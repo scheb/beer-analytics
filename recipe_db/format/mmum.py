@@ -35,7 +35,7 @@ class MmumParser(FormatParser):
             recipe.created = datetime.strptime(date_created, '%d.%m.%Y')
 
         # Characteristics
-        recipe.style_denormalized = json_data.string_or_none('Sorte')
+        recipe.style_raw = json_data.string_or_none('Sorte')
         recipe.extract_efficiency_percent = json_data.float_or_none('Sudhausausbeute')
         recipe.extract_plato = json_data.float_or_none('Stammwuerze')
         recipe.alc_percent = json_data.float_or_none('Alkohol')
@@ -64,7 +64,7 @@ class MmumParser(FormatParser):
                 if unit is not None and unit == 'kg':
                     amount *= 1000
 
-            malts.append(RecipeMalt(kind_denormalized=kind, amount=amount))
+            malts.append(RecipeMalt(kind_raw=kind, amount=amount))
             i += 1
 
         return malts
@@ -91,7 +91,7 @@ class MmumParser(FormatParser):
                     if boiling_time is not None:
                         boiling_time = ceil(boiling_time)
 
-            hops.append(RecipeHop(kind_denormalized=kind, alpha=alpha, amount=amount, boiling_time=boiling_time))
+            hops.append(RecipeHop(kind_raw=kind, alpha=alpha, amount=amount, boiling_time=boiling_time))
             i += 1
 
         return hops
@@ -101,7 +101,7 @@ class MmumParser(FormatParser):
         yeast_kind = json_data.string_or_none('Hefe')
 
         if yeast_kind is not None:
-            yeast = RecipeYeast(kind_denormalized=yeast_kind)
+            yeast = RecipeYeast(kind_raw=yeast_kind)
             yeasts.append(yeast)
 
         return yeasts

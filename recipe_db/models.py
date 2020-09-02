@@ -44,7 +44,7 @@ class Recipe(models.Model):
 
     # Characteristics
     style = models.ForeignKey(Style, on_delete=models.SET_NULL, default=None, blank=True, null=True)
-    style_denormalized = models.CharField(max_length=255, default=None, blank=True, null=True)
+    style_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
     extract_efficiency_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
     extract_plato = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
     alc_percent = models.FloatField(default=None, blank=True, null=True)
@@ -86,7 +86,7 @@ class Recipe(models.Model):
 class RecipeMalt(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     kind = models.ForeignKey(Malt, on_delete=models.SET_NULL, default=None, blank=True, null=True)
-    kind_denormalized = models.CharField(max_length=255, default=None, blank=True, null=True)
+    kind_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
     amount = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     amount_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
 
@@ -94,7 +94,7 @@ class RecipeMalt(models.Model):
 class RecipeHop(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     kind = models.ForeignKey(Hop, on_delete=models.SET_NULL, default=None, blank=True, null=True)
-    kind_denormalized = models.CharField(max_length=255, default=None, blank=True, null=True)
+    kind_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
     alpha = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     amount = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     amount_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
@@ -104,6 +104,6 @@ class RecipeHop(models.Model):
 class RecipeYeast(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     kind = models.CharField(max_length=255, default=None, blank=True, null=True)
-    kind_denormalized = models.CharField(max_length=255, default=None, blank=True, null=True)
+    kind_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
     amount = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     amount_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
