@@ -21,9 +21,9 @@ class MmumParser(FormatParser):
 
         return ParserResult(
             self.get_recipe(json_data),
-            self.get_malts(json_data),
-            self.get_hops(json_data),
-            self.get_yeasts(json_data),
+            list(self.get_malts(json_data)),
+            list(self.get_hops(json_data)),
+            list(self.get_yeasts(json_data)),
         )
 
     def get_recipe(self, json_data: JsonParser):
@@ -52,8 +52,7 @@ class MmumParser(FormatParser):
 
         return recipe
 
-    def get_malts(self, json_data: JsonParser) -> list:
-        malts = []
+    def get_malts(self, json_data: JsonParser) -> iter:
         i = 1
         while (kind := json_data.string_or_none("Malz%d" % i)) is not None:
             kind = clean_kind(kind)
@@ -64,13 +63,10 @@ class MmumParser(FormatParser):
                 if unit is not None and unit == 'kg':
                     amount *= 1000
 
-            malts.append(RecipeMalt(kind_raw=kind, amount=amount))
+            yield RecipeMalt(kind_raw=kind, amount=amount)
             i += 1
 
-        return malts
-
-    def get_hops(self, json_data: JsonParser) -> list:
-        hops = []
+    def get_hops(self, json_data: JsonParser) -> iter:
         i = 1
         while (kind := json_data.string_or_none("Hopfen_%d_Sorte" % i)) is not None:
             kind = clean_kind(kind)
@@ -91,17 +87,10 @@ class MmumParser(FormatParser):
                     if boiling_time is not None:
                         boiling_time = ceil(boiling_time)
 
-            hops.append(RecipeHop(kind_raw=kind, alpha=alpha, amount=amount, boiling_time=boiling_time))
+            yield RecipeHop(kind_raw=kind, alpha=alpha, amount=amount, boiling_time=boiling_time)
             i += 1
 
-        return hops
-
-    def get_yeasts(self, json_data: JsonParser):
-        yeasts = []
+    def get_yeasts(self, json_data: JsonParser) -> iter:
         yeast_kind = json_data.string_or_none('Hefe')
-
         if yeast_kind is not None:
-            yeast = RecipeYeast(kind_raw=yeast_kind)
-            yeasts.append(yeast)
-
-        return yeasts
+            yield RecipeYeast(kind_raw=yeast_kind)
