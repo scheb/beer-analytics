@@ -1,10 +1,11 @@
+import locale
 from typing import Optional
 from xml.etree import ElementTree
 from xml.etree.ElementTree import Element
 
 from pybeerxml import Parser, Recipe as BeerXMLRecipe
 
-from recipe_db.format.parser import FormatParser, ParserResult, float_or_none
+from recipe_db.format.parser import FormatParser, ParserResult, float_or_none, int_or_none
 from recipe_db.models import Recipe, RecipeYeast, RecipeMalt, RecipeHop
 
 
@@ -37,15 +38,15 @@ class BeerXMLParser(FormatParser):
 
     def get_recipe(self, beerxml: BeerXMLRecipe, recipe_node: Element) -> Recipe:
         recipe = Recipe()
-        recipe.name = beerxml.name
+        recipe.name = self.fix_encoding(beerxml.name)
 
         # Characteristics
-        recipe.style_raw = beerxml.style.name
+        recipe.style_raw = self.fix_encoding(beerxml.style.name)
         recipe.extract_efficiency_percent = beerxml.efficiency
         recipe.extract_plato = self.get_og_plato(beerxml, recipe_node)
         recipe.alc_percent = self.get_abv(beerxml, recipe_node)
-        recipe.ebc = self.get_ebc(beerxml)
-        recipe.ibu = self.get_ibu(beerxml)
+        recipe.ebc = self.get_ebc(beerxml, recipe_node)
+        recipe.ibu = self.get_ibu(beerxml, recipe_node)
 
         # Mashing
         (recipe.mash_water, recipe.sparge_water) = self.get_mash_water(beerxml)
@@ -56,44 +57,66 @@ class BeerXMLParser(FormatParser):
 
         return recipe
 
+    def fix_encoding(self, value):
+        if value is None:
+            return None
+        return value.encode(locale.getpreferredencoding(False)).decode("utf-8")
+
     def get_og_plato(self, beerxml: BeerXMLRecipe, recipe_node: Element):
         sg = self.get_og_sg(beerxml, recipe_node)
         return round((-616.868) + (1111.14 * sg) - (630.272 * sg ** 2) + (135.997 * sg ** 3), 2)
 
     def get_og_sg(self, beerxml: BeerXMLRecipe, recipe_node: Element):
-        og = self.get_float_value_or_none(recipe_node, 'og')
+        og = float_or_none(self.child_element_value(recipe_node, 'og'))
         if og is not None:
             return og
 
         return beerxml.og
 
-    def get_ebc(self, beerxml: BeerXMLRecipe):
+    def get_ebc(self, beerxml: BeerXMLRecipe, recipe_node: Element):
+        color_node_value = self.child_element_value(recipe_node, 'est_color')
+        if color_node_value is not None:
+            color_node_value = color_node_value.strip().lower()
+            if color_node_value.endswith('ebc'):
+                ebc = int_or_none(color_node_value.replace('ebc', '').strip())
+                if ebc is not None:
+                    return ebc
+
         # SRM to EBC, http://www.hillybeer.com/color/
         srm_color = beerxml.color
         return srm_color * 1.97 if srm_color > 0 else None
 
-    def get_ibu(self, beerxml: BeerXMLRecipe):
+    def get_ibu(self, beerxml: BeerXMLRecipe, recipe_node: Element):
+        ibu = int_or_none(self.child_element_value(recipe_node, 'ibu'))
+        if ibu is not None:
+            return ibu
+
         ibu = beerxml.ibu
         return ibu if ibu > 0 else None
 
     def get_abv(self, beerxml: BeerXMLRecipe, recipe_node: Element):
-        abv = self.get_float_value_or_none(recipe_node, 'abv')
+        abv = float_or_none(self.strip_unit(self.child_element_value(recipe_node, 'abv')))
         if abv is not None:
             return abv
 
-        abv = self.get_float_value_or_none(recipe_node, 'est_abv')
+        abv = float_or_none(self.strip_unit(self.child_element_value(recipe_node, 'est_abv')))
         if abv is not None:
             return abv
 
         return beerxml.abv
 
-    def get_float_value_or_none(self, node_tree: Element, tag_name: str):
-        node = self.find_element(node_tree, tag_name)
-        if node is not None:
-            return float_or_none(node.text or "")
+    def strip_unit(self, value):
+        if value is None:
+            return None
+        return value.replace('%vol', '')
+
+    def child_element_value(self, node: Element, tag_name: str) -> Optional[str]:
+        child_node = self.find_child_element(node, tag_name)
+        if child_node is not None:
+            return child_node.text
         return None
 
-    def find_element(self, node: Element, tag_name: str) -> Optional[Element]:
+    def find_child_element(self, node: Element, tag_name: str) -> Optional[Element]:
         for child_node in list(node):
             if child_node.tag.lower() == tag_name:
                 return child_node
