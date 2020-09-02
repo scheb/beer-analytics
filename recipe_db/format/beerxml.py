@@ -152,7 +152,8 @@ class BeerXMLParser(FormatParser):
             amount = beerxml_malt.amount
             if amount is not None:
                 amount *= 1000  # convert to grams
-            yield RecipeMalt(kind_raw=beerxml_malt.name, amount=amount)
+            name = self.fix_encoding(beerxml_malt.name)
+            yield RecipeMalt(kind_raw=name, amount=amount)
 
     def get_hops(self, beerxml: BeerXMLRecipe) -> iter:
         for beerxml_hop in beerxml.hops:
@@ -160,7 +161,8 @@ class BeerXMLParser(FormatParser):
             amount = beerxml_hop.amount
             if amount is not None:
                 amount *= 1000  # convert to grams
-            yield RecipeHop(kind_raw=beerxml_hop.name, alpha=beerxml_hop.alpha, use=use, amount=amount, time=beerxml_hop.time)
+            name = self.fix_encoding(beerxml_hop.name)
+            yield RecipeHop(kind_raw=name, alpha=beerxml_hop.alpha, use=use, amount=amount, time=beerxml_hop.time)
 
     def get_yeasts(self, beerxml: BeerXMLRecipe) -> iter:
         for beerxml_yeast in beerxml.yeasts:
