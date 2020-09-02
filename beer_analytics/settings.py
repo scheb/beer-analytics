@@ -47,6 +47,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+try:
+    import data_import
+    INSTALLED_APPS.append('data_import.apps.DataImportConfig')
+except ModuleNotFoundError:
+    pass
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -100,3 +106,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Data imports
+
+RAW_DATA_DIR = BASE_DIR / 'var/raw_data'
