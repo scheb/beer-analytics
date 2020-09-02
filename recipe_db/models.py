@@ -38,7 +38,7 @@ class Yeast(models.Model):
 
 class Recipe(models.Model):
     # Identifiers
-    uid = models.CharField(max_length=32)
+    uid = models.CharField(max_length=32, primary_key=True)
     name = models.CharField(max_length=255, default=None, blank=True, null=True)
     created = models.DateField(default=None, blank=True, null=True)
 
