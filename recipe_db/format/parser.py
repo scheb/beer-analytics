@@ -5,6 +5,10 @@ import re
 from recipe_db.models import Recipe
 
 
+class MalformedDataError(Exception):
+    pass
+
+
 class ParserResult:
     def __init__(self, recipe: Recipe, malts: list, hops: list, yeasts: list) -> None:
         self.recipe = recipe

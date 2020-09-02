@@ -1,17 +1,14 @@
 import locale
 from typing import Optional
 from xml.etree import ElementTree
-from xml.etree.ElementTree import Element
+from xml.etree.ElementTree import Element, ParseError
 
 from pybeerxml import Parser, Recipe as BeerXMLRecipe
 from pybeerxml.hop import Hop
 
-from recipe_db.format.parser import FormatParser, ParserResult, float_or_none, int_or_none
+from recipe_db.format.parser import FormatParser, ParserResult, float_or_none, int_or_none, clean_kind, \
+    MalformedDataError
 from recipe_db.models import Recipe, RecipeYeast, RecipeMalt, RecipeHop
-
-
-class MalformedDataError(Exception):
-    pass
 
 
 class BeerXMLParser(FormatParser):
@@ -24,8 +21,12 @@ class BeerXMLParser(FormatParser):
     }
 
     def parse_recipe(self, file: str) -> ParserResult:
-        parser = Parser()
-        recipes = parser.parse(file)
+        try:
+            parser = Parser()
+            recipes = parser.parse(file)
+        except Exception as e:
+            raise MalformedDataError("Cannot process BeerXML file because of {}".format(type(e)))
+
         if len(recipes) > 1:
             raise MalformedDataError("Cannot process BeerXML file, because it contains more than one recipe")
         beerxml = recipes[0]
@@ -69,6 +70,8 @@ class BeerXMLParser(FormatParser):
     def fix_encoding(self, value):
         if value is None:
             return None
+        if not isinstance(value, str):
+            return str(value)
         return value.encode(locale.getpreferredencoding(False)).decode("utf-8")
 
     def get_og_plato(self, beerxml: BeerXMLRecipe, recipe_node: Element):
@@ -152,7 +155,7 @@ class BeerXMLParser(FormatParser):
             amount = beerxml_malt.amount
             if amount is not None:
                 amount *= 1000  # convert to grams
-            name = self.fix_encoding(beerxml_malt.name)
+            name = clean_kind(self.fix_encoding(beerxml_malt.name))
             yield RecipeMalt(kind_raw=name, amount=amount)
 
     def get_hops(self, beerxml: BeerXMLRecipe) -> iter:
@@ -161,7 +164,7 @@ class BeerXMLParser(FormatParser):
             amount = beerxml_hop.amount
             if amount is not None:
                 amount *= 1000  # convert to grams
-            name = self.fix_encoding(beerxml_hop.name)
+            name = clean_kind(self.fix_encoding(beerxml_hop.name))
             yield RecipeHop(kind_raw=name, alpha=beerxml_hop.alpha, use=use, amount=amount, time=beerxml_hop.time)
 
     def get_yeasts(self, beerxml: BeerXMLRecipe) -> iter:

@@ -1,14 +1,9 @@
-import re
 from datetime import datetime
 from json import JSONDecodeError
 from math import ceil
 
-from recipe_db.format.parser import JsonParser, clean_kind, FormatParser, ParserResult
+from recipe_db.format.parser import JsonParser, clean_kind, FormatParser, ParserResult, MalformedDataError
 from recipe_db.models import Recipe, RecipeYeast, RecipeMalt, RecipeHop
-
-
-class MalformedDataError(Exception):
-    pass
 
 
 class MmumParser(FormatParser):
@@ -79,11 +74,6 @@ class MmumParser(FormatParser):
         i = 1
         while (kind := json_data.string_or_none("{}_{}_Sorte".format(prefix, i))) is not None:
             kind = clean_kind(kind)
-
-            # Clean data
-            kind = kind.replace("®", "")
-            kind = re.sub("\\s+", " ", kind)
-            kind = kind.strip()
 
             use = RecipeHop.BOIL
             alpha = json_data.float_or_none("{}_{}_alpha".format(prefix, i))
