@@ -42,6 +42,7 @@ ALLOWED_HOSTS = []
 
 
 INSTALLED_APPS = [
+    'recipe_db.apps.RecipeDbConfig',
     'django.contrib.contenttypes',
     'django.contrib.staticfiles',
 ]
