@@ -142,14 +142,14 @@ class BeerXMLParser(FormatParser):
         for beerxml_malt in beerxml.fermentables:
             amount = beerxml_malt.amount
             if amount is not None:
-                beerxml_malt.amount += 1000  # convert to grams
-            yield RecipeMalt(kind_raw=beerxml_malt.name, amount=beerxml_malt.amount)
+                amount *= 1000  # convert to grams
+            yield RecipeMalt(kind_raw=beerxml_malt.name, amount=amount)
 
     def get_hops(self, beerxml: BeerXMLRecipe) -> iter:
         for beerxml_hop in beerxml.hops:
             amount = beerxml_hop.amount
             if amount is not None:
-                beerxml_hop.amount += 1000  # convert to grams
+                amount *= 1000  # convert to grams
             yield RecipeHop(kind_raw=beerxml_hop.name, alpha=beerxml_hop.alpha, amount=amount, boiling_time=beerxml_hop.time)
 
     def get_yeasts(self, beerxml: BeerXMLRecipe) -> iter:
