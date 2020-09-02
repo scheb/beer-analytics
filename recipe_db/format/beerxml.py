@@ -4,6 +4,7 @@ from xml.etree import ElementTree
 from xml.etree.ElementTree import Element
 
 from pybeerxml import Parser, Recipe as BeerXMLRecipe
+from pybeerxml.hop import Hop
 
 from recipe_db.format.parser import FormatParser, ParserResult, float_or_none, int_or_none
 from recipe_db.models import Recipe, RecipeYeast, RecipeMalt, RecipeHop
@@ -14,6 +15,14 @@ class MalformedDataError(Exception):
 
 
 class BeerXMLParser(FormatParser):
+    USE_MAP = {
+        "Mash": RecipeHop.MASH,
+        "First Wort": RecipeHop.FIRST_WORT,
+        "Boil": RecipeHop.BOIL,
+        "Aroma": RecipeHop.AROMA,
+        "Dry Hop": RecipeHop.DRY_HOP,
+    }
+
     def parse_recipe(self, file: str) -> ParserResult:
         parser = Parser()
         recipes = parser.parse(file)
@@ -147,11 +156,26 @@ class BeerXMLParser(FormatParser):
 
     def get_hops(self, beerxml: BeerXMLRecipe) -> iter:
         for beerxml_hop in beerxml.hops:
+            use = self.get_hop_use(beerxml_hop)
             amount = beerxml_hop.amount
             if amount is not None:
                 amount *= 1000  # convert to grams
-            yield RecipeHop(kind_raw=beerxml_hop.name, alpha=beerxml_hop.alpha, amount=amount, boiling_time=beerxml_hop.time)
+            yield RecipeHop(kind_raw=beerxml_hop.name, alpha=beerxml_hop.alpha, use=use, amount=amount, time=beerxml_hop.time)
 
     def get_yeasts(self, beerxml: BeerXMLRecipe) -> iter:
         for beerxml_yeast in beerxml.yeasts:
             yield RecipeYeast(kind_raw=beerxml_yeast.name)
+
+    def get_hop_use(self, beerxml_hop: Hop):
+        use_raw = beerxml_hop.use
+        if use_raw is not None and use_raw in self.USE_MAP:
+            return self.USE_MAP[use_raw]
+
+        time = beerxml_hop.time
+        if time is not None:
+            if time < 5:
+                return RecipeHop.AROMA
+            if time > 24*60:
+                return RecipeHop.DRY_HOP
+
+        return RecipeHop.BOIL

@@ -67,8 +67,17 @@ class MmumParser(FormatParser):
             i += 1
 
     def get_hops(self, json_data: JsonParser) -> iter:
+        for hop in self.parse_hops(json_data, 'Hopfen_VWH'):
+            hop.use = RecipeHop.FIRST_WORT
+            yield hop
+        yield from self.parse_hops(json_data, 'Hopfen')
+        for hop in self.parse_hops(json_data, 'Stopfhopfen'):
+            hop.use = RecipeHop.DRY_HOP
+            yield hop
+
+    def parse_hops(self, json_data: JsonParser, prefix: str):
         i = 1
-        while (kind := json_data.string_or_none("Hopfen_%d_Sorte" % i)) is not None:
+        while (kind := json_data.string_or_none("{}_{}_Sorte".format(prefix, i))) is not None:
             kind = clean_kind(kind)
 
             # Clean data
@@ -76,18 +85,22 @@ class MmumParser(FormatParser):
             kind = re.sub("\\s+", " ", kind)
             kind = kind.strip()
 
-            alpha = json_data.float_or_none("Hopfen_%d_alpha" % i)
-            amount = json_data.float_or_none("Hopfen_%d_Menge" % i)
-            boiling_time = json_data.string_or_none("Hopfen_%d_Kochzeit" % i)
-            if boiling_time is not None:
-                if boiling_time == 'Whirlpool':
-                    boiling_time = 0
+            use = RecipeHop.BOIL
+            alpha = json_data.float_or_none("{}_{}_alpha".format(prefix, i))
+            amount = json_data.float_or_none("{}_{}_Menge".format(prefix, i))
+            time = json_data.string_or_none("{}_{}_Kochzeit".format(prefix, i))
+            if time is not None:
+                if time == 'Whirlpool':
+                    use = RecipeHop.AROMA
+                    time = 0
                 else:
-                    boiling_time = json_data.float_or_none("Hopfen_%d_Kochzeit" % i)
-                    if boiling_time is not None:
-                        boiling_time = ceil(boiling_time)
+                    time = json_data.float_or_none("{}_{}_Kochzeit".format(prefix, i))
+                    if time is not None:
+                        time = ceil(time)
+                        if time < 5:  # Assume aroma use when less than 5mins boiled
+                            use = RecipeHop.AROMA
 
-            yield RecipeHop(kind_raw=kind, alpha=alpha, amount=amount, boiling_time=boiling_time)
+            yield RecipeHop(kind_raw=kind, alpha=alpha, use=use, amount=amount, time=time)
             i += 1
 
     def get_yeasts(self, json_data: JsonParser) -> iter:

@@ -92,13 +92,28 @@ class RecipeMalt(models.Model):
 
 
 class RecipeHop(models.Model):
+    MASH = 'mash'
+    FIRST_WORT = 'first_wort'
+    BOIL = 'boil'
+    AROMA = 'aroma'
+    DRY_HOP = 'dry_hop'
+
+    USE_CHOICES = (
+        (MASH, 'Mash'),
+        (FIRST_WORT, 'First Wort'),
+        (BOIL, 'Boil'),
+        (AROMA, 'Aroma'),
+        (DRY_HOP, 'Dry Hop'),
+    )
+
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     kind = models.ForeignKey(Hop, on_delete=models.SET_NULL, default=None, blank=True, null=True)
     kind_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
+    use = models.CharField(max_length=16, default=None, blank=True, null=True, choices=USE_CHOICES)
     alpha = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     amount = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     amount_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
-    boiling_time = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    time = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
 
 
 class RecipeYeast(models.Model):
