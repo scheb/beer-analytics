@@ -24,6 +24,6 @@ class Command(BaseCommand):
             processor.import_recipe_from_file(file_path, uid)
         except Exception as e:
             self.stderr.write(str(e))
-            pass
+            return
 
         self.stdout.write("Imported recipe {}".format(uid))
