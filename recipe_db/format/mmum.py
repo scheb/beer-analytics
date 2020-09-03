@@ -9,8 +9,9 @@ from recipe_db.models import Recipe, RecipeYeast, RecipeMalt, RecipeHop
 class MmumParser(FormatParser):
     def parse(self, result: ParserResult, file_path: str) -> None:
         try:
-            data = open(file_path, 'r', encoding='utf-8').read()
-            json_data = JsonParser(data)
+            with open(file_path, 'r', encoding='utf-8') as f:
+                data = f.read()
+                json_data = JsonParser(data)
         except JSONDecodeError:
             raise MalformedDataError("Cannot decode JSON")
 
