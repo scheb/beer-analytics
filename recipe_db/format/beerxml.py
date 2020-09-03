@@ -20,10 +20,10 @@ class BeerXMLParser(FormatParser):
         "Dry Hop": RecipeHop.DRY_HOP,
     }
 
-    def parse_recipe(self, file: str) -> ParserResult:
+    def parse(self, result: ParserResult, file_path: str) -> None:
         try:
             parser = Parser()
-            recipes = parser.parse(file)
+            recipes = parser.parse(file_path)
         except Exception as e:
             raise MalformedDataError("Cannot process BeerXML file because of {}".format(type(e)))
 
@@ -31,7 +31,7 @@ class BeerXMLParser(FormatParser):
             raise MalformedDataError("Cannot process BeerXML file, because it contains more than one recipe")
         beerxml = recipes[0]
 
-        with open(file, "rt") as f:
+        with open(file_path, "rt") as f:
             tree = ElementTree.parse(f)
 
         recipe_node = None
@@ -39,15 +39,12 @@ class BeerXMLParser(FormatParser):
             if node.tag.lower() == "recipe":
                 recipe_node = node
 
-        return ParserResult(
-            self.get_recipe(beerxml, recipe_node),
-            list(self.get_malts(beerxml)),
-            list(self.get_hops(beerxml)),
-            list(self.get_yeasts(beerxml)),
-        )
+        self.parse_recipe(result.recipe, beerxml, recipe_node)
+        result.malts.extend(self.get_malts(beerxml))
+        result.hops.extend(self.get_hops(beerxml))
+        result.yeasts.extend(self.get_yeasts(beerxml))
 
-    def get_recipe(self, beerxml: BeerXMLRecipe, recipe_node: Element) -> Recipe:
-        recipe = Recipe()
+    def parse_recipe(self, recipe: Recipe, beerxml: BeerXMLRecipe, recipe_node: Element) -> Recipe:
         recipe.name = self.fix_encoding(beerxml.name)
 
         # Characteristics

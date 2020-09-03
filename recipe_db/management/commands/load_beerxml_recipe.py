@@ -20,8 +20,8 @@ class Command(BaseCommand):
         self.stdout.write("Load recipe {} from file {}".format(uid, file_path))
 
         try:
-            processor = RecipeFileProcessor(RecipeImporter(), BeerXMLParser(), replace_existing=replace)
-            processor.import_recipe_from_file(file_path, uid)
+            processor = RecipeFileProcessor(RecipeImporter(), [BeerXMLParser()], replace_existing=replace)
+            processor.import_recipe_from_file([file_path], uid)
         except Exception as e:
             self.stderr.write(str(e))
             return

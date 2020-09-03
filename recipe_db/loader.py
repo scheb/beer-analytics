@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, List
 
 from django.core.exceptions import ValidationError
 from django.db import transaction
@@ -83,14 +83,13 @@ class RecipeImporter:
             raise last_err
 
 
-
 class RecipeFileProcessor:
-    def __init__(self, importer: RecipeImporter, format_parser: FormatParser, replace_existing=False) -> None:
+    def __init__(self, importer: RecipeImporter, format_parsers: List[FormatParser], replace_existing=False) -> None:
         self.importer = importer
-        self.format_parser = format_parser
+        self.format_parsers = format_parsers
         self.replace_existing = replace_existing
 
-    def import_recipe_from_file(self, file_path: str, uid: str) -> Tuple[Recipe, bool]:
+    def import_recipe_from_file(self, file_paths: List[str], uid: str) -> Tuple[Recipe, bool]:
         # Clear the existing recipe if necessary, otherwise skip
         if Recipe.exists_uid(uid):
             if self.replace_existing:
@@ -98,6 +97,12 @@ class RecipeFileProcessor:
             else:
                 return Recipe.get_uid(uid), False
 
-        result = self.format_parser.parse_recipe(file_path)
+        result = ParserResult()
+        parsing_steps = zip(file_paths, self.format_parsers)
+        for parsing_step in parsing_steps:
+            (file_path, parser) = parsing_step
+            if file_path is not None:
+                parser.parse(result, file_path)
+
         self.importer.import_recipe(uid, result)
         return result.recipe, True

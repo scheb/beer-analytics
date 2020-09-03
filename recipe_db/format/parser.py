@@ -10,16 +10,16 @@ class MalformedDataError(Exception):
 
 
 class ParserResult:
-    def __init__(self, recipe: Recipe, malts: list, hops: list, yeasts: list) -> None:
-        self.recipe = recipe
-        self.malts = malts
-        self.hops = hops
-        self.yeasts = yeasts
+    def __init__(self) -> None:
+        self.recipe = Recipe()
+        self.malts = []
+        self.hops = []
+        self.yeasts = []
 
 
 class FormatParser:
     @abc.abstractmethod
-    def parse_recipe(self, file_path: str) -> ParserResult:
+    def parse(self, result: ParserResult, file_path: str) -> None:
         raise NotImplementedError
 
 

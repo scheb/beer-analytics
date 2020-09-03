@@ -7,23 +7,19 @@ from recipe_db.models import Recipe, RecipeYeast, RecipeMalt, RecipeHop
 
 
 class MmumParser(FormatParser):
-    def parse_recipe(self, file_path: str) -> ParserResult:
+    def parse(self, result: ParserResult, file_path: str) -> None:
         try:
             data = open(file_path, 'r', encoding='utf-8').read()
             json_data = JsonParser(data)
         except JSONDecodeError:
             raise MalformedDataError("Cannot decode JSON")
 
-        return ParserResult(
-            self.get_recipe(json_data),
-            list(self.get_malts(json_data)),
-            list(self.get_hops(json_data)),
-            list(self.get_yeasts(json_data)),
-        )
+        self.parse_recipe(result.recipe, json_data)
+        result.malts.extend(self.get_malts(json_data))
+        result.hops.extend(self.get_hops(json_data))
+        result.yeasts.extend(self.get_yeasts(json_data))
 
-    def get_recipe(self, json_data: JsonParser):
-        recipe = Recipe()
-
+    def parse_recipe(self, recipe: Recipe, json_data: JsonParser):
         recipe.name = json_data.string_or_none('Name')
         date_created = json_data.string_or_none('Datum')
         if date_created is not None:
