@@ -86,17 +86,38 @@ class BeerXMLParser(FormatParser):
         return beerxml.og
 
     def get_ebc(self, beerxml: BeerXMLRecipe, recipe_node: Element):
-        color_node_value = self.child_element_value(recipe_node, 'est_color')
+        (srm1, ebc) = self.get_color_metrics(recipe_node, 'color')
+        if ebc is not None:
+            return ebc
+
+        (srm2, ebc) = self.get_color_metrics(recipe_node, 'est_color')
+        if ebc is not None:
+            return ebc
+
+        if srm1 is not None:
+            return self.srm_to_ebc(srm1)
+
+        if srm2 is not None:
+            return self.srm_to_ebc(srm2)
+
+        # Use calculated value
+        return self.srm_to_ebc(beerxml.color)
+
+    def get_color_metrics(self, recipe_node: Element, element_name: str):
+        ebc = None
+        srm = None
+        color_node_value = self.child_element_value(recipe_node, element_name)
         if color_node_value is not None:
             color_node_value = color_node_value.strip().lower()
             if color_node_value.endswith('ebc'):
                 ebc = int_or_none(color_node_value.replace('ebc', '').strip())
-                if ebc is not None:
-                    return ebc
+            else:
+                srm = float_or_none(color_node_value)
+        return srm, ebc
 
+    def srm_to_ebc(self, srm):
         # SRM to EBC, http://www.hillybeer.com/color/
-        srm_color = beerxml.color
-        return srm_color * 1.97 if srm_color > 0 else None
+        return srm * 1.97
 
     def get_ibu(self, beerxml: BeerXMLRecipe, recipe_node: Element):
         ibu = int_or_none(self.child_element_value(recipe_node, 'ibu'))

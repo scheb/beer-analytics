@@ -57,7 +57,7 @@ class Recipe(models.Model):
 
     # Boiling
     boiling_time = models.IntegerField(default=None, blank=True, null=True)
-    cast_out_wort = models.IntegerField(default=None, blank=True, null=True)
+    cast_out_wort = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
 
     def __str__(self):
         return self.uid
@@ -120,5 +120,3 @@ class RecipeYeast(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     kind = models.CharField(max_length=255, default=None, blank=True, null=True)
     kind_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
-    amount = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    amount_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
