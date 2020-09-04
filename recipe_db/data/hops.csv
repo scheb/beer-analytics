@@ -1,250 +1,315 @@
-Admiral;bitter
-Agnus;bitter
-Apollo;bitter
-Banner;bitter
-Bitter Gold;bitter
-Bravo;bitter
-Brewer's Gold;bitter
-Bullion;bitter
-Bullion 10A;bitter
-California Cluster;bitter
-Chelan;bitter
-Comet;bitter
-Eastern Gold;bitter
-Eroica;bitter
-Feux-Coeur;bitter
-Galena;bitter
-Kitamidori;bitter
-Magnum;bitter
-Millennium;bitter
-Newport;bitter
-Outeniqua;bitter
-Pacific Gem;bitter
-Pacific Sunrise;bitter
-Pilot;bitter
-Pride of Ringwood;bitter
-Satus;bitter
-Sorachi Ace;bitter
-Southern Brewer;bitter
-Southern Star;bitter
-Sovereign;bitter
-Summit;bitter
-Super Pride;bitter
-Symphony;bitter
-Tillicum;bitter
-Toyomidori;bitter
-Warrior;bitter
-Yakima Cluster;bitter
-Zenith;bitter
-Zeus;bitter
-Ahil;aroma
-Ahtanum;aroma
-Amarillo;aroma
-Amethyst;aroma
-Aquila;aroma
-Aramis;aroma
-Atlas;aroma
-Backa;aroma
-Bianca;aroma
-Blato;aroma
-Blisk;aroma
-Boadicea;aroma
-BOR;aroma
-Bramling;aroma
-Canadian Redvine;aroma
-Canterbury Whitebine;aroma
-Cascade;aroma
-Cekin;aroma
-Celeia;aroma
-Cobb;aroma
-Columbia;aroma
-Crystal;aroma
-Dana;aroma
-Defender;aroma
-Density;aroma
-Dunav;aroma
-Early Bird;aroma
-Early Green;aroma
-Early Prolific;aroma
-Early Promise;aroma
-East Kent Golding;aroma
-Eastern Green;aroma
-Eastwell Golding;aroma
-El Dorado;aroma
-Ella;aroma
-Elsaesser;aroma
-Equinox;aroma
-First Choice;aroma
-Fuggle;aroma
-Fuggle H;aroma
-Fuggle N;aroma
-Furano Ace;aroma
-Gargoyle;aroma
-Golden Star;aroma
-Golding;aroma
-Groene Bel;aroma
-Hallertau;aroma
-Hallertau Blanc;aroma
-Hallertauer Gold;aroma
-Hallertauer Tradition;aroma
-Helga;aroma
-Hersbrucker;aroma
-Hersbrucker E;aroma
-Hersbrucker Pure;aroma
-Hersbrucker Red-Stem;aroma
-Hüll Melon;aroma
-Hybrid-2;aroma
-Ivanhoe;aroma
-Janus;aroma
-Jester;aroma
-Keyworth's Early;aroma
-Keyworth's Midseason;aroma
-Kohatu;aroma
-Landhopfen;aroma
-Liberty;aroma
-Lubelska;aroma
-Lubelska-Pulawy;aroma
-Lucan;aroma
-Mandarina Bavaria;aroma
-Mathon;aroma
-Motueka;aroma
-Mount Hood;aroma
-Mount Rainier;aroma
-Nadwislanska;aroma
-Nordgaard;aroma
-Olympic;aroma
-Omega;aroma
-Pacific Jade;aroma
-Pacifica;aroma
-Palisade;aroma
-Petham Golding;aroma
-Pocket Talisman;aroma
-Precoce de Bourgogne;aroma
-Premiant;aroma
-Progress;aroma
-Record;aroma
-Red Earth;aroma
-Riwaka;aroma
-Saaz;aroma
-Santiam;aroma
-Saphir;aroma
-Saxon;aroma
-Serebrianka;aroma
-Shinshuwase;aroma
-Sladek;aroma
-Sonnet;aroma
-Spalt;aroma
-Spalter Select;aroma
-Star;aroma
-Strisselspalt;aroma
-Styrian Golding;aroma
-Summer;aroma
-Sun;aroma
-Sunbeam;aroma
-Sunshine;aroma
-Sussex;aroma
-Sylva;aroma
-Tahoma;aroma
-Tardif de Bourgogne;aroma
-Teamaker;aroma
-Tettnanger;aroma
-Tettnanger A;aroma
-Tettnanger B;aroma
-Tolhurst;aroma
-Topaz;aroma
-Triskel;aroma
-Ultra;aroma
-Vanguard;aroma
-Viking;aroma
-Vojvodina;aroma
-Wai-iti;aroma
-Whitbread Golding;aroma
-Willamette;aroma
-Wuerttemberger;aroma
-Zlatan;aroma
-Zythos;aroma
-Alliance;both
-Amallia;both
-Apolon;both
-Aurora;both
-Azacca;both
-Bate's Brewer;both
-Belma;both
-Blue Northern Brewer;both
-Bobek;both
-Bouclier;both
-Bramling Cross;both
-Buket;both
-Buzz Bullets;both
-Calicross;both
-Caliente;both
-Calypso;both
-Cashmere;both
-Centennial;both
-Cerera;both
-Challenger;both
-Chinook;both
-Cicero;both
-Citra;both
-Cluster;both
-Coigneau;both
-Columbus;both
-Delta;both
-Dr Rudi;both
-Eureka;both
-Falconer's Flight;both
-Fantasia;both
-First Gold;both
-Fuggle Tetraploid;both
-Galaxy;both
-Glacier;both
-Goldings;both
-Green Bullet;both
-Greensburg;both
-Hallertauer Taurus;both
-Herald;both
-Herkules;both
-Horizon;both
-Hüller Bitterer;both
-Kirin II;both
-Legacy;both
-Marynka;both
-Melba;both
-Merkur;both
-Mosaic;both
-MultiHead;both
-Nelson Sauvin;both
-Neo1;both
-Neoplanta;both
-Northdown;both
-Northern Brewer;both
-Nugget;both
-Opal;both
-Orbit;both
-Orion;both
-Perle;both
-Phoenix;both
-Pilgrim;both
-Pioneer;both
-Polaris;both
-Pride of Kent;both
-Rakau;both
-Simcoe;both
-Smaragd;both
-Smooth Cone;both
-Southern Cross;both
-Southern Promise;both
-Sterling;both
-Sticklebract;both
-Styrian Gold;both
-Styrian Wolf;both
-Talisman;both
-Target;both
-Universal;both
-Vic Secret;both
-Vital;both
-Waimea;both
-Wakatu;both
-Willow Creek;both
-Yakima Gold;both
-Yeoman;both
+name;use;alt_names
+Admiral;bittering;
+African Queen;dual;Africa Queen
+Agnus;bittering;
+Ahil;aroma;
+Ahtanum;aroma;Ahtanium, Athanum, Athnanum
+Akoya;aroma;
+Alliance;dual;
+Aloha;dual;
+Amallia;dual;
+Amarillo;aroma;Amarillo, Armarillo
+Amarillo Gold;aroma;
+Amethyst;aroma;
+Apollo;bittering;
+Apolon;dual;
+Aquila;aroma;
+Aramis;aroma;Armis
+Ariana;dual;Arriana
+Atlas;aroma;
+Aurora;dual;
+Azacca;dual;
+Backa;aroma;
+Banner;bittering;
+Barbe Rouge;aroma;
+Bate's Brewer;dual;
+Belma;dual;
+Bergamot;aroma;
+Bianca;aroma;
+Bitter Gold;bittering;
+Blato;aroma;
+Blisk;aroma;
+Blue Northern Brewer;dual;
+Boadicea;aroma;
+Bobek;dual;
+BOR;aroma;
+Bouclier;dual;
+Bramling;aroma;
+Bramling Cross;dual;Bambling Cross 
+Bravo;bittering;
+Brewer's Gold;bittering;
+BRU-1;bittering;BRU1
+Buket;dual;
+Bullion;bittering;
+Bullion 10A;bittering;
+Buzz Bullets;dual;
+Calicross;dual;
+Caliente;dual;
+California Cluster;bittering;
+Calypso;dual;
+Canadian Redvine;aroma;
+Canterbury Whitebine;aroma;
+Cascade;aroma;
+Cashmere;dual;
+Cekin;aroma;
+Celeia;aroma;
+Centennial;dual;
+Cerera;dual;
+Challenger;dual;
+Chelan;bittering;
+Chinook;dual;
+Cicero;dual;
+Citra;dual;
+Cluster;dual;
+Cluster Fugget;aroma;Fugget
+Cobb;aroma;
+Coigneau;dual;
+Columbia;aroma;
+Columbus;dual;
+Comet;bittering;
+Crystal;aroma;
+Dana;aroma;
+Defender;aroma;
+Delta;dual;
+Density;aroma;
+Dr Rudi;dual;
+Dunav;aroma;
+Early Bird;aroma;
+Early Green;aroma;
+Early Prolific;aroma;
+Early Promise;aroma;
+East Kent Golding;aroma;Goldings East Kent, Golding East Kent, East Ken Golding, East Kent Godings, East Kent Goldings, Est Kent Goldings,  Kent East Golding, Kent East Goldings, Kent Golding, Kent Goldings
+Eastern Gold;bittering;
+Eastern Green;aroma;
+Eastwell Golding;aroma;
+Ekuanot;bittering;Ekvanot, Equanot, Eukanot
+El Dorado;aroma;Eldorado
+Elixir;aroma;Elexir
+Ella;aroma;Stella
+Elsaesser;aroma;
+Endeavor;dual;Endeavour, Endevour
+Enigma;bittering;
+Equinox;aroma;
+Eroica;bittering;
+Eureka;dual;
+Falconer's Flight;dual;Falconer Flight, Falcon Flight, Falcones Flight
+Fantasia;dual;
+Feux-Coeur;bittering;
+First Choice;aroma;
+First Gold;dual;
+Flyer;dual;
+Fuggle;aroma;Fuggles, Fuggels, Fugle
+Fuggle H;aroma;
+Fuggle N;aroma;
+Fuggle Tetraploid;dual;
+Furano Ace;aroma;
+Fusion;aroma;Fuison
+Galaxy;dual;
+Galena;bittering;
+Gargoyle;aroma;
+Glacier;dual;Galcier
+Godiva;aroma;
+Golden Star;aroma;
+Golding (US);aroma;Goldings US, US Golding, US Goldings, Northwest Goldings
+Golding (BC);aroma;Goldings BC, BC Golding, BC Goldings, British Columbia Golding
+Green Bullet;dual;
+Greensburg;dual;
+Groene Bel;aroma;
+Hallertau;aroma;Mittelfrüh, Mittelfrüher
+Hallertau Blanc;aroma;
+Hallertauer Gold;aroma;
+Hallertauer Taurus;dual;
+Hallertauer Tradition;aroma;
+Hartwick;aroma;Harwick
+Helga;aroma;
+Herald;dual;
+Herkules;dual;Hercules
+Hersbrucker;aroma;
+Hersbrucker E;aroma;
+Hersbrucker Pure;aroma;
+Hersbrucker Red-Stem;aroma;
+Hersbrucker Spät;aroma;
+Horizon;dual;
+Hüll Melon;aroma;Hüll Mellon, Melon Hüll
+Hüller Bitter;dual;Hüll Bitter, Hüller Bitterer
+Hybrid-2;aroma;Hybrid2
+Idaho 7;dual;Idaho7
+Idaho Gem;aroma;
+Ivanhoe;aroma;
+Janus;aroma;
+Jarrylo;dual;
+Jester;aroma;
+Junga;dual;
+Kazbek;aroma;
+Keyworth's Early;aroma;
+Keyworth's Midseason;aroma;
+Kirin II;dual;Kirin 2, Kirin2
+Kitamidori;bittering;
+Kohatu;aroma;Kuhatu
+Landhopfen;aroma;
+Legacy;dual;
+Liberty;aroma;
+Loral;dual; loral nobel, loral noble
+Lotus;aroma;
+Lubelska;aroma;Lubelski, Luboloski
+Lubelska-Pulawy;aroma;
+Lublin;bittering;Lubliner
+Lucan;aroma;
+Lunga;dual;
+Mackinac;aroma;Mackinaw
+Magnum;bittering;Magnun, Magnung
+Mandarina Bavaria;aroma;Bavarian Mandarina, Bavaria Mandarina, Mandarin Bavaria, Mandrina Bavaria
+Marynka;dual;
+Mathon;aroma;
+Medusa;aroma;
+Melba;dual;
+Meridian;aroma;
+Merkur;dual;
+Michigan Copper;aroma;MI Copper
+Millennium;bittering;Millenium
+Mistral;dual;
+Monroe;aroma;
+Mosaic;dual;Moesaic, Mosacic, Mosai, Mossic, Mozaic, Mscc
+Motueka;aroma;Mouteka
+Mount Hood;aroma;MT Hood
+Mount Rainier;aroma;MT Rainier
+Moutere;dual;Mortere
+MultiHead;dual;
+Mystic;aroma;
+Nadwislanska;aroma;
+Nectaron;dual;Nectron
+Nelson Sauvin;dual;Nelson, Nels, Nel, Neslson Sauvin
+Neo1;dual;Neo-1
+Neoplanta;dual;
+Newport;bittering;
+Nordgaard;aroma;
+Northdown;dual;
+Northern Brewer;dual;Norther, Norther Brewer, Norther Browser, Northerm Brewer, Northern, Nother Brewer
+Nugget;dual;Nugeet, nuggets
+Oktawia;bittering;
+Olicana;dual;
+Olympic;aroma;
+Omega;aroma;
+Opal;dual;
+Opus;aroma;
+Orbit;dual;
+Orion;dual;
+Outeniqua;bittering;
+Pacific Crest;aroma;
+Pacific Gem;bittering;
+Pacific Jade;aroma;
+Pacific Sunrise;bittering;
+Pacifica;aroma;Pacific Hallertau
+Pahto;bittering;
+Palisade;aroma;Palisades, Pallisade
+Paradigm;aroma;
+Pekko;bittering;
+Perle;dual;Pearle
+Petham Golding;aroma;
+Petoskey;aroma;Petosky
+Phoenix;dual;
+Pilgrim;dual;Pilgrin
+Pilot;bittering;
+Pioneer;dual;
+Pocket Talisman;aroma;
+Polaris;dual;
+Precoce de Bourgogne;aroma;
+Premiant;aroma;
+Pride of Kent;dual;
+Pride of Ringwood;bittering;
+Progress;aroma;
+ProvOAK;aroma;
+Puławski;dual;
+Rakau;dual;Raku, Rakua, AlphAroma, AlphaAroma
+Record;aroma;
+Red Earth;aroma;
+Relax;aroma;
+Riwaka;aroma;
+Rubin;bittering;
+Saaz;aroma;Saazer, Saab, Saa, Sazz, Zatec, Zatecky, ŽPČ
+Sabro;aroma;Sabco, Sobro
+Santiam;aroma;
+Saphir;aroma;
+Satus;bittering;
+Saxon;aroma;
+Serebrianka;aroma;
+Shinshuwase;aroma;
+Simcoe;dual;
+Sladek;aroma;
+Smaragd;dual;
+Smooth Cone;dual;
+Sonnet;aroma;
+Sorachi Ace;bittering;Sorachie Ace, Soriachi Ace
+Southern Aroma;aroma;
+Southern Brewer;bittering;
+Southern Cross;dual;
+Southern Dawn;dual;
+Southern Promise;dual;
+Southern Star;bittering;
+Sovereign;bittering;
+Spalter;aroma;Spalt, Spal, Spaltz
+Spalter Select;aroma;Select Spalt
+Star;aroma;
+Sterling;dual;
+Sticklebract;dual;
+Strata;aroma;Strada
+Strisselspalt;aroma;Strisselspalter
+Styrian Goldings;aroma;Styrian Golding
+Styrian Wolf;dual;Wolf
+Summer;aroma;
+Summit;bittering;
+Sun;aroma;
+Sunbeam;aroma;
+Sunshine;aroma;
+Super Alpha;bittering;
+Super Pride;bittering;
+Sussex;aroma;
+Sybilla;dual;
+Sylva;aroma;
+Symphony;bittering;
+Tahoma;aroma;
+Taiheke;dual;
+Talisman;dual;
+Talus;dual;
+Tangerine;aroma;
+Tardif de Bourgogne;aroma;
+Target;dual;
+Teamaker;aroma;
+Tettnanger;aroma;Tettnang
+Tettnanger A;aroma;
+Tettnanger B;aroma;
+Tillicum;bittering;
+Tolhurst;aroma;
+Topaz;aroma;
+Toyomidori;bittering;
+Tradition;bittering;Tratition
+Trident;dual;
+Triple Pearl;dual;
+Triskel;aroma;
+Triumph;aroma;
+Ultra;aroma;
+Universal;dual;
+Vanguard;aroma;
+Vic Secret;dual;Vic Secrel, Victoria, Victoria’s Secret, Victoria Secret
+Viking;aroma;
+Vital;dual;
+Vojvodina;aroma;
+Wai-iti;aroma;Wai-ti
+Waimea;dual;
+Wakatu;dual;Whakatu
+Warrior;bittering;Warior, Warr, Warroir
+Whitbread Golding;aroma;WGV, Whitbread, Whitbread Golding Variety
+Willamette;aroma;Willamett, Willamatte, Williamette
+Willow Creek;dual;
+Wuerttemberger;aroma;
+Yakima Cluster;bittering;
+Yakima Gold;dual;
+Yellow Sub;dual;Yellow Submarine
+Yeoman;dual;
+Zappa;aroma;
+Zenia;dual;
+Zenith;bittering;
+Zeus;bittering;
+Zlatan;aroma;
+Zula;dual;
+Zythos;aroma;

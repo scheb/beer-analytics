@@ -53,7 +53,8 @@ class Malt(models.Model):
 class Hop(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     name = models.CharField(max_length=255)
-    category = models.CharField(max_length=16)
+    use = models.CharField(max_length=16, default=None, blank=True, null=True)
+    alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
 
 
 class Yeast(models.Model):

@@ -67,23 +67,26 @@ def cast_values(value):
 
 def load_hops():
     csv_file = load_csv('hops.csv')
+    header = next(csv_file)
+
     for row in csv_file:
+        if len(row) == 1:
+            continue  # Skip empty lines
+
+        hop_id = create_human_readable_id(row[0])
+        row = map(cast_values, row)
+        data = dict(zip(header, row))
+
         try:
-            hop_id = create_human_readable_id(row[0])
-            query = Hop.objects.filter(pk=hop_id)
-            if query.count() > 0:
-                query.update(
-                    name=row[0],
-                    category=row[1],
-                )
-            else:
-                Hop.objects.create(
-                    id=hop_id,
-                    name=row[0],
-                    category=row[1],
-                )
-        except IndexError:
+            hop = Hop.objects.get(pk=hop_id)
+        except Hop.DoesNotExist:
+            hop = Hop()
             pass
+
+        hop.id = hop_id
+        for field in data:
+            setattr(hop, field, data[field])
+        hop.save()
 
 
 def create_human_readable_id(value: str) -> str:
