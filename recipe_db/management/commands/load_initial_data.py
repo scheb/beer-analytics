@@ -23,25 +23,46 @@ class Command(BaseCommand):
 
 def load_styles():
     csv_file = load_csv('styles.csv')
+    header = next(csv_file)
+
     for row in csv_file:
+        if len(row) == 1:
+            continue  # Skip empty lines
+
+        row = map(cast_values, row)
+        data = dict(zip(header, row))
+
         try:
-            style_id = create_human_readable_id(row[0])
-            query = Style.objects.filter(pk=style_id)
-            if query.count() > 0:
-                query.update(
-                    name=row[0],
-                    category=row[2],
-                    sub_category=row[1],
-                )
-            else:
-                Style.objects.create(
-                    id=style_id,
-                    name=row[0],
-                    category=row[2],
-                    sub_category=row[1],
-                )
-        except IndexError:
+            style = Style.objects.get(pk=data['id'])
+        except Style.DoesNotExist:
+            style = Style()
             pass
+
+        for field in data:
+            setattr(style, field, data[field])
+        style.save()
+
+
+def cast_values(value):
+    if value == '':
+        return None
+
+    if value == 'true':
+        return True
+    if value == 'false':
+        return False
+
+    try:
+        return int(value)
+    except ValueError:
+        pass
+
+    try:
+        return float(value)
+    except ValueError:
+        pass
+
+    return value
 
 
 def load_hops():

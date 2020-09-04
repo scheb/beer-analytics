@@ -11,12 +11,37 @@ class GreaterThanValueValidator(BaseValidator):
         return a <= b
 
 
+# https://www.bjcp.org/docs/2015_Guidelines_Beer.pdf
+# -> https://www.bjcp.org/docs/2015_Guidelines.xlsx
+# -> https://www.bjcp.org/docs/2015_Styles.xlsx
+# https://www.brewersassociation.org/edu/brewers-association-beer-style-guidelines/
 # https://www.dummies.com/food-drink/drinks/beer/beer-style-guidelines-hierarchy/
 class Style(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     name = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
-    sub_category = models.CharField(max_length=255)
+    abv_min = models.FloatField(default=None, blank=True, null=True)
+    abv_max = models.FloatField(default=None, blank=True, null=True)
+    ibu_min = models.IntegerField(default=None, blank=True, null=True)
+    ibu_max = models.IntegerField(default=None, blank=True, null=True)
+    srm_min = models.FloatField(default=None, blank=True, null=True)
+    srm_max = models.FloatField(default=None, blank=True, null=True)
+    og_min = models.IntegerField(default=None, blank=True, null=True)
+    og_max = models.IntegerField(default=None, blank=True, null=True)
+    fg_min = models.IntegerField(default=None, blank=True, null=True)
+    fg_max = models.IntegerField(default=None, blank=True, null=True)
+    strength = models.CharField(max_length=255, default=None, blank=True, null=True)
+    color = models.CharField(max_length=255, default=None, blank=True, null=True)
+    fermentation = models.CharField(max_length=255, default=None, blank=True, null=True)
+    conditioning = models.CharField(max_length=255, default=None, blank=True, null=True)
+    region_of_origin = models.CharField(max_length=255, default=None, blank=True, null=True)
+    style = models.CharField(max_length=255, default=None, blank=True, null=True)
+    specialty_beer = models.BooleanField(default=False)
+    era = models.CharField(max_length=255, default=None, blank=True, null=True)
+    bitter_balances = models.CharField(max_length=255, default=None, blank=True, null=True)
+    sour_hoppy_sweet = models.CharField(max_length=255, default=None, blank=True, null=True)
+    spice = models.CharField(max_length=255, default=None, blank=True, null=True)
+    smoke_roast = models.CharField(max_length=255, default=None, blank=True, null=True)
 
 
 class Malt(models.Model):
