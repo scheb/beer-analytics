@@ -1,4 +1,4 @@
-from django.core.validators import MaxValueValidator, BaseValidator
+from django.core.validators import MaxValueValidator, BaseValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -47,16 +47,16 @@ class Recipe(models.Model):
     style_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
     extract_efficiency_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
     extract_plato = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
-    alc_percent = models.FloatField(default=None, blank=True, null=True)
+    alc_percent = models.FloatField(default=None, blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
     ebc = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     ibu = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
 
     # Mashing
     mash_water = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    sparge_water = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    sparge_water = models.IntegerField(default=None, blank=True, null=True, validators=[MinValueValidator(0)])
 
     # Boiling
-    boiling_time = models.IntegerField(default=None, blank=True, null=True)
+    boiling_time = models.IntegerField(default=None, blank=True, null=True, validators=[MinValueValidator(0)])
     cast_out_wort = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
 
     def __str__(self):
@@ -113,7 +113,7 @@ class RecipeHop(models.Model):
     alpha = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     amount = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     amount_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
-    time = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    time = models.IntegerField(default=None, blank=True, null=True, validators=[MinValueValidator(0)])
 
 
 class RecipeYeast(models.Model):
