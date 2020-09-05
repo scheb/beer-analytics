@@ -91,7 +91,7 @@ def load_hops():
 
 def create_human_readable_id(value: str) -> str:
     value = codecs.encode(value, 'translit/long')
-    return re.sub('\\s+', '_', re.sub('[^\\w\\s]', '', value)).lower()
+    return re.sub('[\\s-]+', '_', re.sub('[^\\w\\s-]', '', value)).lower()
 
 
 def load_csv(file_name: str):
