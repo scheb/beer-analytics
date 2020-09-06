@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.db import transaction
 
 from recipe_db.format.parser import FormatParser, ParserResult
-from recipe_db.models import Recipe, RecipeHop, RecipeMalt, RecipeYeast
+from recipe_db.models import Recipe, RecipeHop, RecipeFermentable, RecipeYeast
 
 
 class RecipeImporter:
@@ -12,16 +12,16 @@ class RecipeImporter:
     @transaction.atomic
     def import_recipe(self, uid: str, result: ParserResult) -> None:
         result.recipe.uid = uid
-        self.set_amount_percent(result.malts)
+        self.set_amount_percent(result.fermentables)
         self.set_amount_percent(result.hops)
 
         self.validate_and_fix_recipe(result.recipe)
         result.recipe.save()
 
-        result.recipe.recipemalt_set.add(*result.malts, bulk=False)
-        for malt in result.malts:
-            self.validate_and_fix_malt(malt)
-            malt.save()
+        result.recipe.recipefermentable_set.add(*result.fermentables, bulk=False)
+        for fermentable in result.fermentables:
+            self.validate_and_fix_fermentable(fermentable)
+            fermentable.save()
 
         result.recipe.recipehop_set.add(*result.hops, bulk=False)
         for hop in result.hops:
@@ -45,8 +45,8 @@ class RecipeImporter:
     def validate_and_fix_recipe(self, recipe: Recipe):
         self.unset_bad_data(recipe)
 
-    def validate_and_fix_malt(self, malt: RecipeMalt):
-        self.unset_bad_data(malt)
+    def validate_and_fix_fermentable(self, fermentable: RecipeFermentable):
+        self.unset_bad_data(fermentable)
 
     def validate_and_fix_hop(self, hop: RecipeHop):
         # Remove odd alpha values

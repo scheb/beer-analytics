@@ -8,7 +8,7 @@ from pybeerxml.hop import Hop
 
 from recipe_db.format.parser import FormatParser, ParserResult, float_or_none, int_or_none, clean_kind, \
     MalformedDataError
-from recipe_db.models import Recipe, RecipeYeast, RecipeMalt, RecipeHop
+from recipe_db.models import Recipe, RecipeYeast, RecipeFermentable, RecipeHop
 
 
 class BeerXMLParser(FormatParser):
@@ -40,7 +40,7 @@ class BeerXMLParser(FormatParser):
                 recipe_node = node
 
         self.parse_recipe(result.recipe, beerxml, recipe_node)
-        result.malts.extend(self.get_malts(beerxml))
+        result.fermentables.extend(self.get_fermentables(beerxml))
         result.hops.extend(self.get_hops(beerxml))
         result.yeasts.extend(self.get_yeasts(beerxml))
 
@@ -168,13 +168,13 @@ class BeerXMLParser(FormatParser):
 
         return mash_water if mash_water > 0 else None, sparge_water if sparge_water > 0 else None
 
-    def get_malts(self, beerxml: BeerXMLRecipe) -> iter:
-        for beerxml_malt in beerxml.fermentables:
-            amount = beerxml_malt.amount
+    def get_fermentables(self, beerxml: BeerXMLRecipe) -> iter:
+        for beerxml_fermentable in beerxml.fermentables:
+            amount = beerxml_fermentable.amount
             if amount is not None:
                 amount *= 1000  # convert to grams
-            name = clean_kind(self.fix_encoding(beerxml_malt.name))
-            yield RecipeMalt(kind_raw=name, amount=amount)
+            name = clean_kind(self.fix_encoding(beerxml_fermentable.name))
+            yield RecipeFermentable(kind_raw=name, amount=amount)
 
     def get_hops(self, beerxml: BeerXMLRecipe) -> iter:
         for beerxml_hop in beerxml.hops:

@@ -7,7 +7,7 @@ from os import path
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from recipe_db.models import Style, Hop, Malt
+from recipe_db.models import Style, Hop, Fermentable
 
 
 class Command(BaseCommand):
@@ -18,8 +18,8 @@ class Command(BaseCommand):
         load_styles()
         self.stdout.write('Load hops')
         load_hops()
-        self.stdout.write('Load malts')
-        load_malts()
+        self.stdout.write('Load fermentables')
+        load_fermentables()
         self.stdout.write('Done')
 
 
@@ -69,28 +69,28 @@ def load_hops():
         hop.save()
 
 
-def load_malts():
-    csv_file = load_csv('malts.csv')
+def load_fermentables():
+    csv_file = load_csv('fermentables.csv')
     header = next(csv_file)
 
     for row in csv_file:
         if len(row) == 1:
             continue  # Skip empty lines
 
-        malt_id = create_human_readable_id(row[0])
+        fermentable_id = create_human_readable_id(row[0])
         row = map(cast_values, row)
         data = dict(zip(header, row))
 
         try:
-            malt = Malt.objects.get(pk=malt_id)
-        except Malt.DoesNotExist:
-            malt = Malt()
+            fermentable = Fermentable.objects.get(pk=fermentable_id)
+        except Fermentable.DoesNotExist:
+            fermentable = Fermentable()
             pass
 
-        malt.id = malt_id
+        fermentable.id = fermentable_id
         for field in data:
-            setattr(malt, field, data[field])
-        malt.save()
+            setattr(fermentable, field, data[field])
+        fermentable.save()
 
 
 def cast_values(value):

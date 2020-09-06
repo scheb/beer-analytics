@@ -3,7 +3,7 @@ from json import JSONDecodeError
 from math import ceil
 
 from recipe_db.format.parser import JsonParser, clean_kind, FormatParser, ParserResult, MalformedDataError
-from recipe_db.models import Recipe, RecipeYeast, RecipeMalt, RecipeHop
+from recipe_db.models import Recipe, RecipeYeast, RecipeFermentable, RecipeHop
 
 
 class MmumParser(FormatParser):
@@ -16,7 +16,7 @@ class MmumParser(FormatParser):
             raise MalformedDataError("Cannot decode JSON")
 
         self.parse_recipe(result.recipe, json_data)
-        result.malts.extend(self.get_malts(json_data))
+        result.fermentables.extend(self.get_fermentables(json_data))
         result.hops.extend(self.get_hops(json_data))
         result.yeasts.extend(self.get_yeasts(json_data))
 
@@ -44,7 +44,7 @@ class MmumParser(FormatParser):
 
         return recipe
 
-    def get_malts(self, json_data: JsonParser) -> iter:
+    def get_fermentables(self, json_data: JsonParser) -> iter:
         i = 1
         while (kind := json_data.string_or_none("Malz%d" % i)) is not None:
             kind = clean_kind(kind)
@@ -55,7 +55,7 @@ class MmumParser(FormatParser):
                 if unit is not None and unit == 'kg':
                     amount *= 1000
 
-            yield RecipeMalt(kind_raw=kind, amount=amount)
+            yield RecipeFermentable(kind_raw=kind, amount=amount)
             i += 1
 
     def get_hops(self, json_data: JsonParser) -> iter:

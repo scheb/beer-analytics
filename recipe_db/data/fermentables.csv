@@ -1,0 +1,70 @@
+name;alt_names;category;type
+Munich;Münchner Malz, Bonlander;grain;barley
+Munich Light;Münchner Hell, Light Munich;grain;barley
+Munich Dark;Münchner Dunkel, Dark Munich;grain;barley
+Vienna;Wiener Malz, Ashburne, Mild Ale;grain;barley
+Pilsner;Pilsener, Pilsen, Lager, Bohemian Pilsner, Bohemian Pilsener;grain;barley
+Pilsner Light;Pilsener Light, Pilsen Light;grain;barley
+Pale Ale;Pale Ale, Pale 2-Row, Pale 6-Row;grain;barley
+Maris Otter;Maris Otter Pale Ale;grain;barley
+Golden Promise;Golden Promise Pale Ale;grain;barley
+Wheat;Weizenmalz;grain;wheat
+Pale Wheat;White Wheat, Helles Weizenmalz, Weizenmalz Hell;grain;wheat
+Dark Wheat;Dunkles Weizenmalz, Weizenmalz Dunkel;grain;wheat
+Spelt Malt;Dinkelmalz;grain;other_grain
+Rye Malt;Roggenmalz;grain;other_grain
+Emmer Malt;Emmermalz;grain;other_grain
+Small Spelt Malt;Einkornmalz;grain;other_grain
+Oat Malt;Hafermalz;grain;other_grain
+Dark Oat Malt;Schwarzhafermalz;grain;other_grain
+Triticale Malt;Triticalemalz;grain;other_grain
+Millet Malt;Hirsemalz;grain;other_grain
+CaraFa I;Cara Fa I;grain;roasted
+CaraFa II;Cara Fa II;grain;roasted
+CaraFa III;Cara Fa III;grain;roasted
+Pale Chocolate;Pale Chocolate, Röstmalz, Farbmalz;grain;roasted
+Chocolate Malt;Chocolate;grain;roasted
+Black Malt;Black Patent, Roasted Malt, Roast Malt, Kiln Black;grain;roasted
+Roasted Wheat;Roast Wheat, Chocolate Wheat, Weizenröstmalz, Midnight Wheat;grain;roasted
+Roasted Rye Malt;Roggenröstmalz, Roast Rye, Chocolate Rye;grain;roasted
+Roasted Spelt Malt;Dinkelröstmalz, Roast Spelt;grain;roasted
+Melanoidin Malt;Melanoidin, Biscuit Malt, Toasted Malt,Special Roast Malt, Brown Malt, Victory, Amber, Aromatic, Kiln Amber;grain;roasted
+Roasted Barley;Röstgerste, Roast Barley;grain;roasted
+Roasted Millet;Roast Millet;grain;roasted
+Black Barley;;grain;roasted
+Acidulated Malt;Sauermalz, Acid Malt, Sour Malt;grain;special
+Chit Malt;Spitzmalz, Pointed Malt;grain;special
+Diastatic Malt;Diastasemalz;grain;special
+Diastatic Wheat Malt;Weizendiastasemalz, Weizen Diastasemalz;grain;special
+Smoke Malt;Smoked Malt, Peat Malt, Peated Malt, Rauchmalz;grain;special
+Green Malt;Grünmalz;grain;special
+Honey Malt;;grain;special
+Flaked Barley;Gerstenflocken, Gersteflocken, Barley Flaked;grain;unmalted_adjunct
+Flaked Oats;Haferflocken, Rolled Oats, Oats Flaked, Oat Flaked;grain;unmalted_adjunct
+Flaked Rye;Roggenflocken, Rye Flaked;grain;unmalted_adjunct
+Flaked Wheat;Weizenflocken, Wheat Flaked;grain;unmalted_adjunct
+Flaked Corn;Maisflocken, Corn Flaked;grain;unmalted_adjunct
+Flaked Rice;Reisflocken, Rice Flaked;grain;unmalted_adjunct
+Flaked Spelt;Hirseflocken, Spelt Flaked;grain;unmalted_adjunct
+Flaked Quinoa;Quinoaflocken, Quinoa Flaked;grain;unmalted_adjunct
+Rice Hulls;Rice Husks;grain;unmalted_adjunct
+Torrified Wheat;Wheat Torrified;grain;unmalted_adjunct
+Golden Naked Oats;;grain;crystal
+CaraRye;Roggen-Caramalz, Roggen-Karamelmalz, Cara Rye, Rye Caramel, Crystal Rye, Rye Crystal;grain;crystal
+CaraHell;Cara Hell;grain;crystal
+CaraWheat;Weizen-Caramalz, Weizen-Karamelmalz, Cara Wheat, Wheat Caramel, Crystal Wheat, Wheat Crystal;grain;crystal
+CaraGold;Cara Gold;grain;crystal
+CaraPils / CaraFoam;Cara Pils, Cara Foam, Dextrine, Caramel Pils;grain;crystal
+CaraMunich I;Cara Munich I, Cara Münch I;grain;crystal
+CaraMunich II;Cara Munich II, Cara Münch II;grain;crystal
+CaraMunich III;Cara Munich III, Cara Münch III;grain;crystal
+CaraAroma;Cara Aroma, Caramel Aroma;grain;crystal
+CaraAmber;Cara Amber, Caramel Amber;grain;crystal
+CaraVienne;Cara Vienne, Cara Vienna, Caramel Vienne;grain;crystal
+Caramel/Crystal Malt – 10L;Crystal 10, Caramel 10;grain;crystal
+Caramel/Crystal Malt – 20L;Crystal 20, Caramel 20;grain;crystal
+Caramel/Crystal Malt – 30L;Crystal 30, Caramel 30, Pale Crystal, Pale Caramel;grain;crystal
+Caramel/Crystal Malt – 40L;Crystal 40, Caramel 40, Caramel Munich 40, Light Crystal, Light Caramel;grain;crystal
+Caramel/Crystal Malt – 60L;Crystal 60, Caramel 60, Caramel Munich 60, Medium Crystal, Medium Caramel;grain;crystal
+Caramel/Crystal Malt – 80L;Crystal 80, Caramel 80;grain;crystal
+Caramel/Crystal Malt – 120L;Crystal 120, Caramel 120, Dark Crystal, Dark Crystal II, Special B, Caramel Munich 120;grain;crystal

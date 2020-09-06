@@ -44,10 +44,11 @@ class Style(models.Model):
     smoke_roast = models.CharField(max_length=255, default=None, blank=True, null=True)
 
 
-class Malt(models.Model):
+class Fermentable(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     name = models.CharField(max_length=255)
     category = models.CharField(max_length=32, default=None, blank=True, null=True)
+    type = models.CharField(max_length=32, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
 
 
@@ -111,9 +112,9 @@ class Recipe(models.Model):
             pass
 
 
-class RecipeMalt(models.Model):
+class RecipeFermentable(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    kind = models.ForeignKey(Malt, on_delete=models.SET_NULL, default=None, blank=True, null=True)
+    kind = models.ForeignKey(Fermentable, on_delete=models.SET_NULL, default=None, blank=True, null=True)
     kind_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
     amount = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     amount_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])

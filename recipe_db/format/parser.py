@@ -12,7 +12,7 @@ class MalformedDataError(Exception):
 class ParserResult:
     def __init__(self) -> None:
         self.recipe = Recipe()
-        self.malts = []
+        self.fermentables = []
         self.hops = []
         self.yeasts = []
 

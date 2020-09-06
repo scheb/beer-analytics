@@ -7,7 +7,7 @@ import translitcodec
 
 from django.db import transaction
 
-from recipe_db.models import RecipeHop, Hop, Malt, RecipeMalt
+from recipe_db.models import RecipeHop, Hop, Fermentable, RecipeFermentable
 
 TRANSLIT_SHORT = 'translit/short'
 TRANSLIT_LONG = 'translit/long'
@@ -175,17 +175,17 @@ class HopsMapper(Mapper):
                 yield re.sub('\\s+([0-9]+)\\b', '\\1', name)
 
 
-class MaltsMapper(Mapper):
+class FermentablesMapper(Mapper):
     def __init__(self) -> None:
         super().__init__()
-        self.create_mapping(Malt.objects.all())
+        self.create_mapping(Fermentable.objects.all())
 
     def map_unmapped(self) -> None:
-        hops = RecipeMalt.objects.filter(kind_id=None)
+        hops = RecipeFermentable.objects.filter(kind_id=None)
         self.map_list(hops)
 
     def map_all(self) -> None:
-        hops = RecipeMalt.objects.all()
+        hops = RecipeFermentable.objects.all()
         self.map_list(hops)
 
     def get_clean_name(self, item: RecipeHop) -> str:
@@ -194,7 +194,7 @@ class MaltsMapper(Mapper):
         value = value.strip()
         return value
 
-    def save_match(self, item: RecipeMalt, match: Malt):
+    def save_match(self, item: RecipeFermentable, match: Fermentable):
         item.kind = match
         item.save()
 
