@@ -20,6 +20,7 @@ class Style(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     name = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
+    alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
     abv_min = models.FloatField(default=None, blank=True, null=True)
     abv_max = models.FloatField(default=None, blank=True, null=True)
     ibu_min = models.IntegerField(default=None, blank=True, null=True)

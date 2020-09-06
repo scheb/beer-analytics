@@ -1,121 +1,124 @@
-id;name;category;abv_min;abv_max;ibu_min;ibu_max;srm_min;srm_max;og_min;og_max;fg_min;fg_max;strength;color;fermentation;conditioning;region_of_origin;style;specialty_beer;era;bitter_balances;sour_hoppy_sweet;spice;smoke_roast
-01A;American Light Lager;Standard American Beer;2.8;4.2;8;12;2.0;3.0;1028;1040;998;1008;session;pale;bottom;lagered;north_america;pale_lager;false;traditional;balanced;;;
-01B;American Lager;Standard American Beer;4.2;5.3;8;18;2.0;4.0;1040;1050;1004;1010;standard;pale;bottom;lagered;north_america;pale_lager;false;traditional;balanced;;;
-01C;Cream Ale;Standard American Beer;4.2;5.6;8;20;2.5;5.0;1042;1055;1006;1012;standard;pale;any;;north_america;pale_ale;false;traditional;balanced;;;
-01D;American Wheat Beer;Standard American Beer;4.0;5.5;15;30;3.0;6.0;1040;1055;1008;1013;standard;pale;any;;north_america;wheat_beer;false;craft;balanced;;;
-02A;International Pale Lager;International Lager;4.6;6.0;18;25;2.0;6.0;1042;1050;1008;1012;standard;pale;bottom;lagered;;pale_lager;false;traditional;balanced;;;
-02B;International Amber Lager;International Lager;4.6;6.0;8;25;7.0;14.0;1042;1055;1008;1014;standard;amber;bottom;lagered;;amber_lager;false;traditional;malty;;;
-02C;International Dark Lager;International Lager;4.2;6.0;8;20;14.0;22.0;1044;1056;1008;1012;standard;dark;bottom;lagered;;dark_lager;false;traditional;malty;;;
-03A;Czech Pale Lager;Czech Lager;3.0;4.1;20;35;3.0;6.0;1028;1044;1008;1014;session;pale;bottom;lagered;central_europe;pale_lager;false;traditional;bitter;hoppy;;
-03B;Czech Premium Pale Lager;Czech Lager;4.2;5.8;30;45;3.5;6.0;1044;1060;1013;1017;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;balanced;hoppy;;
-03C;Czech Amber Lager;Czech Lager;4.4;5.8;20;35;10.0;16.0;1044;1060;1013;1017;standard;amber;bottom;lagered;central_europe;amber_lager;false;traditional;balanced;;;
-03D;Czech Dark Lager;Czech Lager;4.4;5.8;18;34;14.0;35.0;1044;1060;1013;1017;standard;dark;bottom;lagered;central_europe;dark_lager;false;traditional;balanced;;;
-04A;Munich Helles;Pale Malty European Lager;4.7;5.4;16;22;3.0;5.0;1044;1048;1006;1012;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;malty;;;
-04B;Festbier;Pale Malty European Lager;5.8;6.3;18;25;4.0;7.0;1054;1057;1010;1012;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;malty;;;
-04C;Helles Bock;Pale Malty European Lager;6.3;7.4;23;35;6.0;11.0;1064;1072;1011;1018;high;pale;bottom;lagered;central_europe;bock;false;traditional;malty;;;
-05A;German Leichtbier;Pale Bitter European beer;2.4;3.6;15;28;2.0;5.0;1026;1034;1006;1010;session;pale;bottom;lagered;central_europe;pale_lager;false;traditional;bitter;hoppy;;
-05B;Kölsch;Pale Bitter European beer;4.4;5.2;18;30;3.5;5.0;1044;1050;1007;1011;standard;pale;top;lagered;central_europe;pale_ale;false;traditional;balanced;;;
-05C;German Helles Exportbier;Pale Bitter European beer;4.8;6.0;20;30;4.0;7.0;1048;1056;1010;1015;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;balanced;;;
-05D;German Pils;Pale Bitter European beer;4.4;5.2;22;40;2.0;5.0;1044;1050;1008;1013;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;bitter;hoppy;;
-06A;Märzen;Amber Malty European Lager;5.8;6.3;18;24;8.0;17.0;1054;1060;1010;1014;standard;amber;bottom;lagered;central_europe;amber_lager;false;traditional;malty;;;
-06B;Rauchbier;Amber Malty European Lager;4.8;6.0;20;30;12.0;22.0;1050;1057;1012;1016;standard;amber;bottom;lagered;central_europe;amber_lager;false;traditional;malty;;;smoke
-06C;Dunkles Bock;Amber Malty European Lager;6.3;7.2;20;27;14.0;22.0;1064;1072;1013;1019;high;amber;bottom;lagered;central_europe;bock;false;traditional;malty;;;
-07A;Vienna Lager;Amber Bitter European Beer;4.7;5.5;18;30;9.0;15.0;1048;1055;1010;1014;standard;amber;bottom;lagered;central_europe;amber_lager;false;traditional;balanced;;;
-07B;Altbier;Amber Bitter European Beer;4.3;5.5;25;50;11.0;17.0;1044;1052;1008;1014;standard;amber;top;lagered;central_europe;amber_ale;false;traditional;bitter;;;
-07C;Kellerbier;Amber Bitter European Beer;4.7;5.4;20;40;3.0;17.0;1045;1054;1008;1016;standard;;bottom;;central_europe;;false;traditional;balanced;;;
-07C1;Munich Kellerbier;Amber Bitter European Beer;4.7;5.4;20;35;3.0;7.0;1045;1051;1008;1012;standard;pale;bottom;;central_europe;pale_lager;false;traditional;balanced;;;
-07C2;Franconian Kellerbier;Amber Bitter European Beer;4.8;5.4;25;40;7.0;17.0;1048;1054;1012;1016;standard;amber;bottom;;central_europe;amber_lager;false;traditional;balanced;;;
-08A;Munich Dunkel;Dark European Lager;4.5;5.6;18;28;14.0;28.0;1048;1056;1010;1016;standard;dark;bottom;lagered;central_europe;dark_lager;false;traditional;malty;;;
-08B;Schwarzbier;Dark European Lager;4.4;5.4;20;30;17.0;30.0;1046;1052;1010;1016;standard;dark;bottom;lagered;central_europe;dark_lager;false;traditional;balanced;;;
-09A;Doppelbock;Strong European Beer;7.0;10.0;16;26;6.0;25.0;1072;1112;1016;1024;high;;bottom;lagered;central_europe;bock;false;traditional;malty;;;
-09B;Eisbock;Strong European Beer;9.0;14.0;25;35;18.0;30.0;1078;1120;1020;1035;very_high;amber;bottom;lagered;central_europe;bock;false;traditional;malty;;;
-09C;Baltic Porter;Strong European Beer;6.5;9.5;20;40;17.0;30.0;1060;1090;1016;1024;high;dark;any;lagered;eastern_europe;porter;false;traditional;malty;;;
-10A;Weissbier;German Wheat Beer;4.3;5.6;8;15;2.0;6.0;1044;1052;1010;1014;standard;pale;top;;central_europe;wheat_beer;false;traditional;malty;;;
-10B;Dunkles Weissbier;German Wheat Beer;4.3;5.6;10;18;14.0;23.0;1044;1056;1010;1014;standard;amber;top;;central_europe;wheat_beer;false;traditional;malty;;;
-10C;Weizenbock;German Wheat Beer;6.5;9.0;15;30;6.0;25.0;1064;1090;1015;1022;high;pale;top;;central_europe;wheat_beer;false;traditional;malty;;;
-11A;Ordinary Bitter;British Bitter;3.2;3.8;25;35;8.0;14.0;1030;1039;1007;1011;session;amber;top;;british_isles;amber_ale;false;traditional;bitter;;;
-11B;Best Bitter;British Bitter;3.8;4.6;25;40;8.0;16.0;1040;1048;1008;1012;standard;amber;top;;british_isles;amber_ale;false;traditional;bitter;;;
-11C;Strong Bitter;British Bitter;4.6;6.2;30;50;8.0;18.0;1048;1060;1010;1016;standard;amber;top;;british_isles;amber_ale;false;traditional;bitter;;;
-12A;British Golden Ale;Pale Commonwealth Beer;3.8;5.0;20;45;2.0;6.0;1038;1053;1006;1012;standard;pale;top;;british_isles;pale_ale;false;craft;bitter;hoppy;;
-12B;Australian Sparkling Ale;Pale Commonwealth Beer;4.5;6.0;20;35;4.0;7.0;1038;1050;1004;1006;standard;pale;top;;pacific;pale_ale;false;traditional;bitter;;;
-12C;English IPA;Pale Commonwealth Beer;5.0;7.5;40;60;6.0;14.0;1050;1075;1010;1018;high;pale;top;;british_isles;ipa;false;traditional;bitter;hoppy;;
-13A;Dark Mild;Brown British Beer;3.0;3.8;10;25;12.0;25.0;1030;1038;1008;1013;session;dark;top;;british_isles;brown_ale;false;traditional;malty;;;
-13B;British Brown Ale;Brown British Beer;4.2;5.4;20;30;12.0;22.0;1040;1052;1008;1013;standard;amber;top;;british_isles;brown_ale;false;traditional;malty;;;
-13C;English Porter;Brown British Beer;4.0;5.4;18;35;20.0;30.0;1040;1052;1008;1014;standard;dark;top;;british_isles;porter;false;traditional;malty;;;roasty
-14A;Scottish Light;Scottish Ale;2.5;3.2;10;20;17.0;22.0;1030;1035;1010;1013;session;amber;top;;british_isles;amber_ale;false;traditional;malty;;;
-14B;Scottish Heavy;Scottish Ale;3.2;3.9;10;20;13.0;22.0;1035;1040;1010;1015;session;amber;top;;british_isles;amber_ale;false;traditional;malty;;;
-14C;Scottish Export;Scottish Ale;3.9;6.0;15;30;13.0;22.0;1040;1060;1010;1016;standard;amber;top;;british_isles;amber_ale;false;traditional;malty;;;
-15A;Irish Red Ale;Irish Beer;3.8;5.0;18;28;9.0;14.0;1036;1046;1010;1014;standard;amber;top;;british_isles;amber_ale;false;traditional;balanced;;;
-15B;Irish Stout;Irish Beer;4.0;4.5;25;45;25.0;40.0;1036;1044;1007;1011;standard;dark;top;;british_isles;stout;false;traditional;bitter;;;roasty
-15C;Irish Extra Stout;Irish Beer;5.5;6.5;35;50;25.0;40.0;1052;1062;1010;1014;high;dark;top;;british_isles;stout;false;traditional;bitter;;;roasty
-16A;Sweet Stout;Dark British Beer;4.0;6.0;20;40;30.0;40.0;1044;1060;1012;1024;standard;dark;top;;british_isles;stout;false;traditional;malty;sweet;;roasty
-16B;Oatmeal Stout;Dark British Beer;4.2;5.9;25;40;22.0;40.0;1045;1065;1010;1018;standard;dark;top;;british_isles;stout;false;traditional;balanced;;;roasty
-16C;Tropical Stout;Dark British Beer;5.5;8.0;30;50;30.0;40.0;1056;1075;1010;1018;high;dark;top;;british_isles;stout;false;traditional;malty;sweet;;roasty
-16D;Foreign Extra Stout;Dark British Beer;6.3;8.0;50;70;30.0;40.0;1056;1075;1010;1018;high;dark;top;;british_isles;stout;false;traditional;balanced;;;roasty
-17A;British Strong Ale;Strong British Ale;5.5;8.0;30;60;8.0;22.0;1055;1080;1015;1022;high;amber;top;;british_isles;strong_ale;false;traditional;malty;;;
-17B;Old Ale;Strong British Ale;5.5;9.0;30;60;10.0;22.0;1055;1088;1015;1022;high;amber;top;aged;british_isles;strong_ale;false;traditional;malty;;;
-17C;Wee Heavy;Strong British Ale;6.5;10.0;17;35;14.0;25.0;1070;1130;1018;1040;high;amber;top;;british_isles;strong_ale;false;traditional;malty;;;
-17D;English Barleywine;Strong British Ale;8.0;12.0;35;70;8.0;22.0;1080;1120;1018;1030;very_high;amber;top;;british_isles;strong_ale;false;traditional;malty;;;
-18A;Blonde Ale;Pale American Ale;3.8;5.5;15;28;3.0;6.0;1038;1054;1008;1013;standard;pale;any;;north_america;pale_ale;false;craft;balanced;;;
-18B;American Pale Ale;Pale American Ale;4.5;6.2;30;50;5.0;10.0;1045;1060;1010;1015;standard;pale;top;;north_america;pale_ale;false;craft;bitter;hoppy;;
-19A;American Amber Ale;Amber and Brown American Beer;4.5;6.2;25;40;10.0;17.0;1045;1060;1010;1015;standard;amber;top;;north_america;amber_ale;false;craft;balanced;hoppy;;
-19B;California Common ;Amber and Brown American Beer;4.5;5.5;30;45;10.0;14.0;1048;1054;1011;1014;standard;amber;bottom;;north_america;amber_ale;false;traditional;bitter;hoppy;;
-19C;American Brown Ale;Amber and Brown American Beer;4.3;6.2;20;30;18.0;35.0;1045;1060;1010;1016;standard;dark;top;;north_america;brown_ale;false;craft;balanced;hoppy;;
-20A;American Porter;American Porter and Stout;4.8;6.5;25;50;22.0;40.0;1050;1070;1012;1018;standard;dark;top;;north_america;porter;false;craft;bitter;hoppy;;roasty
-20B;American Stout;American Porter and Stout;5.0;7.0;35;75;30.0;40.0;1050;1075;1010;1022;high;dark;top;;north_america;stout;false;craft;bitter;hoppy;;roasty
-20C;Imperial Stout;American Porter and Stout;8.0;12.0;50;90;30.0;40.0;1075;1115;1018;1030;very_high;dark;top;;north_america;stout;false;craft;malty;bitter;;roasty
-21A;American IPA;IPA;5.5;7.5;40;70;6.0;14.0;1056;1070;1008;1014;high;pale;top;;north_america;ipa;false;craft;bitter;hoppy;;
-21B;Specialty IPA;IPA;5.5;9.5;40;100;5.0;40.0;1050;1085;1008;1018;high;;top;;north_america;ipa;true;craft;bitter;hoppy;;
-21B1;Belgian IPA;IPA;6.2;9.5;50;100;5.0;15.0;1058;1080;1008;1016;high;pale;top;;north_america;ipa;true;craft;bitter;hoppy;;
-21B2;Black IPA;IPA;5.5;9.0;50;90;25.0;40.0;1050;1085;1010;1018;high;dark;top;;north_america;ipa;true;craft;bitter;hoppy;;
-21B3;Brown IPA;IPA;5.5;7.5;40;70;11.0;19.0;1056;1070;1008;1016;high;amber;top;;north_america;ipa;true;craft;bitter;hoppy;;
-21B4;Red IPA;IPA;5.5;7.5;40;70;11.0;19.0;1056;1070;1008;1016;high;amber;top;;north_america;ipa;true;craft;bitter;hoppy;;
-21B5;Rye IPA;IPA;5.5;8.0;50;75;6.0;14.0;1056;1075;1008;1014;high;amber;top;;north_america;ipa;true;craft;bitter;hoppy;;
-21B6;White IPA;IPA;5.5;7.0;40;70;5.0;8.0;1056;1065;1010;1016;high;pale;top;;north_america;ipa;true;craft;bitter;hoppy;spice;
-22A;Double IPA;Strong American Ale;7.5;10.0;60;120;6.0;14.0;1065;1085;1008;1018;very_high;pale;top;;north_america;ipa;false;craft;bitter;hoppy;;
-22B;American Strong Ale;Strong American Ale;6.3;10.0;50;100;7.0;19.0;1062;1090;1014;1024;high;amber;top;;north_america;strong_ale;false;craft;bitter;hoppy;;
-22C;American Barleywine;Strong American Ale;8.0;12.0;50;100;10.0;19.0;1080;1120;1016;1030;very_high;amber;top;;north_america;strong_ale;false;craft;bitter;hoppy;;
-22D;Wheatwine;Strong American Ale;8.0;12.0;30;60;8.0;15.0;1080;1120;1016;1030;very_high;amber;top;;north_america;strong_ale;false;craft;balanced;hoppy;;
-23A;Berliner Weisse;European Sour Ale;2.8;3.8;3;8;2.0;3.0;1028;1032;1003;1006;session;pale;top;;central_europe;wheat_beer;false;traditional;;sour;;
-23B;Flanders Red Ale;European Sour Ale;4.6;6.5;10;25;10.0;16.0;1048;1057;1002;1012;standard;amber;top;;western_europe;sour_ale;false;traditional;balanced;sour;;wood
-23C;Oud Bruin;European Sour Ale;4.0;8.0;20;25;15.0;22.0;1040;1074;1008;1012;standard;dark;top;;western_europe;sour_ale;false;traditional;malty;sour;;
-23D;Lambic;European Sour Ale;5.0;6.5;0;10;3.0;7.0;1040;1054;1001;1010;standard;pale;wild;;western_europe;wheat_beer;false;traditional;;sour;;
-23E;Gueuze ;European Sour Ale;5.0;8.0;0;10;3.0;7.0;1040;1060;1000;1006;high;pale;wild;aged;western_europe;wheat_beer;false;traditional;;sour;;
-23F;Fruit Lambic;European Sour Ale;5.0;7.0;0;10;3.0;7.0;1040;1060;1000;1010;standard;pale;wild;;western_europe;wheat_beer;false;traditional;;sour;;fruit
-24A;Witbier;Belgian Ale;4.5;5.5;8;20;2.0;4.0;1044;1052;1008;1012;standard;pale;top;;western_europe;wheat_beer;false;traditional;;;spice;spice
-24B;Belgian Pale Ale;Belgian Ale;4.8;5.5;20;30;8.0;14.0;1048;1054;1010;1014;standard;amber;top;;western_europe;pale_ale;false;traditional;balanced;;;
-24C;Bière de Garde;Belgian Ale;6.0;8.5;18;28;6.0;19.0;1060;1080;1008;1016;high;amber;any;lagered;western_europe;amber_ale;false;traditional;malty;;;
-25A;Belgian Blond Ale;Strong Belgian Ale;6.0;7.5;15;30;4.0;7.0;1062;1075;1008;1018;high;pale;top;;western_europe;;false;traditional;balanced;;;
-25B;Saison;Strong Belgian Ale;3.5;9.5;20;35;5.0;22.0;1048;1065;1002;1008;standard;pale;top;;western_europe;;false;traditional;bitter;;;
-25C;Belgian Golden Strong Ale;Strong Belgian Ale;7.5;10.5;22;35;3.0;6.0;1070;1095;1005;1016;very_high;pale;top;;western_europe;;false;traditional;bitter;;;
-26A;Trappist Single;Trappist Ale;4.8;6.0;25;45;3.0;5.0;1044;1054;1004;1010;standard;pale;top;;western_europe;;false;craft;bitter;hoppy;;
-26B;Belgian Dubbel;Trappist Ale;6.0;7.6;15;25;10.0;17.0;1062;1075;1008;1018;high;amber;top;;western_europe;;false;traditional;malty;;;
-26C;Belgian Tripel;Trappist Ale;7.5;9.5;20;40;4.5;7.0;1075;1085;1008;1014;high;pale;top;;western_europe;;false;traditional;bitter;;;
-26D;Belgian Dark Strong Ale;Trappist Ale;8.0;12.0;20;35;12.0;22.0;1075;1110;1010;1024;very_high;amber;top;;western_europe;;false;traditional;malty;;;
-27A;Gose;Historical Beer;4.2;4.8;5;12;3.0;4.0;1036;1056;1006;1010;standard;pale;top;;central_europe;wheat_beer;false;historical;;sour;spice;
-27B;Kentucky Common;Historical Beer;4.0;5.5;15;30;11.0;20.0;1044;1055;1010;1018;standard;amber;top;;north_america;;false;historical;balanced;;;
-27C;Lichtenhainer;Historical Beer;3.5;4.7;5;12;3.0;6.0;1032;1040;1004;1008;standard;pale;top;;central_europe;wheat_beer;false;historical;;sour;;smoke
-27D;London Brown Ale;Historical Beer;2.8;3.6;15;20;22.0;35.0;1033;1038;1012;1015;session;dark;top;;british_isles;brown_ale;false;historical;malty;sweet;;
-27E;Piwo Grodziskie;Historical Beer;2.5;3.3;20;35;3.0;6.0;1028;1032;1006;1012;session;pale;top;;central_europe;wheat_beer;false;historical;bitter;;;smoke
-27F;Pre-Prohibition Lager;Historical Beer;4.5;6.0;25;40;3.0;6.0;1044;1060;1010;1015;standard;pale;bottom;lagered;north_america;pilsner;false;historical;bitter;hoppy;;
-27G;Pre-Prohibition Porter;Historical Beer;4.5;6.0;20;30;18.0;30.0;1046;1060;1010;1016;standard;dark;any;;north_america;porter;false;historical;malty;;;
-27H;Roggenbier;Historical Beer;4.5;6.0;10;20;14.0;19.0;1046;1056;1010;1014;standard;amber;top;;central_europe;wheat_beer;false;historical;;;;
-27I;Sahti;Historical Beer;7.0;11.0;7;15;4.0;22.0;1076;1120;1016;1020;high;amber;top;;central_europe;;false;historical;;;spice;
-28A;Brett Beer;American Wild Ale;;;;;;;;;;;;;wild;;north_america;;true;craft;;;;
-28B;Mixed-Fermentation Sour Beer;American Wild Ale;;;;;;;;;;;;;wild;;north_america;;true;craft;;sour;;
-28C;Wild Specialty Beer;American Wild Ale;;;;;;;;;;;;;wild;;north_america;;true;craft;;sour;;fruit
-29A;Fruit Beer;Fruit Beer;;;;;;;;;;;;;;;;;true;;;;;fruit
-29B;Fruit and Spice Beer;Fruit Beer;;;;;;;;;;;;;;;;;true;;;;spice;fruit
-29C;Specialty Fruit Beer;Fruit Beer;;;;;;;;;;;;;;;;;true;;;;;fruit
-30A;Spice, Herb, or Vegetable Beer;Spiced Beer;;;;;;;;;;;;;;;;;true;;;;spice;
-30B;Autumn Seasonal Beer;Spiced Beer;;;;;;;;;;;;;;;;;true;;;;spice;
-30C;Winter Seasonal Beer;Spiced Beer;;;;;;;;;;;;;;;;;true;;;;spice;
-31A;Alternative Grain Beer;Alternative Fermentables Beer;;;;;;;;;;;;;;;;;true;;;;;
-31B;Alternative Sugar Beer;Alternative Fermentables Beer;;;;;;;;;;;;;;;;;true;;;;;
-32A;Classic Style Smoked Beer;Smoked Beer;;;;;;;;;;;;;;;;;true;;;;;smoke
-32B;Specialty Smoked Beer;Smoked Beer;;;;;;;;;;;;;;;;;true;;;;;smoke
-33A;Wood-Aged Beer;Wood Beer;;;;;;;;;;;;;;;;;true;;;;;wood
-33B;Specialty Wood-Aged Beer;Wood Beer;;;;;;;;;;;;;;;;;true;;;;;wood
-34A;Clone Beer;Specialty Beer;;;;;;;;;;;;;;;;;true;;;;;
-34B;Mixed-Style Beer;Specialty Beer;;;;;;;;;;;;;;;;;true;;;;;
-34C;Experimental Beer;Specialty Beer;;;;;;;;;;;;;;;;;true;;;;;
+id;name;alt_names;category;abv_min;abv_max;ibu_min;ibu_max;srm_min;srm_max;og_min;og_max;fg_min;fg_max;strength;color;fermentation;conditioning;region_of_origin;style;specialty_beer;era;bitter_balances;sour_hoppy_sweet;spice;smoke_roast
+01A;American Light Lager;;Standard American Beer;2.8;4.2;8;12;2.0;3.0;1028;1040;998;1008;session;pale;bottom;lagered;north_america;pale_lager;false;traditional;balanced;;;
+01B;American Lager;American Pilsner, Amerikanisches Pilsner;Standard American Beer;4.2;5.3;8;18;2.0;4.0;1040;1050;1004;1010;standard;pale;bottom;lagered;north_america;pale_lager;false;traditional;balanced;;;
+01C;Cream Ale;;Standard American Beer;4.2;5.6;8;20;2.5;5.0;1042;1055;1006;1012;standard;pale;any;;north_america;pale_ale;false;traditional;balanced;;;
+01D;American Wheat Beer;American Wheat;Standard American Beer;4.0;5.5;15;30;3.0;6.0;1040;1055;1008;1013;standard;pale;any;;north_america;wheat_beer;false;craft;balanced;;;
+02A;International Pale Lager;;International Lager;4.6;6.0;18;25;2.0;6.0;1042;1050;1008;1012;standard;pale;bottom;lagered;;pale_lager;false;traditional;balanced;;;
+02B;International Amber Lager;Amber Lager;International Lager;4.6;6.0;8;25;7.0;14.0;1042;1055;1008;1014;standard;amber;bottom;lagered;;amber_lager;false;traditional;malty;;;
+02C;International Dark Lager;Dunkles Lager;International Lager;4.2;6.0;8;20;14.0;22.0;1044;1056;1008;1012;standard;dark;bottom;lagered;;dark_lager;false;traditional;malty;;;
+03A;Czech Pale Lager;;Czech Lager;3.0;4.1;20;35;3.0;6.0;1028;1044;1008;1014;session;pale;bottom;lagered;central_europe;pale_lager;false;traditional;bitter;hoppy;;
+03B;Czech Premium Pale Lager;Bohemian Pilsner, Böhmisches Pilsner, Böhmisches Lager;Czech Lager;4.2;5.8;30;45;3.5;6.0;1044;1060;1013;1017;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;balanced;hoppy;;
+03C;Czech Amber Lager;;Czech Lager;4.4;5.8;20;35;10.0;16.0;1044;1060;1013;1017;standard;amber;bottom;lagered;central_europe;amber_lager;false;traditional;balanced;;;
+03D;Czech Dark Lager;Böhmisches Dunkel;Czech Lager;4.4;5.8;18;34;14.0;35.0;1044;1060;1013;1017;standard;dark;bottom;lagered;central_europe;dark_lager;false;traditional;balanced;;;
+04A;Munich Helles;Münchner Helles, Helles;Pale Malty European Lager;4.7;5.4;16;22;3.0;5.0;1044;1048;1006;1012;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;malty;;;
+04B;Festbier;;Pale Malty European Lager;5.8;6.3;18;25;4.0;7.0;1054;1057;1010;1012;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;malty;;;
+04C;Helles Bock;Traditional Bock, Traditioneller Bock, Maibock;Pale Malty European Lager;6.3;7.4;23;35;6.0;11.0;1064;1072;1011;1018;high;pale;bottom;lagered;central_europe;bock;false;traditional;malty;;;
+05A;German Leichtbier;;Pale Bitter European beer;2.4;3.6;15;28;2.0;5.0;1026;1034;1006;1010;session;pale;bottom;lagered;central_europe;pale_lager;false;traditional;bitter;hoppy;;
+05B;Kölsch;;Pale Bitter European beer;4.4;5.2;18;30;3.5;5.0;1044;1050;1007;1011;standard;pale;top;lagered;central_europe;pale_ale;false;traditional;balanced;;;
+05C;German Helles Exportbier;Dortmunder Export, Export;Pale Bitter European beer;4.8;6.0;20;30;4.0;7.0;1048;1056;1010;1015;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;balanced;;;
+05D;German Pils;Deutsches Pilsner;Pale Bitter European beer;4.4;5.2;22;40;2.0;5.0;1044;1050;1008;1013;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;bitter;hoppy;;
+06A;Märzen;;Amber Malty European Lager;5.8;6.3;18;24;8.0;17.0;1054;1060;1010;1014;standard;amber;bottom;lagered;central_europe;amber_lager;false;traditional;malty;;;
+06B;Rauchbier;Smoked Beer, Smoked;Amber Malty European Lager;4.8;6.0;20;30;12.0;22.0;1050;1057;1012;1016;standard;amber;bottom;lagered;central_europe;amber_lager;false;traditional;malty;;;smoke
+06C;Dunkles Bock;;Amber Malty European Lager;6.3;7.2;20;27;14.0;22.0;1064;1072;1013;1019;high;amber;bottom;lagered;central_europe;bock;false;traditional;malty;;;
+07A;Vienna Lager;Wiener Lager;Amber Bitter European Beer;4.7;5.5;18;30;9.0;15.0;1048;1055;1010;1014;standard;amber;bottom;lagered;central_europe;amber_lager;false;traditional;balanced;;;
+07B;Altbier;;Amber Bitter European Beer;4.3;5.5;25;50;11.0;17.0;1044;1052;1008;1014;standard;amber;top;lagered;central_europe;amber_ale;false;traditional;bitter;;;
+07C;Kellerbier;;Amber Bitter European Beer;4.7;5.4;20;40;3.0;17.0;1045;1054;1008;1016;standard;;bottom;;central_europe;;false;traditional;balanced;;;
+07C1;Munich Kellerbier;;Amber Bitter European Beer;4.7;5.4;20;35;3.0;7.0;1045;1051;1008;1012;standard;pale;bottom;;central_europe;pale_lager;false;traditional;balanced;;;
+07C2;Franconian Kellerbier;;Amber Bitter European Beer;4.8;5.4;25;40;7.0;17.0;1048;1054;1012;1016;standard;amber;bottom;;central_europe;amber_lager;false;traditional;balanced;;;
+08A;Munich Dunkel;Münchner Dunkel;Dark European Lager;4.5;5.6;18;28;14.0;28.0;1048;1056;1010;1016;standard;dark;bottom;lagered;central_europe;dark_lager;false;traditional;malty;;;
+08B;Schwarzbier;;Dark European Lager;4.4;5.4;20;30;17.0;30.0;1046;1052;1010;1016;standard;dark;bottom;lagered;central_europe;dark_lager;false;traditional;balanced;;;
+09A;Doppelbock;;Strong European Beer;7.0;10.0;16;26;6.0;25.0;1072;1112;1016;1024;high;;bottom;lagered;central_europe;bock;false;traditional;malty;;;
+09B;Eisbock;;Strong European Beer;9.0;14.0;25;35;18.0;30.0;1078;1120;1020;1035;very_high;amber;bottom;lagered;central_europe;bock;false;traditional;malty;;;
+09C;Baltic Porter;;Strong European Beer;6.5;9.5;20;40;17.0;30.0;1060;1090;1016;1024;high;dark;any;lagered;eastern_europe;porter;false;traditional;malty;;;
+10A;Weissbier;Weizenbier, Hefeweizen;German Wheat Beer;4.3;5.6;8;15;2.0;6.0;1044;1052;1010;1014;standard;pale;top;;central_europe;wheat_beer;false;traditional;malty;;;
+10B;Dunkles Weissbier;Dunkles Weizenbier, Dunkles Hefeweizen, Dunkelweizen;German Wheat Beer;4.3;5.6;10;18;14.0;23.0;1044;1056;1010;1014;standard;amber;top;;central_europe;wheat_beer;false;traditional;malty;;;
+10C;Weizenbock;;German Wheat Beer;6.5;9.0;15;30;6.0;25.0;1064;1090;1015;1022;high;pale;top;;central_europe;wheat_beer;false;traditional;malty;;;
+11A;Ordinary Bitter;Bitter;British Bitter;3.2;3.8;25;35;8.0;14.0;1030;1039;1007;1011;session;amber;top;;british_isles;amber_ale;false;traditional;bitter;;;
+11B;Best Bitter;Special Bitter, Premium Bitter;British Bitter;3.8;4.6;25;40;8.0;16.0;1040;1048;1008;1012;standard;amber;top;;british_isles;amber_ale;false;traditional;bitter;;;
+11C;Strong Bitter;;British Bitter;4.6;6.2;30;50;8.0;18.0;1048;1060;1010;1016;standard;amber;top;;british_isles;amber_ale;false;traditional;bitter;;;
+12A;British Golden Ale;;Pale Commonwealth Beer;3.8;5.0;20;45;2.0;6.0;1038;1053;1006;1012;standard;pale;top;;british_isles;pale_ale;false;craft;bitter;hoppy;;
+12B;Australian Sparkling Ale;;Pale Commonwealth Beer;4.5;6.0;20;35;4.0;7.0;1038;1050;1004;1006;standard;pale;top;;pacific;pale_ale;false;traditional;bitter;;;
+12C;English IPA;Englisches IPA, India Pale Ale;Pale Commonwealth Beer;5.0;7.5;40;60;6.0;14.0;1050;1075;1010;1018;high;pale;top;;british_isles;ipa;false;traditional;bitter;hoppy;;
+13A;Dark Mild;Mild;Brown British Beer;3.0;3.8;10;25;12.0;25.0;1030;1038;1008;1013;session;dark;top;;british_isles;brown_ale;false;traditional;malty;;;
+13B;British Brown Ale;English Brown, Brown Ale;Brown British Beer;4.2;5.4;20;30;12.0;22.0;1040;1052;1008;1013;standard;amber;top;;british_isles;brown_ale;false;traditional;malty;;;
+13C;English Porter;Brown Porter;Brown British Beer;4.0;5.4;18;35;20.0;30.0;1040;1052;1008;1014;standard;dark;top;;british_isles;porter;false;traditional;malty;;;roasty
+14A;Scottish Light;;Scottish Ale;2.5;3.2;10;20;17.0;22.0;1030;1035;1010;1013;session;amber;top;;british_isles;amber_ale;false;traditional;malty;;;
+14B;Scottish Heavy;;Scottish Ale;3.2;3.9;10;20;13.0;22.0;1035;1040;1010;1015;session;amber;top;;british_isles;amber_ale;false;traditional;malty;;;
+14C;Scottish Export;;Scottish Ale;3.9;6.0;15;30;13.0;22.0;1040;1060;1010;1016;standard;amber;top;;british_isles;amber_ale;false;traditional;malty;;;
+15A;Irish Red Ale;Irish Ale;Irish Beer;3.8;5.0;18;28;9.0;14.0;1036;1046;1010;1014;standard;amber;top;;british_isles;amber_ale;false;traditional;balanced;;;
+15B;Irish Stout;Dry Stout, Stout;Irish Beer;4.0;4.5;25;45;25.0;40.0;1036;1044;1007;1011;standard;dark;top;;british_isles;stout;false;traditional;bitter;;;roasty
+15C;Irish Extra Stout;;Irish Beer;5.5;6.5;35;50;25.0;40.0;1052;1062;1010;1014;high;dark;top;;british_isles;stout;false;traditional;bitter;;;roasty
+16A;Sweet Stout;;Dark British Beer;4.0;6.0;20;40;30.0;40.0;1044;1060;1012;1024;standard;dark;top;;british_isles;stout;false;traditional;malty;sweet;;roasty
+16B;Oatmeal Stout;;Dark British Beer;4.2;5.9;25;40;22.0;40.0;1045;1065;1010;1018;standard;dark;top;;british_isles;stout;false;traditional;balanced;;;roasty
+16C;Tropical Stout;;Dark British Beer;5.5;8.0;30;50;30.0;40.0;1056;1075;1010;1018;high;dark;top;;british_isles;stout;false;traditional;malty;sweet;;roasty
+16D;Foreign Extra Stout;;Dark British Beer;6.3;8.0;50;70;30.0;40.0;1056;1075;1010;1018;high;dark;top;;british_isles;stout;false;traditional;balanced;;;roasty
+17A;British Strong Ale;Burton Ale, Strong Ale;Strong British Ale;5.5;8.0;30;60;8.0;22.0;1055;1080;1015;1022;high;amber;top;;british_isles;strong_ale;false;traditional;malty;;;
+17B;Old Ale;;Strong British Ale;5.5;9.0;30;60;10.0;22.0;1055;1088;1015;1022;high;amber;top;aged;british_isles;strong_ale;false;traditional;malty;;;
+17C;Wee Heavy;Scotch Ale, Scottish Ale;Strong British Ale;6.5;10.0;17;35;14.0;25.0;1070;1130;1018;1040;high;amber;top;;british_isles;strong_ale;false;traditional;malty;;;
+17D;English Barleywine;;Strong British Ale;8.0;12.0;35;70;8.0;22.0;1080;1120;1018;1030;very_high;amber;top;;british_isles;strong_ale;false;traditional;malty;;;
+18A;Blonde Ale;;Pale American Ale;3.8;5.5;15;28;3.0;6.0;1038;1054;1008;1013;standard;pale;any;;north_america;pale_ale;false;craft;balanced;;;
+18B;American Pale Ale;Amerikanisches Pale Ale, Pale Ale;Pale American Ale;4.5;6.2;30;50;5.0;10.0;1045;1060;1010;1015;standard;pale;top;;north_america;pale_ale;false;craft;bitter;hoppy;;
+19A;American Amber Ale;Amerikanisches Amber Ale, Amber Ale;Amber and Brown American Beer;4.5;6.2;25;40;10.0;17.0;1045;1060;1010;1015;standard;amber;top;;north_america;amber_ale;false;craft;balanced;hoppy;;
+19B;California Common ;;Amber and Brown American Beer;4.5;5.5;30;45;10.0;14.0;1048;1054;1011;1014;standard;amber;bottom;;north_america;amber_ale;false;traditional;bitter;hoppy;;
+19C;American Brown Ale;Amerikanisches Brown Ale;Amber and Brown American Beer;4.3;6.2;20;30;18.0;35.0;1045;1060;1010;1016;standard;dark;top;;north_america;brown_ale;false;craft;balanced;hoppy;;
+20A;American Porter;Robust Porter;American Porter and Stout;4.8;6.5;25;50;22.0;40.0;1050;1070;1012;1018;standard;dark;top;;north_america;porter;false;craft;bitter;hoppy;;roasty
+20B;American Stout;;American Porter and Stout;5.0;7.0;35;75;30.0;40.0;1050;1075;1010;1022;high;dark;top;;north_america;stout;false;craft;bitter;hoppy;;roasty
+20C;Imperial Stout;;American Porter and Stout;8.0;12.0;50;90;30.0;40.0;1075;1115;1018;1030;very_high;dark;top;;north_america;stout;false;craft;malty;bitter;;roasty
+21A;American IPA;Amerikanisches IPA;IPA;5.5;7.5;40;70;6.0;14.0;1056;1070;1008;1014;high;pale;top;;north_america;ipa;false;craft;bitter;hoppy;;
+21A1;New England IPA;NEIPA;IPA;;;;;;;;;;;;;;;;;false;;;;;
+21A2;West Coast IPA;West Coast;IPA;;;;;;;;;;;;;;;;;false;;;;;
+21A3;Session IPA;;IPA;;;;;;;;;;;;;;;;;false;;;;;
+21B;Specialty IPA;;IPA;5.5;9.5;40;100;5.0;40.0;1050;1085;1008;1018;high;;top;;north_america;ipa;true;craft;bitter;hoppy;;
+21B1;Belgian IPA;;IPA;6.2;9.5;50;100;5.0;15.0;1058;1080;1008;1016;high;pale;top;;north_america;ipa;true;craft;bitter;hoppy;;
+21B2;Black IPA;Cascadian Dark Ale;IPA;5.5;9.0;50;90;25.0;40.0;1050;1085;1010;1018;high;dark;top;;north_america;ipa;true;craft;bitter;hoppy;;
+21B3;Brown IPA;;IPA;5.5;7.5;40;70;11.0;19.0;1056;1070;1008;1016;high;amber;top;;north_america;ipa;true;craft;bitter;hoppy;;
+21B4;Red IPA;;IPA;5.5;7.5;40;70;11.0;19.0;1056;1070;1008;1016;high;amber;top;;north_america;ipa;true;craft;bitter;hoppy;;
+21B5;Rye IPA;;IPA;5.5;8.0;50;75;6.0;14.0;1056;1075;1008;1014;high;amber;top;;north_america;ipa;true;craft;bitter;hoppy;;
+21B6;White IPA;;IPA;5.5;7.0;40;70;5.0;8.0;1056;1065;1010;1016;high;pale;top;;north_america;ipa;true;craft;bitter;hoppy;spice;
+22A;Double IPA;Imperial IPA, Triple IPA;Strong American Ale;7.5;10.0;60;120;6.0;14.0;1065;1085;1008;1018;very_high;pale;top;;north_america;ipa;false;craft;bitter;hoppy;;
+22B;American Strong Ale;;Strong American Ale;6.3;10.0;50;100;7.0;19.0;1062;1090;1014;1024;high;amber;top;;north_america;strong_ale;false;craft;bitter;hoppy;;
+22C;American Barleywine;;Strong American Ale;8.0;12.0;50;100;10.0;19.0;1080;1120;1016;1030;very_high;amber;top;;north_america;strong_ale;false;craft;bitter;hoppy;;
+22D;Wheatwine;;Strong American Ale;8.0;12.0;30;60;8.0;15.0;1080;1120;1016;1030;very_high;amber;top;;north_america;strong_ale;false;craft;balanced;hoppy;;
+23A;Berliner Weisse;;European Sour Ale;2.8;3.8;3;8;2.0;3.0;1028;1032;1003;1006;session;pale;top;;central_europe;wheat_beer;false;traditional;;sour;;
+23B;Flanders Red Ale;;European Sour Ale;4.6;6.5;10;25;10.0;16.0;1048;1057;1002;1012;standard;amber;top;;western_europe;sour_ale;false;traditional;balanced;sour;;wood
+23C;Oud Bruin;;European Sour Ale;4.0;8.0;20;25;15.0;22.0;1040;1074;1008;1012;standard;dark;top;;western_europe;sour_ale;false;traditional;malty;sour;;
+23D;Lambic;;European Sour Ale;5.0;6.5;0;10;3.0;7.0;1040;1054;1001;1010;standard;pale;wild;;western_europe;wheat_beer;false;traditional;;sour;;
+23E;Gueuze ;;European Sour Ale;5.0;8.0;0;10;3.0;7.0;1040;1060;1000;1006;high;pale;wild;aged;western_europe;wheat_beer;false;traditional;;sour;;
+23F;Fruit Lambic;;European Sour Ale;5.0;7.0;0;10;3.0;7.0;1040;1060;1000;1010;standard;pale;wild;;western_europe;wheat_beer;false;traditional;;sour;;fruit
+24A;Witbier;;Belgian Ale;4.5;5.5;8;20;2.0;4.0;1044;1052;1008;1012;standard;pale;top;;western_europe;wheat_beer;false;traditional;;;spice;spice
+24B;Belgian Pale Ale;;Belgian Ale;4.8;5.5;20;30;8.0;14.0;1048;1054;1010;1014;standard;amber;top;;western_europe;pale_ale;false;traditional;balanced;;;
+24C;Bière de Garde;;Belgian Ale;6.0;8.5;18;28;6.0;19.0;1060;1080;1008;1016;high;amber;any;lagered;western_europe;amber_ale;false;traditional;malty;;;
+25A;Belgian Blond Ale;Belgisches Blond, Blond, Blonde;Strong Belgian Ale;6.0;7.5;15;30;4.0;7.0;1062;1075;1008;1018;high;pale;top;;western_europe;;false;traditional;balanced;;;
+25B;Saison;Session;Strong Belgian Ale;3.5;9.5;20;35;5.0;22.0;1048;1065;1002;1008;standard;pale;top;;western_europe;;false;traditional;bitter;;;
+25C;Belgian Golden Strong Ale;;Strong Belgian Ale;7.5;10.5;22;35;3.0;6.0;1070;1095;1005;1016;very_high;pale;top;;western_europe;;false;traditional;bitter;;;
+26A;Trappist Single;;Trappist Ale;4.8;6.0;25;45;3.0;5.0;1044;1054;1004;1010;standard;pale;top;;western_europe;;false;craft;bitter;hoppy;;
+26B;Belgian Dubbel;Belgisches Dubbel, Dubbel, Dubble;Trappist Ale;6.0;7.6;15;25;10.0;17.0;1062;1075;1008;1018;high;amber;top;;western_europe;;false;traditional;malty;;;
+26C;Belgian Tripel;Belgisches Tripel, Triple, Tripel, Tipel;Trappist Ale;7.5;9.5;20;40;4.5;7.0;1075;1085;1008;1014;high;pale;top;;western_europe;;false;traditional;bitter;;;
+26D;Belgian Dark Strong Ale;Belgisches Dunkles Starkbier, Belgisches Dunkel;Trappist Ale;8.0;12.0;20;35;12.0;22.0;1075;1110;1010;1024;very_high;amber;top;;western_europe;;false;traditional;malty;;;
+27A;Gose;;Historical Beer;4.2;4.8;5;12;3.0;4.0;1036;1056;1006;1010;standard;pale;top;;central_europe;wheat_beer;false;historical;;sour;spice;
+27B;Kentucky Common;;Historical Beer;4.0;5.5;15;30;11.0;20.0;1044;1055;1010;1018;standard;amber;top;;north_america;;false;historical;balanced;;;
+27C;Lichtenhainer;;Historical Beer;3.5;4.7;5;12;3.0;6.0;1032;1040;1004;1008;standard;pale;top;;central_europe;wheat_beer;false;historical;;sour;;smoke
+27D;London Brown Ale;;Historical Beer;2.8;3.6;15;20;22.0;35.0;1033;1038;1012;1015;session;dark;top;;british_isles;brown_ale;false;historical;malty;sweet;;
+27E;Piwo Grodziskie;;Historical Beer;2.5;3.3;20;35;3.0;6.0;1028;1032;1006;1012;session;pale;top;;central_europe;wheat_beer;false;historical;bitter;;;smoke
+27F;Pre-Prohibition Lager;;Historical Beer;4.5;6.0;25;40;3.0;6.0;1044;1060;1010;1015;standard;pale;bottom;lagered;north_america;pilsner;false;historical;bitter;hoppy;;
+27G;Pre-Prohibition Porter;;Historical Beer;4.5;6.0;20;30;18.0;30.0;1046;1060;1010;1016;standard;dark;any;;north_america;porter;false;historical;malty;;;
+27H;Roggenbier;;Historical Beer;4.5;6.0;10;20;14.0;19.0;1046;1056;1010;1014;standard;amber;top;;central_europe;wheat_beer;false;historical;;;;
+27I;Sahti;;Historical Beer;7.0;11.0;7;15;4.0;22.0;1076;1120;1016;1020;high;amber;top;;central_europe;;false;historical;;;spice;
+28A;Brett Beer;;American Wild Ale;;;;;;;;;;;;;wild;;north_america;;true;craft;;;;
+28B;Mixed-Fermentation Sour Beer;;American Wild Ale;;;;;;;;;;;;;wild;;north_america;;true;craft;;sour;;
+28C;Wild Specialty Beer;;American Wild Ale;;;;;;;;;;;;;wild;;north_america;;true;craft;;sour;;fruit
+29A;Fruit Beer;Fruchtbier;Fruit Beer;;;;;;;;;;;;;;;;;true;;;;;fruit
+29B;Fruit and Spice Beer;;Fruit Beer;;;;;;;;;;;;;;;;;true;;;;spice;fruit
+29C;Specialty Fruit Beer;;Fruit Beer;;;;;;;;;;;;;;;;;true;;;;;fruit
+30A;Spice, Herb or Vegetable Beer;Frucht- Gewürz- und Kräuterbiere, Gewürz- Kräuter- und Gemüsebier;Spiced Beer;;;;;;;;;;;;;;;;;true;;;;spice;
+30B;Autumn Seasonal Beer;;Spiced Beer;;;;;;;;;;;;;;;;;true;;;;spice;
+30C;Winter Seasonal Beer;Winter Special Spiced, Holiday Special Spiced, Gewürztes Winterbier;Spiced Beer;;;;;;;;;;;;;;;;;true;;;;spice;
+31A;Alternative Grain Beer;;Alternative Fermentables Beer;;;;;;;;;;;;;;;;;true;;;;;
+31B;Alternative Sugar Beer;;Alternative Fermentables Beer;;;;;;;;;;;;;;;;;true;;;;;
+32A;Classic Style Smoked Beer;;Smoked Beer;;;;;;;;;;;;;;;;;true;;;;;smoke
+32B;Specialty Smoked Beer;;Smoked Beer;;;;;;;;;;;;;;;;;true;;;;;smoke
+33A;Wood-Aged Beer;;Wood Beer;;;;;;;;;;;;;;;;;true;;;;;wood
+33B;Specialty Wood-Aged Beer;;Wood Beer;;;;;;;;;;;;;;;;;true;;;;;wood
+34A;Clone Beer;;Specialty Beer;;;;;;;;;;;;;;;;;true;;;;;
+34B;Mixed-Style Beer;;Specialty Beer;;;;;;;;;;;;;;;;;true;;;;;
+34C;Experimental Beer;;Specialty Beer;;;;;;;;;;;;;;;;;true;;;;;

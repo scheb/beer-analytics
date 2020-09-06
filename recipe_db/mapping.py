@@ -7,7 +7,7 @@ import translitcodec
 
 from django.db import transaction
 
-from recipe_db.models import RecipeHop, Hop, Fermentable, RecipeFermentable
+from recipe_db.models import RecipeHop, Hop, Fermentable, RecipeFermentable, Style, Recipe
 
 TRANSLIT_SHORT = 'translit/short'
 TRANSLIT_LONG = 'translit/long'
@@ -289,3 +289,54 @@ class FermentablesMapper(Mapper):
                 number_name = re.sub('\\sii\\b', ' 2', number_name)
                 number_name = re.sub('\\si\\b', ' 1', number_name)
                 yield number_name
+
+
+class StylesMapper(Mapper):
+    def __init__(self) -> None:
+        super().__init__()
+        self.create_mapping(Style.objects.all())
+
+    def map_unmapped(self) -> None:
+        recipes = Recipe.objects.filter(style_id=None)
+        self.map_list(recipes)
+
+    def map_all(self) -> None:
+        recipes = Recipe.objects.all()
+        self.map_list(recipes)
+
+    def get_clean_name(self, item: Recipe) -> str:
+        value = item.style_raw
+        if value is None:
+            return ''
+
+        value = value.lower()
+        value = self.normalize(value)
+        value = value.strip()
+        return value
+
+    def normalize(self, value: str) -> str:
+        value = value.lower()
+
+        # Normalized "münchner"
+        value = re.sub("\\bmünchener\\b", "münchner", value)
+
+        # Normalize "pilsner"
+        value = re.sub("\\bpilsener\\b", "pilsner", value)
+        value = re.sub("\\bpilsen\\b", "pilsner", value)
+
+        return value
+
+    def save_match(self, item: Recipe, match: Style):
+        item.style = match
+        item.save()
+
+    def get_name_variants(self, name: str) -> iter:
+        name = self.normalize(name)
+        for name in self.expand_ipa(get_translit_names(name)):
+            yield name
+
+    def expand_ipa(self, names) -> iter:
+        for name in names:
+            yield name
+            if re.search('\\bipa\\b', name):
+                yield re.sub('\\bipa\\b', 'india pale ale', name)
