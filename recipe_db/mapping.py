@@ -111,17 +111,26 @@ class Mapper(object):
 
     def map_item_name(self, item_name: str) -> Optional[object]:
         # Exact match
-        if match := self.mapping.match(item_name):
+        if match := self.match_extact(item_name):
             return match
 
         # Substring match
-        candidates = list(self.mapping.fuzzy_match(item_name))
+        if match := self.match_substring(item_name):
+            return match
+
+        return None
+
+    def match_extact(self, name: str) -> Optional[object]:
+        if match := self.mapping.match(name):
+            return match
+        return None
+
+    def match_substring(self, name: str) -> Optional[object]:
+        candidates = list(self.mapping.fuzzy_match(name))
 
         if len(candidates) > 0:
             candidates = sorted(candidates, key=sort_candidates)
             return candidates.pop().matching_object
-
-        return None
 
     @abc.abstractmethod
     def get_clean_name(self, item: object) -> str:
@@ -190,8 +199,45 @@ class FermentablesMapper(Mapper):
 
     def get_clean_name(self, item: RecipeHop) -> str:
         value = item.kind_raw.lower()
-        value = re.sub("\\s+type?\\s+", " ", value)  # Remove "type" / "typ"
+        value = self.normalize(value)
+
+        # Remove "type" / "typ"
+        value = re.sub("\\s+type?\\s+", " ", value)
+
         value = value.strip()
+        return value
+
+    def map_item_name(self, item_name: str) -> Optional[object]:
+        # Exact match
+        if match := self.match_extact(item_name):
+            return match
+
+        # Match the exact string with "malt" suffixed
+        if not item_name.endswith(" malt"):
+            if match := self.match_extact(item_name+" malt"):
+                return match
+
+        # Substring match
+        if match := self.match_substring(item_name):
+            return match
+
+        return None
+
+    def normalize(self, value: str) -> str:
+        value = value.lower()
+
+        # Ensure "malt" is always used and its own word
+        value = re.sub("\\bmalz\\b", "malt", value)
+        value = re.sub("(\w)malt\\b", "\\1 malt", value)
+        value = re.sub("(\w)malz\\b", "\\1 malt", value)
+
+        # Normalized "münchner"
+        value = re.sub("\\bmünchener\\b", "münchner", value)
+
+        # Normalize "pilsner"
+        value = re.sub("\\bpilsener\\b", "pilsner", value)
+        value = re.sub("\\bpilsen\\b", "pilsner", value)
+
         return value
 
     def save_match(self, item: RecipeFermentable, match: Fermentable):
@@ -199,16 +245,39 @@ class FermentablesMapper(Mapper):
         item.save()
 
     def get_name_variants(self, name: str) -> iter:
-        for name in self.get_number_variants(self.get_cara_variants(get_translit_names(name))):
+        name = self.normalize(name)
+        # Cara variants must be executed after malt variants
+        for name in self.get_number_variants(self.get_cara_variants(self.get_malt_variants(get_translit_names(name)))):
             yield name
+
+    def get_malt_variants(self, names: iter) -> iter:
+        for name in names:
+            yield name
+
+            # When "malt" is in the middle of the name, add a variant without "malt" included
+            if " malt " in name:
+                yield name.replace(" malt ", " ")
 
     def get_cara_variants(self, names: iter) -> iter:
         for name in names:
             yield name
+
+            # "cara" appended to next word
             if re.search('\\bcara\\s', name):
-                yield re.sub('\\bcara\\s+', 'cara', name)  # Combine with succeeding word
-                yield re.sub('\\bcara\\s+', 'caramel ', name)  # "Caramel"
-                yield re.sub('\\bcara\\s+', 'crystal ', name)  # "Crystal"
+                yield re.sub('\\bcara\\s+', 'cara', name)  # Append with succeeding word
+
+            # "cara" variations
+            if re.search('\\bcara\\b', name):
+                yield re.sub('\\bcara\\b', 'cara malt', name)
+                yield re.sub('\\bcara\\b', 'caramel', name)
+                yield re.sub('\\bcara\\b', 'caramel malt', name).replace("malt malt", "malt")
+                yield re.sub('\\bcara\\b', 'crystal', name)
+                yield re.sub('\\bcara\\b', 'crystal malt', name).replace("malt malt", "malt")
+                yield re.sub('\\bcara\\b', 'karamell', name)
+                yield re.sub('\\bcara\\b', 'karamell malt', name).replace("malt malt", "malt")
+                yield re.sub('\\bcara\\b', 'caracrystal', name)
+                yield re.sub('\\bcara\\b', 'cara crystal', name)
+                yield re.sub('\\bcara\\b', 'crystal cara', name)
 
     def get_number_variants(self, names) -> iter:
         for name in names:
