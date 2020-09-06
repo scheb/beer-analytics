@@ -4,7 +4,7 @@ from recipe_db.mapping import HopsMapper
 
 
 class Command(BaseCommand):
-    help = "Map values"
+    help = "Map hop values"
 
     def add_arguments(self, parser):
         parser.add_argument('--all', action='store_true', help='Map all hops (again)')
