@@ -1,7 +1,8 @@
+import codecs
 import re
+from typing import Optional, Iterable
 
 import translitcodec
-import codecs
 
 from django.db import transaction
 
@@ -12,6 +13,16 @@ TRANSLIT_SHORT = 'translit/short'
 TRANSLIT_LONG = 'translit/long'
 
 
+def clean_hop_name(value: str) -> str:
+    value = value.lower()
+    value = re.sub("northern\\s+brewer\\s+-\\s+", "", value)  # Producer prefix
+    value = re.sub("^hall?ertau(er)?$", "hallertauer mittelfrüh", value)  # Just "Hallertau(er)"
+    value = re.sub('\\(?[0-9]+([.,][0-9]+)?\\s+aa\\)?', '', value)
+    value = re.sub('/?\\s*[0-9]+([.,][0-9]+)?\\s+(grams|ounces)', '', value)
+    value = value.strip()
+    return value
+
+
 def normalize_name(value: str, translit: str) -> str:
     value = codecs.encode(value, translit)
     value = re.sub('[\\s-]+', ' ', re.sub('[^\\w\\s-]', '', value))
@@ -19,82 +30,114 @@ def normalize_name(value: str, translit: str) -> str:
     return value
 
 
-def create_hops_mapping() -> dict:
-    mapping = {}
-    for hop in Hop.objects.all():
-        normalized_name_long = normalize_name(hop.name, TRANSLIT_LONG)
-        mapping[normalized_name_long] = hop
+class Candidate:
+    def __init__(self, pattern: str, matching_object: object) -> None:
+        self.pattern = pattern
+        self.matching_object = matching_object
+        super().__init__()
 
-        normalized_name_short = normalize_name(hop.name, TRANSLIT_SHORT)
-        if normalized_name_short != normalized_name_long:
-            mapping[normalized_name_short] = hop
-
-        if hop.alt_names is not None:
-            alt_names = hop.alt_names.split(",")
-            for alt_name in alt_names:
-                normalized_name_long = normalize_name(alt_name, TRANSLIT_LONG)
-                mapping[normalized_name_long] = hop
-
-                normalized_name_short = normalize_name(alt_name, TRANSLIT_SHORT)
-                if normalized_name_short != normalized_name_long:
-                    mapping[normalized_name_short] = hop
-
-    return mapping
+    def get_weight(self) -> int:
+        num_words = self.pattern.count("_") + 1
+        length = len(self.pattern)
+        return num_words * 1000 + length
 
 
-def clean_name(value: str) -> str:
-    value = re.sub("Northern\\s+Brewer\\s+-\\s+", "", value)  # Producer prefix
-    value = re.sub('\\(?[0-9]+([.,][0-9]+)?\\s+AA\\)?', '', value)
-    value = re.sub('/?\\s*[0-9]+([.,][0-9]+)?\\s+(Grams|Ounces)', '', value)
-    value = value.strip().lower()
-    return value
+def sort_candidates(match: Candidate) -> int:
+    return match.get_weight()
 
 
-@transaction.atomic
-def map_hops():
-    hops_mapping = create_hops_mapping()
-    for hop in RecipeHop.objects.all():
-        hop_name = clean_name(hop.kind_raw)
+class ObjectMap:
+    def __init__(self) -> None:
+        self.mapping = {}
 
-        # Exact match (long translit)
-        hop_name_long = normalize_name(hop_name, TRANSLIT_LONG)
-        if hop_name_long in hops_mapping:
-            hop.kind = hops_mapping[hop_name_long]
-            hop.save()
-            continue
+    def add(self, name: str, mapped_object: object) -> None:
+        for name_variant in self.get_name_variants(name):
+            self.mapping[name_variant] = mapped_object
 
-        # Exact match (short translit)
-        hop_name_short = normalize_name(hop_name, TRANSLIT_SHORT)
-        if hop_name_short != hop_name_long and hop_name_short in hops_mapping:
-            hop.kind = hops_mapping[hop_name_short]
-            hop.save()
-            continue
+    def all(self) -> dict:
+        return self.mapping
 
-        num_candidates = 0
-        candidates = []
-        for pattern in hops_mapping:
-            if pattern in hop_name_long or pattern in hop_name_short:
-                match = pattern, hops_mapping[pattern]
-                candidates.append(match)
-                num_candidates += 1
+    def match(self, name: str) -> Optional[object]:
+        for name_variant in self.get_name_variants(name):
+            if name_variant in self.mapping:
+                return self.mapping[name_variant]
+        return None
 
-        if num_candidates == 1:
-            (_, hop.kind) = candidates.pop()
-            hop.save()
-            continue
+    def fuzzy_match(self, name: str) -> Iterable[Candidate]:
+        for name_variant in self.get_name_variants(name):
+            for pattern in self.mapping:
+                if pattern in name_variant:
+                    yield Candidate(pattern, self.mapping[pattern])
 
-        if num_candidates > 1:
-            candidates = sorted(candidates, key=sort_candidates)
-            (_, hop.kind) = candidates.pop()
-            hop.save()
-            continue
+    def get_name_variants(self, name: str) -> iter:
+        names = set()
 
-        hop.kind = None
-        hop.save()
+        # Long translit name
+        normalized_name_long = normalize_name(name, TRANSLIT_LONG)
+        names.add(normalized_name_long)
+
+        # Short translit name
+        normalized_name_short = normalize_name(name, TRANSLIT_SHORT)
+        names.add(normalized_name_short)
+
+        # Append numeric parts to the previous/next word
+        if re.search('\\s[0-9]+\\b', normalized_name_long):
+            names.add(re.sub('\\s+([0-9]+)\\b', '\\1', normalized_name_long))
+            names.add(re.sub('\\s+([0-9]+)\\b', '\\1', normalized_name_short))
+        if re.search('\\b[0-9]+\\s', normalized_name_long):
+            names.add(re.sub('\\b([0-9]+)\\s+', '\\1', normalized_name_long))
+            names.add(re.sub('\\b([0-9]+)\\s+', '\\1', normalized_name_short))
+
+        yield from names
 
 
-def sort_candidates(match):
-    (pattern, _) = match
-    num_words = pattern.count("_") + 1
-    length = len(pattern)
-    return num_words * 1000 + length
+class HopsMapper:
+    def __init__(self) -> None:
+        self.mapping = self.create_hops_mapping()
+
+    def create_hops_mapping(self) -> ObjectMap:
+        mapping = ObjectMap()
+        for hop in Hop.objects.all():
+            mapping.add(hop.name, hop)
+
+            if hop.alt_names is not None:
+                alt_names = hop.alt_names.split(",")
+                for alt_name in alt_names:
+                    mapping.add(alt_name, hop)
+
+        return mapping
+
+    def map_unmapped(self):
+        hops = RecipeHop.objects.filter(kind_id=None)
+        self.map_hops(hops)
+
+    def map_all(self):
+        hops = RecipeHop.objects.all()
+        self.map_hops(hops)
+
+    @transaction.atomic
+    def map_hops(self, recipe_hops: iter) -> None:
+        for recipe_hop in recipe_hops:
+            hop_name = self.clean_name(recipe_hop.kind_raw)
+
+            # Exact match
+            if hop := self.mapping.match(hop_name):
+                recipe_hop.kind = hop
+                recipe_hop.save()
+                continue
+
+            # Substring match
+            candidates = list(self.mapping.fuzzy_match(hop_name))
+
+            if len(candidates) > 0:
+                candidates = sorted(candidates, key=sort_candidates)
+                recipe_hop.kind = candidates.pop().matching_object
+                recipe_hop.save()
+                continue
+
+            # Otherwise no match
+            recipe_hop.kind = None
+            recipe_hop.save()
+
+    def clean_name(self, name: str):
+        return clean_hop_name(name)
