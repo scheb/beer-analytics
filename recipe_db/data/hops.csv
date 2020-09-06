@@ -8,7 +8,7 @@ Akoya;aroma;
 Alliance;dual;
 Aloha;dual;
 Amallia;dual;
-Amarillo;aroma;Amarillo, Armarillo, Amar
+Amarillo;aroma;Amarillo, Armarillo, Amar, Amaerillo
 Amarillo Gold;aroma;
 Amethyst;aroma;
 Apollo;bittering;
@@ -18,11 +18,11 @@ Aramis;aroma;Armis
 Archer;aroma;
 Ariana;dual;Arriana
 Atlas;aroma;
-Aurora;dual;
-Azacca;dual;Aza
+Aurora;dual;Super Styrian, Super Styrians
+Azacca;dual;Aza, Azzaca
 Backa;aroma;
 Banner;bittering;
-Barbe Rouge;aroma;
+Barbe Rouge;aroma;Barbe Rogue
 Bate's Brewer;dual;
 Belma;dual;
 Bergamot;aroma;
@@ -39,7 +39,7 @@ Bramling;aroma;
 Bramling Cross;dual;Bambling Cross 
 Bravo;bittering;
 Brewer's Gold;bittering;
-BRU-1;bittering;BRU1
+BRU-1;bittering;
 Buket;dual;
 Bullion;bittering;
 Bullion 10A;bittering;
@@ -54,12 +54,12 @@ Canterbury Whitebine;aroma;
 Cascade;aroma;Casade, Cascada, Casacade, Cacade
 Cashmere;dual;Cashmire, Casshmere, Cashmerre, Cashemere
 Cekin;aroma;
-Celeia;aroma;
+Celeia;aroma;Celia
 Centennial;dual;Centenial, Centennials, Centenniel
 Cerera;dual;
 Challenger;dual;
 Chelan;bittering;
-Chinook;dual;
+Chinook;dual;Kanook
 Cicero;dual;
 Citra;dual;
 Cluster;dual;
@@ -69,7 +69,7 @@ Coigneau;dual;
 Columbia;aroma;
 Columbus;dual;Tomahawk, Zeus, CTZ
 Comet;bittering;
-Crystal;aroma;
+Crystal;aroma;Crysta
 Dana;aroma;
 Defender;aroma;
 Delta;dual;
@@ -113,7 +113,7 @@ Gargoyle;aroma;
 Glacier;dual;Galcier
 Godiva;aroma;
 Golden Star;aroma;
-Golding;aroma;Goldings, Golding
+Golding;aroma;Goldings, Golding, Goldins
 Green Bullet;dual;
 Greensburg;dual;
 Groene Bel;aroma;
@@ -121,14 +121,19 @@ Hallertauer Bitter;bittering;Hallertau Bitter, H Bitter
 Hallertauer Blanc;aroma;Hallertau Blanc, H Blanc
 Hallertauer Gold;aroma;Hallertau Gold, H Gold
 Hallertauer Diamant;dual;Hallertau Diamant, H Diamant
-Hallertauer Mittelfrüh;aroma;Hallertau Mittelfrüh, Hallertau Mittlefrüh, Mittelfrüh, Mittelfrüher, H Mittelfrüh, German Hallertau, Domestic Hallertau, Hallertauer Hallertauer, Mttelfrueh
+Hallertauer Mittelfrüh;aroma;Hallertau Mittelfrüh, Hallertau Mittlefrüh, Mittelfrüh, Mittelfrüher, H Mittelfrüh, Hallertauer MF, German Hallertau, Domestic Hallertau, Hallertauer Hallertauer, Hallertau Hallertauer, Mttelfrueh, Mittlefrüh
 Hallertauer Rotrebiger;aroma;Hallertau Rotrebiger, H Rotrebiger
 Hallertauer Taurus;dual;Hallertau Taurus, H Taurus, Taurus
-Hallertauer Tradition;aroma;Hallertau Tradition, H Tradition, Tratition, Tradi, Tradion, Tradition, Traditional
+Hallertauer Tradition;aroma;Hallertau Tradition, H Tradition, Tratition, Tradi, Tradion, Tradition, Traditional, Tradtional
 Hartwick;aroma;Harwick
+HBC 342;bittering;
+HBC 431;bittering;
+HBC 472;dual;
+HBC 586;bittering;
+HBC 692;aroma;
 Helga;aroma;
 Herald;dual;
-Herkules;dual;Hercules
+Herkules;dual;Hercules, Herkels
 Hersbrucker;aroma;Hallertauer Hersbrucker
 Hersbrucker E;aroma;
 Hersbrucker Pure;aroma;
@@ -136,12 +141,13 @@ Hersbrucker Red-Stem;aroma;
 Hersbrucker Spät;aroma;
 Hokitika;aroma;
 Horizon;dual;
+Hort 4337;dual;
 Hüll Melon;aroma;Hüll Mellon, Melon Hüll, Hüllmelon
 Hüller Bitter;dual;Hüll Bitter, Hüller Bitterer
-Hybrid-2;aroma;Hybrid2
-Idaho 7;dual;Idaho7
+Hybrid-2;aroma;
+Idaho 7;dual;Idaho hop 7
 Idaho Gem;aroma;Idaho Gme
-Independence;aroma;
+Independence;aroma;independece
 Iunga;dual;
 Ivanhoe;aroma;
 Janus;aroma;
@@ -152,9 +158,10 @@ Junga;dual;
 Kazbek;aroma;
 Keyworth's Early;aroma;
 Keyworth's Midseason;aroma;
-Kirin II;dual;Kirin, Kirin-2, Kirin2
+Kirin II;dual;Kirin, Kirin 2
 Kitamidori;bittering;
 Kohatu;aroma;Kuhatu
+Korsta;dual;
 Landhopfen;aroma;
 Legacy;dual;
 Lemondrop;aroma;Lemon Drop
@@ -185,11 +192,11 @@ Mount Hood;aroma;MT Hood
 Mount Rainier;aroma;MT Rainier
 Moutere;dual;Mortere
 MultiHead;dual;
-Mystic;aroma;
+Mystic;aroma;Mystique
 Nadwislanska;aroma;
 Nectaron;dual;Nectron
 Nelson Sauvin;dual;Nelson, Nels, Nel, Neslson Sauvin
-Neo1;dual;Neo-1
+Neo1;dual;Neo 1
 Neoplanta;dual;
 Newport;bittering;
 Nordgaard;aroma;
@@ -220,6 +227,7 @@ Petoskey;aroma;Petosky
 Phoenix;dual;
 Pilgrim;dual;Pilgrin
 Pilot;bittering;
+Pink Boots;dual;
 Pioneer;dual;
 Pocket Talisman;aroma;
 Polaris;dual;
@@ -234,10 +242,10 @@ Rakau;dual;Raku, Rakua, AlphAroma, AlphaAroma
 Record;aroma;
 Red Earth;aroma;
 Relax;aroma;
-Riwaka;aroma;
+Riwaka;aroma;Rikawa
 Rubin;bittering;
 Saaz;aroma;Saazer, Saab, Saa, Sazz, Zatec, Zatecky, ŽPČ
-Sabro;aroma;Sabco, Sobro
+Sabro;aroma;Sabco, Sobro, HBC 438
 Samba;aroma;
 Santiam;aroma;
 Saphir;aroma;Safir, Saphier, Saphire
@@ -249,7 +257,7 @@ Serebrianka;aroma;
 Shinshuwase;aroma;
 Simcoe;dual;Semcoe, Simceo, Simco
 Sladek;aroma;
-Smaragd;dual;
+Smaragd;dual;Smarged
 Smooth Cone;dual;
 Sonnet;aroma;
 Sorachi Ace;bittering;Sorachie Ace, Soriachi Ace
@@ -268,9 +276,11 @@ Sterling;dual;
 Sticklebract;dual;
 Strata;aroma;Strada
 Strisselspalt;aroma;Strisselspalter
-Styrian Dragon;aroma;
+Styrian Cardinal;dual;
+Styrian Dragon;aroma;Dragon
+Styrian Fox;dual;Fox
 Styrian Goldings;aroma;Styrian Golding, Styrian Gold
-Styrian Kolibri;aroma;
+Styrian Kolibri;aroma;Kolibri
 Styrian Wolf;dual;Wolf
 Sultana;dual;
 Summer;aroma;
@@ -282,7 +292,7 @@ Super Alpha;bittering;
 Super Pride;bittering;
 Sussex;aroma;
 Sybilla;dual;
-Sylva;aroma;
+Sylva;aroma;Sylvia 
 Symphony;bittering;
 Tahoma;aroma;
 Taiheke;dual;
@@ -295,6 +305,7 @@ Teamaker;aroma;
 Tettnanger;aroma;Tennang, Tetnang, Tettanger, Tettnager, Tettnang, Tettnanger Aroma
 Tettnanger A;aroma;
 Tettnanger B;aroma;
+The Bruce;dual;Bruce
 Tillicum;bittering;
 Tolhurst;aroma;
 Topaz;aroma;
