@@ -7,7 +7,7 @@ from os import path
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from recipe_db.models import Style, Hop
+from recipe_db.models import Style, Hop, Malt
 
 
 class Command(BaseCommand):
@@ -18,6 +18,8 @@ class Command(BaseCommand):
         load_styles()
         self.stdout.write('Load hops')
         load_hops()
+        self.stdout.write('Load malts')
+        load_malts()
         self.stdout.write('Done')
 
 
@@ -43,28 +45,6 @@ def load_styles():
         style.save()
 
 
-def cast_values(value):
-    if value == '':
-        return None
-
-    if value == 'true':
-        return True
-    if value == 'false':
-        return False
-
-    try:
-        return int(value)
-    except ValueError:
-        pass
-
-    try:
-        return float(value)
-    except ValueError:
-        pass
-
-    return value
-
-
 def load_hops():
     csv_file = load_csv('hops.csv')
     header = next(csv_file)
@@ -87,6 +67,52 @@ def load_hops():
         for field in data:
             setattr(hop, field, data[field])
         hop.save()
+
+
+def load_malts():
+    csv_file = load_csv('malts.csv')
+    header = next(csv_file)
+
+    for row in csv_file:
+        if len(row) == 1:
+            continue  # Skip empty lines
+
+        malt_id = create_human_readable_id(row[0])
+        row = map(cast_values, row)
+        data = dict(zip(header, row))
+
+        try:
+            malt = Malt.objects.get(pk=malt_id)
+        except Malt.DoesNotExist:
+            malt = Malt()
+            pass
+
+        malt.id = malt_id
+        for field in data:
+            setattr(malt, field, data[field])
+        malt.save()
+
+
+def cast_values(value):
+    if value == '':
+        return None
+
+    if value == 'true':
+        return True
+    if value == 'false':
+        return False
+
+    try:
+        return int(value)
+    except ValueError:
+        pass
+
+    try:
+        return float(value)
+    except ValueError:
+        pass
+
+    return value
 
 
 def create_human_readable_id(value: str) -> str:

@@ -47,6 +47,8 @@ class Style(models.Model):
 class Malt(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     name = models.CharField(max_length=255)
+    category = models.CharField(max_length=32, default=None, blank=True, null=True)
+    alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
 
 
 # http://www.hopslist.com/hops/
