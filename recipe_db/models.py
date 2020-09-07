@@ -1,3 +1,5 @@
+import datetime
+
 from django.core.validators import MaxValueValidator, BaseValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -67,10 +69,12 @@ class Yeast(models.Model):
 
 
 class Recipe(models.Model):
+    tomorrow = datetime.date.today() + datetime.timedelta(days=1)
+
     # Identifiers
     uid = models.CharField(max_length=32, primary_key=True)
     name = models.CharField(max_length=255, default=None, blank=True, null=True)
-    created = models.DateField(default=None, blank=True, null=True)
+    created = models.DateField(default=None, blank=True, null=True, validators=[MinValueValidator(datetime.date(1990, 1, 1)), MaxValueValidator(tomorrow)])
 
     # Characteristics
     style = models.ForeignKey(Style, on_delete=models.SET_NULL, default=None, blank=True, null=True)
