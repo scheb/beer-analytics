@@ -21,6 +21,7 @@ class GreaterThanValueValidator(BaseValidator):
 class Style(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     name = models.CharField(max_length=255)
+    bjcp_id = models.CharField(max_length=4)
     category = models.CharField(max_length=255)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
     abv_min = models.FloatField(default=None, blank=True, null=True)

@@ -31,15 +31,17 @@ def load_styles():
         if len(row) == 1:
             continue  # Skip empty lines
 
+        style_id = create_human_readable_id(row[1])
         row = map(cast_values, row)
         data = dict(zip(header, row))
 
         try:
-            style = Style.objects.get(pk=data['id'])
+            style = Style.objects.get(pk=style_id)
         except Style.DoesNotExist:
             style = Style()
             pass
 
+        style.id = style_id
         for field in data:
             setattr(style, field, data[field])
         style.save()
