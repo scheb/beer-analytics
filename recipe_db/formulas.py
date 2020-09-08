@@ -28,11 +28,11 @@ def gravity_to_plato(gravity: float) -> float:
     return 259.0 - (259.0 / gravity)
 
 
-def alcohol_by_volume(original_gravity, final_gravity):
+def alcohol_by_volume(original_gravity: float, final_gravity: float):
     """
     Calculate the Alcohol By Volume (ABV).
     """
-    return (original_gravity - final_gravity) / 0.75
+    return (original_gravity - final_gravity) * 131.25
 
 
 def attenuation_to_final_plato(attenuation: float, original_plato: float):

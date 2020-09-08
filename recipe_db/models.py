@@ -9,7 +9,8 @@ from django.core.validators import MaxValueValidator, BaseValidator, MinValueVal
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from recipe_db.formulas import ebc_to_srm, srm_to_ebc, plato_to_gravity, gravity_to_plato
+from recipe_db.formulas import ebc_to_srm, srm_to_ebc, plato_to_gravity, gravity_to_plato, abv_to_to_final_plato, \
+    alcohol_by_volume
 
 
 class GreaterThanValueValidator(BaseValidator):
@@ -210,8 +211,17 @@ class Recipe(models.Model):
         self.derive_missing_values('srm', 'ebc', srm_to_ebc)
         self.derive_missing_values('original_plato', 'og', plato_to_gravity)
         self.derive_missing_values('og', 'original_plato', gravity_to_plato)
+
+        # When no final plato/gravity is available, but there's original plato and abv
+        if self.fg is None and self.final_plato is None and self.original_plato is not None and self.abv is not None:
+            self.final_plato = abv_to_to_final_plato(self.abv, self.original_plato)
+
         self.derive_missing_values('final_plato', 'fg', plato_to_gravity)
         self.derive_missing_values('fg', 'final_plato', gravity_to_plato)
+
+        # Calculate ABV when missing
+        if self.abv is None and self.og is not None and self.fg is not None:
+            self.abv = alcohol_by_volume(self.og, self.fg)
 
         super().save(*args, **kwargs)
 
