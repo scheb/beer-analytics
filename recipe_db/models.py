@@ -4,6 +4,7 @@ import re
 # noinspection PyUnresolvedReferences
 import translitcodec
 import codecs
+
 from django.core.validators import MaxValueValidator, BaseValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -19,7 +20,7 @@ class GreaterThanValueValidator(BaseValidator):
 
 def create_human_readable_id(value: str) -> str:
     value = codecs.encode(value, 'translit/long')
-    return re.sub('[\\s-]+', '_', re.sub('[^\\w\\s-]', '', value)).lower()
+    return re.sub('[\\s-]+', '-', re.sub('[^\\w\\s-]', '', value)).lower()
 
 
 # https://www.bjcp.org/docs/2015_Guidelines_Beer.pdf
@@ -29,10 +30,11 @@ def create_human_readable_id(value: str) -> str:
 # https://www.dummies.com/food-drink/drinks/beer/beer-style-guidelines-hierarchy/
 class Style(models.Model):
     id = models.CharField(max_length=4, primary_key=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(default=None, blank=True, null=True, unique=True)
     name = models.CharField(max_length=255)
-    category = models.CharField(max_length=255)
+    parent_style = models.ForeignKey("self", on_delete=models.SET_NULL, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
+    alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
     abv_min = models.FloatField(default=None, blank=True, null=True)
     abv_max = models.FloatField(default=None, blank=True, null=True)
     ibu_min = models.IntegerField(default=None, blank=True, null=True)
@@ -48,7 +50,7 @@ class Style(models.Model):
     fermentation = models.CharField(max_length=255, default=None, blank=True, null=True)
     conditioning = models.CharField(max_length=255, default=None, blank=True, null=True)
     region_of_origin = models.CharField(max_length=255, default=None, blank=True, null=True)
-    style = models.CharField(max_length=255, default=None, blank=True, null=True)
+    family = models.CharField(max_length=255, default=None, blank=True, null=True)
     specialty_beer = models.BooleanField(default=False)
     era = models.CharField(max_length=255, default=None, blank=True, null=True)
     bitter_balances = models.CharField(max_length=255, default=None, blank=True, null=True)
@@ -68,9 +70,11 @@ class Fermentable(models.Model):
     category = models.CharField(max_length=32, default=None, blank=True, null=True)
     type = models.CharField(max_length=32, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
+    alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
+
 
     def save(self, *args, **kwargs) -> None:
-        if self.id is None:
+        if self.id == '':
             self.id = self.create_id(self.name)
         super().save(*args, **kwargs)
 
@@ -85,9 +89,10 @@ class Hop(models.Model):
     name = models.CharField(max_length=255)
     use = models.CharField(max_length=16, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
+    alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
 
     def save(self, *args, **kwargs) -> None:
-        if self.id is None:
+        if self.id == '':
             self.id = self.create_id(self.name)
         super().save(*args, **kwargs)
 
@@ -101,7 +106,7 @@ class Yeast(models.Model):
     name = models.CharField(max_length=255)
 
     def save(self, *args, **kwargs) -> None:
-        if self.id is None:
+        if self.id == '':
             self.id = self.create_id(self.name)
         super().save(*args, **kwargs)
 

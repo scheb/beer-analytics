@@ -3,6 +3,7 @@ import codecs
 import re
 from typing import Optional, Iterable
 
+# noinspection PyUnresolvedReferences
 import translitcodec
 
 from django.db import transaction
@@ -92,9 +93,16 @@ class Mapper(object):
 
             # Add alternative names
             if item.alt_names is not None:
-                alt_names = item.alt_names.split(",")
-                for alt_name in alt_names:
-                    self.mapping.add(alt_name, item)
+                self.add_alt_names(item.alt_names, item)
+            if item.alt_names_extra is not None:
+                self.add_alt_names(item.alt_names_extra, item)
+
+    def add_alt_names(self, alt_names: str, item: object):
+        alt_names = alt_names.split(",")
+        for alt_name in alt_names:
+            alt_name = alt_name.strip()
+            if alt_name != '':
+                self.mapping.add(alt_name, item)
 
     @transaction.atomic
     def map_list(self, item_list: iter) -> None:
@@ -294,7 +302,8 @@ class FermentablesMapper(Mapper):
 class StylesMapper(Mapper):
     def __init__(self) -> None:
         super().__init__()
-        self.create_mapping(Style.objects.all())
+        # Exclude top-level style categories in the mapping
+        self.create_mapping(Style.objects.filter().exclude(parent_style=None))
 
     def map_unmapped(self) -> None:
         recipes = Recipe.objects.filter(style_id=None)

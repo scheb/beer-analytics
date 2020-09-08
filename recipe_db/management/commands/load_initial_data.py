@@ -8,6 +8,12 @@ from django.core.management.base import BaseCommand
 from recipe_db.models import Style, Hop, Fermentable, create_human_readable_id
 
 
+def make_style_id(value):
+    if isinstance(value, int):
+        return '%02d' % value
+    return value
+
+
 class Command(BaseCommand):
     help = "Load initial date into the database"
 
@@ -25,13 +31,23 @@ def load_styles():
     csv_file = load_csv('styles.csv')
     header = next(csv_file)
 
+    styles = {}
     for row in csv_file:
         if len(row) == 1:
             continue  # Skip empty lines
 
-        style_id = create_human_readable_id(row[1])
         row = map(cast_values, row)
         data = dict(zip(header, row))
+
+        style_id = make_style_id(data['id'])
+        parent_style_id = make_style_id(data['parent_style_id'])
+        parent_style = None
+
+        if parent_style_id is not None:
+            if parent_style_id in styles:
+                parent_style = styles[parent_style_id]
+            else:
+                raise Exception("Could not find parent style {}".format(parent_style_id))
 
         try:
             style = Style.objects.get(pk=style_id)
@@ -39,10 +55,12 @@ def load_styles():
             style = Style()
             pass
 
-        style.id = style_id
         for field in data:
             setattr(style, field, data[field])
+        style.id = style_id
+        style.parent_style = parent_style
         style.save()
+        styles[style.id] = style
 
 
 def load_hops():
