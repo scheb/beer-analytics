@@ -43,6 +43,15 @@ def load_styles():
         parent_style_id = make_style_id(data['parent_style_id'])
         parent_style = None
 
+        if data['og_min'] is not None:
+            data['og_min'] /= 1000
+        if data['og_max'] is not None:
+            data['og_max'] /= 1000
+        if data['fg_min'] is not None:
+            data['fg_min'] /= 1000
+        if data['fg_max'] is not None:
+            data['fg_max'] /= 1000
+
         if parent_style_id is not None:
             if parent_style_id in styles:
                 parent_style = styles[parent_style_id]

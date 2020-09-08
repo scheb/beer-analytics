@@ -9,6 +9,8 @@ from django.core.validators import MaxValueValidator, BaseValidator, MinValueVal
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from recipe_db.formulas import ebc_to_srm, srm_to_ebc, plato_to_gravity, gravity_to_plato
+
 
 class GreaterThanValueValidator(BaseValidator):
     message = _('Ensure this value is greater than %(limit_value)s (it is %(show_value)s).')
@@ -30,21 +32,57 @@ def create_human_readable_id(value: str) -> str:
 # https://www.dummies.com/food-drink/drinks/beer/beer-style-guidelines-hierarchy/
 class Style(models.Model):
     id = models.CharField(max_length=4, primary_key=True)
-    slug = models.SlugField(default=None, blank=True, null=True, unique=True)
+    slug = models.SlugField()
     name = models.CharField(max_length=255)
     parent_style = models.ForeignKey("self", on_delete=models.SET_NULL, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
     alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
+
+    # Metrics
     abv_min = models.FloatField(default=None, blank=True, null=True)
     abv_max = models.FloatField(default=None, blank=True, null=True)
-    ibu_min = models.IntegerField(default=None, blank=True, null=True)
-    ibu_max = models.IntegerField(default=None, blank=True, null=True)
+    ibu_min = models.FloatField(default=None, blank=True, null=True)
+    ibu_max = models.FloatField(default=None, blank=True, null=True)
+    ebc_min = models.FloatField(default=None, blank=True, null=True)
+    ebc_max = models.FloatField(default=None, blank=True, null=True)
     srm_min = models.FloatField(default=None, blank=True, null=True)
     srm_max = models.FloatField(default=None, blank=True, null=True)
-    og_min = models.IntegerField(default=None, blank=True, null=True)
-    og_max = models.IntegerField(default=None, blank=True, null=True)
-    fg_min = models.IntegerField(default=None, blank=True, null=True)
-    fg_max = models.IntegerField(default=None, blank=True, null=True)
+    og_min = models.FloatField(default=None, blank=True, null=True)
+    og_max = models.FloatField(default=None, blank=True, null=True)
+    original_plato_min = models.FloatField(default=None, blank=True, null=True)
+    original_plato_max = models.FloatField(default=None, blank=True, null=True)
+    fg_min = models.FloatField(default=None, blank=True, null=True)
+    fg_max = models.FloatField(default=None, blank=True, null=True)
+    final_plato_min = models.FloatField(default=None, blank=True, null=True)
+    final_plato_max = models.FloatField(default=None, blank=True, null=True)
+
+    # Calculated metrics from recipes
+    recipes_abv_min = models.FloatField(default=None, blank=True, null=True)
+    recipes_abv_mean = models.FloatField(default=None, blank=True, null=True)
+    recipes_abv_max = models.FloatField(default=None, blank=True, null=True)
+    recipes_ibu_min = models.FloatField(default=None, blank=True, null=True)
+    recipes_ibu_mean = models.FloatField(default=None, blank=True, null=True)
+    recipes_ibu_max = models.FloatField(default=None, blank=True, null=True)
+    recipes_ebc_min = models.FloatField(default=None, blank=True, null=True)
+    recipes_ebc_mean = models.FloatField(default=None, blank=True, null=True)
+    recipes_ebc_max = models.FloatField(default=None, blank=True, null=True)
+    recipes_srm_min = models.FloatField(default=None, blank=True, null=True)
+    recipes_srm_mean = models.FloatField(default=None, blank=True, null=True)
+    recipes_srm_max = models.FloatField(default=None, blank=True, null=True)
+    recipes_og_min = models.FloatField(default=None, blank=True, null=True)
+    recipes_og_mean = models.FloatField(default=None, blank=True, null=True)
+    recipes_og_max = models.FloatField(default=None, blank=True, null=True)
+    recipes_original_plato_min = models.FloatField(default=None, blank=True, null=True)
+    recipes_original_plato_mean = models.FloatField(default=None, blank=True, null=True)
+    recipes_original_plato_max = models.FloatField(default=None, blank=True, null=True)
+    recipes_fg_min = models.FloatField(default=None, blank=True, null=True)
+    recipes_fg_mean = models.FloatField(default=None, blank=True, null=True)
+    recipes_fg_max = models.FloatField(default=None, blank=True, null=True)
+    recipes_final_plato_min = models.FloatField(default=None, blank=True, null=True)
+    recipes_final_plato_mean = models.FloatField(default=None, blank=True, null=True)
+    recipes_final_plato_max = models.FloatField(default=None, blank=True, null=True)
+
+    # Classifications
     strength = models.CharField(max_length=255, default=None, blank=True, null=True)
     color = models.CharField(max_length=255, default=None, blank=True, null=True)
     fermentation = models.CharField(max_length=255, default=None, blank=True, null=True)
@@ -59,9 +97,32 @@ class Style(models.Model):
     smoke_roast = models.CharField(max_length=255, default=None, blank=True, null=True)
 
     def save(self, *args, **kwargs) -> None:
-        if self.slug is None:
+        if self.slug == '':
             self.slug = create_human_readable_id(self.name)
+
+        self.derive_missing_values('ebc', 'srm', ebc_to_srm)
+        self.derive_missing_values('srm', 'ebc', srm_to_ebc)
+        self.derive_missing_values('original_plato', 'og', plato_to_gravity)
+        self.derive_missing_values('og', 'original_plato', gravity_to_plato)
+        self.derive_missing_values('final_plato', 'fg', plato_to_gravity)
+        self.derive_missing_values('fg', 'final_plato', gravity_to_plato)
+
         super().save(*args, **kwargs)
+
+    def ids_including_sub_styles(self) -> iter:
+        yield self.id
+        for style in self.style_set.all():
+            yield from style.ids_including_sub_styles()
+
+    def derive_missing_values(self, from_field: str, to_field: str, calc_function: callable) -> None:
+        fields = ['{}_min', '{}_max', 'recipes_{}_min', 'recipes_{}_mean', 'recipes_{}_max']
+        for pattern in fields:
+            to_field_name = pattern.format(to_field)
+            if getattr(self, to_field_name) is None:
+                from_field_name = pattern.format(from_field)
+                from_field_value = getattr(self, from_field_name)
+                if from_field_value is not None:
+                    setattr(self, to_field_name, calc_function(from_field_value))
 
 
 class Fermentable(models.Model):
