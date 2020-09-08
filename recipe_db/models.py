@@ -1,5 +1,9 @@
 import datetime
+import re
 
+# noinspection PyUnresolvedReferences
+import translitcodec
+import codecs
 from django.core.validators import MaxValueValidator, BaseValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -13,15 +17,20 @@ class GreaterThanValueValidator(BaseValidator):
         return a <= b
 
 
+def create_human_readable_id(value: str) -> str:
+    value = codecs.encode(value, 'translit/long')
+    return re.sub('[\\s-]+', '_', re.sub('[^\\w\\s-]', '', value)).lower()
+
+
 # https://www.bjcp.org/docs/2015_Guidelines_Beer.pdf
 # -> https://www.bjcp.org/docs/2015_Guidelines.xlsx
 # -> https://www.bjcp.org/docs/2015_Styles.xlsx
 # https://www.brewersassociation.org/edu/brewers-association-beer-style-guidelines/
 # https://www.dummies.com/food-drink/drinks/beer/beer-style-guidelines-hierarchy/
 class Style(models.Model):
-    id = models.CharField(max_length=255, primary_key=True)
+    id = models.CharField(max_length=4, primary_key=True)
+    slug = models.SlugField(unique=True)
     name = models.CharField(max_length=255)
-    bjcp_id = models.CharField(max_length=4)
     category = models.CharField(max_length=255)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
     abv_min = models.FloatField(default=None, blank=True, null=True)
@@ -47,6 +56,11 @@ class Style(models.Model):
     spice = models.CharField(max_length=255, default=None, blank=True, null=True)
     smoke_roast = models.CharField(max_length=255, default=None, blank=True, null=True)
 
+    def save(self, *args, **kwargs) -> None:
+        if self.slug is None:
+            self.slug = create_human_readable_id(self.name)
+        super().save(*args, **kwargs)
+
 
 class Fermentable(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
@@ -54,6 +68,15 @@ class Fermentable(models.Model):
     category = models.CharField(max_length=32, default=None, blank=True, null=True)
     type = models.CharField(max_length=32, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
+
+    def save(self, *args, **kwargs) -> None:
+        if self.id is None:
+            self.id = self.create_id(self.name)
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def create_id(cls, name: str) -> str:
+        return create_human_readable_id(name)
 
 
 # http://www.hopslist.com/hops/
@@ -63,10 +86,28 @@ class Hop(models.Model):
     use = models.CharField(max_length=16, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
 
+    def save(self, *args, **kwargs) -> None:
+        if self.id is None:
+            self.id = self.create_id(self.name)
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def create_id(cls, name: str) -> str:
+        return create_human_readable_id(name)
+
 
 class Yeast(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     name = models.CharField(max_length=255)
+
+    def save(self, *args, **kwargs) -> None:
+        if self.id is None:
+            self.id = self.create_id(self.name)
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def create_id(cls, name: str) -> str:
+        return create_human_readable_id(name)
 
 
 class Recipe(models.Model):
@@ -96,26 +137,6 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.uid
-
-    @classmethod
-    def get_uid(cls, uid: str):
-        return cls.objects.get(uid=uid)
-
-    @classmethod
-    def exists_uid(cls, uid) -> bool:
-        try:
-            cls.get_uid(uid)
-            return True
-        except cls.DoesNotExist:
-            return False
-
-    @classmethod
-    def delete_uid(cls, uid: str) -> None:
-        try:
-            recipe = cls.get_uid(uid)
-            recipe.delete()
-        except cls.DoesNotExist:
-            pass
 
 
 class RecipeFermentable(models.Model):

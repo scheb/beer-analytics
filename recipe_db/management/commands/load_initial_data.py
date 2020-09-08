@@ -1,13 +1,11 @@
 import csv
-import re
-import translitcodec
-import codecs
+
 from os import path
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from recipe_db.models import Style, Hop, Fermentable
+from recipe_db.models import Style, Hop, Fermentable, create_human_readable_id
 
 
 class Command(BaseCommand):
@@ -55,7 +53,7 @@ def load_hops():
         if len(row) == 1:
             continue  # Skip empty lines
 
-        hop_id = create_human_readable_id(row[0])
+        hop_id = Hop.create_id(row[0])
         row = map(cast_values, row)
         data = dict(zip(header, row))
 
@@ -65,7 +63,6 @@ def load_hops():
             hop = Hop()
             pass
 
-        hop.id = hop_id
         for field in data:
             setattr(hop, field, data[field])
         hop.save()
@@ -79,7 +76,7 @@ def load_fermentables():
         if len(row) == 1:
             continue  # Skip empty lines
 
-        fermentable_id = create_human_readable_id(row[0])
+        fermentable_id = Fermentable.create_id(row[0])
         row = map(cast_values, row)
         data = dict(zip(header, row))
 
@@ -89,7 +86,6 @@ def load_fermentables():
             fermentable = Fermentable()
             pass
 
-        fermentable.id = fermentable_id
         for field in data:
             setattr(fermentable, field, data[field])
         fermentable.save()
@@ -115,11 +111,6 @@ def cast_values(value):
         pass
 
     return value
-
-
-def create_human_readable_id(value: str) -> str:
-    value = codecs.encode(value, 'translit/long')
-    return re.sub('[\\s-]+', '_', re.sub('[^\\w\\s-]', '', value)).lower()
 
 
 def load_csv(file_name: str):

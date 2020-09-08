@@ -91,11 +91,12 @@ class RecipeFileProcessor:
 
     def import_recipe_from_file(self, file_paths: List[str], uid: str) -> Tuple[Recipe, bool]:
         # Clear the existing recipe if necessary, otherwise skip
-        if Recipe.exists_uid(uid):
+        existing_recipes = Recipe.objects.filter(pk=uid)
+        if existing_recipes.count() > 0:
             if self.replace_existing:
-                Recipe.delete_uid(uid)
+                existing_recipes.delete()
             else:
-                return Recipe.get_uid(uid), False
+                return Recipe.objects.get(pk=uid), False
 
         result = ParserResult()
         parsing_steps = zip(file_paths, self.format_parsers)
