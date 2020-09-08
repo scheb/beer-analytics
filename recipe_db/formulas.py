@@ -33,3 +33,19 @@ def alcohol_by_volume(original_gravity, final_gravity):
     Calculate the Alcohol By Volume (ABV).
     """
     return (original_gravity - final_gravity) / 0.75
+
+
+def attenuation_to_final_plato(attenuation: float, original_plato: float):
+    """
+    Calculate the final degrees plato based on attenuation and original plato.
+    """
+    apparent_attenuation = attenuation / 0.81
+    return original_plato - original_plato * apparent_attenuation
+
+
+def abv_to_to_final_plato(abv: float, original_plato: float):
+    """
+    Calculate the final degrees plato based on abv and original plato.
+    """
+    fg = plato_to_gravity(original_plato) - (abv / 131.25)
+    return gravity_to_plato(fg)

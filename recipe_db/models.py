@@ -187,11 +187,15 @@ class Recipe(models.Model):
     # Characteristics
     style = models.ForeignKey(Style, on_delete=models.SET_NULL, default=None, blank=True, null=True)
     style_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
-    extract_efficiency_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
-    extract_plato = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
+    extract_efficiency = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
+    og = models.FloatField(default=None, blank=True, null=True, validators=[MinValueValidator(0.95), MaxValueValidator(1.5)])
+    fg = models.FloatField(default=None, blank=True, null=True, validators=[MinValueValidator(0.95), MaxValueValidator(1.5)])
+    original_plato = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
+    final_plato = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
     abv = models.FloatField(default=None, blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
-    ebc = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    ibu = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    ebc = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    srm = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    ibu = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
 
     # Mashing
     mash_water = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
@@ -200,6 +204,22 @@ class Recipe(models.Model):
     # Boiling
     boiling_time = models.IntegerField(default=None, blank=True, null=True, validators=[MinValueValidator(0)])
     cast_out_wort = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+
+    def save(self, *args, **kwargs) -> None:
+        self.derive_missing_values('ebc', 'srm', ebc_to_srm)
+        self.derive_missing_values('srm', 'ebc', srm_to_ebc)
+        self.derive_missing_values('original_plato', 'og', plato_to_gravity)
+        self.derive_missing_values('og', 'original_plato', gravity_to_plato)
+        self.derive_missing_values('final_plato', 'fg', plato_to_gravity)
+        self.derive_missing_values('fg', 'final_plato', gravity_to_plato)
+
+        super().save(*args, **kwargs)
+
+    def derive_missing_values(self, from_field_name: str, to_field_name: str, calc_function: callable) -> None:
+        if getattr(self, to_field_name) is None:
+            from_field_value = getattr(self, from_field_name)
+            if from_field_value is not None:
+                setattr(self, to_field_name, calc_function(from_field_value))
 
     def __str__(self):
         return self.uid

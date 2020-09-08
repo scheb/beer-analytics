@@ -3,6 +3,7 @@ from json import JSONDecodeError
 from math import ceil
 
 from recipe_db.format.parser import JsonParser, clean_kind, FormatParser, ParserResult, MalformedDataError
+from recipe_db.formulas import attenuation_to_final_plato, abv_to_to_final_plato
 from recipe_db.models import Recipe, RecipeYeast, RecipeFermentable, RecipeHop
 
 
@@ -28,11 +29,12 @@ class MmumParser(FormatParser):
 
         # Characteristics
         recipe.style_raw = json_data.string_or_none('Sorte')
-        recipe.extract_efficiency_percent = json_data.float_or_none('Sudhausausbeute')
-        recipe.extract_plato = json_data.float_or_none('Stammwuerze')
+        recipe.extract_efficiency = json_data.float_or_none('Sudhausausbeute')
         recipe.abv = json_data.float_or_none('Alkohol')
         recipe.ebc = json_data.int_or_none('Farbe')
         recipe.ibu = json_data.int_or_none('Bittere')
+        recipe.original_plato = json_data.float_or_none('Stammwuerze')
+        recipe.final_plato = self.get_final_plato(json_data, recipe)
 
         # Mashing
         recipe.mash_water = json_data.float_or_none('Infusion_Hauptguss')
@@ -43,6 +45,20 @@ class MmumParser(FormatParser):
         recipe.boiling_time = json_data.int_or_none('Kochzeit_Wuerze')
 
         return recipe
+
+    def get_final_plato(self, json_data: JsonParser, recipe: Recipe):
+        if recipe.original_plato is None:
+            return None
+
+        if recipe.abv is not None:
+            return abv_to_to_final_plato(recipe.abv, recipe.original_plato)
+
+        attenuation = json_data.int_or_none('Endvergaerungsgrad')
+        if attenuation is not None:
+            return attenuation_to_final_plato(attenuation / 100, recipe.original_plato)
+
+        return None
+
 
     def get_fermentables(self, json_data: JsonParser) -> iter:
         i = 1

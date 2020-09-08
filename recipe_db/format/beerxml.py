@@ -8,6 +8,7 @@ from pybeerxml.hop import Hop
 
 from recipe_db.format.parser import FormatParser, ParserResult, float_or_none, int_or_none, clean_kind, \
     MalformedDataError
+from recipe_db.formulas import gravity_to_plato, srm_to_ebc
 from recipe_db.models import Recipe, RecipeYeast, RecipeFermentable, RecipeHop
 
 
@@ -49,11 +50,12 @@ class BeerXMLParser(FormatParser):
 
         # Characteristics
         recipe.style_raw = self.fix_encoding(beerxml.style.name)
-        recipe.extract_efficiency_percent = beerxml.efficiency
-        recipe.extract_plato = self.get_og_plato(beerxml, recipe_node)
+        recipe.extract_efficiency = beerxml.efficiency
+        recipe.og = self.get_og(beerxml, recipe_node)
+        recipe.fg = self.get_fg(beerxml, recipe_node)
         recipe.abv = self.get_abv(beerxml, recipe_node)
-        recipe.ebc = self.get_ebc(beerxml, recipe_node)
         recipe.ibu = self.get_ibu(beerxml, recipe_node)
+        (recipe.srm, recipe.ebc) = self.get_srm_ebc(beerxml, recipe_node)
 
         # Mashing
         (recipe.mash_water, recipe.sparge_water) = self.get_mash_water(beerxml)
@@ -71,34 +73,34 @@ class BeerXMLParser(FormatParser):
             return str(value)
         return value.encode(locale.getpreferredencoding(False)).decode("utf-8")
 
-    def get_og_plato(self, beerxml: BeerXMLRecipe, recipe_node: Element):
-        sg = self.get_og_sg(beerxml, recipe_node)
-        return round((-616.868) + (1111.14 * sg) - (630.272 * sg ** 2) + (135.997 * sg ** 3), 2)
-
-    def get_og_sg(self, beerxml: BeerXMLRecipe, recipe_node: Element):
+    def get_og(self, beerxml: BeerXMLRecipe, recipe_node: Element):
         og = float_or_none(self.child_element_value(recipe_node, 'og'))
         if og is not None:
             return og
 
         return beerxml.og
 
-    def get_ebc(self, beerxml: BeerXMLRecipe, recipe_node: Element):
-        (srm1, ebc) = self.get_color_metrics(recipe_node, 'color')
-        if ebc is not None:
-            return ebc
+    def get_fg(self, beerxml: BeerXMLRecipe, recipe_node: Element):
+        og = float_or_none(self.child_element_value(recipe_node, 'fg'))
+        if og is not None:
+            return og
 
-        (srm2, ebc) = self.get_color_metrics(recipe_node, 'est_color')
-        if ebc is not None:
-            return ebc
+        return beerxml.fg
 
-        if srm1 is not None:
-            return self.srm_to_ebc(srm1)
+    def get_srm_ebc(self, beerxml: BeerXMLRecipe, recipe_node: Element):
+        srm = None
+        ebc = None
 
-        if srm2 is not None:
-            return self.srm_to_ebc(srm2)
+        (srm, ebc) = self.get_color_metrics(recipe_node, 'color')
+        if ebc is not None or srm is not None:
+            return srm, ebc
+
+        (srm, ebc) = self.get_color_metrics(recipe_node, 'est_color')
+        if ebc is not None or srm is not None:
+            return srm, ebc
 
         # Use calculated value
-        return self.srm_to_ebc(beerxml.color)
+        return beerxml.color, None
 
     def get_color_metrics(self, recipe_node: Element, element_name: str):
         ebc = None
@@ -112,10 +114,6 @@ class BeerXMLParser(FormatParser):
                 srm = float_or_none(color_node_value)
         return srm, ebc
 
-    def srm_to_ebc(self, srm):
-        # SRM to EBC, http://www.hillybeer.com/color/
-        return srm * 1.97
-
     def get_ibu(self, beerxml: BeerXMLRecipe, recipe_node: Element):
         ibu = int_or_none(self.child_element_value(recipe_node, 'ibu'))
         if ibu is not None:
@@ -125,20 +123,20 @@ class BeerXMLParser(FormatParser):
         return ibu if ibu > 0 else None
 
     def get_abv(self, beerxml: BeerXMLRecipe, recipe_node: Element):
-        abv = float_or_none(self.strip_unit(self.child_element_value(recipe_node, 'abv')))
+        abv = float_or_none(self.strip_abv_unit(self.child_element_value(recipe_node, 'abv')))
         if abv is not None:
             return abv
 
-        abv = float_or_none(self.strip_unit(self.child_element_value(recipe_node, 'est_abv')))
+        abv = float_or_none(self.strip_abv_unit(self.child_element_value(recipe_node, 'est_abv')))
         if abv is not None:
             return abv
 
         return beerxml.abv
 
-    def strip_unit(self, value):
+    def strip_abv_unit(self, value):
         if value is None:
             return None
-        return value.replace('%vol', '')
+        return value.replace('%', '').replace('vol', '').strip()
 
     def child_element_value(self, node: Element, tag_name: str) -> Optional[str]:
         child_node = self.find_child_element(node, tag_name)
