@@ -110,11 +110,6 @@ class Style(models.Model):
 
         super().save(*args, **kwargs)
 
-    def ids_including_sub_styles(self) -> iter:
-        yield self.id
-        for style in self.style_set.all():
-            yield from style.ids_including_sub_styles()
-
     def derive_missing_values(self, from_field: str, to_field: str, calc_function: callable) -> None:
         fields = ['{}_min', '{}_max', 'recipes_{}_min', 'recipes_{}_mean', 'recipes_{}_max']
         for pattern in fields:
@@ -124,6 +119,11 @@ class Style(models.Model):
                 from_field_value = getattr(self, from_field_name)
                 if from_field_value is not None:
                     setattr(self, to_field_name, calc_function(from_field_value))
+
+    def ids_including_sub_styles(self) -> iter:
+        yield self.id
+        for style in self.style_set.all():
+            yield from style.ids_including_sub_styles()
 
 
 class Fermentable(models.Model):
