@@ -30,7 +30,7 @@ class MmumParser(FormatParser):
         recipe.style_raw = json_data.string_or_none('Sorte')
         recipe.extract_efficiency_percent = json_data.float_or_none('Sudhausausbeute')
         recipe.extract_plato = json_data.float_or_none('Stammwuerze')
-        recipe.alc_percent = json_data.float_or_none('Alkohol')
+        recipe.abv = json_data.float_or_none('Alkohol')
         recipe.ebc = json_data.int_or_none('Farbe')
         recipe.ibu = json_data.int_or_none('Bittere')
 

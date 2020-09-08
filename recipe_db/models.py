@@ -128,7 +128,7 @@ class Recipe(models.Model):
     style_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
     extract_efficiency_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
     extract_plato = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
-    alc_percent = models.FloatField(default=None, blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    abv = models.FloatField(default=None, blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
     ebc = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     ibu = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
 

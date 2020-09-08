@@ -51,7 +51,7 @@ class BeerXMLParser(FormatParser):
         recipe.style_raw = self.fix_encoding(beerxml.style.name)
         recipe.extract_efficiency_percent = beerxml.efficiency
         recipe.extract_plato = self.get_og_plato(beerxml, recipe_node)
-        recipe.alc_percent = self.get_abv(beerxml, recipe_node)
+        recipe.abv = self.get_abv(beerxml, recipe_node)
         recipe.ebc = self.get_ebc(beerxml, recipe_node)
         recipe.ibu = self.get_ibu(beerxml, recipe_node)
 
