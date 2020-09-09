@@ -1,5 +1,5 @@
-beer-analytics 🍺
-=================
+beer-analytics 🕵️🍺
+===================
 
 Web application written in Django to **analyze beers recipes and visualize results**.
 
