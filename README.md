@@ -1,7 +1,7 @@
 beer-analytics 🕵️🍺
 ===================
 
-Web application written in Django to **analyze beers recipes and visualize results**.
+Django application to **analyze beers recipes and visualize results**.
 
 The goal is to expand the knowledge how different beer styles are typically brewed and potentially uncover trends in
 craft/home brewing.
