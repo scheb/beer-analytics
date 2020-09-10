@@ -95,7 +95,7 @@ class RecipeFileProcessor:
         self,
          importer: RecipeImporter,
         format_parsers: List[FormatParser],
-        post_processors: List[ResultPostProcessor],
+        post_processors: List[ResultPostProcessor] = None,
         replace_existing=False
     ) -> None:
         self.importer = importer
@@ -119,8 +119,9 @@ class RecipeFileProcessor:
             if file_path is not None:
                 parser.parse(result, file_path)
 
-        for post_processor in self.post_processors:
-            post_processor.process(result)
+        if self.post_processors is not None:
+            for post_processor in self.post_processors:
+                post_processor.process(result)
 
         self.importer.import_recipe(uid, result)
         return result.recipe, True
