@@ -271,11 +271,10 @@ class FermentableMapper(GenericMapper):
                 yield number_name
 
 
-class StyleMapper(GenericMapper, ABC):
-    def __init__(self) -> None:
+class GenericStyleMapper(GenericMapper, ABC):
+    def __init__(self, styles: iter) -> None:
         super().__init__()
-        # Exclude top-level style categories in the mapping
-        self.create_mapping(Style.objects.filter().exclude(parent_style=None))
+        self.create_mapping(styles)
 
     def clean_name(self, value: str) -> str:
         if value is None:
@@ -310,12 +309,70 @@ class StyleMapper(GenericMapper, ABC):
                 yield re.sub('\\bipa\\b', 'india pale ale', name)
 
 
-class RawStyleMapper(StyleMapper):
+class AssignedStyleMapper(GenericStyleMapper):
+    def __init__(self) -> None:
+        # Exclude top-level style categories in the mapping
+        super().__init__(Style.objects.filter().exclude(parent_style=None))
+
     def get_clean_name(self, item: Recipe) -> str:
         return self.clean_name(item.style_raw)
 
 
-class NameStyleMapper(StyleMapper):
+class StyleMapper(Mapper):
+    def __init__(self) -> None:
+        self.assigned_style_mapper = AssignedStyleMapper()
+        self.sub_style_mappers = {}
+
+        styles = Style.objects.filter().exclude(parent_style=None)
+        for style in styles:
+            if style.has_sub_styles:
+                self.sub_style_mappers[style.id] = RecipeNameSubStyleMapper(style.sub_styles)
+
+    def map_item(self, item: Recipe) -> Optional[object]:
+        main_style = self.assigned_style_mapper.map_item(item)
+        if main_style is None:
+            return None
+
+        assert isinstance(main_style, Style)
+        main_style_id = main_style.id
+        if main_style_id not in self.sub_style_mappers:
+            return main_style
+
+        sub_style = self.sub_style_mappers[main_style_id].map_item(item)
+        if sub_style is not None:
+            return sub_style
+
+        return main_style
+
+
+class RecipeNameStyleExactMatchMapper(GenericStyleMapper):
+    def __init__(self) -> None:
+        # Exclude top-level style categories in the mapping
+        super().__init__(Style.objects.filter().exclude(parent_style=None))
+
+    def map_item_name(self, item_name: str) -> Optional[object]:
+        # Exact match only!
+        if match := self.match_extact(item_name):
+            return match
+        return None
+
+    def get_clean_name(self, item: Recipe) -> str:
+        return self.clean_name(item.name)
+
+
+class RecipeNameStyleMapper(GenericStyleMapper):
+    def __init__(self) -> None:
+        # Exclude top-level style categories in the mapping
+        super().__init__(Style.objects.filter().exclude(parent_style=None))
+
+    def get_clean_name(self, item: Recipe) -> str:
+        return self.clean_name(item.name)
+
+
+class RecipeNameSubStyleMapper(GenericStyleMapper):
+    def __init__(self, sub_styles: iter) -> None:
+        super().__init__(sub_styles)
+
     def get_clean_name(self, item: Recipe) -> str:
         return self.clean_name(item.name)
 
