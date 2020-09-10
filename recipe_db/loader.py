@@ -1,3 +1,4 @@
+import abc
 from typing import Tuple, List
 
 from django.core.exceptions import ValidationError
@@ -5,6 +6,12 @@ from django.db import transaction
 
 from recipe_db.format.parser import FormatParser, ParserResult
 from recipe_db.models import Recipe, RecipeHop, RecipeFermentable, RecipeYeast
+
+
+class ResultPostProcessor:
+    @abc.abstractmethod
+    def process(self, result: ParserResult) -> None:
+        raise NotImplementedError
 
 
 class RecipeImporter:
@@ -84,9 +91,16 @@ class RecipeImporter:
 
 
 class RecipeFileProcessor:
-    def __init__(self, importer: RecipeImporter, format_parsers: List[FormatParser], replace_existing=False) -> None:
+    def __init__(
+        self,
+         importer: RecipeImporter,
+        format_parsers: List[FormatParser],
+        post_processors: List[ResultPostProcessor],
+        replace_existing=False
+    ) -> None:
         self.importer = importer
         self.format_parsers = format_parsers
+        self.post_processors = post_processors
         self.replace_existing = replace_existing
 
     def import_recipe_from_file(self, file_paths: List[str], uid: str) -> Tuple[Recipe, bool]:
@@ -104,6 +118,9 @@ class RecipeFileProcessor:
             (file_path, parser) = parsing_step
             if file_path is not None:
                 parser.parse(result, file_path)
+
+        for post_processor in self.post_processors:
+            post_processor.process(result)
 
         self.importer.import_recipe(uid, result)
         return result.recipe, True
