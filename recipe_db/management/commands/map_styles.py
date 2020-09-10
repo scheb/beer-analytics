@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from recipe_db.mapping import StylesMapper
+from recipe_db.mapping import StylesProcessor, RawStyleMapper, NameStyleMapper
 
 
 class Command(BaseCommand):
@@ -11,7 +11,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         map_all = options['all']
-        style_mapper = StylesMapper()
+        style_mapper = StylesProcessor([RawStyleMapper(), NameStyleMapper()])
 
         if map_all:
             self.stdout.write("Mapping all styles")

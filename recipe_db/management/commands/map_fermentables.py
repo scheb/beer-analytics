@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from recipe_db.mapping import FermentablesMapper
+from recipe_db.mapping import FermentablesProcessor, FermentableMapper
 
 
 class Command(BaseCommand):
@@ -11,7 +11,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         map_all = options['all']
-        fermentables_mapper = FermentablesMapper()
+        fermentables_mapper = FermentablesProcessor([FermentableMapper()])
 
         if map_all:
             self.stdout.write("Mapping all fermentables")
