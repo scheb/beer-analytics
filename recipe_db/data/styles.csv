@@ -15,7 +15,7 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 03D;3;Czech Dark Lager;;Böhmisches Dunkel;4.4;5.8;18;34;14.0;35.0;1044;1060;1013;1017;standard;dark;bottom;lagered;central_europe;dark_lager;false;traditional;balanced;;;
 4;;Pale Malty European Lager;;;;;;;;;;;;;;;;;;;false;;;;;
 04A;4;Munich Helles;;Münchner Helles, Helles;4.7;5.4;16;22;3.0;5.0;1044;1048;1006;1012;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;malty;;;
-04B;4;Festbier;;;5.8;6.3;18;25;4.0;7.0;1054;1057;1010;1012;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;malty;;;
+04B;4;Festbier;;Oktoberfest;5.8;6.3;18;25;4.0;7.0;1054;1057;1010;1012;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;malty;;;
 04C;4;Helles Bock;Traditional Bock;Traditioneller Bock, Maibock;6.3;7.4;23;35;6.0;11.0;1064;1072;1011;1018;high;pale;bottom;lagered;central_europe;bock;false;traditional;malty;;;
 5;;Pale Bitter European Beer;;;;;;;;;;;;;;;;;;;false;;;;;
 05A;5;German Leichtbier;;;2.4;3.6;15;28;2.0;5.0;1026;1034;1006;1010;session;pale;bottom;lagered;central_europe;pale_lager;false;traditional;bitter;hoppy;;
@@ -75,10 +75,10 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 17D;17;English Barleywine;;;8.0;12.0;35;70;8.0;22.0;1080;1120;1018;1030;very_high;amber;top;;british_isles;strong_ale;false;traditional;malty;;;
 18;;Pale American Ale;;;;;;;;;;;;;;;;;;;false;;;;;
 18A;18;Blonde Ale;;;3.8;5.5;15;28;3.0;6.0;1038;1054;1008;1013;standard;pale;any;;north_america;pale_ale;false;craft;balanced;;;
-18B;18;American Pale Ale;;Amerikanisches Pale Ale, Pale Ale;4.5;6.2;30;50;5.0;10.0;1045;1060;1010;1015;standard;pale;top;;north_america;pale_ale;false;craft;bitter;hoppy;;
+18B;18;American Pale Ale;;Amerikanisches Pale Ale, Pale Ale, APA;4.5;6.2;30;50;5.0;10.0;1045;1060;1010;1015;standard;pale;top;;north_america;pale_ale;false;craft;bitter;hoppy;;
 19;;Amber and Brown American Beer;;;;;;;;;;;;;;;;;;;false;;;;;
 19A;19;American Amber Ale;;Amerikanisches Amber Ale, Amber Ale;4.5;6.2;25;40;10.0;17.0;1045;1060;1010;1015;standard;amber;top;;north_america;amber_ale;false;craft;balanced;hoppy;;
-19B;19;California Common ;;;4.5;5.5;30;45;10.0;14.0;1048;1054;1011;1014;standard;amber;bottom;;north_america;amber_ale;false;traditional;bitter;hoppy;;
+19B;19;California Common ;;Cali Common;4.5;5.5;30;45;10.0;14.0;1048;1054;1011;1014;standard;amber;bottom;;north_america;amber_ale;false;traditional;bitter;hoppy;;
 19C;19;American Brown Ale;;Amerikanisches Brown Ale;4.3;6.2;20;30;18.0;35.0;1045;1060;1010;1016;standard;dark;top;;north_america;brown_ale;false;craft;balanced;hoppy;;
 20;;American Porter and Stout;;;;;;;;;;;;;;;;;;;false;;;;;
 20A;20;American Porter;Robust Porter;;4.8;6.5;25;50;22.0;40.0;1050;1070;1012;1018;standard;dark;top;;north_america;porter;false;craft;bitter;hoppy;;roasty
@@ -87,7 +87,7 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 21;;IPA;;;;;;;;;;;;;;;;;;;false;;;;;
 21A;21;American IPA;;Amerikanisches IPA;5.5;7.5;40;70;6.0;14.0;1056;1070;1008;1014;high;pale;top;;north_america;ipa;false;craft;bitter;hoppy;;
 21A1;21A;New England IPA;NEIPA;Specialty IPA: New England IPA;6.0;9.0;25;60;3.0;7.0;1060;1085;1010;1015;high;pale;top;;north_america;ipa;false;craft;bitter;hoppy;;
-21A2;21A;West Coast IPA;;IPA West Coast;;;;;;;;;;;high;pale;top;;north_america;ipa;false;craft;bitter;hoppy;;
+21A2;21A;West Coast IPA;;IPA West Coast, W Coast IPA;;;;;;;;;;;high;pale;top;;north_america;ipa;false;craft;bitter;hoppy;;
 21B;21;Specialty IPA;Session IPA;IPA Specialty;5.5;9.5;40;100;5.0;40.0;1050;1085;1008;1018;high;;top;;north_america;ipa;true;craft;bitter;hoppy;;
 21B1;21B;Belgian IPA;;IPA Belgian, Specialty IPA: Belgian IPA;6.2;9.5;50;100;5.0;15.0;1058;1080;1008;1016;high;pale;top;;north_america;ipa;true;craft;bitter;hoppy;;
 21B2;21B;Black IPA;Cascadian Dark Ale;IPA Black, Specialty IPA: Black IPA;5.5;9.0;50;90;25.0;40.0;1050;1085;1010;1018;high;dark;top;;north_america;ipa;true;craft;bitter;hoppy;;
