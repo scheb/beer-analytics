@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% load style_extras %}
+{% load l10n %}
+
+{% block title %}Beer Styles{% endblock %}
+
+{% block content %}
+    {% include './breadcrumb.html' %}
+    <h1 class="mr-auto"><small class="text-muted" title="BJCP ID">{{ style.id }}</small> {{ style.name }}</h1>
+
+    {% if style.alt_names %}
+        <p>Alternative names: <strong>{{ style.alt_names_list|join:'</strong>, <strong>' }}</strong></p>
+    {% endif %}
+
+
+    {% localize on %}
+        {% if style.recipes_count %}
+            <p>Number of recipes: <strong>{{ style.recipes_count }}</strong></p>
+        {% endif %}
+    {% endlocalize %}
+
+    {% if style.is_category %}
+        <p>This is a <strong>beer style category</strong>, containing the following beer styles:</p>
+    {% elif style.has_sub_styles %}
+        <p>This beer style has some specialized <strong>sub-styles</strong>:</p>
+    {% endif %}
+
+    {% if style.has_sub_styles %}
+        <ul>
+            {% for style1 in style.sub_styles %}
+                <li>
+                    <small class="text-muted" title="BJCP ID">{{ style1.id }}</small>
+                    <a href="{% url "style_detail" style1.category.slug style1.slug %}">{{ style1.name }}</a>
+                    {% if style1.has_sub_styles %}
+                        <ul class="list-unstyled mt-1 mb-2 ml-2">
+                            {% for style2 in style1.sub_styles %}
+                                <li><small class="text-muted" title="BJCP ID">{{ style2.id }}</small>
+                                    <a href="{% url "style_detail" style2.category.slug style2.slug %}">{{ style2.name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% include './metrics.html' %}
+
+    <h2>Popularity Over Time</h2>
+    <div>
+        <div id="09c6c6c0-86ef-4487-b32f-b4e42e728642" class="plotly-graph-div" style="height:100%; width:100%;"></div>
+        <script>
+            window.PLOTLYENV = window.PLOTLYENV || {};
+            if (document.getElementById("09c6c6c0-86ef-4487-b32f-b4e42e728642")) {
+                data = {{ chart_popularity|safe }}
+                        Plotly.newPlot(
+                                '09c6c6c0-86ef-4487-b32f-b4e42e728642',
+                                data.data,
+                                data.layout,
+                                {responsive: true}
+                        )
+            }
+        </script>
+    </div>
+
+    <h2>Most Used Fermentables</h2>
+    <div>{{ chart_fermentables|safe }}</div>
+
+    <h2>Most Used Hops</h2>
+    <div>{{ chart_hops|safe }}</div>
+
+    <h2>Common Hop Pairings</h2>
+    <div>{{ chart_hop_pairings|safe }}</div>
+{% endblock %}

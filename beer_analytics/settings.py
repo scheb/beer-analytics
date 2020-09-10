@@ -42,7 +42,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'recipe_db.apps.RecipeDbConfig',
-    'django.contrib.contenttypes',
+    'web_app.apps.WebAppConfig',
+    'django.contrib.humanize',
     'django.contrib.staticfiles',
 ]
 
@@ -70,8 +71,6 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
             ],
         },
     },
@@ -96,9 +95,11 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
-USE_I18N = True
+USE_I18N = False
 USE_L10N = True
-USE_TZ = True
+USE_TZ = False
+USE_THOUSAND_SEPARATOR = True
+NUMBER_GROUPING = 3
 
 
 # Static files (CSS, JavaScript, Images)

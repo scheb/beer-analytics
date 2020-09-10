@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <title>Beer Analytics · {% block title %}{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}"/>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <div class="container-fluid navbar-expand-md p-0">
+        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="/">Beer Analytics</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+                data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse2 navbar-collapse">
+            <ul class="navbar-nav mr-auto mb-2 mb-md-0">
+                <li class="nav-item"><a class="nav-link" href="{% url "trends" %}">Trends</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url "style_overview" %}">Beer Styles</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url "hop_overview" %}">Hops</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url "fermentable_overview" %}">Fermentables</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="position-sticky pt-3"></div>
+        </nav>
+
+        <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 pb-4">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</div>
+
+<script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+
+</body>
+</html>

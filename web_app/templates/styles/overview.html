@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load style_extras %}
+
+{% block title %}Beer Styles{% endblock %}
+
+{% block content %}
+    <h1>Beer Styles</h1>
+    <p>
+        These beer styles is used to categorize the beer recipes in the database. It is based is based on the
+        <a href="https://www.bjcp.org/">BJCP</a>'s <a href="https://www.bjcp.org/docs/2015_Guidelines_Beer.pdf">Style
+        Guide from 2015</a> with minor changes and additions.
+    </p>
+
+    <hr/>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+        {% for category in categories %}
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="h6 p-0 m-0">
+                            <small class="text-muted" title="BJCP ID">{{ category.id }}</small>
+                            <a href="{{ category|url }}" class="text-body">{{ category.name }}</a>
+                        </h2>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for style1 in category.sub_styles %}
+                            <li class="list-group-item">
+                                {% if style1.recipes_count %}<span class="text-muted float-right">{{ style1.recipes_count }}</span>{% endif %}
+                                <small class="text-muted" title="BJCP ID">{{ style1.id }}</small>
+                                <a href="{{ style1|url }}">{{ style1.name }}</a>
+                                {% if style1.has_sub_styles %}
+                                    <ul class="list-unstyled mt-1 ml-2">
+                                        {% for style2 in style1.sub_styles %}
+                                            <li>
+                                                {% if style2.recipes_count %}<span class="text-muted float-right">{{ style2.recipes_count }}</span>{% endif %}
+                                                <small class="text-muted" title="BJCP ID">{{ style2.id }}</small>
+                                                <a href="{{ style2|url }}">{{ style2.name }}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

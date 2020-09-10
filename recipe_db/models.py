@@ -1,3 +1,4 @@
+from __future__ import annotations
 import datetime
 import re
 
@@ -19,6 +20,10 @@ class GreaterThanValueValidator(BaseValidator):
 
     def compare(self, a, b):
         return a <= b
+
+
+def get_tomorrow_date():
+    return datetime.date.today() + datetime.timedelta(days=1)
 
 
 def create_human_readable_id(value: str) -> str:
@@ -58,6 +63,7 @@ class Style(models.Model):
     final_plato_max = models.FloatField(default=None, blank=True, null=True)
 
     # Calculated metrics from recipes
+    recipes_count = models.IntegerField(default=None, blank=True, null=True)
     recipes_abv_min = models.FloatField(default=None, blank=True, null=True)
     recipes_abv_mean = models.FloatField(default=None, blank=True, null=True)
     recipes_abv_max = models.FloatField(default=None, blank=True, null=True)
@@ -120,10 +126,70 @@ class Style(models.Model):
                 if from_field_value is not None:
                     setattr(self, to_field_name, calc_function(from_field_value))
 
-    def ids_including_sub_styles(self) -> iter:
-        yield self.id
+    def get_style_including_sub_styles(self) -> iter:
+        yield self
         for style in self.style_set.all():
-            yield from style.ids_including_sub_styles()
+            yield from style.get_style_including_sub_styles()
+
+    def get_id_name_mapping_including_sub_styles(self) -> dict:
+        return dict(map(lambda s: (s.id, s.name), self.get_style_including_sub_styles()))
+
+    def get_ids_including_sub_styles(self) -> list:
+        return list(map(lambda x: x.id, self.get_style_including_sub_styles()))
+
+    @property
+    def parent_styles(self) -> iter:
+        s = self
+        while s.parent_style is not None:
+            yield s.parent_style
+            s = s.parent_style
+
+    @property
+    def sub_styles(self) -> iter:
+        return self.style_set.order_by('id')
+
+    @property
+    def has_sub_styles(self) -> bool:
+        return self.style_set.count() > 0
+
+    @property
+    def is_category(self) -> bool:
+        return self.parent_style is None
+
+    @property
+    def category(self) -> Style:
+        if self.is_category:
+            return self
+        return list(self.parent_styles).pop()
+
+    @property
+    def alt_names_list(self):
+        if self.alt_names is not None:
+            items = self.alt_names.split(',')
+            return list(map(lambda x: x.strip(), items))
+
+    @property
+    def has_specified_metrics(self) -> bool:
+        fields = ['abv_min', 'abv_max', 'ibu_min', 'ibu_max', 'ebc_min', 'ebc_max', 'srm_min', 'srm_max', 'og_min',
+                  'og_max', 'original_plato_min', 'original_plato_max', 'fg_min', 'fg_max', 'final_plato_min',
+                  'final_plato_max']
+        for field in fields:
+            if getattr(self, field) is not None:
+                return True
+        return False
+
+    @property
+    def has_recipes_metrics(self) -> bool:
+        fields = ['recipes_abv_min', 'recipes_abv_mean', 'recipes_abv_max', 'recipes_ibu_min', 'recipes_ibu_mean',
+                  'recipes_ibu_max', 'recipes_ebc_min', 'recipes_ebc_mean', 'recipes_ebc_max', 'recipes_srm_min',
+                  'recipes_srm_mean', 'recipes_srm_max', 'recipes_og_min', 'recipes_og_mean', 'recipes_og_max',
+                  'recipes_original_plato_min', 'recipes_original_plato_mean', 'recipes_original_plato_max',
+                  'recipes_fg_min', 'recipes_fg_mean', 'recipes_fg_max', 'recipes_final_plato_min',
+                  'recipes_final_plato_mean', 'recipes_final_plato_max']
+        for field in fields:
+            if getattr(self, field) is not None:
+                return True
+        return False
 
 
 class Fermentable(models.Model):
@@ -133,7 +199,6 @@ class Fermentable(models.Model):
     type = models.CharField(max_length=32, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
     alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
-
 
     def save(self, *args, **kwargs) -> None:
         if self.id == '':
@@ -178,12 +243,10 @@ class Yeast(models.Model):
 
 
 class Recipe(models.Model):
-    tomorrow = datetime.date.today() + datetime.timedelta(days=1)
-
     # Identifiers
     uid = models.CharField(max_length=32, primary_key=True)
     name = models.CharField(max_length=255, default=None, blank=True, null=True)
-    created = models.DateField(default=None, blank=True, null=True, validators=[MinValueValidator(datetime.date(1990, 1, 1)), MaxValueValidator(tomorrow)])
+    created = models.DateField(default=None, blank=True, null=True, validators=[MinValueValidator(datetime.date(1990, 1, 1)), MaxValueValidator(get_tomorrow_date)])
 
     # Characteristics
     style = models.ForeignKey(Style, on_delete=models.SET_NULL, default=None, blank=True, null=True)

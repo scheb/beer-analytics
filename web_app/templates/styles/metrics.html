@@ -1,0 +1,69 @@
+{% load l10n %}
+{% localize on %}
+{% if style.has_specified_metrics or style.has_recipes_metrics %}
+    <table class="table table-light text-center">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th class="align-top" scope="col">Strength<br/><small title="Alcohol by Volume">ABV</small></th>
+            <th class="align-top" scope="col">Bitterness<br/><small title="International Bitterness Unit">IBU</small></th>
+            <th class="align-top" scope="col">Color<br/><small title="European Brewery Convention">EBC</small><br/><small title="Standard Reference Method (Lovibond)">SRM</small></th>
+            <th class="align-top" scope="col">Original Extract<br/><small title="Degrees Plato">°P</small><br/><small title="Original Gravity">OG</small></th>
+            <th class="align-top" scope="col">Apparent Extract<br/><small title="Degrees Plato">°P</small><br/><small title="Final Gravity">FG</small></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if style.has_specified_metrics %}
+        <tr>
+            <th class="text-left" scope="row">Style Guide</th>
+            <td>{% if style.abv_min %}{{ style.abv_min|floatformat:1 }} &ndash; {{ style.abv_max|floatformat:1 }}{% endif %}</td>
+            <td>{% if style.ibu_min %}{{ style.ibu_min|floatformat:0 }} &ndash; {{ style.ibu_max|floatformat:0 }}{% endif %}</td>
+            <td>
+                {% if style.ebc_min %}
+                    {{ style.ebc_min|floatformat:0 }} &ndash; {{ style.ebc_max|floatformat:0 }}<br/>
+                    {{ style.srm_min|floatformat:0 }} &ndash; {{ style.srm_max|floatformat:0 }}
+                {% endif %}
+            </td>
+            <td>
+                {% if style.original_plato_min %}
+                    {{ style.original_plato_min|floatformat:1 }} &ndash; {{ style.original_plato_max|floatformat:1 }}<br/>
+                    {{ style.og_min|floatformat:3 }} &ndash; {{ style.og_max|floatformat:3 }}
+                {% endif %}
+            </td>
+            <td>
+                {% if style.final_plato_min %}
+                    {{ style.final_plato_min|floatformat:1 }} &ndash; {{ style.final_plato_max|floatformat:1 }}<br/>
+                    {{ style.fg_min|floatformat:3 }} &ndash; {{ style.fg_max|floatformat:3 }}
+                {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+        {% if style.has_recipes_metrics %}
+        <tr>
+            <th class="text-left" scope="row">Recipes</th>
+            <td>{% if style.recipes_abv_min %}{{ style.recipes_abv_min|floatformat:1 }} &lt; <strong>{{ style.recipes_abv_mean|floatformat:1 }}</strong> &lt; {{ style.recipes_abv_max|floatformat:1 }}{% endif %}</td>
+            <td>{% if style.recipes_ibu_min %}{{ style.recipes_ibu_min|floatformat:0 }} &lt; <strong>{{ style.recipes_ibu_mean|floatformat:0 }}</strong> &lt; {{ style.recipes_ibu_max|floatformat:0 }}{% endif %}</td>
+            <td>
+                {% if style.recipes_ebc_min %}
+                    {{ style.recipes_ebc_min|floatformat:0 }} &lt; <strong>{{ style.recipes_ebc_mean|floatformat:0 }}</strong> &lt; {{ style.recipes_ebc_max|floatformat:0 }}<br/>
+                    {{ style.recipes_srm_min|floatformat:0 }} &lt; <strong>{{ style.recipes_srm_mean|floatformat:0 }}</strong> &lt; {{ style.recipes_srm_max|floatformat:0 }}
+                {% endif %}
+            </td>
+            <td>
+                {% if style.recipes_original_plato_min %}
+                    {{ style.recipes_original_plato_min|floatformat:1 }} &lt; <strong>{{ style.recipes_original_plato_mean|floatformat:1 }}</strong> &lt; {{ style.recipes_original_plato_max|floatformat:1 }}<br/>
+                    {{ style.recipes_og_min|floatformat:3 }} &lt; <strong>{{ style.recipes_og_mean|floatformat:3 }}</strong> &lt; {{ style.recipes_og_max|floatformat:3 }}
+                {% endif %}
+            </td>
+            <td>
+                {% if style.recipes_final_plato_min %}
+                    {{ style.recipes_final_plato_min|floatformat:1 }} &lt; <strong>{{ style.recipes_final_plato_mean|floatformat:1 }}</strong> &lt; {{ style.recipes_final_plato_max|floatformat:1 }}<br/>
+                    {{ style.recipes_fg_min|floatformat:3 }} &lt; <strong>{{ style.recipes_fg_mean|floatformat:3 }}</strong> &lt; {{ style.recipes_fg_max|floatformat:3 }}
+                {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+{% endif %}
+{% endlocalize %}

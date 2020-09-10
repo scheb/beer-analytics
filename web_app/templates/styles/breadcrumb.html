@@ -1,0 +1,10 @@
+{% load style_extras %}
+<nav aria-label="breadcrumb" class="mt-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url "style_overview" %}">Beer Styles</a></li>
+        {% for parent_style in style.parent_styles reversed %}
+            <li class="breadcrumb-item"><a href="{{ parent_style|url }}">{{ parent_style.name }}</a></li>
+        {% endfor %}
+        <li class="breadcrumb-item active">{{ style.name }}</li>
+    </ol>
+</nav>
