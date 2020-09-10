@@ -1,0 +1,2 @@
+# Exclude Bootstrap files from GitHub language stats
+boot/* linguist-vendored
