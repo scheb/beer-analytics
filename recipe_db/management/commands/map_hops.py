@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from recipe_db.mapping import HopsMapper
+from recipe_db.mapping import HopsProcessor, HopMapper
 
 
 class Command(BaseCommand):
@@ -11,7 +11,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         map_all = options['all']
-        hops_mapper = HopsMapper()
+        hops_mapper = HopsProcessor([HopMapper()])
 
         if map_all:
             self.stdout.write("Mapping all hops")

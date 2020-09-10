@@ -1,6 +1,7 @@
 import abc
 import codecs
 import re
+from abc import ABC
 from typing import Optional, Iterable
 
 # noinspection PyUnresolvedReferences
@@ -81,7 +82,13 @@ class NameObjectMap:
                     yield Candidate(pattern, self.mapping[pattern])
 
 
-class Mapper(object):
+class Mapper:
+    @abc.abstractmethod
+    def map_item(self, item: object) -> Optional[object]:
+        raise NotImplementedError
+
+
+class GenericMapper(Mapper):
     def __init__(self) -> None:
         self.mapping = NameObjectMap(self.get_name_variants)
         self.mapping_cache = {}
@@ -103,13 +110,6 @@ class Mapper(object):
             alt_name = alt_name.strip()
             if alt_name != '':
                 self.mapping.add(alt_name, item)
-
-    @transaction.atomic
-    def map_list(self, item_list: iter) -> None:
-        for item in item_list:
-            match = self.map_item(item)
-            if match is not None:
-                self.save_match(item, match)
 
     def map_item(self, item: object) -> Optional[object]:
         item_name = self.get_clean_name(item)
@@ -145,26 +145,14 @@ class Mapper(object):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def save_match(self, item: object, match: object) -> str:
-        raise NotImplementedError
-
-    @abc.abstractmethod
     def get_name_variants(self, name: str) -> iter:
         raise NotImplementedError
 
 
-class HopsMapper(Mapper):
+class HopMapper(GenericMapper):
     def __init__(self) -> None:
         super().__init__()
         self.create_mapping(Hop.objects.all())
-
-    def map_unmapped(self) -> None:
-        hops = RecipeHop.objects.filter(kind_id=None)
-        self.map_list(hops)
-
-    def map_all(self) -> None:
-        hops = RecipeHop.objects.all()
-        self.map_list(hops)
 
     def get_clean_name(self, item: RecipeHop) -> str:
         value = item.kind_raw.lower()
@@ -174,10 +162,6 @@ class HopsMapper(Mapper):
         value = re.sub('/?\\s*[0-9]+([.,][0-9]+)?\\s+(grams|ounces)', '', value)
         value = value.strip()
         return value
-
-    def save_match(self, item: RecipeHop, match: Hop):
-        item.kind = match
-        item.save()
 
     def get_name_variants(self, name: str) -> iter:
         for name in self.get_number_variants(get_translit_names(name)):
@@ -192,18 +176,10 @@ class HopsMapper(Mapper):
                 yield re.sub('\\s+([0-9]+)\\b', '\\1', name)
 
 
-class FermentablesMapper(Mapper):
+class FermentableMapper(GenericMapper):
     def __init__(self) -> None:
         super().__init__()
         self.create_mapping(Fermentable.objects.all())
-
-    def map_unmapped(self) -> None:
-        hops = RecipeFermentable.objects.filter(kind_id=None)
-        self.map_list(hops)
-
-    def map_all(self) -> None:
-        hops = RecipeFermentable.objects.all()
-        self.map_list(hops)
 
     def get_clean_name(self, item: RecipeHop) -> str:
         value = item.kind_raw.lower()
@@ -247,10 +223,6 @@ class FermentablesMapper(Mapper):
         value = re.sub("\\bpilsen\\b", "pilsner", value)
 
         return value
-
-    def save_match(self, item: RecipeFermentable, match: Fermentable):
-        item.kind = match
-        item.save()
 
     def get_name_variants(self, name: str) -> iter:
         name = self.normalize(name)
@@ -299,22 +271,13 @@ class FermentablesMapper(Mapper):
                 yield number_name
 
 
-class StylesMapper(Mapper):
+class StyleMapper(GenericMapper, ABC):
     def __init__(self) -> None:
         super().__init__()
         # Exclude top-level style categories in the mapping
         self.create_mapping(Style.objects.filter().exclude(parent_style=None))
 
-    def map_unmapped(self) -> None:
-        recipes = Recipe.objects.filter(style_id=None)
-        self.map_list(recipes)
-
-    def map_all(self) -> None:
-        recipes = Recipe.objects.all()
-        self.map_list(recipes)
-
-    def get_clean_name(self, item: Recipe) -> str:
-        value = item.style_raw
+    def clean_name(self, value: str) -> str:
         if value is None:
             return ''
 
@@ -335,10 +298,6 @@ class StylesMapper(Mapper):
 
         return value
 
-    def save_match(self, item: Recipe, match: Style):
-        item.style = match
-        item.save()
-
     def get_name_variants(self, name: str) -> iter:
         name = self.normalize(name)
         for name in self.expand_ipa(get_translit_names(name)):
@@ -349,3 +308,73 @@ class StylesMapper(Mapper):
             yield name
             if re.search('\\bipa\\b', name):
                 yield re.sub('\\bipa\\b', 'india pale ale', name)
+
+
+class RawStyleMapper(StyleMapper):
+    def get_clean_name(self, item: Recipe) -> str:
+        return self.clean_name(item.style_raw)
+
+
+class NameStyleMapper(StyleMapper):
+    def get_clean_name(self, item: Recipe) -> str:
+        return self.clean_name(item.name)
+
+
+class TransactionalProcessor:
+    def __init__(self, mappers: list) -> None:
+        self.mappers = mappers
+
+    @transaction.atomic
+    def map_list(self, item_list: iter) -> None:
+        for item in item_list:
+            for mapper in self.mappers:
+                match = mapper.map_item(item)
+                if match is not None:
+                    self.save_match(item, match)
+                    break
+
+    @abc.abstractmethod
+    def save_match(self, item: object, match: object) -> str:
+        raise NotImplementedError
+
+
+class HopsProcessor(TransactionalProcessor):
+    def map_unmapped(self) -> None:
+        hops = RecipeHop.objects.filter(kind_id=None)
+        self.map_list(hops)
+
+    def map_all(self) -> None:
+        hops = RecipeHop.objects.all()
+        self.map_list(hops)
+
+    def save_match(self, item: RecipeHop, match: Hop):
+        item.kind = match
+        item.save()
+
+
+class FermentablesProcessor(TransactionalProcessor):
+    def map_unmapped(self) -> None:
+        hops = RecipeFermentable.objects.filter(kind_id=None)
+        self.map_list(hops)
+
+    def map_all(self) -> None:
+        hops = RecipeFermentable.objects.all()
+        self.map_list(hops)
+
+    def save_match(self, item: RecipeFermentable, match: Fermentable):
+        item.kind = match
+        item.save()
+
+
+class StylesProcessor(TransactionalProcessor):
+    def map_unmapped(self) -> None:
+        recipes = Recipe.objects.filter(style_id=None)
+        self.map_list(recipes)
+
+    def map_all(self) -> None:
+        recipes = Recipe.objects.all()
+        self.map_list(recipes)
+
+    def save_match(self, item: Recipe, match: Style):
+        item.style = match
+        item.save()
