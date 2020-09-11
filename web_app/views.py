@@ -1,10 +1,9 @@
-from django.http import HttpResponse, HttpRequest, JsonResponse, Http404
+from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
 from recipe_db.analytics import get_style_popularity, get_style_metric_values
 from recipe_db.models import Style
 from web_app.charts import LinesChart, Plot, CompactHistogramChart
-
 
 def home(request: HttpRequest) -> HttpResponse:
     return render(request, 'index.html')
