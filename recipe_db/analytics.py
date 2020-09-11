@@ -19,13 +19,13 @@ def calculate_style_recipe_count(df, style: Style) -> int:
 def calculate_style_metric(df, style: Style, metric: str) -> Tuple[float, float, float]:
     style_ids = style.get_ids_including_sub_styles()
     df = df[df['style_id'].isin(style_ids)]
-    df = remove_outliers(df, metric)
+    df = remove_outliers(df, metric, 0.02)
     return df[metric].min(), df[metric].mean(), df[metric].max()
 
 
-def remove_outliers(df, field):
-    lower_limit = df[field].quantile(.05)
-    upper_limit = df[field].quantile(.95)
+def remove_outliers(df: DataFrame, field: str, cutoff_percentile: float) -> DataFrame:
+    lower_limit = df[field].quantile(cutoff_percentile)
+    upper_limit = df[field].quantile(1.0 - cutoff_percentile)
     return df[df[field].between(lower_limit, upper_limit)]
 
 
@@ -55,3 +55,21 @@ def get_all_styles_popularity() -> DataFrame:
     recipes_per_month = df.groupby('month').agg({'recipes': 'sum'})
 
     return df.div(recipes_per_month, level='month') * 100
+
+
+def get_style_metric_values(style: Style, metric: str) -> DataFrame:
+    style_ids = style.get_ids_including_sub_styles()
+
+    query = '''
+            SELECT {}
+            FROM recipe_db_recipe
+            WHERE {} IS NOT NULL AND style_id IN ({})
+        '''.format(metric, metric, ','.join('%s' for _ in style_ids))
+
+    df = pd.read_sql(query, connection, params=style_ids)
+    df = remove_outliers(df, metric, 0.03)
+
+    df = df.groupby(metric)[metric].agg({'count', 'count'})
+    df = df.reset_index()
+
+    return df

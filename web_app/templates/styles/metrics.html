@@ -19,7 +19,7 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent">Footer</div>
+                    <div class="card-footer bg-transparent"><div id="chart-spec-abv" class="height-10"></div></div>
                 </div>
             </div>
         {% endif %}
@@ -42,7 +42,7 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent">Footer</div>
+                    <div class="card-footer bg-transparent"><div id="chart-spec-ibu" class="height-10"></div></div>
                 </div>
             </div>
         {% endif %}
@@ -67,7 +67,7 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent">Footer</div>
+                    <div class="card-footer bg-transparent"><div id="chart-spec-color" class="height-10"></div></div>
                 </div>
             </div>
         {% endif %}
@@ -92,7 +92,7 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent">Footer</div>
+                    <div class="card-footer bg-transparent"><div id="chart-spec-original-plato" class="height-10"></div></div>
                 </div>
             </div>
         {% endif %}
@@ -113,11 +113,11 @@
                             <p class="mb-0">
                                 <small class="text-muted">Actual</small><br/>
                                 {{ style.recipes_final_plato_min|floatformat:1 }} &lt; <strong>{{ style.recipes_final_plato_mean|floatformat:1 }}</strong> &lt; {{ style.recipes_final_plato_max|floatformat:1 }} <small class="text-muted" title="Degrees Plato">°P</small><br/>
-                                {{ style.recipes_og_min|floatformat:3 }} &lt; <strong>{{ style.recipes_og_mean|floatformat:3 }}</strong> &lt; {{ style.recipes_og_max|floatformat:3 }} <small class="text-muted" title="Final Gravity">FG</small>
+                                {{ style.recipes_fg_min|floatformat:3 }} &lt; <strong>{{ style.recipes_fg_mean|floatformat:3 }}</strong> &lt; {{ style.recipes_fg_max|floatformat:3 }} <small class="text-muted" title="Final Gravity">FG</small>
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent">Footer</div>
+                    <div class="card-footer bg-transparent"><div id="chart-spec-final-plato" class="height-10"></div></div>
                 </div>
             </div>
         {% endif %}
