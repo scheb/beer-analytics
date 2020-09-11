@@ -23,6 +23,7 @@ class MmumParser(FormatParser):
 
     def parse_recipe(self, recipe: Recipe, json_data: JsonParser):
         recipe.name = json_data.string_or_none('Name')
+        recipe.author = json_data.string_or_none('Autor')
         date_created = json_data.string_or_none('Datum')
         if date_created is not None:
             recipe.created = datetime.strptime(date_created, '%d.%m.%Y')
