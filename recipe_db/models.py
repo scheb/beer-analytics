@@ -246,6 +246,7 @@ class Recipe(models.Model):
     # Identifiers
     uid = models.CharField(max_length=32, primary_key=True)
     name = models.CharField(max_length=255, default=None, blank=True, null=True)
+    author = models.CharField(max_length=255, default=None, blank=True, null=True)
     created = models.DateField(default=None, blank=True, null=True, validators=[MinValueValidator(datetime.date(1990, 1, 1)), MaxValueValidator(get_tomorrow_date)])
 
     # Characteristics

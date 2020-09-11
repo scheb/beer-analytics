@@ -47,6 +47,7 @@ class BeerXMLParser(FormatParser):
 
     def parse_recipe(self, recipe: Recipe, beerxml: BeerXMLRecipe, recipe_node: Element) -> Recipe:
         recipe.name = self.fix_encoding(beerxml.name)
+        recipe.author = self.fix_encoding(beerxml.brewer)
 
         # Characteristics
         recipe.style_raw = self.fix_encoding(beerxml.style.name)
