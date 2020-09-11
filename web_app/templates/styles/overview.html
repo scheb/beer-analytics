@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 
-{% load style_extras %}
-
 {% block title %}Beer Styles{% endblock %}
 
 {% block content %}
@@ -21,7 +19,7 @@
                     <div class="card-header">
                         <h2 class="h6 p-0 m-0">
                             <small class="text-muted" title="BJCP ID">{{ category.id }}</small>
-                            <a href="{{ category|url }}" class="text-body">{{ category.name }}</a>
+                            <a href="{{ category.url }}" class="text-body">{{ category.name }}</a>
                         </h2>
                     </div>
                     <ul class="list-group list-group-flush">
@@ -29,14 +27,14 @@
                             <li class="list-group-item">
                                 {% if style1.recipes_count %}<span class="text-muted float-right">{{ style1.recipes_count }}</span>{% endif %}
                                 <small class="text-muted" title="BJCP ID">{{ style1.id }}</small>
-                                <a href="{{ style1|url }}">{{ style1.name }}</a>
+                                <a href="{{ style1.url }}">{{ style1.name }}</a>
                                 {% if style1.has_sub_styles %}
                                     <ul class="list-unstyled mt-1 ml-2">
                                         {% for style2 in style1.sub_styles %}
                                             <li>
                                                 {% if style2.recipes_count %}<span class="text-muted float-right">{{ style2.recipes_count }}</span>{% endif %}
                                                 <small class="text-muted" title="BJCP ID">{{ style2.id }}</small>
-                                                <a href="{{ style2|url }}">{{ style2.name }}</a>
+                                                <a href="{{ style2.url }}">{{ style2.name }}</a>
                                             </li>
                                         {% endfor %}
                                     </ul>

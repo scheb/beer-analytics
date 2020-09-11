@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
 
-{% load style_extras %}
-{% load l10n %}
-
 {% block title %}Beer Styles{% endblock %}
 
 {% block content %}
@@ -13,12 +10,9 @@
         <p>Alternative names: <strong>{{ style.alt_names_list|join:'</strong>, <strong>' }}</strong></p>
     {% endif %}
 
-
-    {% localize on %}
-        {% if style.recipes_count %}
-            <p>Number of recipes: <strong>{{ style.recipes_count }}</strong></p>
-        {% endif %}
-    {% endlocalize %}
+    {% if style.recipes_count %}
+        <p>Number of recipes: <strong>{{ style.recipes_count }}</strong></p>
+    {% endif %}
 
     {% if style.is_category %}
         <p>This is a <strong>beer style category</strong>, containing the following beer styles:</p>

@@ -8,6 +8,7 @@ import codecs
 
 from django.core.validators import MaxValueValidator, BaseValidator, MinValueValidator
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from recipe_db.formulas import ebc_to_srm, srm_to_ebc, plato_to_gravity, gravity_to_plato, abv_to_to_final_plato, \
@@ -161,6 +162,17 @@ class Style(models.Model):
         if self.is_category:
             return self
         return list(self.parent_styles).pop()
+
+    @property
+    def category_slug(self) -> str:
+        return self.category.slug
+
+    @property
+    def url(self):
+        if self.is_category:
+            return reverse('style_category_detail', kwargs={'category_slug': self.slug})
+        else:
+            return reverse('style_detail', kwargs={'category_slug': self.category.slug, 'slug': self.slug})
 
     @property
     def alt_names_list(self):
