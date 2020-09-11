@@ -43,28 +43,20 @@
     {% include './metrics.html' %}
 
     <h2>Popularity Over Time</h2>
-    <div>
-        <div id="09c6c6c0-86ef-4487-b32f-b4e42e728642" class="plotly-graph-div" style="height:100%; width:100%;"></div>
-        <script>
-            window.PLOTLYENV = window.PLOTLYENV || {};
-            if (document.getElementById("09c6c6c0-86ef-4487-b32f-b4e42e728642")) {
-                data = {{ chart_popularity|safe }}
-                        Plotly.newPlot(
-                                '09c6c6c0-86ef-4487-b32f-b4e42e728642',
-                                data.data,
-                                data.layout,
-                                {responsive: true}
-                        )
-            }
-        </script>
-    </div>
+    <div id="chart-popularity" class="height-20"></div>
 
     <h2>Most Used Fermentables</h2>
-    <div>{{ chart_fermentables|safe }}</div>
+    <div id="fermentables" class="height-20"></div>
 
     <h2>Most Used Hops</h2>
-    <div>{{ chart_hops|safe }}</div>
+    <div id="hops" class="height-20"></div>
 
     <h2>Common Hop Pairings</h2>
-    <div>{{ chart_hop_pairings|safe }}</div>
+    <div id="hop-pairings" class="height-20"></div>
+{% endblock %}
+
+{% block script %}
+<script>
+display_graph('chart-popularity', '{% url "style_chart" style.id "popularity" %}');
+</script>
 {% endblock %}

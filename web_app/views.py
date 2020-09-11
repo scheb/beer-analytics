@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.views.generic import ListView
@@ -49,13 +49,16 @@ def style_detail(request: HttpRequest, *args, **kwargs):
 
 
 def render_style(request: HttpRequest, style: Style) -> HttpResponse:
+    return render(request, 'styles/detail.html', {
+        "style": style
+    })
+
+
+def style_chart(request: HttpRequest, id: str, chart_type: str) -> HttpResponse:
+    style = get_object_or_404(Style, pk=id)
+
     id_to_name = style.get_id_name_mapping_including_sub_styles()
     df = get_style_popularity(style)
     plot = LinesChart().plot(df, 'month', 'recipes', 'style', 'Month/Year', '% Recipes', category_names=id_to_name)
 
-    chart_popularity = plot.render_json()
-
-    return render(request, 'styles/detail.html', {
-        "style": style,
-        "chart_popularity": chart_popularity,
-    })
+    return HttpResponse(plot.render_json(), content_type='application/json')
