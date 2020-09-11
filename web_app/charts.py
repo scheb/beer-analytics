@@ -10,10 +10,10 @@ class Plot:
     def render_json(self) -> str:
         return self.figure.to_json()
 
-    def render_png(self, file_path) -> bytes:
+    def render_png(self) -> bytes:
         return self.figure.to_image(format="png")
 
-    def render_svg(self, file_path) -> bytes:
+    def render_svg(self) -> bytes:
         return self.figure.to_image(format="svg")
 
 
