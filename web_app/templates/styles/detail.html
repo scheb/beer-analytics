@@ -47,13 +47,13 @@
     <div id="chart-popularity" class="height-20"></div>
 
     <h2>Most Used Fermentables</h2>
-    <div id="fermentables" class="height-20"></div>
+    <div id="chart-fermentables" class="height-30"></div>
 
     <h2>Most Used Hops</h2>
-    <div id="hops" class="height-20"></div>
+    <div id="chart-hops" class="height-30"></div>
 
     <h2>Common Hop Pairings</h2>
-    <div id="hop-pairings" class="height-20"></div>
+    <div id="chart-hop-pairings" class="height-20"></div>
 {% endblock %}
 
 {% block script %}
@@ -66,6 +66,9 @@ window.addEventListener('load', function ()
     display_graph('chart-spec-original-plato', '{% url "style_chart" style.id "original-plato-histogram" "json" %}', {displayModeBar: false});
     display_graph('chart-spec-final-plato', '{% url "style_chart" style.id "final-plato-histogram" "json" %}', {displayModeBar: false});
     display_graph('chart-popularity', '{% url "style_chart" style.id "popularity" "json" %}');
+    display_graph('chart-fermentables', '{% url "style_chart" style.id "popular-fermentables" "json" %}');
+    display_graph('chart-hops', '{% url "style_chart" style.id "popular-hops" "json" %}');
+    display_graph('chart-hop-pairings', '{% url "style_chart" style.id "hop-pairings" "json" %}');
 });
 </script>
 {% endblock %}

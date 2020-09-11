@@ -1,9 +1,11 @@
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
-from recipe_db.analytics import get_style_popularity, get_style_metric_values
+from recipe_db.analytics import get_style_popularity, get_style_metric_values, get_style_popular_hops, \
+    get_style_popular_fermentables
 from recipe_db.models import Style
-from web_app.charts import LinesChart, Plot, CompactHistogramChart
+from web_app.charts import LinesChart, Plot, CompactHistogramChart, BoxPlot
+
 
 def home(request: HttpRequest) -> HttpResponse:
     return render(request, 'index.html')
@@ -73,6 +75,12 @@ def style_chart(request: HttpRequest, id: str, chart_type: str, format: str) -> 
     elif chart_type == 'final-plato-histogram':
         df = get_style_metric_values(style, 'fg')
         plot = CompactHistogramChart().plot(df, 'fg', 'count')
+    elif chart_type == 'popular-hops':
+        df = get_style_popular_hops(style)
+        plot = BoxPlot().plot(df, 'hop', 'amount_percent', 'Hops by Popularity', '% Amount')
+    elif chart_type == 'popular-fermentables':
+        df = get_style_popular_fermentables(style)
+        plot = BoxPlot().plot(df, 'fermentable', 'amount_percent', 'Fermentables by Popularity', '% Amount')
     else:
         raise Http404('Unknown chart type %s.' % chart_type)
 
