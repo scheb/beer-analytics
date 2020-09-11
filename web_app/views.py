@@ -54,11 +54,16 @@ def render_style(request: HttpRequest, style: Style) -> HttpResponse:
     })
 
 
-def style_chart(request: HttpRequest, id: str, chart_type: str) -> HttpResponse:
+def style_chart(request: HttpRequest, id: str, chart_type: str, format: str) -> HttpResponse:
     style = get_object_or_404(Style, pk=id)
 
     id_to_name = style.get_id_name_mapping_including_sub_styles()
     df = get_style_popularity(style)
     plot = LinesChart().plot(df, 'month', 'recipes', 'style', 'Month/Year', '% Recipes', category_names=id_to_name)
 
-    return HttpResponse(plot.render_json(), content_type='application/json')
+    if format == 'png':
+        return HttpResponse(plot.render_png(), content_type='image/png')
+    elif format == 'svg':
+        return HttpResponse(plot.render_svg(), content_type='image/svg+xml')
+    else:
+        return HttpResponse(plot.render_json(), content_type='application/json')
