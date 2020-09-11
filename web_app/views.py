@@ -1,11 +1,9 @@
-from django.http import HttpResponse, HttpRequest, JsonResponse
+from django.http import HttpResponse, HttpRequest, JsonResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views import View
-from django.views.generic import ListView
 
-from recipe_db.analytics import get_style_popularity
+from recipe_db.analytics import get_style_popularity, get_style_metric_values
 from recipe_db.models import Style
-from web_app.charts import LinesChart, Plot
+from web_app.charts import LinesChart, Plot, CompactHistogramChart
 
 
 def home(request: HttpRequest) -> HttpResponse:
@@ -57,9 +55,27 @@ def render_style(request: HttpRequest, style: Style) -> HttpResponse:
 def style_chart(request: HttpRequest, id: str, chart_type: str, format: str) -> HttpResponse:
     style = get_object_or_404(Style, pk=id)
 
-    id_to_name = style.get_id_name_mapping_including_sub_styles()
-    df = get_style_popularity(style)
-    plot = LinesChart().plot(df, 'month', 'recipes', 'style', 'Month/Year', '% Recipes', category_names=id_to_name)
+    if chart_type == 'popularity':
+        id_to_name = style.get_id_name_mapping_including_sub_styles()
+        df = get_style_popularity(style)
+        plot = LinesChart().plot(df, 'month', 'recipes', 'style', 'Month/Year', '% Recipes', category_names=id_to_name)
+    elif chart_type == 'abv-histogram':
+        df = get_style_metric_values(style, 'abv')
+        plot = CompactHistogramChart().plot(df, 'abv', 'count')
+    elif chart_type == 'ibu-histogram':
+        df = get_style_metric_values(style, 'ibu')
+        plot = CompactHistogramChart().plot(df, 'ibu', 'count')
+    elif chart_type == 'color-histogram':
+        df = get_style_metric_values(style, 'srm')
+        plot = CompactHistogramChart().plot(df, 'srm', 'count')
+    elif chart_type == 'original-plato-histogram':
+        df = get_style_metric_values(style, 'og')
+        plot = CompactHistogramChart().plot(df, 'og', 'count')
+    elif chart_type == 'final-plato-histogram':
+        df = get_style_metric_values(style, 'fg')
+        plot = CompactHistogramChart().plot(df, 'fg', 'count')
+    else:
+        raise Http404('Unknown chart type %s.' % chart_type)
 
     if format == 'png':
         return HttpResponse(plot.render_png(), content_type='image/png')

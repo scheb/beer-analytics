@@ -116,6 +116,10 @@ h1 {
 /*}*/
 
 
+.height-10 {
+    height: 10rem;
+}
+
 .height-20 {
     height: 20rem;
 }

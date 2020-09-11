@@ -61,3 +61,19 @@ class LinesChart:
         )
 
         return Plot(fig)
+
+
+class CompactHistogramChart:
+    def plot(self, df: DataFrame, x_field: str, count_field: str) -> Plot:
+        fig = px.histogram(df, x=x_field, y=count_field, histfunc="sum", nbins=30)
+        fig.update_layout(
+            margin=dict(l=0, r=0, t=0, b=0),
+            xaxis=dict(
+                title_text=None,
+            ),
+            yaxis=dict(
+                visible=False,
+            ),
+        )
+
+        return Plot(fig)
