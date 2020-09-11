@@ -1,16 +1,16 @@
 id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_max;srm_min;srm_max;og_min;og_max;fg_min;fg_max;strength;color;fermentation;conditioning;region_of_origin;style;specialty_beer;era;bitter_balances;sour_hoppy_sweet;spice;smoke_roast
 1;;Standard American Beer;;;;;;;;;;;;;;;;;;;false;;;;;
-01A;1;American Light Lager;;;2.8;4.2;8;12;2.0;3.0;1028;1040;998;1008;session;pale;bottom;lagered;north_america;pale_lager;false;traditional;balanced;;;
-01B;1;American Lager;American Pilsner;Amerikanisches Pilsner;4.2;5.3;8;18;2.0;4.0;1040;1050;1004;1010;standard;pale;bottom;lagered;north_america;pale_lager;false;traditional;balanced;;;
+01A;1;American Light Lager;;American Lite Lager;2.8;4.2;8;12;2.0;3.0;1028;1040;998;1008;session;pale;bottom;lagered;north_america;pale_lager;false;traditional;balanced;;;
+01B;1;American Lager;;Amerikanisches Pilsner;4.2;5.3;8;18;2.0;4.0;1040;1050;1004;1010;standard;pale;bottom;lagered;north_america;pale_lager;false;traditional;balanced;;;
 01C;1;Cream Ale;;;4.2;5.6;8;20;2.5;5.0;1042;1055;1006;1012;standard;pale;any;;north_america;pale_ale;false;traditional;balanced;;;
 01D;1;American Wheat Beer;;American Wheat;4.0;5.5;15;30;3.0;6.0;1040;1055;1008;1013;standard;pale;any;;north_america;wheat_beer;false;craft;balanced;;;
 2;;International Lager;;;;;;;;;;;;;;;;;;;false;;;;;
-02A;2;International Pale Lager;;;4.6;6.0;18;25;2.0;6.0;1042;1050;1008;1012;standard;pale;bottom;lagered;;pale_lager;false;traditional;balanced;;;
+02A;2;International Pale Lager;;Pale Lager;4.6;6.0;18;25;2.0;6.0;1042;1050;1008;1012;standard;pale;bottom;lagered;;pale_lager;false;traditional;balanced;;;
 02B;2;International Amber Lager;;Amber Lager;4.6;6.0;8;25;7.0;14.0;1042;1055;1008;1014;standard;amber;bottom;lagered;;amber_lager;false;traditional;malty;;;
 02C;2;International Dark Lager;;Dunkles Lager;4.2;6.0;8;20;14.0;22.0;1044;1056;1008;1012;standard;dark;bottom;lagered;;dark_lager;false;traditional;malty;;;
 3;;Czech Lager;;;;;;;;;;;;;;;;;;;false;;;;;
 03A;3;Czech Pale Lager;;;3.0;4.1;20;35;3.0;6.0;1028;1044;1008;1014;session;pale;bottom;lagered;central_europe;pale_lager;false;traditional;bitter;hoppy;;
-03B;3;Czech Premium Pale Lager;Bohemian Pilsner;Böhmisches Pilsner, Böhmisches Lager;4.2;5.8;30;45;3.5;6.0;1044;1060;1013;1017;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;balanced;hoppy;;
+03B;3;Czech Premium Pale Lager;Bohemian Pilsner;Böhmisches Lager;4.2;5.8;30;45;3.5;6.0;1044;1060;1013;1017;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;balanced;hoppy;;
 03C;3;Czech Amber Lager;;;4.4;5.8;20;35;10.0;16.0;1044;1060;1013;1017;standard;amber;bottom;lagered;central_europe;amber_lager;false;traditional;balanced;;;
 03D;3;Czech Dark Lager;;Böhmisches Dunkel;4.4;5.8;18;34;14.0;35.0;1044;1060;1013;1017;standard;dark;bottom;lagered;central_europe;dark_lager;false;traditional;balanced;;;
 4;;Pale Malty European Lager;;;;;;;;;;;;;;;;;;;false;;;;;
@@ -112,7 +112,7 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 24B;24;Belgian Pale Ale;;;4.8;5.5;20;30;8.0;14.0;1048;1054;1010;1014;standard;amber;top;;western_europe;pale_ale;false;traditional;balanced;;;
 24C;24;Bière de Garde;;;6.0;8.5;18;28;6.0;19.0;1060;1080;1008;1016;high;amber;any;lagered;western_europe;amber_ale;false;traditional;malty;;;
 25;;Strong Belgian Ale;;;;;;;;;;;;;;;;;;;false;;;;;
-25A;25;Belgian Blond Ale;Belgisches Blond, Blond, Blonde;;6.0;7.5;15;30;4.0;7.0;1062;1075;1008;1018;high;pale;top;;western_europe;;false;traditional;balanced;;;
+25A;25;Belgian Blond Ale;;Belgisches Blond, Blond, Blonde;6.0;7.5;15;30;4.0;7.0;1062;1075;1008;1018;high;pale;top;;western_europe;;false;traditional;balanced;;;
 25B;25;Saison;;;3.5;9.5;20;35;5.0;22.0;1048;1065;1002;1008;standard;pale;top;;western_europe;;false;traditional;bitter;;;
 25C;25;Belgian Golden Strong Ale;;;7.5;10.5;22;35;3.0;6.0;1070;1095;1005;1016;very_high;pale;top;;western_europe;;false;traditional;bitter;;;
 26;;Trappist Ale;;;;;;;;;;;;;;;;;;;false;;;;;

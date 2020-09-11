@@ -299,7 +299,7 @@ class GenericStyleMapper(GenericMapper, ABC):
 
     def get_name_variants(self, name: str) -> iter:
         name = self.normalize(name)
-        for name in self.expand_ipa(get_translit_names(name)):
+        for name in self.lager_variants(self.expand_ipa(get_translit_names(name))):
             yield name
 
     def expand_ipa(self, names) -> iter:
@@ -307,6 +307,12 @@ class GenericStyleMapper(GenericMapper, ABC):
             yield name
             if re.search('\\bipa\\b', name):
                 yield re.sub('\\bipa\\b', 'india pale ale', name)
+
+    def lager_variants(self, names) -> iter:
+        for name in names:
+            yield name
+            if re.search('\\blager\\b', name):
+                yield re.sub('\\blager\\b', 'pilsner', name)
 
 
 class AssignedStyleMapper(GenericStyleMapper):
