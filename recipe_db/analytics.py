@@ -122,3 +122,46 @@ def get_style_popular_fermentables(style: Style) -> DataFrame:
     top_fermentables = fermentables[fermentables['fermentable'].isin(top_fermentables_ids)]  # Get only the values of the mostly used fermentable
 
     return top_fermentables
+
+
+def get_style_hop_pairings(style: Style) -> DataFrame:
+    style_ids = style.get_ids_including_sub_styles()
+
+    query = '''
+        WITH recipe_hops_agg AS (
+            SELECT recipe_id, kind_id, SUM(amount_percent) AS amount_percent
+            FROM recipe_db_recipehop
+            WHERE kind_id IS NOT NULL
+            GROUP BY recipe_id, kind_id
+        )
+        SELECT
+            rh1.recipe_id,
+            h1.name || ' + ' || h2.name AS pairing,
+            h1.name AS hop1,
+            rh1.amount_percent AS amount_percent1,
+            h2.name AS hop2,
+            rh2.amount_percent AS amount_percent2    FROM recipe_hops_agg AS rh1
+        JOIN recipe_hops_agg AS rh2
+            ON rh1.recipe_id = rh2.recipe_id AND rh1.kind_id < rh2.kind_id
+        JOIN recipe_db_hop AS h1
+            ON rh1.kind_id = h1.id
+        JOIN recipe_db_hop AS h2
+            ON rh2.kind_id = h2.id
+        JOIN recipe_db_recipe AS r
+            ON rh1.recipe_id = r.uid
+        WHERE r.style_id IN ({})
+    '''.format(','.join('%s' for _ in style_ids))
+
+    pairings = pd.read_sql(query, connection, params=style_ids)
+
+    # Filter top pairs
+    top_pairings = pairings["pairing"].value_counts()[:5].index.values
+    pairings = pairings[pairings['pairing'].isin(top_pairings)]
+
+    # Merge the hops data from the 2 columns into a single list
+    df1 = pairings[['pairing', 'hop1', 'amount_percent1']]
+    df1.columns = ['pairing', 'hop', 'amount_percent']
+    df2 = pairings[['pairing', 'hop2', 'amount_percent2']]
+    df2.columns = ['pairing', 'hop', 'amount_percent']
+    df = pd.concat([df1, df2])
+    return df

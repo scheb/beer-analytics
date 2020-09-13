@@ -2,9 +2,9 @@ from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
 from recipe_db.analytics import get_style_popularity, get_style_metric_values, get_style_popular_hops, \
-    get_style_popular_fermentables
+    get_style_popular_fermentables, get_style_hop_pairings
 from recipe_db.models import Style
-from web_app.charts import LinesChart, Plot, CompactHistogramChart, BoxPlot
+from web_app.charts import LinesChart, CompactHistogramChart, BoxPlot, PairsBoxPlot
 
 
 def home(request: HttpRequest) -> HttpResponse:
@@ -81,6 +81,9 @@ def style_chart(request: HttpRequest, id: str, chart_type: str, format: str) -> 
     elif chart_type == 'popular-fermentables':
         df = get_style_popular_fermentables(style)
         plot = BoxPlot().plot(df, 'fermentable', 'amount_percent', 'Fermentables by Popularity', '% Amount')
+    elif chart_type == 'hop-pairings':
+        df = get_style_hop_pairings(style)
+        plot = PairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% Amount')
     else:
         raise Http404('Unknown chart type %s.' % chart_type)
 
