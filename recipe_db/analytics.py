@@ -155,7 +155,7 @@ def get_style_hop_pairings(style: Style) -> DataFrame:
     pairings = pd.read_sql(query, connection, params=style_ids)
 
     # Filter top pairs
-    top_pairings = pairings["pairing"].value_counts()[:5].index.values
+    top_pairings = pairings["pairing"].value_counts()[:8].index.values
     pairings = pairings[pairings['pairing'].isin(top_pairings)]
 
     # Merge the hops data from the 2 columns into a single list
