@@ -128,8 +128,6 @@ class PairsBoxPlot:
             rows=1,
             cols=num_pairings,
             shared_yaxes=True,
-            x_title=x_title,
-            y_title=y_title,
             horizontal_spacing=0.005
         )
 
@@ -158,5 +156,8 @@ class PairsBoxPlot:
                 ),
             )
         )
+
+        fig.update_xaxes(title_text=x_title)
+        fig.update_yaxes(title_text=y_title, row=1, col=1)
 
         return Plot(fig)
