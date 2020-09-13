@@ -94,7 +94,7 @@ def get_style_popular_hops(style: Style) -> DataFrame:
 
     hops = pd.read_sql(query, connection, params=style_ids)
 
-    top_hops_ids = hops["hop"].value_counts()[:20].index.values
+    top_hops_ids = hops["hop"].value_counts()[:10].index.values
     top_hops = hops[hops['hop'].isin(top_hops_ids)]  # Get only the values of the mostly used hops
     top_hops = top_hops.sort_values(["hop"]).reset_index(drop=False)
 
@@ -120,7 +120,7 @@ def get_style_popular_fermentables(style: Style) -> DataFrame:
 
     fermentables = pd.read_sql(query, connection, params=style_ids)
 
-    top_fermentables_ids = fermentables["fermentable"].value_counts()[:20].index.values
+    top_fermentables_ids = fermentables["fermentable"].value_counts()[:10].index.values
     top_fermentables = fermentables[fermentables['fermentable'].isin(top_fermentables_ids)]  # Get only the values of the mostly used fermentable
     top_fermentables = top_fermentables.sort_values(["fermentable"]).reset_index(drop=False)
 
