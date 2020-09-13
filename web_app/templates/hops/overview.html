@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Hops{% endblock %}
+
+{% block content %}
+    <h1>Hops</h1>
+
+    <hr/>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for category in categories %}
+            <div class="col">
+                <h2><a href="{% url "hop_category_detail" category.id %}" class="text-body">{{ category.name }}</a></h2>
+
+                <p class="most-popular">Most popular:
+                    {% for hop in category.most_popular %}
+                        {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
+                        <a class="badge bg-primary" href="{{ hop.url }}">{{ hop.name }}</a>
+                    {% endfor %}
+                </p>
+
+                <div class="card">
+                    <ul class="list-group list-group-flush">
+                        {% for hop in category.hops %}
+                            <li class="list-group-item">
+                                <span class="text-muted float-right">{{ hop.recipes_count }}</span>
+                                <a href="{{ hop.url }}">{{ hop.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

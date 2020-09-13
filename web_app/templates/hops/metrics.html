@@ -1,0 +1,126 @@
+{% if style.has_specified_metrics or style.has_recipes_metrics %}
+    <h2>Specifications</h2>
+    <div class="row row-cols-1 row-cols-lg-5 g-1 mb-4">
+        {% if style.recipes_abv_min or style.abv_min %}
+            <div class="col">
+                <div class="card text-center h-100">
+                    <div class="card-header" title="Alcohol by Volume"><h3 class="h6 mb-0">ABV</h3></div>
+                    <div class="card-body pb-0">
+                        {% if style.abv_min %}
+                            <p>
+                                <small class="text-muted">Specification</small><br/>
+                                {{ style.abv_min|floatformat:1 }} &ndash; {{ style.abv_max|floatformat:1 }}
+                            </p>
+                        {% endif %}
+                        {% if style.recipes_abv_min %}
+                            <p>
+                                <small class="text-muted">Actual</small><br/>
+                                {{ style.recipes_abv_min|floatformat:1 }} &lt; <strong>{{ style.recipes_abv_mean|floatformat:1 }}</strong> &lt; {{ style.recipes_abv_max|floatformat:1 }}
+                            </p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-transparent"><div id="chart-spec-abv" class="height-10"></div></div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if style.recipes_ibu_min or style.recipes_ibu_min %}
+            <div class="col">
+                <div class="card text-center h-100">
+                    <div class="card-header" title="International Bitterness Unit"><h3 class="h6 mb-0">IBU</h3></div>
+                    <div class="card-body pb-0">
+                        {% if style.ibu_min %}
+                            <p>
+                                <small class="text-muted">Specification</small><br/>
+                                {{ style.ibu_min|floatformat:0 }} &ndash; {{ style.ibu_max|floatformat:0 }}
+                            </p>
+                        {% endif %}
+                        {% if style.recipes_ibu_min %}
+                            <p>
+                                <small class="text-muted">Actual</small><br/>
+                                {{ style.recipes_ibu_min|floatformat:0 }} &lt; <strong>{{ style.recipes_ibu_mean|floatformat:0 }}</strong> &lt; {{ style.recipes_ibu_max|floatformat:0 }}
+                            </p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-transparent"><div id="chart-spec-ibu" class="height-10"></div></div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if style.recipes_ebc_min or style.ebc_min %}
+            <div class="col">
+                <div class="card text-center h-100">
+                    <div class="card-header" title="International Bitterness Unit"><h3 class="h6 mb-0">Color</h3></div>
+                    <div class="card-body pb-0">
+                        {% if style.ebc_min %}
+                            <p>
+                                <small class="text-muted">Specification</small><br/>
+                                {{ style.ebc_min|floatformat:0 }} &ndash; {{ style.ebc_max|floatformat:0 }} <small class="text-muted" title="European Brewery Convention">EBC</small><br/>
+                                {{ style.srm_min|floatformat:0 }} &ndash; {{ style.srm_max|floatformat:0 }} <small class="text-muted" title="Standard Reference Method (Lovibond)">SRM</small>
+                            </p>
+                        {% endif %}
+                        {% if style.recipes_ebc_min %}
+                            <p>
+                                <small class="text-muted">Actual</small><br/>
+                                {{ style.recipes_ebc_min|floatformat:0 }} &lt; <strong>{{ style.recipes_ebc_mean|floatformat:0 }}</strong> &lt; {{ style.recipes_ebc_max|floatformat:0 }} <small class="text-muted" title="European Brewery Convention">EBC</small><br/>
+                                {{ style.recipes_srm_min|floatformat:0 }} &lt; <strong>{{ style.recipes_srm_mean|floatformat:0 }}</strong> &lt; {{ style.recipes_srm_max|floatformat:0 }} <small class="text-muted" title="Standard Reference Method (Lovibond)">SRM</small>
+                            </p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-transparent"><div id="chart-spec-color" class="height-10"></div></div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if style.recipes_original_plato_min or style.original_plato_min %}
+            <div class="col">
+                <div class="card text-center h-100">
+                    <div class="card-header" title="International Bitterness Unit"><h3 class="h6 mb-0">Original Extract</h3></div>
+                    <div class="card-body pb-0">
+                        {% if style.ebc_min %}
+                            <p>
+                                <small class="text-muted">Specification</small><br/>
+                                {{ style.original_plato_min|floatformat:1 }} &ndash; {{ style.original_plato_max|floatformat:1 }} <small class="text-muted" title="Degrees Plato">°P</small><br/>
+                                {{ style.og_min|floatformat:3 }} &ndash; {{ style.og_max|floatformat:3 }} <small class="text-muted" title="Original Gravity">OG</small>
+                            </p>
+                        {% endif %}
+                        {% if style.recipes_ebc_min %}
+                            <p class="mb-0">
+                                <small class="text-muted">Actual</small><br/>
+                                {{ style.recipes_original_plato_min|floatformat:1 }} &lt; <strong>{{ style.recipes_original_plato_mean|floatformat:1 }}</strong> &lt; {{ style.recipes_original_plato_max|floatformat:1 }} <small class="text-muted" title="Degrees Plato">°P</small><br/>
+                                {{ style.recipes_og_min|floatformat:3 }} &lt; <strong>{{ style.recipes_og_mean|floatformat:3 }}</strong> &lt; {{ style.recipes_og_max|floatformat:3 }} <small class="text-muted" title="Original Gravity">OG</small>
+                            </p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-transparent"><div id="chart-spec-original-plato" class="height-10"></div></div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if style.recipes_final_plato_min or style.final_plato_min %}
+            <div class="col">
+                <div class="card text-center h-100">
+                    <div class="card-header" title="International Bitterness Unit"><h3 class="h6 mb-0">Final Gravity</h3></div>
+                    <div class="card-body pb-0">
+                        {% if style.ebc_min %}
+                            <p>
+                                <small class="text-muted">Specification</small><br/>
+                                {{ style.final_plato_min|floatformat:1 }} &ndash; {{ style.final_plato_max|floatformat:1 }} <small class="text-muted" title="Degrees Plato">°P</small><br/>
+                                {{ style.fg_min|floatformat:3 }} &ndash; {{ style.fg_max|floatformat:3 }} <small class="text-muted" title="Final Gravity">FG</small>
+                            </p>
+                        {% endif %}
+                        {% if style.recipes_ebc_min %}
+                            <p class="mb-0">
+                                <small class="text-muted">Actual</small><br/>
+                                {{ style.recipes_final_plato_min|floatformat:1 }} &lt; <strong>{{ style.recipes_final_plato_mean|floatformat:1 }}</strong> &lt; {{ style.recipes_final_plato_max|floatformat:1 }} <small class="text-muted" title="Degrees Plato">°P</small><br/>
+                                {{ style.recipes_fg_min|floatformat:3 }} &lt; <strong>{{ style.recipes_fg_mean|floatformat:3 }}</strong> &lt; {{ style.recipes_fg_max|floatformat:3 }} <small class="text-muted" title="Final Gravity">FG</small>
+                            </p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-transparent"><div id="chart-spec-final-plato" class="height-10"></div></div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+{% endif %}

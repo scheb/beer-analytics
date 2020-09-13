@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from recipe_db.analytics import get_style_popularity, get_style_metric_values, get_style_popular_hops, \
     get_style_popular_fermentables, get_style_hop_pairings
-from recipe_db.models import Style
+from recipe_db.models import Style, Hop
 from web_app.charts import LinesChart, CompactHistogramChart, BoxPlot, PairsBoxPlot
 
 
@@ -84,6 +84,60 @@ def style_chart(request: HttpRequest, id: str, chart_type: str, format: str) -> 
         plot = PairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% Amount')
     else:
         raise Http404('Unknown chart type %s.' % chart_type)
+
+    if format == 'png':
+        return HttpResponse(plot.render_png(), content_type='image/png')
+    elif format == 'svg':
+        return HttpResponse(plot.render_svg(), content_type='image/svg+xml')
+    else:
+        return HttpResponse(plot.render_json(), content_type='application/json')
+
+
+def hop_overview(request: HttpRequest) -> HttpResponse:
+    hop_categories = {}
+    categories = Hop.get_categories()
+    for category in categories:
+        most_popular = Hop.objects.filter(use=category).order_by('-recipes_count')[:5]
+        hop_categories[category] = {'id': category, 'name': categories[category], 'hops': [], 'most_popular': most_popular}
+
+    hops = Hop.objects.filter(recipes_count__gt=0).order_by('name')
+    for hop in hops:
+        hop_categories[hop.use]['hops'].append(hop)
+
+    return render(request, 'hops/overview.html', {'categories': hop_categories.values()})
+
+
+def hop_category_detail(request: HttpRequest, *args, **kwargs):
+    category = kwargs['category']
+
+    categories = Hop.get_categories()
+    if category not in categories:
+        raise Http404('Unknown hop category %s.' % category)
+
+    hops_query = Hop.objects.filter(use=category, recipes_count__gt=0)
+
+    hops = hops_query.order_by('name')
+    most_popular = hops_query.order_by('-recipes_count')[:5]
+    category_name = categories[category]
+
+    return render(request, 'hops/category.html', {'category_name': category_name, 'hops': hops, 'most_popular': most_popular})
+
+
+def hop_detail(request: HttpRequest, *args, **kwargs):
+    slug = kwargs['slug']
+    category = kwargs['category']
+    hop = get_object_or_404(Hop, pk=slug)
+
+    if category != hop.category:
+        return redirect('hop_category_detail', category=hop.category, slug=hop.id)
+
+    return render(request, 'hops/detail.html', {'hop': hop})
+
+
+def hop_chart(request: HttpRequest, id: str, chart_type: str, format: str) -> HttpResponse:
+    hop = get_object_or_404(Hop, pk=id)
+
+    raise Http404('Unknown chart type %s.' % chart_type)
 
     if format == 'png':
         return HttpResponse(plot.render_png(), content_type='image/png')

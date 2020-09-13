@@ -224,9 +224,19 @@ class Fermentable(models.Model):
 
 # http://www.hopslist.com/hops/
 class Hop(models.Model):
+    AROMA = 'aroma'
+    BITTERING = 'bittering'
+    DUAL_PURPOSE = 'dual-purpose'
+
+    USE_CHOICES = (
+        (AROMA, 'Aroma'),
+        (BITTERING, 'Bittering'),
+        (DUAL_PURPOSE, 'Dual Purpose'),
+    )
+
     id = models.CharField(max_length=255, primary_key=True)
     name = models.CharField(max_length=255)
-    use = models.CharField(max_length=16, default=None, blank=True, null=True)
+    use = models.CharField(max_length=16, choices=USE_CHOICES, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
     alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
 
@@ -247,6 +257,28 @@ class Hop(models.Model):
     @classmethod
     def create_id(cls, name: str) -> str:
         return create_human_readable_id(name)
+
+    @classmethod
+    def get_categories(cls) -> dict:
+        return dict(cls.USE_CHOICES)
+
+    @property
+    def category(self) -> str:
+        return self.use
+
+    @property
+    def category_name(self) -> str:
+        return self.get_categories()[self.use]
+
+    @property
+    def alt_names_list(self):
+        if self.alt_names is not None:
+            items = self.alt_names.split(',')
+            return list(map(lambda x: x.strip(), items))
+
+    @property
+    def url(self) -> str:
+        return reverse('hop_detail', kwargs={'category': self.use, 'slug': self.id})
 
 
 class Yeast(models.Model):
