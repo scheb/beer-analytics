@@ -145,7 +145,7 @@ class PairsBoxPlot:
         fig.update_layout(
             title=None,
             showlegend=False,
-            margin=dict(l=30, r=0, t=30, b=10),
+            margin=dict(l=30, r=0, t=20, b=10),
             xaxis=dict(
                 fixedrange=True,
             ),
