@@ -58,10 +58,14 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
+
+if env('CACHE_TYPE') != 'dummy':
+    MIDDLEWARE += [
+        'django.middleware.cache.UpdateCacheMiddleware',
+        'django.middleware.cache.FetchFromCacheMiddleware',
+        'django.middleware.common.CommonMiddleware',
+    ]
 
 ROOT_URLCONF = 'beer_analytics.urls'
 
