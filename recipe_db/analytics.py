@@ -33,7 +33,8 @@ def get_style_popularity(style: Style) -> DataFrame:
     style_ids = style.get_ids_including_sub_styles()
     df = get_all_styles_popularity()
     df = df.reset_index()
-    return df[df['style'].isin(style_ids)]
+    df = df[df['style'].isin(style_ids)]
+    return df
 
 
 def get_all_styles_popularity() -> DataFrame:
@@ -45,16 +46,14 @@ def get_all_styles_popularity() -> DataFrame:
         FROM recipe_db_recipe
         WHERE
             created IS NOT NULL
-            AND created > '2011-01-01'
+            AND created > '2012-01-01'
             AND style_id IS NOT NULL
         GROUP BY strftime('%Y-%m', created), style_id
     '''
 
     df = pd.read_sql(query, connection)
-    df = df.set_index(['month', 'style'])
-    recipes_per_month = df.groupby('month').agg({'recipes': 'sum'})
-
-    return df.div(recipes_per_month, level='month') * 100
+    df['recipes_percent'] = 100 * df['recipes'] / df.groupby('month')['recipes'].transform('sum')
+    return df
 
 
 def get_style_metric_values(style: Style, metric: str) -> DataFrame:

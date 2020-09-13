@@ -59,7 +59,7 @@ def style_chart(request: HttpRequest, id: str, chart_type: str, format: str) -> 
     if chart_type == 'popularity':
         id_to_name = style.get_id_name_mapping_including_sub_styles()
         df = get_style_popularity(style)
-        plot = LinesChart().plot(df, 'month', 'recipes', 'style', 'Month/Year', '% Recipes', category_names=id_to_name)
+        plot = LinesChart().plot(df, 'month', 'recipes_percent', 'style', 'Month/Year', '% Recipes', category_names=id_to_name)
     elif chart_type == 'abv-histogram':
         df = get_style_metric_values(style, 'abv')
         plot = CompactHistogramChart().plot(df, 'abv', 'count')
