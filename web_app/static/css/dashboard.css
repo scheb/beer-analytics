@@ -127,3 +127,11 @@ h1 {
 .height-30 {
     height: 30rem;
 }
+
+.most-popular {
+    line-height: 1.6rem;
+}
+
+.most-popular .badge {
+    font-size: inherit;
+}

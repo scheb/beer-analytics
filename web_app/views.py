@@ -21,7 +21,9 @@ def privacy_policy(request: HttpRequest) -> HttpResponse:
 
 def style_overview(request: HttpRequest) -> HttpResponse:
     categories = Style.objects.filter(parent_style=None).order_by('id')
-    return render(request, 'styles/overview.html', {'categories': categories})
+    most_popular = Style.objects.exclude(parent_style=None).order_by('-recipes_count')[:5]
+
+    return render(request, 'styles/overview.html', {'categories': categories, 'most_popular': most_popular})
 
 
 def style_category_detail(request: HttpRequest, *args, **kwargs):
