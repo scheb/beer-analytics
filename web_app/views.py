@@ -11,12 +11,8 @@ def home(request: HttpRequest) -> HttpResponse:
     return render(request, 'index.html')
 
 
-def imprint(request: HttpRequest) -> HttpResponse:
-    return render(request, 'imprint.html')
-
-
-def privacy_policy(request: HttpRequest) -> HttpResponse:
-    return render(request, 'privacy_policy.html')
+def legal(request: HttpRequest) -> HttpResponse:
+    return render(request, 'legal.html')
 
 
 def style_overview(request: HttpRequest) -> HttpResponse:

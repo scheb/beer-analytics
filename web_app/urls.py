@@ -1,4 +1,4 @@
-from django.urls import path, re_path, register_converter
+from django.urls import path, register_converter
 
 from . import views
 
@@ -15,8 +15,7 @@ register_converter(ChartFormat, 'cformat')
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('imprint', views.imprint, name='imprint'),
-    path('privacy-policy', views.privacy_policy, name='privacy_policy'),
+    path('imprint', views.legal, name='legal'),
 
     path('trends/', views.home, name='trends'),
     path('hops/', views.home, name='hop_overview'),
