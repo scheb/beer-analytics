@@ -79,19 +79,20 @@ def get_style_popular_hops(style: Style) -> DataFrame:
     style_ids = style.get_ids_including_sub_styles()
 
     query = '''
-           SELECT rh.recipe_id, h.name AS hop, rh.amount_percent
-           FROM recipe_db_recipehop AS rh
-           JOIN recipe_db_recipe AS r ON rh.recipe_id = r.uid
-           JOIN recipe_db_hop AS h ON rh.kind_id = h.id
-           WHERE
-               rh.kind_id IS NOT NULL
-               AND r.style_id IN ({})
+        WITH recipe_hops_agg AS (
+            SELECT recipe_id, kind_id, SUM(amount_percent) AS amount_percent
+            FROM recipe_db_recipehop
+            WHERE kind_id IS NOT NULL
+            GROUP BY recipe_id, kind_id
+        )
+        SELECT rh.recipe_id, h.name AS hop, rh.amount_percent
+        FROM recipe_hops_agg AS rh
+        JOIN recipe_db_recipe AS r ON rh.recipe_id = r.uid
+        JOIN recipe_db_hop AS h ON rh.kind_id = h.id
+        WHERE r.style_id IN ({})
         '''.format(','.join('%s' for _ in style_ids))
 
     hops = pd.read_sql(query, connection, params=style_ids)
-
-    # Aggregate hops amount per recipe
-    hops = hops.groupby(["recipe_id", "hop"]).agg({"amount_percent": "sum"}).reset_index()
 
     top_hops_ids = hops["hop"].value_counts()[:20].index.values
     top_hops = hops[hops['hop'].isin(top_hops_ids)]  # Get only the values of the mostly used hops
@@ -104,19 +105,20 @@ def get_style_popular_fermentables(style: Style) -> DataFrame:
     style_ids = style.get_ids_including_sub_styles()
 
     query = '''
-           SELECT rf.recipe_id, f.name AS fermentable, rf.amount_percent
-           FROM recipe_db_recipefermentable AS rf
-           JOIN recipe_db_recipe AS r ON rf.recipe_id = r.uid
-           JOIN recipe_db_fermentable AS f ON rf.kind_id = f.id
-           WHERE
-               rf.kind_id IS NOT NULL
-               AND r.style_id IN ({})
+        WITH recipe_fermentables_agg AS (
+            SELECT recipe_id, kind_id, SUM(amount_percent) AS amount_percent
+            FROM recipe_db_recipefermentable
+            WHERE kind_id IS NOT NULL
+            GROUP BY recipe_id, kind_id
+        )
+        SELECT rf.recipe_id, h.name AS fermentable, rf.amount_percent
+        FROM recipe_fermentables_agg AS rf
+        JOIN recipe_db_recipe AS r ON rf.recipe_id = r.uid
+        JOIN recipe_db_fermentable AS h ON rf.kind_id = h.id
+        WHERE r.style_id IN ({})
         '''.format(','.join('%s' for _ in style_ids))
 
-    fermentable = pd.read_sql(query, connection, params=style_ids)
-
-    # Aggregate fermentable amount per recipe
-    fermentables = fermentable.groupby(["recipe_id", "fermentable"]).agg({"amount_percent": "sum"}).reset_index()
+    fermentables = pd.read_sql(query, connection, params=style_ids)
 
     top_fermentables_ids = fermentables["fermentable"].value_counts()[:20].index.values
     top_fermentables = fermentables[fermentables['fermentable'].isin(top_fermentables_ids)]  # Get only the values of the mostly used fermentable
