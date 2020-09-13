@@ -230,6 +230,15 @@ class Hop(models.Model):
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
     alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
 
+    # Calculated metrics from recipes
+    recipes_count = models.IntegerField(default=None, blank=True, null=True)
+    recipes_alpha_min = models.FloatField(default=None, blank=True, null=True)
+    recipes_alpha_mean = models.FloatField(default=None, blank=True, null=True)
+    recipes_alpha_max = models.FloatField(default=None, blank=True, null=True)
+    recipes_amount_percent_min = models.FloatField(default=None, blank=True, null=True)
+    recipes_amount_percent_mean = models.FloatField(default=None, blank=True, null=True)
+    recipes_amount_percent_max = models.FloatField(default=None, blank=True, null=True)
+
     def save(self, *args, **kwargs) -> None:
         if self.id == '':
             self.id = self.create_id(self.name)

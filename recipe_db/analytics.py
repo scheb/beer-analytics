@@ -4,7 +4,7 @@ import pandas as pd
 from django.db import connection
 from pandas import DataFrame
 
-from recipe_db.models import Style
+from recipe_db.models import Style, Hop
 
 
 def load_all_recipes():
@@ -19,6 +19,20 @@ def calculate_style_recipe_count(df, style: Style) -> int:
 def calculate_style_metric(df, style: Style, metric: str) -> Tuple[float, float, float]:
     style_ids = style.get_ids_including_sub_styles()
     df = df[df['style_id'].isin(style_ids)]
+    df = remove_outliers(df, metric, 0.02)
+    return df[metric].min(), df[metric].mean(), df[metric].max()
+
+
+def load_all_recipe_hops():
+    return pd.read_sql('SELECT * FROM recipe_db_recipehop', connection)
+
+
+def calculate_hop_recipe_count(df, hop: Hop) -> int:
+    return len(df[df['kind_id'].eq(hop.id)]['recipe_id'].unique())
+
+
+def calculate_hop_metric(df, hop: Hop, metric: str) -> Tuple[float, float, float]:
+    df = df[df['kind_id'].eq(hop.id)]
     df = remove_outliers(df, metric, 0.02)
     return df[metric].min(), df[metric].mean(), df[metric].max()
 
