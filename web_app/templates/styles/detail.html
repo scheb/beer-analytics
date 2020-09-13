@@ -4,7 +4,7 @@
 
 {% block content %}
     {% include './breadcrumb.html' %}
-    <h1 class="mr-auto"><small class="text-muted" title="BJCP ID">{{ style.id }}</small> {{ style.name }}</h1>
+    <h1><small class="text-muted" title="BJCP ID">{{ style.id }}</small> {{ style.name }}</h1>
 
     {% if style.alt_names %}
         <p>Includes: <span class="badge bg-secondary">{{ style.alt_names_list|join:'</span><span class="invisible">, </span><span class="badge bg-secondary">' }}</span></p>
