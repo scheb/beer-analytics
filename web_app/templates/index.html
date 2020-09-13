@@ -3,5 +3,11 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h1>Welcome to Beer Analytics <small class="text-muted">(Alpha)</small></h1>
+    <h1>Welcome to Beer Analytics <sup class="text-muted">Alpha</sup></h1>
+    <p><strong>The analytical beer recipe database</strong></p>
+    <ul>
+        <li><a href="{% url "style_overview" %}">Explore beer styles</a></li>
+        <li><a href="{% url "hop_overview" %}">Explore hops</a></li>
+        <li><a href="{% url "fermentable_overview" %}">Explore fermentables</a></li>
+    </ul>
 {% endblock %}
