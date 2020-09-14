@@ -38,14 +38,13 @@ h1 {
 
 .nav-icon {
     display: inline-block;
-    width: 24px;
-    height: 26px;
+    width: 32px;
+    height: 32px;
     margin-right: 0.3rem;
     vertical-align: middle;
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: auto 100%;
-    background-image: url('../img/icon-beer.svg');
+    background-position: left;
+    background-size: cover;
     opacity: 0.8;
     transition: opacity 0.15s ease-in-out;
 }
@@ -60,6 +59,10 @@ a.nav-link:hover .nav-icon {
     background-image: url('../img/icon-beer.svg');
 }
 
+.pint-icon {
+    background-image: url('../img/icon-pint.svg');
+}
+
 .hops-icon {
     background-image: url('../img/icon-hops.svg');
 }
@@ -69,7 +72,6 @@ a.nav-link:hover .nav-icon {
 }
 
 .github-icon {
-    width: 24px;
     background-image: url('../img/icon-github.svg');
 }
 
