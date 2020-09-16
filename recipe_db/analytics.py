@@ -195,4 +195,10 @@ def get_style_hop_pairings(style: Style) -> DataFrame:
     df2 = pairings[['pairing', 'hop2', 'amount_percent2']]
     df2.columns = ['pairing', 'hop', 'amount_percent']
     df = pd.concat([df1, df2])
+
+    # Sort by pairing popularity
+    df['pairing'] = pd.Categorical(df['pairing'], top_pairings)
+    df = df.sort_values(by=['pairing', 'hop'])
+    df = df.reset_index()
+
     return df
