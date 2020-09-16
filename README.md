@@ -15,10 +15,11 @@ The project has two components:
 Setup
 -----
 
-- Initialize virtualenv
+- Initialize virtualenv and enable it
 - Install `requirements.txt`
 - Configure the application (see below)
-- Run migrations
+- Run migrations `python manage.py migrate`
+- Load initial data `python manage.py load_initial_data`
 
 ### Configuration
 
