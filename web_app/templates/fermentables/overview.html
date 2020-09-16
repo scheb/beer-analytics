@@ -7,12 +7,14 @@
 
     {% for category in categories %}
         <h2><a href="{% url "fermentable_category_detail" category.id %}" class="text-body">{{ category.name }}</a></h2>
-        <p class="most-popular">Most popular:
-            {% for fermentable in category.most_popular %}
-                {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
-                <a class="badge bg-primary" href="{{ fermentable.url }}">{{ fermentable.name }}</a>
-            {% endfor %}
-        </p>
+        {% if category.most_popular %}
+            <p class="most-popular">Most popular:
+                {% for fermentable in category.most_popular %}
+                    {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
+                    <a class="badge bg-primary" href="{{ fermentable.url }}">{{ fermentable.name }}</a>
+                {% endfor %}
+            </p>
+        {% endif %}
 
         {% if category.fermentables %}
             <ul class="column-list">
