@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from recipe_db.analytics import get_style_popularity, get_style_metric_values, get_style_popular_hops, \
     get_style_popular_fermentables, get_style_hop_pairings
 from recipe_db.models import Style, Hop, Fermentable, Recipe
-from web_app.charts import LinesChart, CompactHistogramChart, BoxPlot, PairsBoxPlot
+from web_app.plot import LinesChart, CompactHistogramChart, BoxPlot, PairsBoxPlot
 
 
 def home(request: HttpRequest) -> HttpResponse:
