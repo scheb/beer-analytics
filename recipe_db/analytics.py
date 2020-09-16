@@ -61,7 +61,7 @@ def get_style_popularity(style: Style) -> DataFrame:
     style_ids = style.get_ids_including_sub_styles()
     df = get_all_styles_popularity()
     df = df.reset_index()
-    df = df[df['style'].isin(style_ids)]
+    df = df[df['style_id'].isin(style_ids)]
     return df
 
 
@@ -69,9 +69,12 @@ def get_all_styles_popularity() -> DataFrame:
     query = '''
         SELECT
             strftime('%Y-%m', created) AS month,
-            style_id AS style,
+            style_id,
+            s.name AS style,
             count(uid) AS recipes
-        FROM recipe_db_recipe
+        FROM recipe_db_recipe AS r
+        JOIN recipe_db_style AS s
+            ON r.style_id = s.id
         WHERE
             created IS NOT NULL
             AND created > '2012-01-01'
