@@ -62,8 +62,8 @@ window.addEventListener('load', function ()
     display_graph('chart-spec-abv', '{% url "style_chart" style.id "abv-histogram" "json" %}', {displayModeBar: false});
     display_graph('chart-spec-ibu', '{% url "style_chart" style.id "ibu-histogram" "json" %}', {displayModeBar: false});
     display_graph('chart-spec-color', '{% url "style_chart" style.id "color-histogram" "json" %}', {displayModeBar: false});
-    display_graph('chart-spec-original-plato', '{% url "style_chart" style.id "original-plato-histogram" "json" %}', {displayModeBar: false});
-    display_graph('chart-spec-final-plato', '{% url "style_chart" style.id "final-plato-histogram" "json" %}', {displayModeBar: false});
+    display_graph('chart-spec-og', '{% url "style_chart" style.id "og-histogram" "json" %}', {displayModeBar: false});
+    display_graph('chart-spec-fg', '{% url "style_chart" style.id "fg-histogram" "json" %}', {displayModeBar: false});
     display_graph('chart-popularity', '{% url "style_chart" style.id "popularity" "json" %}');
     display_graph('chart-fermentables', '{% url "style_chart" style.id "popular-fermentables" "json" %}');
     display_graph('chart-hops', '{% url "style_chart" style.id "popular-hops" "json" %}');

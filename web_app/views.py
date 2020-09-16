@@ -1,10 +1,25 @@
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
-from recipe_db.analytics import get_style_popularity, get_style_metric_values, get_style_popular_hops, \
-    get_style_popular_fermentables, get_style_hop_pairings
 from recipe_db.models import Style, Hop, Fermentable, Recipe
-from web_app.plot import LinesChart, CompactHistogramChart, BoxPlot, PairsBoxPlot
+from web_app.charts.style import StyleChartFactory
+from web_app.plot import Plot
+
+FORMAT_PNG = 'png'
+FORMAT_SVG = 'svg'
+FORMAT_JSON = 'json'
+FORMATS = [FORMAT_PNG, FORMAT_SVG, FORMAT_JSON]
+
+
+def render_plot(plot: Plot, data_format: str):
+    if data_format == FORMAT_PNG:
+        return HttpResponse(plot.render_png(), content_type='image/png')
+    elif data_format == FORMAT_SVG:
+        return HttpResponse(plot.render_svg(), content_type='image/svg+xml')
+    elif data_format == FORMAT_JSON:
+        return HttpResponse(plot.render_json(), content_type='application/json')
+    else:
+        raise Http404('Unknown plotting format %s.' % data_format)
 
 
 def home(request: HttpRequest) -> HttpResponse:
@@ -47,50 +62,19 @@ def style_detail(request: HttpRequest, *args, **kwargs):
 
 
 def render_style(request: HttpRequest, style: Style) -> HttpResponse:
-    return render(request, 'styles/detail.html', {
-        "style": style
-    })
+    return render(request, 'styles/detail.html', {"style": style})
 
 
 def style_chart(request: HttpRequest, id: str, chart_type: str, format: str) -> HttpResponse:
     style = get_object_or_404(Style, pk=id)
 
-    if chart_type == 'popularity':
-        df = get_style_popularity(style)
-        plot = LinesChart().plot(df, 'month', 'recipes_percent', 'style', 'Month/Year', '% Recipes')
-    elif chart_type == 'abv-histogram':
-        df = get_style_metric_values(style, 'abv')
-        plot = CompactHistogramChart().plot(df, 'abv', 'count')
-    elif chart_type == 'ibu-histogram':
-        df = get_style_metric_values(style, 'ibu')
-        plot = CompactHistogramChart().plot(df, 'ibu', 'count')
-    elif chart_type == 'color-histogram':
-        df = get_style_metric_values(style, 'srm')
-        plot = CompactHistogramChart().plot(df, 'srm', 'count')
-    elif chart_type == 'original-plato-histogram':
-        df = get_style_metric_values(style, 'og')
-        plot = CompactHistogramChart().plot(df, 'og', 'count')
-    elif chart_type == 'final-plato-histogram':
-        df = get_style_metric_values(style, 'fg')
-        plot = CompactHistogramChart().plot(df, 'fg', 'count')
-    elif chart_type == 'popular-hops':
-        df = get_style_popular_hops(style)
-        plot = BoxPlot().plot(df, 'hop', 'amount_percent', 'Hops by Popularity', '% Amount')
-    elif chart_type == 'popular-fermentables':
-        df = get_style_popular_fermentables(style)
-        plot = BoxPlot().plot(df, 'fermentable', 'amount_percent', 'Fermentables by Popularity', '% Amount')
-    elif chart_type == 'hop-pairings':
-        df = get_style_hop_pairings(style)
-        plot = PairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% Amount')
+    chart_factory = StyleChartFactory()
+    if chart_factory.is_supported_chart(chart_type):
+        plot = chart_factory.get_chart(style, chart_type)
     else:
         raise Http404('Unknown chart type %s.' % chart_type)
 
-    if format == 'png':
-        return HttpResponse(plot.render_png(), content_type='image/png')
-    elif format == 'svg':
-        return HttpResponse(plot.render_svg(), content_type='image/svg+xml')
-    else:
-        return HttpResponse(plot.render_json(), content_type='application/json')
+    return render_plot(plot, format)
 
 
 def hop_overview(request: HttpRequest) -> HttpResponse:
@@ -138,13 +122,7 @@ def hop_chart(request: HttpRequest, id: str, chart_type: str, format: str) -> Ht
     hop = get_object_or_404(Hop, pk=id)
 
     raise Http404('Unknown chart type %s.' % chart_type)
-
-    if format == 'png':
-        return HttpResponse(plot.render_png(), content_type='image/png')
-    elif format == 'svg':
-        return HttpResponse(plot.render_svg(), content_type='image/svg+xml')
-    else:
-        return HttpResponse(plot.render_json(), content_type='application/json')
+    return render_plot(plot, format)
 
 
 def fermentable_overview(request: HttpRequest) -> HttpResponse:
@@ -222,13 +200,7 @@ def fermentable_chart(request: HttpRequest, id: str, chart_type: str, format: st
     fermentable = get_object_or_404(Fermentable, pk=id)
 
     raise Http404('Unknown chart type %s.' % chart_type)
-
-    if format == 'png':
-        return HttpResponse(plot.render_png(), content_type='image/png')
-    elif format == 'svg':
-        return HttpResponse(plot.render_svg(), content_type='image/svg+xml')
-    else:
-        return HttpResponse(plot.render_json(), content_type='application/json')
+    return render_plot(plot, format)
 
 
 def yeast_overview(request):
