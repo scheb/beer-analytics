@@ -12,6 +12,22 @@ The project has two components:
 2) a user interface to execute data analysis (filtering, slicing and dicing) and present results in a visually appealing
    way
 
+Configuration
+-------------
+
+Provide a `.env` file in the `beer_analytics` folder. An example can be found in `beer_analytics/.env.example`.
+
+Per default the application starts with "dev" settings. Use `DJANGO_SETTINGS_MODULE` to use different settings according
+to the environment:
+
+```
+# Production settings
+DJANGO_SETTINGS_MODULE=beer_analytics.settings_prod
+
+# Dev settings
+DJANGO_SETTINGS_MODULE=beer_analytics.settings_dev
+```
+
 Recipe data import
 ------------------
 
