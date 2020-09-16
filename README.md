@@ -11,9 +11,16 @@ The project has two components:
 1) a recipe database with reliable data (clean and normalized, reduce outliers and bad data)
 2) a user interface to execute data analysis (filtering, slicing and dicing) and present results in a visually appealing
    way
+   
+Setup
+-----
 
-Configuration
--------------
+- Initialize virtualenv
+- Install `requirements.txt`
+- Configure the application (see below)
+- Run migrations
+
+### Configuration
 
 Provide a `.env` file in the `beer_analytics` folder. An example can be found in `beer_analytics/.env.example`.
 
