@@ -4,7 +4,11 @@
 
 {% block content %}
     <h1>Welcome to Beer Analytics <sup class="text-muted">Alpha</sup></h1>
-    <p><strong>The analytical beer recipe database</strong></p>
+    <h2 class="h5">The analytical beer recipe database</h2>
+
+    <hr/>
+
+    <p>Currently analyzing <strong>{{ recipes }}</strong> recipes</p>
     <ul>
         <li><a href="{% url "style_overview" %}">Explore beer styles</a></li>
         <li><a href="{% url "hop_overview" %}">Explore hops</a></li>
