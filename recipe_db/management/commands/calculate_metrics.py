@@ -1,11 +1,13 @@
 from django.core.management.base import BaseCommand
 
 from recipe_db.analytics import load_all_recipes, calculate_style_metric, calculate_style_recipe_count, \
-    calculate_hop_recipe_count, calculate_hop_metric, load_all_recipe_hops
-from recipe_db.models import Style, Hop
+    calculate_hop_recipe_count, calculate_hop_metric, load_all_recipe_hops, calculate_fermentable_recipe_count, \
+    calculate_fermentable_metric, load_all_recipe_fermentables
+from recipe_db.models import Style, Hop, Fermentable
 
 STYLE_METRICS = ['abv', 'ibu', 'ebc', 'original_plato', 'final_plato']
 HOP_METRICS = ['alpha', 'amount_percent']
+FERMENTABLE_METRICS = ['amount_percent']
 
 
 class Command(BaseCommand):
@@ -22,11 +24,19 @@ class Command(BaseCommand):
 
         recipe_hops = load_all_recipe_hops()
 
-        self.stdout.write('Calculate style stats')
+        self.stdout.write('Calculate hop stats')
         for hop in Hop.objects.all():
             self.stdout.write('Hop {}'.format(hop.name))
             self.calculate_all_hop_metrics(recipe_hops, hop)
             hop.save()
+
+        recipe_fermentables = load_all_recipe_fermentables()
+
+        self.stdout.write('Calculate fermentable stats')
+        for fermentable in Fermentable.objects.all():
+            self.stdout.write('Fermentable {}'.format(fermentable.name))
+            self.calculate_all_fermentable_metrics(recipe_fermentables, fermentable)
+            fermentable.save()
 
     def calculate_all_style_metrics(self, df, style: Style) -> None:
         style.recipes_count = calculate_style_recipe_count(df, style)
@@ -49,3 +59,14 @@ class Command(BaseCommand):
             setattr(hop, "recipes_%s_min" % metric, min)
             setattr(hop, "recipes_%s_mean" % metric, mean)
             setattr(hop, "recipes_%s_max" % metric, max)
+
+    def calculate_all_fermentable_metrics(self, df, fermentable: Fermentable) -> None:
+        fermentable.recipes_count = calculate_fermentable_recipe_count(df, fermentable)
+
+        for metric in FERMENTABLE_METRICS:
+            self.stdout.write('Calculate {} for fermentable {}'.format(metric, fermentable.name))
+            (min, mean, max) = calculate_fermentable_metric(df, fermentable, metric)
+            self.stdout.write(str((min, mean, max)))
+            setattr(fermentable, "recipes_%s_min" % metric, min)
+            setattr(fermentable, "recipes_%s_mean" % metric, mean)
+            setattr(fermentable, "recipes_%s_max" % metric, max)
