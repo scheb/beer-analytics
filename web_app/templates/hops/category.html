@@ -21,7 +21,7 @@
 
     <ul class="column-list">
         {% for hop in hops %}
-            <li><a href="{{ hop.url }}">{{ hop.name }}</a></li>
+            <li><a href="{{ hop.url }}">{{ hop.name }}</a> <small class="text-muted ml-2">{{ hop.recipes_count }}</small></li></li>
         {% endfor %}
     </ul>
 {% endblock %}
