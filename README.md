@@ -46,6 +46,16 @@ python manage.py load_beerxml_recipe recipe.xml unique_id
 python manage.py load_mmum_recipe recipe.json unique_id
 ```
 
+Security
+--------
+
+For information about the security policy and know security issues, see [SECURITY.md](SECURITY.md).
+
+Contributing
+------------
+
+Want to contribute to this project? See [CONTRIBUTING.md](CONTRIBUTING.md).
+
 License
 -------
 
