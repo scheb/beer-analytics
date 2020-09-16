@@ -31,6 +31,7 @@
                     <li class="nav-item"><a class="nav-link pt-md-1 pb-md-1{% if url_name|startswith:'style' %} active{% endif %}" href="{% url "style_overview" %}"><span class="nav-icon pint-icon"></span>Beer Styles</a></li>
                     <li class="nav-item"><a class="nav-link pt-md-1 pb-md-1{% if url_name|startswith:'hop' %} active{% endif %}" href="{% url "hop_overview" %}"><span class="nav-icon hops-icon"></span>Hops</a></li>
                     <li class="nav-item"><a class="nav-link pt-md-1 pb-md-1{% if url_name|startswith:'fermentable' %} active{% endif %}" href="{% url "fermentable_overview" %}"><span class="nav-icon fermentables-icon"></span>Fermentables</a></li>
+                    <li class="nav-item"><a class="nav-link pt-md-1 pb-md-1{% if url_name|startswith:'yeast' %} active{% endif %}" href="{% url "yeast_overview" %}"><span class="nav-icon yeasts-icon"></span>Yeasts</a></li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link{% if url_name == 'legal' %} active{% endif %}" href="{% url "legal" %}">Legal Stuff</a></li>
