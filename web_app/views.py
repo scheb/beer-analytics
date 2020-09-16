@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from recipe_db.analytics import get_style_popularity, get_style_metric_values, get_style_popular_hops, \
     get_style_popular_fermentables, get_style_hop_pairings
-from recipe_db.models import Style, Hop
+from recipe_db.models import Style, Hop, Fermentable
 from web_app.charts import LinesChart, CompactHistogramChart, BoxPlot, PairsBoxPlot
 
 
@@ -136,6 +136,86 @@ def hop_detail(request: HttpRequest, *args, **kwargs):
 
 def hop_chart(request: HttpRequest, id: str, chart_type: str, format: str) -> HttpResponse:
     hop = get_object_or_404(Hop, pk=id)
+
+    raise Http404('Unknown chart type %s.' % chart_type)
+
+    if format == 'png':
+        return HttpResponse(plot.render_png(), content_type='image/png')
+    elif format == 'svg':
+        return HttpResponse(plot.render_svg(), content_type='image/svg+xml')
+    else:
+        return HttpResponse(plot.render_json(), content_type='application/json')
+
+
+def fermentable_overview(request: HttpRequest) -> HttpResponse:
+    fermentable_categories = {}
+    categories = Fermentable.get_categories()
+    types = Fermentable.get_types()
+    for category in categories:
+        most_popular = Fermentable.objects.filter(category=category).order_by('-recipes_count')[:5]
+        fermentable_types = {}
+        for t in types:
+            fermentable_types[t] = {
+                'id': t,
+                'name': types[t],
+                'fermentables': [],
+            }
+
+        fermentable_categories[category] = {
+            'id': category,
+            'name': categories[category],
+            'fermentables': [],
+            'types': fermentable_types,
+            'most_popular': most_popular
+        }
+
+    fermentables = Fermentable.objects.filter(recipes_count__gt=0).order_by('name')
+    for fermentable in fermentables:
+        if fermentable.type is not None:
+            fermentable_categories[fermentable.category]['types'][fermentable.type]['fermentables'].append(fermentable)
+        else:
+            fermentable_categories[fermentable.category]['fermentables'].append(fermentable)
+
+    fermentable_categories = fermentable_categories.values()
+    for fermentable in fermentable_categories:
+        types_filtered = []
+        for t in fermentable['types'].values():
+            if len(t['fermentables']) > 0:
+                types_filtered.append(t)
+        fermentable['types'] = types_filtered
+
+    return render(request, 'fermentables/overview.html', {'categories': fermentable_categories})
+
+
+def fermentable_category_detail(request: HttpRequest, *args, **kwargs):
+    category = kwargs['category']
+
+    categories = Fermentable.get_categories()
+    if category not in categories:
+        raise Http404('Unknown fermentable category %s.' % category)
+
+    fermentables_query = Fermentable.objects.filter(category=category, recipes_count__gt=0)
+
+    fermentables = fermentables_query.order_by('name')
+    most_popular = fermentables_query.order_by('-recipes_count')[:5]
+    category_name = categories[category]
+
+    return render(request, 'fermentables/category.html', {'category_name': category_name, 'fermentables': fermentables, 'most_popular': most_popular})
+
+
+def fermentable_detail(request: HttpRequest, *args, **kwargs):
+    slug = kwargs['slug']
+    category = kwargs['category']
+    fermentable = get_object_or_404(Fermentable, pk=slug)
+
+    if category != fermentable.category:
+        return redirect('fermentable_category_detail', category=fermentable.category, slug=fermentable.id)
+
+    return render(request, 'fermentables/detail.html', {'fermentable': fermentable})
+
+
+def fermentable_chart(request: HttpRequest, id: str, chart_type: str, format: str) -> HttpResponse:
+    fermentable = get_object_or_404(Fermentable, pk=id)
 
     raise Http404('Unknown chart type %s.' % chart_type)
 

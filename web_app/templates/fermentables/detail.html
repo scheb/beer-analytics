@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ fermentable.name }} ‹ Beer Styles{% endblock %}
+
+{% block content %}
+    <nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url "fermentable_overview" %}">Fermentables</a></li>
+            <li class="breadcrumb-item"><a href="{% url "fermentable_category_detail" fermentable.category %}">{{ fermentable.category_name }} Fermentables</a></li>
+            <li class="breadcrumb-item active">{{ fermentable.name }}</li>
+        </ol>
+    </nav>
+
+    <h1>{{ fermentable.name }}</h1>
+
+    {% if fermentable.alt_names %}
+        <p>Includes: <span class="badge bg-secondary">{{ fermentable.alt_names_list|join:'</span><span class="invisible">, </span><span class="badge bg-secondary">' }}</span></p>
+    {% endif %}
+
+    {% if fermentable.recipes_count %}
+        <p>Number of recipes: <strong>{{ fermentable.recipes_count }}</strong></p>
+    {% endif %}
+
+    {% include './metrics.html' %}
+
+    <h2>Popularity Over Time</h2>
+    <div id="chart-popularity" class="height-20"></div>
+
+    <h2>Common Styles</h2>
+    <div id="chart-styles" class="height-30"></div>
+
+    <h2>Common Pairings</h2>
+    <div id="chart-pairings" class="height-30"></div>
+{% endblock %}
+
+{% block script %}
+<script>
+window.addEventListener('load', function ()
+{
+    display_graph('chart-spec-alpha', '{% url "fermentable_chart" fermentable.id "alpha-histogram" "json" %}', {displayModeBar: false});
+    display_graph('chart-spec-amount', '{% url "fermentable_chart" fermentable.id "amount-histogram" "json" %}', {displayModeBar: false});
+    display_graph('chart-popularity', '{% url "fermentable_chart" fermentable.id "popularity" "json" %}');
+    display_graph('chart-styles', '{% url "fermentable_chart" fermentable.id "styles" "json" %}');
+    display_graph('chart-pairings', '{% url "fermentable_chart" fermentable.id "pairings" "json" %}');
+});
+</script>
+{% endblock %}

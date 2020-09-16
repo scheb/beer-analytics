@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Fermentables{% endblock %}
+
+{% block content %}
+    <h1>Fermentables</h1>
+
+    {% for category in categories %}
+        <h2><a href="{% url "fermentable_category_detail" category.id %}" class="text-body">{{ category.name }}</a></h2>
+        <p class="most-popular">Most popular:
+            {% for fermentable in category.most_popular %}
+                {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
+                <a class="badge bg-primary" href="{{ fermentable.url }}">{{ fermentable.name }}</a>
+            {% endfor %}
+        </p>
+
+        {% if category.fermentables %}
+            <ul class="column-list">
+                {% for fermentable in category.fermentables %}
+                    <li><a href="{{ fermentable.url }}">{{ fermentable.name }}</a> <small class="text-muted ml-2">{{ fermentable.recipes_count }}</small></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if category.types %}
+            {% for type in category.types %}
+                <h3>{{ type.name }}</h3>
+                {% if type.fermentables %}
+                    <ul class="column-list">
+                        {% for fermentable in type.fermentables %}
+                            <li><a href="{{ fermentable.url }}">{{ fermentable.name }}</a> <small class="text-muted ml-2">{{ fermentable.recipes_count }}</small></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
