@@ -30,16 +30,9 @@ class LinesChart:
         category_field: str,
         x_title: Optional[str] = None,
         y_title: Optional[str] = None,
-        legend_title: str = None,
-        category_names: dict = None
+        legend_title: str = None
     ) -> Plot:
         fig = px.line(df, x=x_field, y=y_field, color=category_field)
-
-        # Relabel traces
-        if category_names is not None:
-            for trace in fig.data:
-                if trace.name in category_names:
-                    trace.name = category_names[trace.name]
 
         fig.update_xaxes(title_text=x_title)
         fig.update_yaxes(title_text=y_title)
@@ -47,6 +40,7 @@ class LinesChart:
         fig.update_layout(legend=dict(title=legend_title))
         fig.update_layout(
             title=None,
+            showlegend=len(fig.data) > 1,
             margin=dict(l=10, r=0, t=20, b=10),
             xaxis=dict(
                 fixedrange=True,
