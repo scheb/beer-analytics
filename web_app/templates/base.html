@@ -1,10 +1,10 @@
-<!doctype html>
+<!doctype html>{% with request.resolver_match.url_name as url_name %}
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content=""/>
-    <title>{% block title %}{% endblock %} | Beer Analytics</title>
+    <title>{% if url_name == "home" %}Beer Analytics &ndash; The analytical beer recipe database{% else %}{% block title %}{% endblock %} | Beer Analytics{% endif %}</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"/>
@@ -24,7 +24,6 @@
                 aria-controls="top-navigation" aria-expanded="false" aria-label="Toggle navigation" title="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        {% with request.resolver_match.url_name as url_name %}
             {% load web_app %}
             <div id="top-navigation" class="collapse navbar-collapse p-2 pl-md-0 pr-md-0">
                 <ul class="navbar-nav">
