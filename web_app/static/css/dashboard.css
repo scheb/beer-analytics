@@ -82,6 +82,10 @@ a.nav-link:hover .nav-icon {
     background-image: url('../img/icon-fermentables.svg');
 }
 
+.yeasts-icon {
+    background-image: url('../img/icon-yeast.svg');
+}
+
 .github-icon {
     background-image: url('../img/icon-github.svg');
 }

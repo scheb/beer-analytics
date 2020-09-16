@@ -224,3 +224,7 @@ def fermentable_chart(request: HttpRequest, id: str, chart_type: str, format: st
         return HttpResponse(plot.render_svg(), content_type='image/svg+xml')
     else:
         return HttpResponse(plot.render_json(), content_type='application/json')
+
+
+def yeast_overview(request):
+    return render(request, 'yeasts/overview.html')

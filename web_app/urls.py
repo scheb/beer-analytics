@@ -2,6 +2,7 @@ from django.urls import path, register_converter
 
 from . import views
 
+
 class ChartFormat:
     regex = 'png|svg|json'
 
@@ -31,4 +32,6 @@ urlpatterns = [
     path('fermentables/<str:category>/', views.fermentable_category_detail, name='fermentable_category_detail'),
     path('fermentables/<str:category>/<str:slug>', views.fermentable_detail, name='fermentable_detail'),
     path('fermentables/charts/<str:id>/<str:chart_type>.<cformat:format>', views.fermentable_chart, name='fermentable_chart'),
+
+    path('yeasts/', views.yeast_overview, name='yeast_overview'),
 ]
