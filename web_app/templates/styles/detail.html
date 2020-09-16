@@ -43,16 +43,16 @@
 
     <h2>Popularity Over Time</h2>
     <noscript><img src="{% url "style_chart" style.id "popularity" "png" %}" alt="Popularity Over Time Chart" /></noscript>
-    <div id="chart-popularity" class="height-20"></div>
+    <div id="chart-popularity" class="chart-m"></div>
 
     <h2>Most Used Fermentables</h2>
-    <div id="chart-fermentables" class="height-30"></div>
+    <div id="chart-fermentables" class="chart-l"></div>
 
     <h2>Most Used Hops</h2>
-    <div id="chart-hops" class="height-30"></div>
+    <div id="chart-hops" class="chart-l"></div>
 
     <h2>Common Hop Pairings</h2>
-    <div id="chart-hop-pairings" class="height-30"></div>
+    <div id="chart-hop-pairings" class="chart-l"></div>
 {% endblock %}
 
 {% block script %}
