@@ -40,7 +40,7 @@ def overview(request: HttpRequest) -> HttpResponse:
             if len(t['fermentables']) > 0:
                 types_filtered.append(t)
         fermentable_category['types'] = types_filtered
-        if len(fermentable_category['fermentables']) > 5:
+        if len(fermentable_category['types']) > 1 or len(fermentable_category['fermentables']) > 5:
             fermentable_category['most_popular'] = Fermentable.objects.filter(category=fermentable_category['id']).order_by('-recipes_count')[:5]
 
     return render(request, 'fermentable/overview.html', {'categories': fermentable_categories})
