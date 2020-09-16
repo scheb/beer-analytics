@@ -12,12 +12,14 @@
 
     <h1>{{ category_name }} Fermentables</h1>
 
-    <p class="most-popular">Most popular:
-        {% for fermentable in most_popular %}
-            {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
-            <a class="badge bg-primary" href="{{ fermentable.url }}">{{ fermentable.name }}</a>
-        {% endfor %}
-    </p>
+    {% if most_popular %}
+        <p class="most-popular">Most popular:
+            {% for fermentable in most_popular %}
+                {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
+                <a class="badge bg-primary" href="{{ fermentable.url }}">{{ fermentable.name }}</a>
+            {% endfor %}
+        </p>
+    {% endif %}
 
     <ul class="column-list">
         {% for fermentable in fermentables %}
