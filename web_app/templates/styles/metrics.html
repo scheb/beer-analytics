@@ -4,18 +4,18 @@
         {% if style.recipes_abv_min or style.abv_min %}
             <div class="col">
                 <div class="card text-center h-100">
-                    <div class="card-header" title="Alcohol by Volume"><h3 class="h6 mb-0">ABV</h3></div>
+                    <div class="card-header"><h3 class="h6 mb-0">Alcohol</h3></div>
                     <div class="card-body pb-0">
                         {% if style.abv_min %}
                             <p>
                                 <small class="text-muted">Specification</small><br/>
-                                {{ style.abv_min|floatformat:1 }} &ndash; {{ style.abv_max|floatformat:1 }}
+                                {{ style.abv_min|floatformat:1 }} &ndash; {{ style.abv_max|floatformat:1 }} <small class="text-muted">%</small>
                             </p>
                         {% endif %}
                         {% if style.recipes_abv_min %}
                             <p>
                                 <small class="text-muted">Actual</small><br/>
-                                {{ style.recipes_abv_min|floatformat:1 }} &lt; <strong>{{ style.recipes_abv_mean|floatformat:1 }}</strong> &lt; {{ style.recipes_abv_max|floatformat:1 }}
+                                {{ style.recipes_abv_min|floatformat:1 }} &lt; <strong>{{ style.recipes_abv_mean|floatformat:1 }}</strong> &lt; {{ style.recipes_abv_max|floatformat:1 }}  <small class="text-muted">%</small>
                             </p>
                         {% endif %}
                     </div>
@@ -27,18 +27,18 @@
         {% if style.recipes_ibu_min or style.recipes_ibu_min %}
             <div class="col">
                 <div class="card text-center h-100">
-                    <div class="card-header" title="International Bitterness Unit"><h3 class="h6 mb-0">IBU</h3></div>
+                    <div class="card-header"><h3 class="h6 mb-0">Bitterness</h3></div>
                     <div class="card-body pb-0">
                         {% if style.ibu_min %}
                             <p>
                                 <small class="text-muted">Specification</small><br/>
-                                {{ style.ibu_min|floatformat:0 }} &ndash; {{ style.ibu_max|floatformat:0 }}
+                                {{ style.ibu_min|floatformat:0 }} &ndash; {{ style.ibu_max|floatformat:0 }} <small class="text-muted" title="International Bitterness Unit">IBU</small>
                             </p>
                         {% endif %}
                         {% if style.recipes_ibu_min %}
                             <p>
                                 <small class="text-muted">Actual</small><br/>
-                                {{ style.recipes_ibu_min|floatformat:0 }} &lt; <strong>{{ style.recipes_ibu_mean|floatformat:0 }}</strong> &lt; {{ style.recipes_ibu_max|floatformat:0 }}
+                                {{ style.recipes_ibu_min|floatformat:0 }} &lt; <strong>{{ style.recipes_ibu_mean|floatformat:0 }}</strong> &lt; {{ style.recipes_ibu_max|floatformat:0 }} <small class="text-muted" title="International Bitterness Unit">IBU</small>
                             </p>
                         {% endif %}
                     </div>
@@ -50,7 +50,7 @@
         {% if style.recipes_ebc_min or style.ebc_min %}
             <div class="col">
                 <div class="card text-center h-100">
-                    <div class="card-header" title="International Bitterness Unit"><h3 class="h6 mb-0">Color</h3></div>
+                    <div class="card-header"><h3 class="h6 mb-0">Color</h3></div>
                     <div class="card-body pb-0">
                         {% if style.ebc_min %}
                             <p>
@@ -75,7 +75,7 @@
         {% if style.recipes_original_plato_min or style.original_plato_min %}
             <div class="col">
                 <div class="card text-center h-100">
-                    <div class="card-header" title="International Bitterness Unit"><h3 class="h6 mb-0">Original Extract</h3></div>
+                    <div class="card-header"><h3 class="h6 mb-0">Original Extract</h3></div>
                     <div class="card-body pb-0">
                         {% if style.ebc_min %}
                             <p>
@@ -100,7 +100,7 @@
         {% if style.recipes_final_plato_min or style.final_plato_min %}
             <div class="col">
                 <div class="card text-center h-100">
-                    <div class="card-header" title="International Bitterness Unit"><h3 class="h6 mb-0">Final Gravity</h3></div>
+                    <div class="card-header"><h3 class="h6 mb-0">Final Gravity</h3></div>
                     <div class="card-body pb-0">
                         {% if style.ebc_min %}
                             <p>
