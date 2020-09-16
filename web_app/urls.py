@@ -1,10 +1,11 @@
 from django.urls import path, register_converter
 
 from . import views
+from .views import FORMATS
 
 
 class ChartFormat:
-    regex = 'png|svg|json'
+    regex = '|'.join(FORMATS)
 
     def to_python(self, value):
         return str(value)
