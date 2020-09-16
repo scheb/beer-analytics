@@ -57,33 +57,46 @@ def remove_outliers(df: DataFrame, field: str, cutoff_percentile: float) -> Data
     return df[df[field].between(lower_limit, upper_limit)]
 
 
-def get_style_popularity(style: Style) -> DataFrame:
-    style_ids = style.get_ids_including_sub_styles()
-    df = get_all_styles_popularity()
-    df = df.reset_index()
-    df = df[df['style_id'].isin(style_ids)]
-    return df
-
-
-def get_all_styles_popularity() -> DataFrame:
+def get_num_recipes_per_month() -> DataFrame:
     query = '''
-        SELECT
-            strftime('%Y-%m', created) AS month,
-            style_id,
-            s.name AS style,
-            count(uid) AS recipes
-        FROM recipe_db_recipe AS r
-        JOIN recipe_db_style AS s
-            ON r.style_id = s.id
-        WHERE
-            created IS NOT NULL
-            AND created > '2012-01-01'
-            AND style_id IS NOT NULL
-        GROUP BY strftime('%Y-%m', created), style_id
+        SELECT strftime('%Y-%m', created) AS month, count(uid) AS total_recipes
+        FROM recipe_db_recipe
+        GROUP BY strftime('%Y-%m', created)
+        ORDER BY month ASC
     '''
 
     df = pd.read_sql(query, connection)
-    df['recipes_percent'] = 100 * df['recipes'] / df.groupby('month')['recipes'].transform('sum')
+    df = df.set_index('month')
+
+    return df
+
+
+def get_style_popularity(style: Style) -> DataFrame:
+    style_ids = style.get_ids_including_sub_styles()
+    recipes_per_month = get_num_recipes_per_month()
+
+    query = '''
+            SELECT
+                strftime('%%Y-%%m', r.created) AS month,
+                r.style_id,
+                s.name AS style,
+                count(r.uid) AS recipes
+            FROM recipe_db_recipe AS r
+            JOIN recipe_db_style AS s
+                ON r.style_id = s.id
+            WHERE
+                created IS NOT NULL
+                AND r.created > '2012-01-01'
+                AND r.style_id IN ({})
+            GROUP BY strftime('%%Y-%%m', r.created), r.style_id
+        '''.format(','.join('%s' for _ in style_ids))
+
+    df = pd.read_sql(query, connection, params=style_ids)
+    df = df.set_index(['month', 'style_id'])
+    df = df.merge(recipes_per_month, on="month")
+    df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
+    df = df.reset_index()
+
     return df
 
 
