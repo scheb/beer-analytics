@@ -155,3 +155,44 @@ class PairsBoxPlot:
         fig.update_yaxes(title_text=y_title, row=1, col=1)
 
         return Plot(fig)
+
+
+class BarChart():
+    def plot(
+        self,
+        df: DataFrame,
+        type_field: str,
+        value_field: str,
+        x_title: Optional[str] = None,
+        y_title: Optional[str] = None,
+    ) -> Plot:
+        fig = px.bar(
+            df,
+            x=df[type_field],
+            y=df[value_field],
+            color=df[value_field],
+            color_continuous_scale=px.colors.sequential.matter
+        )
+
+        fig.update_layout(
+            title=None,
+            showlegend=False,
+            coloraxis=dict(
+                showscale=False,
+            ),
+            margin=dict(l=30, r=0, t=20, b=10),
+            xaxis=dict(
+                fixedrange=True,
+            ),
+            yaxis=dict(
+                fixedrange=True,
+                title=dict(
+                    standoff=30,
+                ),
+            )
+        )
+
+        fig.update_xaxes(title_text=x_title)
+        fig.update_yaxes(title_text=y_title)
+
+        return Plot(fig)

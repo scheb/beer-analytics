@@ -71,6 +71,21 @@ def get_num_recipes_per_month() -> DataFrame:
     return df
 
 
+def get_num_recipes_per_style() -> DataFrame:
+    query = '''
+        SELECT style_id, count(uid) AS total_recipes
+        FROM recipe_db_recipe
+        WHERE style_id IS NOT NULL
+        GROUP BY style_id
+        ORDER BY style_id ASC
+    '''
+
+    df = pd.read_sql(query, connection)
+    df = df.set_index('style_id')
+
+    return df
+
+
 def get_style_popularity(style: Style) -> DataFrame:
     style_ids = style.get_ids_including_sub_styles()
     recipes_per_month = get_num_recipes_per_month()
@@ -212,6 +227,128 @@ def get_style_hop_pairings(style: Style) -> DataFrame:
     # Sort by pairing popularity
     df['pairing'] = pd.Categorical(df['pairing'], top_pairings)
     df = df.sort_values(by=['pairing', 'hop'])
+    df = df.reset_index()
+
+    return df
+
+
+def get_hop_popularity(hop: Hop) -> DataFrame:
+    recipes_per_month = get_num_recipes_per_month()
+
+    query = '''
+        SELECT
+            strftime('%%Y-%%m', r.created) AS month,
+            rh.kind_id,
+            h.name AS hop,
+            count(DISTINCT r.uid) AS recipes
+        FROM recipe_db_recipe AS r
+        JOIN recipe_db_recipehop AS rh
+            ON r.uid = rh.recipe_id
+        JOIN recipe_db_hop AS h
+            ON rh.kind_id = h.id
+        WHERE
+            created IS NOT NULL
+            AND r.created > '2012-01-01'
+            AND rh.kind_id = %s
+        GROUP BY strftime('%%Y-%%m', r.created), rh.kind_id
+    '''
+
+    df = pd.read_sql(query, connection, params=[hop.id])
+    df = df.set_index(['month', 'kind_id'])
+    df = df.merge(recipes_per_month, on="month")
+    df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
+    df = df.reset_index()
+
+    return df
+
+
+def get_hop_common_styles(hop: Hop) -> DataFrame:
+    recipes_per_style = get_num_recipes_per_style()
+
+    query = '''
+        SELECT
+            r.style_id,
+            s.name AS style_name,
+            count(DISTINCT r.uid) AS recipes
+        FROM recipe_db_recipe AS r
+        JOIN recipe_db_recipehop AS rh
+            ON r.uid = rh.recipe_id
+        JOIN recipe_db_style AS s
+            ON r.style_id = s.id
+        WHERE
+            created IS NOT NULL
+            AND r.created > '2012-01-01'
+            AND rh.kind_id = %s
+        GROUP BY r.style_id
+    '''
+
+    df = pd.read_sql(query, connection, params=[hop.id])
+    df = df.set_index(['style_id'])
+    df = df.merge(recipes_per_style, on="style_id")
+    df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
+    df = df.sort_values('recipes_percent', ascending=False)
+    df = df[:30]
+    df = df.reset_index()
+
+    return df
+
+
+def get_fermentable_popularity(fermentable: Fermentable) -> DataFrame:
+    recipes_per_month = get_num_recipes_per_month()
+
+    query = '''
+        SELECT
+            strftime('%%Y-%%m', r.created) AS month,
+            fh.kind_id,
+            f.name AS fermentable,
+            count(DISTINCT r.uid) AS recipes
+        FROM recipe_db_recipe AS r
+        JOIN recipe_db_recipefermentable AS fh
+            ON r.uid = fh.recipe_id
+        JOIN recipe_db_fermentable AS f
+            ON fh.kind_id = f.id
+        WHERE
+            created IS NOT NULL
+            AND r.created > '2012-01-01'
+            AND fh.kind_id = %s
+        GROUP BY strftime('%%Y-%%m', r.created), fh.kind_id
+    '''
+
+    df = pd.read_sql(query, connection, params=[fermentable.id])
+    df = df.set_index(['month', 'kind_id'])
+    df = df.merge(recipes_per_month, on="month")
+    df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
+    df = df.reset_index()
+
+    return df
+
+
+def get_fermentable_common_styles(fermentable: Fermentable) -> DataFrame:
+    recipes_per_style = get_num_recipes_per_style()
+
+    query = '''
+        SELECT
+            r.style_id,
+            s.name AS style_name,
+            count(DISTINCT r.uid) AS recipes
+        FROM recipe_db_recipe AS r
+        JOIN recipe_db_recipefermentable AS rf
+            ON r.uid = rf.recipe_id
+        JOIN recipe_db_style AS s
+            ON r.style_id = s.id
+        WHERE
+            created IS NOT NULL
+            AND r.created > '2012-01-01'
+            AND rf.kind_id = %s
+        GROUP BY r.style_id
+    '''
+
+    df = pd.read_sql(query, connection, params=[fermentable.id])
+    df = df.set_index(['style_id'])
+    df = df.merge(recipes_per_style, on="style_id")
+    df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
+    df = df.sort_values('recipes_percent', ascending=False)
+    df = df[:30]
     df = df.reset_index()
 
     return df

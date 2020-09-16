@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
 from recipe_db.models import Fermentable
+from web_app.charts.fermentable import FermentableChartFactory
 from web_app.views.utils import render_plot
 
 
@@ -79,5 +80,10 @@ def detail(request: HttpRequest, *args, **kwargs):
 def chart(request: HttpRequest, id: str, chart_type: str, format: str) -> HttpResponse:
     fermentable = get_object_or_404(Fermentable, pk=id)
 
-    raise Http404('Unknown chart type %s.' % chart_type)
+    chart_factory = FermentableChartFactory()
+    if chart_factory.is_supported_chart(chart_type):
+        plot = chart_factory.get_chart(fermentable, chart_type)
+    else:
+        raise Http404('Unknown chart type %s.' % chart_type)
+
     return render_plot(plot, format)
