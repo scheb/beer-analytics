@@ -205,12 +205,50 @@ class Style(models.Model):
 
 
 class Fermentable(models.Model):
+    # Categories
+    GRAIN = "grain"
+    SUGAR = "sugar"
+    FRUIT = "fruit"
+    EXTRACT = "extract"
+
+    # Types
+    BARLEY = "barley"
+    WHEAT = "wheat"
+    OTHER_GRAIN = "other_grain"
+    CARA_CRYSTAL = "cara_crystal"
+    ROASTED = "roasted"
+    SPECIAL = "special"
+    UNMALTED_ADJUNCT = "unmalted_adjunct"
+
+    CATEGORY_CHOICES = (
+        (GRAIN, "Grain"),
+        (SUGAR, "Sugar"),
+        (FRUIT, "Fruit"),
+        (EXTRACT, "Malt Extract"),
+    )
+
+    TYPE_CHOICES = (
+        (BARLEY, "Barley"),
+        (WHEAT, "Wheat"),
+        (CARA_CRYSTAL, "Caramel/Crystal Malt"),
+        (ROASTED, "Roasted"),
+        (SPECIAL, "Special"),
+        (OTHER_GRAIN, "Other Grains"),
+        (UNMALTED_ADJUNCT, "Unmalted Adjunct"),
+    )
+
     id = models.CharField(max_length=255, primary_key=True)
     name = models.CharField(max_length=255)
-    category = models.CharField(max_length=32, default=None, blank=True, null=True)
-    type = models.CharField(max_length=32, default=None, blank=True, null=True)
+    category = models.CharField(max_length=32, choices=CATEGORY_CHOICES, default=None, blank=True, null=True)
+    type = models.CharField(max_length=32, choices=TYPE_CHOICES, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
     alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
+
+    # Calculated metrics from recipes
+    recipes_count = models.IntegerField(default=None, blank=True, null=True)
+    recipes_amount_percent_min = models.FloatField(default=None, blank=True, null=True)
+    recipes_amount_percent_mean = models.FloatField(default=None, blank=True, null=True)
+    recipes_amount_percent_max = models.FloatField(default=None, blank=True, null=True)
 
     def save(self, *args, **kwargs) -> None:
         if self.id == '':
