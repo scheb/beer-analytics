@@ -4,7 +4,7 @@
 
 {% block content %}
     {% include './breadcrumb.html' %}
-    <h1><small class="text-muted" title="BJCP ID">{{ style.id }}</small> {{ style.name }}</h1>
+    <h1>{{ style.name }} <small class="text-muted ml-2" title="BJCP ID">{{ style.id }}</small></h1>
 
     {% if style.alt_names %}
         <p>Includes: <span class="badge bg-secondary">{{ style.alt_names_list|join:'</span><span class="invisible">, </span><span class="badge bg-secondary">' }}</span></p>
@@ -24,12 +24,11 @@
         <ul>
             {% for style1 in style.sub_styles %}
                 <li>
-                    <small class="text-muted" title="BJCP ID">{{ style1.id }}</small>
                     <a href="{% url "style_detail" style1.category.slug style1.slug %}">{{ style1.name }}</a>
                     {% if style1.has_sub_styles %}
                         <ul class="list-unstyled mt-1 mb-2 ml-2">
                             {% for style2 in style1.sub_styles %}
-                                <li><small class="text-muted" title="BJCP ID">{{ style2.id }}</small>
+                                <li>
                                     <a href="{% url "style_detail" style2.category.slug style2.slug %}">{{ style2.name }}</a>
                                 </li>
                             {% endfor %}
