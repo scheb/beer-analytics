@@ -30,8 +30,6 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 07A;7;Vienna Lager;;Wiener Lager;4.7;5.5;18;30;9.0;15.0;1048;1055;1010;1014;standard;amber;bottom;lagered;central_europe;amber_lager;false;traditional;balanced;;;
 07B;7;Altbier;;;4.3;5.5;25;50;11.0;17.0;1044;1052;1008;1014;standard;amber;top;lagered;central_europe;amber_ale;false;traditional;bitter;;;
 07C;7;Kellerbier;;;4.7;5.4;20;40;3.0;17.0;1045;1054;1008;1016;standard;;bottom;;central_europe;;false;traditional;balanced;;;
-07C1;07C;Munich Kellerbier;;;4.7;5.4;20;35;3.0;7.0;1045;1051;1008;1012;standard;pale;bottom;;central_europe;pale_lager;false;traditional;balanced;;;
-07C2;07C;Franconian Kellerbier;;;4.8;5.4;25;40;7.0;17.0;1048;1054;1012;1016;standard;amber;bottom;;central_europe;amber_lager;false;traditional;balanced;;;
 8;;Dark European Lager;;;;;;;;;;;;;;;;;;;false;;;;;
 08A;8;Munich Dunkel;;Münchner Dunkel;4.5;5.6;18;28;14.0;28.0;1048;1056;1010;1016;standard;dark;bottom;lagered;central_europe;dark_lager;false;traditional;malty;;;
 08B;8;Schwarzbier;;;4.4;5.4;20;30;17.0;30.0;1046;1052;1010;1016;standard;dark;bottom;lagered;central_europe;dark_lager;false;traditional;balanced;;;
