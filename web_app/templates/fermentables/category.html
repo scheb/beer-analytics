@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category_name }} Fermentables{% endblock %}
+
+{% block content %}
+    <nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url "fermentable_overview" %}">Fermentables</a></li>
+            <li class="breadcrumb-item active">{{ category_name }} Fermentables</li>
+        </ol>
+    </nav>
+
+    <h1>{{ category_name }} Fermentables</h1>
+
+    <p class="most-popular">Most popular:
+        {% for fermentable in most_popular %}
+            {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
+            <a class="badge bg-primary" href="{{ fermentable.url }}">{{ fermentable.name }}</a>
+        {% endfor %}
+    </p>
+
+    <ul class="column-list">
+        {% for fermentable in fermentables %}
+            <li><a href="{{ fermentable.url }}">{{ fermentable.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

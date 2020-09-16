@@ -3,6 +3,8 @@ import datetime
 import re
 
 # noinspection PyUnresolvedReferences
+from typing import Optional
+
 import translitcodec
 import codecs
 
@@ -258,6 +260,36 @@ class Fermentable(models.Model):
     @classmethod
     def create_id(cls, name: str) -> str:
         return create_human_readable_id(name)
+
+    @classmethod
+    def get_categories(cls) -> dict:
+        return dict(cls.CATEGORY_CHOICES)
+
+    @property
+    def category_name(self) -> Optional[str]:
+        if self.category is None:
+            return None
+        return self.get_categories()[self.category]
+
+    @classmethod
+    def get_types(cls) -> dict:
+        return dict(cls.TYPE_CHOICES)
+
+    @property
+    def type_name(self) -> Optional[str]:
+        if self.type is None:
+            return None
+        return self.get_types()[self.type]
+
+    @property
+    def alt_names_list(self):
+        if self.alt_names is not None:
+            items = self.alt_names.split(',')
+            return list(map(lambda x: x.strip(), items))
+
+    @property
+    def url(self) -> str:
+        return reverse('fermentable_detail', kwargs={'category': self.category, 'slug': self.id})
 
 
 # http://www.hopslist.com/hops/

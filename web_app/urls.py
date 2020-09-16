@@ -27,5 +27,8 @@ urlpatterns = [
     path('hops/<str:category>/<str:slug>', views.hop_detail, name='hop_detail'),
     path('hops/charts/<str:id>/<str:chart_type>.<cformat:format>', views.hop_chart, name='hop_chart'),
 
-    path('fermentables/', views.home, name='fermentable_overview'),
+    path('fermentables/', views.fermentable_overview, name='fermentable_overview'),
+    path('fermentables/<str:category>/', views.fermentable_category_detail, name='fermentable_category_detail'),
+    path('fermentables/<str:category>/<str:slug>', views.fermentable_detail, name='fermentable_detail'),
+    path('fermentables/charts/<str:id>/<str:chart_type>.<cformat:format>', views.fermentable_chart, name='fermentable_chart'),
 ]
