@@ -3,7 +3,8 @@ import abc
 from recipe_db.analytics import get_style_hop_pairings, get_style_popular_fermentables, get_style_popular_hops, \
     get_style_metric_values, get_style_popularity
 from recipe_db.models import Style
-from web_app.plot import Plot, PairsBoxPlot, CompactHistogramChart, LinesChart, PreAggregatedBoxPlot
+from web_app.plot import Plot, LinesChart, PreAggregatedBoxPlot, \
+    PreAggregateHistogramChart, PreAggregatedPairsBoxPlot
 
 
 class StyleChart:
@@ -24,31 +25,31 @@ class StylePopularityChart(StyleChart):
 class StyleAbvChart(StyleChart):
     def plot(self) -> Plot:
         df = get_style_metric_values(self.style, 'abv')
-        return CompactHistogramChart().plot(df, 'abv', 'count')
+        return PreAggregateHistogramChart().plot(df, 'abv', 'count')
 
 
 class StyleIbuChart(StyleChart):
     def plot(self) -> Plot:
         df = get_style_metric_values(self.style, 'ibu')
-        return CompactHistogramChart().plot(df, 'ibu', 'count')
+        return PreAggregateHistogramChart().plot(df, 'ibu', 'count')
 
 
 class StyleColorChart(StyleChart):
     def plot(self) -> Plot:
         df = get_style_metric_values(self.style, 'srm')
-        return CompactHistogramChart().plot(df, 'srm', 'count')
+        return PreAggregateHistogramChart().plot(df, 'srm', 'count')
 
 
 class StyleOGChart(StyleChart):
     def plot(self) -> Plot:
         df = get_style_metric_values(self.style, 'og')
-        return CompactHistogramChart().plot(df, 'og', 'count')
+        return PreAggregateHistogramChart().plot(df, 'og', 'count')
 
 
 class StyleFGChart(StyleChart):
     def plot(self) -> Plot:
         df = get_style_metric_values(self.style, 'fg')
-        return CompactHistogramChart().plot(df, 'fg', 'count')
+        return PreAggregateHistogramChart().plot(df, 'fg', 'count')
 
 
 class StylePopularHopsChart(StyleChart):
@@ -66,7 +67,7 @@ class StylePopularFermentablesChart(StyleChart):
 class StyleHopPairingsChart(StyleChart):
     def plot(self) -> Plot:
         df = get_style_hop_pairings(self.style)
-        return PairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% Amount')
+        return PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% Amount')
 
 
 class StyleChartFactory:
