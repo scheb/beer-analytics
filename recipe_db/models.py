@@ -5,6 +5,8 @@ import datetime
 import re
 from typing import Optional
 
+# noinspection PyUnresolvedReferences
+import translitcodec
 from django.core.validators import MaxValueValidator, BaseValidator, MinValueValidator
 from django.db import models
 from django.urls import reverse
