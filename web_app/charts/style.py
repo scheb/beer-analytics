@@ -3,7 +3,7 @@ import abc
 from recipe_db.analytics import get_style_hop_pairings, get_style_popular_fermentables, get_style_popular_hops, \
     get_style_metric_values, get_style_popularity
 from recipe_db.models import Style
-from web_app.plot import Plot, PairsBoxPlot, CompactHistogramChart, LinesChart, BoxPlot
+from web_app.plot import Plot, PairsBoxPlot, CompactHistogramChart, LinesChart, PreAggregatedBoxPlot
 
 
 class StyleChart:
@@ -54,13 +54,13 @@ class StyleFGChart(StyleChart):
 class StylePopularHopsChart(StyleChart):
     def plot(self) -> Plot:
         df = get_style_popular_hops(self.style)
-        return BoxPlot().plot(df, 'hop', 'amount_percent', 'Hops by Popularity', '% Amount')
+        return PreAggregatedBoxPlot().plot(df, 'hop', 'amount_percent', 'Hops by Popularity', '% Amount')
 
 
 class StylePopularFermentablesChart(StyleChart):
     def plot(self) -> Plot:
         df = get_style_popular_fermentables(self.style)
-        return BoxPlot().plot(df, 'fermentable', 'amount_percent', 'Fermentables by Popularity', '% Amount')
+        return PreAggregatedBoxPlot().plot(df, 'fermentable', 'amount_percent', 'Fermentables by Popularity', '% Amount')
 
 
 class StyleHopPairingsChart(StyleChart):

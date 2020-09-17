@@ -138,7 +138,7 @@ def get_style_popular_hops(style: Style) -> DataFrame:
 
     query = '''
         WITH recipe_hops_agg AS (
-            SELECT recipe_id, kind_id, SUM(amount_percent) AS amount_percent
+            SELECT recipe_id, kind_id, sum(amount_percent) AS amount_percent
             FROM recipe_db_recipehop
             WHERE kind_id IS NOT NULL
             GROUP BY recipe_id, kind_id
@@ -155,7 +155,12 @@ def get_style_popular_hops(style: Style) -> DataFrame:
     top_hops_ids = hops["hop"].value_counts()[:10].index.values
     top_hops = hops[hops['hop'].isin(top_hops_ids)]  # Get only the values of the mostly used hops
 
-    return top_hops
+    agg = [lowerfence, q1, 'median', 'mean', q3, upperfence, 'count']
+    aggregated = top_hops.groupby('hop').agg({'amount_percent': agg})
+    aggregated = aggregated.reset_index()
+    aggregated = aggregated.sort_values(by=('amount_percent', 'count'), ascending=False)
+
+    return aggregated
 
 
 def get_style_popular_fermentables(style: Style) -> DataFrame:
@@ -163,15 +168,15 @@ def get_style_popular_fermentables(style: Style) -> DataFrame:
 
     query = '''
         WITH recipe_fermentables_agg AS (
-            SELECT recipe_id, kind_id, SUM(amount_percent) AS amount_percent
+            SELECT recipe_id, kind_id, sum(amount_percent) AS amount_percent
             FROM recipe_db_recipefermentable
             WHERE kind_id IS NOT NULL
             GROUP BY recipe_id, kind_id
         )
-        SELECT rf.recipe_id, h.name AS fermentable, rf.amount_percent
+        SELECT f.name AS fermentable, rf.amount_percent
         FROM recipe_fermentables_agg AS rf
         JOIN recipe_db_recipe AS r ON rf.recipe_id = r.uid
-        JOIN recipe_db_fermentable AS h ON rf.kind_id = h.id
+        JOIN recipe_db_fermentable AS f ON rf.kind_id = f.id
         WHERE r.style_id IN ({})
         '''.format(','.join('%s' for _ in style_ids))
 
@@ -180,7 +185,12 @@ def get_style_popular_fermentables(style: Style) -> DataFrame:
     top_fermentables_ids = fermentables["fermentable"].value_counts()[:10].index.values
     top_fermentables = fermentables[fermentables['fermentable'].isin(top_fermentables_ids)]  # Get only the values of the mostly used fermentable
 
-    return top_fermentables
+    agg = [lowerfence, q1, 'median', 'mean', q3, upperfence, 'count']
+    aggregated = top_fermentables.groupby('fermentable').agg({'amount_percent': agg})
+    aggregated = aggregated.reset_index()
+    aggregated = aggregated.sort_values(by=('amount_percent', 'count'), ascending=False)
+
+    return aggregated
 
 
 def get_style_hop_pairings(style: Style) -> DataFrame:
@@ -352,3 +362,19 @@ def get_fermentable_common_styles(fermentable: Fermentable) -> DataFrame:
     df = df.reset_index()
 
     return df
+
+
+def lowerfence(x):
+    return x.quantile(0.02)
+
+
+def q1(x):
+    return x.quantile(0.25)
+
+
+def q3(x):
+    return x.quantile(0.75)
+
+
+def upperfence(x):
+    return x.quantile(0.98)
