@@ -3,7 +3,6 @@ from __future__ import annotations
 import codecs
 import datetime
 import re
-# noinspection PyUnresolvedReferences
 from typing import Optional
 
 from django.core.validators import MaxValueValidator, BaseValidator, MinValueValidator
@@ -12,7 +11,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from recipe_db.formulas import ebc_to_srm, srm_to_ebc, plato_to_gravity, gravity_to_plato, abv_to_to_final_plato, \
-    alcohol_by_volume
+    alcohol_by_volume, lovibond_to_ebc, ebc_to_lovibond
 
 
 class GreaterThanValueValidator(BaseValidator):
@@ -421,11 +420,42 @@ class Recipe(models.Model):
 
 
 class RecipeFermentable(models.Model):
+    GRAIN = 'grain'
+    SUGAR = 'sugar'
+    EXTRACT = 'extract'
+    DRY_EXTRACT = 'dry-extract'
+    ADJUNCT = 'adjunct'
+
+    FORM_CHOICES = (
+        (GRAIN, "Grain"),
+        (SUGAR, "Sugar"),
+        (EXTRACT, "Extract"),
+        (DRY_EXTRACT, "Dry Extract"),
+        (ADJUNCT, "Adjunct"),
+    )
+
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     kind = models.ForeignKey(Fermentable, on_delete=models.SET_NULL, default=None, blank=True, null=True)
     kind_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
+    origin_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
+    form = models.CharField(max_length=16, choices=FORM_CHOICES, default=None, blank=True, null=True)
     amount = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     amount_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
+    color_lovibond = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    color_ebc = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    _yield = models.FloatField(default=None, blank=True, null=True, db_column='yield', validators=[GreaterThanValueValidator(0)])
+
+    def save(self, *args, **kwargs) -> None:
+        self.derive_missing_values('color_lovibond', 'color_ebc', lovibond_to_ebc)
+        self.derive_missing_values('color_ebc', 'color_lovibond', ebc_to_lovibond)
+
+        super().save(*args, **kwargs)
+
+    def derive_missing_values(self, from_field_name: str, to_field_name: str, calc_function: callable) -> None:
+        if getattr(self, to_field_name) is None:
+            from_field_value = getattr(self, from_field_name)
+            if from_field_value is not None:
+                setattr(self, to_field_name, calc_function(from_field_value))
 
 
 class RecipeHop(models.Model):
@@ -435,6 +465,14 @@ class RecipeHop(models.Model):
     AROMA = 'aroma'
     DRY_HOP = 'dry_hop'
 
+    BITTERING = 'bittering'
+    DUAL_PURPOSE = 'dual-purpose'
+
+    PELLET = 'pellet'
+    PLUG = 'plug'
+    LEAF = 'leaf'
+    EXTRACT = 'extract'
+
     USE_CHOICES = (
         (MASH, 'Mash'),
         (FIRST_WORT, 'First Wort'),
@@ -443,10 +481,24 @@ class RecipeHop(models.Model):
         (DRY_HOP, 'Dry Hop'),
     )
 
+    TYPE_CHOICES = (
+        (AROMA, 'Aroma'),
+        (BITTERING, 'Bittering'),
+        (DUAL_PURPOSE, 'Dual-Purpose'),
+    )
+
+    FORM_CHOICES = (
+        (PELLET, 'Pellet'),
+        (PLUG, 'Plug'),
+        (LEAF, 'Leaf'),
+    )
+
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     kind = models.ForeignKey(Hop, on_delete=models.SET_NULL, default=None, blank=True, null=True)
     kind_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
-    use = models.CharField(max_length=16, default=None, blank=True, null=True, choices=USE_CHOICES)
+    form = models.CharField(max_length=16, choices=FORM_CHOICES, default=None, blank=True, null=True)
+    type = models.CharField(max_length=16, choices=TYPE_CHOICES, default=None, blank=True, null=True)
+    use = models.CharField(max_length=16, choices=USE_CHOICES, default=None, blank=True, null=True)
     alpha = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     amount = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     amount_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])

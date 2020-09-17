@@ -14,6 +14,38 @@ def ebc_to_srm(ebc: float) -> float:
     return ebc / 1.97
 
 
+def lovibond_to_srm(lovibond: float) -> float:
+    """
+    Convert from Degrees Lovibond color system to
+    Standard Reference Method (SRM) color system.
+    """
+    return 1.3546 * lovibond - 0.76
+
+
+def srm_to_lovibond(srm: float) -> float:
+    """
+    Convert from Degrees Lovibond color system to
+    Standard Reference Method (SRM) color system.
+    """
+    return (srm + 0.76) / 1.3546
+
+
+def ebc_to_lovibond(ebc: float) -> float:
+    """
+    Convert from European Brewing Convention (EBC) color system to
+    Degrees Lovibond color system.
+    """
+    return srm_to_lovibond(ebc_to_srm(ebc))
+
+
+def lovibond_to_ebc(lovibond: float) -> float:
+    """
+    Convert from Degrees Lovibond color system to
+    European Brewing Convention (EBC) color system.
+    """
+    return srm_to_ebc(lovibond_to_srm(lovibond))
+
+
 def plato_to_gravity(degrees_plato: float) -> float:
     """
     Convert degrees plato to gravity.
