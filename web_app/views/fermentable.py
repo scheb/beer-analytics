@@ -47,9 +47,7 @@ def overview(request: HttpRequest) -> HttpResponse:
     return render(request, 'fermentable/overview.html', {'categories': fermentable_categories})
 
 
-def category_detail(request: HttpRequest, *args, **kwargs):
-    category = kwargs['category']
-
+def category(request: HttpRequest, category: str) -> HttpResponse:
     categories = Fermentable.get_categories()
     if category not in categories:
         raise Http404('Unknown fermentable category %s.' % category)
@@ -66,16 +64,14 @@ def category_detail(request: HttpRequest, *args, **kwargs):
     return render(request, 'fermentable/category.html', {'category_name': category_name, 'fermentables': fermentables, 'most_popular': most_popular})
 
 
-def detail(request: HttpRequest, *args, **kwargs):
-    slug = kwargs['slug']
-    category = kwargs['category']
+def detail(request: HttpRequest, slug: str, category: str) -> HttpResponse:
     fermentable = get_object_or_404(Fermentable, pk=slug)
 
     if fermentable.recipes_count <= 0:
         raise Http404("Fermentable doesn't have any data.")
 
     if category != fermentable.category:
-        return redirect('fermentable_category_detail', category=fermentable.category, slug=fermentable.id)
+        return redirect('fermentable_category', category=fermentable.category, slug=fermentable.id)
 
     return render(request, 'fermentable/detail.html', {'fermentable': fermentable})
 

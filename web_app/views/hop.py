@@ -20,9 +20,7 @@ def overview(request: HttpRequest) -> HttpResponse:
     return render(request, 'hop/overview.html', {'categories': hop_categories.values()})
 
 
-def category_detail(request: HttpRequest, *args, **kwargs):
-    category = kwargs['category']
-
+def category(request: HttpRequest, category: str) -> HttpResponse:
     categories = Hop.get_categories()
     if category not in categories:
         raise Http404('Unknown hop category %s.' % category)
@@ -36,16 +34,14 @@ def category_detail(request: HttpRequest, *args, **kwargs):
     return render(request, 'hop/category.html', {'category_name': category_name, 'hops': hops, 'most_popular': most_popular})
 
 
-def detail(request: HttpRequest, *args, **kwargs):
-    slug = kwargs['slug']
-    category = kwargs['category']
+def detail(request: HttpRequest, slug: str, category: str) -> HttpResponse:
     hop = get_object_or_404(Hop, pk=slug)
 
     if hop.recipes_count <= 0:
         raise Http404("Fermentable doesn't have any data.")
 
     if category != hop.category:
-        return redirect('hop_category_detail', category=hop.category, slug=hop.id)
+        return redirect('hop_category', category=hop.category, slug=hop.id)
 
     return render(request, 'hop/detail.html', {'hop': hop})
 

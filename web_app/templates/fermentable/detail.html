@@ -6,7 +6,7 @@
     <nav aria-label="breadcrumb" class="mt-3">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url "fermentable_overview" %}">Fermentables</a></li>
-            <li class="breadcrumb-item"><a href="{% url "fermentable_category_detail" fermentable.category %}">{{ fermentable.category_name }} Fermentables</a></li>
+            <li class="breadcrumb-item"><a href="{% url "fermentable_category" fermentable.category %}">{{ fermentable.category_name }} Fermentables</a></li>
             <li class="breadcrumb-item active">{{ fermentable.name }}</li>
         </ol>
     </nav>

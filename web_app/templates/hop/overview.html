@@ -6,7 +6,7 @@
     <h1>Hops</h1>
 
     {% for category in categories %}
-        <h2><a href="{% url "hop_category_detail" category.id %}" class="text-body">{{ category.name }}</a></h2>
+        <h2><a href="{% url "hop_category" category.id %}" class="text-body">{{ category.name }}</a></h2>
 
         <p class="most-popular">Most popular:
             {% for hop in category.most_popular %}
