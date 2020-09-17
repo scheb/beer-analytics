@@ -6,7 +6,6 @@ from typing import Optional, Iterable
 
 # noinspection PyUnresolvedReferences
 import translitcodec
-
 from django.db import transaction
 
 from recipe_db.models import RecipeHop, Hop, Fermentable, RecipeFermentable, Style, Recipe
@@ -155,7 +154,8 @@ class HopMapper(GenericMapper):
         self.create_mapping(Hop.objects.all())
 
     def get_clean_name(self, item: RecipeHop) -> str:
-        value = item.kind_raw.lower()
+        value = item.kind_raw or ''
+        value = value.lower()
         value = re.sub("northern\\s+brewer\\s+-\\s+", "", value)  # Producer prefix
         value = re.sub("^hall?ertau(er)?$", "hallertauer mittelfrüh", value)  # Just "Hallertau(er)"
         value = re.sub('\\(?[0-9]+([.,][0-9]+)?\\s+aa\\)?', '', value)
@@ -182,7 +182,8 @@ class FermentableMapper(GenericMapper):
         self.create_mapping(Fermentable.objects.all())
 
     def get_clean_name(self, item: RecipeHop) -> str:
-        value = item.kind_raw.lower()
+        value = item.kind_raw or ''
+        value = value.lower()
         value = self.normalize(value)
 
         # Remove "type" / "typ"
@@ -321,7 +322,7 @@ class AssignedStyleMapper(GenericStyleMapper):
         super().__init__(Style.objects.filter().exclude(parent_style=None))
 
     def get_clean_name(self, item: Recipe) -> str:
-        return self.clean_name(item.style_raw)
+        return self.clean_name(item.style_raw or '')
 
 
 class StyleMapper(Mapper):
@@ -363,7 +364,7 @@ class RecipeNameStyleExactMatchMapper(GenericStyleMapper):
         return None
 
     def get_clean_name(self, item: Recipe) -> str:
-        return self.clean_name(item.name)
+        return self.clean_name(item.name or '')
 
 
 class RecipeNameStyleMapper(GenericStyleMapper):
@@ -372,7 +373,7 @@ class RecipeNameStyleMapper(GenericStyleMapper):
         super().__init__(Style.objects.filter().exclude(parent_style=None))
 
     def get_clean_name(self, item: Recipe) -> str:
-        return self.clean_name(item.name)
+        return self.clean_name(item.name or '')
 
 
 class RecipeNameSubStyleMapper(GenericStyleMapper):
@@ -380,7 +381,7 @@ class RecipeNameSubStyleMapper(GenericStyleMapper):
         super().__init__(sub_styles)
 
     def get_clean_name(self, item: Recipe) -> str:
-        return self.clean_name(item.name)
+        return self.clean_name(item.name or '')
 
 
 class TransactionalProcessor:
