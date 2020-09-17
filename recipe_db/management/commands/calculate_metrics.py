@@ -1,3 +1,5 @@
+import math
+
 from django.core.management.base import BaseCommand
 
 from recipe_db.analytics import load_all_recipes, calculate_style_metric, calculate_style_recipe_count, \
@@ -45,9 +47,9 @@ class Command(BaseCommand):
             self.stdout.write('Calculate {} for style {}'.format(metric, style.name))
             (min, mean, max) = calculate_style_metric(df, style, metric)
             self.stdout.write(str((min, mean, max)))
-            setattr(style, "recipes_%s_min" % metric, min)
-            setattr(style, "recipes_%s_mean" % metric, mean)
-            setattr(style, "recipes_%s_max" % metric, max)
+            setattr(style, "recipes_%s_min" % metric, None if math.isnan(min) else min)
+            setattr(style, "recipes_%s_mean" % metric, None if math.isnan(mean) else mean)
+            setattr(style, "recipes_%s_max" % metric, None if math.isnan(max) else max)
 
     def calculate_all_hop_metrics(self, df, hop: Hop) -> None:
         hop.recipes_count = calculate_hop_recipe_count(df, hop)
@@ -56,9 +58,9 @@ class Command(BaseCommand):
             self.stdout.write('Calculate {} for hop {}'.format(metric, hop.name))
             (min, mean, max) = calculate_hop_metric(df, hop, metric)
             self.stdout.write(str((min, mean, max)))
-            setattr(hop, "recipes_%s_min" % metric, min)
-            setattr(hop, "recipes_%s_mean" % metric, mean)
-            setattr(hop, "recipes_%s_max" % metric, max)
+            setattr(hop, "recipes_%s_min" % metric, None if math.isnan(min) else min)
+            setattr(hop, "recipes_%s_mean" % metric, None if math.isnan(mean) else mean)
+            setattr(hop, "recipes_%s_max" % metric, None if math.isnan(max) else max)
 
     def calculate_all_fermentable_metrics(self, df, fermentable: Fermentable) -> None:
         fermentable.recipes_count = calculate_fermentable_recipe_count(df, fermentable)
@@ -67,6 +69,6 @@ class Command(BaseCommand):
             self.stdout.write('Calculate {} for fermentable {}'.format(metric, fermentable.name))
             (min, mean, max) = calculate_fermentable_metric(df, fermentable, metric)
             self.stdout.write(str((min, mean, max)))
-            setattr(fermentable, "recipes_%s_min" % metric, min)
-            setattr(fermentable, "recipes_%s_mean" % metric, mean)
-            setattr(fermentable, "recipes_%s_max" % metric, max)
+            setattr(fermentable, "recipes_%s_min" % metric, None if math.isnan(min) else min)
+            setattr(fermentable, "recipes_%s_mean" % metric, None if math.isnan(mean) else mean)
+            setattr(fermentable, "recipes_%s_max" % metric, None if math.isnan(max) else max)
