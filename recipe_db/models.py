@@ -1,12 +1,10 @@
 from __future__ import annotations
+
+import codecs
 import datetime
 import re
-
 # noinspection PyUnresolvedReferences
 from typing import Optional
-
-import translitcodec
-import codecs
 
 from django.core.validators import MaxValueValidator, BaseValidator, MinValueValidator
 from django.db import models
@@ -172,7 +170,7 @@ class Style(models.Model):
     @property
     def url(self):
         if self.is_category:
-            return reverse('style_category_detail', kwargs={'category_slug': self.slug})
+            return reverse('style_category', kwargs={'category_slug': self.slug})
         else:
             return reverse('style_detail', kwargs={'category_slug': self.category.slug, 'slug': self.slug})
 

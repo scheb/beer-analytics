@@ -13,8 +13,7 @@ def overview(request: HttpRequest) -> HttpResponse:
     return render(request, 'style/overview.html', {'categories': categories, 'most_popular': most_popular})
 
 
-def category_detail(request: HttpRequest, *args, **kwargs):
-    category_slug = kwargs['category_slug']
+def category(request: HttpRequest, category_slug: str) -> HttpResponse:
     style = get_object_or_404(Style, slug=category_slug)
 
     if not style.is_category:
@@ -23,13 +22,11 @@ def category_detail(request: HttpRequest, *args, **kwargs):
     return render_style(request, style)
 
 
-def detail(request: HttpRequest, *args, **kwargs):
-    slug = kwargs['slug']
-    category_slug = kwargs['category_slug']
+def detail(request: HttpRequest, slug: str, category_slug: str) -> HttpResponse:
     style = get_object_or_404(Style, slug=slug)
 
     if style.is_category:
-        return redirect('style_category_detail', category_slug=style.category.slug)
+        return redirect('style_category', category_slug=style.category.slug)
     if category_slug != style.category.slug:
         return redirect('style_detail', category_slug=style.category.slug, slug=style.slug)
 
