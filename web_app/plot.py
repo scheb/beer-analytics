@@ -63,9 +63,11 @@ class CompactHistogramChart:
             margin=dict(l=0, r=0, t=0, b=0),
             xaxis=dict(
                 title_text=None,
+                fixedrange=True,
             ),
             yaxis=dict(
                 visible=False,
+                fixedrange=True,
             ),
         )
 
@@ -131,27 +133,20 @@ class PairsBoxPlot:
             trace = go.Box(
                 x=sub_df[type_field],
                 y=sub_df[value_field],
-                marker=dict(color=px.colors.qualitative.Prism[(column - 1) % len(px.colors.qualitative.Prism)])
+                marker=dict(color=px.colors.qualitative.Prism[(column - 1) % len(px.colors.qualitative.Prism)]),
             )
             fig.add_trace(trace, row=1, col=column)
             column += 1
 
+        fig.update_traces(boxpoints="outliers", jitter=0.3, hoveron="boxes", marker=dict(opacity=0.3, size=4))
         fig.update_layout(
             title=None,
             showlegend=False,
             margin=dict(l=30, r=0, t=20, b=10),
-            xaxis=dict(
-                fixedrange=True,
-            ),
-            yaxis=dict(
-                fixedrange=True,
-                title=dict(
-                    standoff=30,
-                ),
-            )
         )
 
-        fig.update_xaxes(title_text=x_title)
+        fig.update_xaxes(title_text=x_title, fixedrange=True)
+        fig.update_yaxes(fixedrange=True)
         fig.update_yaxes(title_text=y_title, row=1, col=1)
 
         return Plot(fig)
