@@ -1,24 +1,45 @@
 import locale
 from typing import Optional
 from xml.etree import ElementTree
-from xml.etree.ElementTree import Element, ParseError
+from xml.etree.ElementTree import Element
 
 from pybeerxml import Parser, Recipe as BeerXMLRecipe
 from pybeerxml.hop import Hop
 
 from recipe_db.format.parser import FormatParser, ParserResult, float_or_none, int_or_none, clean_kind, \
     MalformedDataError
-from recipe_db.formulas import gravity_to_plato, srm_to_ebc
 from recipe_db.models import Recipe, RecipeYeast, RecipeFermentable, RecipeHop
 
 
 class BeerXMLParser(FormatParser):
-    USE_MAP = {
-        "Mash": RecipeHop.MASH,
-        "First Wort": RecipeHop.FIRST_WORT,
-        "Boil": RecipeHop.BOIL,
-        "Aroma": RecipeHop.AROMA,
-        "Dry Hop": RecipeHop.DRY_HOP,
+    HOP_USE_MAP = {
+        "mash": RecipeHop.MASH,
+        "first wort": RecipeHop.FIRST_WORT,
+        "boil": RecipeHop.BOIL,
+        "aroma": RecipeHop.AROMA,
+        "dry hop": RecipeHop.DRY_HOP,
+    }
+
+    HOP_TYPE_MAP = {
+        "aroma": RecipeHop.AROMA,
+        "bittering": RecipeHop.BITTERING,
+        "both": RecipeHop.DUAL_PURPOSE,
+    }
+
+    HOP_FORM_MAP = {
+        "pellet": RecipeHop.PELLET,
+        "plug": RecipeHop.PLUG,
+        "leaf": RecipeHop.LEAF,
+        "extract": RecipeHop.EXTRACT,
+    }
+
+    FERMENTABLE_FORM_MAP = {
+        "grain": RecipeFermentable.GRAIN,
+        "sugar": RecipeFermentable.SUGAR,
+        "extract": RecipeFermentable.EXTRACT,
+        "dry extract": RecipeFermentable.DRY_EXTRACT,
+        "adjunct": RecipeFermentable.ADJUNCT,
+        "fruit": RecipeFermentable.ADJUNCT,
     }
 
     def parse(self, result: ParserResult, file_path: str) -> None:
@@ -172,17 +193,44 @@ class BeerXMLParser(FormatParser):
             amount = beerxml_fermentable.amount
             if amount is not None:
                 amount *= 1000  # convert to grams
+
             name = clean_kind(self.fix_encoding(beerxml_fermentable.name))
-            yield RecipeFermentable(kind_raw=name, amount=amount)
+
+            fermentable = RecipeFermentable()
+            fermentable.kind_raw = name
+            fermentable.amount = amount
+            fermentable.form = self.get_fermentable_form(self.getattr(beerxml_fermentable, 'type'))
+            fermentable.origin_raw = clean_kind(self.fix_encoding(self.getattr(beerxml_fermentable, 'origin')))
+            fermentable.color_lovibond = beerxml_fermentable.color
+            fermentable._yield = beerxml_fermentable._yield
+
+            yield fermentable
+
+    def get_fermentable_form(self, value):
+        if value is not None:
+            value = clean_kind(value.lower())
+            if value in self.FERMENTABLE_FORM_MAP:
+                return self.FERMENTABLE_FORM_MAP[value]
+        return None
 
     def get_hops(self, beerxml: BeerXMLRecipe) -> iter:
         for beerxml_hop in beerxml.hops:
-            use = self.get_hop_use(beerxml_hop)
             amount = beerxml_hop.amount
             if amount is not None:
                 amount *= 1000  # convert to grams
+
             name = clean_kind(self.fix_encoding(beerxml_hop.name))
-            yield RecipeHop(kind_raw=name, alpha=beerxml_hop.alpha, use=use, amount=amount, time=beerxml_hop.time)
+
+            hop = RecipeHop()
+            hop.kind_raw = name
+            hop.amount = amount
+            hop.use = self.get_hop_use(beerxml_hop)
+            hop.alpha = beerxml_hop.alpha
+            hop.time = beerxml_hop.time
+            hop.type = self.get_hop_type(self.getattr(beerxml_hop, 'type'))
+            hop.form = self.get_hop_form(self.getattr(beerxml_hop, 'form'))
+
+            yield hop
 
     def get_yeasts(self, beerxml: BeerXMLRecipe) -> iter:
         for beerxml_yeast in beerxml.yeasts:
@@ -190,8 +238,10 @@ class BeerXMLParser(FormatParser):
 
     def get_hop_use(self, beerxml_hop: Hop):
         use_raw = beerxml_hop.use
-        if use_raw is not None and use_raw in self.USE_MAP:
-            return self.USE_MAP[use_raw]
+        if use_raw is not None:
+            use_raw = clean_kind(use_raw.lower())
+            if use_raw in self.HOP_USE_MAP:
+                return self.HOP_USE_MAP[use_raw]
 
         time = beerxml_hop.time
         if time is not None:
@@ -201,3 +251,24 @@ class BeerXMLParser(FormatParser):
                 return RecipeHop.DRY_HOP
 
         return RecipeHop.BOIL
+
+    def get_hop_type(self, value):
+        if value is not None:
+            value = clean_kind(value.lower())
+            if value in self.HOP_TYPE_MAP:
+                return self.HOP_TYPE_MAP[value]
+        return None
+
+    def get_hop_form(self, value):
+        if value is not None:
+            value = clean_kind(value.lower())
+            if value in self.HOP_FORM_MAP:
+                return self.HOP_FORM_MAP[value]
+        return None
+
+    def getattr(self, object, attribute):
+        try:
+            return getattr(object, attribute)
+        except AttributeError:
+            return None
+
