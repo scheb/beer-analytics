@@ -6,10 +6,21 @@ from pandas import DataFrame
 
 from recipe_db.models import Style, Hop, Fermentable
 
+METRIC_PRECISION = {
+    'default': 1,
+    'abv': 1,
+    'ibu': 1,
+    'srm': 1,
+    'og': 3,
+    'fg': 3,
+}
+
 
 def load_all_recipes():
     return pd.read_sql('SELECT * FROM recipe_db_recipe', connection)
 
+def get_hop_names_dict() -> dict:
+    return dict(connection.cursor().execute("SELECT id, name FROM recipe_db_hop"))
 
 def calculate_style_recipe_count(df, style: Style) -> int:
     style_ids = style.get_ids_including_sub_styles()
@@ -117,20 +128,22 @@ def get_style_popularity(style: Style) -> DataFrame:
 
 def get_style_metric_values(style: Style, metric: str) -> DataFrame:
     style_ids = style.get_ids_including_sub_styles()
+    precision = METRIC_PRECISION[metric] if metric in METRIC_PRECISION else METRIC_PRECISION['default']
 
     query = '''
-            SELECT {}
+            SELECT round({}, {}) as {}
             FROM recipe_db_recipe
             WHERE {} IS NOT NULL AND style_id IN ({})
-        '''.format(metric, metric, ','.join('%s' for _ in style_ids))
+        '''.format(metric, precision, metric, metric, ','.join('%s' for _ in style_ids))
 
     df = pd.read_sql(query, connection, params=style_ids)
-    df = remove_outliers(df, metric, 0.03)
+    df = remove_outliers(df, metric, 0.02)
 
-    df = df.groupby(metric)[metric].agg({'count', 'count'})
-    df = df.reset_index()
+    histogram = df.groupby([pd.cut(df[metric], 16, precision=precision)])[metric].agg(['count'])
+    histogram = histogram.reset_index()
+    histogram[metric] = histogram[metric].map(str)
 
-    return df
+    return histogram
 
 
 def get_style_popular_hops(style: Style) -> DataFrame:
@@ -197,49 +210,44 @@ def get_style_hop_pairings(style: Style) -> DataFrame:
     style_ids = style.get_ids_including_sub_styles()
 
     query = '''
-        WITH recipe_hops_agg AS (
-            SELECT recipe_id, kind_id, SUM(amount_percent) AS amount_percent
-            FROM recipe_db_recipehop
-            WHERE kind_id IS NOT NULL
-            GROUP BY recipe_id, kind_id
-        )
-        SELECT
-            rh1.recipe_id,
-            h1.name || ' + ' || h2.name AS pairing,
-            h1.name AS hop1,
-            rh1.amount_percent AS amount_percent1,
-            h2.name AS hop2,
-            rh2.amount_percent AS amount_percent2    FROM recipe_hops_agg AS rh1
-        JOIN recipe_hops_agg AS rh2
-            ON rh1.recipe_id = rh2.recipe_id AND rh1.kind_id < rh2.kind_id
-        JOIN recipe_db_hop AS h1
-            ON rh1.kind_id = h1.id
-        JOIN recipe_db_hop AS h2
-            ON rh2.kind_id = h2.id
+        SELECT rh.recipe_id, rh.kind_id, rh.amount_percent
+        FROM recipe_db_recipehop AS rh
         JOIN recipe_db_recipe AS r
-            ON rh1.recipe_id = r.uid
-        WHERE r.style_id IN ({})
+            ON rh.recipe_id = r.uid
+        WHERE rh.kind_id IS NOT NULL AND r.style_id IN ({})
     '''.format(','.join('%s' for _ in style_ids))
 
-    pairings = pd.read_sql(query, connection, params=style_ids)
+    hops = pd.read_sql(query, connection, params=style_ids)
 
-    # Filter top pairs
-    top_pairings = pairings["pairing"].value_counts()[:8].index.values
-    pairings = pairings[pairings['pairing'].isin(top_pairings)]
+    # Aggregate amount per recipe
+    hops = hops.groupby(["recipe_id", "kind_id"]).agg({"amount_percent": "sum"}).reset_index()
 
-    # Merge the hops data from the 2 columns into a single list
-    df1 = pairings[['pairing', 'hop1', 'amount_percent1']]
-    df1.columns = ['pairing', 'hop', 'amount_percent']
-    df2 = pairings[['pairing', 'hop2', 'amount_percent2']]
-    df2.columns = ['pairing', 'hop', 'amount_percent']
-    df = pd.concat([df1, df2])
+    # Create unique pairs per recipe
+    pairs = pd.merge(hops, hops, on='recipe_id', suffixes=('_1', '_2'))
+    pairs = pairs[pairs['kind_id_1'] < pairs['kind_id_2']]
+    pairs['pairing'] = pairs['kind_id_1'] + " " + pairs['kind_id_2']
 
-    # Sort by pairing popularity
-    df['pairing'] = pd.Categorical(df['pairing'], top_pairings)
-    df = df.sort_values(by=['pairing', 'hop'])
-    df = df.reset_index()
+    # Filter only the top pairs
+    top_pairings = pairs["pairing"].value_counts()[:8].index.values
+    pairs = pairs[pairs['pairing'].isin(top_pairings)]
 
-    return df
+    # Merge left and right hop into one dataset
+    df1 = pairs[['pairing', 'kind_id_1', 'amount_percent_1']]
+    df1.columns = ['pairing', 'kind_id', 'amount_percent']
+    df2 = pairs[['pairing', 'kind_id_2', 'amount_percent_2']]
+    df2.columns = ['pairing', 'kind_id', 'amount_percent']
+    top_pairings = pd.concat([df1, df2])
+
+    # Calculate boxplot values
+    agg = [lowerfence, q1, 'median', 'mean', q3, upperfence, 'count']
+    aggregated = top_pairings.groupby(['pairing', 'kind_id']).agg({'amount_percent': agg})
+    aggregated = aggregated.reset_index()
+    aggregated = aggregated.sort_values(by=('amount_percent', 'count'), ascending=False)
+
+    # Finally, add hop names
+    aggregated['hop'] = aggregated['kind_id'].map(get_hop_names_dict())
+
+    return aggregated
 
 
 def get_hop_popularity(hop: Hop) -> DataFrame:
