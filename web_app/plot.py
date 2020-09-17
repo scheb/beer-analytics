@@ -107,6 +107,57 @@ class BoxPlot:
         return Plot(fig)
 
 
+
+class PreAggregatedBoxPlot:
+    def plot(
+        self,
+        df: DataFrame,
+        type_field: str,
+        value_field: str,
+        x_title: Optional[str] = None,
+        y_title: Optional[str] = None,
+    ) -> Plot:
+        fig = make_subplots()
+        column = 0
+        for trace_name in df[type_field].values.tolist():
+            trace_df = df[df[type_field].eq(trace_name)]
+            trace = go.Box(
+                x=[trace_name],
+                y=[[1]],
+                lowerfence=trace_df[value_field]['lowerfence'],
+                q1=trace_df[value_field]['q1'],
+                median=trace_df[value_field]['median'],
+                mean=trace_df[value_field]['mean'],
+                q3=trace_df[value_field]['q3'],
+                upperfence=trace_df[value_field]['upperfence'],
+                boxpoints=False,
+                name=trace_name,
+                marker=dict(color=px.colors.qualitative.Prism[column % len(px.colors.qualitative.Prism)]),
+            )
+            fig.add_trace(trace)
+            column += 1
+
+        fig.update_layout(
+            title=None,
+            showlegend=False,
+            margin=dict(l=10, r=0, t=20, b=10),
+            xaxis=dict(
+                fixedrange=True,
+            ),
+            yaxis=dict(
+                fixedrange=True,
+                title=dict(
+                    standoff=30,
+                ),
+            )
+        )
+
+        fig.update_xaxes(title_text=x_title)
+        fig.update_yaxes(title_text=y_title)
+
+        return Plot(fig)
+
+
 class PairsBoxPlot:
     def plot(
         self,
