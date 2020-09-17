@@ -1,6 +1,7 @@
 import abc
 import json
 import re
+from typing import Optional
 
 from recipe_db.models import Recipe
 
@@ -80,8 +81,12 @@ def greater_than_zero_or_none(value):
     return value
 
 
-def clean_kind(kind: str) -> str:
+def clean_kind(kind) -> Optional[str]:
+    if kind is None:
+        return None
+
     kind = kind.replace("®", "")
     kind = re.sub("\\s+", " ", kind)
     kind = kind.strip()
+
     return kind
