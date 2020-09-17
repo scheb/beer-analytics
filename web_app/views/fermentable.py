@@ -27,7 +27,7 @@ def overview(request: HttpRequest) -> HttpResponse:
             'most_popular': []
         }
 
-    fermentables = Fermentable.objects.filter().order_by('name')
+    fermentables = Fermentable.objects.filter(recipes_count__gt=0).order_by('name')
     for fermentable in fermentables:
         if fermentable.type is not None:
             fermentable_categories[fermentable.category]['types'][fermentable.type]['fermentables'].append(fermentable)
