@@ -27,7 +27,7 @@ def overview(request: HttpRequest) -> HttpResponse:
             'most_popular': []
         }
 
-    fermentables = Fermentable.objects.filter(recipes_count__gt=0).order_by('name')
+    fermentables = Fermentable.objects.filter().order_by('name')
     for fermentable in fermentables:
         if fermentable.type is not None:
             fermentable_categories[fermentable.category]['types'][fermentable.type]['fermentables'].append(fermentable)
@@ -70,6 +70,9 @@ def detail(request: HttpRequest, *args, **kwargs):
     slug = kwargs['slug']
     category = kwargs['category']
     fermentable = get_object_or_404(Fermentable, pk=slug)
+
+    if fermentable.recipes_count <= 0:
+        raise Http404("Fermentable doesn't have any data.")
 
     if category != fermentable.category:
         return redirect('fermentable_category_detail', category=fermentable.category, slug=fermentable.id)

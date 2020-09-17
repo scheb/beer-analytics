@@ -41,6 +41,9 @@ def detail(request: HttpRequest, *args, **kwargs):
     category = kwargs['category']
     hop = get_object_or_404(Hop, pk=slug)
 
+    if hop.recipes_count <= 0:
+        raise Http404("Fermentable doesn't have any data.")
+
     if category != hop.category:
         return redirect('hop_category_detail', category=hop.category, slug=hop.id)
 

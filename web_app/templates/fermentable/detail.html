@@ -17,9 +17,7 @@
         <p>Includes: <span class="badge bg-secondary">{{ fermentable.alt_names_list|join:'</span><span class="invisible">, </span><span class="badge bg-secondary">' }}</span></p>
     {% endif %}
 
-    {% if fermentable.recipes_count %}
-        <p>Number of recipes: <strong>{{ fermentable.recipes_count }}</strong></p>
-    {% endif %}
+    <p>Number of recipes: <strong>{{ fermentable.recipes_count }}</strong></p>
 
     {% include './metrics.html' %}
 
