@@ -21,9 +21,24 @@
         </p>
     {% endif %}
 
-    <ul class="column-list">
-        {% for fermentable in fermentables %}
-            <li><a href="{{ fermentable.url }}">{{ fermentable.name }}</a></li>
+    {% if fermentables %}
+        <ul class="column-list">
+            {% for fermentable in fermentables %}
+                <li><a href="{{ fermentable.url }}">{{ fermentable.name }}</a> <small class="text-muted ml-2">{{ fermentable.recipes_count }}</small></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if types %}
+        {% for type in types %}
+            <h3>{{ type.name }}</h3>
+            {% if type.fermentables %}
+                <ul class="column-list">
+                    {% for fermentable in type.fermentables %}
+                        <li><a href="{{ fermentable.url }}">{{ fermentable.name }}</a> <small class="text-muted ml-2">{{ fermentable.recipes_count }}</small></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         {% endfor %}
-    </ul>
+    {% endif %}
 {% endblock %}
