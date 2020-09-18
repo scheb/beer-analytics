@@ -1,3 +1,4 @@
+import math
 from typing import Optional
 
 import plotly.graph_objects as go
@@ -193,7 +194,6 @@ class PreAggregatedPairsBoxPlot:
         fig = make_subplots(
             rows=1,
             cols=num_pairings,
-            shared_yaxes=True,
             horizontal_spacing=0.005
         )
 
@@ -224,9 +224,16 @@ class PreAggregatedPairsBoxPlot:
             margin=dict(l=30, r=0, t=20, b=10),
         )
 
+        # When fixedrange=True is set, shared axis do no longer align, so we manually calculate the overall value range
+        # and set it to all the axis so they match.
+        y_range = (
+            max([0, math.floor((df[value_field]['lowerfence'].min() - 5) / 10) * 10]),
+            min([100, math.ceil((df[value_field]['upperfence'].max() + 5) / 10) * 10]),
+        )
+
         fig.update_xaxes(title_text=x_title, fixedrange=True)
-        fig.update_yaxes(fixedrange=True)
-        fig.update_yaxes(title_text=y_title, row=1, col=1)
+        fig.update_yaxes(fixedrange=True, range=y_range, showticklabels=False)
+        fig.update_yaxes(title_text=y_title, showticklabels=True, row=1, col=1)
 
         return Plot(fig)
 
