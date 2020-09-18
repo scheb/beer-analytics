@@ -1,8 +1,8 @@
 import abc
 
-from recipe_db.analytics import get_hop_popularity, get_hop_common_styles
+from recipe_db.analytics import get_hop_popularity, get_hop_common_styles, get_hop_pairing_hops
 from recipe_db.models import Hop
-from web_app.plot import Plot, LinesChart, BarChart
+from web_app.plot import Plot, LinesChart, BarChart, PreAggregatedPairsBoxPlot
 
 
 class HopChart:
@@ -28,7 +28,8 @@ class HopCommonStylesChart(HopChart):
 
 class HopPairingsChart(HopChart):
     def plot(self) -> Plot:
-        pass
+        df = get_hop_pairing_hops(self.hop)
+        return PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% Amount')
 
 
 class HopChartFactory:
