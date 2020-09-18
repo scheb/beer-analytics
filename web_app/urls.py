@@ -18,7 +18,8 @@ register_converter(ChartFormat, 'cformat')
 
 urlpatterns = [
     path('', views.misc.home, name='home'),
-    path('imprint', misc.legal, name='legal'),
+    path('legal', misc.legal, name='legal'),
+    path('about', misc.about, name='about'),
 
     path('styles/', style.overview, name='style_overview'),
     path('styles/<str:category_slug>/', style.category, name='style_category'),
