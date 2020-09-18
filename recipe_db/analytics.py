@@ -218,13 +218,18 @@ def get_style_hop_pairings(style: Style) -> DataFrame:
     '''.format(','.join('%s' for _ in style_ids))
 
     hops = pd.read_sql(query, connection, params=style_ids)
+    return get_hop_pairings(hops)
 
+
+def get_hop_pairings(hops: DataFrame, pair_must_include: Hop = None) -> DataFrame:
     # Aggregate amount per recipe
     hops = hops.groupby(["recipe_id", "kind_id"]).agg({"amount_percent": "sum"}).reset_index()
 
     # Create unique pairs per recipe
     pairs = pd.merge(hops, hops, on='recipe_id', suffixes=('_1', '_2'))
     pairs = pairs[pairs['kind_id_1'] < pairs['kind_id_2']]
+    if pair_must_include is not None:
+        pairs = pairs[pairs['kind_id_1'].eq(pair_must_include.id) | pairs['kind_id_2'].eq(pair_must_include.id)]
     pairs['pairing'] = pairs['kind_id_1'] + " " + pairs['kind_id_2']
 
     # Filter only the top pairs
@@ -309,6 +314,24 @@ def get_hop_common_styles(hop: Hop) -> DataFrame:
     df = df.reset_index()
 
     return df
+
+
+def get_hop_pairing_hops(hop: Hop) -> DataFrame:
+    hop_id = hop.id
+
+    # Pre-select only the hops used in recipes using that hop
+    query = '''
+        SELECT recipe_id, kind_id, amount_percent
+        FROM recipe_db_recipehop
+        WHERE recipe_id IN (
+            SELECT DISTINCT recipe_id
+            FROM recipe_db_recipehop
+            WHERE kind_id = %s
+        )
+    '''
+
+    hops = pd.read_sql(query, connection, params=[hop_id])
+    return get_hop_pairings(hops, pair_must_include=hop)
 
 
 def get_fermentable_popularity(fermentable: Fermentable) -> DataFrame:
