@@ -32,6 +32,7 @@
                     <li class="nav-item"><a class="nav-link pt-md-1 pb-md-1{% if url_name|startswith:'yeast' %} active{% endif %}" href="{% url "yeast_overview" %}"><span class="nav-icon yeasts-icon"></span>Yeasts</a></li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link{% if url_name == 'about' %} active{% endif %}" href="{% url "about" %}">About</a></li>
                     <li class="nav-item"><a class="nav-link{% if url_name == 'legal' %} active{% endif %}" href="{% url "legal" %}">Legal Stuff</a></li>
                     <li class="nav-item"><a class="nav-link pt-md-0 pb-md-0" href="https://github.com/scheb/beer-analytics">
                         <span class="nav-icon github-icon" title="Fork me on GitHub"></span>

@@ -179,3 +179,9 @@ a.nav-link:hover .nav-icon {
         column-count: 5;
     }
 }
+
+.about-logo {
+    width: 40%;
+    max-width: 15rem;
+    height: auto;
+}

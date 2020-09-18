@@ -11,3 +11,8 @@ def home(request: HttpRequest) -> HttpResponse:
 
 def legal(request: HttpRequest) -> HttpResponse:
     return render(request, 'legal.html')
+
+
+def about(request: HttpRequest) -> HttpResponse:
+    recipes = Recipe.objects.count()
+    return render(request, 'about.html', {'recipes': recipes})
