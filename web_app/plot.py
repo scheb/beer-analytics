@@ -6,7 +6,20 @@ from plotly import express as px
 from plotly.graph_objs import Figure
 from plotly.subplots import make_subplots
 
-COLORS_DISTINCT = px.colors.qualitative.Vivid
+COLORS_DISTINCT = [
+    "rgb(93, 105, 177)",
+    "rgb(229, 134, 6)",
+    "rgb(82, 188, 163)",
+    "rgb(204, 97, 176)",
+    "rgb(153, 201, 69)",
+    "rgb(36, 121, 108)",
+    "rgb(218, 165, 27)",
+    "rgb(47, 138, 196)",
+    "rgb(118, 78, 159)",
+    "rgb(237, 100, 90)",
+    "rgb(165, 170, 153)",
+]
+
 COLORS_PRISM = px.colors.qualitative.Prism
 COLOR_SEQUENTIAL = px.colors.sequential.Sunsetdark
 
