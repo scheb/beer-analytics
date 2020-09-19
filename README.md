@@ -1,7 +1,7 @@
 beer-analytics 🕵️🍺
 ===================
 
-Django application to **analyze beers recipes and visualize results**.
+Django application to **analyze beer recipes and visualize results**.
 
 Live website: https://www.beer-analytics.com/
 
