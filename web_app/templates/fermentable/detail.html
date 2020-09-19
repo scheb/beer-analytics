@@ -27,8 +27,8 @@
     <h2>Common Styles</h2>
     <div id="chart-styles" class="chart-l"></div>
 
-    <h2>Common Pairings</h2>
-    <div id="chart-pairings" class="chart-l"></div>
+{#    <h2>Common Pairings</h2>#}
+{#    <div id="chart-pairings" class="chart-l"></div>#}
 {% endblock %}
 
 {% block script %}
@@ -39,7 +39,7 @@ window.addEventListener('load', function ()
     display_graph('chart-spec-amount', '{% url "fermentable_chart" fermentable.id "amount-histogram" "json" %}', {displayModeBar: false});
     display_graph('chart-popularity', '{% url "fermentable_chart" fermentable.id "popularity" "json" %}');
     display_graph('chart-styles', '{% url "fermentable_chart" fermentable.id "styles" "json" %}');
-    display_graph('chart-pairings', '{% url "fermentable_chart" fermentable.id "pairings" "json" %}');
+    {#display_graph('chart-pairings', '{% url "fermentable_chart" fermentable.id "pairings" "json" %}');#}
 });
 </script>
 {% endblock %}
