@@ -7,7 +7,7 @@ from recipe_db.analytics import load_all_recipes, calculate_style_metric, calcul
     calculate_fermentable_metric, load_all_recipe_fermentables
 from recipe_db.models import Style, Hop, Fermentable
 
-STYLE_METRICS = ['abv', 'ibu', 'ebc', 'original_plato', 'final_plato']
+STYLE_METRICS = ['abv', 'ibu', 'ebc', 'srm', 'og', 'fg', 'original_plato', 'final_plato']
 HOP_METRICS = ['alpha', 'amount_percent']
 FERMENTABLE_METRICS = ['amount_percent']
 
