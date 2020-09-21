@@ -192,9 +192,28 @@ a.nav-link:hover .nav-icon {
     height: 100%;
     justify-content: center;
     align-items: center;
-    text-align: center;
     font-size: 1.5rem;
     line-height: 100%;
     color: #5d5d5d;
     background: #f7f7f7;
+}
+
+.chart-loading {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-loading span {
+    display: block;
+    width: 10rem;
+    height: 50%;
+    max-height: 10rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-image: url('../img/loading.svg');
+    opacity: 0.2;
 }
