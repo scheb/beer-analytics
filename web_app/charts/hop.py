@@ -1,6 +1,7 @@
 import abc
 
-from recipe_db.analytics import get_hop_popularity, get_hop_common_styles, get_hop_pairing_hops
+from recipe_db.analytics import get_hop_popularity, get_hop_common_styles_relative, get_hop_pairing_hops, \
+    get_hop_common_styles_absolute
 from recipe_db.models import Hop
 from web_app.charts.utils import NoDataException
 from web_app.plot import Plot, LinesChart, BarChart, PreAggregatedPairsBoxPlot
@@ -24,9 +25,18 @@ class HopPopularityChart(HopChart):
         return LinesChart().plot(df, 'month', 'recipes_percent', 'hop', 'Month/Year', '% Recipes')
 
 
-class HopCommonStylesChart(HopChart):
+class HopCommonStylesAbsoluteChart(HopChart):
     def plot(self) -> Plot:
-        df = get_hop_common_styles(self.hop)
+        df = get_hop_common_styles_absolute(self.hop)
+        if len(df) == 0:
+            raise NoDataException()
+
+        return BarChart().plot(df, 'style_name', 'recipes', 'Style', 'Number Recipes')
+
+
+class HopCommonStylesRelativeChart(HopChart):
+    def plot(self) -> Plot:
+        df = get_hop_common_styles_relative(self.hop)
         if len(df) == 0:
             raise NoDataException()
 
@@ -45,7 +55,8 @@ class HopPairingsChart(HopChart):
 class HopChartFactory:
     CHARTS = dict(
         popularity=HopPopularityChart,
-        styles=HopCommonStylesChart,
+        styles_absolute=HopCommonStylesAbsoluteChart,
+        styles_relative=HopCommonStylesRelativeChart,
         pairings=HopPairingsChart,
     )
 

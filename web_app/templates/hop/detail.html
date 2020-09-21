@@ -25,7 +25,13 @@
     <div id="chart-popularity" class="chart-m"></div>
 
     <h2>Common Styles</h2>
-    <div id="chart-styles" class="chart-l"></div>
+    <h3>Absolute Number of Recipes</h3>
+    <div id="chart-styles-abs" class="chart-l"></div>
+    <h3>Relative Percent of Recipes</h3>
+    <div id="chart-styles-rel" class="chart-l"></div>
+
+    <h2><a id="usage-ranges"></a>Usage Ranges</h2>
+    <div id="chart-usage-ranges" class="chart-l"></div>
 
     <h2>Common Pairings</h2>
     <div id="chart-pairings" class="chart-l"></div>
@@ -35,10 +41,12 @@
 <script>
 window.addEventListener('load', function ()
 {
-    display_graph('chart-spec-alpha', '{% url "hop_chart" hop.id "alpha-histogram" "json" %}', {displayModeBar: false});
-    display_graph('chart-spec-amount', '{% url "hop_chart" hop.id "amount-histogram" "json" %}', {displayModeBar: false});
+    display_graph('chart-metric-alpha', '{% url "hop_chart" hop.id "alpha-histogram" "json" %}', {displayModeBar: false});
+    display_graph('chart-metric-amount-percent', '{% url "hop_chart" hop.id "amount-percent-range" "json" %}', {displayModeBar: false});
     display_graph('chart-popularity', '{% url "hop_chart" hop.id "popularity" "json" %}');
-    display_graph('chart-styles', '{% url "hop_chart" hop.id "styles" "json" %}');
+    display_graph('chart-styles-abs', '{% url "hop_chart" hop.id "styles-absolute" "json" %}');
+    display_graph('chart-styles-rel', '{% url "hop_chart" hop.id "styles-relative" "json" %}');
+    display_graph('chart-usage-ranges', '{% url "hop_chart" hop.id "usage-ranges" "json" %}');
     display_graph('chart-pairings', '{% url "hop_chart" hop.id "pairings" "json" %}');
 });
 </script>

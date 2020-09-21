@@ -1,6 +1,7 @@
 import abc
 
-from recipe_db.analytics import get_fermentable_popularity, get_fermentable_common_styles
+from recipe_db.analytics import get_fermentable_popularity, get_fermentable_common_styles_relative, \
+    get_fermentable_common_styles_absolute
 from recipe_db.models import Fermentable
 from web_app.charts.utils import NoDataException
 from web_app.plot import Plot, LinesChart, BarChart
@@ -24,9 +25,18 @@ class FermentablePopularityChart(FermentableChart):
         return LinesChart().plot(df, 'month', 'recipes_percent', 'fermentable', 'Month/Year', '% Recipes')
 
 
-class FermentableCommonStylesChart(FermentableChart):
+class FermentableCommonStylesAbsoluteChart(FermentableChart):
     def plot(self) -> Plot:
-        df = get_fermentable_common_styles(self.fermentable)
+        df = get_fermentable_common_styles_absolute(self.fermentable)
+        if len(df) == 0:
+            raise NoDataException()
+
+        return BarChart().plot(df, 'style_name', 'recipes', 'Style', 'Number Recipes')
+
+
+class FermentableCommonStylesRelativeChart(FermentableChart):
+    def plot(self) -> Plot:
+        df = get_fermentable_common_styles_relative(self.fermentable)
         if len(df) == 0:
             raise NoDataException()
 
@@ -36,7 +46,8 @@ class FermentableCommonStylesChart(FermentableChart):
 class FermentableChartFactory:
     CHARTS = dict(
         popularity=FermentablePopularityChart,
-        styles=FermentableCommonStylesChart,
+        styles_absolute=FermentableCommonStylesAbsoluteChart,
+        styles_relative=FermentableCommonStylesRelativeChart,
     )
 
     def get_chart(self, fermentable: Fermentable, chart_type: str) -> Plot:
