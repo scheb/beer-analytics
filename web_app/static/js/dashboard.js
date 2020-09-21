@@ -13,10 +13,17 @@ function display_graph(container_id, chart_url, config={}) {
     xhr.open("GET", chart_url, true);
     xhr.onreadystatechange = function ()
     {
-        if (xhr.readyState === 4 && xhr.status === 200)
+        if (xhr.readyState === 4)
         {
-            let data = JSON.parse(xhr.responseText);
-            Plotly.newPlot(container_id, data.data, data.layout, mergedConfig)
+            if (xhr.status === 204)
+            {
+                document.getElementById(container_id).innerHTML = '<p class="no-data"><span>No data</span></p>'
+            }
+            else if (xhr.status === 200)
+            {
+                let data = JSON.parse(xhr.responseText);
+                Plotly.newPlot(container_id, data.data, data.layout, mergedConfig)
+            }
         }
     }
     xhr.send();
