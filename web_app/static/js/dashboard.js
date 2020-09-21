@@ -1,10 +1,13 @@
 /* globals Chart:false, feather:false */
 
 function display_graph(container_id, chart_url, config={}) {
-    if (!document.getElementById(container_id))
+    let container = document.getElementById(container_id)
+    if (!container)
     {
         return
     }
+
+    container.innerHTML = '<div class="chart-loading"><span></span></div>'
 
     let defaultConfig = {responsive: true, displayModeBar: true}
     let mergedConfig = {...defaultConfig, ...config};
@@ -21,6 +24,7 @@ function display_graph(container_id, chart_url, config={}) {
             }
             else if (xhr.status === 200)
             {
+                container.innerHTML = '';
                 let data = JSON.parse(xhr.responseText);
                 Plotly.newPlot(container_id, data.data, data.layout, mergedConfig)
             }
