@@ -31,8 +31,8 @@
     <h3>Relative Percent of Recipes</h3>
     <div id="chart-styles-rel" class="chart-l"></div>
 
-    <h2><a id="usage-ranges"></a>Usage Ranges</h2>
-    <div id="chart-usage-ranges" class="chart-l"></div>
+    <h2>Amount per Style</h2>
+    <div id="chart-style-amount" class="chart-l"></div>
 
     <h2>Common Pairings</h2>
     <div id="chart-pairings" class="chart-l"></div>
@@ -47,7 +47,7 @@ window.addEventListener('load', function ()
     display_graph('chart-popularity', '{% url "fermentable_chart" fermentable.id "popularity" "json" %}');
     display_graph('chart-styles-abs', '{% url "fermentable_chart" fermentable.id "styles-absolute" "json" %}');
     display_graph('chart-styles-rel', '{% url "fermentable_chart" fermentable.id "styles-relative" "json" %}');
-    display_graph('chart-usage-ranges', '{% url "fermentable_chart" fermentable.id "usage-ranges" "json" %}');
+    display_graph('chart-style-amount', '{% url "hop_chart" fermentable.id "style-amount" "json" %}');
     display_graph('chart-pairings', '{% url "fermentable_chart" fermentable.id "pairings" "json" %}');
 });
 </script>
