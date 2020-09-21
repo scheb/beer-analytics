@@ -69,4 +69,4 @@ Want to contribute to this project? See [CONTRIBUTING.md](CONTRIBUTING.md).
 License
 -------
 
-This software is available under the [WTFPL License](LICENSE).
+This software is available under the [Beerware License](LICENSE).
