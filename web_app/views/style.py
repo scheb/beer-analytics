@@ -40,11 +40,12 @@ def render_style(request: HttpRequest, style: Style) -> HttpResponse:
 
 def chart(request: HttpRequest, id: str, chart_type: str, format: str) -> HttpResponse:
     style = get_object_or_404(Style, pk=id)
+    filter_param = str(request.GET['filter']) if 'filter' in request.GET else None
 
     chart_factory = StyleChartFactory()
     if chart_factory.is_supported_chart(chart_type):
         try:
-            plot = chart_factory.get_chart(style, chart_type)
+            plot = chart_factory.get_chart(style, chart_type, filter_param)
         except NoDataException:
             return HttpResponse(status=204)
     else:

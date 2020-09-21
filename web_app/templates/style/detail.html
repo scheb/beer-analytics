@@ -48,6 +48,15 @@
     <div id="chart-fermentables" class="chart-l"></div>
 
     <h2>Most Used Hops</h2>
+    <nav id="chart-hops-tabs">
+        <label for="chart-hops-tabs" class="float-left py-1 pr-2">Used for</label>
+        <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item"><a class="nav-link px-2 py-1 active" aria-current="page" data-toggle="tab" role="tab" data-filter="" href="#chart-hops">Any</a></li>
+            <li class="nav-item"><a class="nav-link px-2 py-1" data-toggle="tab" role="tab" data-filter="bittering" href="#chart-hops-bittering">Bittering</a></li>
+            <li class="nav-item"><a class="nav-link px-2 py-1" data-toggle="tab" role="tab" data-filter="aroma" href="#chart-hops-aroma">Aroma</a></li>
+            <li class="nav-item"><a class="nav-link px-2 py-1" data-toggle="tab" role="tab" data-filter="dry-hop" href="#chart-hops-dry-hop">Dry-Hop</a></li>
+        </ul>
+    </nav>
     <div id="chart-hops" class="chart-l"></div>
 
     <h2>Common Hop Pairings</h2>
@@ -65,7 +74,7 @@ window.addEventListener('load', function ()
     display_graph('chart-spec-fg', '{% url "style_chart" style.id "fg-histogram" "json" %}', {displayModeBar: false});
     display_graph('chart-popularity', '{% url "style_chart" style.id "popularity" "json" %}');
     display_graph('chart-fermentables', '{% url "style_chart" style.id "popular-fermentables" "json" %}');
-    display_graph('chart-hops', '{% url "style_chart" style.id "popular-hops" "json" %}');
+    display_graph_with_navigation('chart-hops', 'chart-hops-tabs', '{% url "style_chart" style.id "popular-hops" "json" %}');
     display_graph('chart-hop-pairings', '{% url "style_chart" style.id "hop-pairings" "json" %}');
 });
 </script>
