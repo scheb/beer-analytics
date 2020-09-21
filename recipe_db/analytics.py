@@ -19,8 +19,10 @@ METRIC_PRECISION = {
 def load_all_recipes():
     return pd.read_sql('SELECT * FROM recipe_db_recipe', connection)
 
+
 def get_hop_names_dict() -> dict:
     return dict(connection.cursor().execute("SELECT id, name FROM recipe_db_hop"))
+
 
 def calculate_style_recipe_count(df, style: Style) -> int:
     style_ids = style.get_ids_including_sub_styles()
@@ -253,6 +255,28 @@ def get_hop_amount_range(hop: Hop) -> DataFrame:
     aggregated = aggregated.reset_index()
 
     return aggregated
+
+
+def get_hop_use_counts(hop: Hop) -> dict:
+    results = connection.cursor().execute('''
+        SELECT use, count(DISTINCT recipe_id) AS num_recipes
+        FROM recipe_db_recipehop
+        WHERE kind_id = %s AND use IS NOT NULL
+        GROUP BY use
+    ''', params=[hop.id])
+
+    count_per_use = {}
+    for result in results:
+        (use, count) = result
+        count_per_use[use] = count
+
+    return count_per_use
+
+
+def get_hop_usage(hop: Hop) -> DataFrame:
+    df = DataFrame(hop.use_count)
+    print(df)
+    return df
 
 
 def get_style_hop_pairings(style: Style) -> DataFrame:

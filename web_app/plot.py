@@ -274,6 +274,9 @@ class RangeBoxPlot:
 
 
 class BarChart:
+    def __init__(self, add_margin: bool = True) -> None:
+        self.add_margin = add_margin
+
     def plot(
         self,
         df: DataFrame,
@@ -290,13 +293,14 @@ class BarChart:
             color_continuous_scale=COLOR_SEQUENTIAL
         )
 
+        margin = dict(l=30, r=0, t=20, b=10) if self.add_margin else dict(l=0, r=0, t=0, b=0)
         fig.update_layout(
             title=None,
             showlegend=False,
             coloraxis=dict(
                 showscale=False,
             ),
-            margin=dict(l=30, r=0, t=20, b=10),
+            margin=margin,
             xaxis=dict(
                 fixedrange=True,
             ),
