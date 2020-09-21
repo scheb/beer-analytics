@@ -17,6 +17,7 @@
         <p>Includes: <span class="badge bg-secondary">{{ fermentable.alt_names_list|join:'</span><span class="invisible">, </span><span class="badge bg-secondary">' }}</span></p>
     {% endif %}
 
+    <p>Type: <strong>{{ fermentable.type_name }}</strong></p>
     <p>Number of recipes: <strong>{{ fermentable.recipes_count }}</strong></p>
 
     {% include './metrics.html' %}
@@ -25,21 +26,29 @@
     <div id="chart-popularity" class="chart-m"></div>
 
     <h2>Common Styles</h2>
-    <div id="chart-styles" class="chart-l"></div>
+    <h3>Absolute Number of Recipes</h3>
+    <div id="chart-styles-abs" class="chart-l"></div>
+    <h3>Relative Percent of Recipes</h3>
+    <div id="chart-styles-rel" class="chart-l"></div>
 
-{#    <h2>Common Pairings</h2>#}
-{#    <div id="chart-pairings" class="chart-l"></div>#}
+    <h2><a id="usage-ranges"></a>Usage Ranges</h2>
+    <div id="chart-usage-ranges" class="chart-l"></div>
+
+    <h2>Common Pairings</h2>
+    <div id="chart-pairings" class="chart-l"></div>
 {% endblock %}
 
 {% block script %}
 <script>
 window.addEventListener('load', function ()
 {
-    display_graph('chart-spec-alpha', '{% url "fermentable_chart" fermentable.id "alpha-histogram" "json" %}', {displayModeBar: false});
-    display_graph('chart-spec-amount', '{% url "fermentable_chart" fermentable.id "amount-histogram" "json" %}', {displayModeBar: false});
+    display_graph('chart-metric-color', '{% url "fermentable_chart" fermentable.id "color-histogram" "json" %}', {displayModeBar: false});
+    display_graph('chart-metric-amount-percent', '{% url "fermentable_chart" fermentable.id "amount-percent-range" "json" %}', {displayModeBar: false});
     display_graph('chart-popularity', '{% url "fermentable_chart" fermentable.id "popularity" "json" %}');
-    display_graph('chart-styles', '{% url "fermentable_chart" fermentable.id "styles" "json" %}');
-    {#display_graph('chart-pairings', '{% url "fermentable_chart" fermentable.id "pairings" "json" %}');#}
+    display_graph('chart-styles-abs', '{% url "fermentable_chart" fermentable.id "styles-absolute" "json" %}');
+    display_graph('chart-styles-rel', '{% url "fermentable_chart" fermentable.id "styles-relative" "json" %}');
+    display_graph('chart-usage-ranges', '{% url "fermentable_chart" fermentable.id "usage-ranges" "json" %}');
+    display_graph('chart-pairings', '{% url "fermentable_chart" fermentable.id "pairings" "json" %}');
 });
 </script>
 {% endblock %}

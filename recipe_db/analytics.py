@@ -285,9 +285,30 @@ def get_hop_popularity(hop: Hop) -> DataFrame:
     return df
 
 
-def get_hop_common_styles(hop: Hop) -> DataFrame:
-    recipes_per_style = get_num_recipes_per_style()
+def get_hop_common_styles_absolute(hop: Hop) -> DataFrame:
+    df = get_hop_common_styles_data(hop)
 
+    df = df.sort_values('recipes', ascending=False)
+    df = df[:30]
+
+    return df
+
+
+def get_hop_common_styles_relative(hop: Hop) -> DataFrame:
+    recipes_per_style = get_num_recipes_per_style()
+    df = get_hop_common_styles_data(hop)
+
+    df = df.set_index(['style_id'])
+    df = df.merge(recipes_per_style, on="style_id")
+    df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
+    df = df.sort_values('recipes_percent', ascending=False)
+    df = df[:30]
+    df = df.reset_index()
+
+    return df
+
+
+def get_hop_common_styles_data(hop: Hop) -> DataFrame:
     query = '''
         SELECT
             r.style_id,
@@ -305,15 +326,7 @@ def get_hop_common_styles(hop: Hop) -> DataFrame:
         GROUP BY r.style_id
     '''
 
-    df = pd.read_sql(query, connection, params=[hop.id])
-    df = df.set_index(['style_id'])
-    df = df.merge(recipes_per_style, on="style_id")
-    df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
-    df = df.sort_values('recipes_percent', ascending=False)
-    df = df[:30]
-    df = df.reset_index()
-
-    return df
+    return pd.read_sql(query, connection, params=[hop.id])
 
 
 def get_hop_pairing_hops(hop: Hop) -> DataFrame:
@@ -364,9 +377,30 @@ def get_fermentable_popularity(fermentable: Fermentable) -> DataFrame:
     return df
 
 
-def get_fermentable_common_styles(fermentable: Fermentable) -> DataFrame:
-    recipes_per_style = get_num_recipes_per_style()
+def get_fermentable_common_styles_absolute(fermentable: Fermentable) -> DataFrame:
+    df = get_fermentable_common_styles_data(fermentable)
 
+    df = df.sort_values('recipes', ascending=False)
+    df = df[:30]
+
+    return df
+
+
+def get_fermentable_common_styles_relative(fermentable: Fermentable) -> DataFrame:
+    recipes_per_style = get_num_recipes_per_style()
+    df = get_fermentable_common_styles_data(fermentable)
+
+    df = df.set_index(['style_id'])
+    df = df.merge(recipes_per_style, on="style_id")
+    df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
+    df = df.sort_values('recipes_percent', ascending=False)
+    df = df[:30]
+    df = df.reset_index()
+
+    return df
+
+
+def get_fermentable_common_styles_data(fermentable: Fermentable) -> DataFrame:
     query = '''
         SELECT
             r.style_id,
@@ -384,15 +418,7 @@ def get_fermentable_common_styles(fermentable: Fermentable) -> DataFrame:
         GROUP BY r.style_id
     '''
 
-    df = pd.read_sql(query, connection, params=[fermentable.id])
-    df = df.set_index(['style_id'])
-    df = df.merge(recipes_per_style, on="style_id")
-    df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
-    df = df.sort_values('recipes_percent', ascending=False)
-    df = df[:30]
-    df = df.reset_index()
-
-    return df
+    return pd.read_sql(query, connection, params=[fermentable.id])
 
 
 def lowerfence(x):
