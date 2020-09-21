@@ -274,9 +274,7 @@ def get_hop_use_counts(hop: Hop) -> dict:
 
 
 def get_hop_usage(hop: Hop) -> DataFrame:
-    df = DataFrame(hop.use_count)
-    print(df)
-    return df
+    return DataFrame(hop.use_count)
 
 
 def get_style_hop_pairings(style: Style) -> DataFrame:
