@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from recipe_db.models import Fermentable
 from web_app.charts.fermentable import FermentableChartFactory
+from web_app.charts.utils import NoDataException
 from web_app.views.utils import render_plot
 
 
@@ -57,7 +58,10 @@ def chart(request: HttpRequest, id: str, chart_type: str, format: str) -> HttpRe
 
     chart_factory = FermentableChartFactory()
     if chart_factory.is_supported_chart(chart_type):
-        plot = chart_factory.get_chart(fermentable, chart_type)
+        try:
+            plot = chart_factory.get_chart(fermentable, chart_type)
+        except NoDataException:
+            return HttpResponse(status=204)
     else:
         raise Http404('Unknown chart type %s.' % chart_type)
 
