@@ -30,12 +30,17 @@ def calculate_style_recipe_count(df, style: Style) -> int:
 def calculate_style_metric(df, style: Style, metric: str) -> Tuple[float, float, float]:
     style_ids = style.get_ids_including_sub_styles()
     df = df[df['style_id'].isin(style_ids)]
-    df = remove_outliers(df, metric, 0.02)
-    return df[metric].min(), df[metric].mean(), df[metric].max()
+    return lowerfence(df[metric]), df[metric].median(), upperfence(df[metric])
 
 
-def load_all_recipe_hops():
-    return pd.read_sql('SELECT * FROM recipe_db_recipehop', connection)
+def load_all_recipe_hops_aggregated():
+    df = pd.read_sql_query('SELECT * FROM recipe_db_recipehop', connection)
+
+    # Aggregate per recipe
+    df = df.groupby(["recipe_id", "kind_id"]).agg({"amount_percent": "sum", "alpha": "mean"}).reset_index()
+    df = df.reset_index()
+
+    return df
 
 
 def calculate_hop_recipe_count(df, hop: Hop) -> int:
@@ -44,12 +49,17 @@ def calculate_hop_recipe_count(df, hop: Hop) -> int:
 
 def calculate_hop_metric(df, hop: Hop, metric: str) -> Tuple[float, float, float]:
     df = df[df['kind_id'].eq(hop.id)]
-    df = remove_outliers(df, metric, 0.02)
-    return df[metric].min(), df[metric].mean(), df[metric].max()
+    return lowerfence(df[metric]), df[metric].median(), upperfence(df[metric])
 
 
-def load_all_recipe_fermentables():
-    return pd.read_sql('SELECT * FROM recipe_db_recipefermentable', connection)
+def load_all_recipe_fermentables_aggregated():
+    df = pd.read_sql('SELECT * FROM recipe_db_recipefermentable', connection)
+
+    # Aggregate per recipe
+    df = df.groupby(["recipe_id", "kind_id"]).agg({"amount_percent": "sum", "color_lovibond": "mean", "color_ebc": "mean"}).reset_index()
+    df = df.reset_index()
+
+    return df
 
 
 def calculate_fermentable_recipe_count(df, fermentable: Fermentable) -> int:
@@ -58,8 +68,7 @@ def calculate_fermentable_recipe_count(df, fermentable: Fermentable) -> int:
 
 def calculate_fermentable_metric(df, fermentable: Fermentable, metric: str) -> Tuple[float, float, float]:
     df = df[df['kind_id'].eq(fermentable.id)]
-    df = remove_outliers(df, metric, 0.02)
-    return df[metric].min(), df[metric].mean(), df[metric].max()
+    return lowerfence(df[metric]), df[metric].median(), upperfence(df[metric])
 
 
 def remove_outliers(df: DataFrame, field: str, cutoff_percentile: float) -> DataFrame:

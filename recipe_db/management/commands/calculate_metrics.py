@@ -3,8 +3,8 @@ import math
 from django.core.management.base import BaseCommand
 
 from recipe_db.analytics import load_all_recipes, calculate_style_metric, calculate_style_recipe_count, \
-    calculate_hop_recipe_count, calculate_hop_metric, load_all_recipe_hops, calculate_fermentable_recipe_count, \
-    calculate_fermentable_metric, load_all_recipe_fermentables
+    calculate_hop_recipe_count, calculate_hop_metric, calculate_fermentable_recipe_count, \
+    calculate_fermentable_metric, load_all_recipe_fermentables_aggregated, load_all_recipe_hops_aggregated
 from recipe_db.models import Style, Hop, Fermentable
 
 STYLE_METRICS = ['abv', 'ibu', 'ebc', 'srm', 'og', 'fg', 'original_plato', 'final_plato']
@@ -24,7 +24,7 @@ class Command(BaseCommand):
             self.calculate_all_style_metrics(recipes, style)
             style.save()
 
-        recipe_hops = load_all_recipe_hops()
+        recipe_hops = load_all_recipe_hops_aggregated()
 
         self.stdout.write('Calculate hop stats')
         for hop in Hop.objects.all():
@@ -32,7 +32,7 @@ class Command(BaseCommand):
             self.calculate_all_hop_metrics(recipe_hops, hop)
             hop.save()
 
-        recipe_fermentables = load_all_recipe_fermentables()
+        recipe_fermentables = load_all_recipe_fermentables_aggregated()
 
         self.stdout.write('Calculate fermentable stats')
         for fermentable in Fermentable.objects.all():
