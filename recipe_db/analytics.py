@@ -157,32 +157,36 @@ def get_style_metric_values(style: Style, metric: str) -> DataFrame:
     return histogram
 
 
-def get_style_popular_hops(style: Style) -> DataFrame:
+def get_style_popular_hops(style: Style, use_filter: list) -> DataFrame:
     style_ids = style.get_ids_including_sub_styles()
 
     query = '''
-        WITH recipe_hops_agg AS (
-            SELECT recipe_id, kind_id, sum(amount_percent) AS amount_percent
-            FROM recipe_db_recipehop
-            WHERE kind_id IS NOT NULL
-            GROUP BY recipe_id, kind_id
-        )
-        SELECT rh.recipe_id, h.name AS hop, rh.amount_percent
-        FROM recipe_hops_agg AS rh
+        SELECT rh.recipe_id, rh.kind_id, rh.amount_percent
+        FROM recipe_db_recipehop AS rh
         JOIN recipe_db_recipe AS r ON rh.recipe_id = r.uid
-        JOIN recipe_db_hop AS h ON rh.kind_id = h.id
         WHERE r.style_id IN ({})
         '''.format(','.join('%s' for _ in style_ids))
 
-    hops = pd.read_sql(query, connection, params=style_ids)
+    if len(use_filter):
+        query += " AND rh.use IN ({})".format(','.join('%s' for _ in use_filter))
 
-    top_hops_ids = hops["hop"].value_counts()[:10].index.values
-    top_hops = hops[hops['hop'].isin(top_hops_ids)]  # Get only the values of the mostly used hops
+    df = pd.read_sql(query, connection, params=style_ids + use_filter)
 
+    # Aggregate amount per recipe
+    hops = df.groupby(["recipe_id", "kind_id"]).agg({"amount_percent": "sum"}).reset_index()
+
+    # Filter top hops
+    top_hops_ids = hops["kind_id"].value_counts()[:10].index.values
+    top_hops = hops[hops['kind_id'].isin(top_hops_ids)]  # Get only the values of the mostly used hops
+
+    # Calculate boxplot values
     agg = [lowerfence, q1, 'median', 'mean', q3, upperfence, 'count']
-    aggregated = top_hops.groupby('hop').agg({'amount_percent': agg})
+    aggregated = top_hops.groupby('kind_id').agg({'amount_percent': agg})
     aggregated = aggregated.reset_index()
     aggregated = aggregated.sort_values(by=('amount_percent', 'count'), ascending=False)
+
+    # Finally, add hop names
+    aggregated['hop'] = aggregated['kind_id'].map(get_hop_names_dict())
 
     return aggregated
 
