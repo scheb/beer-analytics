@@ -9,7 +9,7 @@ from recipe_db.models import Style, Hop, Fermentable
 
 STYLE_METRICS = ['abv', 'ibu', 'ebc', 'srm', 'og', 'fg', 'original_plato', 'final_plato']
 HOP_METRICS = ['alpha', 'amount_percent']
-FERMENTABLE_METRICS = ['amount_percent']
+FERMENTABLE_METRICS = ['amount_percent', 'color_lovibond', 'color_ebc']
 
 
 class Command(BaseCommand):

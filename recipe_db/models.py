@@ -250,6 +250,12 @@ class Fermentable(models.Model):
     recipes_amount_percent_min = models.FloatField(default=None, blank=True, null=True)
     recipes_amount_percent_mean = models.FloatField(default=None, blank=True, null=True)
     recipes_amount_percent_max = models.FloatField(default=None, blank=True, null=True)
+    recipes_color_lovibond_min = models.FloatField(default=None, blank=True, null=True)
+    recipes_color_lovibond_mean = models.FloatField(default=None, blank=True, null=True)
+    recipes_color_lovibond_max = models.FloatField(default=None, blank=True, null=True)
+    recipes_color_ebc_min = models.FloatField(default=None, blank=True, null=True)
+    recipes_color_ebc_mean = models.FloatField(default=None, blank=True, null=True)
+    recipes_color_ebc_max = models.FloatField(default=None, blank=True, null=True)
 
     def save(self, *args, **kwargs) -> None:
         if self.id == '':
