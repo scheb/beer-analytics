@@ -357,6 +357,25 @@ class Hop(models.Model):
             return list(map(lambda x: x.strip(), items))
 
     @property
+    def use_count(self) -> list:
+        uses = [
+            RecipeHop.MASH,
+            RecipeHop.FIRST_WORT,
+            RecipeHop.BOIL,
+            RecipeHop.AROMA,
+            RecipeHop.DRY_HOP,
+        ]
+
+        use_names = RecipeHop.get_uses()
+        use_counts = []
+        for use in uses:
+            value = getattr(self, 'recipes_use_%s_count' % use)
+            if value is not None:
+                use_counts.append({"use_id": use, "use": use_names[use], "recipes": value})
+
+        return use_counts
+
+    @property
     def url(self) -> str:
         return reverse('hop_detail', kwargs={'category': self.use, 'slug': self.id})
 
@@ -516,6 +535,10 @@ class RecipeHop(models.Model):
     amount = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     amount_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
     time = models.IntegerField(default=None, blank=True, null=True, validators=[MinValueValidator(0)])
+
+    @classmethod
+    def get_uses(cls) -> dict:
+        return dict(cls.USE_CHOICES)
 
 
 class RecipeYeast(models.Model):
