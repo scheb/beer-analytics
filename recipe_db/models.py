@@ -323,6 +323,11 @@ class Hop(models.Model):
     recipes_amount_percent_min = models.FloatField(default=None, blank=True, null=True)
     recipes_amount_percent_mean = models.FloatField(default=None, blank=True, null=True)
     recipes_amount_percent_max = models.FloatField(default=None, blank=True, null=True)
+    recipes_use_mash_count = models.IntegerField(default=None, blank=True, null=True)
+    recipes_use_first_wort_count = models.IntegerField(default=None, blank=True, null=True)
+    recipes_use_boil_count = models.IntegerField(default=None, blank=True, null=True)
+    recipes_use_aroma_count = models.IntegerField(default=None, blank=True, null=True)
+    recipes_use_dry_hop_count = models.IntegerField(default=None, blank=True, null=True)
 
     def save(self, *args, **kwargs) -> None:
         if self.id == '':
