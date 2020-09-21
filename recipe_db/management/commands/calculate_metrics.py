@@ -4,7 +4,8 @@ from django.core.management.base import BaseCommand
 
 from recipe_db.analytics import load_all_recipes, calculate_style_metric, calculate_style_recipe_count, \
     calculate_hop_recipe_count, calculate_hop_metric, calculate_fermentable_recipe_count, \
-    calculate_fermentable_metric, load_all_recipe_fermentables_aggregated, load_all_recipe_hops_aggregated
+    calculate_fermentable_metric, load_all_recipe_fermentables_aggregated, load_all_recipe_hops_aggregated, \
+    get_hop_use_counts
 from recipe_db.models import Style, Hop, Fermentable
 
 STYLE_METRICS = ['abv', 'ibu', 'ebc', 'srm', 'og', 'fg', 'original_plato', 'final_plato']
@@ -53,6 +54,10 @@ class Command(BaseCommand):
 
     def calculate_all_hop_metrics(self, df, hop: Hop) -> None:
         hop.recipes_count = calculate_hop_recipe_count(df, hop)
+
+        use_counts = get_hop_use_counts(hop)
+        for use in use_counts:
+            setattr(hop, 'recipes_use_%s_count' % use, use_counts[use])
 
         for metric in HOP_METRICS:
             self.stdout.write('Calculate {} for hop {}'.format(metric, hop.name))
