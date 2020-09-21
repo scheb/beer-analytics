@@ -206,6 +206,25 @@ def get_style_popular_fermentables(style: Style) -> DataFrame:
     return aggregated
 
 
+def get_hop_metric_values(hop: Hop, metric: str) -> DataFrame:
+    precision = METRIC_PRECISION[metric] if metric in METRIC_PRECISION else METRIC_PRECISION['default']
+
+    query = '''
+            SELECT round({}, {}) as {}
+            FROM recipe_db_recipehop
+            WHERE kind_id = %s
+        '''.format(metric, precision, metric)
+
+    df = pd.read_sql(query, connection, params=[hop.id])
+    df = remove_outliers(df, metric, 0.02)
+
+    histogram = df.groupby([pd.cut(df[metric], 16, precision=precision)])[metric].agg(['count'])
+    histogram = histogram.reset_index()
+    histogram[metric] = histogram[metric].map(str)
+
+    return histogram
+
+
 def get_style_hop_pairings(style: Style) -> DataFrame:
     style_ids = style.get_ids_including_sub_styles()
 
@@ -345,6 +364,25 @@ def get_hop_pairing_hops(hop: Hop) -> DataFrame:
 
     hops = pd.read_sql(query, connection, params=[hop_id])
     return get_hop_pairings(hops, pair_must_include=hop)
+
+
+def get_fermentable_metric_values(fermentable: Fermentable, metric: str) -> DataFrame:
+    precision = METRIC_PRECISION[metric] if metric in METRIC_PRECISION else METRIC_PRECISION['default']
+
+    query = '''
+            SELECT round({}, {}) as {}
+            FROM recipe_db_recipefermentable
+            WHERE kind_id = %s
+        '''.format(metric, precision, metric)
+
+    df = pd.read_sql(query, connection, params=[fermentable.id])
+    df = remove_outliers(df, metric, 0.02)
+
+    histogram = df.groupby([pd.cut(df[metric], 16, precision=precision)])[metric].agg(['count'])
+    histogram = histogram.reset_index()
+    histogram[metric] = histogram[metric].map(str)
+
+    return histogram
 
 
 def get_fermentable_popularity(fermentable: Fermentable) -> DataFrame:
