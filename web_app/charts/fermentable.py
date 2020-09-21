@@ -1,10 +1,10 @@
 import abc
 
 from recipe_db.analytics import get_fermentable_popularity, get_fermentable_common_styles_relative, \
-    get_fermentable_common_styles_absolute, get_fermentable_metric_values
+    get_fermentable_common_styles_absolute, get_fermentable_metric_values, get_fermentable_amount_range
 from recipe_db.models import Fermentable
 from web_app.charts.utils import NoDataException
-from web_app.plot import Plot, LinesChart, BarChart, PreAggregateHistogramChart
+from web_app.plot import Plot, LinesChart, BarChart, PreAggregateHistogramChart, RangeBoxPlot
 
 
 class FermentableChart:
@@ -34,6 +34,15 @@ class FermentableColorChart(FermentableChart):
         return PreAggregateHistogramChart().plot(df, 'color_lovibond', 'count')
 
 
+class FermentableAmountRangeChart(FermentableChart):
+    def plot(self) -> Plot:
+        df = get_fermentable_amount_range(self.fermentable)
+        if len(df) == 0:
+            raise NoDataException()
+
+        return RangeBoxPlot().plot(df, 'amount_percent')
+
+
 class FermentableCommonStylesAbsoluteChart(FermentableChart):
     def plot(self) -> Plot:
         df = get_fermentable_common_styles_absolute(self.fermentable)
@@ -55,7 +64,7 @@ class FermentableCommonStylesRelativeChart(FermentableChart):
 class FermentableChartFactory:
     CHARTS = dict(
         color_histogram=FermentableColorChart,
-        # amount_percent_range=A,
+        amount_percent_range=FermentableAmountRangeChart,
         popularity=FermentablePopularityChart,
         styles_absolute=FermentableCommonStylesAbsoluteChart,
         styles_relative=FermentableCommonStylesRelativeChart,

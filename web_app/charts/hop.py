@@ -1,10 +1,10 @@
 import abc
 
 from recipe_db.analytics import get_hop_popularity, get_hop_common_styles_relative, get_hop_pairing_hops, \
-    get_hop_common_styles_absolute, get_hop_metric_values
+    get_hop_common_styles_absolute, get_hop_metric_values, get_hop_amount_range
 from recipe_db.models import Hop
 from web_app.charts.utils import NoDataException
-from web_app.plot import Plot, LinesChart, BarChart, PreAggregatedPairsBoxPlot, PreAggregateHistogramChart
+from web_app.plot import Plot, LinesChart, BarChart, PreAggregatedPairsBoxPlot, PreAggregateHistogramChart, RangeBoxPlot
 
 
 class HopChart:
@@ -32,6 +32,15 @@ class HopAlphaChart(HopChart):
             raise NoDataException()
 
         return PreAggregateHistogramChart().plot(df, 'alpha', 'count')
+
+
+class HopAmountRangeChart(HopChart):
+    def plot(self) -> Plot:
+        df = get_hop_amount_range(self.hop)
+        if len(df) == 0:
+            raise NoDataException()
+
+        return RangeBoxPlot().plot(df, 'amount_percent')
 
 
 class HopCommonStylesAbsoluteChart(HopChart):
@@ -64,7 +73,7 @@ class HopPairingsChart(HopChart):
 class HopChartFactory:
     CHARTS = dict(
         alpha_histogram=HopAlphaChart,
-        # amount_percent_range=A,
+        amount_percent_range=HopAmountRangeChart,
         popularity=HopPopularityChart,
         styles_absolute=HopCommonStylesAbsoluteChart,
         styles_relative=HopCommonStylesRelativeChart,

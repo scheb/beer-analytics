@@ -237,6 +237,42 @@ class PreAggregatedPairsBoxPlot:
         return Plot(fig)
 
 
+class RangeBoxPlot:
+    def plot(
+        self,
+        df: DataFrame,
+        value_field: str,
+    ) -> Plot:
+        fig = make_subplots()
+        trace = go.Box(
+            x=[[1]],
+            lowerfence=df[value_field]['lowerfence'],
+            q1=df[value_field]['q1'],
+            median=df[value_field]['median'],
+            mean=df[value_field]['mean'],
+            q3=df[value_field]['q3'],
+            upperfence=df[value_field]['upperfence'],
+            boxpoints=False,
+            marker=dict(color=COLORS_PRISM[0]),
+        )
+        fig.add_trace(trace)
+
+        fig.update_layout(
+            title=None,
+            showlegend=False,
+            margin=dict(l=0, r=0, t=0, b=0),
+            xaxis=dict(
+                fixedrange=True,
+            ),
+            yaxis=dict(
+                showticklabels=False,
+                fixedrange=True,
+            )
+        )
+
+        return Plot(fig)
+
+
 class BarChart:
     def plot(
         self,

@@ -234,6 +234,27 @@ def get_hop_metric_values(hop: Hop, metric: str) -> DataFrame:
     return histogram
 
 
+def get_hop_amount_range(hop: Hop) -> DataFrame:
+    # Pre-select only the hops used in recipes using that hop
+    query = '''
+        SELECT recipe_id, kind_id, amount_percent
+        FROM recipe_db_recipehop
+        WHERE kind_id = %s
+    '''
+
+    df = pd.read_sql(query, connection, params=[hop.id])
+
+    # Aggregate amount per recipe
+    hop_amounts = df.groupby(["recipe_id", "kind_id"]).agg({"amount_percent": "sum"}).reset_index()
+    hop_amounts['style'] = 'All'
+
+    agg = [lowerfence, q1, 'median', 'mean', q3, upperfence]
+    aggregated = hop_amounts.groupby('style').agg({'amount_percent': agg}, axis=1)
+    aggregated = aggregated.reset_index()
+
+    return aggregated
+
+
 def get_style_hop_pairings(style: Style) -> DataFrame:
     style_ids = style.get_ids_including_sub_styles()
 
@@ -392,6 +413,27 @@ def get_fermentable_metric_values(fermentable: Fermentable, metric: str) -> Data
     histogram[metric] = histogram[metric].map(str)
 
     return histogram
+
+
+def get_fermentable_amount_range(fermentable: Fermentable) -> DataFrame:
+    # Pre-select only the hops used in recipes using that hop
+    query = '''
+        SELECT recipe_id, kind_id, amount_percent
+        FROM recipe_db_recipefermentable
+        WHERE kind_id = %s
+    '''
+
+    df = pd.read_sql(query, connection, params=[fermentable.id])
+
+    # Aggregate amount per recipe
+    hop_amounts = df.groupby(["recipe_id", "kind_id"]).agg({"amount_percent": "sum"}).reset_index()
+    hop_amounts['style'] = 'All'
+
+    agg = [lowerfence, q1, 'median', 'mean', q3, upperfence]
+    aggregated = hop_amounts.groupby('style').agg({'amount_percent': agg}, axis=1)
+    aggregated = aggregated.reset_index()
+
+    return aggregated
 
 
 def get_fermentable_popularity(fermentable: Fermentable) -> DataFrame:
