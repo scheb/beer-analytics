@@ -20,7 +20,6 @@
                     {% if fermentable.recipes_amount_percent_min %}
                         {{ fermentable.recipes_amount_percent_min|floatformat:1 }} &lt; <strong>{{ fermentable.recipes_amount_percent_mean|floatformat:1 }}</strong> &lt; {{ fermentable.recipes_amount_percent_max|floatformat:1 }} <small class="text-muted">%</small>
                     {% endif %}
-                    <br/><a href="#usage-ranges">More details below</a>
                 </div>
                 <div class="card-footer bg-transparent"><div id="chart-metric-amount-percent" class="chart-s"></div></div>
             </div>
