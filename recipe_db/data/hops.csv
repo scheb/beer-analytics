@@ -61,7 +61,7 @@ Challenger;dual-purpose;;
 Chelan;bittering;;
 Chinook;dual-purpose;;Kanook
 Cicero;dual-purpose;;
-Citra;dual-purpose;;
+Citra;dual-purpose;HBC 394;
 Cluster;dual-purpose;;
 Cluster Fugget;aroma;;Fugget
 Cobb;aroma;;
@@ -85,14 +85,13 @@ East Kent Golding;aroma;;Goldings East Kent, Golding East Kent, East Ken Golding
 Eastern Gold;bittering;;
 Eastern Green;aroma;;
 Eastwell Golding;aroma;;
-Ekuanot;bittering;;Ekvanot, Equanot, Eukanot, Ekua
+Ekuanot;dual-purpose;Equinox, HBC 366;Ekvanot, Equanot, Eukanot, Ekua
 El Dorado;aroma;;Eldorado
 Elixir;aroma;;Elexir
 Ella;aroma;Stella;
 Elsaesser;aroma;;
 Endeavor;dual-purpose;;Endeavour, Endevour
 Enigma;bittering;;
-Equinox;aroma;;
 Eroica;bittering;;
 Eureka;dual-purpose;;
 Falconer's Flight 7 C's;dual-purpose;;Falconer's Flight, Falconer Flight, Falcon Flight, Falcones Flight, Seven C's, 7 C's, 7C's
@@ -166,7 +165,7 @@ Landhopfen;aroma;;
 Legacy;dual-purpose;;
 Lemondrop;aroma;;Lemon Drop
 Liberty;aroma;;
-Loral;dual-purpose;;Loral Nobel, Loral Noble
+Loral;dual-purpose;HBC 291;Loral Nobel, Loral Noble
 Lotus;aroma;;
 Lubelska;aroma;;Lubelski, Luboloski
 Lubelska-Pulawy;aroma;;
@@ -186,7 +185,7 @@ Michigan Copper;aroma;;MI Copper
 Millennium;bittering;;Millenium
 Mistral;dual-purpose;;
 Monroe;aroma;;
-Mosaic;dual-purpose;;Moesaic, Mosacic, Mosai, Mossic, Mozaic, Mscc, Mosiac, Mosiac
+Mosaic;dual-purpose;HBC 369;Moesaic, Mosacic, Mosai, Mossic, Mozaic, Mscc, Mosiac, Mosiac
 Motueka;aroma;;Mouteka
 Mount Hood;aroma;;MT Hood
 Mount Rainier;aroma;;MT Rainier
@@ -217,7 +216,7 @@ Pacific Gem;bittering;;
 Pacific Jade;aroma;;Jade
 Pacific Sunrise;bittering;;
 Pacifica;aroma;Pacific Hallertau;
-Pahto;bittering;;
+Pahto;bittering;HBC 682;
 Palisade;aroma;;Palisades, Pallisade
 Paradigm;aroma;;
 Pekko;bittering;;
@@ -297,7 +296,7 @@ Symphony;bittering;;
 Tahoma;aroma;;
 Taiheke;dual-purpose;;
 Talisman;dual-purpose;;
-Talus;dual-purpose;;
+Talus;dual-purpose;HBC 692;
 Tangerine;aroma;;
 Tardif de Bourgogne;aroma;;
 Target;dual-purpose;;
