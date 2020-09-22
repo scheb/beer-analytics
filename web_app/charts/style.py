@@ -1,9 +1,9 @@
 import abc
-from typing import Optional
+from typing import Optional, Tuple
 
 from recipe_db.analytics import get_style_hop_pairings, get_style_popular_fermentables, get_style_popular_hops, \
     get_style_metric_values, get_style_popularity
-from recipe_db.models import Style, RecipeHop
+from recipe_db.models import Style, RecipeHop, Fermentable
 from web_app.charts.utils import NoDataException
 from web_app.plot import Plot, LinesChart, PreAggregatedBoxPlot, \
     PreAggregateHistogramChart, PreAggregatedPairsBoxPlot
@@ -93,11 +93,30 @@ class StylePopularHopsChart(StyleChart):
 
 class StylePopularFermentablesChart(StyleChart):
     def plot(self) -> Plot:
-        df = get_style_popular_fermentables(self.style)
+        (categories, types) = self.get_filter()
+        df = get_style_popular_fermentables(self.style, categories, types)
         if len(df) == 0:
             raise NoDataException()
 
         return PreAggregatedBoxPlot().plot(df, 'fermentable', 'amount_percent', 'Fermentables by Popularity', '% Amount')
+
+    def get_filter(self) -> Tuple[list, list]:
+        if self.filter_param == 'base':
+            return [], [Fermentable.BASE]
+        if self.filter_param == 'cara-crystal':
+            return [], [Fermentable.CARA_CRYSTAL]
+        if self.filter_param == 'toasted':
+            return [], [Fermentable.TOASTED]
+        if self.filter_param == 'roasted':
+            return [], [Fermentable.ROASTED]
+        if self.filter_param == 'other-grain':
+            return [], [Fermentable.OTHER_MALT, Fermentable.ADJUNCT, Fermentable.UNMALTED_ADJUNCT]
+        if self.filter_param == 'sugar':
+            return [Fermentable.SUGAR], []
+        if self.filter_param == 'fruit':
+            return [Fermentable.FRUIT], []
+
+        return [], []
 
 
 class StyleHopPairingsChart(StyleChart):
