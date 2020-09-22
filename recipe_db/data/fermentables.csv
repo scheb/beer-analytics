@@ -6,53 +6,52 @@ Munich Dark;grain;base;Munich Malt II;Münchner Malz Dunkel, Dark Munich, Münch
 Vienna;grain;base;;Vienna Malt, Wiener Malz
 Pilsner;grain;base;Bohemian Pilsner, Lager Malt;Pilsner Malt, Château Pilsner
 Pilsner Light;grain;base;Light Pilsner, Extra Light Pilsner, Light Lager Malt;Pilsner Malt Light, Pilsner Malt Extra Light, Pilsner Malz Hell, Pilsner Malz Extra Hell, Helles Pilsner, Extra Helles Pilsner, Lager Malt Light
-Extra Pale Ale;grain;base;Extra Pale Malt;
+Extra Pale Ale;grain;base;Extra Pale Malt, Thomas Fawcett Pearl;Pearl
 Pale Ale;grain;base;ESB Malt;Pale Ale Malt, Pale Malt, Ale Malt, Pale 2-Row, Pale 6-Row,
 Mild Ale;grain;base;Mild Malt;Ashbourne Mild, Ashburne Mild,
 Maris Otter;grain;base;;Maris Otter Pale Ale
 Golden Promise;grain;base;;Golden Promise Pale Ale
 Wheat;grain;base;;Weizenmalz, Weizen
 Pale Wheat;grain;base;White Wheat;Helles Weizenmalz, Weizenmalz Hell, Chaetau Wheat Blanc
-Dark Wheat;grain;base;;Dunkles Weizenmalz, Weizenmalz Dunkel, Chateau Wheat Munich Light
-Extra Dark Wheat;grain;base;;Chateau Wheat Munich 25
+Dark Wheat;grain;base;;Dunkles Weizenmalz, Weizenmalz Dunkel, Château Wheat Munich Light
+Extra Dark Wheat;grain;base;;Château Wheat Munich 25
 Stout Malt;grain;base;;
 Smoke Malt;grain;base;;Smoked, Rauchmalz
-Peated Malt;grain;base;Peated Malt;Peat Malt, Chateau Whisky
+Peated Malt;grain;base;Peated Malt;Peat Malt, Château Whisky
 Whisky Malt;grain;base;Distiller's Malt;Whiskey Malt, Distiller Malt
 Green Malt;grain;base;;Grünmalz
-Spelt Malt;grain;other_malt;;Dinkelmalz, Chateau Spelt
-Rye Malt;grain;other_malt;;Rye, Roggenmalz, Chateau Rye
+Spelt Malt;grain;other_malt;;Dinkelmalz, Château Spelt
+Rye Malt;grain;other_malt;;Rye, Roggenmalz, Château Rye
 Emmer Malt;grain;other_malt;;Emmermalz
 Small Spelt Malt;grain;other_malt;;Einkornmalz
-Oat Malt;grain;other_malt;;Hafermalz, Chateau Oat
+Oat Malt;grain;other_malt;;Hafermalz, Château Oat
 Dark Oat Malt;grain;other_malt;;Schwarzhafermalz
 Triticale Malt;grain;other_malt;;Triticalemalz
 Millet Malt;grain;other_malt;;Hirsemalz
-Buckwheat Malt;grain;other_malt;;Buchweizenmalz, Chateau Buckwheat
-CaraFa I;grain;roasted;Roasted Malt I;Cara Fa I, Röstmalz I, Chateau Chocolat
+Buckwheat Malt;grain;other_malt;;Buchweizenmalz, Château Buckwheat
+CaraFa I;grain;roasted;Roasted Malt I;Cara Fa I, Röstmalz I, Château Chocolat
 CaraFa II;grain;roasted;Roasted Malt II;Cara Fa II, Röstmalz II
 CaraFa III;grain;roasted;Roasted Malt III;Cara Fa III, Röstmalz IIII
 CaraFa Special I;grain;roasted;Roasted Malt Special I, Dehusked Carafa I;Cara Fa Special I, Cara Fa Spezial I, Cara Fa Sp. I, Röstmalz Spezial I, Röstmalz Sp. I, De-husked Carafa I, De-husked Caraf I
 CaraFa Special II;grain;roasted;Roasted Malt Special II, Dehusked Carafa II;Cara Fa Special II, Cara Fa Spezial II, Cara Fa Sp. II, Röstmalz Spezial II, Röstmalz Sp. II, De-husked Carafa II, De-husked Caraf II
 CaraFa Special III;grain;roasted;Roasted Malt Special III, Dehusked Carafa III;Cara Fa Special III, Cara Fa Spezial III, Cara Fa Sp. III, Röstmalz Spezial III, Röstmalz Sp. III, De-husked Carafa III, De-husked Caraf III
-Light Coffee Malt;grain;roasted;;Light Coffee, Coffee Light, Chateau Cafe Light
-Coffee Malt;grain;roasted;;Chateau Cafe
+Light Coffee Malt;grain;roasted;;Light Coffee, Coffee Light, Château Cafe Light
+Coffee Malt;grain;roasted;;Château Cafe
 Pale Chocolate;grain;roasted;Chocolate Light, Chocolate Low Colour;Pale Chocolate, Chocolate Light, Chocolate Low Colour, Chocolate Low Color
 Chocolate Malt;grain;roasted;;Chocolate
 Dark Chocolate Malt;grain;roasted;;Chocolate Dark
-Black Malt;grain;roasted;;Black Patent, Chateau Black, Roasted Malt, Roast Malt, Kiln Black, Blackprinz
+Black Malt;grain;roasted;Black Barley, Black Patent, Château Black, Blackprinz;Roasted Malt, Roast Malt, Kiln Black
 Debittered Black Malt;grain;roasted;;De-bittered Black Malt
 Roasted Wheat;grain;roasted;Chocolate Wheat, Midnight Wheat;Wheat Roasted, Roast Wheat, Weizenröstmalz Röstmalz Weizen, Midnight Wheat
 Roasted Rye Malt;grain;roasted;Chocolate Rye;Rye Roasted, Roggenröstmalz, Roast Rye
 Roasted Spelt Malt;grain;roasted;;Spelt Roasted, Dinkelröstmalz, Roast Spelt
-Roasted Barley;grain;roasted;;Barley Roasted, Röstgerste, Röstmalz, Roast Barley
+Roasted Barley;grain;roasted;Black Pearl;Barley Roasted, Röstgerste, Röstmalz, Roast Barley
 Roasted Millet;grain;roasted;;Millet Roasted, Roast Millet
-Black Barley;grain;roasted;;Barley Black
 Brown Malt;grain;roasted;Aroma 150 MD;Brown
-Abbey Malt;grain;toasted;Belgian Malt, Aromatic MD;Chateau Abbey, Aromatic MD
-Biscuit Malt;grain;toasted;Victory Malt;Chateau Biscuit
+Abbey Malt;grain;toasted;Belgian Malt, Aromatic MD;Château Abbey, Aromatic MD
+Biscuit Malt;grain;toasted;Victory Malt;Château Biscuit
 Cookie Malt;grain;toasted;;Cookie
-Aromatic Malt;grain;toasted;;Aromatic, Chateau Arome, Aurora Malt
+Aromatic Malt;grain;toasted;;Aromatic, Château Arome, Aurora Malt
 Amber Malt;grain;toasted;Special Roast, Aroma 100 MD;Amber
 Melanoidin Malt;grain;toasted;Melano, Red X, Toasted Malt;Melanoidin
 Honey Malt;grain;toasted;;
@@ -105,9 +104,9 @@ Caramel/Crystal Malt – 20L;grain;cara_crystal;Crystal Malt 20L, Caramel Malt 2
 Caramel/Crystal Malt – 30L;grain;cara_crystal;Crystal Malt 30L, Caramel Malt 30L, Pale Caramel, Carastan;Pale Crystal, Cara Pale, Pale Cara
 Caramel/Crystal Malt – 40L;grain;cara_crystal;Crystal Malt 40L, Caramel Malt 40L, Light Caramel;Light Crystal, Cara Malt Munich 40L, Light Cara, Cara Light
 Caramel/Crystal Malt – 45L;grain;cara_crystal;Crystal Malt 45L, Caramel Malt 45L;
-Caramel/Crystal Malt – 50L;grain;cara_crystal;Crystal Malt 50L, Caramel Malt 50L;Chateau Cara Gold
+Caramel/Crystal Malt – 50L;grain;cara_crystal;Crystal Malt 50L, Caramel Malt 50L;Château Cara Gold
 Caramel/Crystal Malt – 55L;grain;cara_crystal;Crystal Malt 55L, Caramel Malt 55L;
-Caramel/Crystal Malt – 60L;grain;cara_crystal;Crystal Malt 60L, Caramel Malt 60L, Medium Caramel;Cara Munich 60L, Chateau Crystal
+Caramel/Crystal Malt – 60L;grain;cara_crystal;Crystal Malt 60L, Caramel Malt 60L, Medium Caramel;Cara Munich 60L, Château Crystal
 Caramel/Crystal Malt – 70L;grain;cara_crystal;Crystal Malt 70L, Caramel Malt 70L;
 Caramel/Crystal Malt – 75L;grain;cara_crystal;Crystal Malt 75L, Caramel Malt 75L;
 Caramel/Crystal Malt – 80L;grain;cara_crystal;Crystal Malt 80L, Caramel Malt 80L;
