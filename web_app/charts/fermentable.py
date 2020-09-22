@@ -1,10 +1,11 @@
 import abc
 
 from recipe_db.analytics import get_fermentable_popularity, get_fermentable_common_styles_relative, \
-    get_fermentable_common_styles_absolute, get_fermentable_metric_values, get_fermentable_amount_range
+    get_fermentable_common_styles_absolute, get_fermentable_metric_values, get_fermentable_amount_range, \
+    get_fermentable_pairing_fermentables
 from recipe_db.models import Fermentable
 from web_app.charts.utils import NoDataException
-from web_app.plot import Plot, LinesChart, BarChart, PreAggregateHistogramChart, RangeBoxPlot
+from web_app.plot import Plot, LinesChart, BarChart, PreAggregateHistogramChart, RangeBoxPlot, PreAggregatedPairsBoxPlot
 
 
 class FermentableChart:
@@ -61,6 +62,15 @@ class FermentableCommonStylesRelativeChart(FermentableChart):
         return BarChart().plot(df, 'style_name', 'recipes_percent', 'Style', 'Used in % Recipes')
 
 
+class FermentablePairingsChart(FermentableChart):
+    def plot(self) -> Plot:
+        df = get_fermentable_pairing_fermentables(self.fermentable)
+        if len(df) == 0:
+            raise NoDataException()
+
+        return PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'fermentable', 'amount_percent', None, '% Amount')
+
+
 class FermentableChartFactory:
     CHARTS = dict(
         color_histogram=FermentableColorChart,
@@ -68,6 +78,7 @@ class FermentableChartFactory:
         popularity=FermentablePopularityChart,
         styles_absolute=FermentableCommonStylesAbsoluteChart,
         styles_relative=FermentableCommonStylesRelativeChart,
+        pairings=FermentablePairingsChart,
     )
 
     def get_chart(self, fermentable: Fermentable, chart_type: str) -> Plot:

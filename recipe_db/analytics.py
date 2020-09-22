@@ -42,6 +42,10 @@ def get_hop_names_dict() -> dict:
     return dict(connection.cursor().execute("SELECT id, name FROM recipe_db_hop"))
 
 
+def get_fermentable_names_dict() -> dict:
+    return dict(connection.cursor().execute("SELECT id, name FROM recipe_db_fermentable"))
+
+
 def calculate_style_recipe_count(df, style: Style) -> int:
     style_ids = style.get_ids_including_sub_styles()
     return len(df[df['style_id'].isin(style_ids)])
@@ -558,6 +562,58 @@ def get_fermentable_common_styles_data(fermentable: Fermentable) -> DataFrame:
     '''
 
     return pd.read_sql(query, connection, params=[fermentable.id])
+
+
+def get_fermentable_pairing_fermentables(fermentable: Fermentable) -> DataFrame:
+    fermentable_id = fermentable.id
+
+    # Pre-select only the hops used in recipes using that hop
+    query = '''
+        SELECT recipe_id, kind_id, amount_percent
+        FROM recipe_db_recipefermentable
+        WHERE recipe_id IN (
+            SELECT DISTINCT recipe_id
+            FROM recipe_db_recipefermentable
+            WHERE kind_id = %s
+        )
+    '''
+
+    fermentables = pd.read_sql(query, connection, params=[fermentable_id])
+    return get_fermentable_pairings(fermentables, pair_must_include=fermentable)
+
+
+def get_fermentable_pairings(fermentables: DataFrame, pair_must_include: Fermentable = None) -> DataFrame:
+    # Aggregate amount per recipe
+    fermentables = fermentables.groupby(["recipe_id", "kind_id"]).agg({"amount_percent": "sum"}).reset_index()
+
+    # Create unique pairs per recipe
+    pairs = pd.merge(fermentables, fermentables, on='recipe_id', suffixes=('_1', '_2'))
+    pairs = pairs[pairs['kind_id_1'] < pairs['kind_id_2']]
+    if pair_must_include is not None:
+        pairs = pairs[pairs['kind_id_1'].eq(pair_must_include.id) | pairs['kind_id_2'].eq(pair_must_include.id)]
+    pairs['pairing'] = pairs['kind_id_1'] + " " + pairs['kind_id_2']
+
+    # Filter only the top pairs
+    top_pairings = pairs["pairing"].value_counts()[:8].index.values
+    pairs = pairs[pairs['pairing'].isin(top_pairings)]
+
+    # Merge left and right fermentable into one dataset
+    df1 = pairs[['pairing', 'kind_id_1', 'amount_percent_1']]
+    df1.columns = ['pairing', 'kind_id', 'amount_percent']
+    df2 = pairs[['pairing', 'kind_id_2', 'amount_percent_2']]
+    df2.columns = ['pairing', 'kind_id', 'amount_percent']
+    top_pairings = pd.concat([df1, df2])
+
+    # Calculate boxplot values
+    agg = [lowerfence, q1, 'median', 'mean', q3, upperfence, 'count']
+    aggregated = top_pairings.groupby(['pairing', 'kind_id']).agg({'amount_percent': agg})
+    aggregated = aggregated.reset_index()
+    aggregated = aggregated.sort_values(by=('amount_percent', 'count'), ascending=False)
+
+    # Finally, add fermentable names
+    aggregated['fermentable'] = aggregated['kind_id'].map(get_fermentable_names_dict())
+
+    return aggregated
 
 
 def lowerfence(x):
