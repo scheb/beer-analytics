@@ -3,6 +3,7 @@ from __future__ import annotations
 import codecs
 import datetime
 import re
+from collections import OrderedDict
 from typing import Optional
 
 # noinspection PyUnresolvedReferences
@@ -538,7 +539,7 @@ class RecipeHop(models.Model):
 
     @classmethod
     def get_uses(cls) -> dict:
-        return dict(cls.USE_CHOICES)
+        return OrderedDict(cls.USE_CHOICES)
 
 
 class RecipeYeast(models.Model):

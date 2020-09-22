@@ -4,7 +4,7 @@ import pandas as pd
 from django.db import connection
 from pandas import DataFrame
 
-from recipe_db.models import Style, Hop, Fermentable
+from recipe_db.models import Style, Hop, Fermentable, RecipeHop
 
 METRIC_PRECISION = {
     'default': 1,
@@ -44,6 +44,10 @@ def get_hop_names_dict() -> dict:
 
 def get_fermentable_names_dict() -> dict:
     return dict(connection.cursor().execute("SELECT id, name FROM recipe_db_fermentable"))
+
+
+def get_style_names_dict() -> dict:
+    return dict(connection.cursor().execute("SELECT id, name FROM recipe_db_style"))
 
 
 def calculate_style_recipe_count(df, style: Style) -> int:
@@ -289,6 +293,63 @@ def get_hop_amount_range(hop: Hop) -> DataFrame:
     return aggregated
 
 
+def get_hop_amount_range_per_style(hop: Hop) -> DataFrame:
+    # Pre-select only the hops used in recipes using that hop
+    query = '''
+        SELECT rh.recipe_id, r.style_id, rh.kind_id, rh.amount_percent
+        FROM recipe_db_recipehop AS rh
+        JOIN recipe_db_recipe AS r
+            ON rh.recipe_id = r.uid
+        WHERE rh.kind_id = %s AND r.style_id IS NOT NULL
+    '''
+
+    df = pd.read_sql(query, connection, params=[hop.id])
+
+    # Aggregate amount per recipe
+    amounts = df.groupby(["recipe_id", "style_id", "kind_id"]).agg({"amount_percent": "sum"}).reset_index()
+
+    top_style_ids = amounts["style_id"].value_counts()[:16].index.values
+    top_style_amounts = amounts[amounts['style_id'].isin(top_style_ids)]  # Get only the values of the mostly used fermentable
+
+    agg = [lowerfence, q1, 'median', 'mean', q3, upperfence, 'count']
+    aggregated = top_style_amounts.groupby('style_id').agg({'amount_percent': agg})
+    aggregated = aggregated.reset_index()
+    aggregated = aggregated.sort_values(by=('amount_percent', 'count'), ascending=False)
+
+    # Finally, add style names
+    aggregated['style'] = aggregated['style_id'].map(get_style_names_dict())
+
+    return aggregated
+
+
+def get_hop_amount_range_per_use(hop: Hop) -> DataFrame:
+    # Pre-select only the hops used in recipes using that hop
+    query = '''
+        SELECT rh.recipe_id, rh.use AS use_id, rh.kind_id, rh.amount_percent
+        FROM recipe_db_recipehop AS rh
+        WHERE rh.kind_id = %s AND rh.use IS NOT NULL
+    '''
+
+    df = pd.read_sql(query, connection, params=[hop.id])
+
+    # Aggregate amount per recipe
+    amounts = df.groupby(["recipe_id", "use_id", "kind_id"]).agg({"amount_percent": "sum"}).reset_index()
+
+    top_use_ids = amounts["use_id"].value_counts()[:16].index.values
+    top_use_amounts = amounts[amounts['use_id'].isin(top_use_ids)]  # Get only the values of the mostly used fermentable
+
+    agg = [lowerfence, q1, 'median', 'mean', q3, upperfence]
+    aggregated = top_use_amounts.groupby('use_id').agg({'amount_percent': agg})
+    aggregated = aggregated.reset_index()
+    aggregated['use_id'] = pd.Categorical(aggregated['use_id'], categories=list(RecipeHop.get_uses().keys()), ordered=True)
+    aggregated = aggregated.sort_values(by='use_id')
+
+    # Finally, add use names
+    aggregated['use'] = aggregated['use_id'].map(RecipeHop.get_uses())
+
+    return aggregated
+
+
 def get_hop_use_counts(hop: Hop) -> dict:
     results = connection.cursor().execute('''
         SELECT use, count(DISTINCT recipe_id) AS num_recipes
@@ -486,6 +547,35 @@ def get_fermentable_amount_range(fermentable: Fermentable) -> DataFrame:
     agg = [lowerfence, q1, 'median', 'mean', q3, upperfence]
     aggregated = hop_amounts.groupby('style').agg({'amount_percent': agg})
     aggregated = aggregated.reset_index()
+
+    return aggregated
+
+
+def get_fermentable_amount_range_per_style(fermentable: Fermentable) -> DataFrame:
+    # Pre-select only the fermentables used in recipes using that fermentable
+    query = '''
+        SELECT rf.recipe_id, r.style_id, rf.kind_id, rf.amount_percent
+        FROM recipe_db_recipefermentable AS rf
+        JOIN recipe_db_recipe AS r
+            ON rf.recipe_id = r.uid
+        WHERE rf.kind_id = %s AND r.style_id IS NOT NULL
+    '''
+
+    df = pd.read_sql(query, connection, params=[fermentable.id])
+
+    # Aggregate amount per recipe
+    amounts = df.groupby(["recipe_id", "style_id", "kind_id"]).agg({"amount_percent": "sum"}).reset_index()
+
+    top_style_ids = amounts["style_id"].value_counts()[:16].index.values
+    top_style_amounts = amounts[amounts['style_id'].isin(top_style_ids)]  # Get only the values of the mostly used fermentable
+
+    agg = [lowerfence, q1, 'median', 'mean', q3, upperfence, 'count']
+    aggregated = top_style_amounts.groupby('style_id').agg({'amount_percent': agg})
+    aggregated = aggregated.reset_index()
+    aggregated = aggregated.sort_values(by=('amount_percent', 'count'), ascending=False)
+
+    # Finally, add style names
+    aggregated['style'] = aggregated['style_id'].map(get_style_names_dict())
 
     return aggregated
 
