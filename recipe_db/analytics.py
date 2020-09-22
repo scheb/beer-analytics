@@ -171,6 +171,8 @@ def get_style_popular_hops(style: Style, use_filter: list) -> DataFrame:
         query += " AND rh.use IN ({})".format(','.join('%s' for _ in use_filter))
 
     df = pd.read_sql(query, connection, params=style_ids + use_filter)
+    if len(df) == 0:
+        return df
 
     # Aggregate amount per recipe
     hops = df.groupby(["recipe_id", "kind_id"]).agg({"amount_percent": "sum"}).reset_index()
@@ -208,6 +210,8 @@ def get_style_popular_fermentables(style: Style, category_filter: list, type_fil
         query += " AND f.type IN ({})".format(','.join('%s' for _ in type_filter))
 
     df = pd.read_sql(query, connection, params=style_ids + category_filter + type_filter)
+    if len(df) == 0:
+        return df
 
     # Aggregate amount per recipe
     fermentables = df.groupby(["recipe_id", "fermentable"]).agg({"amount_percent": "sum"}).reset_index()
