@@ -213,12 +213,12 @@ class Fermentable(models.Model):
     EXTRACT = "extract"
 
     # Types
-    BARLEY = "barley"
-    WHEAT = "wheat"
-    OTHER_GRAIN = "other_grain"
+    BASE = "base"
     CARA_CRYSTAL = "cara_crystal"
+    TOASTED = "toasted"
     ROASTED = "roasted"
-    SPECIAL = "special"
+    OTHER_MALT = "other_malt"
+    ADJUNCT = "adjunct"
     UNMALTED_ADJUNCT = "unmalted_adjunct"
 
     CATEGORY_CHOICES = (
@@ -229,13 +229,13 @@ class Fermentable(models.Model):
     )
 
     TYPE_CHOICES = (
-        (BARLEY, "Barley"),
-        (WHEAT, "Wheat"),
-        (CARA_CRYSTAL, "Caramel/Crystal Malt"),
+        (BASE, "Base Malts"),
+        (CARA_CRYSTAL, "Caramel/Crystal Malts"),
+        (TOASTED, "Toasted"),
         (ROASTED, "Roasted"),
-        (SPECIAL, "Special"),
-        (OTHER_GRAIN, "Other Grains"),
-        (UNMALTED_ADJUNCT, "Unmalted Adjunct"),
+        (OTHER_MALT, "Other Malts"),
+        (ADJUNCT, "Adjunct Malts"),
+        (UNMALTED_ADJUNCT, "Unmalted Adjuncts"),
     )
 
     id = models.CharField(max_length=255, primary_key=True)
