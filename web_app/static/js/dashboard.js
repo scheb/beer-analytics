@@ -58,6 +58,8 @@ class ChartMount {
                     self.container.innerHTML = '';
                     let data = JSON.parse(xhr.responseText);
                     Plotly.newPlot(self.container.id, data.data, data.layout, self.chartConfig)
+                } else {
+                    self.container.innerHTML = '<p class="no-data"><span>Failed loading data</span></p>'
                 }
             }
         }
