@@ -47,7 +47,7 @@ window.addEventListener('load', function ()
     display_graph('chart-popularity', '{% url "fermentable_chart" fermentable.id "popularity" "json" %}');
     display_graph('chart-styles-abs', '{% url "fermentable_chart" fermentable.id "styles-absolute" "json" %}');
     display_graph('chart-styles-rel', '{% url "fermentable_chart" fermentable.id "styles-relative" "json" %}');
-    display_graph('chart-style-amount', '{% url "hop_chart" fermentable.id "style-amount" "json" %}');
+    display_graph('chart-style-amount', '{% url "fermentable_chart" fermentable.id "style-amount" "json" %}');
     display_graph('chart-pairings', '{% url "fermentable_chart" fermentable.id "pairings" "json" %}');
 });
 </script>
