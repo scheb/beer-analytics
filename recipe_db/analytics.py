@@ -191,7 +191,7 @@ def get_style_popular_hops(style: Style, use_filter: list) -> DataFrame:
     return aggregated
 
 
-def get_style_popular_fermentables(style: Style) -> DataFrame:
+def get_style_popular_fermentables(style: Style, category_filter: list, type_filter: list) -> DataFrame:
     style_ids = style.get_ids_including_sub_styles()
 
     query = '''
@@ -208,7 +208,12 @@ def get_style_popular_fermentables(style: Style) -> DataFrame:
         WHERE r.style_id IN ({})
         '''.format(','.join('%s' for _ in style_ids))
 
-    fermentables = pd.read_sql(query, connection, params=style_ids)
+    if len(category_filter):
+        query += " AND f.category IN ({})".format(','.join('%s' for _ in category_filter))
+    if len(type_filter):
+        query += " AND f.type IN ({})".format(','.join('%s' for _ in type_filter))
+
+    fermentables = pd.read_sql(query, connection, params=style_ids + category_filter + type_filter)
 
     top_fermentables_ids = fermentables["fermentable"].value_counts()[:10].index.values
     top_fermentables = fermentables[fermentables['fermentable'].isin(top_fermentables_ids)]  # Get only the values of the mostly used fermentable
