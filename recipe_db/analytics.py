@@ -283,7 +283,7 @@ def get_hop_amount_range(hop: Hop) -> DataFrame:
     hop_amounts['style'] = 'All'
 
     agg = [lowerfence, q1, 'median', 'mean', q3, upperfence]
-    aggregated = hop_amounts.groupby('style').agg({'amount_percent': agg}, axis=1)
+    aggregated = hop_amounts.groupby('style').agg({'amount_percent': agg})
     aggregated = aggregated.reset_index()
 
     return aggregated
@@ -484,7 +484,7 @@ def get_fermentable_amount_range(fermentable: Fermentable) -> DataFrame:
     hop_amounts['style'] = 'All'
 
     agg = [lowerfence, q1, 'median', 'mean', q3, upperfence]
-    aggregated = hop_amounts.groupby('style').agg({'amount_percent': agg}, axis=1)
+    aggregated = hop_amounts.groupby('style').agg({'amount_percent': agg})
     aggregated = aggregated.reset_index()
 
     return aggregated
