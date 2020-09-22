@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>{% load web_app %}
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+        xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "home" %}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.1</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "about" %}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "legal" %}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.0</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "style_overview" %}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "hop_overview" %}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "fermentable_overview" %}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "yeast_overview" %}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.1</priority>
+    </url>
+    {% for style in styles %}
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{{ style.url }}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>{{ style|priority }}</priority>
+    </url>
+    {% endfor %}
+    {% for hop in hops %}
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{{ hop.url }}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>{{ hop|priority }}</priority>
+    </url>
+    {% endfor %}
+    {% for fermentable in fermentables %}
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{{ fermentable.url }}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>{{ fermentable|priority }}</priority>
+    </url>
+    {% endfor %}
+</urlset>

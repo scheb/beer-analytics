@@ -20,6 +20,7 @@ urlpatterns = [
     path('', views.misc.home, name='home'),
     path('legal', misc.legal, name='legal'),
     path('about', misc.about, name='about'),
+    path('sitemap.xml', misc.sitemap, name='sitemap'),
 
     path('styles/', style.overview, name='style_overview'),
     path('styles/<str:category_slug>/', style.category, name='style_category'),
