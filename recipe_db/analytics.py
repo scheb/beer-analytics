@@ -20,6 +20,24 @@ def load_all_recipes():
     return pd.read_sql('SELECT * FROM recipe_db_recipe', connection)
 
 
+def get_ranked_styles() -> dict:
+    df = pd.read_sql_query('SELECT id, recipes_count FROM recipe_db_style', connection)
+    df['percentile'] = df['recipes_count'].rank(pct=True)
+    return df.set_index('id').to_dict('index')
+
+
+def get_ranked_hops() -> dict:
+    df = pd.read_sql_query('SELECT id, recipes_count FROM recipe_db_hop', connection)
+    df['percentile'] = df['recipes_count'].rank(pct=True)
+    return df.set_index('id').to_dict('index')
+
+
+def get_ranked_fermentables() -> dict:
+    df = pd.read_sql_query('SELECT id, recipes_count FROM recipe_db_fermentable', connection)
+    df['percentile'] = df['recipes_count'].rank(pct=True)
+    return df.set_index('id').to_dict('index')
+
+
 def get_hop_names_dict() -> dict:
     return dict(connection.cursor().execute("SELECT id, name FROM recipe_db_hop"))
 
