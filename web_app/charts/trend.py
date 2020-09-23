@@ -22,7 +22,7 @@ class StylesPopularityChart(ChartDefinition, ABC):
 
 
 class TrendingStylesChart(StylesPopularityChart):
-    IDS = ["02A", "12C", "23A"]
+    IDS = ["02A", "12C"]
 
     def get_chart_title(self) -> str:
         return "Trending beer styles"
