@@ -21,7 +21,7 @@ def startswith(text, starts):
 
 
 @register.filter('priority')
-def startswith(item: object):
+def priority(item: object):
     if isinstance(item, Style):
         return get_priority(item.id, STYLES_RANKED)
 
