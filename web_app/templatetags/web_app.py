@@ -54,6 +54,12 @@ def chart_image(item: object, chart_type):
     return '<img src="%s" alt="%s" class="chart-image"/>' % (url, alt_text)
 
 
+@register.filter('chart_image_url', is_safe=True)
+def chart_image_url(item: object, chart_type):
+    return chart_url(item, chart_type, 'svg')
+
+
+@register.filter('chart_image_alt')
 def chart_image_alt(item: object, chart_type):
     if isinstance(item, Style):
         return StyleChartFactory.get_chart(item, chart_type).get_image_alt()
@@ -72,14 +78,14 @@ def chart_url(item: object, chart_type: str, format: str):
         if item.is_category:
             return reverse('style_category_chart', kwargs={
                 'category_slug': item.category.slug,
-                'chart_type': chart_type,
+                'chart_type': chart_type.replace('_', '-'),
                 'format': format
             })
         else:
             return reverse('style_chart', kwargs={
                 'category_slug': item.category.slug,
                 'slug': item.slug,
-                'chart_type': chart_type,
+                'chart_type': chart_type.replace('_', '-'),
                 'format': format
             })
 
@@ -87,7 +93,7 @@ def chart_url(item: object, chart_type: str, format: str):
         return reverse('hop_chart', kwargs={
             'category': item.use,
             'slug': item.id,
-            'chart_type': chart_type,
+            'chart_type': chart_type.replace('_', '-'),
             'format': format
         })
 
@@ -95,7 +101,7 @@ def chart_url(item: object, chart_type: str, format: str):
         return reverse('fermentable_chart', kwargs={
             'category': item.category,
             'slug': item.id,
-            'chart_type': chart_type,
+            'chart_type': chart_type.replace('_', '-'),
             'format': format
         })
 

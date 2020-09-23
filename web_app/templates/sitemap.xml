@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>{% load web_app %}
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
-        xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+        xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
     <url>
         <loc>{{ request.scheme }}://{{ request.get_host }}{% url "home" %}</loc>
         <changefreq>weekly</changefreq>
@@ -42,6 +43,12 @@
         <loc>{{ request.scheme }}://{{ request.get_host }}{{ style|url }}</loc>
         <changefreq>weekly</changefreq>
         <priority>{{ style|priority }}</priority>
+        {% if style.recipes_count > 100 %}{% for chart_type in style_chart_types %}{# To avoid charts not having enough data #}
+        <image:image>
+            <image:loc>{{ request.scheme }}://{{ request.get_host }}{{ style|chart_image_url:chart_type }}</image:loc>
+            <image:title>{{ style|chart_image_alt:chart_type }}</image:title>
+        </image:image>
+        {% endfor %}{% endif %}
     </url>
     {% endfor %}
     {% for hop in hops %}
@@ -49,6 +56,12 @@
         <loc>{{ request.scheme }}://{{ request.get_host }}{{ hop|url }}</loc>
         <changefreq>weekly</changefreq>
         <priority>{{ hop|priority }}</priority>
+        {% if hop.recipes_count > 100 %}{% for chart_type in hop_chart_types %}{# To avoid charts not having enough data #}
+        <image:image>
+            <image:loc>{{ request.scheme }}://{{ request.get_host }}{{ hop|chart_image_url:chart_type }}</image:loc>
+            <image:title>{{ hop|chart_image_alt:chart_type }}</image:title>
+        </image:image>
+        {% endfor %}{% endif %}
     </url>
     {% endfor %}
     {% for fermentable in fermentables %}
@@ -56,6 +69,12 @@
         <loc>{{ request.scheme }}://{{ request.get_host }}{{ fermentable|url }}</loc>
         <changefreq>weekly</changefreq>
         <priority>{{ fermentable|priority }}</priority>
+        {% if fermentable.recipes_count > 100 %}{% for chart_type in fermentable_chart_types %}{# To avoid charts not having enough data #}
+        <image:image>
+            <image:loc>{{ request.scheme }}://{{ request.get_host }}{{ fermentable|chart_image_url:chart_type }}</image:loc>
+            <image:title>{{ fermentable|chart_image_alt:chart_type }}</image:title>
+        </image:image>
+        {% endfor %}{% endif %}
     </url>
     {% endfor %}
 </urlset>
