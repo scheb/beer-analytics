@@ -42,6 +42,21 @@ def url(item: object):
     return None
 
 
+@register.filter('hop')
+def hop(id: str):
+    return Hop.objects.get(pk=id)
+
+
+@register.filter('fermentable')
+def fermentable(id: str):
+    return Fermentable.objects.get(pk=id)
+
+
+@register.filter('style')
+def style(id: str):
+    return Style.objects.get(pk=id)
+
+
 @register.filter('chart_js')
 def chart_js(item: object, chart_type):
     return chart_url(item, chart_type, 'json')
