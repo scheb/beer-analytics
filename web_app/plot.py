@@ -25,20 +25,6 @@ COLORS_PRISM = px.colors.qualitative.Prism
 COLOR_SEQUENTIAL = px.colors.sequential.Sunsetdark
 
 
-class Plot:
-    def __init__(self, figure: Figure) -> None:
-        self.figure = figure
-
-    def render_json(self) -> str:
-        return self.figure.to_json()
-
-    def render_png(self) -> bytes:
-        return self.figure.to_image(format="png")
-
-    def render_svg(self) -> bytes:
-        return self.figure.to_image(format="svg")
-
-
 class LinesChart:
     def plot(
         self,
@@ -49,7 +35,7 @@ class LinesChart:
         x_title: Optional[str] = None,
         y_title: Optional[str] = None,
         legend_title: str = None
-    ) -> Plot:
+    ) -> Figure:
         fig = px.line(df, x=x_field, y=y_field, color=category_field, color_discrete_sequence=COLORS_DISTINCT)
         fig.update_traces(line=dict(width=4))
 
@@ -72,11 +58,11 @@ class LinesChart:
             )
         )
 
-        return Plot(fig)
+        return fig
 
 
 class CompactHistogramChart:
-    def plot(self, df: DataFrame, x_field: str, count_field: str) -> Plot:
+    def plot(self, df: DataFrame, x_field: str, count_field: str) -> Figure:
         fig = px.histogram(df, x=x_field, y=count_field, histfunc="sum", nbins=30)
 
         fig.update_layout(
@@ -91,7 +77,7 @@ class CompactHistogramChart:
             ),
         )
 
-        return Plot(fig)
+        return fig
 
 
 class BoxPlot:
@@ -102,7 +88,7 @@ class BoxPlot:
         value_field: str,
         x_title: Optional[str] = None,
         y_title: Optional[str] = None,
-    ) -> Plot:
+    ) -> Figure:
         fig = px.box(df, x=type_field, y=value_field, points="all", color=type_field, color_discrete_sequence=COLORS_PRISM)
         fig.update_traces(boxpoints="outliers", jitter=0.3, hoveron="boxes", marker=dict(opacity=0.3, size=4))
         fig.update_layout(
@@ -124,7 +110,7 @@ class BoxPlot:
         fig.update_xaxes(title_text=x_title)
         fig.update_yaxes(title_text=y_title)
 
-        return Plot(fig)
+        return fig
 
 
 class PreAggregatedBoxPlot:
@@ -135,7 +121,7 @@ class PreAggregatedBoxPlot:
         value_field: str,
         x_title: Optional[str] = None,
         y_title: Optional[str] = None,
-    ) -> Plot:
+    ) -> Figure:
         fig = make_subplots()
         column = 0
         for trace_name in df[type_field].values.tolist():
@@ -174,7 +160,7 @@ class PreAggregatedBoxPlot:
         fig.update_xaxes(title_text=x_title)
         fig.update_yaxes(title_text=y_title)
 
-        return Plot(fig)
+        return fig
 
 
 class PreAggregatedPairsBoxPlot:
@@ -186,7 +172,7 @@ class PreAggregatedPairsBoxPlot:
         value_field: str,
         x_title: Optional[str] = None,
         y_title: Optional[str] = None,
-    ) -> Plot:
+    ) -> Figure:
         pairings = df[pair_field].unique()
         num_pairings = len(pairings)
 
@@ -234,7 +220,7 @@ class PreAggregatedPairsBoxPlot:
         fig.update_yaxes(fixedrange=True, range=y_range, showticklabels=False)
         fig.update_yaxes(title_text=y_title, showticklabels=True, row=1, col=1)
 
-        return Plot(fig)
+        return fig
 
 
 class RangeBoxPlot:
@@ -242,7 +228,7 @@ class RangeBoxPlot:
         self,
         df: DataFrame,
         value_field: str,
-    ) -> Plot:
+    ) -> Figure:
         fig = make_subplots()
         trace = go.Box(
             x=[[1]],
@@ -270,7 +256,7 @@ class RangeBoxPlot:
             )
         )
 
-        return Plot(fig)
+        return fig
 
 
 class BarChart:
@@ -284,7 +270,7 @@ class BarChart:
         value_field: str,
         x_title: Optional[str] = None,
         y_title: Optional[str] = None,
-    ) -> Plot:
+    ) -> Figure:
         fig = px.bar(
             df,
             x=df[type_field],
@@ -315,7 +301,7 @@ class BarChart:
         fig.update_xaxes(title_text=x_title)
         fig.update_yaxes(title_text=y_title)
 
-        return Plot(fig)
+        return fig
 
 
 class PreAggregateHistogramChart:
@@ -326,7 +312,7 @@ class PreAggregateHistogramChart:
         value_field: str,
         x_title: Optional[str] = None,
         y_title: Optional[str] = None,
-    ) -> Plot:
+    ) -> Figure:
         fig = px.bar(
             df,
             x=df[type_field],
@@ -359,4 +345,4 @@ class PreAggregateHistogramChart:
         fig.update_xaxes(title_text=x_title)
         fig.update_yaxes(title_text=y_title)
 
-        return Plot(fig)
+        return fig

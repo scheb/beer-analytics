@@ -4,8 +4,8 @@ from recipe_db.analytics import get_hop_popularity, get_hop_common_styles_relati
     get_hop_common_styles_absolute, get_hop_metric_values, get_hop_amount_range, get_hop_usage, \
     get_hop_amount_range_per_style, get_hop_amount_range_per_use
 from recipe_db.models import Hop
-from web_app.charts.utils import NoDataException
-from web_app.plot import Plot, LinesChart, BarChart, PreAggregatedPairsBoxPlot, PreAggregateHistogramChart, \
+from web_app.charts.utils import NoDataException, Chart
+from web_app.plot import LinesChart, BarChart, PreAggregatedPairsBoxPlot, PreAggregateHistogramChart, \
     RangeBoxPlot, PreAggregatedBoxPlot
 
 
@@ -19,84 +19,93 @@ class HopChart:
 
 
 class HopPopularityChart(HopChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_hop_popularity(self.hop)
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        return LinesChart().plot(df, 'month', 'recipes_percent', 'hop', 'Month/Year', '% Recipes')
+        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'hop', 'Month/Year', '% Recipes')
+        return Chart(figure)
 
 
 class HopAlphaChart(HopChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_hop_metric_values(self.hop, 'alpha')
         if len(df) == 0:
             raise NoDataException()
 
-        return PreAggregateHistogramChart().plot(df, 'alpha', 'count')
+        figure = PreAggregateHistogramChart().plot(df, 'alpha', 'count')
+        return Chart(figure, 300, 200)
 
 
 class HopAmountRangeChart(HopChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_hop_amount_range(self.hop)
         if len(df) == 0:
             raise NoDataException()
 
-        return RangeBoxPlot().plot(df, 'amount_percent')
+        figure = RangeBoxPlot().plot(df, 'amount_percent')
+        return Chart(figure, 300, 200)
 
 
 class HopUsageChart(HopChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_hop_usage(self.hop)
         if len(df) == 0:
             raise NoDataException()
 
-        return BarChart(add_margin=False).plot(df, 'use', 'recipes', None, None)
+        figure = BarChart(add_margin=False).plot(df, 'use', 'recipes', None, None)
+        return Chart(figure, 300, 200)
 
 
 class HopCommonStylesAbsoluteChart(HopChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_hop_common_styles_absolute(self.hop)
         if len(df) == 0:
             raise NoDataException()
 
-        return BarChart().plot(df, 'style_name', 'recipes', 'Style', 'Number Recipes')
+        figure = BarChart().plot(df, 'style_name', 'recipes', 'Style', 'Number Recipes')
+        return Chart(figure)
 
 
 class HopCommonStylesRelativeChart(HopChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_hop_common_styles_relative(self.hop)
         if len(df) == 0:
             raise NoDataException()
 
-        return BarChart().plot(df, 'style_name', 'recipes_percent', 'Style', 'Used in % Recipes')
+        figure = BarChart().plot(df, 'style_name', 'recipes_percent', 'Style', 'Used in % Recipes')
+        return Chart(figure)
 
 
 class HopStyleAmountChart(HopChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_hop_amount_range_per_style(self.hop)
         if len(df) == 0:
             raise NoDataException()
 
-        return PreAggregatedBoxPlot().plot(df, 'style', 'amount_percent', 'Style', '% Amount')
+        figure = PreAggregatedBoxPlot().plot(df, 'style', 'amount_percent', 'Style', '% Amount')
+        return Chart(figure)
 
 
 class HopUsageAmountChart(HopChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_hop_amount_range_per_use(self.hop)
         if len(df) == 0:
             raise NoDataException()
 
-        return PreAggregatedBoxPlot().plot(df, 'use', 'amount_percent', 'Usage', '% Amount')
+        figure = PreAggregatedBoxPlot().plot(df, 'use', 'amount_percent', 'Usage', '% Amount')
+        return Chart(figure)
 
 
 class HopPairingsChart(HopChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_hop_pairing_hops(self.hop)
         if len(df) == 0:
             raise NoDataException()
 
-        return PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% Amount')
+        figure = PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% Amount')
+        return Chart(figure)
 
 
 class HopChartFactory:
@@ -112,7 +121,7 @@ class HopChartFactory:
         pairings=HopPairingsChart,
     )
 
-    def get_chart(self, hop: Hop, chart_type: str) -> Plot:
+    def get_chart(self, hop: Hop, chart_type: str) -> Chart:
         chart_type = self.normalize_type(chart_type)
         chart = self.CHARTS[chart_type]
         return chart(hop).plot()
