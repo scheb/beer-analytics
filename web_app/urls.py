@@ -24,7 +24,7 @@ urlpatterns = [
 
     path('styles/', style.overview, name='style_overview'),
     path('styles/<str:category_slug>/', style.category, name='style_category'),
-    path('styles/<str:category_slug>/charts/<str:chart_type>.<cformat:format>', style.chart, name='style_category_chart'),
+    path('styles/<str:category_slug>/charts/<str:chart_type>.<cformat:format>', style.category_chart, name='style_category_chart'),
     path('styles/<str:category_slug>/<str:slug>/', style.detail, name='style_detail'),
     path('styles/<str:category_slug>/<str:slug>/charts/<str:chart_type>.<cformat:format>', style.chart, name='style_chart'),
 

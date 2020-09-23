@@ -49,9 +49,9 @@ def plot_image(item: object, chart_type):
 
 
 def do_plot(item: object, chart_type: str, format: str):
-    if isinstance(item, Style) and not item.is_category:
+    if isinstance(item, Style):
         if item.is_category:
-            return reverse('style_chart', kwargs={
+            return reverse('style_category_chart', kwargs={
                 'category_slug': item.category.slug,
                 'chart_type': chart_type,
                 'format': format
