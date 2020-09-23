@@ -116,27 +116,55 @@ a.nav-link:hover .nav-icon {
  */
 
 .chart-s {
+    min-height: 8rem;
+}
+
+.chart-s .chart-loading {
     height: 8rem;
 }
 
+.chart-s .chart-image {
+    max-width: 100%;
+}
+
 .chart-m {
+    min-height: 14rem;
+}
+
+.chart-m .chart-loading {
     height: 14rem;
 }
 
 .chart-l {
+    min-height: 20rem;
+}
+
+.chart-l .chart-loading {
     height: 20rem;
 }
 
 @media (min-width: 768px) {
     .chart-s {
+        min-height: 10rem;
+    }
+
+    .chart-s .chart-loading {
         height: 10rem;
     }
 
     .chart-m {
+        min-height: 20rem;
+    }
+
+    .chart-m .chart-loading {
         height: 20rem;
     }
 
     .chart-l {
+        min-height: 30rem;
+    }
+
+    .chart-l .chart-loading {
         height: 30rem;
     }
 }
@@ -201,7 +229,6 @@ a.nav-link:hover .nav-icon {
 .chart-loading {
     display: flex;
     width: 100%;
-    height: 100%;
     justify-content: center;
     align-items: center;
 }

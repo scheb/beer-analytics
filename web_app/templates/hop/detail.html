@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load web_app %}
 
 {% block title %}{{ hop.name }} ‹ Hops{% endblock %}
 
@@ -22,37 +23,64 @@
     {% include './metrics.html' %}
 
     <h2>Popularity Over Time</h2>
-    <div id="chart-popularity" class="chart-m"></div>
+    <div id="chart-popularity" class="chart-m">
+        <noscript>
+            <img src="{{ hop|plot_image:"popularity" }}" alt="Popularity of the {{ hop.name }} hop over time" class="chart-image"/>
+        </noscript>
+    </div>
 
-    <h2>Common Styles</h2>
-    <h3>Absolute Number of Recipes</h3>
-    <div id="chart-styles-abs" class="chart-l"></div>
-    <h3>Relative Percent of Recipes</h3>
-    <div id="chart-styles-rel" class="chart-l"></div>
+    <h2>Typical Styles</h2>
+    <h3>By Number of Recipes</h3>
+    <div id="chart-styles-abs" class="chart-l">
+        <noscript>
+            <img src="{{ hop|plot_image:"typical-styles-absolute" }}" alt="Typical beer styles using {{ hop.name }} hops (by number of recipes)" class="chart-image"/>
+        </noscript>
+    </div>
+    <h3>By Percent of Recipes</h3>
+    <div id="chart-styles-rel" class="chart-l">
+        <noscript>
+            <img src="{{ hop|plot_image:"typical-styles-relative" }}" alt="Typical beer styles using {{ hop.name }} hops (by percent of recipes)" class="chart-image"/>
+        </noscript>
+    </div>
 
     <h2>Amount per Style</h2>
-    <div id="chart-style-amount" class="chart-l"></div>
+    <div id="chart-style-amount" class="chart-l">
+        <noscript>
+            <img src="{{ hop|plot_image:"amount-used-per-style" }}" alt="Amount of {{ hop.name }} hops used per beer style" class="chart-image"/>
+        </noscript>
+    </div>
 
     <h2>Amount per Use</h2>
-    <div id="chart-usage-amount" class="chart-l"></div>
+    <div id="chart-usage-amount" class="chart-l">
+        <noscript>
+            <img src="{{ hop|plot_image:"amount-used-per-use" }}" alt="Amount of {{ hop.name }} hops per on usage type" class="chart-image"/>
+        </noscript>
+    </div>
 
     <h2>Common Pairings</h2>
-    <div id="chart-pairings" class="chart-l"></div>
+    <div id="chart-hop-pairings" class="chart-l">
+        <noscript>
+            <img src="{{ hop|plot_image:"hop-pairings" }}" alt="Hops typically paired with {{ hop.name }} hops" class="chart-image"/>
+        </noscript>
+    </div>
 {% endblock %}
 
 {% block script %}
 <script>
 window.addEventListener('load', function ()
 {
-    display_graph('chart-metric-alpha', '{% url "hop_chart" hop.id "alpha-histogram" "json" %}', {displayModeBar: false});
-    display_graph('chart-metric-amount-percent', '{% url "hop_chart" hop.id "amount-percent-range" "json" %}', {displayModeBar: false});
-    display_graph('chart-metric-usage', '{% url "hop_chart" hop.id "usage" "json" %}', {displayModeBar: false});
-    display_graph('chart-popularity', '{% url "hop_chart" hop.id "popularity" "json" %}');
-    display_graph('chart-styles-abs', '{% url "hop_chart" hop.id "styles-absolute" "json" %}');
-    display_graph('chart-styles-rel', '{% url "hop_chart" hop.id "styles-relative" "json" %}');
-    display_graph('chart-style-amount', '{% url "hop_chart" hop.id "style-amount" "json" %}');
-    display_graph('chart-usage-amount', '{% url "hop_chart" hop.id "usage-amount" "json" %}');
-    display_graph('chart-pairings', '{% url "hop_chart" hop.id "pairings" "json" %}');
+    // Metrics
+    display_graph('chart-metric-alpha', '{{ hop|plot:"alpha-histogram" }}', {displayModeBar: false});
+    display_graph('chart-metric-amount-percent', '{{ hop|plot:"amount-percent-range" }}', {displayModeBar: false});
+    display_graph('chart-metric-usage', '{{ hop|plot:"usage-types" }}', {displayModeBar: false});
+
+    // Charts
+    display_graph('chart-popularity', '{{ hop|plot:"popularity" }}');
+    display_graph('chart-styles-abs', '{{ hop|plot:"typical-styles-absolute" }}');
+    display_graph('chart-styles-rel', '{{ hop|plot:"typical-styles-relative" }}');
+    display_graph('chart-style-amount', '{{ hop|plot:"amount-used-per-style" }}');
+    display_graph('chart-usage-amount', '{{ hop|plot:"amount-used-per-use" }}');
+    display_graph('chart-hop-pairings', '{{ hop|plot:"hop-pairings" }}');
 });
 </script>
 {% endblock %}

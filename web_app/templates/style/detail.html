@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load web_app %}
 
 {% block title %}{{ style.name }} ‹ Beer Styles{% endblock %}
 
@@ -42,7 +43,11 @@
     {% include './metrics.html' %}
 
     <h2>Popularity Over Time</h2>
-    <div id="chart-popularity" class="chart-m"></div>
+    <div id="chart-popularity" class="chart-m">
+        <noscript>
+            <img src="{{ style|plot_image:"popularity" }}" alt="Popularity of the {{ style.name }} beer style over time" class="chart-image"/>
+        </noscript>
+    </div>
 
     <h2>Most Used Fermentables</h2>
     <nav id="chart-fermentables-tabs">
@@ -58,7 +63,11 @@
             <li class="nav-item"><a class="nav-link px-2 py-1" data-toggle="tab" role="tab" data-filter="fruit" href="#chart-fermentables-fruit">Fruit</a></li>
         </ul>
     </nav>
-    <div id="chart-fermentables" class="chart-l"></div>
+    <div id="chart-fermentables" class="chart-l">
+        <noscript>
+            <img src="{{ style|plot_image:"popular-fermentables" }}" alt="Popular fermentables/malts used in the {{ style.name }} beer style" class="chart-image"/>
+        </noscript>
+    </div>
 
     <h2>Most Used Hops</h2>
     <nav id="chart-hops-tabs">
@@ -70,25 +79,36 @@
             <li class="nav-item"><a class="nav-link px-2 py-1" data-toggle="tab" role="tab" data-filter="dry-hop" href="#chart-hops-dry-hop">Dry-Hop</a></li>
         </ul>
     </nav>
-    <div id="chart-hops" class="chart-l"></div>
+    <div id="chart-hops" class="chart-l">
+        <noscript>
+            <img src="{{ style|plot_image:"popular-hops" }}" alt="Popular hops used in the {{ style.name }} beer style" class="chart-image"/>
+        </noscript>
+    </div>
 
     <h2>Common Hop Pairings</h2>
-    <div id="chart-hop-pairings" class="chart-l"></div>
+    <div id="chart-hop-pairings" class="chart-l">
+        <noscript>
+            <img src="{{ style|plot_image:"hop-pairings" }}" alt="Popular hop pairings used in the {{ style.name }} beer style" class="chart-image"/>
+        </noscript>
+    </div>
 {% endblock %}
 
 {% block script %}
 <script>
 window.addEventListener('load', function ()
 {
-    display_graph('chart-spec-abv', '{% url "style_chart" style.id "abv-histogram" "json" %}', {displayModeBar: false});
-    display_graph('chart-spec-ibu', '{% url "style_chart" style.id "ibu-histogram" "json" %}', {displayModeBar: false});
-    display_graph('chart-spec-color', '{% url "style_chart" style.id "color-histogram" "json" %}', {displayModeBar: false});
-    display_graph('chart-spec-og', '{% url "style_chart" style.id "og-histogram" "json" %}', {displayModeBar: false});
-    display_graph('chart-spec-fg', '{% url "style_chart" style.id "fg-histogram" "json" %}', {displayModeBar: false});
-    display_graph('chart-popularity', '{% url "style_chart" style.id "popularity" "json" %}');
-    display_graph_with_navigation('chart-fermentables', 'chart-fermentables-tabs', '{% url "style_chart" style.id "popular-fermentables" "json" %}');
-    display_graph_with_navigation('chart-hops', 'chart-hops-tabs', '{% url "style_chart" style.id "popular-hops" "json" %}');
-    display_graph('chart-hop-pairings', '{% url "style_chart" style.id "hop-pairings" "json" %}');
+    // Metrics
+    display_graph('chart-spec-abv', '{{ style|plot:"abv-histogram" }}', {displayModeBar: false});
+    display_graph('chart-spec-ibu', '{{ style|plot:"ibu-histogram" }}', {displayModeBar: false});
+    display_graph('chart-spec-color', '{{ style|plot:"color-histogram" }}', {displayModeBar: false});
+    display_graph('chart-spec-og', '{{ style|plot:"og-histogram" }}', {displayModeBar: false});
+    display_graph('chart-spec-fg', '{{ style|plot:"fg-histogram" }}', {displayModeBar: false});
+
+    // Charts
+    display_graph('chart-popularity', '{{ style|plot:"popularity" }}');
+    display_graph_with_navigation('chart-fermentables', 'chart-fermentables-tabs', '{{ style|plot:"popular-fermentables" }}');
+    display_graph_with_navigation('chart-hops', 'chart-hops-tabs', '{{ style|plot:"popular-hops" }}');
+    display_graph('chart-hop-pairings', '{{ style|plot:"hop-pairings" }}');
 });
 </script>
 {% endblock %}

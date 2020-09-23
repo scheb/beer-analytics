@@ -26,7 +26,7 @@ class StylePopularityChart(StyleChart):
             raise NoDataException()
 
         figure = LinesChart().plot(df, 'month', 'recipes_percent', 'style', 'Month/Year', '% Recipes')
-        return Chart(figure)
+        return Chart(figure, height=Chart.DEFAULT_HEIGHT*0.66, title="Popularity of <b>%s</b> over time" % self.style.name)
 
 
 class StyleAbvChart(StyleChart):
@@ -36,7 +36,7 @@ class StyleAbvChart(StyleChart):
             raise NoDataException()
 
         figure = PreAggregateHistogramChart().plot(df, 'abv', 'count')
-        return Chart(figure, 300, 200)
+        return Chart(figure, 500, 350, title="Alcohol per Volume of <b>%s</b>" % self.style.name)
 
 
 class StyleIbuChart(StyleChart):
@@ -46,7 +46,7 @@ class StyleIbuChart(StyleChart):
             raise NoDataException()
 
         figure = PreAggregateHistogramChart().plot(df, 'ibu', 'count')
-        return Chart(figure, 300, 200)
+        return Chart(figure, 500, 350, title="Bitterness of <b>%s</b>" % self.style.name)
 
 
 class StyleColorChart(StyleChart):
@@ -56,7 +56,7 @@ class StyleColorChart(StyleChart):
             raise NoDataException()
 
         figure = PreAggregateHistogramChart().plot(df, 'srm', 'count')
-        return Chart(figure, 300, 200)
+        return Chart(figure, 500, 350, title="Color of <b>%s</b>" % self.style.name)
 
 
 class StyleOGChart(StyleChart):
@@ -66,7 +66,7 @@ class StyleOGChart(StyleChart):
             raise NoDataException()
 
         figure = PreAggregateHistogramChart().plot(df, 'og', 'count')
-        return Chart(figure, 300, 200)
+        return Chart(figure, 500, 350, title="Original Gravity of <b>%s</b>" % self.style.name)
 
 
 class StyleFGChart(StyleChart):
@@ -76,7 +76,7 @@ class StyleFGChart(StyleChart):
             raise NoDataException()
 
         figure = PreAggregateHistogramChart().plot(df, 'fg', 'count')
-        return Chart(figure, 300, 200)
+        return Chart(figure, 500, 350, title="Final Gravity of <b>%s</b>" % self.style.name)
 
 
 class StylePopularHopsChart(StyleChart):
@@ -86,7 +86,7 @@ class StylePopularHopsChart(StyleChart):
             raise NoDataException()
 
         figure = PreAggregatedBoxPlot().plot(df, 'hop', 'amount_percent', 'Hops by Popularity', '% Amount')
-        return Chart(figure)
+        return Chart(figure, title="Popular hops used in <b>%s</b>" % self.style.name)
 
     def get_use_filter(self):
         if self.filter_param == 'bittering':
@@ -106,7 +106,7 @@ class StylePopularFermentablesChart(StyleChart):
             raise NoDataException()
 
         figure = PreAggregatedBoxPlot().plot(df, 'fermentable', 'amount_percent', 'Fermentables by Popularity', '% Amount')
-        return Chart(figure)
+        return Chart(figure, title="Popular fermentables/malts used in <b>%s</b>" % self.style.name)
 
     def get_filter(self) -> Tuple[list, list]:
         if self.filter_param == 'base':
@@ -134,17 +134,17 @@ class StyleHopPairingsChart(StyleChart):
             raise NoDataException()
 
         figure = PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% Amount')
-        return Chart(figure)
+        return Chart(figure, title="Popular hop pairings used in <b>%s</b>" % self.style.name)
 
 
 class StyleChartFactory:
     CHARTS = dict(
-        popularity=StylePopularityChart,
         abv_histogram=StyleAbvChart,
         ibu_histogram=StyleIbuChart,
-        color_histogram=StyleColorChart,
-        og_histogram=StyleOGChart,
-        fg_histogram=StyleFGChart,
+        color_srm_histogram=StyleColorChart,
+        original_gravity_histogram=StyleOGChart,
+        final_gravity_histogram=StyleFGChart,
+        popularity=StylePopularityChart,
         popular_hops=StylePopularHopsChart,
         popular_fermentables=StylePopularFermentablesChart,
         hop_pairings=StyleHopPairingsChart,

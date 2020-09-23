@@ -10,7 +10,6 @@ from typing import Optional
 import translitcodec
 from django.core.validators import MaxValueValidator, BaseValidator, MinValueValidator
 from django.db import models
-from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from recipe_db.formulas import ebc_to_srm, srm_to_ebc, plato_to_gravity, gravity_to_plato, abv_to_to_final_plato, \
@@ -170,13 +169,6 @@ class Style(models.Model):
         return self.category.slug
 
     @property
-    def url(self):
-        if self.is_category:
-            return reverse('style_category', kwargs={'category_slug': self.slug})
-        else:
-            return reverse('style_detail', kwargs={'category_slug': self.category.slug, 'slug': self.slug})
-
-    @property
     def alt_names_list(self):
         if self.alt_names is not None:
             items = self.alt_names.split(',')
@@ -293,10 +285,6 @@ class Fermentable(models.Model):
             items = self.alt_names.split(',')
             return list(map(lambda x: x.strip(), items))
 
-    @property
-    def url(self) -> str:
-        return reverse('fermentable_detail', kwargs={'category': self.category, 'slug': self.id})
-
 
 # http://www.hopslist.com/hops/
 class Hop(models.Model):
@@ -375,10 +363,6 @@ class Hop(models.Model):
                 use_counts.append({"use_id": use, "use": use_names[use], "recipes": value})
 
         return use_counts
-
-    @property
-    def url(self) -> str:
-        return reverse('hop_detail', kwargs={'category': self.use, 'slug': self.id})
 
 
 class Yeast(models.Model):

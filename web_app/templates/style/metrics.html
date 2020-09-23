@@ -1,3 +1,4 @@
+{% load web_app %}
 {% if style.has_specified_metrics or style.has_recipes_metrics %}
     <h2>Specifications</h2>
     <div class="row row-cols-1 row-cols-lg-5 g-1 mb-4">
@@ -19,7 +20,11 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent"><div id="chart-spec-abv" class="chart-s"></div></div>
+                    <div class="card-footer bg-transparent"><div id="chart-spec-abv" class="chart-s">
+                        <noscript>
+                            <img src="{{ style|plot_image:"abv-histogram" }}" alt="Histogram of Alcohol per Volume (ABV) in the {{ style.name }} beer style" class="chart-image"/>
+                        </noscript>
+                    </div></div>
                 </div>
             </div>
         {% endif %}
@@ -42,7 +47,11 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent"><div id="chart-spec-ibu" class="chart-s"></div></div>
+                    <div class="card-footer bg-transparent"><div id="chart-spec-ibu" class="chart-s">
+                        <noscript>
+                            <img src="{{ style|plot_image:"ibu-histogram" }}" alt="Histogram of bitterness (IBU) in the {{ style.name }} beer style" class="chart-image"/>
+                        </noscript>
+                    </div></div>
                 </div>
             </div>
         {% endif %}
@@ -67,7 +76,11 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent"><div id="chart-spec-color" class="chart-s"></div></div>
+                    <div class="card-footer bg-transparent"><div id="chart-spec-color" class="chart-s">
+                        <noscript>
+                            <img src="{{ style|plot_image:"color-srm-histogram" }}" alt="Histogram of beer color (SRM) in the {{ style.name }} beer style" class="chart-image"/>
+                        </noscript>
+                    </div></div>
                 </div>
             </div>
         {% endif %}
@@ -92,7 +105,11 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent"><div id="chart-spec-og" class="chart-s"></div></div>
+                    <div class="card-footer bg-transparent"><div id="chart-spec-og" class="chart-s">
+                        <noscript>
+                            <img src="{{ style|plot_image:"original-gravity-histogram" }}" alt="Histogram of original gravity (OG) in the {{ style.name }} beer style" class="chart-image"/>
+                        </noscript>
+                    </div></div>
                 </div>
             </div>
         {% endif %}
@@ -117,7 +134,11 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent"><div id="chart-spec-fg" class="chart-s"></div></div>
+                    <div class="card-footer bg-transparent"><div id="chart-spec-fg" class="chart-s">
+                        <noscript>
+                            <img src="{{ style|plot_image:"final-gravity-histogram" }}" alt="Histogram of final gravity (FG) in the {{ style.name }} beer style" class="chart-image"/>
+                        </noscript>
+                    </div></div>
                 </div>
             </div>
         {% endif %}

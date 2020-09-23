@@ -1,4 +1,5 @@
 from django import template
+from django.urls import reverse
 
 from recipe_db.analytics import get_ranked_styles, get_ranked_hops, get_ranked_fermentables
 from recipe_db.models import Style, Hop, Fermentable
@@ -20,6 +21,68 @@ def startswith(text, starts):
     return False
 
 
+@register.filter('url')
+def url(item: object):
+    if isinstance(item, Style):
+        if item.is_category:
+            return reverse('style_category', kwargs={'category_slug': item.slug})
+        else:
+            return reverse('style_detail', kwargs={'category_slug': item.category.slug, 'slug': item.slug})
+
+    if isinstance(item, Hop):
+        return reverse('hop_detail', kwargs={'category': item.use, 'slug': item.id})
+
+    if isinstance(item, Fermentable):
+        return reverse('fermentable_detail', kwargs={'category': item.category, 'slug': item.id})
+
+    return None
+
+
+@register.filter('plot')
+def plot(item: object, chart_type):
+    return do_plot(item, chart_type, 'json')
+
+
+@register.filter('plot_image')
+def plot_image(item: object, chart_type):
+    return do_plot(item, chart_type, 'svg')
+
+
+def do_plot(item: object, chart_type: str, format: str):
+    if isinstance(item, Style) and not item.is_category:
+        if item.is_category:
+            return reverse('style_chart', kwargs={
+                'category_slug': item.category.slug,
+                'chart_type': chart_type,
+                'format': format
+            })
+        else:
+            return reverse('style_chart', kwargs={
+                'category_slug': item.category.slug,
+                'slug': item.slug,
+                'chart_type': chart_type,
+                'format': format
+            })
+
+    if isinstance(item, Hop):
+        return reverse('hop_chart', kwargs={
+            'category': item.use,
+            'slug': item.id,
+            'chart_type': chart_type,
+            'format': format
+        })
+
+    if isinstance(item, Fermentable):
+        return reverse('fermentable_chart', kwargs={
+            'category': item.category,
+            'slug': item.id,
+            'chart_type': chart_type,
+            'format': format
+        })
+
+    return None
+
+
 @register.filter('priority')
 def priority(item: object):
     if isinstance(item, Style):
@@ -27,7 +90,7 @@ def priority(item: object):
 
     if isinstance(item, Hop):
         return get_priority(item.id, HOPS_RANKED)
-    #
+
     if isinstance(item, Fermentable):
         return get_priority(item.id, FERMENTABLES_RANKED)
 

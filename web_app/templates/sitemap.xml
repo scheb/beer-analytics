@@ -39,21 +39,21 @@
     </url>
     {% for style in styles %}
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{{ style.url }}</loc>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{{ style|url }}</loc>
         <changefreq>weekly</changefreq>
         <priority>{{ style|priority }}</priority>
     </url>
     {% endfor %}
     {% for hop in hops %}
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{{ hop.url }}</loc>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{{ hop|url }}</loc>
         <changefreq>weekly</changefreq>
         <priority>{{ hop|priority }}</priority>
     </url>
     {% endfor %}
     {% for fermentable in fermentables %}
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{{ fermentable.url }}</loc>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{{ fermentable|url }}</loc>
         <changefreq>weekly</changefreq>
         <priority>{{ fermentable|priority }}</priority>
     </url>
