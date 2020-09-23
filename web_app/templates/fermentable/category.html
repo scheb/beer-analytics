@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load web_app %}
 
 {% block title %}{{ category_name }} Fermentables{% endblock %}
 
@@ -16,7 +17,7 @@
         <p class="most-popular">Most popular:
             {% for fermentable in most_popular %}
                 {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
-                <a class="badge bg-primary" href="{{ fermentable.url }}">{{ fermentable.name }}</a>
+                <a class="badge bg-primary" href="{{ fermentable|url }}">{{ fermentable.name }}</a>
             {% endfor %}
         </p>
     {% endif %}
@@ -24,7 +25,7 @@
     {% if fermentables %}
         <ul class="column-list">
             {% for fermentable in fermentables %}
-                <li><a href="{{ fermentable.url }}">{{ fermentable.name }}</a> <small class="text-muted ml-2">{{ fermentable.recipes_count }}</small></li>
+                <li><a href="{{ fermentable|url }}">{{ fermentable.name }}</a> <small class="text-muted ml-2">{{ fermentable.recipes_count }}</small></li>
             {% endfor %}
         </ul>
     {% endif %}
@@ -35,7 +36,7 @@
             {% if type.fermentables %}
                 <ul class="column-list">
                     {% for fermentable in type.fermentables %}
-                        <li><a href="{{ fermentable.url }}">{{ fermentable.name }}</a> <small class="text-muted ml-2">{{ fermentable.recipes_count }}</small></li>
+                        <li><a href="{{ fermentable|url }}">{{ fermentable.name }}</a> <small class="text-muted ml-2">{{ fermentable.recipes_count }}</small></li>
                     {% endfor %}
                 </ul>
             {% endif %}

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load web_app %}
 
 {% block title %}Hops{% endblock %}
 
@@ -11,13 +12,13 @@
         <p class="most-popular">Most popular:
             {% for hop in category.most_popular %}
                 {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
-                <a class="badge bg-primary" href="{{ hop.url }}">{{ hop.name }}</a>
+                <a class="badge bg-primary" href="{{ hop|url }}">{{ hop.name }}</a>
             {% endfor %}
         </p>
 
         <ul class="column-list">
             {% for hop in category.hops %}
-                <li><a href="{{ hop.url }}">{{ hop.name }}</a> <small
+                <li><a href="{{ hop|url }}">{{ hop.name }}</a> <small
                         class="text-muted ml-2">{{ hop.recipes_count }}</small></li></li>
             {% endfor %}
         </ul>

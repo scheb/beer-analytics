@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load web_app %}
 
 {% block title %}{{ fermentable.name }} ‹ Fermentables{% endblock %}
 
@@ -23,32 +24,55 @@
     {% include './metrics.html' %}
 
     <h2>Popularity Over Time</h2>
-    <div id="chart-popularity" class="chart-m"></div>
+    <div id="chart-popularity" class="chart-m">
+        <noscript>
+            <img src="{{ fermentable|plot_image:"popularity" }}" alt="Popularity of the {{ fermentable.name }} fermentables over time" class="chart-image"/>
+        </noscript>
+    </div>
 
-    <h2>Common Styles</h2>
+    <h2>Typical Styles</h2>
     <h3>Absolute Number of Recipes</h3>
-    <div id="chart-styles-abs" class="chart-l"></div>
+    <div id="chart-styles-abs" class="chart-l">
+        <noscript>
+            <img src="{{ fermentable|plot_image:"typical-styles-absolute" }}" alt="Typical beer styles using {{ fermentable.name }} fermentables (by number of recipes)" class="chart-image"/>
+        </noscript>
+    </div>
     <h3>Relative Percent of Recipes</h3>
-    <div id="chart-styles-rel" class="chart-l"></div>
+    <div id="chart-styles-rel" class="chart-l">
+        <noscript>
+            <img src="{{ fermentable|plot_image:"typical-styles-relative" }}" alt="Typical beer styles using {{ fermentable.name }} fermentables (by percent of recipes)" class="chart-image"/>
+        </noscript>
+    </div>
 
     <h2>Amount per Style</h2>
-    <div id="chart-style-amount" class="chart-l"></div>
+    <div id="chart-style-amount" class="chart-l">
+        <noscript>
+            <img src="{{ fermentable|plot_image:"amount-used-per-style" }}" alt="Amount of {{ fermentable.name }} fermentables used per beer style" class="chart-image"/>
+        </noscript>
+    </div>
 
     <h2>Common Pairings</h2>
-    <div id="chart-pairings" class="chart-l"></div>
+    <div id="chart-pairings" class="chart-l">
+        <noscript>
+            <img src="{{ fermentable|plot_image:"fermentable-pairings" }}" alt="Fermentables typically paired with the {{ fermentable.name }} fermentable" class="chart-image"/>
+        </noscript>
+    </div>
 {% endblock %}
 
 {% block script %}
 <script>
 window.addEventListener('load', function ()
 {
-    display_graph('chart-metric-color', '{% url "fermentable_chart" fermentable.id "color-histogram" "json" %}', {displayModeBar: false});
-    display_graph('chart-metric-amount-percent', '{% url "fermentable_chart" fermentable.id "amount-percent-range" "json" %}', {displayModeBar: false});
-    display_graph('chart-popularity', '{% url "fermentable_chart" fermentable.id "popularity" "json" %}');
-    display_graph('chart-styles-abs', '{% url "fermentable_chart" fermentable.id "styles-absolute" "json" %}');
-    display_graph('chart-styles-rel', '{% url "fermentable_chart" fermentable.id "styles-relative" "json" %}');
-    display_graph('chart-style-amount', '{% url "fermentable_chart" fermentable.id "style-amount" "json" %}');
-    display_graph('chart-pairings', '{% url "fermentable_chart" fermentable.id "pairings" "json" %}');
+    // Metrics
+    display_graph('chart-metric-color', '{{ fermentable|plot:"color-histogram" }}', {displayModeBar: false});
+    display_graph('chart-metric-amount-percent', '{{ fermentable|plot:"amount-percent-range" }}', {displayModeBar: false});
+
+    // Charts
+    display_graph('chart-popularity', '{{ fermentable|plot:"popularity" }}');
+    display_graph('chart-styles-abs', '{{ fermentable|plot:"typical-styles-absolute" }}');
+    display_graph('chart-styles-rel', '{{ fermentable|plot:"typical-styles-relative" }}');
+    display_graph('chart-style-amount', '{{ fermentable|plot:"amount-used-per-style" }}');
+    display_graph('chart-pairings', '{{ fermentable|plot:"fermentable_pairings" }}');
 });
 </script>
 {% endblock %}

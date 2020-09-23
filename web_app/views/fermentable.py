@@ -54,8 +54,14 @@ def detail(request: HttpRequest, slug: str, category: str) -> HttpResponse:
     return render(request, 'fermentable/detail.html', {'fermentable': fermentable})
 
 
-def chart(request: HttpRequest, id: str, chart_type: str, format: str) -> HttpResponse:
-    fermentable = get_object_or_404(Fermentable, pk=id)
+def chart(request: HttpRequest, slug: str, category: str, chart_type: str, format: str) -> HttpResponse:
+    fermentable = get_object_or_404(Fermentable, pk=slug)
+
+    if fermentable.recipes_count <= 0:
+        raise Http404("Fermentable doesn't have any data.")
+
+    if category != fermentable.category:
+        return redirect('fermentable_chart', category=fermentable.category, slug=fermentable.id, chart_type=chart_type, format=format)
 
     chart_factory = FermentableChartFactory()
     if chart_factory.is_supported_chart(chart_type):

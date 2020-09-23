@@ -1,3 +1,4 @@
+{% load web_app %}
 <h2>Characteristics</h2>
 <div class="row row-cols-1 row-cols-lg-3 g-1 mb-4">
     {% if hop.recipes_alpha_min %}
@@ -7,7 +8,11 @@
                 <div class="card-body">
                     {{ hop.recipes_alpha_min|floatformat:1 }} &lt; <strong>{{ hop.recipes_alpha_mean|floatformat:1 }}</strong> &lt; {{ hop.recipes_alpha_max|floatformat:1 }} <small class="text-muted">%</small>
                 </div>
-                <div class="card-footer bg-transparent"><div id="chart-metric-alpha" class="chart-s"></div></div>
+                <div class="card-footer bg-transparent"><div id="chart-metric-alpha" class="chart-s">
+                    <noscript>
+                        <img src="{{ hop|plot_image:"alpha-histogram" }}" alt="Alpha acid histogram of {{ hop.name }} hops" class="chart-image"/>
+                    </noscript>
+                </div></div>
             </div>
         </div>
     {% endif %}
@@ -20,7 +25,11 @@
                         {{ hop.recipes_amount_percent_min|floatformat:1 }} &lt; <strong>{{ hop.recipes_amount_percent_mean|floatformat:1 }}</strong> &lt; {{ hop.recipes_amount_percent_max|floatformat:1 }} <small class="text-muted">%</small>
                     {% endif %}
                 </div>
-                <div class="card-footer bg-transparent"><div id="chart-metric-amount-percent" class="chart-s"></div></div>
+                <div class="card-footer bg-transparent"><div id="chart-metric-amount-percent" class="chart-s">
+                    <noscript>
+                        <img src="{{ hop|plot_image:"amount-percent-range" }}" alt="Amount of {{ hop.name }} hops used in beer recipes" class="chart-image"/>
+                    </noscript>
+                </div></div>
             </div>
         </div>
     {% endif %}
@@ -31,7 +40,11 @@
                 <div class="card-body">
                     <strong>{{ hop.category_name }} Hop</strong>
                 </div>
-                <div class="card-footer bg-transparent"><div id="chart-metric-usage" class="chart-s"></div></div>
+                <div class="card-footer bg-transparent"><div id="chart-metric-usage" class="chart-s">
+                    <noscript>
+                        <img src="{{ hop|plot_image:"usage-types" }}" alt="How {{ hop.name }} hops are typically used in beer recipes" class="chart-image"/>
+                    </noscript>
+                </div></div>
             </div>
         </div>
     {% endif %}

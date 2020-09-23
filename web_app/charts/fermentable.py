@@ -25,7 +25,7 @@ class FermentablePopularityChart(FermentableChart):
             raise NoDataException()
 
         figure = LinesChart().plot(df, 'month', 'recipes_percent', 'fermentable', 'Month/Year', '% Recipes')
-        return Chart(figure)
+        return Chart(figure, height=Chart.DEFAULT_HEIGHT*0.66, title="Popularity of <b>%s</b> fermentables over time" % self.fermentable.name)
 
 
 class FermentableColorChart(FermentableChart):
@@ -35,7 +35,7 @@ class FermentableColorChart(FermentableChart):
             raise NoDataException()
 
         figure = PreAggregateHistogramChart().plot(df, 'color_lovibond', 'count')
-        return Chart(figure, 300, 200)
+        return Chart(figure, 500, 350, title="Color of <b>%s</b> fermentables" % self.fermentable.name)
 
 
 class FermentableAmountRangeChart(FermentableChart):
@@ -45,7 +45,7 @@ class FermentableAmountRangeChart(FermentableChart):
             raise NoDataException()
 
         figure = RangeBoxPlot().plot(df, 'amount_percent')
-        return Chart(figure, 300, 200)
+        return Chart(figure, 500, 350, title="Amount of <b>%s</b> fermentables used" % self.fermentable.name)
 
 
 class FermentableCommonStylesAbsoluteChart(FermentableChart):
@@ -55,7 +55,7 @@ class FermentableCommonStylesAbsoluteChart(FermentableChart):
             raise NoDataException()
 
         figure = BarChart().plot(df, 'style_name', 'recipes', 'Style', 'Number Recipes')
-        return Chart(figure)
+        return Chart(figure, title="Typical beer styles using <b>%s</b> fermentables (by number of recipes)" % self.fermentable.name)
 
 
 class FermentableCommonStylesRelativeChart(FermentableChart):
@@ -65,7 +65,7 @@ class FermentableCommonStylesRelativeChart(FermentableChart):
             raise NoDataException()
 
         figure = BarChart().plot(df, 'style_name', 'recipes_percent', 'Style', 'Used in % Recipes')
-        return Chart(figure)
+        return Chart(figure, title="Typical beer styles using <b>%s</b> fermentables (by percent of recipes)" % self.fermentable.name)
 
 
 class FermentableStyleAmountChart(FermentableChart):
@@ -75,7 +75,7 @@ class FermentableStyleAmountChart(FermentableChart):
             raise NoDataException()
 
         figure = PreAggregatedBoxPlot().plot(df, 'style', 'amount_percent', 'Style', '% Amount')
-        return Chart(figure)
+        return Chart(figure, title="Amount of <b>%s</b> fermentables used per beer style" % self.fermentable.name)
 
 
 class FermentablePairingsChart(FermentableChart):
@@ -85,7 +85,7 @@ class FermentablePairingsChart(FermentableChart):
             raise NoDataException()
 
         figure = PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'fermentable', 'amount_percent', None, '% Amount')
-        return Chart(figure)
+        return Chart(figure, title="Fermentables typically paired with <b>%s</b> fermentables" % self.fermentable.name)
 
 
 class FermentableChartFactory:
@@ -93,10 +93,10 @@ class FermentableChartFactory:
         color_histogram=FermentableColorChart,
         amount_percent_range=FermentableAmountRangeChart,
         popularity=FermentablePopularityChart,
-        styles_absolute=FermentableCommonStylesAbsoluteChart,
-        styles_relative=FermentableCommonStylesRelativeChart,
-        style_amount=FermentableStyleAmountChart,
-        pairings=FermentablePairingsChart,
+        typical_styles_absolute=FermentableCommonStylesAbsoluteChart,
+        typical_styles_relative=FermentableCommonStylesRelativeChart,
+        amount_used_per_style=FermentableStyleAmountChart,
+        fermentable_pairings=FermentablePairingsChart,
     )
 
     def get_chart(self, fermentable: Fermentable, chart_type: str) -> Chart:

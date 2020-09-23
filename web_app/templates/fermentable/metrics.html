@@ -1,3 +1,4 @@
+{% load web_app %}
 <h2>Characteristics</h2>
 <div class="row row-cols-1 row-cols-lg-2 g-1 mb-4">
     {% if fermentable.recipes_color_ebc_min %}
@@ -8,7 +9,11 @@
                     {{ fermentable.recipes_color_ebc_min|floatformat:0 }} &lt; <strong>{{ fermentable.recipes_color_ebc_mean|floatformat:0 }}</strong> &lt; {{ fermentable.recipes_color_ebc_max|floatformat:0 }} <small class="text-muted" title="European Brewery Convention">EBC</small><br/>
                     {{ fermentable.recipes_color_lovibond_min|floatformat:0 }} &lt; <strong>{{ fermentable.recipes_color_lovibond_mean|floatformat:0 }}</strong> &lt; {{ fermentable.recipes_color_lovibond_max|floatformat:0 }} <small class="text-muted" title="Degrees Lovibond">°L</small>
                 </div>
-                <div class="card-footer bg-transparent"><div id="chart-metric-color" class="chart-s"></div></div>
+                <div class="card-footer bg-transparent"><div id="chart-metric-color" class="chart-s">
+                    <noscript>
+                        <img src="{{ fermentable|plot_image:"color-histogram" }}" alt="Histogram of the color (°Lovibond) of {{ fermentable.name }} fermentables" class="chart-image"/>
+                    </noscript>
+                </div></div>
             </div>
         </div>
     {% endif %}
@@ -21,7 +26,11 @@
                         {{ fermentable.recipes_amount_percent_min|floatformat:1 }} &lt; <strong>{{ fermentable.recipes_amount_percent_mean|floatformat:1 }}</strong> &lt; {{ fermentable.recipes_amount_percent_max|floatformat:1 }} <small class="text-muted">%</small>
                     {% endif %}
                 </div>
-                <div class="card-footer bg-transparent"><div id="chart-metric-amount-percent" class="chart-s"></div></div>
+                <div class="card-footer bg-transparent"><div id="chart-metric-amount-percent" class="chart-s">
+                    <noscript>
+                        <img src="{{ fermentable|plot_image:"amount-percent-range" }}" alt="Amount of {{ fermentable.name }} fermentables used in beer recipes" class="chart-image"/>
+                    </noscript>
+                </div></div>
             </div>
         </div>
     {% endif %}

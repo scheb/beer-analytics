@@ -25,7 +25,7 @@ class HopPopularityChart(HopChart):
             raise NoDataException()
 
         figure = LinesChart().plot(df, 'month', 'recipes_percent', 'hop', 'Month/Year', '% Recipes')
-        return Chart(figure)
+        return Chart(figure, height=Chart.DEFAULT_HEIGHT*0.66, title="Popularity of <b>%s</b> hops over time" % self.hop.name)
 
 
 class HopAlphaChart(HopChart):
@@ -35,7 +35,7 @@ class HopAlphaChart(HopChart):
             raise NoDataException()
 
         figure = PreAggregateHistogramChart().plot(df, 'alpha', 'count')
-        return Chart(figure, 300, 200)
+        return Chart(figure, 500, 350, title="Alpha acid of <b>%s</b> hops" % self.hop.name)
 
 
 class HopAmountRangeChart(HopChart):
@@ -45,7 +45,7 @@ class HopAmountRangeChart(HopChart):
             raise NoDataException()
 
         figure = RangeBoxPlot().plot(df, 'amount_percent')
-        return Chart(figure, 300, 200)
+        return Chart(figure, 500, 350, title="Amount of <b>%s</b> hops used" % self.hop.name)
 
 
 class HopUsageChart(HopChart):
@@ -55,7 +55,7 @@ class HopUsageChart(HopChart):
             raise NoDataException()
 
         figure = BarChart(add_margin=False).plot(df, 'use', 'recipes', None, None)
-        return Chart(figure, 300, 200)
+        return Chart(figure, 500, 350, title="How <b>%s</b> hops are used" % self.hop.name)
 
 
 class HopCommonStylesAbsoluteChart(HopChart):
@@ -65,7 +65,7 @@ class HopCommonStylesAbsoluteChart(HopChart):
             raise NoDataException()
 
         figure = BarChart().plot(df, 'style_name', 'recipes', 'Style', 'Number Recipes')
-        return Chart(figure)
+        return Chart(figure, title="Typical beer styles using <b>%s</b> hops (by number of recipes)" % self.hop.name)
 
 
 class HopCommonStylesRelativeChart(HopChart):
@@ -75,7 +75,7 @@ class HopCommonStylesRelativeChart(HopChart):
             raise NoDataException()
 
         figure = BarChart().plot(df, 'style_name', 'recipes_percent', 'Style', 'Used in % Recipes')
-        return Chart(figure)
+        return Chart(figure, title="Typical beer styles using <b>%s</b> hops (by percent of recipes)" % self.hop.name)
 
 
 class HopStyleAmountChart(HopChart):
@@ -85,7 +85,7 @@ class HopStyleAmountChart(HopChart):
             raise NoDataException()
 
         figure = PreAggregatedBoxPlot().plot(df, 'style', 'amount_percent', 'Style', '% Amount')
-        return Chart(figure)
+        return Chart(figure, title="Amount of <b>%s</b> hops used per beer style" % self.hop.name)
 
 
 class HopUsageAmountChart(HopChart):
@@ -95,7 +95,7 @@ class HopUsageAmountChart(HopChart):
             raise NoDataException()
 
         figure = PreAggregatedBoxPlot().plot(df, 'use', 'amount_percent', 'Usage', '% Amount')
-        return Chart(figure)
+        return Chart(figure, title="Amount of <b>%s</b> hops per on usage type" % self.hop.name)
 
 
 class HopPairingsChart(HopChart):
@@ -105,20 +105,20 @@ class HopPairingsChart(HopChart):
             raise NoDataException()
 
         figure = PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% Amount')
-        return Chart(figure)
+        return Chart(figure, title="Hops typically paired with <b>%s</b> hops" % self.hop.name)
 
 
 class HopChartFactory:
     CHARTS = dict(
         alpha_histogram=HopAlphaChart,
         amount_percent_range=HopAmountRangeChart,
-        usage=HopUsageChart,
+        usage_types=HopUsageChart,
         popularity=HopPopularityChart,
-        styles_absolute=HopCommonStylesAbsoluteChart,
-        styles_relative=HopCommonStylesRelativeChart,
-        style_amount=HopStyleAmountChart,
-        usage_amount=HopUsageAmountChart,
-        pairings=HopPairingsChart,
+        typical_styles_absolute=HopCommonStylesAbsoluteChart,
+        typical_styles_relative=HopCommonStylesRelativeChart,
+        amount_used_per_style=HopStyleAmountChart,
+        amount_used_per_use=HopUsageAmountChart,
+        hop_pairings=HopPairingsChart,
     )
 
     def get_chart(self, hop: Hop, chart_type: str) -> Chart:

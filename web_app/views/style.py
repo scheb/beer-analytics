@@ -38,8 +38,14 @@ def render_style(request: HttpRequest, style: Style) -> HttpResponse:
     return render(request, 'style/detail.html', {"style": style})
 
 
-def chart(request: HttpRequest, id: str, chart_type: str, format: str) -> HttpResponse:
-    style = get_object_or_404(Style, pk=id)
+def chart(request: HttpRequest, slug: str, category_slug: str, chart_type: str, format: str) -> HttpResponse:
+    style = get_object_or_404(Style, slug=slug)
+
+    if style.is_category:
+        return redirect('style_category', category_slug=style.category.slug)
+    if category_slug != style.category.slug:
+        return redirect('style_detail', category_slug=style.category.slug, slug=style.slug)
+
     filter_param = str(request.GET['filter']) if 'filter' in request.GET else None
 
     chart_factory = StyleChartFactory()
