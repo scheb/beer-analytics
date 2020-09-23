@@ -4,8 +4,8 @@ from recipe_db.analytics import get_fermentable_popularity, get_fermentable_comm
     get_fermentable_common_styles_absolute, get_fermentable_metric_values, get_fermentable_amount_range, \
     get_fermentable_pairing_fermentables, get_fermentable_amount_range_per_style
 from recipe_db.models import Fermentable
-from web_app.charts.utils import NoDataException
-from web_app.plot import Plot, LinesChart, BarChart, PreAggregateHistogramChart, RangeBoxPlot, \
+from web_app.charts.utils import NoDataException, Chart
+from web_app.plot import LinesChart, BarChart, PreAggregateHistogramChart, RangeBoxPlot, \
     PreAggregatedPairsBoxPlot, PreAggregatedBoxPlot
 
 
@@ -19,66 +19,73 @@ class FermentableChart:
 
 
 class FermentablePopularityChart(FermentableChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_fermentable_popularity(self.fermentable)
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        return LinesChart().plot(df, 'month', 'recipes_percent', 'fermentable', 'Month/Year', '% Recipes')
+        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'fermentable', 'Month/Year', '% Recipes')
+        return Chart(figure)
 
 
 class FermentableColorChart(FermentableChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_fermentable_metric_values(self.fermentable, 'color_lovibond')
         if len(df) == 0:
             raise NoDataException()
 
-        return PreAggregateHistogramChart().plot(df, 'color_lovibond', 'count')
+        figure = PreAggregateHistogramChart().plot(df, 'color_lovibond', 'count')
+        return Chart(figure, 300, 200)
 
 
 class FermentableAmountRangeChart(FermentableChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_fermentable_amount_range(self.fermentable)
         if len(df) == 0:
             raise NoDataException()
 
-        return RangeBoxPlot().plot(df, 'amount_percent')
+        figure = RangeBoxPlot().plot(df, 'amount_percent')
+        return Chart(figure, 300, 200)
 
 
 class FermentableCommonStylesAbsoluteChart(FermentableChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_fermentable_common_styles_absolute(self.fermentable)
         if len(df) == 0:
             raise NoDataException()
 
-        return BarChart().plot(df, 'style_name', 'recipes', 'Style', 'Number Recipes')
+        figure = BarChart().plot(df, 'style_name', 'recipes', 'Style', 'Number Recipes')
+        return Chart(figure)
 
 
 class FermentableCommonStylesRelativeChart(FermentableChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_fermentable_common_styles_relative(self.fermentable)
         if len(df) == 0:
             raise NoDataException()
 
-        return BarChart().plot(df, 'style_name', 'recipes_percent', 'Style', 'Used in % Recipes')
+        figure = BarChart().plot(df, 'style_name', 'recipes_percent', 'Style', 'Used in % Recipes')
+        return Chart(figure)
 
 
 class FermentableStyleAmountChart(FermentableChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_fermentable_amount_range_per_style(self.fermentable)
         if len(df) == 0:
             raise NoDataException()
 
-        return PreAggregatedBoxPlot().plot(df, 'style', 'amount_percent', 'Style', '% Amount')
+        figure = PreAggregatedBoxPlot().plot(df, 'style', 'amount_percent', 'Style', '% Amount')
+        return Chart(figure)
 
 
 class FermentablePairingsChart(FermentableChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_fermentable_pairing_fermentables(self.fermentable)
         if len(df) == 0:
             raise NoDataException()
 
-        return PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'fermentable', 'amount_percent', None, '% Amount')
+        figure = PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'fermentable', 'amount_percent', None, '% Amount')
+        return Chart(figure)
 
 
 class FermentableChartFactory:
@@ -92,7 +99,7 @@ class FermentableChartFactory:
         pairings=FermentablePairingsChart,
     )
 
-    def get_chart(self, fermentable: Fermentable, chart_type: str) -> Plot:
+    def get_chart(self, fermentable: Fermentable, chart_type: str) -> Chart:
         chart_type = self.normalize_type(chart_type)
         chart = self.CHARTS[chart_type]
         return chart(fermentable).plot()

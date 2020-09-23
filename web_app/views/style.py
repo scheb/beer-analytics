@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from recipe_db.models import Style
 from web_app.charts.style import StyleChartFactory
 from web_app.charts.utils import NoDataException
-from web_app.views.utils import render_plot
+from web_app.views.utils import render_chart
 
 
 def overview(request: HttpRequest) -> HttpResponse:
@@ -45,10 +45,10 @@ def chart(request: HttpRequest, id: str, chart_type: str, format: str) -> HttpRe
     chart_factory = StyleChartFactory()
     if chart_factory.is_supported_chart(chart_type):
         try:
-            plot = chart_factory.get_chart(style, chart_type, filter_param)
+            chart = chart_factory.get_chart(style, chart_type, filter_param)
         except NoDataException:
             return HttpResponse(status=204)
     else:
         raise Http404('Unknown chart type %s.' % chart_type)
 
-    return render_plot(plot, format)
+    return render_chart(chart, format)

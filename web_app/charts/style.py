@@ -4,8 +4,8 @@ from typing import Optional, Tuple
 from recipe_db.analytics import get_style_hop_pairings, get_style_popular_fermentables, get_style_popular_hops, \
     get_style_metric_values, get_style_popularity
 from recipe_db.models import Style, RecipeHop, Fermentable
-from web_app.charts.utils import NoDataException
-from web_app.plot import Plot, LinesChart, PreAggregatedBoxPlot, \
+from web_app.charts.utils import NoDataException, Chart
+from web_app.plot import LinesChart, PreAggregatedBoxPlot, \
     PreAggregateHistogramChart, PreAggregatedPairsBoxPlot
 
 
@@ -20,66 +20,73 @@ class StyleChart:
 
 
 class StylePopularityChart(StyleChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_style_popularity(self.style)
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        return LinesChart().plot(df, 'month', 'recipes_percent', 'style', 'Month/Year', '% Recipes')
+        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'style', 'Month/Year', '% Recipes')
+        return Chart(figure)
 
 
 class StyleAbvChart(StyleChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_style_metric_values(self.style, 'abv')
         if len(df) == 0:
             raise NoDataException()
 
-        return PreAggregateHistogramChart().plot(df, 'abv', 'count')
+        figure = PreAggregateHistogramChart().plot(df, 'abv', 'count')
+        return Chart(figure, 300, 200)
 
 
 class StyleIbuChart(StyleChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_style_metric_values(self.style, 'ibu')
         if len(df) == 0:
             raise NoDataException()
 
-        return PreAggregateHistogramChart().plot(df, 'ibu', 'count')
+        figure = PreAggregateHistogramChart().plot(df, 'ibu', 'count')
+        return Chart(figure, 300, 200)
 
 
 class StyleColorChart(StyleChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_style_metric_values(self.style, 'srm')
         if len(df) == 0:
             raise NoDataException()
 
-        return PreAggregateHistogramChart().plot(df, 'srm', 'count')
+        figure = PreAggregateHistogramChart().plot(df, 'srm', 'count')
+        return Chart(figure, 300, 200)
 
 
 class StyleOGChart(StyleChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_style_metric_values(self.style, 'og')
         if len(df) == 0:
             raise NoDataException()
 
-        return PreAggregateHistogramChart().plot(df, 'og', 'count')
+        figure = PreAggregateHistogramChart().plot(df, 'og', 'count')
+        return Chart(figure, 300, 200)
 
 
 class StyleFGChart(StyleChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_style_metric_values(self.style, 'fg')
         if len(df) == 0:
             raise NoDataException()
 
-        return PreAggregateHistogramChart().plot(df, 'fg', 'count')
+        figure = PreAggregateHistogramChart().plot(df, 'fg', 'count')
+        return Chart(figure, 300, 200)
 
 
 class StylePopularHopsChart(StyleChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_style_popular_hops(self.style, self.get_use_filter())
         if len(df) == 0:
             raise NoDataException()
 
-        return PreAggregatedBoxPlot().plot(df, 'hop', 'amount_percent', 'Hops by Popularity', '% Amount')
+        figure = PreAggregatedBoxPlot().plot(df, 'hop', 'amount_percent', 'Hops by Popularity', '% Amount')
+        return Chart(figure)
 
     def get_use_filter(self):
         if self.filter_param == 'bittering':
@@ -92,13 +99,14 @@ class StylePopularHopsChart(StyleChart):
 
 
 class StylePopularFermentablesChart(StyleChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         (categories, types) = self.get_filter()
         df = get_style_popular_fermentables(self.style, categories, types)
         if len(df) == 0:
             raise NoDataException()
 
-        return PreAggregatedBoxPlot().plot(df, 'fermentable', 'amount_percent', 'Fermentables by Popularity', '% Amount')
+        figure = PreAggregatedBoxPlot().plot(df, 'fermentable', 'amount_percent', 'Fermentables by Popularity', '% Amount')
+        return Chart(figure)
 
     def get_filter(self) -> Tuple[list, list]:
         if self.filter_param == 'base':
@@ -120,12 +128,13 @@ class StylePopularFermentablesChart(StyleChart):
 
 
 class StyleHopPairingsChart(StyleChart):
-    def plot(self) -> Plot:
+    def plot(self) -> Chart:
         df = get_style_hop_pairings(self.style)
         if len(df) == 0:
             raise NoDataException()
 
-        return PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% Amount')
+        figure = PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% Amount')
+        return Chart(figure)
 
 
 class StyleChartFactory:
@@ -141,7 +150,7 @@ class StyleChartFactory:
         hop_pairings=StyleHopPairingsChart,
     )
 
-    def get_chart(self, style: Style, chart_type: str, filter_param: Optional[str]) -> Plot:
+    def get_chart(self, style: Style, chart_type: str, filter_param: Optional[str]) -> Chart:
         chart_type = self.normalize_type(chart_type)
         chart = self.CHARTS[chart_type]
         return chart(style, filter_param).plot()
