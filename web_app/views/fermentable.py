@@ -63,10 +63,9 @@ def chart(request: HttpRequest, slug: str, category: str, chart_type: str, forma
     if category != fermentable.category:
         return redirect('fermentable_chart', category=fermentable.category, slug=fermentable.id, chart_type=chart_type, format=format)
 
-    chart_factory = FermentableChartFactory()
-    if chart_factory.is_supported_chart(chart_type):
+    if FermentableChartFactory.is_supported_chart(chart_type):
         try:
-            chart = chart_factory.get_chart(fermentable, chart_type)
+            chart = FermentableChartFactory.plot_chart(fermentable, chart_type)
         except NoDataException:
             return HttpResponse(status=204)
     else:

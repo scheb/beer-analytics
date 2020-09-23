@@ -45,7 +45,7 @@
     <h2>Popularity Over Time</h2>
     <div id="chart-popularity" class="chart-m">
         <noscript>
-            <img src="{{ style|plot_image:"popularity" }}" alt="Popularity of the {{ style.name }} beer style over time" class="chart-image"/>
+            {{ style|chart_image:"popularity"|safe }}
         </noscript>
     </div>
 
@@ -65,7 +65,7 @@
     </nav>
     <div id="chart-fermentables" class="chart-l">
         <noscript>
-            <img src="{{ style|plot_image:"popular-fermentables" }}" alt="Popular fermentables/malts used in the {{ style.name }} beer style" class="chart-image"/>
+            {{ style|chart_image:"popular-fermentables"|safe }}
         </noscript>
     </div>
 
@@ -81,14 +81,14 @@
     </nav>
     <div id="chart-hops" class="chart-l">
         <noscript>
-            <img src="{{ style|plot_image:"popular-hops" }}" alt="Popular hops used in the {{ style.name }} beer style" class="chart-image"/>
+            {{ style|chart_image:"popular-hops"|safe }}
         </noscript>
     </div>
 
     <h2>Common Hop Pairings</h2>
     <div id="chart-hop-pairings" class="chart-l">
         <noscript>
-            <img src="{{ style|plot_image:"hop-pairings" }}" alt="Popular hop pairings used in the {{ style.name }} beer style" class="chart-image"/>
+            {{ style|chart_image:"hop-pairings"|safe }}
         </noscript>
     </div>
 {% endblock %}
@@ -98,17 +98,17 @@
 window.addEventListener('load', function ()
 {
     // Metrics
-    display_graph('chart-spec-abv', '{{ style|plot:"abv-histogram" }}', {displayModeBar: false});
-    display_graph('chart-spec-ibu', '{{ style|plot:"ibu-histogram" }}', {displayModeBar: false});
-    display_graph('chart-spec-color', '{{ style|plot:"color-srm-histogram" }}', {displayModeBar: false});
-    display_graph('chart-spec-og', '{{ style|plot:"original-gravity-histogram" }}', {displayModeBar: false});
-    display_graph('chart-spec-fg', '{{ style|plot:"final-gravity_histogram" }}', {displayModeBar: false});
+    display_graph('chart-spec-abv', '{{ style|chart_js:"abv-histogram" }}', {displayModeBar: false});
+    display_graph('chart-spec-ibu', '{{ style|chart_js:"ibu-histogram" }}', {displayModeBar: false});
+    display_graph('chart-spec-color', '{{ style|chart_js:"color-srm-histogram" }}', {displayModeBar: false});
+    display_graph('chart-spec-og', '{{ style|chart_js:"original-gravity-histogram" }}', {displayModeBar: false});
+    display_graph('chart-spec-fg', '{{ style|chart_js:"final-gravity_histogram" }}', {displayModeBar: false});
 
     // Charts
-    display_graph('chart-popularity', '{{ style|plot:"popularity" }}');
-    display_graph_with_navigation('chart-fermentables', 'chart-fermentables-tabs', '{{ style|plot:"popular-fermentables" }}');
-    display_graph_with_navigation('chart-hops', 'chart-hops-tabs', '{{ style|plot:"popular-hops" }}');
-    display_graph('chart-hop-pairings', '{{ style|plot:"hop-pairings" }}');
+    display_graph('chart-popularity', '{{ style|chart_js:"popularity" }}');
+    display_graph_with_navigation('chart-fermentables', 'chart-fermentables-tabs', '{{ style|chart_js:"popular-fermentables" }}');
+    display_graph_with_navigation('chart-hops', 'chart-hops-tabs', '{{ style|chart_js:"popular-hops" }}');
+    display_graph('chart-hop-pairings', '{{ style|chart_js:"hop-pairings" }}');
 });
 </script>
 {% endblock %}

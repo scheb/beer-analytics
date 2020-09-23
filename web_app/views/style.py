@@ -61,10 +61,9 @@ def chart(request: HttpRequest, slug: str, category_slug: str, chart_type: str, 
 def display_chart(request: HttpRequest, style: Style, chart_type: str, format: str) -> HttpResponse:
     filter_param = str(request.GET['filter']) if 'filter' in request.GET else None
 
-    chart_factory = StyleChartFactory()
-    if chart_factory.is_supported_chart(chart_type):
+    if StyleChartFactory.is_supported_chart(chart_type):
         try:
-            chart = chart_factory.get_chart(style, chart_type, filter_param)
+            chart = StyleChartFactory.plot_chart(style, chart_type, filter_param)
         except NoDataException:
             return HttpResponse(status=204)
     else:

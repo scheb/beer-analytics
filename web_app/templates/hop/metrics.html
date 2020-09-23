@@ -10,7 +10,7 @@
                 </div>
                 <div class="card-footer bg-transparent"><div id="chart-metric-alpha" class="chart-s">
                     <noscript>
-                        <img src="{{ hop|plot_image:"alpha-histogram" }}" alt="Alpha acid histogram of {{ hop.name }} hops" class="chart-image"/>
+                        {{ hop|chart_image:"alpha-histogram"|safe }}
                     </noscript>
                 </div></div>
             </div>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="card-footer bg-transparent"><div id="chart-metric-amount-percent" class="chart-s">
                     <noscript>
-                        <img src="{{ hop|plot_image:"amount-percent-range" }}" alt="Amount of {{ hop.name }} hops used in beer recipes" class="chart-image"/>
+                        {{ hop|chart_image:"amount-percent-range"|safe }}
                     </noscript>
                 </div></div>
             </div>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="card-footer bg-transparent"><div id="chart-metric-usage" class="chart-s">
                     <noscript>
-                        <img src="{{ hop|plot_image:"usage-types" }}" alt="How {{ hop.name }} hops are typically used in beer recipes" class="chart-image"/>
+                        {{ hop|chart_image:"usage-types"|safe }}
                     </noscript>
                 </div></div>
             </div>
