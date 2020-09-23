@@ -136,6 +136,15 @@ def get_num_recipes_per_style() -> DataFrame:
 
 def get_style_popularity(style: Style) -> DataFrame:
     style_ids = style.get_ids_including_sub_styles()
+    return calculate_styles_popularity(style_ids)
+
+
+def get_styles_popularity(styles: list) -> DataFrame:
+    style_ids = list(map(lambda x: x.id, styles))
+    return calculate_styles_popularity(style_ids)
+
+
+def calculate_styles_popularity(style_ids: list) -> DataFrame:
     recipes_per_month = get_num_recipes_per_month()
 
     query = '''
@@ -161,7 +170,6 @@ def get_style_popularity(style: Style) -> DataFrame:
     df = df.reset_index()
 
     return df
-
 
 def get_style_metric_values(style: Style, metric: str) -> DataFrame:
     style_ids = style.get_ids_including_sub_styles()
@@ -417,6 +425,37 @@ def get_hop_pairings(hops: DataFrame, pair_must_include: Hop = None) -> DataFram
     aggregated['hop'] = aggregated['kind_id'].map(get_hop_names_dict())
 
     return aggregated
+
+
+def get_hops_popularity(hops: list) -> DataFrame:
+    recipes_per_month = get_num_recipes_per_month()
+    hop_ids = list(map(lambda x: x.id, hops))
+
+    query = '''
+        SELECT
+            strftime('%%Y-%%m', r.created) AS month,
+            rh.kind_id,
+            h.name AS hop,
+            count(DISTINCT r.uid) AS recipes
+        FROM recipe_db_recipe AS r
+        JOIN recipe_db_recipehop AS rh
+            ON r.uid = rh.recipe_id
+        JOIN recipe_db_hop AS h
+            ON rh.kind_id = h.id
+        WHERE
+            created IS NOT NULL
+            AND r.created > '2012-01-01'
+            AND rh.kind_id IN ({})
+        GROUP BY strftime('%%Y-%%m', r.created), rh.kind_id
+    '''.format(','.join('%s' for _ in hop_ids))
+
+    df = pd.read_sql(query, connection, params=hop_ids)
+    df = df.set_index(['month', 'kind_id'])
+    df = df.merge(recipes_per_month, on="month")
+    df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
+    df = df.reset_index()
+
+    return df
 
 
 def get_hop_popularity(hop: Hop) -> DataFrame:

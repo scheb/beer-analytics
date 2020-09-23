@@ -1,17 +1,89 @@
 {% extends 'base.html' %}
+{% load web_app %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h1>Welcome to Beer Analytics <sup class="text-muted">Alpha</sup></h1>
+    <h1 class="mb-0">Welcome to Beer Analytics <sup class="text-muted">Alpha</sup></h1>
     <h2 class="h5">The analytical beer recipe database</h2>
+
+    <p class="mt-3">
+        Explore how certain <strong><a href="{% url "style_overview" %}">beer styles</a> are typically composed</strong>
+        and <strong>discover trends in home/craft beer brewing</strong>.
+        Or just browse the index of <a href="{% url "fermentable_overview" %}">fermentables</a>,
+        <a href="{% url "fermentable_category" "grain" %}">malts</a>, <a href="{% url "hop_overview" %}">hops</a> and
+        <a href="{% url "yeast_overview" %}">yeasts</a>.
+    </p>
 
     <hr/>
 
-    <p>Currently analyzing <strong>{{ recipes }}</strong> recipes</p>
-    <ul>
-        <li><a href="{% url "style_overview" %}">Explore beer styles</a></li>
-        <li><a href="{% url "hop_overview" %}">Explore hops</a></li>
-        <li><a href="{% url "fermentable_overview" %}">Explore fermentables</a></li>
-    </ul>
+    <h2>Trends in Homebrewing</h2>
+    <h3>Trending Beer Styles</h3>
+    <p>
+        <a href="{{ "02A"|style|url }}">International Pale Lager</a> and <a href="{{ "12C"|style|url }}">English IPA</a>
+        on the rise.
+    </p>
+    <div id="chart-trending-styles" class="chart-m">
+        <noscript>
+            <img src="{% url "trend_chart" "trending-styles" "svg" %}" alt="Trending beer styles"/>
+        </noscript>
+    </div>
+
+    <p class="mt-3">
+        The fall/winter brewing season is starting! People are brewing more <a href="">Porter and Stouts</a> and they're
+        mashing in seasonal <a href="{{ "30"|style|url }}">spiced beers</a>.
+    </p>
+    <div id="chart-winter-styles" class="chart-m">
+        <noscript>
+            <img src="{% url "trend_chart" "winter-styles" "svg" %}" alt="Trending winter beer styles"/>
+        </noscript>
+    </div>
+
+    <h3>Trending Hops</h3>
+
+    <h4>The Future</h4>
+    <p>
+        <a href="{{ "sabro"|hop|url }}">Sabro</a> (aka HBC 438) is the trending hop of 2020.
+        <a href="{{ "idaho-7"|hop|url }}">Idaho 7</a> and <a href="{{ "cashmere"|hop|url }}">Cashmere</a> are growing.
+    </p>
+    <div id="chart-future-hops" class="chart-m">
+        <noscript>
+            <img src="{% url "trend_chart" "future-hops" "svg" %}" alt="Trending hops, popularity rising"/>
+        </noscript>
+    </div>
+
+    <h4>The Present</h4>
+    <p><a href="{{ "galaxy"|hop|url }}">Galaxy</a> and <a href="{{ "mosaic"|hop|url }}">Mosaic</a> are still some of
+        brewer's favorites. <a href={{ "lemondrop"|hop|url }}>Lemondrop</a> got popular since 2017, but is now
+        plateauing.
+    </p>
+    <div id="chart-present-hops" class="chart-m">
+        <noscript>
+            <img src="{% url "trend_chart" "present-hops" "svg" %}" alt="Currently popular hops in beer recipes"/>
+        </noscript>
+    </div>
+
+    <h4>The Past</h4>
+    <p>
+        <a href="{{ "el-dorado"|hop|url }}">El Dorado</a> and <a href="{{ "azacca"|hop|url }}">Azacca</a>, trending hops
+        of 2017-2019, are now slowly decreasing in popularity.
+    </p>
+    <div id="chart-past-hops" class="chart-m">
+        <noscript>
+            <img src="{% url "trend_chart" "present-hops" "svg" %}" alt="Currently popular hops in beer recipes, but popularity decreasing"/>
+        </noscript>
+    </div>
+{% endblock %}
+
+{% block script %}
+<script>
+window.addEventListener('load', function ()
+{
+    display_graph('chart-trending-styles', '{% url "trend_chart" "trending-styles" "json" %}');
+    display_graph('chart-winter-styles', '{% url "trend_chart" "winter-styles" "json" %}');
+    display_graph('chart-future-hops', '{% url "trend_chart" "future-hops" "json" %}');
+    display_graph('chart-present-hops', '{% url "trend_chart" "present-hops" "json" %}');
+    display_graph('chart-past-hops', '{% url "trend_chart" "past-hops" "json" %}');
+});
+</script>
 {% endblock %}

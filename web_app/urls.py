@@ -1,7 +1,7 @@
 from django.urls import path, register_converter
 
 from . import views
-from .views import fermentable, hop, misc, style, yeast
+from .views import fermentable, hop, misc, style, yeast, trend
 from .views.utils import FORMATS
 
 
@@ -39,4 +39,6 @@ urlpatterns = [
     path('fermentables/<str:category>/<str:slug>/charts/<str:chart_type>.<cformat:format>', fermentable.chart, name='fermentable_chart'),
 
     path('yeasts/', views.yeast.overview, name='yeast_overview'),
+
+    path('trends/<str:chart_type>.<cformat:format>', trend.chart, name='trend_chart'),
 ]
