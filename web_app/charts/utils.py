@@ -1,3 +1,6 @@
+import abc
+from abc import ABC
+
 from plotly.graph_objs import Figure
 
 
@@ -40,3 +43,17 @@ class Chart:
             title=title,
             margin=dict(l=10, r=10, t=margin_top, b=30),
         )
+
+
+class ChartDefinition(ABC):
+    @abc.abstractmethod
+    def get_chart_title(self) -> str:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_image_alt(self) -> str:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def plot(self) -> Chart:
+        raise NotImplementedError

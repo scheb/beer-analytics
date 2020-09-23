@@ -56,10 +56,9 @@ def chart(request: HttpRequest, slug: str, category: str, chart_type: str, forma
     if category != hop.category:
         return redirect('hop_chart', category=hop.category, slug=hop.id, chart_type=chart_type, format=format)
 
-    chart_factory = HopChartFactory()
-    if chart_factory.is_supported_chart(chart_type):
+    if HopChartFactory.is_supported_chart(chart_type):
         try:
-            chart = chart_factory.get_chart(hop, chart_type)
+            chart = HopChartFactory.plot_chart(hop, chart_type)
         except NoDataException:
             return HttpResponse(status=204)
     else:

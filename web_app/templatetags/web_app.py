@@ -1,8 +1,12 @@
 from django import template
 from django.urls import reverse
+from django.utils.html import escape
 
 from recipe_db.analytics import get_ranked_styles, get_ranked_hops, get_ranked_fermentables
 from recipe_db.models import Style, Hop, Fermentable
+from web_app.charts.fermentable import FermentableChartFactory
+from web_app.charts.hop import HopChartFactory
+from web_app.charts.style import StyleChartFactory
 
 register = template.Library()
 
@@ -38,17 +42,32 @@ def url(item: object):
     return None
 
 
-@register.filter('plot')
-def plot(item: object, chart_type):
-    return do_plot(item, chart_type, 'json')
+@register.filter('chart_js')
+def chart_js(item: object, chart_type):
+    return chart_url(item, chart_type, 'json')
 
 
-@register.filter('plot_image')
-def plot_image(item: object, chart_type):
-    return do_plot(item, chart_type, 'svg')
+@register.filter('chart_image', is_safe=True)
+def chart_image(item: object, chart_type):
+    url = chart_url(item, chart_type, 'svg')
+    alt_text = escape(chart_image_alt(item, chart_type))
+    return '<img src="%s" alt="%s" class="chart-image"/>' % (url, alt_text)
 
 
-def do_plot(item: object, chart_type: str, format: str):
+def chart_image_alt(item: object, chart_type):
+    if isinstance(item, Style):
+        return StyleChartFactory.get_chart(item, chart_type).get_image_alt()
+
+    if isinstance(item, Hop):
+        return HopChartFactory.get_chart(item, chart_type).get_image_alt()
+
+    if isinstance(item, Fermentable):
+        return FermentableChartFactory.get_chart(item, chart_type).get_image_alt()
+
+    return None
+
+
+def chart_url(item: object, chart_type: str, format: str):
     if isinstance(item, Style):
         if item.is_category:
             return reverse('style_category_chart', kwargs={

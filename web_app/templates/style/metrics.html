@@ -22,7 +22,7 @@
                     </div>
                     <div class="card-footer bg-transparent"><div id="chart-spec-abv" class="chart-s">
                         <noscript>
-                            <img src="{{ style|plot_image:"abv-histogram" }}" alt="Histogram of Alcohol per Volume (ABV) in the {{ style.name }} beer style" class="chart-image"/>
+                            {{ style|chart_image:"abv-histogram"|safe }}
                         </noscript>
                     </div></div>
                 </div>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="card-footer bg-transparent"><div id="chart-spec-ibu" class="chart-s">
                         <noscript>
-                            <img src="{{ style|plot_image:"ibu-histogram" }}" alt="Histogram of bitterness (IBU) in the {{ style.name }} beer style" class="chart-image"/>
+                            {{ style|chart_image:"ibu-histogram"|safe }}
                         </noscript>
                     </div></div>
                 </div>
@@ -78,7 +78,7 @@
                     </div>
                     <div class="card-footer bg-transparent"><div id="chart-spec-color" class="chart-s">
                         <noscript>
-                            <img src="{{ style|plot_image:"color-srm-histogram" }}" alt="Histogram of beer color (SRM) in the {{ style.name }} beer style" class="chart-image"/>
+                            {{ style|chart_image:"color-srm-histogram"|safe }}
                         </noscript>
                     </div></div>
                 </div>
@@ -107,7 +107,7 @@
                     </div>
                     <div class="card-footer bg-transparent"><div id="chart-spec-og" class="chart-s">
                         <noscript>
-                            <img src="{{ style|plot_image:"original-gravity-histogram" }}" alt="Histogram of original gravity (OG) in the {{ style.name }} beer style" class="chart-image"/>
+                            {{ style|chart_image:"original-gravity-histogram"|safe }}
                         </noscript>
                     </div></div>
                 </div>
@@ -136,7 +136,7 @@
                     </div>
                     <div class="card-footer bg-transparent"><div id="chart-spec-fg" class="chart-s">
                         <noscript>
-                            <img src="{{ style|plot_image:"final-gravity-histogram" }}" alt="Histogram of final gravity (FG) in the {{ style.name }} beer style" class="chart-image"/>
+                            {{ style|chart_image:"final-gravity-histogram"|safe }}
                         </noscript>
                     </div></div>
                 </div>

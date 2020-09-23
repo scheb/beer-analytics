@@ -11,7 +11,7 @@
                 </div>
                 <div class="card-footer bg-transparent"><div id="chart-metric-color" class="chart-s">
                     <noscript>
-                        <img src="{{ fermentable|plot_image:"color-histogram" }}" alt="Histogram of the color (°Lovibond) of {{ fermentable.name }} fermentables" class="chart-image"/>
+                        {{ fermentable|chart_image:"color-histogram"|safe }}
                     </noscript>
                 </div></div>
             </div>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="card-footer bg-transparent"><div id="chart-metric-amount-percent" class="chart-s">
                     <noscript>
-                        <img src="{{ fermentable|plot_image:"amount-percent-range" }}" alt="Amount of {{ fermentable.name }} fermentables used in beer recipes" class="chart-image"/>
+                        {{ fermentable|chart_image:"amount-percent-range"|safe }}
                     </noscript>
                 </div></div>
             </div>
