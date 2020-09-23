@@ -100,9 +100,9 @@ window.addEventListener('load', function ()
     // Metrics
     display_graph('chart-spec-abv', '{{ style|plot:"abv-histogram" }}', {displayModeBar: false});
     display_graph('chart-spec-ibu', '{{ style|plot:"ibu-histogram" }}', {displayModeBar: false});
-    display_graph('chart-spec-color', '{{ style|plot:"color-histogram" }}', {displayModeBar: false});
-    display_graph('chart-spec-og', '{{ style|plot:"og-histogram" }}', {displayModeBar: false});
-    display_graph('chart-spec-fg', '{{ style|plot:"fg-histogram" }}', {displayModeBar: false});
+    display_graph('chart-spec-color', '{{ style|plot:"color-srm-histogram" }}', {displayModeBar: false});
+    display_graph('chart-spec-og', '{{ style|plot:"original-gravity-histogram" }}', {displayModeBar: false});
+    display_graph('chart-spec-fg', '{{ style|plot:"final-gravity_histogram" }}', {displayModeBar: false});
 
     // Charts
     display_graph('chart-popularity', '{{ style|plot:"popularity" }}');
