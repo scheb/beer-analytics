@@ -1,4 +1,5 @@
 from pathlib import Path
+
 from environ import Env
 
 env = Env()
@@ -53,6 +54,28 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'var/data.sqlite3',
     }
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': env.str('LOG_FILE'),
+        },
+    },
+    'root': {
+        'handlers': ['file'],
+        'level': env.str('LOG_LEVEL'),
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': env.str('LOG_LEVEL'),
+            'propagate': False,
+        },
+    },
 }
 
 CACHE_MIDDLEWARE_ALIAS = 'default'
