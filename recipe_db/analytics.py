@@ -427,6 +427,40 @@ def get_hop_pairings(hops: DataFrame, pair_must_include: Hop = None) -> DataFram
     return aggregated
 
 
+def get_most_popular_hops() -> DataFrame:
+    recipes_per_month = get_num_recipes_per_month()
+
+    query = '''
+        SELECT
+            strftime('%Y-%m', r.created) AS month,
+            rh.kind_id,
+            h.name AS hop,
+            count(DISTINCT r.uid) AS recipes
+        FROM recipe_db_recipe AS r
+        JOIN recipe_db_recipehop AS rh
+            ON r.uid = rh.recipe_id
+        JOIN recipe_db_hop AS h
+            ON rh.kind_id = h.id
+        WHERE
+            created IS NOT NULL
+            AND r.created > '2012-01-01'
+            AND rh.kind_id IS NOT NULL
+        GROUP BY strftime('%Y-%m', r.created), rh.kind_id
+    '''
+
+    df = pd.read_sql(query, connection)
+    df = df.merge(recipes_per_month, on="month")
+    df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
+
+    # Filter for the most popular since 2018
+    recent = df[df['month'] > '2018-01']
+    most_used = recent.groupby('kind_id').agg({"recipes_percent": "mean"}).sort_values('recipes_percent', ascending=False)[:8]
+    most_used_kind_ids = most_used.index.values
+    df = df[df['kind_id'].isin(most_used_kind_ids)]
+
+    return df
+
+
 def get_hops_popularity(hops: list) -> DataFrame:
     recipes_per_month = get_num_recipes_per_month()
     hop_ids = list(map(lambda x: x.id, hops))

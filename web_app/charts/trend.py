@@ -1,6 +1,6 @@
 from abc import ABC
 
-from recipe_db.analytics import get_hops_popularity, get_styles_popularity
+from recipe_db.analytics import get_hops_popularity, get_styles_popularity, get_most_popular_hops
 from recipe_db.models import Hop, Style
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.plot import LinesChart
@@ -32,7 +32,7 @@ class TrendingStylesChart(StylesPopularityChart):
 
 
 class WinterStylesChart(StylesPopularityChart):
-    IDS = ["30A", "30B", "30C", "16A", "16B", "20A", "20B", "20C"]
+    IDS = ["30A", "30B", "30C", "16B", "20A", "20C"]
 
     def get_chart_title(self) -> str:
         return "Trending winter beer styles"
@@ -56,43 +56,49 @@ class HopsPopularityChart(ChartDefinition, ABC):
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
-class FutureHopsPopularityChart(HopsPopularityChart):
+class IncreasingHopsPopularityChart(HopsPopularityChart):
     IDS = ["sabro", "cashmere", "idaho-7"]
 
     def get_chart_title(self) -> str:
-        return "Trending Hops"
+        return "Trending hops"
 
     def get_image_alt(self) -> str:
-        return "Trending Hops"
+        return "Trending hops"
 
 
-class PresentHopsPopularityChart(HopsPopularityChart):
-    IDS = ["galaxy", "mosaic", "lemondrop"]
+class PlateauingHopsPopularityChart(HopsPopularityChart):
+    IDS = ["lemondrop", "el-dorado", "azacca"]
 
     def get_chart_title(self) -> str:
-        return "Currently popular hops"
+        return "Previously trending hops"
 
     def get_image_alt(self) -> str:
-        return "Currently popular hops"
+        return "Previously trending hops"
 
 
-class PastHopsPopularityChart(HopsPopularityChart):
-    IDS = ["el-dorado", "azacca"]
-
+class FavouriteHopsPopularityChart(ChartDefinition):
     def get_chart_title(self) -> str:
-        return "Hops with decreasing popularity"
+        return "Brewer's favourite hops"
 
     def get_image_alt(self) -> str:
-        return "Hops with decreasing popularity"
+        return "Brewer's favourite hops"
+
+    def plot(self) -> Chart:
+        df = get_most_popular_hops()
+        if len(df) <= 1:  # 1, because a single data point is also meaningless
+            raise NoDataException()
+
+        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'hop', 'Month/Year', '% Recipes')
+        return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
 class TrendChartFactory:
     CHARTS = dict(
         trending_styles=TrendingStylesChart,
         winter_styles=WinterStylesChart,
-        future_hops=FutureHopsPopularityChart,
-        present_hops=PresentHopsPopularityChart,
-        past_hops=PastHopsPopularityChart,
+        increasing_popularity_hops=IncreasingHopsPopularityChart,
+        plateauing_popularity_hops=PlateauingHopsPopularityChart,
+        favourite_hops=FavouriteHopsPopularityChart,
     )
 
     @classmethod
