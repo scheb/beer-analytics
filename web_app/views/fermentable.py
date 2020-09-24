@@ -49,7 +49,7 @@ def detail(request: HttpRequest, slug: str, category: str) -> HttpResponse:
         raise Http404("Fermentable doesn't have any data.")
 
     if category != fermentable.category:
-        return redirect('fermentable_category', category=fermentable.category, slug=fermentable.id)
+        return redirect('fermentable_detail', category=fermentable.category, slug=fermentable.id)
 
     return render(request, 'fermentable/detail.html', {'fermentable': fermentable})
 

@@ -42,7 +42,7 @@ def detail(request: HttpRequest, slug: str, category: str) -> HttpResponse:
         raise Http404("Hop doesn't have any data.")
 
     if category != hop.category:
-        return redirect('hop_category', category=hop.category, slug=hop.id)
+        return redirect('hop_detail', category=hop.category, slug=hop.id)
 
     return render(request, 'hop/detail.html', {'hop': hop})
 
