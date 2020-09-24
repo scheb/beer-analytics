@@ -18,6 +18,7 @@
     <hr/>
 
     <h2>Trends in Homebrewing</h2>
+
     <h3>Trending Beer Styles</h3>
     <p>
         <a href="{{ "02A"|style|url }}">International Pale Lager</a> and <a href="{{ "12C"|style|url }}">English IPA</a>
@@ -30,8 +31,9 @@
     </div>
 
     <p class="mt-3">
-        The fall/winter brewing season is starting! People are brewing more <a href="">Porter and Stouts</a> and they're
-        mashing in seasonal <a href="{{ "30"|style|url }}">spiced beers</a>.
+        The fall/winter brewing season is starting! People are brewing more
+        <a href="{{ "20"|style|url }}">Porter and Stouts</a> and they're mashing in seasonal
+        <a href="{{ "30"|style|url }}">spiced beers</a>.
     </p>
     <div id="chart-winter-styles" class="chart-m">
         <noscript>
@@ -41,38 +43,53 @@
 
     <h3>Trending Hops</h3>
 
-    <h4>The Future</h4>
+    <h4>Rising Stars</h4>
     <p>
         <a href="{{ "sabro"|hop|url }}">Sabro</a> (aka HBC 438) is the trending hop of 2020.
-        <a href="{{ "idaho-7"|hop|url }}">Idaho 7</a> and <a href="{{ "cashmere"|hop|url }}">Cashmere</a> are growing.
+        <a href="{{ "idaho-7"|hop|url }}">Idaho 7</a> and <a href="{{ "cashmere"|hop|url }}">Cashmere</a> are growing
+        too.
     </p>
-    <div id="chart-future-hops" class="chart-m">
+    <div id="chart-increasing-popularity-hops" class="chart-m">
         <noscript>
-            <img src="{% url "trend_chart" "future-hops" "svg" %}" alt="Trending hops, popularity rising"/>
+            <img src="{% url "trend_chart" "increasing-popularity-hops" "svg" %}" alt="Trending hops, popularity currently increasing"/>
         </noscript>
     </div>
-
-    <h4>The Present</h4>
-    <p><a href="{{ "galaxy"|hop|url }}">Galaxy</a> and <a href="{{ "mosaic"|hop|url }}">Mosaic</a> are still some of
-        brewer's favorites. <a href={{ "lemondrop"|hop|url }}>Lemondrop</a> got popular since 2017, but is now
+    <p class="mt-3">
+        <a href="{{ "el-dorado"|hop|url }}">El Dorado</a>, <a href="{{ "azacca"|hop|url }}">Azacca</a> and
+        <a href="{{ "lemondrop"|hop|url }}">Lemondrop</a> have been trending since 2017, but their popularity is now
         plateauing.
     </p>
-    <div id="chart-present-hops" class="chart-m">
+    <div id="chart-plateauing-popularity-hops" class="chart-m">
         <noscript>
-            <img src="{% url "trend_chart" "present-hops" "svg" %}" alt="Currently popular hops in beer recipes"/>
+            <img src="{% url "trend_chart" "plateauing-popularity-hops" "svg" %}" alt="Previously trending hops, popularity currently plateauing"/>
         </noscript>
     </div>
 
-    <h4>The Past</h4>
+    <h4>All-time Favourites</h4>
     <p>
-        <a href="{{ "el-dorado"|hop|url }}">El Dorado</a> and <a href="{{ "azacca"|hop|url }}">Azacca</a>, trending hops
-        of 2017-2019, are now slowly decreasing in popularity.
+        While usage of <a href="{{ "cascade"|hop|url }}">Cascade</a> has decreased over the last years, it is still
+        brewer's favourite hop. Citra is defending a strong second place. Both are used in around 15% of recipes.
+    <p>
+    <p>
+        There's a whole group of popular hops in the range 5-10% of the recipes. Most notably,
+        <a href="{{ "mosaic"|hop|url }}">Mosaic</a> has grown over the last years from nothing to becoming one of
+        the most used hop kind.
     </p>
-    <div id="chart-past-hops" class="chart-m">
+
+    <div id="chart-favourite-hops" class="chart-m">
         <noscript>
-            <img src="{% url "trend_chart" "present-hops" "svg" %}" alt="Currently popular hops in beer recipes, but popularity decreasing"/>
+            <img src="{% url "trend_chart" "favourite-hops" "svg" %}" alt="All-time favourite hops"/>
         </noscript>
     </div>
+
+    <h3>Fermentables</h3>
+    <p>People are brewing less and less with <a href="{{ "malt-extract"|fermentable|url }}">malt extract</a> and are switching to all-grain instead.</p>
+    <div id="chart-malt-extract" class="chart-m">
+        <noscript>
+            {{ "malt-extract"|fermentable|chart_image:"popularity"|safe }}
+        </noscript>
+    </div>
+
 {% endblock %}
 
 {% block script %}
@@ -81,9 +98,12 @@ window.addEventListener('load', function ()
 {
     display_graph('chart-trending-styles', '{% url "trend_chart" "trending-styles" "json" %}');
     display_graph('chart-winter-styles', '{% url "trend_chart" "winter-styles" "json" %}');
-    display_graph('chart-future-hops', '{% url "trend_chart" "future-hops" "json" %}');
-    display_graph('chart-present-hops', '{% url "trend_chart" "present-hops" "json" %}');
-    display_graph('chart-past-hops', '{% url "trend_chart" "past-hops" "json" %}');
+
+    display_graph('chart-increasing-popularity-hops', '{% url "trend_chart" "increasing-popularity-hops" "json" %}');
+    display_graph('chart-plateauing-popularity-hops', '{% url "trend_chart" "plateauing-popularity-hops" "json" %}');
+    display_graph('chart-favourite-hops', '{% url "trend_chart" "favourite-hops" "json" %}');
+
+    display_graph('chart-malt-extract', '{{ "malt-extract"|fermentable|chart_js:"popularity" }}');
 });
 </script>
 {% endblock %}
