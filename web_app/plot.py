@@ -7,6 +7,8 @@ from plotly import express as px
 from plotly.graph_objs import Figure
 from plotly.subplots import make_subplots
 
+COLORS_PRISM = px.colors.qualitative.Prism
+
 COLORS_DISTINCT = [
     "rgb(93, 105, 177)",
     "rgb(229, 134, 6)",
@@ -21,8 +23,13 @@ COLORS_DISTINCT = [
     "rgb(165, 170, 153)",
 ]
 
-COLORS_PRISM = px.colors.qualitative.Prism
-COLOR_SEQUENTIAL = px.colors.sequential.Sunsetdark
+COLOR_SEQUENTIAL = [
+    '#fcd99d',
+    '#f5a452',
+    '#d15483',
+    '#bd4d8d',
+    '#883b7e',
+]
 
 
 class LinesChart:
@@ -44,6 +51,7 @@ class LinesChart:
 
         fig.update_layout(legend=dict(title=legend_title))
         fig.update_layout(
+            plot_bgcolor='#f1efee',
             title=None,
             showlegend=len(fig.data) > 1,
             margin=dict(l=10, r=0, t=20, b=10),
@@ -66,6 +74,7 @@ class CompactHistogramChart:
         fig = px.histogram(df, x=x_field, y=count_field, histfunc="sum", nbins=30)
 
         fig.update_layout(
+            plot_bgcolor='#f1efee',
             margin=dict(l=0, r=0, t=0, b=0),
             xaxis=dict(
                 title_text=None,
@@ -92,6 +101,7 @@ class BoxPlot:
         fig = px.box(df, x=type_field, y=value_field, points="all", color=type_field, color_discrete_sequence=COLORS_PRISM)
         fig.update_traces(boxpoints="outliers", jitter=0.3, hoveron="boxes", marker=dict(opacity=0.3, size=4))
         fig.update_layout(
+            plot_bgcolor='#f1efee',
             title=None,
             showlegend=False,
             margin=dict(l=10, r=0, t=20, b=10),
@@ -143,6 +153,7 @@ class PreAggregatedBoxPlot:
             column += 1
 
         fig.update_layout(
+            plot_bgcolor='#f1efee',
             title=None,
             showlegend=False,
             margin=dict(l=10, r=0, t=20, b=10),
@@ -204,6 +215,7 @@ class PreAggregatedPairsBoxPlot:
                 fig.add_trace(trace, row=1, col=column)
 
         fig.update_layout(
+            plot_bgcolor='#f1efee',
             title=None,
             showlegend=False,
             margin=dict(l=30, r=0, t=20, b=10),
@@ -244,6 +256,7 @@ class RangeBoxPlot:
         fig.add_trace(trace)
 
         fig.update_layout(
+            plot_bgcolor='#f1efee',
             title=None,
             showlegend=False,
             margin=dict(l=0, r=0, t=0, b=0),
@@ -281,6 +294,7 @@ class BarChart:
 
         margin = dict(l=30, r=0, t=20, b=10) if self.add_margin else dict(l=0, r=0, t=0, b=0)
         fig.update_layout(
+            plot_bgcolor='#f1efee',
             title=None,
             showlegend=False,
             coloraxis=dict(
@@ -323,6 +337,7 @@ class PreAggregateHistogramChart:
         fig.update_traces(marker=dict(line=dict(width=0)))
 
         fig.update_layout(
+            plot_bgcolor='#f1efee',
             title=None,
             showlegend=False,
             bargap=0,
