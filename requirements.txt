@@ -4,6 +4,7 @@ chardet==3.0.4
 cycler==0.10.0
 Django==3.1
 django-environ==0.4.5
+django-pipeline==2.0.5
 idna==2.10
 kaleido==0.0.3.post1
 kiwisolver==1.2.0

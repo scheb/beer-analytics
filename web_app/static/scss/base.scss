@@ -1,0 +1,45 @@
+// Basic styles and Bootstrap overwrites
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Titillium Web", var(--bs-font-sans-serif);
+}
+
+h1 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+h2 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid $gray-300;
+
+    a {
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.card {
+    h2, h3 {
+        border-bottom: none;
+    }
+}
+
+.card-header {
+    background-color: $gray-50;
+    border-bottom: 2px solid $primary;
+
+    h2, h3, h4, h5, h6 {
+        margin: 0;
+    }
+}
+
+.breadcrumb {
+    background: $gray-10;
+    padding: 0.3rem 0.6rem;
+}

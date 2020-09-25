@@ -12,51 +12,88 @@
         </ol>
     </nav>
 
-    <h1>{{ fermentable.name }}</h1>
-
-    {% if fermentable.alt_names %}
-        <p>Includes: <span class="badge bg-secondary">{{ fermentable.alt_names_list|join:'</span><span class="invisible">, </span><span class="badge bg-secondary">' }}</span></p>
-    {% endif %}
-
-    <p>Type: <strong>{{ fermentable.type_name }}</strong></p>
-    <p>Number of recipes: <strong>{{ fermentable.recipes_count }}</strong></p>
+    <div class="detail-head">
+        <h1>{{ fermentable.name }}</h1>
+        <dl class="detail-info">
+            <dt>Type:</dt>
+            <dd>{{ fermentable.type_name }}</dd>
+            <dt>Recipes:</dt>
+            <dd>{{ fermentable.recipes_count }}</dd>
+            {% if fermentable.alt_names %}
+            <dt>Includes:</dt>
+            {% for alt_name in fermentable.alt_names_list %}
+            <dd class="badge">{{ alt_name }}</dd>
+            {% endfor %}
+            {% endif %}
+        </dl>
+    </div>
 
     {% include './metrics.html' %}
 
-    <h2>Popularity Over Time</h2>
-    <div id="chart-popularity" class="chart-m">
-        <noscript>
-            {{ fermentable|chart_image:"popularity"|safe }}
-        </noscript>
-    </div>
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#popularity" id="popularity" class="anchor"><span></span></a>Popularity Over Time</h2>
+        </div>
+        <div class="card-body">
+            <div id="chart-popularity" class="chart-m">
+                <noscript>
+                    {{ fermentable|chart_image:"popularity"|safe }}
+                </noscript>
+            </div>
+        </div>
+    </section>
 
-    <h2>Typical Styles</h2>
-    <h3>Absolute Number of Recipes</h3>
-    <div id="chart-styles-abs" class="chart-l">
-        <noscript>
-            {{ fermentable|chart_image:"typical-styles-absolute"|safe }}
-        </noscript>
-    </div>
-    <h3>Relative Percent of Recipes</h3>
-    <div id="chart-styles-rel" class="chart-l">
-        <noscript>
-            {{ fermentable|chart_image:"typical-styles-relative"|safe }}
-        </noscript>
-    </div>
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#styles-number-recipes" id="styles-number-recipes" class="anchor"><span></span></a>Typical Styles <small class="text-muted">by Number of Recipes</small></h2>
+        </div>
+        <div class="card-body">
+            <div id="chart-styles-abs" class="chart-l">
+                <noscript>
+                    {{ fermentable|chart_image:"typical-styles-absolute"|safe }}
+                </noscript>
+            </div>
+        </div>
+    </section>
 
-    <h2>Amount per Style</h2>
-    <div id="chart-style-amount" class="chart-l">
-        <noscript>
-            {{ fermentable|chart_image:"amount-used-per-style"|safe }}
-        </noscript>
-    </div>
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#styles-percent-recipes" id="styles-percent-recipes" class="anchor"><span></span></a>Typical Styles <small class="text-muted">by Percent of Recipes</small></h2>
+        </div>
+        <div class="card-body">
+            <div id="chart-styles-rel" class="chart-l">
+                <noscript>
+                    {{ fermentable|chart_image:"amount-used-per-style"|safe }}
+                </noscript>
+            </div>
+        </div>
+    </section>
 
-    <h2>Common Pairings</h2>
-    <div id="chart-pairings" class="chart-l">
-        <noscript>
-            {{ fermentable|chart_image:"fermentable-pairings"|safe }}
-        </noscript>
-    </div>
+     <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#style-amount" id="style-amount" class="anchor"><span></span></a>Amount per Style</h2>
+        </div>
+        <div class="card-body">
+            <div id="chart-style-amount" class="chart-l">
+                <noscript>
+                    {{ fermentable|chart_image:"amount-used-per-style"|safe }}
+                </noscript>
+            </div>
+        </div>
+    </section>
+
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#fermentable-pairings" id="fermentable-pairings" class="anchor"><span></span></a>Common Pairings</h2>
+        </div>
+        <div class="card-body">
+            <div id="chart-fermentable-pairings" class="chart-l">
+                <noscript>
+                    {{ fermentable|chart_image:"fermentable-pairings"|safe }}
+                </noscript>
+            </div>
+        </div>
+    </section>
 {% endblock %}
 
 {% block script %}
@@ -72,7 +109,7 @@ window.addEventListener('load', function ()
     display_graph('chart-styles-abs', '{{ fermentable|chart_js:"typical-styles-absolute" }}');
     display_graph('chart-styles-rel', '{{ fermentable|chart_js:"typical-styles-relative" }}');
     display_graph('chart-style-amount', '{{ fermentable|chart_js:"amount-used-per-style" }}');
-    display_graph('chart-pairings', '{{ fermentable|chart_js:"fermentable_pairings" }}');
+    display_graph('chart-fermentable-pairings', '{{ fermentable|chart_js:"fermentable-pairings" }}');
 });
 </script>
 {% endblock %}

@@ -1,0 +1,167 @@
+// Detail pages header
+
+.detail-head {
+    margin-bottom: 2rem;
+
+    h1 {
+        margin-bottom: 0.25rem;
+    }
+}
+
+dl.detail-info {
+    display: flex;
+    margin: 0 0 1rem 0;
+
+    dt {
+        &:first-child {
+            margin-left: 0;
+            padding-left: 0;
+            border-left: none;
+        }
+
+        margin: 0 0.25rem 0 0.5rem;
+        padding: 0 0 0 0.5rem;
+        display: inline-block;
+        font-weight: normal;
+        border-left: 1px solid $gray-100;
+    }
+
+    dd {
+        margin: 0;
+        display: inline-block;
+        font-weight: bold;
+    }
+
+    .badge {
+        margin: 0 0.1rem;
+        font-size: inherit;
+        background-color: $gray-400;
+    }
+}
+
+.most-popular {
+    line-height: 2rem;
+
+    a.badge {
+        color: $white;
+        font-size: inherit;
+        text-decoration: none;
+        background: $secondary;
+
+        &:hover {
+            color: $white;
+            text-decoration: underline;
+        }
+    }
+}
+
+
+// Anchors
+
+a.anchor {
+    position:relative;
+    top: -68px;  // Move the anchor to account for the overlaying header navigation
+    width: 0;
+}
+
+a.anchor span {
+    display: none;
+    position: absolute;
+    right: 0;
+    width: 21px;
+    height: 16px;
+    line-height: 1;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: contain;
+    background-image: url("../img/icon-anchor.svg")
+}
+
+h2 a.anchor span {
+    top: 85px;
+}
+
+h3 a.anchor span {
+    top: 82px;
+}
+
+h2, h3 {
+    &:hover {
+        a.anchor span {
+            display: block;
+        }
+    }
+}
+
+.card {
+    a.anchor span {
+        width: 24px;
+    }
+}
+
+
+// Generic overviews
+
+.recipes-count {
+    cursor: help;
+    color: $text-muted;
+    margin-left: 0.5rem;
+}
+
+.styles-overview {
+    .recipes-count {
+        float: right;
+    }
+}
+
+.search {
+    margin-bottom: 1.5rem;
+
+    input.search-term {
+        max-width: 500px;
+    }
+}
+
+
+// Column lists
+.column-list {
+    @include list-unstyled();
+    margin-left: 2rem;
+    margin-right: 2rem;
+
+    @include media-breakpoint-up('sm') {
+        column-count: 2;
+    }
+
+    @include media-breakpoint-up('lg') {
+        column-count: 3;
+    }
+
+    @include media-breakpoint-up('xl') {
+        column-count: 4;
+    }
+
+    @include media-breakpoint-up('xxl') {
+        column-count: 5;
+    }
+}
+
+
+// Static content
+
+.about-logo {
+    width: 40%;
+    max-width: 15rem;
+    height: auto;
+}
+
+h1.home {
+    margin-bottom: 0;
+}
+
+h2.home {
+    margin: 0 0 1.5rem 0;
+    border-bottom: none;
+    font-size: 1.5rem;
+}

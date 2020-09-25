@@ -5,92 +5,119 @@
 
 {% block content %}
     {% include './breadcrumb.html' %}
-    <h1>{{ style.name }} <small class="text-muted ml-2" title="BJCP ID">{{ style.id }}</small></h1>
+    <div class="detail-head">
+        <h1>{{ style.name }} <small class="text-muted ml-2" title="BJCP ID">{{ style.id }}</small></h1>
 
-    {% if style.alt_names %}
-        <p>Includes: <span class="badge bg-secondary">{{ style.alt_names_list|join:'</span><span class="invisible">, </span><span class="badge bg-secondary">' }}</span></p>
-    {% endif %}
-
-    {% if style.recipes_count %}
-        <p>Number of recipes: <strong>{{ style.recipes_count }}</strong></p>
-    {% endif %}
-
-    {% if style.is_category %}
-        <p>This is a <strong>beer style category</strong>, containing the following beer styles:</p>
-    {% elif style.has_sub_styles %}
-        <p>This beer style has some specialized <strong>sub-styles</strong>:</p>
-    {% endif %}
-
-    {% if style.has_sub_styles %}
-        <ul>
-            {% for style1 in style.sub_styles %}
-                <li>
-                    <a href="{% url "style_detail" style1.category.slug style1.slug %}">{{ style1.name }}</a>
-                    {% if style1.has_sub_styles %}
-                        <ul class="list-unstyled mt-1 mb-2 ml-2">
-                            {% for style2 in style1.sub_styles %}
-                                <li>
-                                    <a href="{% url "style_detail" style2.category.slug style2.slug %}">{{ style2.name }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </li>
+        <dl class="detail-info">
+            <dt>Recipes:</dt>
+            <dd>{{ style.recipes_count }}</dd>
+            {% if style.alt_names %}
+            <dt>Includes:</dt>
+            {% for alt_name in style.alt_names_list %}
+            <dd class="badge">{{ alt_name }}</dd>
             {% endfor %}
-        </ul>
-    {% endif %}
+            {% endif %}
+        </dl>
+
+        {% if style.is_category %}
+            <p>This is a <strong>beer style category</strong>, containing the following beer styles:</p>
+        {% elif style.has_sub_styles %}
+            <p>This beer style has some specialized <strong>sub-styles</strong>:</p>
+        {% endif %}
+
+        {% if style.has_sub_styles %}
+            <ul>
+                {% for style1 in style.sub_styles %}
+                    <li>
+                        <a href="{% url "style_detail" style1.category.slug style1.slug %}">{{ style1.name }}</a>
+                        {% if style1.has_sub_styles %}
+                            <ul class="list-unstyled mt-1 mb-2 ml-2">
+                                {% for style2 in style1.sub_styles %}
+                                    <li>
+                                        <a href="{% url "style_detail" style2.category.slug style2.slug %}">{{ style2.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
 
     {% include './metrics.html' %}
 
-    <h2>Popularity Over Time</h2>
-    <div id="chart-popularity" class="chart-m">
-        <noscript>
-            {{ style|chart_image:"popularity"|safe }}
-        </noscript>
-    </div>
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#popularity" id="popularity" class="anchor"><span></span></a>Popularity Over Time</h2>
+        </div>
+        <div class="card-body">
+            <div id="chart-popularity" class="chart-m">
+                <noscript>
+                    {{ style|chart_image:"popularity"|safe }}
+                </noscript>
+            </div>
+        </div>
+    </section>
 
-    <h2>Most Used Fermentables</h2>
-    <nav id="chart-fermentables-tabs">
-        <label for="chart-fermentables-tabs" class="float-left py-1 pr-2">Type:</label>
-        <ul class="nav nav-pills" role="tablist">
-            <li class="nav-item"><a class="nav-link px-2 py-1 active" aria-current="page" data-toggle="tab" role="tab" data-filter="" href="#chart-fermentables">Any</a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" data-toggle="tab" role="tab" data-filter="base" href="#chart-fermentables-base">Base Malt</a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" data-toggle="tab" role="tab" data-filter="cara-crystal" href="#chart-fermentables-cara-crystal">Caramel/Crystal</a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" data-toggle="tab" role="tab" data-filter="toasted" href="#chart-fermentables-toasted">Toasted</a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" data-toggle="tab" role="tab" data-filter="roasted" href="#chart-fermentables-roasted">Roasted</a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" data-toggle="tab" role="tab" data-filter="other-grain" href="#chart-fermentables-other-grain">Other Grain</a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" data-toggle="tab" role="tab" data-filter="sugar" href="#chart-fermentables-sugar">Sugar</a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" data-toggle="tab" role="tab" data-filter="fruit" href="#chart-fermentables-fruit">Fruit</a></li>
-        </ul>
-    </nav>
-    <div id="chart-fermentables" class="chart-l">
-        <noscript>
-            {{ style|chart_image:"popular-fermentables"|safe }}
-        </noscript>
-    </div>
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#most-used-fermentables" id="most-used-fermentables" class="anchor"><span></span></a>Most Used Fermentables</h2>
+            <nav id="chart-fermentables-tabs">
+                <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="" href="#chart-fermentables">Any</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="base" href="#chart-fermentables-base">Base Malt</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="cara-crystal" href="#chart-fermentables-cara-crystal">Caramel/Crystal</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="toasted" href="#chart-fermentables-toasted">Toasted</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="roasted" href="#chart-fermentables-roasted">Roasted</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="other-grain" href="#chart-fermentables-other-grain">Other Grain</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="sugar" href="#chart-fermentables-sugar">Sugar</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="fruit" href="#chart-fermentables-fruit">Fruit</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="card-body">
+            <div id="chart-fermentables" class="chart-l">
+                <noscript>
+                    {{ style|chart_image:"popular-fermentables"|safe }}
+                </noscript>
+            </div>
+        </div>
+    </section>
 
-    <h2>Most Used Hops</h2>
-    <nav id="chart-hops-tabs">
-        <label for="chart-hops-tabs" class="float-left py-1 pr-2">Used for:</label>
-        <ul class="nav nav-pills" role="tablist">
-            <li class="nav-item"><a class="nav-link px-2 py-1 active" aria-current="page" data-toggle="tab" role="tab" data-filter="" href="#chart-hops">Any</a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" data-toggle="tab" role="tab" data-filter="bittering" href="#chart-hops-bittering">Bittering</a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" data-toggle="tab" role="tab" data-filter="aroma" href="#chart-hops-aroma">Aroma</a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" data-toggle="tab" role="tab" data-filter="dry-hop" href="#chart-hops-dry-hop">Dry-Hop</a></li>
-        </ul>
-    </nav>
-    <div id="chart-hops" class="chart-l">
-        <noscript>
-            {{ style|chart_image:"popular-hops"|safe }}
-        </noscript>
-    </div>
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#most-used-hops" id="most-used-hops" class="anchor"><span></span></a>Most Used Hops</h2>
+            <nav id="chart-hops-tabs">
+                <ul class="nav nav-tabs  card-header-tabs" role="tablist">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="" href="#chart-hops">Any</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="bittering" href="#chart-hops-bittering">Bittering</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="aroma" href="#chart-hops-aroma">Aroma</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="dry-hop" href="#chart-hops-dry-hop">Dry-Hop</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="card-body">
+            <div id="chart-hops" class="chart-l">
+                <noscript>
+                    {{ style|chart_image:"popular-hops"|safe }}
+                </noscript>
+            </div>
+        </div>
+    </section>
 
-    <h2>Common Hop Pairings</h2>
-    <div id="chart-hop-pairings" class="chart-l">
-        <noscript>
-            {{ style|chart_image:"hop-pairings"|safe }}
-        </noscript>
-    </div>
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#hop-pairings" id="hop-pairings" class="anchor"><span></span></a>Common Hop Pairings</h2>
+        </div>
+        <div class="card-body">
+            <div id="chart-hop-pairings" class="chart-l">
+                <noscript>
+                    {{ style|chart_image:"hop-pairings"|safe }}
+                </noscript>
+            </div>
+        </div>
+    </section>
 {% endblock %}
 
 {% block script %}

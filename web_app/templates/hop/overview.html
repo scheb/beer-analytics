@@ -6,21 +6,36 @@
 {% block content %}
     <h1>Hops</h1>
 
-    {% for category in categories %}
-        <h2><a href="{% url "hop_category" category.id %}" class="text-body">{{ category.name }}</a></h2>
-
-        <p class="most-popular">Most popular:
-            {% for hop in category.most_popular %}
-                {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
-                <a class="badge bg-primary" href="{{ hop|url }}">{{ hop.name }}</a>
-            {% endfor %}
+    <form class="search d-none">
+        <p>
+            <label for="input-search" class="sr-only">Search hops</label>
+            <input type="search" class="search-term form-control" id="input-search" placeholder="Search hops">
         </p>
+    </form>
 
-        <ul class="column-list">
-            {% for hop in category.hops %}
-                <li><a href="{{ hop|url }}">{{ hop.name }}</a> <small
-                        class="text-muted ml-2">{{ hop.recipes_count }}</small></li></li>
-            {% endfor %}
-        </ul>
-    {% endfor %}
+    <div class="hops-overview">
+        {% for category in categories %}
+            <h2>
+                <a href="#{{ category.id }}" id="{{ category.id }}" class="anchor"><span></span></a>
+                <a href="{% url "hop_category" category.id %}" class="text-body">{{ category.name }}</a>
+            </h2>
+            <div class="mb-4">
+                <p class="most-popular">Most popular:
+                    {% for hop in category.most_popular %}
+                        {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
+                        <a class="badge" href="{{ hop|url }}">{{ hop.name }}</a>
+                    {% endfor %}
+                </p>
+
+                <ul class="column-list">
+                    {% for hop in category.hops %}
+                        <li data-search-term="{{ hop.name }}">
+                            {% if hop.is_popular %}<strong>{% endif %}<a href="{{ hop|url }}">{{ hop.name }}</a>{% if hop.is_popular %}</strong>{% endif %}
+                            <small class="recipes-count" title="Recipes">{{ hop.recipes_count }}</small>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

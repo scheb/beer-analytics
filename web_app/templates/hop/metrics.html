@@ -1,10 +1,13 @@
 {% load web_app %}
-<h2>Characteristics</h2>
+<h2>
+    <a id="characteristics" href="#characteristics" class="anchor"><span></span></a>
+    Characteristics
+</h2>
 <div class="row row-cols-1 row-cols-lg-3 g-1 mb-4">
     {% if hop.recipes_alpha_min %}
         <div class="col">
             <div class="card text-center h-100">
-                <div class="card-header"><h3 class="h6 mb-0">Alpha Acid</h3></div>
+                <div class="card-header"><h3 class="h5 mb-0">Alpha Acid</h3></div>
                 <div class="card-body">
                     {{ hop.recipes_alpha_min|floatformat:1 }} &lt; <strong>{{ hop.recipes_alpha_mean|floatformat:1 }}</strong> &lt; {{ hop.recipes_alpha_max|floatformat:1 }} <small class="text-muted">%</small>
                 </div>
@@ -19,7 +22,7 @@
     {% if hop.recipes_amount_percent_min %}
         <div class="col">
             <div class="card text-center h-100">
-                <div class="card-header"><h3 class="h6 mb-0">Amount in Recipe</h3></div>
+                <div class="card-header"><h3 class="h5 mb-0">Amount</h3></div>
                 <div class="card-body">
                     {% if hop.recipes_amount_percent_min %}
                         {{ hop.recipes_amount_percent_min|floatformat:1 }} &lt; <strong>{{ hop.recipes_amount_percent_mean|floatformat:1 }}</strong> &lt; {{ hop.recipes_amount_percent_max|floatformat:1 }} <small class="text-muted">%</small>
@@ -36,7 +39,7 @@
     {% if hop.use_count %}
         <div class="col">
             <div class="card text-center h-100">
-                <div class="card-header"><h3 class="h6 mb-0">Usage in Recipe</h3></div>
+                <div class="card-header"><h3 class="h5 mb-0">Usage</h3></div>
                 <div class="card-body">
                     <strong>{{ hop.category_name }} Hop</strong>
                 </div>

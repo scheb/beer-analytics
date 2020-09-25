@@ -5,31 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content=""/>
     <title>{% if url_name == "home" %}Beer Analytics &ndash; The analytical beer recipe database{% else %}{% block title %}{% endblock %} | Beer Analytics{% endif %}</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"/>
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}"/>
+    {% load pipeline %}{% stylesheet 'base' %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web">
 </head>
 <body>
 
-<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap shadow p-0">
-    <div class="container-fluid navbar-expand-md p-0 pr-2">
-        <a class="navbar-brand col-md-3 col-lg-2 mr-0" href="/"><span class="logo"></span>Beer Analytics</a>
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap shadow">
+    <nav class="container-fluid navbar-expand-md p-0">
+        <a class="navbar-brand col-md-3 col-lg-2" href="/"><span class="logo"></span>Beer Analytics</a>
         <button class="navbar-toggler d-md-none ml-auto" type="button" data-toggle="collapse" data-target="#sidebar"
                 aria-controls="sidebar" aria-expanded="false" aria-label="Toggle filters" title="Toggle filters">
             <span class="navbar-filter-icon"></span>
         </button>
-        <button class="navbar-toggler d-md-none ml-1" type="button" data-toggle="collapse" data-target="#top-navigation"
+        <button class="navbar-toggler d-md-none ml-1 mr-3" type="button" data-toggle="collapse" data-target="#top-navigation"
                 aria-controls="top-navigation" aria-expanded="false" aria-label="Toggle navigation" title="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
             {% load web_app %}
-            <div id="top-navigation" class="collapse navbar-collapse p-2 pl-md-0 pr-md-0">
+            <div id="top-navigation" class="collapse navbar-collapse">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link pt-md-1 pb-md-1{% if url_name|startswith:'style' %} active{% endif %}" href="{% url "style_overview" %}"><span class="nav-icon pint-icon"></span>Beer Styles</a></li>
-                    <li class="nav-item"><a class="nav-link pt-md-1 pb-md-1{% if url_name|startswith:'hop' %} active{% endif %}" href="{% url "hop_overview" %}"><span class="nav-icon hops-icon"></span>Hops</a></li>
-                    <li class="nav-item"><a class="nav-link pt-md-1 pb-md-1{% if url_name|startswith:'fermentable' %} active{% endif %}" href="{% url "fermentable_overview" %}"><span class="nav-icon fermentables-icon"></span>Fermentables</a></li>
-                    <li class="nav-item"><a class="nav-link pt-md-1 pb-md-1{% if url_name|startswith:'yeast' %} active{% endif %}" href="{% url "yeast_overview" %}"><span class="nav-icon yeasts-icon"></span>Yeasts</a></li>
+                    <li class="nav-item"><a class="nav-link{% if url_name|startswith:'style' %} active{% endif %}" href="{% url "style_overview" %}"><span class="nav-icon pint-icon"></span>Beer Styles</a></li>
+                    <li class="nav-item"><a class="nav-link{% if url_name|startswith:'hop' %} active{% endif %}" href="{% url "hop_overview" %}"><span class="nav-icon hops-icon"></span>Hops</a></li>
+                    <li class="nav-item"><a class="nav-link{% if url_name|startswith:'fermentable' %} active{% endif %}" href="{% url "fermentable_overview" %}"><span class="nav-icon fermentables-icon"></span>Fermentables</a></li>
+                    <li class="nav-item"><a class="nav-link{% if url_name|startswith:'yeast' %} active{% endif %}" href="{% url "yeast_overview" %}"><span class="nav-icon yeasts-icon"></span>Yeasts</a></li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link{% if url_name == 'about' %} active{% endif %}" href="{% url "about" %}">About</a></li>
@@ -41,16 +39,16 @@
                 </ul>
             </div>
         {% endwith %}
-    </div>
-</nav>
+    </nav>
+</header>
 
 <div class="container-fluid">
     <div class="row">
-        <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-            <div class="position-sticky">
-                <div class="container-fluid"><p class="alert alert-info mt-3 p-2">No filtering options (yet)</p></div>
+        <div id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+            <div class="position-sticky sidebar-content">
+                <p>Filter options not available (yet)</p>
             </div>
-        </nav>
+        </div>
 
         <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 pb-4">
             {% block content %}{% endblock %}
@@ -58,6 +56,7 @@
     </div>
 </div>
 
+{% load static %}
 <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
 <script src="{% static 'js/plotly-latest.min.js' %}"></script>
 <script src="{% static 'js/dashboard.js' %}"></script>

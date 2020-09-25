@@ -1,11 +1,14 @@
 {% load web_app %}
 {% if style.has_specified_metrics or style.has_recipes_metrics %}
-    <h2>Specifications</h2>
+    <h2>
+        <a id="specifications" href="#specifications" class="anchor"><span></span></a>
+        Specifications
+    </h2>
     <div class="row row-cols-1 row-cols-lg-5 g-1 mb-4">
         {% if style.recipes_abv_min or style.abv_min %}
             <div class="col">
                 <div class="card text-center h-100">
-                    <div class="card-header"><h3 class="h6 mb-0">Alcohol</h3></div>
+                    <div class="card-header"><h3 class="h5">Alcohol</h3></div>
                     <div class="card-body pb-0">
                         {% if style.abv_min %}
                             <p>
@@ -32,7 +35,7 @@
         {% if style.ibu_min or style.recipes_ibu_min %}
             <div class="col">
                 <div class="card text-center h-100">
-                    <div class="card-header"><h3 class="h6 mb-0">Bitterness</h3></div>
+                    <div class="card-header"><h3 class="h5">Bitterness</h3></div>
                     <div class="card-body pb-0">
                         {% if style.ibu_min %}
                             <p>
@@ -59,7 +62,7 @@
         {% if style.recipes_ebc_min or style.ebc_min %}
             <div class="col">
                 <div class="card text-center h-100">
-                    <div class="card-header"><h3 class="h6 mb-0">Color</h3></div>
+                    <div class="card-header"><h3 class="h5">Color</h3></div>
                     <div class="card-body pb-0">
                         {% if style.ebc_min %}
                             <p>
@@ -88,7 +91,7 @@
         {% if style.recipes_original_plato_min or style.original_plato_min %}
             <div class="col">
                 <div class="card text-center h-100">
-                    <div class="card-header"><h3 class="h6 mb-0">Original Extract</h3></div>
+                    <div class="card-header"><h3 class="h5">Original Extract</h3></div>
                     <div class="card-body pb-0">
                         {% if style.ebc_min %}
                             <p>
@@ -117,7 +120,7 @@
         {% if style.recipes_final_plato_min or style.final_plato_min %}
             <div class="col">
                 <div class="card text-center h-100">
-                    <div class="card-header"><h3 class="h6 mb-0">Final Gravity</h3></div>
+                    <div class="card-header"><h3 class="h5">Final Gravity</h3></div>
                     <div class="card-body pb-0">
                         {% if style.ebc_min %}
                             <p>

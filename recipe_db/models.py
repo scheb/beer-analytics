@@ -197,6 +197,10 @@ class Style(models.Model):
                 return True
         return False
 
+    @property
+    def is_popular(self) -> bool:
+        return self.recipes_count > 3000
+
 
 class Fermentable(models.Model):
     # Categories
@@ -285,6 +289,10 @@ class Fermentable(models.Model):
             items = self.alt_names.split(',')
             return list(map(lambda x: x.strip(), items))
 
+    @property
+    def is_popular(self) -> bool:
+        return self.recipes_count > 4000
+
 
 # http://www.hopslist.com/hops/
 class Hop(models.Model):
@@ -363,6 +371,10 @@ class Hop(models.Model):
                 use_counts.append({"use_id": use, "use": use_names[use], "recipes": value})
 
         return use_counts
+
+    @property
+    def is_popular(self) -> bool:
+        return self.recipes_count > 1000
 
 
 class Yeast(models.Model):

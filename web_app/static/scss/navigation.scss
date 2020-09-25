@@ -1,0 +1,110 @@
+// Header navigation
+
+header {
+    &.navbar {
+        padding: 0;
+    }
+
+    .navbar-brand {
+        margin-right: 0;
+        padding: 0.75rem;
+        background-color: $gray-900;
+        box-shadow: inset -1px -1px 0 rgba(0, 0, 0, .25);
+        font-family: "Titillium Web", var(--bs-font-sans-serif);
+
+        .logo {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            margin-right: 0.3rem;
+            vertical-align: top;
+            background-repeat: no-repeat;
+            background-position: left;
+            background-size: cover;
+            background-image: url('../img/logo.svg');
+            opacity: 0.8;
+            transition: opacity 0.15s ease-in-out;
+        }
+    }
+
+    .navbar-nav {
+        .nav-link {
+            @include media-breakpoint-up('m') {
+                padding-top: 0.75rem;
+                padding-bottom: 0.75rem;
+                padding-right: 1rem !important;
+
+                &.active {
+                    border-bottom: 3px solid $primary;
+                    margin-bottom: -3px;
+                }
+            }
+
+            &.active {
+                background-color: $gray-700;
+            }
+        }
+    }
+}
+
+
+.navbar-filter-icon {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+    background-image: url('../img/icon-filter.svg');
+}
+
+.nav-icon {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin-right: 0.3rem;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: cover;
+    opacity: 0.8;
+    transition: opacity 0.15s ease-in-out;
+}
+
+a.nav-link.active .nav-icon,
+a.nav-link:hover .nav-icon {
+    opacity: 1;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.beer-icon {
+    background-image: url('../img/icon-beer.svg');
+}
+
+.pint-icon {
+    background-image: url('../img/icon-pint.svg');
+}
+
+.hops-icon {
+    background-image: url('../img/icon-hops.svg');
+}
+
+.fermentables-icon {
+    background-image: url('../img/icon-fermentables.svg');
+}
+
+.yeasts-icon {
+    background-image: url('../img/icon-yeast.svg');
+}
+
+.github-icon {
+    background-image: url('../img/icon-github.svg');
+}
+
+@media (min-width: 768px) {
+    .github-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}
