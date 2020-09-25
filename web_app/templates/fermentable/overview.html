@@ -6,36 +6,59 @@
 {% block content %}
     <h1>Fermentables</h1>
 
-    {% for category in categories %}
-        <h2><a href="{% url "fermentable_category" category.id %}" class="text-body">{{ category.name }}</a></h2>
-        {% if category.most_popular %}
-            <p class="most-popular">Most popular:
-                {% for fermentable in category.most_popular %}
-                    {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
-                    <a class="badge bg-primary" href="{{ fermentable|url }}">{{ fermentable.name }}</a>
-                {% endfor %}
-            </p>
-        {% endif %}
+    <form class="search d-none">
+        <p>
+            <label for="input-search" class="sr-only">Search fermentables</label>
+            <input type="search" class="search-term form-control" id="input-search" placeholder="Search fermentables">
+        </p>
+    </form>
 
-        {% if category.fermentables %}
-            <ul class="column-list">
-                {% for fermentable in category.fermentables %}
-                    <li><a href="{{ fermentable|url }}">{{ fermentable.name }}</a> <small class="text-muted ml-2">{{ fermentable.recipes_count }}</small></li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+    <div class="fermentables-overview">
+        {% for category in categories %}
+            <h2>
+                <a href="#{{ category.id }}" id="{{ category.id }}" class="anchor"><span></span></a>
+                <a href="{% url "fermentable_category" category.id %}" class="text-body">{{ category.name }}</a>
+            </h2>
+            <div class="mb-4">
+                {% if category.most_popular %}
+                    <p class="most-popular">Most popular:
+                        {% for fermentable in category.most_popular %}
+                            {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
+                            <a class="badge" href="{{ fermentable|url }}">{{ fermentable.name }}</a>
+                        {% endfor %}
+                    </p>
+                {% endif %}
 
-        {% if category.types %}
-            {% for type in category.types %}
-                <h3>{{ type.name }}</h3>
-                {% if type.fermentables %}
+                {% if category.fermentables %}
                     <ul class="column-list">
-                        {% for fermentable in type.fermentables %}
-                            <li><a href="{{ fermentable|url }}">{{ fermentable.name }}</a> <small class="text-muted ml-2">{{ fermentable.recipes_count }}</small></li>
+                        {% for fermentable in category.fermentables %}
+                            <li>
+                                {% if fermentable.is_popular %}<strong>{% endif %}<a href="{{ fermentable|url }}">{{ fermentable.name }}</a>{% if fermentable.is_popular %}</strong>{% endif %}
+                                <small class="recipes-count" title="Recipes">{{ fermentable.recipes_count }}</small>
+                            </li>
                         {% endfor %}
                     </ul>
                 {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endfor %}
+
+                {% if category.types %}
+                    {% for type in category.types %}
+                        <h3>
+                            <a href="#{{ type.id }}" id="{{ type.id }}" class="anchor"><span></span></a>
+                            {{ type.name }}
+                        </h3>
+                        {% if type.fermentables %}
+                            <ul class="column-list">
+                                {% for fermentable in type.fermentables %}
+                                    <li>
+                                        {% if fermentable.is_popular %}<strong>{% endif %}<a href="{{ fermentable|url }}">{{ fermentable.name }}</a>{% if fermentable.is_popular %}</strong>{% endif %}
+                                        <small class="recipes-count" title="Recipes">{{ fermentable.recipes_count }}</small>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

@@ -4,18 +4,16 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h1 class="mb-0">Welcome to Beer Analytics <sup class="text-muted">Alpha</sup></h1>
-    <h2 class="h5">The analytical beer recipe database</h2>
+    <h1 class="home">Welcome to Beer Analytics <sup class="text-muted">Alpha</sup></h1>
+    <h2 class="home">The analytical beer recipe database</h2>
 
-    <p class="mt-3">
+    <p class="mb-5">
         Explore how certain <strong><a href="{% url "style_overview" %}">beer styles</a> are typically composed</strong>
         and <strong>discover trends in home/craft beer brewing</strong>.
         Or just browse the index of <a href="{% url "fermentable_overview" %}">fermentables</a>,
         <a href="{% url "fermentable_category" "grain" %}">malts</a>, <a href="{% url "hop_overview" %}">hops</a> and
         <a href="{% url "yeast_overview" %}">yeasts</a>.
     </p>
-
-    <hr/>
 
     <h2>Trends in Homebrewing</h2>
 

@@ -11,31 +11,39 @@
         Guide from 2015</a> with minor changes and additions.
     </p>
 
-    <p class="most-popular">Most popular beer styles:
+    <p class="most-popular mb-4">Most popular beer styles:
         {% for style in most_popular %}
             {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
-            <a class="badge bg-primary" href="{{ style|url }}">{{ style.name }}</a>
+            <a class="badge" href="{{ style|url }}">{{ style.name }}</a>
         {% endfor %}
     </p>
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+    <form class="search d-none">
+        <p>
+            <label for="input-search" class="sr-only">Search styles</label>
+            <input type="search" class="search-term form-control" id="input-search" placeholder="Search styles">
+        </p>
+    </form>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 styles-overview">
         {% for category in categories %}
             <div class="col">
-                <div class="card">
+                <div class="card" data-search-term="{{ category.name }}{% if category.alt_names %}, {{ category.alt_names }}{% endif %}">
                     <div class="card-header">
                         <h2 class="h5 p-0 m-0"><a href="{{ category|url }}" class="text-body">{{ category.name }}</a></h2>
                     </div>
                     <ul class="list-group list-group-flush">
                         {% for style1 in category.sub_styles %}
-                            <li class="list-group-item">
-                                {% if style1.recipes_count %}<span class="text-muted float-right">{{ style1.recipes_count }}</span>{% endif %}
-                                <a href="{{ style1|url }}">{{ style1.name }}</a>
+                            <li class="list-group-item" data-search-term="{{ style1.name }}{% if style1.alt_names %}, {{ style1.alt_names }}{% endif %}">
+                                {% if style1.recipes_count %}<span class="recipes-count" title="Recipes">{{ style1.recipes_count }}</span>{% endif %}
+                                {% if style1.is_popular %}<strong>{% endif %}<a href="{{ style1|url }}">{{ style1.name }}</a>{% if style1.is_popular %}</strong>{% endif %}
+
                                 {% if style1.has_sub_styles %}
                                     <ul class="list-unstyled mt-1 ml-2">
                                         {% for style2 in style1.sub_styles %}
-                                            <li>
-                                                {% if style2.recipes_count %}<span class="text-muted float-right">{{ style2.recipes_count }}</span>{% endif %}
-                                                <a href="{{ style2|url }}">{{ style2.name }}</a>
+                                            <li data-search-term="{{ style2.name }}{% if style2.alt_names %}, {{ style2.alt_names }}{% endif %}">
+                                                {% if style2.recipes_count %}<span class="recipes-count" title="Recipes">{{ style2.recipes_count }}</span>{% endif %}
+                                                {% if style2.is_popular %}<strong>{% endif %}<a href="{{ style2|url }}">{{ style2.name }}</a>{% if style2.is_popular %}</strong>{% endif %}
                                             </li>
                                         {% endfor %}
                                     </ul>

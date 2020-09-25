@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'web_app.apps.WebAppConfig',
     'django.contrib.humanize',
     'django.contrib.staticfiles',
+    'pipeline',
 ]
 
 try:
@@ -92,8 +93,43 @@ NUMBER_GROUPING = 3
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
-STATICFILES_DIRS = [
-    BASE_DIR / 'boot'
-]
+STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'pipeline.finders.PipelineFinder',
+)
+
+PIPELINE = {
+    'PIPELINE_ENABLED': False,
+    'CSS_COMPRESSOR': 'pipeline.compressors.yuglify.YuglifyCompressor',
+    'JS_COMPRESSOR': 'pipeline.compressors.yuglify.YuglifyCompressor',
+    'COMPILERS': (
+      'pipeline.compilers.sass.SASSCompiler',
+    ),
+    'YUGLIFY_BINARY': str(BASE_DIR / "node_modules/.bin/yuglify.cmd"),
+    'SASS_BINARY': str(BASE_DIR / "node_modules/.bin/sass.cmd"),
+    'STYLESHEETS': {
+        'base': {
+            'source_filenames': (
+                'scss/beer_analytics.scss',
+            ),
+            'output_filename': 'css/base.css',
+        },
+    },
+
+    # 'JAVASCRIPT': {
+    #     'stats': {
+    #         'source_filenames': (
+    #             'js/jquery.js',
+    #             'js/d3.js',
+    #             'js/collections/*.js',
+    #             'js/application.js',
+    #         ),
+    #         'output_filename': 'js/stats.js',
+    #     }
+    # }
+}
 
 RAW_DATA_DIR = env.str('RAW_DATA_DIR')
