@@ -119,18 +119,16 @@ PIPELINE = {
             'output_filename': 'css/style.css',
         },
     },
-
-    # 'JAVASCRIPT': {
-    #     'stats': {
-    #         'source_filenames': (
-    #             'js/jquery.js',
-    #             'js/d3.js',
-    #             'js/collections/*.js',
-    #             'js/application.js',
-    #         ),
-    #         'output_filename': 'js/stats.js',
-    #     }
-    # }
+    'JAVASCRIPT': {
+        'app': {
+            'source_filenames': (
+                'js/bootstrap.js',
+                'js/plotly.js',
+                'js/application.js',
+            ),
+            'output_filename': 'js/app.js',
+        }
+    }
 }
 
 RAW_DATA_DIR = env.str('RAW_DATA_DIR')
