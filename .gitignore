@@ -1,4 +1,5 @@
 /static
+/node_modules
 /var
 /venv
 .env
