@@ -15,7 +15,7 @@ INSTALLED_APPS = [
     'recipe_db.apps.RecipeDbConfig',
     'web_app.apps.WebAppConfig',
     'django.contrib.humanize',
-    'django.contrib.staticfiles',
+    'web_app.apps.WebAppStaticFilesConfig',
     'pipeline',
 ]
 
