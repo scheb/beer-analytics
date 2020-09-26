@@ -1,11 +1,22 @@
-<!doctype html>{% with request.resolver_match.url_name as url_name %}
+<!doctype html>{% with request.resolver_match.url_name as url_name %}{% load static %}{% load pipeline %}
 <html lang="en">
 <head>
+    <title>{% if url_name == "home" %}Beer Analytics &ndash; The analytical beer recipe database{% else %}{% block title %}{% endblock %} | Beer Analytics{% endif %}</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content=""/>
-    <title>{% if url_name == "home" %}Beer Analytics &ndash; The analytical beer recipe database{% else %}{% block title %}{% endblock %} | Beer Analytics{% endif %}</title>
-    {% load pipeline %}{% stylesheet 'base' %}
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}"/>
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}"/>
+    <link rel="mask-icon" href="{% static 'favicon/safari-pinned-tab.svg' %}" color="#5bbad5"/>
+    <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}"/>
+    <meta name="apple-mobile-web-app-title" content="Beer Analytics"/>
+    <meta name="application-name" content="Beer Analytics"/>
+    <meta name="msapplication-TileColor" content="#da532c"/>
+    <meta name="msapplication-config" content="{% static 'favicon/browserconfig.xml' %}"/>
+    <meta name="theme-color" content="#ffffff"/>
+    {% stylesheet 'base' %}
 </head>
 <body>
 
@@ -55,7 +66,6 @@
     </div>
 </div>
 
-{% load static %}
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/plotly.min.js' %}"></script>
 {% javascript 'app' %}
