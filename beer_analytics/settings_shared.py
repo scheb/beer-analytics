@@ -1,3 +1,4 @@
+import platform
 from pathlib import Path
 
 from environ import Env
@@ -108,8 +109,8 @@ PIPELINE = {
     'COMPILERS': (
       'pipeline.compilers.sass.SASSCompiler',
     ),
-    'YUGLIFY_BINARY': str(BASE_DIR / "node_modules/.bin/yuglify.cmd"),
-    'SASS_BINARY': str(BASE_DIR / "node_modules/.bin/sass.cmd"),
+    'YUGLIFY_BINARY': str(BASE_DIR / "node_modules/.bin/yuglify") + (".cmd" if platform.system() == "Windows" else ""),
+    'SASS_BINARY': str(BASE_DIR / "node_modules/.bin/sass") + (".cmd" if platform.system() == "Windows" else ""),
     'STYLESHEETS': {
         'base': {
             'source_filenames': (
