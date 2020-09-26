@@ -122,8 +122,6 @@ PIPELINE = {
     'JAVASCRIPT': {
         'app': {
             'source_filenames': (
-                'js/bootstrap.js',
-                'js/plotly.js',
                 'js/application.js',
             ),
             'output_filename': 'js/app.js',
