@@ -55,6 +55,9 @@
     </div>
 </div>
 
+{% load static %}
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/plotly.min.js' %}"></script>
 {% javascript 'app' %}
 {% block script %}{% endblock %}
 
