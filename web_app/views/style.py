@@ -8,7 +8,7 @@ from web_app.views.utils import render_chart
 
 
 def overview(request: HttpRequest) -> HttpResponse:
-    categories = Style.objects.filter(parent_style=None).order_by('id')
+    categories = Style.objects.filter(parent_style=None).order_by('-recipes_count')
     most_popular = Style.objects.exclude(parent_style=None).order_by('-recipes_count')[:5]
 
     return render(request, 'style/overview.html', {'categories': categories, 'most_popular': most_popular})
