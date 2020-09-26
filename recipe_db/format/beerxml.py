@@ -66,7 +66,7 @@ class BeerXMLParser(FormatParser):
         result.hops.extend(self.get_hops(beerxml))
         result.yeasts.extend(self.get_yeasts(beerxml))
 
-    def parse_recipe(self, recipe: Recipe, beerxml: BeerXMLRecipe, recipe_node: Element) -> Recipe:
+    def parse_recipe(self, recipe: Recipe, beerxml: BeerXMLRecipe, recipe_node: Element) -> None:
         recipe.name = self.fix_encoding(beerxml.name)
         recipe.author = self.fix_encoding(beerxml.brewer)
 
@@ -85,8 +85,6 @@ class BeerXMLParser(FormatParser):
         # Boiling
         recipe.cast_out_wort = beerxml.batch_size
         recipe.boiling_time = beerxml.boil_time
-
-        return recipe
 
     def fix_encoding(self, value):
         if value is None:
