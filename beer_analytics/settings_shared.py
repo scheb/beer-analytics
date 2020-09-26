@@ -116,7 +116,7 @@ PIPELINE = {
             'source_filenames': (
                 'scss/beer_analytics.scss',
             ),
-            'output_filename': 'css/base.css',
+            'output_filename': 'css/style.css',
         },
     },
 
