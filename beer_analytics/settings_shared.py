@@ -106,6 +106,7 @@ PIPELINE = {
     'PIPELINE_ENABLED': False,
     'CSS_COMPRESSOR': 'pipeline.compressors.yuglify.YuglifyCompressor',
     'JS_COMPRESSOR': 'pipeline.compressors.yuglify.YuglifyCompressor',
+    'DISABLE_WRAPPER': True,
     'COMPILERS': (
       'pipeline.compilers.sass.SASSCompiler',
     ),
