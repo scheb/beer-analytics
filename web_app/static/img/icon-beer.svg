@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="92.875px" height="117.625px" viewBox="0 0 92.875 117.625" enable-background="new 0 0 92.875 117.625"
-	 xml:space="preserve">
-<path fill="#FFFFFF" fill-opacity="0.15" d="M55.273,89.666V42.292h1.488v-17.5H22.137v80.25h34.625V89.666H55.273z M41.375,89.666
-	h-2.977V42.292h2.977V89.666z"/>
-<path fill="#FFFFFF" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M87.948,24.79
-	c-0.866-4.141-4.724-7.55-8.523-9.184c-1.597-5.297-6.507-9.158-12.325-9.158c-1.233,0-2.426,0.184-3.557,0.509
-	c-2.346-2.464-5.648-4.007-9.318-4.007c-5.834,0-10.754,3.883-12.336,9.203c-0.79-0.151-1.603-0.237-2.437-0.237
-	c-7.111,0-12.875,5.764-12.875,12.875"/>
-<rect x="22.137" y="24.792" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" width="69.25" height="80.25"/>
-<rect x="55.273" y="42.292" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" width="2.977" height="47.375"/>
-<path fill="#FFFFFF" fill-opacity="0.3" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="
-	M89.824,105.041V111c0,2.209-2.791,4-5,4H28.699c-2.209,0-4-1.791-4-4v-5.959H89.824z"/>
-<polyline fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" points="22.137,82.416 
-	13.625,82.416 13.625,49.542 22.137,49.542 "/>
-<path fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M22.137,96.416H13.75
-	c-6.627,0-12-5.372-12-12V47.542c0-6.627,5.373-12,12-12h8.387"/>
-<rect x="38.398" y="42.292" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" width="2.977" height="47.375"/>
-<rect x="72.148" y="42.292" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" width="2.977" height="47.375"/>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
+<svg version="1.1" baseProfile="tiny" id="Ebene_1" xmlns="http://www.w3.org/2000/svg"
+     x="0px" y="0px" width="512px" height="512px" viewBox="0 0 512 512" xml:space="preserve">
+<polygon fill="#FFFFFF" fill-opacity="0.2" points="139.094,248.71 168.459,335.701 165.472,496.146 256.002,496.146
+	256.002,122.365 132.11,122.365 "/>
+<path fill="#FFFFFF" d="M390.709,148.711c-1.041-25.075-5.537-86.021-24.755-110.334c-2.118-2.679-5.346-4.242-8.761-4.242h-13.771
+	c-6.641-4.085-15.867-6.793-26.207-7.289C314.054,11.735,291.458,0,264.013,0c-26.311,0-48.146,10.775-52.71,24.971
+	c-5.188-1.752-11.224-2.788-17.706-2.788c-14.298,0-26.569,4.925-31.865,11.952h-6.923c-3.415,0-6.643,1.563-8.76,4.242
+	c-19.218,24.313-23.715,85.259-24.757,110.334c-2.134,51.384,2.987,98.406,13.7,125.785c17.425,44.538,21.456,58.938,22.275,62.271
+	c-0.322,14.981-2.961,137.962-2.961,148.385c0,22.328,13.624,27.016,25.053,27.016h153.296c11.424,0,25.041-4.688,25.041-27.016
+	c0-10.423-2.634-133.418-2.955-148.387c0.816-3.327,4.839-17.722,22.268-62.269C387.721,247.117,392.843,200.095,390.709,148.711z
+	 M160.794,56.468h190.414c6.283,11.325,11.202,32.383,14.23,57.392H146.562C149.591,88.852,154.51,67.793,160.794,56.468z
+	 M356.21,266.359c-21.058,53.823-23.451,65.898-23.717,67.772c-0.085,0.6-0.121,1.204-0.108,1.81
+	c0.03,1.385,2.978,138.584,2.978,149.21c0,2.427-0.215,3.812-0.388,4.534c-0.469,0.075-1.21,0.147-2.319,0.147H179.359
+	c-1.116,0-1.862-0.073-2.333-0.148c-0.172-0.723-0.387-2.107-0.387-4.533c0-10.626,2.955-147.825,2.984-149.21
+	c0.013-0.607-0.023-1.215-0.109-1.816c-0.267-1.874-2.667-13.946-23.724-67.767c-12.165-31.089-14.826-86.98-11.027-134.498h222.476
+	C371.036,179.378,368.374,235.269,356.21,266.359z"/>
 </svg>

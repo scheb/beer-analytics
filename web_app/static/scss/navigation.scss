@@ -1,52 +1,122 @@
 // Header navigation
 
+@mixin navbar-icon {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
 header {
     &.navbar {
         padding: 0;
     }
 
     .navbar-brand {
-        margin-right: 0;
-        padding: 0.75rem;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        margin: 0;
+        padding: 0.5rem;
         background-color: $gray-900;
         box-shadow: inset -1px -1px 0 rgba(0, 0, 0, .25);
         font-family: "Titillium Web", var(--bs-font-sans-serif);
+        font-size: 1.4rem;
 
         .logo {
-            display: inline-block;
-            width: 32px;
-            height: 32px;
+            @include navbar-icon;
             margin-right: 0.3rem;
-            vertical-align: top;
-            background-repeat: no-repeat;
-            background-position: left;
-            background-size: cover;
+            vertical-align: bottom;
             background-image: url('../img/logo.svg');
             opacity: 0.8;
-            transition: opacity 0.15s ease-in-out;
         }
     }
 
-    .navbar-nav {
+    .navbar-expand-md .navbar-nav {
         .nav-link {
-            @include media-breakpoint-up('m') {
-                padding-top: 0.75rem;
-                padding-bottom: 0.75rem;
-                padding-right: 1rem !important;
-
-                &.active {
-                    border-bottom: 3px solid $primary;
-                    margin-bottom: -3px;
-                }
-            }
+            box-sizing: content-box;
+            height: 32px;
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
 
             &.active {
                 background-color: $gray-700;
             }
         }
+
+        @include media-breakpoint-up('md') {
+             .nav-link {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-bottom: 3px solid transparent;
+
+                &.active {
+                    border-bottom: 3px solid $primary;
+                }
+            }
+        }
     }
 }
 
+
+// Icons
+
+.nav-icon {
+    @include navbar-icon;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    opacity: 0.8;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.icon-beer {
+    width: 32px;
+    background-image: url('../img/icon-beer.svg');
+
+    @include media-breakpoint-up('md') {
+        width: 19px;
+    }
+}
+
+.icon-hop {
+    width: 32px;
+    background-image: url('../img/icon-hop.svg');
+
+    @include media-breakpoint-up('md') {
+        width: 26px;
+    }
+}
+
+.icon-fermentable {
+    width: 32px;
+    background-image: url('../img/icon-fermentable.svg');
+
+    @include media-breakpoint-up('md') {
+        width: 18px;
+    }
+}
+
+.icon-yeast {
+    width: 32px;
+    background-image: url('../img/icon-yeast.svg');
+}
+
+.icon-github {
+    width: 32px;
+    background-image: url('../img/icon-github.svg');
+}
+
+.nav-link {
+    &:active, &:hover, &.active {
+        .nav-icon {
+            opacity: 1;
+            transition: opacity 0.15s ease-in-out;
+        }
+    }
+}
 
 .navbar-filter-icon {
     display: inline-block;
@@ -57,54 +127,4 @@ header {
     background-position: center;
     background-size: 80%;
     background-image: url('../img/icon-filter.svg');
-}
-
-.nav-icon {
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    margin-right: 0.3rem;
-    vertical-align: middle;
-    background-repeat: no-repeat;
-    background-position: left;
-    background-size: cover;
-    opacity: 0.8;
-    transition: opacity 0.15s ease-in-out;
-}
-
-a.nav-link.active .nav-icon,
-a.nav-link:hover .nav-icon {
-    opacity: 1;
-    transition: opacity 0.15s ease-in-out;
-}
-
-.beer-icon {
-    background-image: url('../img/icon-beer.svg');
-}
-
-.pint-icon {
-    background-image: url('../img/icon-pint.svg');
-}
-
-.hops-icon {
-    background-image: url('../img/icon-hops.svg');
-}
-
-.fermentables-icon {
-    background-image: url('../img/icon-fermentables.svg');
-}
-
-.yeasts-icon {
-    background-image: url('../img/icon-yeast.svg');
-}
-
-.github-icon {
-    background-image: url('../img/icon-github.svg');
-}
-
-@media (min-width: 768px) {
-    .github-icon {
-        width: 2.5rem;
-        height: 2.5rem;
-    }
 }

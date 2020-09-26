@@ -24,16 +24,16 @@
             {% load web_app %}
             <div id="top-navigation" class="collapse navbar-collapse">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link{% if url_name|startswith:'style' %} active{% endif %}" href="{% url "style_overview" %}"><span class="nav-icon pint-icon"></span>Beer Styles</a></li>
-                    <li class="nav-item"><a class="nav-link{% if url_name|startswith:'hop' %} active{% endif %}" href="{% url "hop_overview" %}"><span class="nav-icon hops-icon"></span>Hops</a></li>
-                    <li class="nav-item"><a class="nav-link{% if url_name|startswith:'fermentable' %} active{% endif %}" href="{% url "fermentable_overview" %}"><span class="nav-icon fermentables-icon"></span>Fermentables</a></li>
-                    <li class="nav-item"><a class="nav-link{% if url_name|startswith:'yeast' %} active{% endif %}" href="{% url "yeast_overview" %}"><span class="nav-icon yeasts-icon"></span>Yeasts</a></li>
+                    <li class="nav-item"><a class="nav-link{% if url_name|startswith:'style' %} active{% endif %}" href="{% url "style_overview" %}"><span class="nav-icon icon-beer"></span>Beer Styles</a></li>
+                    <li class="nav-item"><a class="nav-link{% if url_name|startswith:'hop' %} active{% endif %}" href="{% url "hop_overview" %}"><span class="nav-icon icon-hop"></span>Hops</a></li>
+                    <li class="nav-item"><a class="nav-link{% if url_name|startswith:'fermentable' %} active{% endif %}" href="{% url "fermentable_overview" %}"><span class="nav-icon icon-fermentable"></span>Fermentables</a></li>
+                    <li class="nav-item"><a class="nav-link{% if url_name|startswith:'yeast' %} active{% endif %}" href="{% url "yeast_overview" %}"><span class="nav-icon icon-yeast"></span>Yeasts</a></li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link{% if url_name == 'about' %} active{% endif %}" href="{% url "about" %}">About</a></li>
                     <li class="nav-item"><a class="nav-link{% if url_name == 'legal' %} active{% endif %}" href="{% url "legal" %}">Legal Stuff</a></li>
-                    <li class="nav-item"><a class="nav-link pt-md-0 pb-md-0" href="https://github.com/scheb/beer-analytics">
-                        <span class="nav-icon github-icon" title="Fork me on GitHub"></span>
+                    <li class="nav-item"><a class="nav-link" href="https://github.com/scheb/beer-analytics">
+                        <span class="nav-icon icon-github" title="Fork me on GitHub"></span>
                         <span class="d-md-none">Fork me on GitHub</span>
                     </a></li>
                 </ul>
