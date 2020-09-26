@@ -243,7 +243,7 @@ class BeerXMLParser(FormatParser):
 
         time = beerxml_hop.time
         if time is not None:
-            if time < 5:
+            if time <= 5:
                 return RecipeHop.AROMA
             if time > 24*60:
                 return RecipeHop.DRY_HOP
