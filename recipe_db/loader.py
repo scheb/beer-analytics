@@ -45,9 +45,10 @@ class RecipeImporter:
         for item in items:
             if item.amount is not None:
                 total_amount += item.amount
-        for item in items:
-            if item.amount is not None:
-                item.amount_percent = item.amount / total_amount * 100
+        if total_amount:
+            for item in items:
+                if item.amount is not None:
+                    item.amount_percent = item.amount / total_amount * 100
 
     def validate_and_fix_recipe(self, recipe: Recipe):
         self.unset_bad_data(recipe)
