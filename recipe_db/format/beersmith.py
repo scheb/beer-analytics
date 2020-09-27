@@ -293,7 +293,7 @@ class BeerSmithParser(FormatParser):
                 hop.time = dry_hop_time * 24 * 60  # Days to minutes
 
             # Force Aroma use when boil time is low
-            if hop.use == RecipeHop.BOIL and hop.time <= 5:
+            if hop.use == RecipeHop.BOIL and hop.time is not None and hop.time <= 5:
                 hop.use = RecipeHop.AROMA
 
             yield hop
