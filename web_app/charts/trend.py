@@ -57,7 +57,7 @@ class HopsPopularityChart(ChartDefinition, ABC):
 
 
 class IncreasingHopsPopularityChart(HopsPopularityChart):
-    IDS = ["sabro", "cashmere", "idaho-7"]
+    IDS = ["sabro", "strata", "cashmere", "idaho-7"]
 
     def get_chart_title(self) -> str:
         return "Trending hops"

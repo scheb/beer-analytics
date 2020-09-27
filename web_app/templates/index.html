@@ -17,35 +17,12 @@
 
     <h2>Trends in Homebrewing</h2>
 
-    <h3>Trending Beer Styles</h3>
-    <p>
-        <a href="{{ "02A"|style|url }}">International Pale Lager</a> and <a href="{{ "12C"|style|url }}">English IPA</a>
-        on the rise.
-    </p>
-    <div id="chart-trending-styles" class="chart-m">
-        <noscript>
-            <img src="{% url "trend_chart" "trending-styles" "svg" %}" alt="Trending beer styles"/>
-        </noscript>
-    </div>
-
-    <p class="mt-3">
-        The fall/winter brewing season is starting! People are brewing more
-        <a href="{{ "20"|style|url }}">Porter and Stouts</a> and they're mashing in seasonal
-        <a href="{{ "30"|style|url }}">spiced beers</a>.
-    </p>
-    <div id="chart-winter-styles" class="chart-m">
-        <noscript>
-            <img src="{% url "trend_chart" "winter-styles" "svg" %}" alt="Trending winter beer styles"/>
-        </noscript>
-    </div>
-
     <h3>Trending Hops</h3>
-
-    <h4>Rising Stars</h4>
     <p>
         <a href="{{ "sabro"|hop|url }}">Sabro</a> (aka HBC 438) is the trending hop of 2020.
-        <a href="{{ "idaho-7"|hop|url }}">Idaho 7</a> and <a href="{{ "cashmere"|hop|url }}">Cashmere</a> are growing
-        too.
+        <a href="{{ "strata"|hop|url }}">Strata</a> is also showing potential this year.
+        <a href="{{ "idaho-7"|hop|url }}">Idaho 7</a> and <a href="{{ "cashmere"|hop|url }}">Cashmere</a> have been
+        popular last year, but it seems the trend has reached it's peak.
     </p>
     <div id="chart-increasing-popularity-hops" class="chart-m">
         <noscript>
@@ -63,20 +40,44 @@
         </noscript>
     </div>
 
-    <h4>All-time Favourites</h4>
+    <h3>All-time Favourite Hops</h3>
     <p>
         While usage of <a href="{{ "cascade"|hop|url }}">Cascade</a> has decreased over the last years, it is still
-        brewer's favourite hop. Citra is defending a strong second place. Both are used in around 15% of recipes.
+        brewer's favourite hop. Citra is defending a strong second place.
     <p>
     <p>
-        There's a whole group of popular hops in the range 5-10% of the recipes. Most notably,
-        <a href="{{ "mosaic"|hop|url }}">Mosaic</a> has grown over the last years from nothing to becoming one of
-        the most used hop kind.
+        There's a whole group of popular hops underneath. Most notably, <a href="{{ "amarillo"|hop|url }}">Amarillo</a>
+        and specifically <a href="{{ "mosaic"|hop|url }}">Mosaic</a> have grown over the last years from nothing to
+        some of the most used hop kinds.
     </p>
 
     <div id="chart-favourite-hops" class="chart-m">
         <noscript>
             <img src="{% url "trend_chart" "favourite-hops" "svg" %}" alt="All-time favourite hops"/>
+        </noscript>
+    </div>
+
+    <h3>Trending Beer Styles</h3>
+
+    <p class="mt-3">
+        The fall/winter brewing season is starting! People are brewing more
+        <a href="{{ "20"|style|url }}">Porter and Stouts</a> and they're mashing in seasonal
+        <a href="{{ "30"|style|url }}">spiced beers</a>.
+    </p>
+    <div id="chart-winter-styles" class="chart-m">
+        <noscript>
+            <img src="{% url "trend_chart" "winter-styles" "svg" %}" alt="Trending winter beer styles"/>
+        </noscript>
+    </div>
+
+    <p>
+        In general, there's not much movement on the popularity of beer styles.
+        <a href="{{ "02A"|style|url }}">International Pale Lager</a> and <a href="{{ "12C"|style|url }}">English IPA</a>
+        are growing slightly.
+    </p>
+    <div id="chart-trending-styles" class="chart-m">
+        <noscript>
+            <img src="{% url "trend_chart" "trending-styles" "svg" %}" alt="Trending beer styles"/>
         </noscript>
     </div>
 
