@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import codecs
 import datetime
+import math
 import re
 from collections import OrderedDict
 from typing import Optional
@@ -536,6 +537,20 @@ class RecipeHop(models.Model):
     @classmethod
     def get_uses(cls) -> dict:
         return OrderedDict(cls.USE_CHOICES)
+
+    # https://realbeer.com/hops/research.html
+    def ibu_tinseth(self, og_wort: float, batch_size: float) -> float:
+        if self.use == self.DRY_HOP:
+            return 0.0  # Dry hop doesn't affect IBU
+        if self.alpha is None or self.amount is None or self.time is None:
+            return 0.0
+
+        return 1.65 * math.pow(0.000125, og_wort - 1.0) * ((1 - math.pow(math.e, -0.04 * self.time)) / 4.15) * (
+                (self.alpha / 100.0 * self.amount * 1000) / batch_size) * self.utilization_factor()
+
+    def utilization_factor(self) -> float:
+        """Account for better utilization from pellets vs. whole"""
+        return 1.15 if self.form == self.PELLET else 1.0
 
 
 class RecipeYeast(models.Model):
