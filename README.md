@@ -17,10 +17,20 @@ The project has two components:
 Setup
 -----
 
-- Initialize virtualenv and enable it
-- Install `requirements.txt`
+### Requirements
+
+- Python 3.8
+- pip
+- virtualenv (ideally)
+- yarn (JS package manager)
+
+### Steps
+
+- `yarn install`
+- Initialize `virtualenv` and enable it
+- Install Python dependencies: `pip -r requirements.txt`
 - Configure the application (see below)
-- Run migrations `python manage.py migrate`
+- Apply database migrations `python makemigrations` + `python manage.py migrate`
 - Load initial data `python manage.py load_initial_data`
 
 ### Configuration
