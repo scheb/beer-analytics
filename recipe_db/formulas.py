@@ -81,3 +81,17 @@ def abv_to_to_final_plato(abv: float, original_plato: float):
     """
     fg = plato_to_gravity(original_plato) - (abv / 131.25)
     return gravity_to_plato(fg)
+
+
+def fluid_ounces_to_liters(oz: float) -> float:
+    """
+    Calculate fluid ounces to gallons
+    """
+    return oz / 33.814
+
+
+def ounces_to_gramms(oz: float) -> float:
+    """
+    Calculate ounces to gramms
+    """
+    return oz * 28.3495

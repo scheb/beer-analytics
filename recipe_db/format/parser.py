@@ -90,3 +90,9 @@ def clean_kind(kind) -> Optional[str]:
     kind = kind.strip()
 
     return kind
+
+
+def to_lower(string):
+    if isinstance(string, str):
+        return string.lower()
+    return None

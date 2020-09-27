@@ -56,6 +56,12 @@ python manage.py load_beerxml_recipe recipe.xml unique_id
 python manage.py load_mmum_recipe recipe.json unique_id
 ```
 
+**[BeerSmith format](https://beersmithrecipes.com/):**
+
+```bash
+python manage.py load_beersmith_recipe recipe.bsmx unique_id
+```
+
 Security
 --------
 
