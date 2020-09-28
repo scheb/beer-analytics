@@ -67,6 +67,7 @@ class Style(models.Model):
 
     # Calculated metrics from recipes
     recipes_count = models.IntegerField(default=None, blank=True, null=True)
+    recipes_percentile = models.FloatField(default=None, blank=True, null=True)
     recipes_abv_min = models.FloatField(default=None, blank=True, null=True)
     recipes_abv_mean = models.FloatField(default=None, blank=True, null=True)
     recipes_abv_max = models.FloatField(default=None, blank=True, null=True)
@@ -200,7 +201,7 @@ class Style(models.Model):
 
     @property
     def is_popular(self) -> bool:
-        return self.recipes_count > 3000
+        return self.recipes_percentile is not None and self.recipes_percentile > 0.8
 
 
 class Fermentable(models.Model):
@@ -245,6 +246,7 @@ class Fermentable(models.Model):
 
     # Calculated metrics from recipes
     recipes_count = models.IntegerField(default=None, blank=True, null=True)
+    recipes_percentile = models.FloatField(default=None, blank=True, null=True)
     recipes_amount_percent_min = models.FloatField(default=None, blank=True, null=True)
     recipes_amount_percent_mean = models.FloatField(default=None, blank=True, null=True)
     recipes_amount_percent_max = models.FloatField(default=None, blank=True, null=True)
@@ -292,7 +294,7 @@ class Fermentable(models.Model):
 
     @property
     def is_popular(self) -> bool:
-        return self.recipes_count > 4000
+        return self.recipes_percentile is not None and self.recipes_percentile > 0.9
 
 
 # http://www.hopslist.com/hops/
@@ -315,6 +317,7 @@ class Hop(models.Model):
 
     # Calculated metrics from recipes
     recipes_count = models.IntegerField(default=None, blank=True, null=True)
+    recipes_percentile = models.FloatField(default=None, blank=True, null=True)
     recipes_alpha_min = models.FloatField(default=None, blank=True, null=True)
     recipes_alpha_mean = models.FloatField(default=None, blank=True, null=True)
     recipes_alpha_max = models.FloatField(default=None, blank=True, null=True)
@@ -375,7 +378,7 @@ class Hop(models.Model):
 
     @property
     def is_popular(self) -> bool:
-        return self.recipes_count > 1000
+        return self.recipes_percentile is not None and self.recipes_percentile > 0.9
 
 
 class Yeast(models.Model):

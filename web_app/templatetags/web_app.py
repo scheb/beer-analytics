@@ -1,8 +1,9 @@
+from typing import Optional
+
 from django import template
 from django.urls import reverse
 from django.utils.html import escape
 
-from recipe_db.analytics import get_ranked_styles, get_ranked_hops, get_ranked_fermentables
 from recipe_db.models import Style, Hop, Fermentable
 from web_app.charts.fermentable import FermentableChartFactory
 from web_app.charts.hop import HopChartFactory
@@ -13,9 +14,6 @@ register = template.Library()
 MAX_PRIORITY = 1.0
 MIN_PRIORITY = 0.1
 DEFAULT_PRIORITY = 0.3
-STYLES_RANKED = get_ranked_styles()
-HOPS_RANKED = get_ranked_hops()
-FERMENTABLES_RANKED = get_ranked_fermentables()
 
 
 @register.filter('startswith')
@@ -126,20 +124,19 @@ def chart_url(item: object, chart_type: str, format: str):
 @register.filter('priority')
 def priority(item: object):
     if isinstance(item, Style):
-        return get_priority(item.id, STYLES_RANKED)
+        return get_priority(item.recipes_percentile)
 
     if isinstance(item, Hop):
-        return get_priority(item.id, HOPS_RANKED)
+        return get_priority(item.recipes_percentile)
 
     if isinstance(item, Fermentable):
-        return get_priority(item.id, FERMENTABLES_RANKED)
+        return get_priority(item.recipes_percentile)
 
     return DEFAULT_PRIORITY
 
 
-def get_priority(rank_id: str, rank: dict) -> float:
-    if rank_id not in rank:
-        return DEFAULT_PRIORITY
+def get_priority(percentile: Optional[float]) -> float:
+    if percentile is not None:
+        return round(MIN_PRIORITY + (MAX_PRIORITY - MIN_PRIORITY) * percentile, 1)
 
-    percentile = rank[rank_id]['percentile']
-    return round(MIN_PRIORITY + (MAX_PRIORITY - MIN_PRIORITY) * percentile, 1)
+    return DEFAULT_PRIORITY
