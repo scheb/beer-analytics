@@ -13,16 +13,12 @@ function display_graph_with_navigation(container_id, navigation_id, chart_url, c
     var chart = new ChartMount(container, chart_url, config)
 
     if (navigation_id) {
-        var navigation_tab_list = document.querySelectorAll('#' + navigation_id + ' a[data-toggle="tab"]')
-        navigation_tab_list.forEach(function (tab) {
-            tab.addEventListener('shown.bs.tab', function (e) {
-                var filter = e.target.dataset['filter']
-                var query = {}
-                if (filter) {
-                    query['filter'] = filter
-                }
-                chart.load(query)
-            })
+        new ChartNavigation(navigation_id, function (filter) {
+            var query = {}
+            if (filter) {
+                query['filter'] = filter
+            }
+            chart.load(query)
         })
     }
 
@@ -81,4 +77,35 @@ ChartMount.prototype.serializeFilter = function(obj) {
         }
     }
     return str.join("&");
+}
+
+function ChartNavigation(navigation_id, on_select) {
+    this.navigation = document.querySelector('#' + navigation_id)
+    this.navigation.className = this.navigation.className.replace('d-none', '')
+
+    // Update styling
+    this.update_style()
+    window.addEventListener("resize", this.update_style.bind(this))
+
+    var navigation_tab_list = document.querySelectorAll('#' + navigation_id + ' a[data-toggle="tab"]')
+    navigation_tab_list.forEach(function (tab) {
+        tab.addEventListener('shown.bs.tab', function (e) {
+            var filter = e.target.dataset['filter']
+            on_select(filter)
+        })
+    })
+}
+
+ChartNavigation.prototype.update_style = function() {
+    var nav_element = this.navigation.querySelector('.nav')
+    nav_element.className = nav_element.className
+        .replace('nav-tabs card-header-tabs', '')
+        .replace('nav-pills card-header-pills', '')
+
+    // Decide if to show tabs for pills
+    if (nav_element.clientHeight > 50) {
+        nav_element.className += " nav-pills card-header-pills"
+    } else {
+        nav_element.className += " nav-tabs card-header-tabs"
+    }
 }
