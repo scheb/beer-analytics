@@ -36,8 +36,8 @@ function ChartMount(container, chartUrl, chartConfig) {
 
     // Config defaults
     this.chartConfig = chartConfig
-    this.chartConfig.responsive = this.chartConfig.responsive === "undefined" ? true : this.chartConfig.responsive
-    this.chartConfig.displayModeBar = this.chartConfig.displayModeBar === "undefined" ? true : this.chartConfig.displayModeBar
+    this.chartConfig.responsive = this.chartConfig.responsive === undefined ? true : this.chartConfig.responsive
+    this.chartConfig.displayModeBar = this.chartConfig.displayModeBar === undefined ? true : this.chartConfig.displayModeBar
 }
 
 ChartMount.prototype.load = function(query) {
