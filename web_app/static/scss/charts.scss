@@ -20,63 +20,30 @@
 }
 
 .chart-s {
-    min-height: 8rem;
+    min-height: 10rem;
 }
 
 .chart-s .chart-loading,
 .chart-s .no-data {
-    height: 8rem;
-}
-
-.chart-s .chart-image {
-    max-width: 100%;
+    height: 10rem;
 }
 
 .chart-m {
-    min-height: 14rem;
+    min-height: 20rem;
 }
 
 .chart-m .chart-loading,
 .chart-m .no-data {
-    height: 14rem;
+    height: 20rem;
 }
 
 .chart-l {
-    min-height: 20rem;
+    min-height: 30rem;
 }
 
 .chart-l .chart-loading,
 .chart-l .no-data {
-    height: 20rem;
-}
-
-@media (min-width: 768px) {
-    .chart-s {
-        min-height: 10rem;
-    }
-
-    .chart-s .chart-loading,
-    .chart-s .no-data {
-        height: 10rem;
-    }
-
-    .chart-m {
-        min-height: 20rem;
-    }
-
-    .chart-m .chart-loading,
-    .chart-m .no-data {
-        height: 20rem;
-    }
-
-    .chart-l {
-        min-height: 30rem;
-    }
-
-    .chart-l .chart-loading,
-    .chart-l .no-data {
-        height: 30rem;
-    }
+    height: 30rem;
 }
 
 .no-data {
