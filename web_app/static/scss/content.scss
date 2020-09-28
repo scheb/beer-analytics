@@ -59,37 +59,37 @@ dl.detail-info {
 // Anchors
 
 a.anchor {
+    display: inline-block;
     position:relative;
-    top: -68px;  // Move the anchor to account for the overlaying header navigation
+    top: -60px;  // Move the anchor to account for the overlaying header navigation
+    left: -16px;
     width: 0;
+    float: left;
+    line-height: 1;
 }
 
 a.anchor span {
-    display: none;
-    position: absolute;
+    position: relative;
+    top: 60px;  // Move the anchor to its visual position
     right: 0;
-    width: 21px;
+    width: 16px;
     height: 16px;
-    line-height: 1;
     vertical-align: middle;
     background-repeat: no-repeat;
-    background-position: left center;
+    background-position: left top;
     background-size: contain;
-    background-image: url("../img/icon-anchor.svg")
-}
+    background-image: url("../img/icon-anchor.svg");
 
-h2 a.anchor span {
-    top: 85px;
-}
-
-h3 a.anchor span {
-    top: 82px;
+    @include media-breakpoint-up('md') {
+        left: -5px;
+        width: 21px;
+    }
 }
 
 h2, h3 {
     &:hover {
         a.anchor span {
-            display: block;
+            display: inline-block;
         }
     }
 }
@@ -97,6 +97,7 @@ h2, h3 {
 .card {
     a.anchor span {
         width: 24px;
+        left: -8px;
     }
 }
 
