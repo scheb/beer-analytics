@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 from recipe_db.analytics import load_all_recipes, calculate_style_metric, calculate_style_recipe_count, \
     calculate_hop_recipe_count, calculate_hop_metric, calculate_fermentable_recipe_count, \
     calculate_fermentable_metric, load_all_recipe_fermentables_aggregated, load_all_recipe_hops_aggregated, \
-    get_hop_use_counts
+    get_hop_use_counts, get_style_percentiles, get_fermentables_percentiles, get_hops_percentiles
 from recipe_db.models import Style, Hop, Fermentable
 
 STYLE_METRICS = ['abv', 'ibu', 'ebc', 'srm', 'og', 'fg', 'original_plato', 'final_plato']
@@ -40,6 +40,34 @@ class Command(BaseCommand):
             self.stdout.write('Fermentable {}'.format(fermentable.name))
             self.calculate_all_fermentable_metrics(recipe_fermentables, fermentable)
             fermentable.save()
+
+        # Recalculate percentiles
+        style_percentiles = get_style_percentiles()
+        for style in Style.objects.all():
+            self.stdout.write('Calculate percentile for style {}'.format(style.name))
+            style.recipes_percentile = 0
+            if style.id in style_percentiles:
+                style.recipes_percentile = style_percentiles[style.id]['percentile']
+                style.save()
+            self.stdout.write(str(style.recipes_percentile))
+
+        hop_percentiles = get_hops_percentiles()
+        for hop in Hop.objects.all():
+            self.stdout.write('Calculate percentile for hop {}'.format(hop.name))
+            hop.recipes_percentile = 0
+            if hop.id in hop_percentiles:
+                hop.recipes_percentile = hop_percentiles[hop.id]['percentile']
+                hop.save()
+            self.stdout.write(str(hop.recipes_percentile))
+
+        fermentable_percentiles = get_fermentables_percentiles()
+        for fermentable in Fermentable.objects.all():
+            self.stdout.write('Calculate percentile for fermentable {}'.format(fermentable.name))
+            fermentable.recipes_percentile = 0
+            if fermentable.id in fermentable_percentiles:
+                fermentable.recipes_percentile = fermentable_percentiles[fermentable.id]['percentile']
+                fermentable.save()
+            self.stdout.write(str(fermentable.recipes_percentile))
 
     def calculate_all_style_metrics(self, df, style: Style) -> None:
         style.recipes_count = calculate_style_recipe_count(df, style)
