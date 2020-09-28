@@ -119,7 +119,7 @@ header {
     }
 }
 
-.navbar-filter-icon {
+@mixin navbar-toggler-icon {
     display: inline-block;
     width: 1.5em;
     height: 1.5em;
@@ -127,5 +127,15 @@ header {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 80%;
+}
+
+.navbar-burger-icon {
+    @include navbar-toggler-icon;
+    background-image: url('../img/icon-burger.svg');
+}
+
+
+.navbar-filter-icon {
+    @include navbar-toggler-icon;
     background-image: url('../img/icon-filter.svg');
 }
