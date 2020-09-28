@@ -94,7 +94,7 @@ NUMBER_GROUPING = 3
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
-STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
+STATICFILES_STORAGE = 'pipeline.storage.PipelineManifestStorage'
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
