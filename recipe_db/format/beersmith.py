@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import html
 import re
 from datetime import datetime
 from typing import Optional, List, Iterable
-from xml.etree import ElementTree
-from xml.etree.ElementTree import Element
 
 import numpy as np
+from lxml import etree
+from lxml.etree import Element
 
 from recipe_db.format.parser import FormatParser, ParserResult, float_or_none, int_or_none, clean_kind, \
     MalformedDataError, to_lower, string_or_none
@@ -89,12 +88,8 @@ class BeerSmithParser(FormatParser):
     def parse(self, result: ParserResult, file_path: str) -> None:
         try:
             with open(file_path, "rt") as f:
-                file_data = f.read()
-                file_data = html.unescape(file_data)  # Replace HTML entities
-                file_data = file_data.replace('&', '&amp;')
-                file_data = file_data.replace('"', '&quot;')
-                # file_data = re.sub(u'[\x00-\x08\x0B-\x0C\x0E-\x1F\x7F%s]', '', file_data)
-                tree = ElementTree.fromstring(file_data)
+                parser = etree.XMLParser(recover=True, resolve_entities=True, encoding='utf-8')
+                tree = etree.parse(file_path, parser)
         except Exception as e:
             raise MalformedDataError("Cannot process xml file because of {}: {}".format(type(e), str(e)))
 
