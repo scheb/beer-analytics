@@ -95,3 +95,16 @@ def ounces_to_gramms(oz: float) -> float:
     Calculate ounces to gramms
     """
     return oz * 28.3495
+
+
+def kg_to_lbs(kg: float) -> float:
+    return kg * 2.20462
+
+
+def yield_to_ppg(_yield: float) -> float:
+    return _yield * 0.46214
+
+
+def liters_to_gallons(liters: float) -> float:
+  return liters * 0.264172
+

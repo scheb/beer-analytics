@@ -7,6 +7,8 @@ from typing import Optional, List, Iterable
 from xml.etree import ElementTree
 from xml.etree.ElementTree import Element
 
+import numpy as np
+
 from recipe_db.format.parser import FormatParser, ParserResult, float_or_none, int_or_none, clean_kind, \
     MalformedDataError, to_lower, string_or_none
 from recipe_db.formulas import fluid_ounces_to_liters, ounces_to_gramms
@@ -113,6 +115,10 @@ class BeerSmithParser(FormatParser):
         self.parse_misc(file_path, bs_recipe)
 
         # Calculated values
+        if result.recipe.og is None:
+            result.recipe.og = self.calc_og(result.recipe, result.fermentables)
+        if result.recipe.fg is None:
+            result.recipe.fg = self.calc_fg(result.recipe, result.yeasts)
         result.recipe.srm = self.calc_srm(result.recipe, result.fermentables)
         result.recipe.ibu = self.calc_ibu(result.recipe, result.hops)
 
@@ -132,6 +138,11 @@ class BeerSmithParser(FormatParser):
         # Recipe
         recipe.og = bs_recipe.float_or_none('og_measured')
         recipe.fg = bs_recipe.float_or_none('fg_measured')
+        if recipe.og == 1.046 and recipe.fg == 1.010:
+            # These seem to be default values, so they're meaningless
+            recipe.og = None
+            recipe.fg = None
+
         (recipe.mash_water, recipe.sparge_water) = self.get_mash_water(bs_recipe)
 
         # Boiling
@@ -190,6 +201,39 @@ class BeerSmithParser(FormatParser):
             sparge_water = None if sparge_water == 0 else fluid_ounces_to_liters(sparge_water)
 
         return mash_water, sparge_water
+
+    def calc_og(self, recipe: Recipe, fermentables: List[RecipeFermentable]):
+        if recipe.cast_out_wort is None:
+            return None
+
+        og = 1.0
+
+        # Calculate gravities from fermentables
+        for fermentable in fermentables:
+            efficiency = fermentable.extract_efficiency
+
+            gu = fermentable.gu(recipe.cast_out_wort) * efficiency
+            if gu is None:
+                return None
+
+            og += gu / 1000.0
+
+        return og
+
+    def calc_fg(self, recipe: Recipe, yeasts: List[RecipeYeast]):
+        if recipe.og is None:
+            return None
+
+        # Get attenuation for final gravity
+        attenuation = 0
+        for yeast in yeasts:
+            if yeast.attenuation is not None and yeast.attenuation > attenuation:
+                attenuation = yeast.attenuation
+
+        if attenuation <= 0:
+            attenuation = 75
+
+        return recipe.og - ((recipe.og - 1.0) * attenuation / 100.0)
 
     def calc_srm(self, recipe: Recipe, fermentables: List[RecipeFermentable]) -> Optional[float]:
         if recipe.cast_out_wort is None or len(fermentables) == 0:
@@ -317,9 +361,19 @@ class BeerSmithParser(FormatParser):
         return None
 
     def get_yeasts(self, bs_recipe: BeerSmithNode) -> iter:
-        for bs_hop in self.get_ingredients_of_type(bs_recipe, ['yeast']):
-            name = clean_kind(bs_hop.string_or_none('name'))
-            yield RecipeYeast(kind_raw=name)
+        for bs_yeast in self.get_ingredients_of_type(bs_recipe, ['yeast']):
+            name = clean_kind(bs_yeast.string_or_none('name'))
+            yeast = RecipeYeast(kind_raw=name)
+
+            attenuation_values = []
+            if (min_attenuation := bs_yeast.float_or_none('min_attenuation')) is not None:
+                attenuation_values.append(min_attenuation)
+            if (max_attenuation := bs_yeast.float_or_none('max_attenuation')) is not None:
+                attenuation_values.append(max_attenuation)
+            if len(attenuation_values) > 0:
+                yeast.attenuation = np.mean(attenuation_values)
+
+            yield yeast
 
     def get_ingredients_of_type(self, bs_recipe: BeerSmithNode, types: list) -> Iterable[BeerSmithNode]:
         for ingredient in self.get_ingredients(bs_recipe):

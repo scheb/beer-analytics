@@ -24,8 +24,8 @@ class BeerSmithParserTests(TestCase):
         self.assertEqual('LDB', recipe.author)
         self.assertEqual('Doppelbock', recipe.style_raw)
         self.assertEqual(72, recipe.extract_efficiency)
-        self.assertEqual(1.046, recipe.og)
-        self.assertEqual(1.010, recipe.fg)
+        self.assertEqual(1.065, round(recipe.og, 3))
+        self.assertEqual(1.018, round(recipe.fg, 3))
         self.assertEqual(24.2, round(recipe.ibu, 1))  # Calculated
         self.assertEqual(23.0, round(recipe.srm, 1))  # Calculated
         self.assertEqual(18.04, round(recipe.mash_water, 2))

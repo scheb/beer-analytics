@@ -14,7 +14,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from recipe_db.formulas import ebc_to_srm, srm_to_ebc, plato_to_gravity, gravity_to_plato, abv_to_to_final_plato, \
-    alcohol_by_volume, lovibond_to_ebc, ebc_to_lovibond
+    alcohol_by_volume, lovibond_to_ebc, ebc_to_lovibond, kg_to_lbs, yield_to_ppg, liters_to_gallons
 
 
 class GreaterThanValueValidator(BaseValidator):
@@ -453,6 +453,10 @@ class Recipe(models.Model):
 
 
 class RecipeFermentable(models.Model):
+    BOIL = 'boil'
+    MASH = 'mash'
+    STEEP = 'steep'
+
     GRAIN = 'grain'
     SUGAR = 'sugar'
     EXTRACT = 'extract'
@@ -489,6 +493,48 @@ class RecipeFermentable(models.Model):
             from_field_value = getattr(self, from_field_name)
             if from_field_value is not None:
                 setattr(self, to_field_name, calc_function(from_field_value))
+
+    # When is this item added in the brewing process? Boil, steep, or mash?
+    @property
+    def addition(self):
+        if self.kind_raw is None:
+            return self.MASH
+
+        regexes = [
+            # Forced values take precedence, then search known names and default to mashing
+            (re.compile("/mash/i"), self.MASH),
+            (re.compile("/steep/i"), self.STEEP),
+            (re.compile("/boil/i"), self.BOIL),
+            (re.compile("/boil/i"), self.BOIL),
+            (re.compile("/biscuit|black|cara|chocolate|crystal|munich|roast|special|toast|victory|vienna/i"), self.STEEP),
+            (re.compile("/candi|candy|dme|dry|extract|honey|lme|liquid|sugar|syrup|turbinado/i"), self.BOIL),
+        ]
+
+        kind_raw_lower = self.kind_raw.lower()
+        for regex, addition in regexes:
+            if re.search(regex, kind_raw_lower):
+                return addition
+
+        return self.MASH
+
+    # Efficiency based on addition
+    @property
+    def extract_efficiency(self):
+        if self.addition == self.STEEP:
+            return 0.5
+        elif self.addition == self.MASH:
+            return 0.75
+        return 1.0
+
+    # Get the gravity units for a specific liquid volume with 100% efficiency
+    def gu(self, cast_out_wort: float):
+        if self._yield is None or self.amount is None:
+            return None
+
+        ppg = yield_to_ppg(self._yield)
+        amount_lbs = kg_to_lbs(self.amount / 1000)
+        gallons = liters_to_gallons(cast_out_wort)
+        return ppg * amount_lbs / gallons
 
 
 class RecipeHop(models.Model):
@@ -560,3 +606,4 @@ class RecipeYeast(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     kind = models.CharField(max_length=255, default=None, blank=True, null=True)
     kind_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
+    attenuation = models.FloatField(default=None, blank=True, null=True)
