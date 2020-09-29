@@ -14,7 +14,7 @@ class ResultPostProcessor:
         raise NotImplementedError
 
 
-class RecipeImporter:
+class RecipeLoader:
 
     @transaction.atomic
     def import_recipe(self, uid: str, result: ParserResult) -> None:
@@ -94,7 +94,7 @@ class RecipeImporter:
 class RecipeFileProcessor:
     def __init__(
         self,
-         importer: RecipeImporter,
+         importer: RecipeLoader,
         format_parsers: List[FormatParser],
         post_processors: List[ResultPostProcessor] = None,
         replace_existing=False
