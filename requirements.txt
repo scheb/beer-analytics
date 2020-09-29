@@ -8,6 +8,7 @@ django-pipeline==2.0.5
 idna==2.10
 kaleido==0.0.3.post1
 kiwisolver==1.2.0
+lxml==4.5.2
 numpy==1.19.1
 pandas==1.1.1
 path==15.0.0
