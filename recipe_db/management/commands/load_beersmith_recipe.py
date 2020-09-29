@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 
 from recipe_db.format.beersmith import BeerSmithParser
-from recipe_db.loader import RecipeFileProcessor, RecipeImporter
+from recipe_db.loader import RecipeFileProcessor, RecipeLoader
 
 
 class Command(BaseCommand):
@@ -20,7 +20,7 @@ class Command(BaseCommand):
         self.stdout.write("Load recipe {} from file {}".format(uid, file_path))
 
         try:
-            processor = RecipeFileProcessor(RecipeImporter(), [BeerSmithParser()], replace_existing=replace)
+            processor = RecipeFileProcessor(RecipeLoader(), [BeerSmithParser()], replace_existing=replace)
             processor.import_recipe_from_file([file_path], uid)
         except Exception as e:
             self.stderr.write(str(e))
