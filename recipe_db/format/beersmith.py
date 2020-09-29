@@ -208,11 +208,11 @@ class BeerSmithParser(FormatParser):
         for fermentable in fermentables:
             efficiency = fermentable.extract_efficiency
 
-            gu = fermentable.gu(recipe.cast_out_wort) * efficiency
+            gu = fermentable.gu(recipe.cast_out_wort)
             if gu is None:
                 return None
 
-            og += gu / 1000.0
+            og += gu * efficiency / 1000.0
 
         return og
 
