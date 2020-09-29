@@ -145,8 +145,20 @@ class BeerSmithParser(FormatParser):
 
         (recipe.mash_water, recipe.sparge_water) = self.get_mash_water(bs_recipe)
 
+        # Equipment values
+        cast_out_ounces = None
+        bs_equipment = bs_recipe.get_child('equipment')
+        if bs_equipment:
+            if creation_date is None or creation_date == '1969-12-31':
+                creation_date = bs_equipment.string_or_none('last_modified')
+            recipe.boiling_time = bs_equipment.float_or_none('boil_time')
+            recipe.extract_efficiency = bs_equipment.float_or_none('efficiency')
+            cast_out_ounces = bs_equipment.float_or_none('batch_vol')
+
+        if recipe.extract_efficiency is None:
+            recipe.extract_efficiency = bs_recipe.float_or_none('old_efficiency')
+
         # Boiling
-        cast_out_ounces = bs_recipe.float_or_none('batch_vol')
         if cast_out_ounces is None or cast_out_ounces == 0.0:
             cast_out_ounces = bs_recipe.float_or_none('volume_measured')
         if cast_out_ounces is None or cast_out_ounces == 0.0:
@@ -155,17 +167,6 @@ class BeerSmithParser(FormatParser):
             cast_out_ounces = None
 
         recipe.cast_out_wort = fluid_ounces_to_liters(cast_out_ounces) if cast_out_ounces is not None else None
-
-        # Equipment values
-        bs_equipment = bs_recipe.get_child('equipment')
-        if bs_equipment:
-            if creation_date is None or creation_date == '1969-12-31':
-                creation_date = bs_equipment.string_or_none('last_modified')
-            recipe.boiling_time = bs_equipment.float_or_none('boil_time')
-            recipe.extract_efficiency = bs_equipment.float_or_none('efficiency')
-
-        if recipe.extract_efficiency is None:
-            recipe.extract_efficiency = bs_recipe.float_or_none('old_efficiency')
 
         # Hopefully we've found a creation date
         if creation_date is not None and creation_date != '1969-12-31':
