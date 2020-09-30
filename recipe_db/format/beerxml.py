@@ -175,16 +175,21 @@ class BeerXMLParser(FormatParser):
         mash_water = 0
         sparge_water = 0
         sparge_temp = 78 if mash.sparge_temp is None else mash.sparge_temp
+        if len(mash.steps) > 0:
+            first_mash = mash.steps[0]
+            amount = first_mash.infuse_amount
+            if amount is not None:
+                mash_water = amount
+
         for mash_step in mash.steps:
             temp = mash_step.step_temp
             amount = mash_step.infuse_amount
             if temp is not None and amount is not None:
-                if temp > sparge_temp:
+                if temp >= sparge_temp:
                     sparge_water += amount
-                else:
-                    mash_water += amount
 
-        return mash_water if mash_water > 0 else None, sparge_water if sparge_water > 0 else None
+        return mash_water if mash_water > 0 else None,\
+               sparge_water if sparge_water > 0 else None
 
     def get_fermentables(self, beerxml: BeerXMLRecipe) -> iter:
         for beerxml_fermentable in beerxml.fermentables:
