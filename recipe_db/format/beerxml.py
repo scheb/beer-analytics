@@ -1,13 +1,11 @@
-import locale
 from typing import Optional
-from xml.etree import ElementTree
 from xml.etree.ElementTree import Element
 
 from pybeerxml.hop import Hop
 from pybeerxml.parser import Parser
 from pybeerxml.recipe import Recipe as BeerXMLRecipe
 
-from recipe_db.format.parser import FormatParser, ParserResult, float_or_none, int_or_none, clean_kind, \
+from recipe_db.format.parser import FormatParser, ParserResult, float_or_none, clean_kind, \
     MalformedDataError
 from recipe_db.models import Recipe, RecipeYeast, RecipeFermentable, RecipeHop
 
@@ -45,8 +43,10 @@ class BeerXMLParser(FormatParser):
 
     def parse(self, result: ParserResult, file_path: str) -> None:
         try:
-            parser = Parser()
-            recipes = parser.parse(file_path)
+            with open(file_path, "rt", encoding='utf-8') as f:
+                parser = Parser()
+                recipes = parser.parse_from_string(f.read())
+
         except Exception as e:
             raise MalformedDataError("Cannot process BeerXML file because of {}".format(type(e)))
 
@@ -54,31 +54,23 @@ class BeerXMLParser(FormatParser):
             raise MalformedDataError("Cannot process BeerXML file, because it contains more than one recipe")
         beerxml = recipes[0]
 
-        with open(file_path, "rt") as f:
-            tree = ElementTree.parse(f)
-
-        recipe_node = None
-        for node in tree.iter():
-            if node.tag.lower() == "recipe":
-                recipe_node = node
-
-        self.parse_recipe(result.recipe, beerxml, recipe_node)
+        self.parse_recipe(result.recipe, beerxml)
         result.fermentables.extend(self.get_fermentables(beerxml))
         result.hops.extend(self.get_hops(beerxml))
         result.yeasts.extend(self.get_yeasts(beerxml))
 
-    def parse_recipe(self, recipe: Recipe, beerxml: BeerXMLRecipe, recipe_node: Element) -> None:
-        recipe.name = self.fix_encoding(beerxml.name)
-        recipe.author = self.fix_encoding(beerxml.brewer)
+    def parse_recipe(self, recipe: Recipe, beerxml: BeerXMLRecipe) -> None:
+        recipe.name = beerxml.name
+        recipe.author = beerxml.brewer
 
         # Characteristics
-        recipe.style_raw = self.fix_encoding(beerxml.style.name)
+        recipe.style_raw = beerxml.style.name
         recipe.extract_efficiency = beerxml.efficiency
-        recipe.og = self.get_og(beerxml, recipe_node)
-        recipe.fg = self.get_fg(beerxml, recipe_node)
-        recipe.abv = self.get_abv(beerxml, recipe_node)
-        recipe.ibu = self.get_ibu(beerxml, recipe_node)
-        (recipe.srm, recipe.ebc) = self.get_srm_ebc(beerxml, recipe_node)
+        recipe.og = beerxml.og
+        recipe.fg = beerxml.fg
+        recipe.abv = self.get_abv(beerxml)
+        recipe.ibu = beerxml.ibu
+        (recipe.srm, recipe.ebc) = self.get_srm_ebc(beerxml)
 
         # Mashing
         (recipe.mash_water, recipe.sparge_water) = self.get_mash_water(beerxml)
@@ -87,72 +79,44 @@ class BeerXMLParser(FormatParser):
         recipe.cast_out_wort = beerxml.batch_size
         recipe.boiling_time = beerxml.boil_time
 
-    def fix_encoding(self, value):
-        if value is None:
-            return None
-        if not isinstance(value, str):
-            return str(value)
-        return value.encode(locale.getpreferredencoding(False)).decode("utf-8")
-
-    def get_og(self, beerxml: BeerXMLRecipe, recipe_node: Element):
-        og = float_or_none(self.child_element_value(recipe_node, 'og'))
-        if og is not None:
-            return og
-
-        return beerxml.og
-
-    def get_fg(self, beerxml: BeerXMLRecipe, recipe_node: Element):
-        og = float_or_none(self.child_element_value(recipe_node, 'fg'))
-        if og is not None:
-            return og
-
-        return beerxml.fg
-
-    def get_srm_ebc(self, beerxml: BeerXMLRecipe, recipe_node: Element):
-        srm = None
-        ebc = None
-
-        (srm, ebc) = self.get_color_metrics(recipe_node, 'color')
+    def get_srm_ebc(self, beerxml: BeerXMLRecipe):
+        (srm, ebc) = self.get_color_metrics(beerxml.color)
         if ebc is not None or srm is not None:
             return srm, ebc
 
-        (srm, ebc) = self.get_color_metrics(recipe_node, 'est_color')
+        (srm, ebc) = self.get_color_metrics(beerxml.est_color)
         if ebc is not None or srm is not None:
             return srm, ebc
 
         # Use calculated value
         return beerxml.color, None
 
-    def get_color_metrics(self, recipe_node: Element, element_name: str):
-        ebc = None
-        srm = None
-        color_node_value = self.child_element_value(recipe_node, element_name)
-        if color_node_value is not None:
-            color_node_value = color_node_value.strip().lower()
-            if color_node_value.endswith('ebc'):
-                ebc = int_or_none(color_node_value.replace('ebc', '').strip())
-            else:
-                srm = float_or_none(color_node_value)
-        return srm, ebc
+    def get_color_metrics(self, color_value):
+        # If it's numeric, it's SRM
+        if isinstance(color_value, float) or isinstance(color_value, int):
+            return color_value, None
 
-    def get_ibu(self, beerxml: BeerXMLRecipe, recipe_node: Element):
-        ibu = int_or_none(self.child_element_value(recipe_node, 'ibu'))
-        if ibu is not None:
-            return ibu
+        # If it's a string, check for units
+        if isinstance(color_value, str):
+            color_value = color_value.strip().lower()
+            if color_value.endswith('ebc'):
+                ebc = float_or_none(color_value.replace('ebc', '').strip())
+                return None, ebc
+            elif color_value.endswith('srm'):
+                srm = float_or_none(color_value.replace('srm', '').strip())
+                return srm, None
 
-        ibu = beerxml.ibu
-        return ibu if ibu > 0 else None
+        return None, None
 
-    def get_abv(self, beerxml: BeerXMLRecipe, recipe_node: Element):
-        abv = float_or_none(self.strip_abv_unit(self.child_element_value(recipe_node, 'abv')))
-        if abv is not None:
+    def get_abv(self, beerxml: BeerXMLRecipe):
+        abv = beerxml.abv
+        if isinstance(abv, str):
+            abv = float_or_none(self.strip_abv_unit(abv))
+
+        if isinstance(abv, float):
             return abv
 
-        abv = float_or_none(self.strip_abv_unit(self.child_element_value(recipe_node, 'est_abv')))
-        if abv is not None:
-            return abv
-
-        return beerxml.abv
+        return None
 
     def strip_abv_unit(self, value):
         if value is None:
@@ -190,7 +154,7 @@ class BeerXMLParser(FormatParser):
                     sparge_water += amount
 
         return mash_water if mash_water > 0 else None,\
-               sparge_water if sparge_water > 0 else None
+            sparge_water if sparge_water > 0 else None
 
     def get_fermentables(self, beerxml: BeerXMLRecipe) -> iter:
         for beerxml_fermentable in beerxml.fermentables:
@@ -198,13 +162,13 @@ class BeerXMLParser(FormatParser):
             if amount is not None:
                 amount *= 1000  # convert to grams
 
-            name = clean_kind(self.fix_encoding(beerxml_fermentable.name))
+            name = clean_kind(beerxml_fermentable.name)
 
             fermentable = RecipeFermentable()
             fermentable.kind_raw = name
             fermentable.amount = amount
-            fermentable.form = self.get_fermentable_form(self.getattr(beerxml_fermentable, 'type'))
-            fermentable.origin_raw = clean_kind(self.fix_encoding(self.getattr(beerxml_fermentable, 'origin')))
+            fermentable.form = self.get_fermentable_form(beerxml_fermentable.type)
+            fermentable.origin_raw = clean_kind(beerxml_fermentable.origin)
             fermentable.color_lovibond = beerxml_fermentable.color
             fermentable._yield = beerxml_fermentable._yield
 
@@ -223,7 +187,7 @@ class BeerXMLParser(FormatParser):
             if amount is not None:
                 amount *= 1000  # convert to grams
 
-            name = clean_kind(self.fix_encoding(beerxml_hop.name))
+            name = clean_kind(beerxml_hop.name)
 
             hop = RecipeHop()
             hop.kind_raw = name
@@ -231,8 +195,8 @@ class BeerXMLParser(FormatParser):
             hop.use = self.get_hop_use(beerxml_hop)
             hop.alpha = beerxml_hop.alpha
             hop.time = beerxml_hop.time
-            hop.type = self.get_hop_type(self.getattr(beerxml_hop, 'type'))
-            hop.form = self.get_hop_form(self.getattr(beerxml_hop, 'form'))
+            hop.type = self.get_hop_type(beerxml_hop.type)
+            hop.form = self.get_hop_form(beerxml_hop.form)
 
             yield hop
 
@@ -269,10 +233,3 @@ class BeerXMLParser(FormatParser):
             if value in self.HOP_FORM_MAP:
                 return self.HOP_FORM_MAP[value]
         return None
-
-    def getattr(self, object, attribute):
-        try:
-            return getattr(object, attribute)
-        except AttributeError:
-            return None
-
