@@ -85,6 +85,7 @@ def clean_kind(kind) -> Optional[str]:
     if kind is None:
         return None
 
+    kind = str(kind)
     kind = kind.replace("®", "")
     kind = re.sub("\\s+", " ", kind)
     kind = kind.strip()
