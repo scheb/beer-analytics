@@ -2,7 +2,7 @@ from os import path
 
 from django.test import TestCase
 
-from recipe_db.format import beersmith
+from recipe_db.format import beersmith, beerxml
 from recipe_db.format.parser import ParserResult
 from recipe_db.models import RecipeHop, RecipeFermentable
 
@@ -74,3 +74,68 @@ class BeerSmithParserTests(TestCase):
         # Yeasts
         self.assertEquals(1, len(yeasts))
         self.assertEquals('Harvest', yeasts[0].kind_raw)
+
+
+class BeerXMLParserTests(TestCase):
+
+    def test_parse_recipe(self):
+        parser = beerxml.BeerXMLParser()
+        file = path.join(path.dirname(__file__), "fixtures/beerxml.xml")
+        result = ParserResult()
+        parser.parse(result, file)
+
+        recipe = result.recipe
+        hops = result.hops
+        fermentables = result.fermentables
+        yeasts = result.yeasts
+
+        self.assertEqual('Coffee Stout', recipe.name)
+        self.assertEqual('https://github.com/jwjulien', recipe.author)
+        self.assertEqual('Dry Stout', recipe.style_raw)
+        self.assertEqual(70.0, recipe.extract_efficiency)
+        self.assertEqual(1.049, round(recipe.og, 3))
+        self.assertEqual(1.015, round(recipe.fg, 3))
+        self.assertEqual(35, round(recipe.ibu, 1))  # Calculated
+        self.assertEqual(37, round(recipe.srm, 1))  # Calculated
+        self.assertEqual(5.76, round(recipe.abv, 2))  # Calculated
+        self.assertEqual(12.42, round(recipe.mash_water, 2))
+        self.assertEqual(18.30, round(recipe.sparge_water, 2))
+        self.assertEqual(20.82, round(recipe.cast_out_wort, 2))
+        self.assertEqual(60, recipe.boiling_time)
+
+        # Fermentables
+        self.assertEquals(4, len(fermentables))
+
+        self.assertEquals('Simpsons - Maris Otter', fermentables[0].kind_raw)
+        self.assertEquals(4876.12, round(fermentables[0].amount, 2))
+        self.assertEquals(RecipeFermentable.GRAIN, fermentables[0].form)
+        self.assertEquals('UK', fermentables[0].origin_raw)
+        self.assertEquals(3, round(fermentables[0].color_lovibond, 1))
+        self.assertEquals(81.0, round(fermentables[0]._yield, 2))
+
+        self.assertEquals('Simpsons - Crystal Dark', fermentables[1].kind_raw)
+        self.assertEquals('Simpsons - Chocolate Malt', fermentables[2].kind_raw)
+        self.assertEquals('Simpsons - Black Malt', fermentables[3].kind_raw)
+
+        # Hops
+        self.assertEquals(2, len(hops))
+
+        self.assertEquals('US Fuggles', hops[0].kind_raw)
+        self.assertEquals(28.35, round(hops[0].amount, 2))
+        self.assertEquals(4.5, hops[0].alpha)
+        self.assertEquals(RecipeHop.DUAL_PURPOSE, hops[0].type)
+        self.assertEquals(RecipeHop.PELLET, hops[0].form)
+        self.assertEquals(RecipeHop.BOIL, hops[0].use)
+        self.assertEquals(60, hops[0].time)
+
+        self.assertEquals('UK Fuggles', hops[1].kind_raw)
+        self.assertEquals(12.00, round(hops[1].amount, 2))
+        self.assertEquals(4.8, hops[1].alpha)
+        self.assertEquals(RecipeHop.AROMA, hops[1].type)
+        self.assertEquals(RecipeHop.PELLET, hops[1].form)
+        self.assertEquals(RecipeHop.AROMA, hops[1].use)
+        self.assertEquals(5, hops[1].time)
+
+        # Yeasts
+        self.assertEquals(1, len(yeasts))
+        self.assertEquals('Wyeast - London ESB Ale', yeasts[0].kind_raw)

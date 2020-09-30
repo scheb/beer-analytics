@@ -3,8 +3,9 @@ from typing import Optional
 from xml.etree import ElementTree
 from xml.etree.ElementTree import Element
 
-from pybeerxml import Parser, Recipe as BeerXMLRecipe
 from pybeerxml.hop import Hop
+from pybeerxml.parser import Parser
+from pybeerxml.recipe import Recipe as BeerXMLRecipe
 
 from recipe_db.format.parser import FormatParser, ParserResult, float_or_none, int_or_none, clean_kind, \
     MalformedDataError
