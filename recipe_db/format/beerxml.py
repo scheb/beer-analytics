@@ -60,11 +60,11 @@ class BeerXMLParser(FormatParser):
         result.yeasts.extend(self.get_yeasts(beerxml))
 
     def parse_recipe(self, recipe: Recipe, beerxml: BeerXMLRecipe) -> None:
-        recipe.name = beerxml.name
-        recipe.author = beerxml.brewer
+        recipe.name = str(beerxml.name)
+        recipe.author = str(beerxml.brewer)
 
         # Characteristics
-        recipe.style_raw = beerxml.style.name
+        recipe.style_raw = str(beerxml.style.name)
         recipe.extract_efficiency = beerxml.efficiency
         recipe.og = beerxml.og
         recipe.fg = beerxml.fg
