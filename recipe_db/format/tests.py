@@ -95,9 +95,9 @@ class BeerXMLParserTests(TestCase):
         self.assertEqual(70.0, recipe.extract_efficiency)
         self.assertEqual(1.049, round(recipe.og, 3))
         self.assertEqual(1.015, round(recipe.fg, 3))
-        self.assertEqual(35, round(recipe.ibu, 1))  # Calculated
-        self.assertEqual(37, round(recipe.srm, 1))  # Calculated
-        self.assertEqual(5.76, round(recipe.abv, 2))  # Calculated
+        self.assertEqual(35, round(recipe.ibu, 1))
+        self.assertEqual(37, round(recipe.srm, 1))
+        self.assertEqual(5.76, round(recipe.abv, 2))
         self.assertEqual(12.42, round(recipe.mash_water, 2))
         self.assertEqual(18.30, round(recipe.sparge_water, 2))
         self.assertEqual(20.82, round(recipe.cast_out_wort, 2))
