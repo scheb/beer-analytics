@@ -19,11 +19,11 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 04C;4;Helles Bock;Traditional Bock;Traditioneller Bock, Maibock;6.3;7.4;23;35;6.0;11.0;1064;1072;1011;1018;high;pale;bottom;lagered;central_europe;bock;false;traditional;malty;;;
 5;;Pale Bitter European Beer;;;;;;;;;;;;;;;;;;;false;;;;;
 05A;5;German Leichtbier;;;2.4;3.6;15;28;2.0;5.0;1026;1034;1006;1010;session;pale;bottom;lagered;central_europe;pale_lager;false;traditional;bitter;hoppy;;
-05B;5;Kölsch;;;4.4;5.2;18;30;3.5;5.0;1044;1050;1007;1011;standard;pale;top;lagered;central_europe;pale_ale;false;traditional;balanced;;;
+05B;5;Kölsch;;Klsch;4.4;5.2;18;30;3.5;5.0;1044;1050;1007;1011;standard;pale;top;lagered;central_europe;pale_ale;false;traditional;balanced;;;
 05C;5;German Helles Exportbier;;Dortmunder Export, Export;4.8;6.0;20;30;4.0;7.0;1048;1056;1010;1015;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;balanced;;;
 05D;5;German Pils;;Deutsches Pilsner;4.4;5.2;22;40;2.0;5.0;1044;1050;1008;1013;standard;pale;bottom;lagered;central_europe;pale_lager;false;traditional;bitter;hoppy;;
 6;;Amber Malty European Lager;;;;;;;;;;;;;;;;;;;false;;;;;
-06A;6;Märzen;;;5.8;6.3;18;24;8.0;17.0;1054;1060;1010;1014;standard;amber;bottom;lagered;central_europe;amber_lager;false;traditional;malty;;;
+06A;6;Märzen;;Mrzen;5.8;6.3;18;24;8.0;17.0;1054;1060;1010;1014;standard;amber;bottom;lagered;central_europe;amber_lager;false;traditional;malty;;;
 06B;6;Rauchbier;Smoked Beer;Smoked;4.8;6.0;20;30;12.0;22.0;1050;1057;1012;1016;standard;amber;bottom;lagered;central_europe;amber_lager;false;traditional;malty;;;smoke
 06C;6;Dunkles Bock;;;6.3;7.2;20;27;14.0;22.0;1064;1072;1013;1019;high;amber;bottom;lagered;central_europe;bock;false;traditional;malty;;;
 7;;Amber Bitter European Beer;;;;;;;;;;;;;;;;;;;false;;;;;
@@ -99,7 +99,7 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 22C;22;American Barleywine;;;8.0;12.0;50;100;10.0;19.0;1080;1120;1016;1030;very_high;amber;top;;north_america;strong_ale;false;craft;bitter;hoppy;;
 22D;22;Wheatwine;;;8.0;12.0;30;60;8.0;15.0;1080;1120;1016;1030;very_high;amber;top;;north_america;strong_ale;false;craft;balanced;hoppy;;
 23;;European Sour Ale;;;;;;;;;;;;;;;;;;;false;;;;;
-23A;23;Berliner Weisse;;;2.8;3.8;3;8;2.0;3.0;1028;1032;1003;1006;session;pale;top;;central_europe;wheat_beer;false;traditional;;sour;;
+23A;23;Berliner Weisse;;Berliner Weiss;2.8;3.8;3;8;2.0;3.0;1028;1032;1003;1006;session;pale;top;;central_europe;wheat_beer;false;traditional;;sour;;
 23B;23;Flanders Red Ale;;;4.6;6.5;10;25;10.0;16.0;1048;1057;1002;1012;standard;amber;top;;western_europe;sour_ale;false;traditional;balanced;sour;;wood
 23C;23;Oud Bruin;;;4.0;8.0;20;25;15.0;22.0;1040;1074;1008;1012;standard;dark;top;;western_europe;sour_ale;false;traditional;malty;sour;;
 23D;23;Lambic;;;5.0;6.5;0;10;3.0;7.0;1040;1054;1001;1010;standard;pale;wild;;western_europe;wheat_beer;false;traditional;;sour;;
@@ -139,7 +139,7 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 30;;Spiced Beer;;;;;;;;;;;;;;;;;;;true;;;;;
 30A;30;Spice, Herb or Vegetable Beer;;Frucht- Gewürz- und Kräuterbiere, Gewürz- Kräuter- und Gemüsebier;;;;;;;;;;;;;;;;;true;;;;spice;
 30B;30;Autumn Seasonal Beer;;;;;;;;;;;;;;;;;;;true;;;;spice;
-30C;30;Winter Seasonal Beer;;Winter Special Spiced, Holiday Special Spiced, Gewürztes Winterbier;;;;;;;;;;;;;;;;;true;;;;spice;
+30C;30;Winter Seasonal Beer;;Winter Special Spiced, Holiday Special Spiced, Gewürztes Winterbier, Christmas;;;;;;;;;;;;;;;;;true;;;;spice;
 31;;Alternative Fermentables Beer;;;;;;;;;;;;;;;;;;;true;;;;;
 31A;31;Alternative Grain Beer;;;;;;;;;;;;;;;;;;;true;;;;;
 31B;31;Alternative Sugar Beer;;;;;;;;;;;;;;;;;;;true;;;;;
