@@ -318,7 +318,15 @@ class BeerSmithParser(FormatParser):
             hop.use = self.get_hop_use(bs_hop)
             hop.type = self.get_hop_type(bs_hop)
             hop.form = self.get_hop_form(bs_hop)
+
             hop.alpha = bs_hop.float_or_none('alpha')
+            hop.beta = bs_hop.float_or_none('beta')
+            hop.hsi = bs_hop.float_or_none('hsi')
+
+            notes = bs_hop.string_or_none('notes')
+            sub_search = re.search('Subst\w*:(.+)', notes)
+            if sub_search:
+                hop.substitutes = sub_search.group(1).strip()
 
             # Add an extra attribute to pass the value around
             hop.ibu_contrib = bs_hop.float_or_none('ibu_contrib') or 0.0

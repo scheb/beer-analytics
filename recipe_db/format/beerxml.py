@@ -193,10 +193,18 @@ class BeerXMLParser(FormatParser):
             hop.kind_raw = name
             hop.amount = amount
             hop.use = self.get_hop_use(beerxml_hop)
-            hop.alpha = beerxml_hop.alpha
             hop.time = beerxml_hop.time
             hop.type = self.get_hop_type(beerxml_hop.type)
             hop.form = self.get_hop_form(beerxml_hop.form)
+
+            hop.alpha = beerxml_hop.alpha
+            hop.beta = beerxml_hop.beta
+            hop.hsi = beerxml_hop.hsi
+            hop.humulene = beerxml_hop.humulene
+            hop.caryophyllene = beerxml_hop.caryophyllene
+            hop.cohumulone = beerxml_hop.cohumulone
+            hop.myrcene = beerxml_hop.myrcene
+            hop.substitutes = clean_kind(beerxml_hop.substitutes)
 
             yield hop
 

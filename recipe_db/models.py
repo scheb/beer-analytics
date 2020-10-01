@@ -578,10 +578,18 @@ class RecipeHop(models.Model):
     form = models.CharField(max_length=16, choices=FORM_CHOICES, default=None, blank=True, null=True)
     type = models.CharField(max_length=16, choices=TYPE_CHOICES, default=None, blank=True, null=True)
     use = models.CharField(max_length=16, choices=USE_CHOICES, default=None, blank=True, null=True)
-    alpha = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     amount = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     amount_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
     time = models.IntegerField(default=None, blank=True, null=True, validators=[MinValueValidator(0)])
+
+    alpha = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    beta = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    hsi = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    humulene = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    caryophyllene = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    cohumulone = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    myrcene = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    substitutes = models.CharField(max_length=255, default=None, blank=True, null=True)
 
     @classmethod
     def get_uses(cls) -> dict:
