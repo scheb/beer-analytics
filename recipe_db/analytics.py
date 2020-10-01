@@ -1,3 +1,4 @@
+import math
 from typing import Tuple
 
 import pandas as pd
@@ -184,7 +185,16 @@ def get_style_metric_values(style: Style, metric: str) -> DataFrame:
     df = pd.read_sql(query, connection, params=style_ids)
     df = remove_outliers(df, metric, 0.02)
 
-    histogram = df.groupby([pd.cut(df[metric], 16, precision=precision)])[metric].agg(['count'])
+    bins = 16
+    if metric in ['og', 'fg'] and len(df) > 0:
+        abs = df[metric].max() - df[metric].min()
+        bins = max([1, round(abs / 0.002)])
+        if bins > 18:
+            print(bins)
+            bins = round(bins / math.ceil(bins / 12))
+            print(bins)
+
+    histogram = df.groupby([pd.cut(df[metric], bins, precision=precision)])[metric].agg(['count'])
     histogram = histogram.reset_index()
     histogram[metric] = histogram[metric].map(str)
 
