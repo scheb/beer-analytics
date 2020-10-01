@@ -15,7 +15,7 @@ path==15.0.0
 Pillow==7.2.0
 plotly==4.9.0
 psutil==5.7.2
-pybeerxml==2.1.0
+pybeerxml==2.1.1
 pyparsing==2.4.7
 python-dateutil==2.8.1
 pytz==2020.1
