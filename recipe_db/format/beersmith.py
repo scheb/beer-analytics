@@ -4,13 +4,12 @@ import re
 from datetime import datetime
 from typing import Optional, List, Iterable
 
-import numpy as np
 from lxml import etree
 from lxml.etree import Element
 
 from recipe_db.format.parser import FormatParser, ParserResult, float_or_none, int_or_none, clean_kind, \
     MalformedDataError, to_lower, string_or_none
-from recipe_db.formulas import fluid_ounces_to_liters, ounces_to_gramms
+from recipe_db.formulas import fluid_ounces_to_liters, ounces_to_gramms, fahrenheit_to_celsius
 from recipe_db.models import Recipe, RecipeYeast, RecipeFermentable, RecipeHop
 
 
@@ -84,6 +83,9 @@ class BeerSmithParser(FormatParser):
     HOP_USE_MAP = [RecipeHop.BOIL, RecipeHop.DRY_HOP, RecipeHop.MASH, RecipeHop.FIRST_WORT, RecipeHop.AROMA]
     FERMENTABLE_FORM_MAP = [RecipeFermentable.GRAIN, RecipeFermentable.EXTRACT, RecipeFermentable.SUGAR, RecipeFermentable.ADJUNCT, RecipeFermentable.DRY_EXTRACT]
     MISC_USE_MAP = ["Boil", "Mash", "Primary", "Secondary", "Bottling", "Sparge"]
+    YEAST_FLOCCULATION_MAP = [RecipeYeast.LOW, RecipeYeast.MEDIUM, RecipeYeast.HIGH, RecipeYeast.VERY_HIGH]
+    YEAST_TYPE_MAP = [RecipeYeast.ALE, RecipeYeast.LAGER, RecipeYeast.WINE, RecipeYeast.CHAMPAGNE, RecipeYeast.WHEAT]
+    YEAST_FORM_MAP = [RecipeYeast.LIQUID, RecipeYeast.DRY, RecipeYeast.SLANT, RecipeYeast.CULTURE]
 
     def parse(self, result: ParserResult, file_path: str) -> None:
         try:
@@ -369,15 +371,38 @@ class BeerSmithParser(FormatParser):
             name = clean_kind(bs_yeast.string_or_none('name'))
             yeast = RecipeYeast(kind_raw=name)
 
-            attenuation_values = []
-            if (min_attenuation := bs_yeast.float_or_none('min_attenuation')) is not None:
-                attenuation_values.append(min_attenuation)
-            if (max_attenuation := bs_yeast.float_or_none('max_attenuation')) is not None:
-                attenuation_values.append(max_attenuation)
-            if len(attenuation_values) > 0:
-                yeast.attenuation = np.mean(attenuation_values)
+            yeast.lab = bs_yeast.string_or_none('lab')
+            yeast.product_id = bs_yeast.string_or_none('product_id')
+            yeast.form = self.get_yeast_form(bs_yeast)
+            yeast.type = self.get_yeast_type(bs_yeast)
+            yeast.min_attenuation = bs_yeast.float_or_none('min_attenuation')
+            yeast.max_attenuation = bs_yeast.float_or_none('max_attenuation')
+            yeast.flocculation = self.get_yeast_flocculation(bs_yeast)
+
+            min_temp = bs_yeast.float_or_none('min_temp')
+            max_temp = bs_yeast.float_or_none('max_temp')
+            yeast.min_temperature = None if min_temp is None else fahrenheit_to_celsius(min_temp)
+            yeast.max_temperature = None if max_temp is None else fahrenheit_to_celsius(max_temp)
 
             yield yeast
+
+    def get_yeast_type(self, bs_yeast: BeerSmithNode):
+        value = bs_yeast.int_or_none('type')
+        if value is not None and value < len(self.YEAST_TYPE_MAP):
+            return self.YEAST_TYPE_MAP[value]
+        return None
+
+    def get_yeast_form(self, bs_yeast: BeerSmithNode):
+        value = bs_yeast.int_or_none('form')
+        if value is not None and value < len(self.YEAST_FORM_MAP):
+            return self.YEAST_FORM_MAP[value]
+        return None
+
+    def get_yeast_flocculation(self, bs_yeast: BeerSmithNode):
+        value = bs_yeast.int_or_none('flocculation')
+        if value is not None and value < len(self.YEAST_FLOCCULATION_MAP):
+            return self.YEAST_FLOCCULATION_MAP[value]
+        return None
 
     def get_ingredients_of_type(self, bs_recipe: BeerSmithNode, types: list) -> Iterable[BeerSmithNode]:
         for ingredient in self.get_ingredients(bs_recipe):

@@ -4,7 +4,7 @@ from django.test import TestCase
 
 from recipe_db.format import beersmith, beerxml
 from recipe_db.format.parser import ParserResult
-from recipe_db.models import RecipeHop, RecipeFermentable
+from recipe_db.models import RecipeHop, RecipeFermentable, RecipeYeast
 
 
 class BeerSmithParserTests(TestCase):
@@ -77,6 +77,15 @@ class BeerSmithParserTests(TestCase):
         # Yeasts
         self.assertEquals(1, len(yeasts))
         self.assertEquals('Harvest', yeasts[0].kind_raw)
+        self.assertEquals("Imperial Yeast", yeasts[0].lab)
+        self.assertEquals("L17", yeasts[0].product_id)
+        self.assertEquals(RecipeYeast.LIQUID, yeasts[0].form)
+        self.assertEquals(RecipeYeast.LAGER, yeasts[0].type)
+        self.assertEquals(70.0, yeasts[0].min_attenuation)
+        self.assertEquals(70.0, yeasts[0].min_attenuation)
+        self.assertEquals(10.0, round(yeasts[0].min_temperature, 1))
+        self.assertEquals(15.6, round(yeasts[0].max_temperature, 1))
+        self.assertEquals(RecipeYeast.MEDIUM, yeasts[0].flocculation)
 
 
 class BeerXMLParserTests(TestCase):
@@ -149,3 +158,8 @@ class BeerXMLParserTests(TestCase):
         # Yeasts
         self.assertEquals(1, len(yeasts))
         self.assertEquals('Wyeast - London ESB Ale', yeasts[0].kind_raw)
+        self.assertEquals('Wyeast Labs', yeasts[0].lab)
+        self.assertEquals('1968', yeasts[0].product_id)
+        self.assertEquals(RecipeYeast.LIQUID, yeasts[0].form)
+        self.assertEquals(RecipeYeast.ALE, yeasts[0].type)
+        self.assertEquals(RecipeYeast.VERY_HIGH, yeasts[0].flocculation)
