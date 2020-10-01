@@ -41,6 +41,28 @@ class BeerXMLParser(FormatParser):
         "fruit": RecipeFermentable.ADJUNCT,
     }
 
+    YEAST_FORM_MAP = {
+        "liquid": RecipeYeast.LIQUID,
+        "dry": RecipeYeast.DRY,
+        "slant": RecipeYeast.SLANT,
+        "culture": RecipeYeast.CULTURE,
+    }
+
+    YEAST_TYPE_MAP = {
+        "ale": RecipeYeast.ALE,
+        "lager": RecipeYeast.LAGER,
+        "wheat": RecipeYeast.WHEAT,
+        "wine": RecipeYeast.WINE,
+        "champagne": RecipeYeast.CHAMPAGNE,
+    }
+
+    YEAST_FLOCCULATION_MAP = {
+        "low": RecipeYeast.LOW,
+        "medium": RecipeYeast.MEDIUM,
+        "high": RecipeYeast.HIGH,
+        "very high": RecipeYeast.VERY_HIGH,
+    }
+
     def parse(self, result: ParserResult, file_path: str) -> None:
         try:
             with open(file_path, "rt", encoding='utf-8') as f:
@@ -208,10 +230,6 @@ class BeerXMLParser(FormatParser):
 
             yield hop
 
-    def get_yeasts(self, beerxml: BeerXMLRecipe) -> iter:
-        for beerxml_yeast in beerxml.yeasts:
-            yield RecipeYeast(kind_raw=beerxml_yeast.name)
-
     def get_hop_use(self, beerxml_hop: Hop):
         use_raw = beerxml_hop.use
         if use_raw is not None:
@@ -240,4 +258,57 @@ class BeerXMLParser(FormatParser):
             value = clean_kind(value.lower())
             if value in self.HOP_FORM_MAP:
                 return self.HOP_FORM_MAP[value]
+        return None
+
+    def get_yeasts(self, beerxml: BeerXMLRecipe) -> iter:
+        for beerxml_yeast in beerxml.yeasts:
+            # amount = beerxml_yeast.amount
+            # if amount is not None:
+            #     amount *= 1000  # convert to grams
+
+            name = clean_kind(beerxml_yeast.name)
+            yeast = RecipeYeast(kind_raw=name)
+
+            # Handle numeric product ids
+            product_id = beerxml_yeast.product_id
+            if isinstance(product_id, int):
+                product_id = str(product_id)
+            if isinstance(product_id, float):
+                if round(product_id) == product_id:
+                    product_id = str(round(product_id))
+                else:
+                    product_id = str(product_id)
+
+            yeast.lab = beerxml_yeast.laboratory
+            yeast.product_id = product_id
+            yeast.form = self.get_yeast_form(beerxml_yeast.form)
+            yeast.type = self.get_yeast_type(beerxml_yeast.type)
+            # TODO: add fields when pybeerxml was updated
+            # yeast.amount = amount
+            # yeast.amount_is_weight = beerxml_yeast.amount_is_weight
+            # yeast.min_attenuation = beerxml_yeast.min_attenuation
+            # yeast.max_attenuation = beerxml_yeast.max_attenuation
+            yeast.flocculation = self.get_yeast_flocculation(beerxml_yeast.flocculation)
+
+            yield yeast
+
+    def get_yeast_form(self, value):
+        if value is not None:
+            value = clean_kind(value.lower())
+            if value in self.YEAST_FORM_MAP:
+                return self.YEAST_FORM_MAP[value]
+        return None
+
+    def get_yeast_type(self, value):
+        if value is not None:
+            value = clean_kind(value.lower())
+            if value in self.YEAST_TYPE_MAP:
+                return self.YEAST_TYPE_MAP[value]
+        return None
+
+    def get_yeast_flocculation(self, value):
+        if value is not None:
+            value = clean_kind(value.lower())
+            if value in self.YEAST_FLOCCULATION_MAP:
+                return self.YEAST_FLOCCULATION_MAP[value]
         return None

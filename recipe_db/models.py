@@ -7,6 +7,7 @@ import re
 from collections import OrderedDict
 from typing import Optional
 
+import numpy as np
 # noinspection PyUnresolvedReferences
 import translitcodec
 from django.core.validators import MaxValueValidator, BaseValidator, MinValueValidator
@@ -611,7 +612,69 @@ class RecipeHop(models.Model):
 
 
 class RecipeYeast(models.Model):
+    ALE = "ale"
+    LAGER = "lager"
+    WHEAT = "wheat"
+    WINE = "wine"
+    CHAMPAGNE = "champagne"
+
+    LIQUID = "liquid"
+    DRY = "dry"
+    SLANT = "slant"
+    CULTURE = "culture"
+
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    VERY_HIGH = "very-high"
+
+    FORM_CHOICES = (
+        (ALE, "Ale"),
+        (LAGER, "Lager"),
+        (WHEAT, "Wheat"),
+        (WINE, "Wine"),
+        (CHAMPAGNE, "Champagne"),
+    )
+
+    TYPE_CHOICES = (
+        (LIQUID, "Liquid"),
+        (DRY, "Dry"),
+        (SLANT, "Slant"),
+        (CULTURE, "Culture"),
+    )
+
+    FLOCCULATION_CHOICES = (
+        (LOW, "Low"),
+        (MEDIUM, "Medium"),
+        (HIGH, "High"),
+        (VERY_HIGH, "Very High"),
+    )
+
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    kind = models.CharField(max_length=255, default=None, blank=True, null=True)
+    kind = models.ForeignKey(Yeast, on_delete=models.SET_NULL, default=None, blank=True, null=True)
     kind_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
-    attenuation = models.FloatField(default=None, blank=True, null=True)
+    lab = models.CharField(max_length=255, default=None, blank=True, null=True)
+    product_id = models.CharField(max_length=32, default=None, blank=True, null=True)
+    form = models.CharField(max_length=16, choices=FORM_CHOICES, default=None, blank=True, null=True)
+    type = models.CharField(max_length=16, choices=TYPE_CHOICES, default=None, blank=True, null=True)
+    amount = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    amount_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
+    amount_is_weight: models.BooleanField(default=None, blank=True, null=True)
+    min_attenuation = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    max_attenuation = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    min_temperature = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    max_temperature = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    flocculation = models.CharField(max_length=16, choices=FLOCCULATION_CHOICES, default=None, blank=True, null=True)
+
+    @property
+    def attenuation(self) -> Optional[float]:
+        attenuations = []
+        if self.min_attenuation is not None:
+            attenuations.append(self.min_attenuation)
+        if self.max_attenuation is not None:
+            attenuations.append(self.max_attenuation)
+
+        if len(attenuations) > 0:
+            return np.mean(attenuations)
+
+        return None

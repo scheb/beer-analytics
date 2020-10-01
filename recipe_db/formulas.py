@@ -106,5 +106,8 @@ def yield_to_ppg(_yield: float) -> float:
 
 
 def liters_to_gallons(liters: float) -> float:
-  return liters * 0.264172
+    return liters * 0.264172
 
+
+def fahrenheit_to_celsius(fahrenheit: float) -> float:
+    return (fahrenheit - 32) * 5 / 9
