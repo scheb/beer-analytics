@@ -24,7 +24,7 @@ Spelt Malt;grain;other_malt;;Dinkelmalz, Château Spelt
 Rye Malt;grain;other_malt;;Rye, Roggenmalz, Château Rye
 Emmer Malt;grain;other_malt;;Emmermalz
 Small Spelt Malt;grain;other_malt;;Einkornmalz
-Oat Malt;grain;other_malt;;Hafermalz, Château Oat
+Oat Malt;grain;other_malt;;Hafermalz, Château Oat, Oats malted, Oat malted
 Dark Oat Malt;grain;other_malt;;Schwarzhafermalz
 Triticale Malt;grain;other_malt;;Triticalemalz
 Millet Malt;grain;other_malt;;Hirsemalz
@@ -83,7 +83,7 @@ Rice Hulls;grain;unmalted_adjunct;Rice Husks;
 Torrified Barley;grain;unmalted_adjunct;;Barley Torrified
 Torrified Wheat;grain;unmalted_adjunct;;Wheat Torrified
 Maize;grain;unmalted_adjunct;Corn;Mais
-Golden Naked Oats;grain;cara_crystal;;Naked Oats
+Golden Naked Oats;grain;cara_crystal;;Naked Oats, Oats Golden Naked
 CaraRye;grain;cara_crystal;;Cara Malt Rye, Rye Cara
 CaraRed;grain;cara_crystal;CaraRuby;Cara Malt Red, Cara Malt Ruby, Cara Malt Rot, Rotes Cara
 CaraHell;grain;cara_crystal;;Cara Malt Hell, Karamellmalz Hell, CaraMalt, Helles Cara
@@ -106,14 +106,14 @@ Caramel/Crystal Malt – 40L;grain;cara_crystal;Crystal Malt 40L, Caramel Malt 4
 Caramel/Crystal Malt – 45L;grain;cara_crystal;Crystal Malt 45L, Caramel Malt 45L;
 Caramel/Crystal Malt – 50L;grain;cara_crystal;Crystal Malt 50L, Caramel Malt 50L;Château Cara Gold
 Caramel/Crystal Malt – 55L;grain;cara_crystal;Crystal Malt 55L, Caramel Malt 55L;
-Caramel/Crystal Malt – 60L;grain;cara_crystal;Crystal Malt 60L, Caramel Malt 60L, Medium Caramel;Cara Munich 60L, Château Crystal
+Caramel/Crystal Malt – 60L;grain;cara_crystal;Crystal Malt 60L, Caramel Malt 60L, Medium Caramel, Crystal Medium;Cara Munich 60L, Château Crystal
 Caramel/Crystal Malt – 70L;grain;cara_crystal;Crystal Malt 70L, Caramel Malt 70L;
 Caramel/Crystal Malt – 75L;grain;cara_crystal;Crystal Malt 75L, Caramel Malt 75L;
 Caramel/Crystal Malt – 80L;grain;cara_crystal;Crystal Malt 80L, Caramel Malt 80L;
 Caramel/Crystal Malt – 90L;grain;cara_crystal;Crystal Malt 90L, Caramel Malt 90L;
 Caramel/Crystal Malt – 120L;grain;cara_crystal;Crystal Malt 120L, Caramel Malt 120L, Dark Caramel, Special B, Extra Special Malt, DRC Malt;Dark Cara, Dark Cara II, Cara Dark, Cara Munich 120L, Crystal Extra Dark 120L, DRC
 Caramel/Crystal Malt – 140L;grain;cara_crystal;Crystal Malt 140L, Caramel Malt 140L;
-Caramel/Crystal Malt – 150L;grain;cara_crystal;Crystal Malt 150L, Caramel Malt 150L;
+Caramel/Crystal Malt – 150L;grain;cara_crystal;Crystal Malt 150L, Caramel Malt 150L, Special X, Crystal Extra Dark;
 Malt Extract;extract;;DME, LME;Extract
 Acerola;fruit;;;
 Apple;fruit;;;
@@ -190,3 +190,4 @@ Molasses;sugar;;;Melasse
 Rice Syrup;sugar;;;
 Sugar;sugar;;;Zucker, Haushaltszucker
 Turbinado;sugar;;;
+Sorghum Syrup;sugar;;;
