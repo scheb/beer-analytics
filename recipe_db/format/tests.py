@@ -42,6 +42,9 @@ class BeerSmithParserTests(TestCase):
         self.assertEquals('Germany', fermentables[0].origin_raw)
         self.assertEquals(8.5, round(fermentables[0].color_lovibond, 1))
         self.assertEquals(82.23, round(fermentables[0]._yield, 2))
+        self.assertIsNotNone(fermentables[0].notes)
+        self.assertTrue(fermentables[0].notes.startswith("Darker Munich Malt"))
+        self.assertTrue(fermentables[0].notes.endswith("flavour and aroma"))
 
         self.assertEquals('Melanoidin (Weyermann)', fermentables[1].kind_raw)
         self.assertEquals('Caraaroma', fermentables[2].kind_raw)
@@ -58,6 +61,11 @@ class BeerSmithParserTests(TestCase):
         self.assertEquals(RecipeHop.PELLET, hops[0].form)
         self.assertEquals(RecipeHop.BOIL, hops[0].use)
         self.assertEquals(60, hops[0].time)
+        self.assertEquals("Ale, Lager, Stout, hefeweizen, IPA, Bitter", hops[0].used_for)
+        self.assertEquals("No distinctive aroma characteristics", hops[0].aroma)
+        self.assertIsNotNone(hops[0].notes)
+        self.assertTrue(hops[0].notes.startswith("High-alpha hop"))
+        self.assertTrue(hops[0].notes.endswith("any recipe."))
 
         self.assertEquals('Hallertau', hops[1].kind_raw)
         self.assertEquals(28.35, round(hops[1].amount, 2))
@@ -86,6 +94,10 @@ class BeerSmithParserTests(TestCase):
         self.assertEquals(10.0, round(yeasts[0].min_temperature, 1))
         self.assertEquals(15.6, round(yeasts[0].max_temperature, 1))
         self.assertEquals(RecipeYeast.MEDIUM, yeasts[0].flocculation)
+        self.assertEquals("Imperial Ales", yeasts[0].best_for)
+        self.assertIsNotNone(yeasts[0].notes)
+        self.assertTrue(yeasts[0].notes.startswith("This strain"))
+        self.assertTrue(yeasts[0].notes.endswith("style you throw its way."))
 
 
 class BeerXMLParserTests(TestCase):
