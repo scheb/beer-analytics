@@ -82,7 +82,7 @@ class BeerSmithParserTests(TestCase):
         self.assertEquals(RecipeYeast.LIQUID, yeasts[0].form)
         self.assertEquals(RecipeYeast.LAGER, yeasts[0].type)
         self.assertEquals(70.0, yeasts[0].min_attenuation)
-        self.assertEquals(70.0, yeasts[0].min_attenuation)
+        self.assertEquals(74.0, yeasts[0].max_attenuation)
         self.assertEquals(10.0, round(yeasts[0].min_temperature, 1))
         self.assertEquals(15.6, round(yeasts[0].max_temperature, 1))
         self.assertEquals(RecipeYeast.MEDIUM, yeasts[0].flocculation)
