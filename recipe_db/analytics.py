@@ -7,6 +7,7 @@ from pandas import DataFrame
 
 from recipe_db.models import Style, Hop, Fermentable, RecipeHop
 
+POPULARITY_MIN_MONTH = '2011-09-01'
 METRIC_PRECISION = {
     'default': 1,
     'abv': 1,
@@ -108,9 +109,10 @@ def remove_outliers(df: DataFrame, field: str, cutoff_percentile: float) -> Data
 
 def get_num_recipes_per_month() -> DataFrame:
     query = '''
-        SELECT strftime('%Y-%m', created) AS month, count(uid) AS total_recipes
+        SELECT date(created, 'start of month') AS month, count(uid) AS total_recipes
         FROM recipe_db_recipe
-        GROUP BY strftime('%Y-%m', created)
+        WHERE created IS NOT NULL
+        GROUP BY date(created, 'start of month')
         ORDER BY month ASC
     '''
 
@@ -150,7 +152,7 @@ def calculate_styles_popularity(style_ids: list) -> DataFrame:
 
     query = '''
             SELECT
-                strftime('%%Y-%%m', r.created) AS month,
+                date(r.created, 'start of month') AS month,
                 r.style_id,
                 s.name AS style,
                 count(r.uid) AS recipes
@@ -158,19 +160,19 @@ def calculate_styles_popularity(style_ids: list) -> DataFrame:
             JOIN recipe_db_style AS s
                 ON r.style_id = s.id
             WHERE
-                created IS NOT NULL
-                AND r.created > '2012-01-01'
+                r.created IS NOT NULL
+                AND r.created > %s
                 AND r.style_id IN ({})
-            GROUP BY strftime('%%Y-%%m', r.created), r.style_id
+            GROUP BY date(r.created, 'start of month'), r.style_id
         '''.format(','.join('%s' for _ in style_ids))
 
-    df = pd.read_sql(query, connection, params=style_ids)
-    df = df.set_index(['month', 'style_id'])
-    df = df.merge(recipes_per_month, on="month")
-    df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
-    df = df.reset_index()
+    per_month = pd.read_sql(query, connection, params=[POPULARITY_MIN_MONTH] + style_ids)
+    per_month = per_month.merge(recipes_per_month, on="month")
+    per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes'] * 100
 
-    return df
+    per_month = set_multiple_series_start(per_month, 'style_id', 'month', 'recipes_percent')
+
+    return per_month
 
 def get_style_metric_values(style: Style, metric: str) -> DataFrame:
     style_ids = style.get_ids_including_sub_styles()
@@ -442,7 +444,7 @@ def get_most_popular_hops() -> DataFrame:
 
     query = '''
         SELECT
-            strftime('%Y-%m', r.created) AS month,
+            date(r.created, 'start of month') AS month,
             rh.kind_id,
             h.name AS hop,
             count(DISTINCT r.uid) AS recipes
@@ -452,13 +454,13 @@ def get_most_popular_hops() -> DataFrame:
         JOIN recipe_db_hop AS h
             ON rh.kind_id = h.id
         WHERE
-            created IS NOT NULL
-            AND r.created > '2012-01-01'
+            r.created IS NOT NULL
+            AND r.created > %s
             AND rh.kind_id IS NOT NULL
-        GROUP BY strftime('%Y-%m', r.created), rh.kind_id
+        GROUP BY date(r.created, 'start of month'), rh.kind_id
     '''
 
-    df = pd.read_sql(query, connection)
+    df = pd.read_sql(query, connection, params=[POPULARITY_MIN_MONTH])
     df = df.merge(recipes_per_month, on="month")
     df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
 
@@ -477,7 +479,7 @@ def get_hops_popularity(hops: list) -> DataFrame:
 
     query = '''
         SELECT
-            strftime('%%Y-%%m', r.created) AS month,
+            date(r.created, 'start of month') AS month,
             rh.kind_id,
             h.name AS hop,
             count(DISTINCT r.uid) AS recipes
@@ -487,19 +489,63 @@ def get_hops_popularity(hops: list) -> DataFrame:
         JOIN recipe_db_hop AS h
             ON rh.kind_id = h.id
         WHERE
-            created IS NOT NULL
-            AND r.created > '2012-01-01'
+            r.created IS NOT NULL
+            AND r.created > %s
             AND rh.kind_id IN ({})
-        GROUP BY strftime('%%Y-%%m', r.created), rh.kind_id
+        GROUP BY date(r.created, 'start of month'), rh.kind_id
     '''.format(','.join('%s' for _ in hop_ids))
 
-    df = pd.read_sql(query, connection, params=hop_ids)
-    df = df.set_index(['month', 'kind_id'])
-    df = df.merge(recipes_per_month, on="month")
-    df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
-    df = df.reset_index()
+    per_month = pd.read_sql(query, connection, params=[POPULARITY_MIN_MONTH] + hop_ids)
+    per_month = per_month.merge(recipes_per_month, on="month")
+    per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes'] * 100
 
-    return df
+    per_month = set_multiple_series_start(per_month, 'kind_id', 'month', 'recipes_percent')
+
+    return per_month
+
+
+def set_multiple_series_start(
+    df: DataFrame,
+    series_column: str,
+    time_column: str,
+    value_column: str
+) -> DataFrame:
+    series_dfs = []
+
+    series_values = df[series_column].unique()
+    for series_value in series_values:
+        series = df[df[series_column].eq(series_value)]
+        series_dfs.append(set_series_start(series, time_column, value_column))
+
+    return pd.concat(series_dfs)
+
+
+def set_series_start(
+    df: DataFrame,
+    time_column: str,
+    value_column: str
+) -> DataFrame:
+    time_indexed = df.set_index(pd.DatetimeIndex(df[time_column]))
+
+    # Fill in missing months with NaN
+    month_min = time_indexed.index.min()
+    month_max = time_indexed.index.max()
+    month_range = pd.date_range(start=month_min, end=month_max, freq='MS')
+    time_indexed = time_indexed.reindex(month_range)
+
+    # Find the minimum index first having 4/6 of values set in the rolling window
+    rolling = time_indexed[value_column].rolling(9, min_periods=6).min().shift(-8)
+    start_timestamp = rolling[rolling.notnull()].index.min()
+
+    # No start date, return the original dataframe
+    if start_timestamp is None:
+        return df
+
+    # Filter
+    filtered = time_indexed[time_indexed.index >= start_timestamp]
+    filtered = filtered[filtered[value_column].notnull()]
+
+    return filtered.reset_index()
 
 
 def get_hop_popularity(hop: Hop) -> DataFrame:
@@ -507,7 +553,7 @@ def get_hop_popularity(hop: Hop) -> DataFrame:
 
     query = '''
         SELECT
-            strftime('%%Y-%%m', r.created) AS month,
+            date(r.created, 'start of month') AS month,
             rh.kind_id,
             h.name AS hop,
             count(DISTINCT r.uid) AS recipes
@@ -517,19 +563,19 @@ def get_hop_popularity(hop: Hop) -> DataFrame:
         JOIN recipe_db_hop AS h
             ON rh.kind_id = h.id
         WHERE
-            created IS NOT NULL
-            AND r.created > '2012-01-01'
+            r.created IS NOT NULL
+            AND r.created > %s
             AND rh.kind_id = %s
-        GROUP BY strftime('%%Y-%%m', r.created), rh.kind_id
+        GROUP BY date(r.created, 'start of month'), rh.kind_id
     '''
 
-    df = pd.read_sql(query, connection, params=[hop.id])
-    df = df.set_index(['month', 'kind_id'])
-    df = df.merge(recipes_per_month, on="month")
-    df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
-    df = df.reset_index()
+    per_month = pd.read_sql(query, connection, params=[POPULARITY_MIN_MONTH, hop.id])
+    per_month = per_month.merge(recipes_per_month, on="month")
+    per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes'] * 100
 
-    return df
+    per_month = set_series_start(per_month, 'month', 'recipes_percent')
+
+    return per_month
 
 
 def get_hop_common_styles_absolute(hop: Hop) -> DataFrame:
@@ -567,8 +613,7 @@ def get_hop_common_styles_data(hop: Hop) -> DataFrame:
         JOIN recipe_db_style AS s
             ON r.style_id = s.id
         WHERE
-            created IS NOT NULL
-            AND r.created > '2012-01-01'
+            r.created IS NOT NULL
             AND rh.kind_id = %s
         GROUP BY r.style_id
     '''
@@ -668,7 +713,7 @@ def get_fermentable_popularity(fermentable: Fermentable) -> DataFrame:
 
     query = '''
         SELECT
-            strftime('%%Y-%%m', r.created) AS month,
+            date(r.created, 'start of month') AS month,
             fh.kind_id,
             f.name AS fermentable,
             count(DISTINCT r.uid) AS recipes
@@ -678,19 +723,19 @@ def get_fermentable_popularity(fermentable: Fermentable) -> DataFrame:
         JOIN recipe_db_fermentable AS f
             ON fh.kind_id = f.id
         WHERE
-            created IS NOT NULL
-            AND r.created > '2012-01-01'
+            r.created IS NOT NULL
+            AND r.created > %s
             AND fh.kind_id = %s
-        GROUP BY strftime('%%Y-%%m', r.created), fh.kind_id
+        GROUP BY date(r.created, 'start of month'), fh.kind_id
     '''
 
-    df = pd.read_sql(query, connection, params=[fermentable.id])
-    df = df.set_index(['month', 'kind_id'])
-    df = df.merge(recipes_per_month, on="month")
-    df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
-    df = df.reset_index()
+    per_month = pd.read_sql(query, connection, params=[POPULARITY_MIN_MONTH, fermentable.id])
+    per_month = per_month.merge(recipes_per_month, on="month")
+    per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes'] * 100
 
-    return df
+    per_month = set_series_start(per_month, 'month', 'recipes_percent')
+
+    return per_month
 
 
 def get_fermentable_common_styles_absolute(fermentable: Fermentable) -> DataFrame:
@@ -728,8 +773,7 @@ def get_fermentable_common_styles_data(fermentable: Fermentable) -> DataFrame:
         JOIN recipe_db_style AS s
             ON r.style_id = s.id
         WHERE
-            created IS NOT NULL
-            AND r.created > '2012-01-01'
+            r.created IS NOT NULL
             AND rf.kind_id = %s
         GROUP BY r.style_id
     '''
