@@ -1,13 +1,15 @@
 import math
+from datetime import datetime
 from typing import Tuple
 
+import numpy as np
 import pandas as pd
 from django.db import connection
 from pandas import DataFrame
 
 from recipe_db.models import Style, Hop, Fermentable, RecipeHop
 
-POPULARITY_MIN_MONTH = '2011-09-01'
+POPULARITY_MIN_MONTH = '2012-01-01'
 METRIC_PRECISION = {
     'default': 1,
     'abv': 1,
@@ -122,6 +124,23 @@ def get_num_recipes_per_month() -> DataFrame:
     return df
 
 
+def get_style_num_recipes_per_month(style_ids: list):
+    query = '''
+        SELECT date(created, 'start of month') AS month, count(uid) AS total_recipes
+        FROM recipe_db_recipe
+        WHERE
+            created IS NOT NULL
+            AND style_id IN ({})
+        GROUP BY date(created, 'start of month')
+        ORDER BY month ASC
+    '''.format(','.join('%s' for _ in style_ids))
+
+    df = pd.read_sql(query, connection, params=style_ids)
+    df = df.set_index('month')
+
+    return df
+
+
 def get_num_recipes_per_style() -> DataFrame:
     query = '''
         SELECT style_id, count(uid) AS total_recipes
@@ -199,6 +218,77 @@ def get_style_metric_values(style: Style, metric: str) -> DataFrame:
     histogram[metric] = histogram[metric].map(str)
 
     return histogram
+
+
+def get_style_trending_hops(style: Style) -> DataFrame:
+    style_ids = style.get_ids_including_sub_styles()
+    recipes_per_month = get_style_num_recipes_per_month(style_ids)
+
+    query = '''
+            SELECT
+                date(r.created, 'start of month') AS month,
+                rh.kind_id,
+                count(DISTINCT r.uid) AS recipes
+            FROM recipe_db_recipe AS r
+            JOIN recipe_db_recipehop AS rh
+                ON r.uid = rh.recipe_id
+            WHERE
+                r.created IS NOT NULL
+                AND r.created > %s
+                AND rh.kind_id IS NOT NULL
+                AND r.style_id IN ({})
+            GROUP BY date(r.created, 'start of month'), rh.kind_id
+        '''.format(','.join('%s' for _ in style_ids))
+
+    per_month = pd.read_sql(query, connection, params=[POPULARITY_MIN_MONTH] + style_ids)
+    per_month = per_month.merge(recipes_per_month, on="month")
+    per_month['month'] = pd.to_datetime(per_month['month'])
+    per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes'] * 100
+
+    trending = filter_trending(per_month, 'kind_id', 'month', 'recipes_percent')
+    trending = set_multiple_series_start(trending, 'kind_id', 'month', 'recipes_percent')
+
+    # Finally, add hop names
+    trending['hop'] = trending['kind_id'].map(get_hop_names_dict())
+
+    return trending
+
+
+def filter_trending(df: DataFrame, series_column: str, time_column: str, value_column: str) -> DataFrame:
+    # Take only last months
+    num_months = 18
+    start_date = pd.Timestamp('now').floor('D') - pd.offsets.MonthBegin(1) + pd.DateOffset(months=-num_months)
+
+    # At least 10 days in the current month to take it into the calculation
+    if datetime.now().day < 10:
+        end_date = pd.Timestamp('now').floor('D') - pd.offsets.MonthBegin(1) + pd.DateOffset(days=-1)
+    else:
+        end_date = pd.Timestamp('now').floor('D')
+
+    recent_df = df[df[time_column].between(start_date, end_date)]
+
+    # Take only ones with minimum number of recipes == number of months
+    recipes_per_series = recent_df.groupby(series_column)['recipes'].sum()
+    recipes_per_series = recipes_per_series[recipes_per_series.gt(num_months)]
+    recent_df = recent_df[recent_df[series_column].isin(recipes_per_series.index.values.tolist())]
+
+    # Fill in missing months with 0
+    series_ids = recent_df[series_column].unique()
+    month_range = pd.date_range(start=recent_df[time_column].min(), end=recent_df[time_column].max(), freq='MS')
+    new_index = pd.MultiIndex.from_product([series_ids, month_range], names=[series_column, time_column])
+    zero_filled = recent_df.set_index([series_column, time_column])
+    zero_filled = zero_filled.reindex(new_index, fill_value=0)
+
+    slopes = zero_filled.groupby(series_column).agg({value_column: ['mean', slope]})
+    slopes['slope_weighted'] = slopes[value_column]['slope'] / slopes[value_column]['mean']
+
+    trending = slopes
+    trending = trending[trending[value_column]['mean'] >= 0.3]  # At least 0.3% mean to be relevant
+    trending = trending[trending['slope_weighted'] >= 0.8]  # At least weighted slope
+    trending = trending.sort_values('slope_weighted', ascending=False)
+
+    trending_ids = trending.reset_index()[series_column].values.tolist()[:10]
+    return recent_df[recent_df[series_column].isin(trending_ids)]
 
 
 def get_style_popular_hops(style: Style, use_filter: list) -> DataFrame:
@@ -509,6 +599,8 @@ def set_multiple_series_start(
     value_column: str
 ) -> DataFrame:
     series_dfs = []
+    if len(df) == 0:
+        return df
 
     series_values = df[series_column].unique()
     for series_value in series_values:
@@ -845,3 +937,9 @@ def q3(x):
 
 def upperfence(x):
     return x.quantile(0.98)
+
+
+def slope(d):
+    if len(d) < 4:
+        return 0
+    return np.polyfit(np.linspace(0, 1, len(d)), d, 1)[0]

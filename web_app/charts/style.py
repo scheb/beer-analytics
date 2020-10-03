@@ -2,7 +2,7 @@ from abc import ABC
 from typing import Optional, Tuple
 
 from recipe_db.analytics import get_style_hop_pairings, get_style_popular_fermentables, get_style_popular_hops, \
-    get_style_metric_values, get_style_popularity
+    get_style_metric_values, get_style_popularity, get_style_trending_hops
 from recipe_db.models import Style, RecipeHop, Fermentable
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.plot import LinesChart, PreAggregatedBoxPlot, \
@@ -102,6 +102,18 @@ class StylePopularityChart(StyleChart):
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
+class StyleTrendingHopsChart(StyleChart):
+    CHART_TITLE = "Trending hops in <b>%s</b>"
+    IMAGE_ALT = "Trending hops in the %s beer style"
+
+    def plot(self) -> Chart:
+        df = get_style_trending_hops(self.style)
+        if len(df) == 0:
+            raise NoDataException()
+
+        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'hop', 'Month/Year', '% Style Recipes')
+        return Chart(figure, title=self.get_chart_title())
+
 class StylePopularHopsChart(StyleChart):
     CHART_TITLE = "Popular hops used in <b>%s</b>"
     IMAGE_ALT = "Popular hops used in the %s beer style"
@@ -177,6 +189,7 @@ class StyleChartFactory:
         original_gravity_histogram=StyleOGChart,
         final_gravity_histogram=StyleFGChart,
         popularity=StylePopularityChart,
+        trending_hops=StyleTrendingHopsChart,
         popular_hops=StylePopularHopsChart,
         popular_fermentables=StylePopularFermentablesChart,
         hop_pairings=StyleHopPairingsChart,
