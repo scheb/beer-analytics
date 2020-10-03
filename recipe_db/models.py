@@ -633,18 +633,18 @@ class RecipeYeast(models.Model):
     VERY_HIGH = "very-high"
 
     FORM_CHOICES = (
+        (LIQUID, "Liquid"),
+        (DRY, "Dry"),
+        (SLANT, "Slant"),
+        (CULTURE, "Culture"),
+    )
+
+    TYPE_CHOICES = (
         (ALE, "Ale"),
         (LAGER, "Lager"),
         (WHEAT, "Wheat"),
         (WINE, "Wine"),
         (CHAMPAGNE, "Champagne"),
-    )
-
-    TYPE_CHOICES = (
-        (LIQUID, "Liquid"),
-        (DRY, "Dry"),
-        (SLANT, "Slant"),
-        (CULTURE, "Culture"),
     )
 
     FLOCCULATION_CHOICES = (
