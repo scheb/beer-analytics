@@ -277,7 +277,7 @@ class BeerXMLParser(FormatParser):
                 if round(product_id) == product_id:
                     product_id = str(round(product_id))
                 else:
-                    product_id = str(product_id)
+                    product_id = str(product_id).strip()
 
             yeast.lab = beerxml_yeast.laboratory
             yeast.product_id = product_id
