@@ -262,9 +262,9 @@ class BeerXMLParser(FormatParser):
 
     def get_yeasts(self, beerxml: BeerXMLRecipe) -> iter:
         for beerxml_yeast in beerxml.yeasts:
-            # amount = beerxml_yeast.amount
-            # if amount is not None:
-            #     amount *= 1000  # convert to grams
+            amount = beerxml_yeast.amount
+            if amount is not None:
+                amount *= 1000  # convert to grams/milliliters
 
             name = clean_kind(beerxml_yeast.name)
             yeast = RecipeYeast(kind_raw=name)
@@ -283,11 +283,12 @@ class BeerXMLParser(FormatParser):
             yeast.product_id = product_id
             yeast.form = self.get_yeast_form(beerxml_yeast.form)
             yeast.type = self.get_yeast_type(beerxml_yeast.type)
-            # TODO: add fields when pybeerxml was updated
-            # yeast.amount = amount
-            # yeast.amount_is_weight = beerxml_yeast.amount_is_weight
-            # yeast.min_attenuation = beerxml_yeast.min_attenuation
-            # yeast.max_attenuation = beerxml_yeast.max_attenuation
+            yeast.amount = amount
+            yeast.amount_is_weight = beerxml_yeast.amount_is_weight
+            yeast.min_attenuation = beerxml_yeast.attenuation
+            yeast.max_attenuation = beerxml_yeast.attenuation
+            yeast.min_temperature = beerxml_yeast.min_temperature
+            yeast.max_temperature = beerxml_yeast.max_temperature
             yeast.flocculation = self.get_yeast_flocculation(beerxml_yeast.flocculation)
 
             yield yeast
