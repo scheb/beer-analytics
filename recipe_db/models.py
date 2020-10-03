@@ -482,6 +482,7 @@ class RecipeFermentable(models.Model):
     color_lovibond = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     color_ebc = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     _yield = models.FloatField(default=None, blank=True, null=True, db_column='yield', validators=[GreaterThanValueValidator(0)])
+    notes = models.TextField(default=None, blank=True, null=True)
 
     def save(self, *args, **kwargs) -> None:
         self.derive_missing_values('color_lovibond', 'color_ebc', lovibond_to_ebc)
@@ -591,6 +592,9 @@ class RecipeHop(models.Model):
     cohumulone = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     myrcene = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     substitutes = models.CharField(max_length=255, default=None, blank=True, null=True)
+    used_for = models.CharField(max_length=255, default=None, blank=True, null=True)
+    aroma = models.CharField(max_length=255, default=None, blank=True, null=True)
+    notes = models.TextField(default=None, blank=True, null=True)
 
     @classmethod
     def get_uses(cls) -> dict:
@@ -665,6 +669,8 @@ class RecipeYeast(models.Model):
     min_temperature = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     max_temperature = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     flocculation = models.CharField(max_length=16, choices=FLOCCULATION_CHOICES, default=None, blank=True, null=True)
+    best_for = models.CharField(max_length=255, default=None, blank=True, null=True)
+    notes = models.TextField(default=None, blank=True, null=True)
 
     @property
     def attenuation(self) -> Optional[float]:

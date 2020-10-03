@@ -296,6 +296,7 @@ class BeerSmithParser(FormatParser):
             fermentable.origin_raw = clean_kind(bs_fermentable.string_or_none('origin'))
             fermentable.color_lovibond = bs_fermentable.float_or_none('color')
             fermentable._yield = bs_fermentable.float_or_none('yield')
+            fermentable.notes = bs_fermentable.string_or_none('notes')
 
             yield fermentable
 
@@ -326,9 +327,21 @@ class BeerSmithParser(FormatParser):
             hop.hsi = bs_hop.float_or_none('hsi')
 
             notes = bs_hop.string_or_none('notes')
-            sub_search = re.search('Subst\w*:(.+)', notes)
-            if sub_search:
-                hop.substitutes = sub_search.group(1).strip()
+            if notes is not None:
+                sub_search = re.search('Subst\\w*:(.+)', notes, flags=re.IGNORECASE)
+                if sub_search:
+                    hop.substitutes = sub_search.group(1).strip()
+                aroma_search = re.search('Aroma\\w*:(.+)', notes, flags=re.IGNORECASE)
+                if aroma_search:
+                    hop.aroma = aroma_search.group(1).strip()
+                used_for_search = re.search('Used\\s*for\\w*:(.+)', notes, flags=re.IGNORECASE)
+                if used_for_search:
+                    hop.used_for = used_for_search.group(1).strip()
+                descr_search = re.search('(.+)\n[\\w\\s]+:', notes, flags=re.IGNORECASE | re.MULTILINE)
+                if descr_search:
+                    hop.notes = descr_search.group(1).strip()
+                else:
+                    hop.notes = notes
 
             # Add an extra attribute to pass the value around
             hop.ibu_contrib = bs_hop.float_or_none('ibu_contrib') or 0.0
@@ -378,6 +391,10 @@ class BeerSmithParser(FormatParser):
             yeast.min_attenuation = bs_yeast.float_or_none('min_attenuation')
             yeast.max_attenuation = bs_yeast.float_or_none('max_attenuation')
             yeast.flocculation = self.get_yeast_flocculation(bs_yeast)
+            yeast.best_for = bs_yeast.string_or_none('best_for')
+
+            notes = bs_yeast.string_or_none('notes')
+            yeast.notes = None if notes is None else notes.strip()
 
             min_temp = bs_yeast.float_or_none('min_temp')
             max_temp = bs_yeast.float_or_none('max_temp')
