@@ -192,9 +192,7 @@ def get_style_metric_values(style: Style, metric: str) -> DataFrame:
         abs = df[metric].max() - df[metric].min()
         bins = max([1, round(abs / 0.002)])
         if bins > 18:
-            print(bins)
             bins = round(bins / math.ceil(bins / 12))
-            print(bins)
 
     histogram = df.groupby([pd.cut(df[metric], bins, precision=precision)])[metric].agg(['count'])
     histogram = histogram.reset_index()
