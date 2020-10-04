@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load web_app %}
+
+{% block title %}{{ yeast.full_name }} ‹ Yeasts{% endblock %}
+
+{% block content %}
+    <nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url "yeast_overview" %}">Yeasts</a></li>
+            <li class="breadcrumb-item"><a href="{% url "yeast_type" yeast.type %}">{{ yeast.type_name }} Yeasts</a></li>
+            <li class="breadcrumb-item active">{{ yeast.full_name }}</li>
+        </ol>
+    </nav>
+
+    <div class="detail-head">
+        <h1>{{ yeast.brand }} · {{ yeast.name }}{% if not yeast.has_product_id_included %} <small class="text-muted">{{ yeast.product_id }}</small>{% endif %}</h1>
+        <dl class="detail-info">
+            <dt>Recipes:</dt>
+            <dd>{{ yeast.recipes_count }}</dd>
+            {% if yeast.form %}
+            <dt>Form:</dt>
+            <dd>{{ yeast.form_name }}</dd>
+            {% endif %}
+            {% if yeast.attenuation %}
+            <dt>Attenuation:</dt>
+            <dd>{{ yeast.attenuation }}%</dd>
+            {% endif %}
+            {% if yeast.flocculation %}
+            <dt>Flocculation:</dt>
+            <dd>{{ yeast.flocculation_name }}</dd>
+            {% endif %}
+            {% if yeast.tolerance %}
+            <dt>Tolerance:</dt>
+            <dd>{{ yeast.tolerance_name }}</dd>
+            {% elif yeast.tolerance_percent %}
+            <dt>Tolerance:</dt>
+            <dd>{{ yeast.tolerance_percent }}%</dd>
+            {% endif %}
+            {% if yeast.min_temperature and yeast.max_temperature %}
+            <dt>Temperature:</dt>
+            <dd>{{ yeast.min_temperature }}&nbsp;&ndash;&nbsp;{{ yeast.max_temperature }}°C</dd>
+            {% endif %}
+        </dl>
+    </div>
+
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#popularity" id="popularity" class="anchor"><span></span></a>Popularity Over Time</h2>
+        </div>
+        <div class="card-body">
+            <div id="chart-popularity" class="chart-m">
+                <noscript>
+                    {{ yeast|chart_image:"popularity"|safe }}
+                </noscript>
+            </div>
+        </div>
+    </section>
+
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#styles-number-recipes" id="styles-number-recipes" class="anchor"><span></span></a>Typical Styles <small class="text-muted">by Number of Recipes</small></h2>
+        </div>
+        <div class="card-body">
+            <div id="chart-styles-abs" class="chart-l">
+                <noscript>
+                    {{ yeast|chart_image:"typical-styles-absolute"|safe }}
+                </noscript>
+            </div>
+        </div>
+    </section>
+
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#styles-percent-recipes" id="styles-percent-recipes" class="anchor"><span></span></a>Typical Styles <small class="text-muted">by Percent of Recipes</small></h2>
+        </div>
+        <div class="card-body">
+            <div id="chart-styles-rel" class="chart-l">
+                <noscript>
+                    {{ yeast|chart_image:"typical-styles-relative"|safe }}
+                </noscript>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block script %}
+<script>
+window.addEventListener('load', function ()
+{
+    // Charts
+    display_graph('chart-popularity', '{{ yeast|chart_js:"popularity" }}');
+    display_graph('chart-styles-abs', '{{ yeast|chart_js:"typical-styles-absolute" }}');
+    display_graph('chart-styles-rel', '{{ yeast|chart_js:"typical-styles-relative" }}');
+});
+</script>
+{% endblock %}

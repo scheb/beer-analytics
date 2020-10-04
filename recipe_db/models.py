@@ -469,6 +469,53 @@ class Yeast(models.Model):
             combined = "{} {}".format(brand, name)
         return create_human_readable_id(combined)
 
+    @classmethod
+    def get_brands(cls) -> list:
+        return list(cls.objects.order_by('brand').values_list('brand', flat=True).distinct())
+
+    @classmethod
+    def get_types(cls) -> dict:
+        return dict(cls.TYPE_CHOICES)
+
+    @property
+    def has_product_id_included(self):
+        return self.product_id is not None and self.product_id in self.name
+
+    @property
+    def full_name(self):
+        full_name = "{} · {}".format(self.brand, self.name)
+        if self.product_id is not None and not self.has_product_id_included:
+            full_name += " ({})".format(self.product_id)
+        return full_name
+
+    @property
+    def type_name(self) -> Optional[str]:
+        if self.type is None:
+            return None
+        return self.get_types()[self.type]
+
+    @property
+    def form_name(self):
+        if self.flocculation is None:
+            return None
+        return dict(self.FORM_CHOICES)[self.form]
+
+    @property
+    def flocculation_name(self):
+        if self.flocculation is None:
+            return None
+        return dict(self.FLOCCULATION_CHOICES)[self.flocculation]
+
+    @property
+    def tolerance_name(self):
+        if self.tolerance is None:
+            return None
+        return dict(self.TOLERANCE_CHOICES)[self.tolerance]
+
+    @property
+    def is_popular(self) -> bool:
+        return self.recipes_percentile is not None and self.recipes_percentile > 0.9
+
 
 class Recipe(models.Model):
     # Identifiers

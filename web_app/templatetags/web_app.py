@@ -4,10 +4,11 @@ from django import template
 from django.urls import reverse
 from django.utils.html import escape
 
-from recipe_db.models import Style, Hop, Fermentable
+from recipe_db.models import Style, Hop, Fermentable, Yeast
 from web_app.charts.fermentable import FermentableChartFactory
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.style import StyleChartFactory
+from web_app.charts.yeast import YeastChartFactory
 
 register = template.Library()
 
@@ -36,6 +37,9 @@ def url(item: object):
 
     if isinstance(item, Fermentable):
         return reverse('fermentable_detail', kwargs={'category': item.category, 'slug': item.id})
+
+    if isinstance(item, Yeast):
+        return reverse('yeast_detail', kwargs={'type': item.type, 'slug': item.id})
 
     return None
 
@@ -83,6 +87,9 @@ def chart_image_alt(item: object, chart_type):
     if isinstance(item, Fermentable):
         return FermentableChartFactory.get_chart(item, chart_type).get_image_alt()
 
+    if isinstance(item, Yeast):
+        return YeastChartFactory.get_chart(item, chart_type).get_image_alt()
+
     return None
 
 
@@ -118,6 +125,14 @@ def chart_url(item: object, chart_type: str, format: str):
             'format': format
         })
 
+    if isinstance(item, Yeast):
+        return reverse('yeast_chart', kwargs={
+            'type': item.type,
+            'slug': item.id,
+            'chart_type': chart_type.replace('_', '-'),
+            'format': format
+        })
+
     return None
 
 
@@ -130,6 +145,9 @@ def priority(item: object):
         return get_priority(item.recipes_percentile)
 
     if isinstance(item, Fermentable):
+        return get_priority(item.recipes_percentile)
+
+    if isinstance(item, Yeast):
         return get_priority(item.recipes_percentile)
 
     return DEFAULT_PRIORITY

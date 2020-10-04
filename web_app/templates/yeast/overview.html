@@ -1,9 +1,62 @@
 {% extends 'base.html' %}
+{% load web_app %}
 
 {% block title %}Yeasts{% endblock %}
 
 {% block content %}
     <h1>Yeasts</h1>
 
-    <p class="alert alert-info">This section is still work in progress, sorry!</p>
+    <form class="search d-none">
+        <p>
+            <label for="input-search" class="sr-only">Search yeasts</label>
+            <input type="search" class="search-term form-control" id="input-search" placeholder="Search yeasts">
+        </p>
+    </form>
+
+    <div class="yeasts-overview">
+        {% for type in types %}
+            <h2>
+                <a href="#{{ type.id }}" id="{{ type.id }}" class="anchor"><span></span></a>
+                <a href="{% url "yeast_type" type.id %}" class="text-body">{{ type.name }}</a>
+            </h2>
+            <div class="mb-4">
+                {% if type.most_popular %}
+                    <p class="most-popular">Most popular:
+                        {% for yeast in type.most_popular %}
+                            {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
+                            <a class="badge" href="{{ yeast|url }}">{{ yeast.full_name }}</a>
+                        {% endfor %}
+                    </p>
+                {% endif %}
+
+                {% for brand in type.brands %}
+                    <h3>{{ brand.name }}</h3>
+                    {% if brand.yeasts %}
+                        <ul class="column-list">
+                            {% for yeast in brand.yeasts %}
+                                <li>
+                                    {% if yeast.is_popular %}<strong>{% endif %}<a href="{{ yeast|url }}">{{ yeast.name }}</a>{% if yeast.is_popular %}</strong>{% endif %}
+                                    <small class="recipes-count" title="Recipes">{{ yeast.recipes_count }}</small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+
+                {% if type.yeasts %}
+                    {% if type.brands %}
+                        <h3>Other</h3>
+                    {% endif %}
+                    <ul class="column-list">
+                        {% for yeast in type.yeasts %}
+                            <li>
+                                {% if yeast.is_popular %}<strong>{% endif %}<a href="{{ yeast|url }}">{{ yeast.full_name }}</a>{% if yeast.is_popular %}</strong>{% endif %}
+                                <small class="recipes-count" title="Recipes">{{ yeast.recipes_count }}</small>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
