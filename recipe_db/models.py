@@ -386,8 +386,8 @@ class Yeast(models.Model):
     ALE = "ale"
     LAGER = "lager"
     WHEAT = "wheat"
-    WINE = "wine"
-    CHAMPAGNE = "champagne"
+    BRETT_BACTERIA = "brett-bacteria"
+    WINE_CIDER = "wine-cider"
 
     LIQUID = "liquid"
     DRY = "dry"
@@ -395,7 +395,9 @@ class Yeast(models.Model):
     CULTURE = "culture"
 
     LOW = "low"
-    MEDIUM = "medium"
+    MEDIUM_LOW = "medium"
+    MEDIUM = "medium-low"
+    MEDIUM_HIGH = "medium-high"
     HIGH = "high"
     VERY_HIGH = "very-high"
 
@@ -410,30 +412,49 @@ class Yeast(models.Model):
         (ALE, "Ale"),
         (LAGER, "Lager"),
         (WHEAT, "Wheat"),
-        (WINE, "Wine"),
-        (CHAMPAGNE, "Champagne"),
+        (BRETT_BACTERIA, "Brett & Bacteria"),
+        (WINE_CIDER, "Wine & Cider"),
     )
 
     FLOCCULATION_CHOICES = (
         (LOW, "Low"),
+        (MEDIUM_LOW, "Medium-Low"),
         (MEDIUM, "Medium"),
+        (MEDIUM_HIGH, "Medium-High"),
         (HIGH, "High"),
         (VERY_HIGH, "Very High"),
     )
 
+    TOLERANCE_CHOICES = (
+        (LOW, "Low"),
+        (MEDIUM, "Medium"),
+        (VERY_HIGH, "Very High"),
+    )
+
     id = models.CharField(max_length=255, primary_key=True)
+    product_id = models.CharField(max_length=16, default=None, blank=True, null=True)
+    alt_product_id = models.CharField(max_length=255, default=None, blank=True, null=True)
     name = models.CharField(max_length=255)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
-    lab = models.CharField(max_length=255, default=None, blank=True, null=True)
+    alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
     brand = models.CharField(max_length=255, default=None, blank=True, null=True)
-    product_id = models.CharField(max_length=32, default=None, blank=True, null=True)
+    alt_brand = models.CharField(max_length=255, default=None, blank=True, null=True)
+    alt_brand_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
     form = models.CharField(max_length=16, choices=FORM_CHOICES, default=None, blank=True, null=True)
     type = models.CharField(max_length=16, choices=TYPE_CHOICES, default=None, blank=True, null=True)
-    min_attenuation = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    max_attenuation = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    attenuation = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     min_temperature = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     max_temperature = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     flocculation = models.CharField(max_length=16, choices=FLOCCULATION_CHOICES, default=None, blank=True, null=True)
+    tolerance = models.CharField(max_length=16, choices=TOLERANCE_CHOICES, default=None, blank=True, null=True)
+    tolerance_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+
+    # Calculated metrics from recipes
+    recipes_count = models.IntegerField(default=None, blank=True, null=True)
+    recipes_percentile = models.FloatField(default=None, blank=True, null=True)
+
+    class Meta:
+        unique_together = ('brand', 'product_id')
 
     def save(self, *args, **kwargs) -> None:
         if self.id == '':

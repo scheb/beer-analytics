@@ -1,11 +1,10 @@
 import csv
-
 from os import path
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from recipe_db.models import Style, Hop, Fermentable, create_human_readable_id
+from recipe_db.models import Style, Hop, Fermentable, create_human_readable_id, Yeast
 
 
 def make_style_id(value):
@@ -24,6 +23,8 @@ class Command(BaseCommand):
         load_hops()
         self.stdout.write('Load fermentables')
         load_fermentables()
+        self.stdout.write('Load yeasts')
+        load_yeasts()
         self.stdout.write('Done')
 
 
@@ -118,7 +119,43 @@ def load_fermentables():
         fermentable.save()
 
 
+def load_yeasts():
+    csv_file = load_csv('yeasts.csv')
+    header = next(csv_file)
+
+    for row in csv_file:
+        if len(row) == 1:
+            continue  # Skip empty lines
+
+        row = map(cast_values, row)
+        data = dict(zip(header, row))
+        yeast_id = make_yeast_id(data)
+
+        try:
+            yeast = Yeast.objects.get(pk=yeast_id)
+        except Yeast.DoesNotExist:
+            yeast = Yeast()
+            pass
+
+        yeast.id = yeast_id
+        for field in data:
+            setattr(yeast, field, data[field])
+        yeast.save()
+
+
+def make_yeast_id(data: dict) -> str:
+    if data['product_id'] is not None and str(data['product_id']) not in data['name']:
+        combined = "{} {} {}".format(data['brand'], data['name'], data['product_id'])
+    else:
+        combined = "{} {}".format(data['brand'], data['name'])
+
+    return create_human_readable_id(combined)
+
+
 def cast_values(value):
+    if isinstance(value, str):
+        value = value.strip()
+
     if value == '':
         return None
 
