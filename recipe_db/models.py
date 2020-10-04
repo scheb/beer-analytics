@@ -395,8 +395,8 @@ class Yeast(models.Model):
     CULTURE = "culture"
 
     LOW = "low"
-    MEDIUM_LOW = "medium"
-    MEDIUM = "medium-low"
+    MEDIUM_LOW = "medium-low"
+    MEDIUM = "medium"
     MEDIUM_HIGH = "medium-high"
     HIGH = "high"
     VERY_HIGH = "very-high"
@@ -428,6 +428,7 @@ class Yeast(models.Model):
     TOLERANCE_CHOICES = (
         (LOW, "Low"),
         (MEDIUM, "Medium"),
+        (HIGH, "High"),
         (VERY_HIGH, "Very High"),
     )
 
