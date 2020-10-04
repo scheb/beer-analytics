@@ -34,11 +34,13 @@
             <dd>{{ yeast.tolerance_name }}</dd>
             {% elif yeast.tolerance_percent %}
             <dt>Tolerance:</dt>
-            <dd>{{ yeast.tolerance_percent }}%</dd>
+            <dd>{{ yeast.tolerance_percent|floatformat:1 }}%</dd>
             {% endif %}
             {% if yeast.min_temperature and yeast.max_temperature %}
             <dt>Temperature:</dt>
-            <dd>{{ yeast.min_temperature }}&nbsp;&ndash;&nbsp;{{ yeast.max_temperature }}°C</dd>
+            <dd class="cursor-help" title="{{ yeast.min_temperature|fahrenheit|floatformat:1 }}&nbsp;&ndash;&nbsp;{{ yeast.max_temperature|fahrenheit|floatformat:1 }}°F">
+                {{ yeast.min_temperature|floatformat:1 }}&nbsp;&ndash;&nbsp;{{ yeast.max_temperature|floatformat:1 }}°C
+            </dd>
             {% endif %}
         </dl>
     </div>
