@@ -1,20 +1,20 @@
 name;category;type;alt_names;alt_names_extra
 Basic Barley Malt;grain;base;Brewers Malt 2-Row, Standard 2-Row, Base Malt;2-Row, Two-Row, 6-Row, Six-Row, Barley Malt, Standard Malt, Basic Malt
-Munich;grain;base;;Munich Malt, Münchner Malz, Bonlander Munich
-Munich Light;grain;base;Munich Malt I;Münchner Malz Hell, Light Munich, Munich Malt Light, Münchner Malz I, Münchner I,
-Munich Dark;grain;base;Munich Malt II;Münchner Malz Dunkel, Dark Munich, Münchner Malz II
-Vienna;grain;base;;Vienna Malt, Wiener Malz
-Pilsner;grain;base;Bohemian Pilsner, Lager Malt;Pilsner Malt, Château Pilsner
-Pilsner Light;grain;base;Light Pilsner, Extra Light Pilsner, Light Lager Malt;Pilsner Malt Light, Pilsner Malt Extra Light, Pilsner Malz Hell, Pilsner Malz Extra Hell, Helles Pilsner, Extra Helles Pilsner, Lager Malt Light
-Extra Pale Ale;grain;base;Extra Pale Malt, Thomas Fawcett Pearl;Pearl
-Pale Ale;grain;base;ESB Malt;Pale Ale Malt, Pale Malt, Ale Malt, Pale 2-Row, Pale 6-Row,
-Mild Ale;grain;base;Mild Malt;Ashbourne Mild, Ashburne Mild,
-Maris Otter;grain;base;;Maris Otter Pale Ale
-Golden Promise;grain;base;;Golden Promise Pale Ale
-Wheat;grain;base;;Weizenmalz, Weizen
-Pale Wheat;grain;base;White Wheat;Helles Weizenmalz, Weizenmalz Hell, Chaetau Wheat Blanc
-Dark Wheat;grain;base;;Dunkles Weizenmalz, Weizenmalz Dunkel, Château Wheat Munich Light
-Extra Dark Wheat;grain;base;;Château Wheat Munich 25
+Munich Malt;grain;base;;Munich, Münchner Malz, Bonlander Munich, Munich Malt 20L
+Munich Light Malt;grain;base;Munich Malt I;Munich Light, Münchner Malz Hell, Light Munich, Munich Malt Light, Münchner Malz I, Münchner I
+Munich Dark Malt;grain;base;Munich Malt II;Munich Dark, Münchner Malz Dunkel, Dark Munich, Münchner Malz II
+Vienna Malt;grain;base;;Vienna, Vienna Malt, Wiener Malz
+Pilsner Malt;grain;base;Bohemian Pilsner, Lager Malt;Pilsner, Pilsner Malt, Château Pilsner
+Pilsner Light Malt;grain;base;Extra Light Pilsner, Light Lager Malt;Pilsner Light, Light Pilsner, Pilsner Malt Light, Pilsner Malt Extra Light, Pilsner Malz Hell, Pilsner Malz Extra Hell, Helles Pilsner, Extra Helles Pilsner, Lager Malt Light
+Extra Pale Ale Malt;grain;base;Extra Pale Malt, Thomas Fawcett Pearl;Extra Pale Ale, Pearl
+Pale Ale Malt;grain;base;ESB Malt;Pale Ale, Pale Malt, Ale Malt, Pale 2-Row, Pale 6-Row,
+Mild Ale Malt;grain;base;Mild Malt;Mild Ale, Ashbourne Mild, Ashburne Mild,
+Maris Otter Malt;grain;base;;Maris Otter, Maris Otter Pale Ale
+Golden Promise Malt;grain;base;;Golden Promise, Golden Promise Pale Ale
+Wheat Malt;grain;base;;Wheat, Weizenmalz, Weizen
+Pale Wheat Malt;grain;base;White Wheat Malt;Pale Wheat, White Wheat, Helles Weizenmalz, Weizenmalz Hell, Chaetau Wheat Blanc
+Dark Wheat Malt;grain;base;;Dark Wheat, Dunkles Weizenmalz, Weizenmalz Dunkel, Château Wheat Munich Light
+Extra Dark Wheat Malt;grain;base;;Extra Dark Wheat, Château Wheat Munich 25
 Stout Malt;grain;base;;
 Smoke Malt;grain;base;;Smoked, Rauchmalz
 Peated Malt;grain;base;Peated Malt;Peat Malt, Château Whisky
@@ -42,11 +42,11 @@ Chocolate Malt;grain;roasted;;Chocolate
 Dark Chocolate Malt;grain;roasted;;Chocolate Dark
 Black Malt;grain;roasted;Black Barley, Black Patent, Château Black, Blackprinz;Roasted Malt, Roast Malt, Kiln Black
 Debittered Black Malt;grain;roasted;;De-bittered Black Malt
-Roasted Wheat;grain;roasted;Chocolate Wheat, Midnight Wheat;Wheat Roasted, Roast Wheat, Weizenröstmalz Röstmalz Weizen, Midnight Wheat
+Roasted Wheat Malt;grain;roasted;Chocolate Wheat, Midnight Wheat;Roasted Wheat, Wheat Roasted, Roast Wheat, Weizenröstmalz Röstmalz Weizen, Midnight Wheat
 Roasted Rye Malt;grain;roasted;Chocolate Rye;Rye Roasted, Roggenröstmalz, Roast Rye
 Roasted Spelt Malt;grain;roasted;;Spelt Roasted, Dinkelröstmalz, Roast Spelt
-Roasted Barley;grain;roasted;Black Pearl;Barley Roasted, Röstgerste, Röstmalz, Roast Barley
-Roasted Millet;grain;roasted;;Millet Roasted, Roast Millet
+Roasted Barley Malt;grain;roasted;Black Pearl;Roasted Barley, Barley Roasted, Röstgerste, Röstmalz, Roast Barley
+Roasted Millet Malt;grain;roasted;;Roasted Millet, Millet Roasted, Roast Millet
 Brown Malt;grain;roasted;Aroma 150 MD;Brown
 Abbey Malt;grain;toasted;Belgian Malt, Aromatic MD;Château Abbey, Aromatic MD
 Biscuit Malt;grain;toasted;Victory Malt;Château Biscuit
@@ -80,8 +80,8 @@ Flaked Rice;grain;unmalted_adjunct;;Reisflocken, Rice Flakes, Rice Flaked
 Flaked Spelt;grain;unmalted_adjunct;;Hirseflocken, Spelt Flakes, Spelt Flaked
 Flaked Quinoa;grain;unmalted_adjunct;;Quinoaflocken, Quinoa Flakes, Quinoa Flaked
 Rice Hulls;grain;unmalted_adjunct;Rice Husks;
-Torrified Barley;grain;unmalted_adjunct;;Barley Torrified
-Torrified Wheat;grain;unmalted_adjunct;;Wheat Torrified
+Torrified Barley Malt;grain;unmalted_adjunct;;Torrified Barley, Barley Torrified
+Torrified Wheat Malt;grain;unmalted_adjunct;;Torrified Wheat, Wheat Torrified
 Maize;grain;unmalted_adjunct;Corn;Mais
 Golden Naked Oats;grain;cara_crystal;;Naked Oats, Oats Golden Naked
 CaraRye;grain;cara_crystal;;Cara Malt Rye, Rye Cara
@@ -90,9 +90,9 @@ CaraHell;grain;cara_crystal;;Cara Malt Hell, Karamellmalz Hell, CaraMalt, Helles
 CaraWheat;grain;cara_crystal;;Cara Malt Wheat, Wheat Cara, Weizen Cara, Cara Weizen
 CaraGold;grain;cara_crystal;;Cara Malt Gold
 CaraPils / CaraFoam;grain;cara_crystal;Cara Clair, Gladiator, Dextrine Malt;Cara Malt Pils, Cara Malt Foam, Dextrine, Dextrin, Cara Malt Extra Hell
-CaraMunich I;grain;cara_crystal;;Cara Malt Munich I, Cara Malt Münch I, Cara Malt Münchner I, Cara Malt Dunkel I, Cara Malt Dunkel
-CaraMunich II;grain;cara_crystal;;Cara Malt Munich II, Cara Malt Münch II, Cara Malt Münchner II, Cara Malt Dunkel II
-CaraMunich III;grain;cara_crystal;;Cara Malt Munich III, Cara Malt Münch III, Cara Malt Münchner III, Cara Malt Dunkel III
+CaraMunich I;grain;cara_crystal;;Caramunich Malt, Cara Malt Munich I, Cara Malt Münch I, Cara Malt Münchner I, Cara Malt Dunkel I, Cara Malt Dunkel
+CaraMunich II;grain;cara_crystal;;Cara Malt Munich II, Cara Malt Münch II, Cara Malt Münchner II, Cara Malt Dunkel II, CaraMunich 45L, Munich 45L
+CaraMunich III;grain;cara_crystal;;Cara Malt Munich III, Cara Malt Münch III, Cara Malt Münchner III, Cara Malt Dunkel III, CaraMunich 60L, Munich 60L, Caramel Munich Dark 150
 CaraBelge;grain;cara_crystal;;Cara Malt Belge, Cara Belgisch, Beligisches Cara
 CaraBohemian;grain;cara_crystal;;Cara Malt Bohemian, Cara Böhmisch, Böhmisches Cara
 CaraAroma;grain;cara_crystal;;Cara Malt Aroma, Aroma Cara
@@ -106,7 +106,7 @@ Caramel/Crystal Malt – 40L;grain;cara_crystal;Crystal Malt 40L, Caramel Malt 4
 Caramel/Crystal Malt – 45L;grain;cara_crystal;Crystal Malt 45L, Caramel Malt 45L;
 Caramel/Crystal Malt – 50L;grain;cara_crystal;Crystal Malt 50L, Caramel Malt 50L;Château Cara Gold
 Caramel/Crystal Malt – 55L;grain;cara_crystal;Crystal Malt 55L, Caramel Malt 55L;
-Caramel/Crystal Malt – 60L;grain;cara_crystal;Crystal Malt 60L, Caramel Malt 60L, Medium Caramel, Crystal Medium;Cara Munich 60L, Château Crystal
+Caramel/Crystal Malt – 60L;grain;cara_crystal;Crystal Malt 60L, Caramel Malt 60L, Medium Caramel, Crystal Medium;Château Crystal
 Caramel/Crystal Malt – 70L;grain;cara_crystal;Crystal Malt 70L, Caramel Malt 70L;
 Caramel/Crystal Malt – 75L;grain;cara_crystal;Crystal Malt 75L, Caramel Malt 75L;
 Caramel/Crystal Malt – 80L;grain;cara_crystal;Crystal Malt 80L, Caramel Malt 80L;

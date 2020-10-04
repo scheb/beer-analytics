@@ -43,12 +43,19 @@ def category(request: HttpRequest, category: str) -> HttpResponse:
 
 
 def detail(request: HttpRequest, slug: str, category: str) -> HttpResponse:
-    fermentable = get_object_or_404(Fermentable, pk=slug)
+    try:
+        fermentable = get_object_or_404(Fermentable, pk=slug)
+    except Http404 as err:
+        # Gracefully redirect when the "-malt" suffix is missing
+        if not slug.endswith('-malt'):
+            fermentable = get_object_or_404(Fermentable, pk=slug+"-malt")
+        else:
+            raise err
 
     if fermentable.recipes_count <= 0:
         raise Http404("Fermentable doesn't have any data.")
 
-    if category != fermentable.category:
+    if category != fermentable.category or slug != fermentable.id:
         return redirect('fermentable_detail', category=fermentable.category, slug=fermentable.id)
 
     return render(request, 'fermentable/detail.html', {'fermentable': fermentable})
