@@ -4,7 +4,7 @@ from os import path
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from recipe_db.models import Style, Hop, Fermentable, create_human_readable_id, Yeast
+from recipe_db.models import Style, Hop, Fermentable, Yeast
 
 
 def make_style_id(value):
@@ -129,7 +129,7 @@ def load_yeasts():
 
         row = map(cast_values, row)
         data = dict(zip(header, row))
-        yeast_id = make_yeast_id(data)
+        yeast_id = Yeast.create_id(data['name'], data['brand'], data['product_id'])
 
         try:
             yeast = Yeast.objects.get(pk=yeast_id)
@@ -141,15 +141,6 @@ def load_yeasts():
         for field in data:
             setattr(yeast, field, data[field])
         yeast.save()
-
-
-def make_yeast_id(data: dict) -> str:
-    if data['product_id'] is not None and str(data['product_id']) not in data['name']:
-        combined = "{} {} {}".format(data['brand'], data['name'], data['product_id'])
-    else:
-        combined = "{} {}".format(data['brand'], data['name'])
-
-    return create_human_readable_id(combined)
 
 
 def cast_values(value):

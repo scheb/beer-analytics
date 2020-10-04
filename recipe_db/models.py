@@ -458,12 +458,16 @@ class Yeast(models.Model):
 
     def save(self, *args, **kwargs) -> None:
         if self.id == '':
-            self.id = self.create_id(self.name)
+            self.id = self.create_id(self.name, self.brand, self.product_id)
         super().save(*args, **kwargs)
 
     @classmethod
-    def create_id(cls, name: str) -> str:
-        return create_human_readable_id(name)
+    def create_id(cls, name: str, brand: str, product_id: Optional[str]) -> str:
+        if product_id is not None and str(product_id) not in name:
+            combined = "{} {} {}".format(brand, name, product_id)
+        else:
+            combined = "{} {}".format(brand, name)
+        return create_human_readable_id(combined)
 
 
 class Recipe(models.Model):
