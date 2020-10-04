@@ -54,22 +54,22 @@ def detail(request: HttpRequest, slug: str, type: str) -> HttpResponse:
     return render(request, 'yeast/detail.html', {'yeast': yeast})
 
 
-def chart(request: HttpRequest, slug: str, type: str, chart_brand: str, format: str) -> HttpResponse:
+def chart(request: HttpRequest, slug: str, type: str, chart_type: str, format: str) -> HttpResponse:
     yeast = get_object_or_404(Yeast, pk=slug)
 
     if yeast.recipes_count <= 0:
         raise Http404("Yeast doesn't have any data.")
 
     if type != yeast.type:
-        return redirect('yeast_chart', type=yeast.type, slug=yeast.id, chart_brand=chart_brand, format=format)
+        return redirect('yeast_chart', type=yeast.type, slug=yeast.id, chart_brand=chart_type, format=format)
 
-    if YeastChartFactory.is_supported_chart(chart_brand):
+    if YeastChartFactory.is_supported_chart(chart_type):
         try:
-            chart = YeastChartFactory.plot_chart(yeast, chart_brand)
+            chart = YeastChartFactory.plot_chart(yeast, chart_type)
         except NoDataException:
             return HttpResponse(status=204)
     else:
-        raise Http404('Unknown chart brand %s.' % chart_brand)
+        raise Http404('Unknown chart brand %s.' % chart_type)
 
     return render_chart(chart, format)
 
