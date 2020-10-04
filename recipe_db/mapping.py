@@ -118,7 +118,7 @@ class GenericMapper(Mapper):
 
     def map_item_name(self, item_name: str) -> Optional[object]:
         # Exact match
-        if match := self.match_extact(item_name):
+        if match := self.match_exact(item_name):
             return match
 
         # Substring match
@@ -127,7 +127,7 @@ class GenericMapper(Mapper):
 
         return None
 
-    def match_extact(self, name: str) -> Optional[object]:
+    def match_exact(self, name: str) -> Optional[object]:
         if match := self.mapping.match(name):
             return match
         return None
@@ -194,12 +194,12 @@ class FermentableMapper(GenericMapper):
 
     def map_item_name(self, item_name: str) -> Optional[object]:
         # Exact match
-        if match := self.match_extact(item_name):
+        if match := self.match_exact(item_name):
             return match
 
         # Match the exact string with "malt" suffixed
         if not item_name.endswith(" malt"):
-            if match := self.match_extact(item_name+" malt"):
+            if match := self.match_exact(item_name + " malt"):
                 return match
 
         # Substring match
@@ -359,7 +359,7 @@ class RecipeNameStyleExactMatchMapper(GenericStyleMapper):
 
     def map_item_name(self, item_name: str) -> Optional[object]:
         # Exact match only!
-        if match := self.match_extact(item_name):
+        if match := self.match_exact(item_name):
             return match
         return None
 
