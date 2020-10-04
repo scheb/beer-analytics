@@ -38,7 +38,10 @@ urlpatterns = [
     path('fermentables/<str:category>/<str:slug>/', fermentable.detail, name='fermentable_detail'),
     path('fermentables/<str:category>/<str:slug>/charts/<str:chart_type>.<cformat:format>', fermentable.chart, name='fermentable_chart'),
 
-    path('yeasts/', views.yeast.overview, name='yeast_overview'),
+    path('yeasts/', yeast.overview, name='yeast_overview'),
+    path('yeasts/<str:type>/', yeast.type_overview, name='yeast_type'),
+    path('yeasts/<str:type>/<str:slug>/', yeast.detail, name='yeast_detail'),
+    path('yeasts/<str:type>/<str:slug>/charts/<str:chart_type>.<cformat:format>', yeast.chart, name='yeast_chart'),
 
     path('trends/<str:chart_type>.<cformat:format>', trend.chart, name='trend_chart'),
 ]
