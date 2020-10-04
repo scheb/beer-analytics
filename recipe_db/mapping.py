@@ -1,5 +1,6 @@
 import abc
 import codecs
+import itertools
 import re
 from abc import ABC
 from typing import Optional, Iterable
@@ -8,7 +9,7 @@ from typing import Optional, Iterable
 import translitcodec
 from django.db import transaction
 
-from recipe_db.models import RecipeHop, Hop, Fermentable, RecipeFermentable, Style, Recipe
+from recipe_db.models import RecipeHop, Hop, Fermentable, RecipeFermentable, Style, Recipe, RecipeYeast, Yeast
 
 TRANSLIT_SHORT = 'translit/short'
 TRANSLIT_LONG = 'translit/long'
@@ -30,6 +31,26 @@ def normalize_name(value: str, translit: str) -> str:
     value = re.sub('[\\s-]+', ' ', re.sub('[^\\w\\s-]', '', value))
     value = value.strip().lower()
     return value
+
+
+def get_product_id_variants(name: str) -> iter:
+    name = re.sub('\\W+', ' ', name)  # Split non-word chars
+    name = re.sub('([A-Za-z])([0-9])', '\\1 \\2', name)  # Split number + letter
+    name = re.sub('([0-9])([A-Za-z])', '\\1 \\2', name)  # Split letter + number
+    name = re.sub('\\s+', ' ', name).strip()  # Make sure we have single spaces only
+    name_parts = name.split(' ')
+
+    parts = []
+    first = True
+    for name_part in name_parts:
+        if first:
+            first = False
+        else:
+            parts.append(['', ' '])
+        parts.append([name_part])
+
+    for tuple in itertools.product(*parts):
+        yield ''.join(tuple)
 
 
 class Candidate:
@@ -54,21 +75,25 @@ class MappingException(Exception):
 
 class NameObjectMap:
     def __init__(self, name_variants_function: callable) -> None:
+        self.ignore_ambiguous = False
         self.mapping = {}
         self.get_name_variants = name_variants_function
 
-    def add(self, name: str, mapped_object: object) -> None:
+    def add(self, name: str, mapped_object) -> None:
         for name_variant in self.get_name_variants(name):
             if name_variant in self.mapping:
                 if self.mapping[name_variant] != mapped_object:
-                    raise MappingException("Cannot map \"{}\" to {}, as it's already mapped to {}".format(name_variant, mapped_object, self.mapping[name_variant]))
+                    if self.ignore_ambiguous:
+                        self.mapping[name_variant] = None
+                    else:
+                        raise MappingException("Cannot map \"{}\" to \"{}\", as it's already mapped to \"{}\"".format(name_variant, mapped_object, self.mapping[name_variant]))
             else:
                 self.mapping[name_variant] = mapped_object
 
     def all(self) -> dict:
         return self.mapping
 
-    def match(self, name: str) -> Optional[object]:
+    def match(self, name: str) -> Optional:
         for name_variant in self.get_name_variants(name):
             if name_variant in self.mapping:
                 return self.mapping[name_variant]
@@ -272,6 +297,149 @@ class FermentableMapper(GenericMapper):
                 yield number_name
 
 
+# Map yeasts to their brand
+class YeastBrandMapper(GenericMapper):
+    def __init__(self) -> None:
+        super().__init__()
+        self.create_mapping(Yeast.objects.filter().exclude(brand=None))
+
+    def create_mapping(self, yeasts: Iterable[Yeast]) -> None:
+        for yeast in yeasts:
+            # Add names
+            self.mapping.add(yeast.brand, yeast.brand)
+
+            # Add alternative names
+            if yeast.alt_brand is not None:
+                self.add_alt_names(yeast.alt_brand, yeast.brand)
+            if yeast.alt_brand_extra is not None:
+                self.add_alt_names(yeast.alt_brand_extra, yeast.brand)
+
+    def get_clean_name(self, item: RecipeYeast) -> str:
+        value = item.lab or item.kind_raw or ''
+        return self.normalize(value)
+
+    def get_name_variants(self, name: str) -> iter:
+        name = self.normalize(name)
+        for name in get_translit_names(name):
+            yield name
+
+    def normalize(self, value: str) -> str:
+        return value.lower().strip()
+
+
+# Map yeasts within a brand by product id
+class YeastProductIdMapper(GenericMapper):
+    def __init__(self, yeasts: iter) -> None:
+        super().__init__()
+        self.create_mapping(yeasts)
+
+    def create_mapping(self, yeasts: Iterable[Yeast]) -> None:
+        for yeast in yeasts:
+            # Product id
+            self.mapping.add(yeast.product_id, yeast)
+
+            # Add alternative product id
+            if yeast.alt_product_id is not None:
+                self.add_alt_names(yeast.alt_product_id, yeast)
+
+    def get_clean_name(self, item: RecipeYeast) -> str:
+        value = item.product_id or item.kind_raw or ''
+        return self.normalize(value)
+
+    def get_name_variants(self, name: str) -> iter:
+        name = self.normalize(name)
+        if re.fullmatch('\\w{2,10}', name):
+            yield from get_product_id_variants(name)
+        else:
+            yield name
+
+    def normalize(self, value: str) -> str:
+        return value.lower().strip()
+
+
+class YeastProductNameMapper(GenericMapper):
+    def __init__(self, yeasts: iter) -> None:
+        super().__init__()
+        self.mapping.ignore_ambiguous = True
+        self.create_mapping(yeasts)
+
+    def get_clean_name(self, item: RecipeHop) -> str:
+        value = item.kind_raw or ''
+        value = value.lower()
+        value = value.strip()
+        return value
+
+    def get_name_variants(self, name: str) -> iter:
+        for name in self.get_yeast_variants(get_translit_names(name)):
+            yield name
+
+    def get_yeast_variants(self, names: iter):
+        for name in names:
+            yield name
+            if " yeast" in name:
+                yield name.replace(' yeast', '')
+
+
+# Map yeast based on brand and product id
+class YeastBrandProductIdMapper(Mapper):
+    def __init__(self) -> None:
+        self.brand_mapper = YeastBrandMapper()
+        self.brand_id_mappers = {}
+
+        brand_yeasts = {}
+        yeasts = Yeast.objects.all()
+        for yeast in yeasts:
+            if yeast.product_id is None:
+                continue  # No product id available, skip
+            if yeast.brand not in brand_yeasts:
+                brand_yeasts[yeast.brand] = []
+            brand_yeasts[yeast.brand].append(yeast)
+
+        for brand in brand_yeasts:
+            self.brand_id_mappers[brand] = YeastProductIdMapper(brand_yeasts[brand])
+
+    def map_item(self, item: RecipeYeast) -> Optional[object]:
+        brand = self.brand_mapper.map_item(item)
+        if brand is None:
+            return None
+
+        if brand in self.brand_id_mappers:
+            yeast = self.brand_id_mappers[brand].map_item(item)
+            if yeast is not None:
+                return yeast
+
+        return None
+
+
+# Map yeast based on brand and product id
+class YeastBrandProductNameMapper(Mapper):
+    def __init__(self) -> None:
+        self.brand_mapper = YeastBrandMapper()
+        self.brand_name_mappers = {}
+
+        brand_yeasts = {}
+        yeasts = Yeast.objects.all()
+        for yeast in yeasts:
+            if yeast.brand not in brand_yeasts:
+                brand_yeasts[yeast.brand] = []
+            brand_yeasts[yeast.brand].append(yeast)
+
+        for brand in brand_yeasts:
+            self.brand_name_mappers[brand] = YeastProductNameMapper(brand_yeasts[brand])
+
+    def map_item(self, item: RecipeYeast) -> Optional[object]:
+        brand = self.brand_mapper.map_item(item)
+        if brand is None:
+            return None
+
+        if brand in self.brand_name_mappers:
+            yeast = self.brand_name_mappers[brand].map_item(item)
+            if yeast is not None:
+                return yeast
+
+        return None
+
+
 class GenericStyleMapper(GenericMapper, ABC):
     def __init__(self, styles: iter) -> None:
         super().__init__()
@@ -441,4 +609,18 @@ class StylesProcessor(TransactionalProcessor):
 
     def save_match(self, item: Recipe, match: Style):
         item.style = match
+        item.save()
+
+
+class YeastsProcessor(TransactionalProcessor):
+    def map_unmapped(self) -> None:
+        yeasts = RecipeYeast.objects.filter(kind_id=None)
+        self.map_list(yeasts)
+
+    def map_all(self) -> None:
+        yeasts = RecipeYeast.objects.all()
+        self.map_list(yeasts)
+
+    def save_match(self, item: RecipeYeast, match: Yeast):
+        item.kind = match
         item.save()
