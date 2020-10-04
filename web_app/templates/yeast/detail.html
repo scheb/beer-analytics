@@ -13,7 +13,7 @@
     </nav>
 
     <div class="detail-head">
-        <h1>{{ yeast.brand }} · {{ yeast.name }}{% if not yeast.has_product_id_included %} <small class="text-muted">{{ yeast.product_id }}</small>{% endif %}</h1>
+        <h1>{{ yeast.brand }} · {{ yeast.name }}{% if yeast.product_id and not yeast.has_product_id_included %} <small class="text-muted">{{ yeast.product_id }}</small>{% endif %}</h1>
         <dl class="detail-info">
             <dt>Recipes:</dt>
             <dd>{{ yeast.recipes_count }}</dd>
