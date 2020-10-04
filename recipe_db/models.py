@@ -32,7 +32,7 @@ def get_tomorrow_date():
 
 def create_human_readable_id(value: str) -> str:
     value = codecs.encode(value, 'translit/long')
-    return re.sub('[\\s-]+', '-', re.sub('[^\\w\\s-]', '', value)).lower()
+    return re.sub('[\\s\\/-]+', '-', re.sub('[^\\w\\s\\/-]', '', value)).lower()
 
 
 # https://www.bjcp.org/docs/2015_Guidelines_Beer.pdf
@@ -383,8 +383,57 @@ class Hop(models.Model):
 
 
 class Yeast(models.Model):
+    ALE = "ale"
+    LAGER = "lager"
+    WHEAT = "wheat"
+    WINE = "wine"
+    CHAMPAGNE = "champagne"
+
+    LIQUID = "liquid"
+    DRY = "dry"
+    SLANT = "slant"
+    CULTURE = "culture"
+
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    VERY_HIGH = "very-high"
+
+    FORM_CHOICES = (
+        (LIQUID, "Liquid"),
+        (DRY, "Dry"),
+        (SLANT, "Slant"),
+        (CULTURE, "Culture"),
+    )
+
+    TYPE_CHOICES = (
+        (ALE, "Ale"),
+        (LAGER, "Lager"),
+        (WHEAT, "Wheat"),
+        (WINE, "Wine"),
+        (CHAMPAGNE, "Champagne"),
+    )
+
+    FLOCCULATION_CHOICES = (
+        (LOW, "Low"),
+        (MEDIUM, "Medium"),
+        (HIGH, "High"),
+        (VERY_HIGH, "Very High"),
+    )
+
     id = models.CharField(max_length=255, primary_key=True)
     name = models.CharField(max_length=255)
+    alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
+    lab = models.CharField(max_length=255, default=None, blank=True, null=True)
+    brand = models.CharField(max_length=255, default=None, blank=True, null=True)
+    product_id = models.CharField(max_length=32, default=None, blank=True, null=True)
+    form = models.CharField(max_length=16, choices=FORM_CHOICES, default=None, blank=True, null=True)
+    type = models.CharField(max_length=16, choices=TYPE_CHOICES, default=None, blank=True, null=True)
+    min_attenuation = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    max_attenuation = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    min_temperature = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    max_temperature = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    flocculation = models.CharField(max_length=16, choices=FLOCCULATION_CHOICES, default=None, blank=True, null=True)
 
     def save(self, *args, **kwargs) -> None:
         if self.id == '':
