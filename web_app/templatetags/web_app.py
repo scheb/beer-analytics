@@ -4,6 +4,7 @@ from django import template
 from django.urls import reverse
 from django.utils.html import escape
 
+from recipe_db.formulas import celsius_to_fahrenheit
 from recipe_db.models import Style, Hop, Fermentable, Yeast
 from web_app.charts.fermentable import FermentableChartFactory
 from web_app.charts.hop import HopChartFactory
@@ -158,3 +159,11 @@ def get_priority(percentile: Optional[float]) -> float:
         return round(MIN_PRIORITY + (MAX_PRIORITY - MIN_PRIORITY) * percentile, 1)
 
     return DEFAULT_PRIORITY
+
+
+@register.filter('fahrenheit')
+def fahrenheit(value):
+    if value is None:
+        return None
+    f = celsius_to_fahrenheit(value)
+    return round(f * 2) / 2  # Round to .5
