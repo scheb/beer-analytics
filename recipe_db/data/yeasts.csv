@@ -1,7 +1,7 @@
 name;alt_names;brand;alt_brand;alt_brand_extra;product_id;alt_product_id;type;form;tolerance;tolerance_percent;flocculation;attenuation;min_temperature;max_temperature
 Fermoale;;AEB;;;;;ale;dry;;;high;72.5;18;25
-Fermoale AY3;;AEB;;;AY3;;ale;dry;;;high;;14;22
-Fermoale AY4;;AEB;;;AY4;;ale;dry;medium;;high;75;17;25
+Fermoale AY3;;AEB;;;;;ale;dry;;;high;;14;22
+Fermoale AY4;;AEB;;;;;ale;dry;medium;;high;75;17;25
 Fermolager W;;AEB;;;;;lager;dry;high;;high;87;9;15
 Fermolager Berlin;;AEB;;;;;lager;dry;;;;82.5;10;15
 Weiss Arome+;;AEB;;;;;wheat;dry;;12;high;95;12;25
@@ -185,8 +185,8 @@ Safcider;;Fermentis;;;;;wine-cider;dry;high;;high;75;10;27
 SafSpirit HG-1;;Fermentis;SafSpirit;;HG-1;;ale;dry;high;;low;80;25;35
 SafSpirit USW-6;;Fermentis;SafSpirit;;USW-6;;ale;liquid;high;;medium;80;20;32
 SafAle HA-18;;Fermentis;SafAle;;HA-18;;ale;dry;high;;medium;97;25;35
-American Ale Yeast US-05;;Fermentis;SafAle;;US-05;;ale;dry;low;;medium;81;12;25
-American Ale Yeast US-56;;Fermentis;SafAle;;US-56;;ale;dry;medium;;medium;72;15;24
+American Ale Yeast;;Fermentis;SafAle;;US-05;;ale;dry;low;;medium;81;12;25
+American Ale Yeast;;Fermentis;SafAle;;US-56;;ale;dry;medium;;medium;72;15;24
 Belgian Saison Ale Yeast;;Fermentis;SafAle;;BE-134;;ale;dry;;;low;90;18;28
 English Ale Yeast;;Fermentis;SafAle;;S-04;;ale;dry;;9.75;high;75;12;25
 German Ale Yeast;;Fermentis;SafAle;;K-97;;ale;dry;;10.4;high;81;12;25
@@ -194,8 +194,8 @@ Abbaye Yeast;;Fermentis;SafAle;;BE-256;;ale;dry;;11;high;82;12;25
 General/Belgian Yeast;;Fermentis;SafAle;;S-33;;ale;dry;;11.5;high;70;12;25
 Specialty Ale Yeast;;Fermentis;SafAle;;T-58;;ale;dry;;11.5;high;70;12;25
 Wheat Beer Yeast;;Fermentis;SafAle;;WB-06;;wheat;dry;;10.5;low;86;12;25
-German Lager Yeast S-23;;Fermentis;SafLager;;S-23;;lager;dry;;10.5;high;82;9;22
-German Lager Yeast W-34/70;;Fermentis;SafLager;;W-34/70;34/70;lager;dry;;10.5;high;83;9;22
+German Lager Yeast;;Fermentis;SafLager;;S-23;;lager;dry;;10.5;high;82;9;22
+German Lager Yeast;;Fermentis;SafLager;;W-34/70;34/70;lager;dry;;10.5;high;83;9;22
 Swiss Lager Yeast;;Fermentis;SafLager;;S-189;;lager;dry;;10.5;high;84;9;22
 Achouffe Belgian Ale Yeast;;GigaYeast;;Giga;GY003;;ale;liquid;;;medium-low;82.5;20;25
 Altstadt Ale;;GigaYeast;;Giga;GY016;;ale;liquid;;;low;79;13;20
@@ -326,27 +326,27 @@ Midtbust;;Mainiacal Yeast Labs;;Mainiacal;;;ale;liquid;medium;;medium;78;24;41
 MTF Blend;;Mainiacal Yeast Labs;;Mainiacal;;;brett-bacteria;liquid;high;;medium;80;21;38
 Muri;;Mainiacal Yeast Labs;;Mainiacal;;;ale;liquid;medium;;medium;80;16;38
 MYBrett86;;Mainiacal Yeast Labs;;Mainiacal;;;brett-bacteria;liquid;medium;;low;85;13;28
-Bavarian Lager;;Mangrove Jack;;Mangrove's Jack, Mangrove;M76;;lager;dry;;;medium;77.5;7;14
-Bavarian Wheat Yeast;;Mangrove Jack;;Mangrove's Jack, Mangrove;M20;;ale;dry;;;low;73;15;30
-Belgian Abbey;;Mangrove Jack;;Mangrove's Jack, Mangrove;M47;;ale;dry;;;medium-high;75;18;25
-Belgian Ale Yeast;;Mangrove Jack;;Mangrove's Jack, Mangrove;M41;;ale;dry;;;medium;85;18;28
-Belgian Tripel;;Mangrove Jack;;Mangrove's Jack, Mangrove;M31;;ale;dry;;;medium;85;18;28
-Belgian Wit;;Mangrove Jack;;Mangrove's Jack, Mangrove;M21;;ale;dry;;;medium-low;72.5;18;25
-Bohemian Lager Yeast;;Mangrove Jack;;Mangrove's Jack, Mangrove;M84;;lager;dry;;;high;78;10;15
-British Ale Yeast;;Mangrove Jack;;Mangrove's Jack, Mangrove;M07;;ale;dry;;;high;78;14;22
-Burton Union Yeast;;Mangrove Jack;;Mangrove's Jack, Mangrove;M79;;ale;dry;;;high;78;17;23
-Californian Lager;;Mangrove Jack;;Mangrove's Jack, Mangrove;M54;;lager;dry;;;medium-high;79.5;18;20
-Cider Yeast;Craft Series Cider Yeast;Mangrove Jack;;Mangrove's Jack, Mangrove;M02;;wine-cider;dry;;;high;78;18;24
-Empire Ale;;Mangrove Jack;;Mangrove's Jack, Mangrove;M15;;ale;dry;;;medium-high;72.5;21;24
-French Saison Ale;;Mangrove Jack;;Mangrove's Jack, Mangrove;M29;;ale;dry;;;medium;87.5;26;32
-Kveik Yeast;;Mangrove Jack;;Mangrove's Jack, Mangrove;M12;;ale;dry;high;;high;80;20;40
-Liberty Bell Ale;;Mangrove Jack;;Mangrove's Jack, Mangrove;M36;;ale;dry;;;medium-high;76;17;23
-Belgian Wit Yeast;;Mangrove Jack;;Mangrove's Jack, Mangrove;M27;;ale;liquid;high;;medium;95;26;32
-Mead;;Mangrove Jack;;Mangrove's Jack, Mangrove;M05;;wine-cider;dry;;;medium-high;97.5;15;30
-New World Strong Ale;;Mangrove Jack;;Mangrove's Jack, Mangrove;M42;;ale;dry;;;high;79.5;16;22
-UK Dark Ale Yeast;Newcastle Dark Ale Yeast;Mangrove Jack;;Mangrove's Jack, Mangrove;M03;;ale;dry;;;medium;73;18;22
-US West Coast Yeast;;Mangrove Jack;;Mangrove's Jack, Mangrove;M44;;ale;dry;;;high;78;15;23
-Workhorse Beer Yeast;;Mangrove Jack;;Mangrove's Jack, Mangrove;M10;;ale;dry;;;medium;78;15;20
+Bavarian Lager;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M76;;lager;dry;;;medium;77.5;7;14
+Bavarian Wheat Yeast;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M20;;ale;dry;;;low;73;15;30
+Belgian Abbey;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M47;;ale;dry;;;medium-high;75;18;25
+Belgian Ale Yeast;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M41;;ale;dry;;;medium;85;18;28
+Belgian Tripel;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M31;;ale;dry;;;medium;85;18;28
+Belgian Wit;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M21;;ale;dry;;;medium-low;72.5;18;25
+Bohemian Lager Yeast;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M84;;lager;dry;;;high;78;10;15
+British Ale Yeast;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M07;;ale;dry;;;high;78;14;22
+Burton Union Yeast;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M79;;ale;dry;;;high;78;17;23
+Californian Lager;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M54;;lager;dry;;;medium-high;79.5;18;20
+Cider Yeast;Craft Series Cider Yeast;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M02;;wine-cider;dry;;;high;78;18;24
+Empire Ale;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M15;;ale;dry;;;medium-high;72.5;21;24
+French Saison Ale;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M29;;ale;dry;;;medium;87.5;26;32
+Kveik Yeast;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M12;;ale;dry;high;;high;80;20;40
+Liberty Bell Ale;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M36;;ale;dry;;;medium-high;76;17;23
+Belgian Wit Yeast;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M27;;ale;liquid;high;;medium;95;26;32
+Mead;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M05;;wine-cider;dry;;;medium-high;97.5;15;30
+New World Strong Ale;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M42;;ale;dry;;;high;79.5;16;22
+UK Dark Ale Yeast;Newcastle Dark Ale Yeast;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M03;;ale;dry;;;medium;73;18;22
+US West Coast Yeast;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M44;;ale;dry;;;high;78;15;23
+Workhorse Beer Yeast;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M10;;ale;dry;;;medium;78;15;20
 Gervin Ale ;;Muntons;;;GV-12;;ale;dry;low;;low;70;16;22
 Abbey Ale C;;Omega Yeast Labs;;Omega;OYL-018;;ale;liquid;;12;medium-low;76;20;26
 All the Bretts;;Omega Yeast Labs;;Omega;OYL-218;;brett-bacteria;liquid;;11;low;48;20;29
