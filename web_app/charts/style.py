@@ -1,8 +1,9 @@
 from abc import ABC
 from typing import Optional, Tuple
 
-from recipe_db.analytics import get_style_hop_pairings, get_style_popular_fermentables, get_style_popular_hops, \
-    get_style_metric_values, get_style_popularity, get_style_trending_hops
+from recipe_db.analytics.charts.fermentable import get_style_popular_fermentables
+from recipe_db.analytics.charts.hop import get_style_hop_pairings, get_style_popular_hops
+from recipe_db.analytics.charts.style import get_style_metric_values, get_style_trending_hops, get_style_popularity
 from recipe_db.models import Style, RecipeHop, Fermentable
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.plot import LinesChart, PreAggregatedBoxPlot, \
