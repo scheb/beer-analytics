@@ -3,6 +3,20 @@
 
 {% block title %}{{ fermentable.name }} ‹ Fermentables{% endblock %}
 
+{% block sidebar %}
+<nav class="table-of-contents">
+    <strong>Table of Contents</strong>
+    <ul>
+        <li><a href="#characteristics">Characteristics</a></li>
+        <li><a href="#popularity">Popularity Over Time</a></li>
+        <li><a href="#styles-number-recipes">Typical Styles (Recipes)</a></li>
+        <li><a href="#styles-percent-recipes">Typical Styles (Percent)</a></li>
+        <li><a href="#style-amount">Amount per Style</a></li>
+        <li><a href="#fermentable-pairings">Common Pairings</a></li>
+    </ul>
+</nav>
+{% endblock %}
+
 {% block content %}
     <nav aria-label="breadcrumb" class="mt-3">
         <ol class="breadcrumb">
