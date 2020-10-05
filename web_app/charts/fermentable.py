@@ -2,8 +2,8 @@ from abc import ABC
 
 from recipe_db.analytics.charts.fermentable import get_fermentable_pairing_fermentables, \
     get_fermentable_amount_range_per_style, get_fermentable_common_styles_relative, \
-    get_fermentable_common_styles_absolute, get_fermentable_popularity, get_fermentable_amount_range
-from recipe_db.analytics.metrics.fermentable import get_fermentable_metric_values
+    get_fermentable_common_styles_absolute, get_fermentable_popularity, get_fermentable_amount_range, \
+    get_fermentable_metric_values
 from recipe_db.models import Fermentable
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.plot import LinesChart, BarChart, PreAggregateHistogramChart, RangeBoxPlot, \

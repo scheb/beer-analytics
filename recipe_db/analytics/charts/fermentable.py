@@ -2,9 +2,10 @@ import pandas as pd
 from django.db import connection
 from pandas import DataFrame
 
-from recipe_db.analytics import lowerfence, q1, q3, upperfence, POPULARITY_MIN_MONTH
+from recipe_db.analytics import lowerfence, q1, q3, upperfence, POPULARITY_MIN_MONTH, METRIC_PRECISION
 from recipe_db.analytics.charts.style import get_num_recipes_per_style
-from recipe_db.analytics.utils import get_style_names_dict, get_num_recipes_per_month, set_series_start
+from recipe_db.analytics.utils import get_style_names_dict, get_num_recipes_per_month, set_series_start, \
+    remove_outliers, get_fermentable_names_dict
 from recipe_db.models import Style, Fermentable
 
 
@@ -215,3 +216,22 @@ def get_fermentable_pairings(fermentables: DataFrame, pair_must_include: Ferment
     aggregated['fermentable'] = aggregated['kind_id'].map(get_fermentable_names_dict())
 
     return aggregated
+
+
+def get_fermentable_metric_values(fermentable: Fermentable, metric: str) -> DataFrame:
+    precision = METRIC_PRECISION[metric] if metric in METRIC_PRECISION else METRIC_PRECISION['default']
+
+    query = '''
+            SELECT round({}, {}) as {}
+            FROM recipe_db_recipefermentable
+            WHERE kind_id = %s
+        '''.format(metric, precision, metric)
+
+    df = pd.read_sql(query, connection, params=[fermentable.id])
+    df = remove_outliers(df, metric, 0.02)
+
+    histogram = df.groupby([pd.cut(df[metric], 16, precision=precision)])[metric].agg(['count'])
+    histogram = histogram.reset_index()
+    histogram[metric] = histogram[metric].map(str)
+
+    return histogram
