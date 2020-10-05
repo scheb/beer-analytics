@@ -15,7 +15,7 @@ def overview(request: HttpRequest) -> HttpResponse:
     for yeast_type in yeast_types:
         if len(yeast_type['yeasts']) > 5:
             yeast_type['most_popular'] = Yeast.objects.filter(type=yeast_type['id']).order_by('-recipes_count')[:5]
-        (yeast_type['yeasts'], yeast_type['brands']) = group_by_brand(yeast_type['yeasts'])
+        (yeast_type['yeasts'], yeast_type['labs']) = group_by_lab(yeast_type['yeasts'])
 
     return render(request, 'yeast/overview.html', {'types': yeast_types})
 
@@ -28,7 +28,7 @@ def type_overview(request: HttpRequest, type: str) -> HttpResponse:
     type_name = types[type]
 
     yeasts_query = Yeast.objects.filter(type=type, recipes_count__gt=0)
-    (yeasts, brands) = group_by_brand(yeasts_query.order_by('name'))
+    (yeasts, labs) = group_by_lab(yeasts_query.order_by('name'))
 
     most_popular = []
     if yeasts_query.count() > 5:
@@ -37,7 +37,7 @@ def type_overview(request: HttpRequest, type: str) -> HttpResponse:
     return render(request, 'yeast/type.html', {
         'type_name': type_name,
         'yeasts': yeasts,
-        'brands': brands,
+        'labs': labs,
         'most_popular': most_popular
     })
 
@@ -61,7 +61,7 @@ def chart(request: HttpRequest, slug: str, type: str, chart_type: str, format: s
         raise Http404("Yeast doesn't have any data.")
 
     if type != yeast.type:
-        return redirect('yeast_chart', type=yeast.type, slug=yeast.id, chart_brand=chart_type, format=format)
+        return redirect('yeast_chart', type=yeast.type, slug=yeast.id, chart_type=chart_type, format=format)
 
     if YeastChartFactory.is_supported_chart(chart_type):
         try:
@@ -69,7 +69,7 @@ def chart(request: HttpRequest, slug: str, type: str, chart_type: str, format: s
         except NoDataException:
             return HttpResponse(status=204)
     else:
-        raise Http404('Unknown chart brand %s.' % chart_type)
+        raise Http404('Unknown chart type %s.' % chart_type)
 
     return render_chart(chart, format)
 
@@ -100,28 +100,28 @@ def group_by_type(yeasts: iter) -> list:
     return types_filtered
 
 
-def group_by_brand(yeasts: iter) -> Tuple[list, list]:
+def group_by_lab(yeasts: iter) -> Tuple[list, list]:
     other_yeasts = []
-    brands = Yeast.get_brands()
-    yeast_brands = {}
+    labs = Yeast.get_labs()
+    yeast_labs = {}
 
-    # Create brand objects
-    for brand in brands:
-        yeast_brands[brand] = {
-            'name': brand,
+    # Create lab objects
+    for lab in labs:
+        yeast_labs[lab] = {
+            'name': lab,
             'yeasts': [],
         }
 
     # Assign yeasts (if possible)
     for yeast in yeasts:
-        yeast_brands[yeast.brand]['yeasts'].append(yeast)
+        yeast_labs[yeast.lab]['yeasts'].append(yeast)
 
-    # Filter brands with yeasts
-    brands_filtered = []
-    for yeast_brand in yeast_brands.values():
-        if len(yeast_brand['yeasts']) > 10:
-            brands_filtered.append(yeast_brand)
+    # Filter labs with yeasts
+    labs_filtered = []
+    for yeast_lab in yeast_labs.values():
+        if len(yeast_lab['yeasts']) > 10:
+            labs_filtered.append(yeast_lab)
         else:
-            other_yeasts.extend(yeast_brand['yeasts'])
+            other_yeasts.extend(yeast_lab['yeasts'])
 
-    return other_yeasts, brands_filtered
+    return other_yeasts, labs_filtered
