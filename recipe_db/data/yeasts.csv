@@ -1,704 +1,706 @@
-name;alt_names;brand;alt_brand;alt_brand_extra;product_id;alt_product_id;type;form;tolerance;tolerance_percent;flocculation;attenuation;min_temperature;max_temperature
-Fermoale;;AEB;;;;;ale;dry;;;high;72.5;18;25
-Fermoale AY3;;AEB;;;;;ale;dry;;;high;;14;22
-Fermoale AY4;;AEB;;;;;ale;dry;medium;;high;75;17;25
-Fermolager W;;AEB;;;;;lager;dry;high;;high;87;9;15
-Fermolager Berlin;;AEB;;;;;lager;dry;;;;82.5;10;15
-Weiss Arome+;;AEB;;;;;wheat;dry;;12;high;95;12;25
-American Ale;;Bio4;;Bio 4;SY025;;ale;liquid;high;;medium;77;15;22
-Heffeweizen Ale;;Bio4;;Bio 4;SY055;;wheat;liquid;medium;;low;74;16;22
-London ESB;;Bio4;;Bio 4;SY030;;ale;liquid;medium;;high;71;18;22
-Norwegian Kveik ;;Bio4;;Bio 4;SY081;;ale;liquid;high;;medium;65;22;37
-Norwegian Kveik 2;;Bio4;;Bio 4;SY084;;ale;liquid;high;;high;76;20;37
-Superyeast High Gravity Ale;;Bio4;;Bio 4;SY042;;ale;liquid;high;;medium;80;18;22
-Aurora;;Bootleg Biology;;Bootleg, Bootleg Bio;BBAUR ;;ale;liquid;medium;;medium;81;24;37
-NEEPAH Blend;;Bootleg Biology;;Bootleg, Bootleg Bio;BBXNPA ;;ale;liquid;low;;low;80;19;21
-Belgian Blend;;Bootleg Biology;;Bootleg, Bootleg Bio;BBXBELG;;ale;liquid;medium;;low;72;17;22
-Berliner Blend;;Bootleg Biology;;Bootleg, Bootleg Bio;BBXBRLN ;;brett-bacteria;liquid;low;;low;98;18;24
-Brulosophy Blend;;Bootleg Biology;;Bootleg, Bootleg Bio;BBXBRU1;;ale;liquid;low;;medium;76;10;20
-Chardonnay;;Bootleg Biology;;Bootleg, Bootleg Bio;BB99301A;;wine-cider;liquid;medium;;low;70;18;24
-Funk Weapon #1;;Bootleg Biology;;Bootleg, Bootleg Bio;BB0034A ;;brett-bacteria;liquid;medium;;low;80;18;24
-Funk Weapon #2;;Bootleg Biology;;Bootleg, Bootleg Bio;BB0035C ;;brett-bacteria;liquid;medium;;low;80;18;24
-Funk Weapon #3;;Bootleg Biology;;Bootleg, Bootleg Bio;BB0022 ;;brett-bacteria;liquid;medium;;low;80;18;24
-Oslo;;Bootleg Biology;;Bootleg, Bootleg Bio;OSLO;;ale;liquid;medium;;medium;82;18;41
-S. Arlingtonesis;;Bootleg Biology;;Bootleg, Bootleg Bio;BB22204;;ale;liquid;medium;;medium;85;16;24
-Saison Parfait;;Bootleg Biology;;Bootleg, Bootleg Bio;BBX0104;;ale;liquid;medium;;medium;90;18;29
-Sour Solera Blend;;Bootleg Biology;;Bootleg, Bootleg Bio;BBXSS;;brett-bacteria;liquid;medium;;medium;95;18;24
-Sour Weapon L;;Bootleg Biology;;Bootleg, Bootleg Bio;BBXSWL ;;brett-bacteria;liquid;low;;low;;29;37
-Sour Weapon P;;Bootleg Biology;;Bootleg, Bootleg Bio;BBX0089;;brett-bacteria;liquid;medium;;low;;27;38
-The Mad Fermentationist Saison Blend;;Bootleg Biology;;Bootleg, Bootleg Bio;BBXMAD1;;brett-bacteria;liquid;medium;;medium;90;20;27
-Blanche;;Brewferm;;;Y015;;ale;dry;;;low;78;18;23
-Lager;;Brewferm;;;Y016;;lager;dry;;;high;78;10;15
-Top;;Brewferm;;;;;ale;dry;medium;;medium-high;75;18;25
-Ringwood Ale;;BSI;;;1187;;ale;liquid;medium;;high;72;18;23
-Pasteur Champagne;;BSI;;;1868;;wine-cider;liquid;high;;low;68;4;34
-German Lager;;BSI;;;3470;;lager;liquid;medium;;medium;75;8;12
-German Ale;;BSI;;;A-07;;ale;liquid;low;;low;75;13;19
-American White Ale;;BSI;;;A-10;;ale;liquid;medium;;low;76;16;22
-London Ale III;;BSI;;;A-18;;ale;liquid;medium;;medium;73;18;23
-London Ale I;;BSI;;;A-28;;ale;liquid;medium;;medium;75;16;22
-British Ale III;;BSI;;;A-32;;ale;liquid;medium;;high;69;16;22
-British Ale II;;BSI;;;A-35;;ale;liquid;medium;;high;74;17;24
-Old German Ale;;BSI;;;A-38;;ale;liquid;medium;;low;75;16;22
-Chico Ale;;BSI;;;A-56;;ale;liquid;medium;;medium;75;16;22
-Kolsch;;BSI;;;A-65;;ale;liquid;medium;;low;75;12;18
-London Ale II;;BSI;;;A-68;;ale;liquid;medium;;high;69;18;22
-Timothy Taylor Ale;;BSI;;;A-69;;ale;liquid;medium;;high;69;18;22
-American Microbrewery Ale;;BSI;;;A-72;;ale;liquid;medium;;high;74;17;22
-Henley on Thames Ale;;BSI;;;A-75;;ale;liquid;medium;;medium;74;17;22
-Scotch Ale;;BSI;;;A-78;;ale;liquid;high;;high;71;13;21
-Irish Ale;;BSI;;;A-84;;ale;liquid;medium;;medium;73;18;22
-British Ale;;BSI;;;A-98;;ale;liquid;medium;;high;74;18;22
-Whitbread Ale;;BSI;;;A-99;;ale;liquid;low;;high;70;18;24
-Belgian Ale;;BSI;;;ABS3;;ale;liquid;medium;;high;74;18;24
-Andechs Lager;;BSI;;;;;lager;liquid;medium;;medium;73;10;12
-Andechs Weizen;;BSI;;;;;ale;liquid;medium;;low;74;18;21
-Augustiner Lager;;BSI;;;;;lager;liquid;medium;;medium;73;11;17
-Amber Lager;;Bulldog;;;B38;;lager;dry;medium;;high;73;9;14
-American West;;Bulldog;;;B5;;ale;dry;medium;;medium;73;16;21
-Belgian Saison;;Bulldog;;;B16;BR16;ale;dry;high;;medium;85;18;30
-Bavarian Wheat;;Bulldog;;;B49;;wheat;dry;medium;;low;78;18;25
-Belgian Trappix;;Bulldog;;;B19;;ale;dry;medium;;high;78;18;25
-English Ale;;Bulldog;;;B4;;ale;dry;medium;;high;67;16;21
-European Ale;;Bulldog;;;B44;;ale;dry;medium;;high;73;15;21
-German Lager;;Bulldog;;;B34;;lager;dry;medium;;high;78;9;14
-Steam Lager;;Bulldog;;;B23;;lager;dry;medium;;high;78;13;20
-Universal Ale;;Bulldog;;;B01;;ale;dry;medium;;medium;73;18;23
-London's Calling;;Crescat Labs;;Crescat;CL001;;ale;liquid;;9;medium;76.5;18;22
-Northern Shire;;Crescat Labs;;Crescat;CL002;;ale;liquid;;9;medium;75;18;22
-Bagpipes Chanter;;Crescat Labs;;Crescat;CL003;;ale;liquid;;10;high;77;18;22
-Black Clover;;Crescat Labs;;Crescat;CL004;;ale;liquid;;12;very-high;73;16;22
-Flemish Rhapsody;;Crescat Labs;;Crescat;CL005;;ale;liquid;;10;low;73.5;16;24
-Saison's Season;;Crescat Labs;;Crescat;CL006;;ale;liquid;;11;medium-low;79.5;18;25
-Abbey's Sellection;;Crescat Labs;;Crescat;CL007;;ale;liquid;;12;medium-low;76;19;24
-Belgian Meander;;Crescat Labs;;Crescat;CL008;;ale;liquid;;12;very-high;74;18;24
-Trapeze Trappist;;Crescat Labs;;Crescat;CL009;;ale;liquid;;12;medium;76;19;25
-Moravian Vale;;Crescat Labs;;Crescat;CL010;;lager;liquid;;12;high;75;8;12
-Bayernfest;;Crescat Labs;;Crescat;CL011;;lager;liquid;;11;high;76.5;8;14
-Witty Pretty;;Crescat Labs;;Crescat;CL012;;ale;liquid;;10;low;78;18;22
-Cologne Definition;;Crescat Labs;;Crescat;CL013;;ale;liquid;;11;medium-low;75;14;22
-American Cream;;Crescat Labs;;Crescat;CL014;;ale;liquid;;10;medium;76;14;22
-Piwo Cells;;Crescat Labs;;Crescat;CL015;;ale;liquid;;9;low;69.5;18;22
-USA1933;;Crescat Labs;;Crescat;CL016;;ale;liquid;;11;medium;75;16;22
-Friar's Strong;;Crescat Labs;;Crescat;CL017;;ale;liquid;;15;high;77.5;18;24
-Kveik & Fox;;Crescat Labs;;Crescat;CL018;;ale;liquid;;10;high;74;20;40
-Belgian;;Crossmyloof Brew;;Crossmyloof;;;ale;dry;medium;;medium;80;18;28
-BEòIR;;Crossmyloof Brew ;;Crossmyloof;;;ale;dry;medium;;medium;74;15;22
-Californian ;;Crossmyloof Brew;;Crossmyloof;;;lager;dry;medium;;medium;79;15;22
-Five;;Crossmyloof Brew;;Crossmyloof;;;ale;dry;medium;;high;78;17;28
-Four;;Crossmyloof Brew ;;Crossmyloof;;;ale;dry;medium;;medium;73.5;15;22
-Haze;;Crossmyloof Brew;;Crossmyloof;;;ale;dry;medium;;low;75;15;20
-Hell;;Crossmyloof Brew;;Crossmyloof;;;lager;dry;medium;;high;79;12;21
-HøG-NORSK;;Crossmyloof Brew ;;Crossmyloof;;;ale;dry;medium;;high;77.5;18;27
-Kentucky;;Crossmyloof Brew;;Crossmyloof;;;ale;dry;medium;;high;75.5;13;22
-Kölsch;;Crossmyloof Brew ;;Crossmyloof;;;ale;liquid;medium;;high;79;15;22
-Kristallweizen;;Crossmyloof Brew ;;Crossmyloof;;;wheat;dry;medium;;medium;76;18;28
-Lille Saison;;Crossmyloof Brew ;;Crossmyloof;;;ale;dry;high;;medium;85;17;28
-Midland;;Crossmyloof Brew;;Crossmyloof;;;ale;dry;high;;high;75;13;22
-Monk;;Crossmyloof Brew;;Crossmyloof;;;ale;dry;medium;;medium;69;15;20
-Pia;;Crossmyloof Brew;;Crossmyloof;;;ale;dry;medium;;medium;74;15;22
-Real Ale ;;Crossmyloof Brew;;Crossmyloof;;;ale;dry;low;;medium;75;17;22
-Real Ale;;Crossmyloof Brew;;Crossmyloof;;;ale;dry;medium;;medium;76;17;22
-US Pale Ale;;Crossmyloof Brew;;Crossmyloof;;;ale;dry;low;;medium;77;17;22
-Baltic Lager;;East Coast Yeast;;ECY;ECY22;;lager;liquid;;;medium;77;8;12
-Belgian Abbaye;;East Coast Yeast;;ECY;ECY09;;ale;liquid;;;medium;75;19;22
-Belgian White;;East Coast Yeast;;ECY;ECY11;;ale;liquid;;;low;76;21;24
-Berliner Blend;;East Coast Yeast;;ECY;ECY06;;brett-bacteria;liquid;;;;76;21;23
-Brett Blend #1 Anomala;;East Coast Yeast;;ECY;ECY04;;brett-bacteria;liquid;;;;75;21;21
-Brett Blend #9;;East Coast Yeast;;ECY;ECY05;;brett-bacteria;liquid;;;;75;21;21
-Brett Custersianus;;East Coast Yeast;;ECY;ECY19;;brett-bacteria;liquid;;;;75;16;23
-Brett Nanus;;East Coast Yeast;;ECY;ECY24;;brett-bacteria;liquid;;;;75;21;21
-British Mild;;East Coast Yeast;;ECY;ECY18;;ale;liquid;;;low;68;16;20
-BugCounty;;East Coast Yeast;;ECY;ECY20;;ale;liquid;;;;80;16;23
-BugFarm ;;East Coast Yeast;;ECY;ECY01;;ale;liquid;low;;low;80;16;23
-BugFarm 2;;East Coast Yeast;;ECY;ECY45;;brett-bacteria;liquid;high;;medium;65;16;27
-Burton Union;;East Coast Yeast;;ECY;ECY17;;ale;liquid;;;medium;74;18;21
-Farmhouse Brett;;East Coast Yeast;;ECY;ECY03;;brett-bacteria;liquid;;;;75;21;21
-Flemish Ale;;East Coast Yeast;;ECY;ECY02;;ale;liquid;;;;80;16;23
-Kellerbier;;East Coast Yeast;;ECY;ECY28;;lager;liquid;medium;;medium;75;8;12
-Kölschbier;;East Coast Yeast;;ECY;ECY21;;ale;liquid;;;high;77;14;19
-Munich Festbier;;East Coast Yeast;;ECY;ECY15;;lager;liquid;;;medium;75;8;12
-Northeast Ale;;East Coast Yeast;;ECY;ECY29;;ale;liquid;;;high;81;18;21
-Old Newark Ale;;East Coast Yeast;;ECY;ECY10;;ale;liquid;;;high;72;16;20
-Old Newark Beer;;East Coast Yeast;;ECY;ECY12;;ale;liquid;;;medium;72;14;20
-Oud Brune;;East Coast Yeast;;ECY;ECY23;;ale;liquid;;;;77;20;23
-Saison Brasserie;;East Coast Yeast;;ECY;ECY08;;ale;liquid;;;medium;80;24;29
-Saison Single;;East Coast Yeast;;ECY;ECY14;;ale;liquid;;;medium;77;24;28
-Scottish Heavy;;East Coast Yeast;;ECY;ECY07;;ale;liquid;;;medium;78;16;20
-Senne Valley;;East Coast Yeast;;ECY;ECY31;;ale;liquid;high;;high;85;18;26
-Trappist Ale;;East Coast Yeast;;ECY;ECY13;;ale;liquid;;;medium;75;19;22
-American Ale;;Escarpment Labs;;Escarpment;;;ale;liquid;medium;;medium;74;16;22
-Anchorman Ale;;Escarpment Labs;;Escarpment;;;ale;liquid;high;;high;77.5;18;20
-Ardennes Belgian Ale;;Escarpment Labs;;Escarpment;;;ale;liquid;high;;medium-high;76;18;24
-Årset Kveik Blend;;Escarpment Labs;;Escarpment;;;ale;liquid;high;;high;75;20;37
-Belgian Sour Blend;;Escarpment Labs;;Escarpment;;;brett-bacteria;liquid;low;;low;0;21;32
-Berliner Brett I;;Escarpment Labs;;Escarpment;;;brett-bacteria;liquid;high;;medium;0;18;24
-Biergarten Lager;;Escarpment Labs;;Escarpment;;;lager;liquid;medium;;medium;73;9;13
-Brett B;;Escarpment Labs;;Escarpment;;;brett-bacteria;liquid;medium;;low;77.5;27;27
-Brett D;;Escarpment Labs;;Escarpment;;;brett-bacteria;liquid;;12;medium-low;80;22;25
-Brett Q;;Escarpment Labs;;Escarpment;;;brett-bacteria;liquid;high;;medium-low;80;20;25
-Brussels Brett;;Escarpment Labs;;Escarpment;;;brett-bacteria;liquid;;12;medium-low;80;22;25
-Cali Ale;;Escarpment Labs;;Escarpment;;;ale;liquid;high;;medium;80;18;22
-Cali Common Lager;;Escarpment Labs;;Escarpment;;;lager;liquid;medium;;medium;67.5;14;18
-Cerberus;;Escarpment Labs;;Escarpment;;;ale;liquid;medium;;low;75;22;28
-Classic Witbier;;Escarpment Labs;;Escarpment;;;ale;liquid;medium;;medium-low;75;19;24
-Copenhagen Lager;;Escarpment Labs;;Escarpment;;;lager;liquid;medium;;medium-low;74;8;13
-Czech Lager;;Escarpment Labs;;Escarpment;;;lager;liquid;medium;;medium;74;9;13
-Dry Belgian Ale;;Escarpment Labs;;Escarpment;;;ale;liquid;;12;medium-low;85;22;26
-Ebbegarden Kveik Blend;;Escarpment Labs;;Escarpment;;;ale;liquid;high;;medium;75;22;37
-English Ale I;;Escarpment Labs;;Escarpment;;;ale;liquid;medium;;very-high;67;18;21
-English Ale II;;Escarpment Labs;;Escarpment;;;ale;liquid;medium;;medium-high;76;18;22
-Marina Russian Farmhouse;;Escarpment Labs;;Escarpment;;;ale;liquid;medium;;low;72;25;39
-Foggy London Ale;;Escarpment Labs;;Escarpment;;;ale;liquid;medium;;medium;74.5;18;23
-Fruit Bomb Saison;;Escarpment Labs;;Escarpment;;;ale;liquid;;12;medium-low;80;22;27
-Fruity Witbier;;Escarpment Labs;;Escarpment;;;ale;liquid;;12;medium-low;72.5;17;24
-Goldrush Lager;;Escarpment Labs;;Escarpment;;;lager;liquid;medium;;medium;72;14;18
-Hornindal Kveik Blend;;Escarpment Labs;;Escarpment;;;ale;liquid;high;;high;79;25;35
-Irish Ale;;Escarpment Labs;;Escarpment;;;ale;liquid;medium;;medium-high;72.5;18;22
-Isar Lager;;Escarpment Labs;;Escarpment;;;lager;liquid;medium;;medium-high;77;10;15
-Kölsch Ale;;Escarpment Labs;;Escarpment;;;ale;liquid;medium;;medium;75;18;21
-Krispy;;Escarpment Labs;;Escarpment;;;ale;liquid;high;;high;76;18;30
-Lactobacillus Blend;;Escarpment Labs;;Escarpment;;;brett-bacteria;liquid;;;;0;32;42
-Lactobacillus Blend 2.0;;Escarpment Labs;;Escarpment;;;brett-bacteria;liquid;low;;low;0;30;45
-Lactobacillus brevis;;Escarpment Labs;;Escarpment;;;brett-bacteria;liquid;;;;0;35;45
-Lactobacillus Secondary Souring Blend;;Escarpment Labs;;Escarpment;;;brett-bacteria;liquid;low;;low;0;18;25
-Lærdal Kveik;;Escarpment Labs;;Escarpment;;;ale;liquid;high;;high;75;22;37
-Mexican Lager;;Escarpment Labs;;Escarpment;;;lager;liquid;medium;;medium;75;10;14
-Munich Lager;;Escarpment Labs;;Escarpment;;;lager;liquid;high;;medium;78;12;15
-New World Saison;;Escarpment Labs;;Escarpment;;;ale;liquid;;12;medium;80;20;25
-Old World Saison Blend;;Escarpment Labs;;Escarpment;;;ale;liquid;high;;medium-low;85;22;27
-Ontario Farmhouse Ale Blend;;Escarpment Labs;;Escarpment;;;ale;liquid;medium;;low;80;22;27
-Scotia Sauvage;;Escarpment Labs;;Escarpment;;;ale;liquid;high;;medium;80;18;25
-Scottish Ale;;Escarpment Labs;;Escarpment;;;ale;liquid;high;;medium;73.5;14;22
-Skare Kveik;;Escarpment Labs;;Escarpment;;;ale;liquid;low;;low;76;18;30
-Spooky Saison;;Escarpment Labs;;Escarpment;;;ale;liquid;medium;;low;85;25;-18
-St-Remy Abbey Ale;;Escarpment Labs;;Escarpment;;;ale;liquid;;10;medium;76;18;24
-St. Lucifer Belgian Ale;;Escarpment Labs;;Escarpment;;;ale;liquid;;12;medium;80;20;24
-Sterling Ale;;Escarpment Labs;;Escarpment;;;ale;liquid;high;;medium;78;14;22
-Uberweizen;;Escarpment Labs;;Escarpment;;;ale;liquid;medium;;medium;76;18;24
-Vermont Ale;;Escarpment Labs;;Escarpment;;;ale;liquid;high;;medium;78;19;22
-Voss Kveik;;Escarpment Labs;;Escarpment;;;ale;liquid;high;;high;72.5;25;42
-Weizen I;;Escarpment Labs;;Escarpment;;;ale;liquid;medium;;low;72.5;18;24
-Weizen II;;Escarpment Labs;;Escarpment;;;ale;liquid;medium;;medium-low;76;18;24
-Wild Thing;;Escarpment Labs;;Escarpment;;;ale;liquid;;9;medium;78.5;25;25
-Safcider;;Fermentis;;;;;wine-cider;dry;high;;high;75;10;27
-SafSpirit HG-1;;Fermentis;SafSpirit;;HG-1;;ale;dry;high;;low;80;25;35
-SafSpirit USW-6;;Fermentis;SafSpirit;;USW-6;;ale;liquid;high;;medium;80;20;32
-SafAle HA-18;;Fermentis;SafAle;;HA-18;;ale;dry;high;;medium;97;25;35
-American Ale;;Fermentis;SafAle;;US-05;;ale;dry;low;;medium;81;12;25
-American Ale;;Fermentis;SafAle;;US-56;;ale;dry;medium;;medium;72;15;24
-Belgian Saison Ale;;Fermentis;SafAle;;BE-134;;ale;dry;;;low;90;18;28
-English Ale;;Fermentis;SafAle;;S-04;;ale;dry;;9.75;high;75;12;25
-German Ale;;Fermentis;SafAle;;K-97;;ale;dry;;10.4;high;81;12;25
-Abbaye;;Fermentis;SafAle;;BE-256;;ale;dry;;11;high;82;12;25
-General/Belgian;;Fermentis;SafAle;;S-33;;ale;dry;;11.5;high;70;12;25
-Specialty Ale;;Fermentis;SafAle;;T-58;;ale;dry;;11.5;high;70;12;25
-Wheat Beer;;Fermentis;SafAle;;WB-06;;wheat;dry;;10.5;low;86;12;25
-German Lager;;Fermentis;SafLager;;S-23;;lager;dry;;10.5;high;82;9;22
-German Lager;;Fermentis;SafLager;;W-34/70;34/70;lager;dry;;10.5;high;83;9;22
-Swiss Lager;;Fermentis;SafLager;;S-189;;lager;dry;;10.5;high;84;9;22
-Achouffe Belgian Ale;;GigaYeast;;Giga;GY003;;ale;liquid;;;medium-low;82.5;20;25
-Altstadt Ale;;GigaYeast;;Giga;GY016;;ale;liquid;;;low;79;13;20
-American Lager;;GigaYeast;;Giga;GY030;;lager;liquid;;;medium;81;9;16
-Bavarian Hefe;;GigaYeast;;Giga;GY017;;ale;liquid;;;low;79;18;27
-Belgian Mix;;GigaYeast;;Giga;GY007;;ale;liquid;;;low;80;19;25
-Belgian Wit;;GigaYeast;;Giga;GY028;;ale;liquid;;;low;77.5;18;27
-Berliner Blend;;GigaYeast;;Giga;GB122;;brett-bacteria;liquid;;;;89;21;27
-British Ale #3;;GigaYeast;;Giga;GY041;;ale;liquid;;;medium-high;81;18;25
-British Ale #1;;GigaYeast;;Giga;GY011;;ale;liquid;;;high;77;18;25
-British Ale #2;;GigaYeast;;Giga;GY031;;ale;liquid;;;high;81;18;24
-Czech Pilsner;;GigaYeast;;Giga;GY002;;lager;liquid;;;medium-high;77;9;13
-Farmhouse Sour;;GigaYeast;;Giga;GB121;;brett-bacteria;liquid;;;;89;20;27
-Fast Souring Lacto;;GigaYeast;;Giga;GB110;;brett-bacteria;liquid;;;;40;20;37
-German Lager;;GigaYeast;;Giga;GY045;;lager;liquid;;;medium-low;76;10;16
-Golden Gate Lager;;GigaYeast;;Giga;GY005;;lager;liquid;;;medium;81;13;21
-Golden Pear Belgian Ale;;GigaYeast;;Giga;GY048;;ale;liquid;;;low;84;18;27
-Hornindal Kveik #5;;GigaYeast;;Giga;GY135;;ale;liquid;medium;;medium;77;10;38
-Kölsch Bier;;GigaYeast;;Giga;GY021;;ale;liquid;;;medium-high;81;16;22
-NorCal Ale #1;;GigaYeast;;Giga;GY001;;ale;liquid;;;medium;78;18;25
-NorCal Ale #5;;GigaYeast;;Giga;GY029;;ale;liquid;;;medium-high;71;19;24
-Portland Hefe;;GigaYeast;;Giga;GY020;;ale;liquid;;;low;78;18;23
-Saison Blend;;GigaYeast;;Giga;GY047;;ale;liquid;;;low;81.5;18;27
-Saison Sour;;GigaYeast;;Giga;GB124;;brett-bacteria;liquid;;;;78;20;27
-Saison #1;;GigaYeast;;Giga;GY018;;ale;liquid;;;low;82;18;27
-Saison #2;;GigaYeast;;Giga;GY027;;ale;liquid;;;low;81;18;27
-Scotch Ale #1;;GigaYeast;;Giga;GY044;;ale;liquid;;;medium-low;81;18;24
-Scourmont Abbey Ale;;GigaYeast;;Giga;GY014;;ale;liquid;;;low;80;18;27
-Sour Cherry Funk;;GigaYeast;;Giga;GB150;;brett-bacteria;liquid;medium;;low;65;20;27
-Sour Plum Belgian;;GigaYeast;;Giga;GB123;;brett-bacteria;liquid;;;;77;20;27
-Sweet Flemish Brett;;GigaYeast;;Giga;GB144;;brett-bacteria;liquid;;;;83;20;24
-Trappist Tripel;;GigaYeast;;Giga;GY015;;ale;liquid;;;low;75;19;23
-Vermont IPA;;GigaYeast;;Giga;GY054;;ale;liquid;;;medium-low;80;17;24
-Bubbles;;Imperial Yeast;;Imperial;A40;;wine-cider;liquid;high;;medium;90;14;25
-House;;Imperial Yeast;;Imperial;A01;;ale;liquid;;;high;73;17;21
-Barbarian;;Imperial Yeast;;Imperial;A04;;ale;liquid;;;medium;73;17;21
-Voyager ;Four Square;Imperial Yeast;;Imperial;A05;;ale;liquid;medium;;high;68;18;23
-Flagship;;Imperial Yeast;;Imperial;A07;;ale;liquid;;;medium-low;73;16;22
-Pub;;Imperial Yeast;;Imperial;A09;;ale;liquid;;;very-high;69;18;21
-Darkness;;Imperial Yeast;;Imperial;A10;;ale;liquid;;;medium;71;17;22
-Sovereign;;Imperial Yeast;;Imperial;A13;;ale;liquid;;;medium-low;73;16;21
-Independence;;Imperial Yeast;;Imperial;A15;;ale;liquid;;;medium;72;17;22
-Joystick;;Imperial Yeast;;Imperial;A18;;ale;liquid;;;medium-high;73;16;21
-Citrus;;Imperial Yeast;;Imperial;A20;;ale;liquid;;;low;74;19;27
-Dry Hop;;Imperial Yeast;;Imperial;A24;;ale;liquid;;;medium;76;18;23
-Tartan;;Imperial Yeast;;Imperial;A31;;ale;liquid;;;medium;72.5;18;21
-Julius;;Imperial Yeast;;Imperial;A34;;ale;liquid;medium;;high;75;18;20
-POG;;Imperial Yeast;;Imperial;A37;;ale;liquid;high;;high;80;29;38
-Juice;;Imperial Yeast;;Imperial;A38;;ale;liquid;medium;;medium;74;18;23
-Loki;;Imperial Yeast;;Imperial;A43;;ale;liquid;;;medium-high;80;16;38
-Kveiking;;Imperial Yeast;;Imperial;A44;;ale;liquid;high;;low;80;24;36
-Bell;;Imperial Yeast;;Imperial;A62;;ale;liquid;medium;;medium;79;18;22
-Whiteout;;Imperial Yeast;;Imperial;B44;;ale;liquid;;;medium-low;72;17;22
-Gnome;;Imperial Yeast;;Imperial;B45;;ale;liquid;;;medium-high;72;18;24
-Triple Double;;Imperial Yeast;;Imperial;B48;;ale;liquid;;;medium;74;18;25
-Workhorse;;Imperial Yeast;;Imperial;B51;;ale;liquid;;;medium;72;18;24
-Fish Finder;;Imperial Yeast;;Imperial;B53;;ale;liquid;;;medium;74;18;23
-Rustic;;Imperial Yeast;;Imperial;B56;;ale;liquid;;;medium;72;20;32
-Monastic;;Imperial Yeast;;Imperial;B63;;ale;liquid;;;medium-low;74;20;26
-Napoleon;;Imperial Yeast;;Imperial;B64;;ale;liquid;;;low;77;18;26
-Sour Batch Kidz;;Imperial Yeast;;Imperial;F08;;brett-bacteria;liquid;;;low;80;20;24
-Stefon;;Imperial Yeast;;Imperial;G01;;ale;liquid;;;low;73;17;23
-Kaiser;;Imperial Yeast;;Imperial;G02;;ale;liquid;;;low;73;13;18
-Dieter;;Imperial Yeast;;Imperial;G03;;ale;liquid;;;medium;75;16;21
-Fest;;Imperial Yeast;;Imperial;L02;;lager;liquid;;;medium-high;71;8;13
-Cablecar;;Imperial Yeast;;Imperial;L05;;lager;liquid;;;medium-high;71;13;18
-Que Bueno;;Imperial Yeast;;Imperial;L09;;lager;liquid;;;medium;73;8;13
-Gateway;;Imperial Yeast;;Imperial;L11;;lager;liquid;;;medium;72;8;13
-Global;;Imperial Yeast;;Imperial;L13;;lager;liquid;;;medium-low;73;8;13
-Harvest;;Imperial Yeast;;Imperial;L17;;lager;liquid;;;medium;70;10;16
-Pilgrimage;;Imperial Yeast;;Imperial;L26;;lager;liquid;medium;;medium;75;7;13
-Urkel;;Imperial Yeast;;Imperial;L28;;lager;liquid;;;medium;73;11;14
-Suburban Brett;;Imperial Yeast;;Imperial;W15;;brett-bacteria;liquid;;;low;77.5;18;23
-American Ale;;Inland Island Yeast;;Inland Island;INIS-007;;ale;liquid;high;;medium;71;20;23
-Belgian Gnome Ale;;Inland Island Yeast;;Inland Island;INIS-222;;ale;liquid;high;;high;74;18;24
-Brett Barrel III;;Inland Island Yeast;;Inland Island;INIS-913;;brett-bacteria;liquid;medium;;medium;90;16;24
-Colorado IPA;;Inland Island Yeast;;Inland Island;INIS-003;;ale;liquid;high;;medium;76;17;24
-Eccentric Ale;;Inland Island Yeast;;Inland Island;INIS-006;;ale;liquid;medium;;medium;72;20;22
-English Ale V;;Inland Island Yeast;;Inland Island;INIS-315;;ale;liquid;medium;;very-high;66.5;18;20
-English Dry Ale;;Inland Island Yeast;;Inland Island;INIS-318;;ale;liquid;medium;;medium-high;75;18;21
-German Monk Lager;;Inland Island Yeast;;Inland Island;INIS-711;;lager;liquid;medium;;medium;73;10;12
-East Coast IPA;;Inland Island Yeast;;Inland Island;INIS-008;;ale;liquid;high;;high;73;18;23
-Fog Machine;;Inland Island Yeast;;Inland Island;INIS-009;;ale;liquid;medium;;medium;74;19;23
-American Weizen;;Inland Island Yeast;;Inland Island;INIS-055;;ale;liquid;medium;;low;72;18;21
-Belgian Wit Ale;;Inland Island Yeast;;Inland Island;INIS-241;;ale;liquid;high;;medium;74;18;23
-Saison : Baron;;Inland Island Yeast;;Inland Island;INIS-298;;ale;liquid;medium;;medium;75;21;26
-Norwegian Farmhouse;;Inland Island Yeast;;Inland Island;INIS-441;;ale;liquid;medium;;high;80;21;38
-French Ale;;Inland Island Yeast;;Inland Island;INIS-451;;ale;liquid;medium;;high;72;17;23
-Golden Kolsch Style Ale;;Inland Island Yeast;;Inland Island;INIS-572;;ale;liquid;medium;;medium;76;13;18
-German Hybrid Ale;;Inland Island Yeast;;Inland Island;INIS-573;;ale;liquid;medium;;medium;75;18;21
-Session Lager;;Inland Island Yeast;;Inland Island;INIS 701;;lager;liquid;medium;;medium;77.5;10;13
-Northern California Ale;;Inland Island Yeast;;Inland Island;INIS-001;;ale;liquid;high;;medium;75;16;22
-Saison Farmhouse;;Inland Island Yeast;;Inland Island;INIS-291;;ale;liquid;high;;medium;76.5;21;35
-West Coast;;Lallemand;Danstar, LalBrew;;BRY-97;;ale;dry;high;;high;75;15;22
-Abbaye Belgian Ale;;Lallemand;Danstar, LalBrew;;;;ale;dry;high;;medium;88;17;25
-Belle Saison;;Lallemand;Danstar, LalBrew;;;;ale;dry;high;;low;90;15;35
-Diamond Lager;;Lallemand;Danstar, LalBrew;;;;lager;dry;low;;high;80;10;15
-New England;;Lallemand;Danstar, LalBrew;;;;ale;dry;medium;;medium;75;15;22
-Cask and Bottle Conditioning;;Lallemand;Danstar, LalBrew;;CBC-1;;ale;dry;high;;high;65;15;25
-Köln Kölsch Style Ale;;Lallemand;Danstar, LalBrew;;;;ale;dry;medium;;medium;75;15;22
-London English-Style Ale;London ESB Yeast;Lallemand;Danstar, LalBrew;;;;ale;dry;high;;low;65;18;22
-Munich Classic Wheat Beer;Munich Dry Wheat Yeast;Lallemand;Danstar, LalBrew;;;;ale;dry;high;;low;78;18;22
-Nottingham Ale;Nottingham High Performance Ale Yeast;Lallemand;Danstar, LalBrew;;;;ale;dry;medium;;high;80;10;22
-Voss Kveik Ale;;Lallemand;Danstar, LalBrew;;;;ale;dry;high;;high;80;25;40
-Windsor Ale;Windsor British-Style Beer Yeast;Lallemand;Danstar, LalBrew;;;;ale;dry;medium;;low;70;15;22
-Verdant IPA;;Lallemand;Danstar, LalBrew;;;;ale;dry;high;;high;80;18;23
-Lalvin 71B ;;Lallemand;;;71B;;wine-cider;dry;high;;high;100;15;30
-Lalvin EC-1118;;Lallemand;;;EC-1118;;wine-cider;dry;high;;high;65;15;25
-Lalvin ICV D47;;Lallemand;;;;;wine-cider;liquid;high;;medium;95;15;30
-Lalvin V1116;;Lallemand;;;;;wine-cider;dry;medium;;high;65;10;35
-Sourvisiae;;Lallemand;;;;;ale;dry;high;;medium;85;10;22
-WildBrew Philly Sour;;Lallemand;;;;;ale;dry;medium;;high;85;20;25
-WildBrew Helveticus Pitch;;Lallemand;;;;;brett-bacteria;dry;low;;low;0;38;45
-Wildbrew Sour Pitch;;Lallemand;;;;;brett-bacteria;dry;low;;low;;30;40
-Arset;;Mainiacal Yeast Labs;;Mainiacal;;;ale;liquid;medium;;medium;78;18;35
-Aurland;;Mainiacal Yeast Labs;;Mainiacal;;;ale;liquid;medium;;medium;0;16;35
-BB 3;;Mainiacal Yeast Labs;;Mainiacal;;;ale;liquid;medium;;medium;76;20;26
-Brettanomainer;;Mainiacal Yeast Labs;;Mainiacal;;;brett-bacteria;liquid;medium;;low;93;11;27
-Citrus King;;Mainiacal Yeast Labs;;Mainiacal;;;ale;liquid;low;;low;82;18;26
-Ebbegarden Kveik ;;Mainiacal Yeast Labs;;Mainiacal;;;ale;liquid;high;;medium;85;27;32
-Espe;;Mainiacal Yeast Labs;;Mainiacal;;;ale;liquid;medium;;medium;75;16;34
-Framgarden;;Mainiacal Yeast Labs;;Mainiacal;;;ale;liquid;high;;medium;78;24;43
-Granvin;;Mainiacal Yeast Labs;;Mainiacal;;;ale;liquid;medium;;low;78;20;43
-Infectious Behaviour;;Mainiacal Yeast Labs;;Mainiacal;;;ale;liquid;high;;medium;90;18;27
-Juggernaut;;Mainiacal Yeast Labs;;Mainiacal;;;ale;liquid;medium;;medium;79;18;27
-Lærdal;;Mainiacal Yeast Labs;;Mainiacal;;;ale;liquid;low;;low;80;27;41
-Midtbust;;Mainiacal Yeast Labs;;Mainiacal;;;ale;liquid;medium;;medium;78;24;41
-MTF Blend;;Mainiacal Yeast Labs;;Mainiacal;;;brett-bacteria;liquid;high;;medium;80;21;38
-Muri;;Mainiacal Yeast Labs;;Mainiacal;;;ale;liquid;medium;;medium;80;16;38
-MYBrett86;;Mainiacal Yeast Labs;;Mainiacal;;;brett-bacteria;liquid;medium;;low;85;13;28
-Bavarian Lager;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M76;;lager;dry;;;medium;77.5;7;14
-Bavarian Wheat;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M20;;ale;dry;;;low;73;15;30
-Belgian Abbey;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M47;;ale;dry;;;medium-high;75;18;25
-Belgian Ale;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M41;;ale;dry;;;medium;85;18;28
-Belgian Tripel;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M31;;ale;dry;;;medium;85;18;28
-Belgian Wit;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M21;;ale;dry;;;medium-low;72.5;18;25
-Bohemian Lager;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M84;;lager;dry;;;high;78;10;15
-British Ale;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M07;;ale;dry;;;high;78;14;22
-Burton Union;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M79;;ale;dry;;;high;78;17;23
-Californian Lager;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M54;;lager;dry;;;medium-high;79.5;18;20
-Cider;Craft Series Cider Yeast;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M02;;wine-cider;dry;;;high;78;18;24
-Empire Ale;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M15;;ale;dry;;;medium-high;72.5;21;24
-French Saison Ale;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M29;;ale;dry;;;medium;87.5;26;32
-Kveik;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M12;;ale;dry;high;;high;80;20;40
-Liberty Bell Ale;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M36;;ale;dry;;;medium-high;76;17;23
-Belgian Wit;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M27;;ale;liquid;high;;medium;95;26;32
-Mead;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M05;;wine-cider;dry;;;medium-high;97.5;15;30
-New World Strong Ale;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M42;;ale;dry;;;high;79.5;16;22
-UK Dark Ale;Newcastle Dark Ale Yeast;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M03;;ale;dry;;;medium;73;18;22
-US West Coast;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M44;;ale;dry;;;high;78;15;23
-Workhorse Beer;;Mangrove Jack's;;Mangrove Jack, Mangroves Jack, Mangrove;M10;;ale;dry;;;medium;78;15;20
-Gervin Ale ;;Muntons;;;GV-12;;ale;dry;low;;low;70;16;22
-Abbey Ale C;;Omega Yeast Labs;;Omega;OYL-018;;ale;liquid;;12;medium-low;76;20;26
-All the Bretts;;Omega Yeast Labs;;Omega;OYL-218;;brett-bacteria;liquid;;11;low;48;20;29
-Alt;;Omega Yeast Labs;;Omega;OYL-001;;ale;liquid;;11;low;75;13;20
-American Lager;;Omega Yeast Labs;;Omega;OYL-103;;lager;liquid;;9;medium;75;9;13
-American Pilsner;;Omega Yeast Labs;;Omega;OYL-102;;lager;liquid;;9;medium;73;9;13
-American Wheat;;Omega Yeast Labs;;Omega;OYL-002;;ale;liquid;;10;low;76;14;23
-Bavarian Wheat;;Omega Yeast Labs;;Omega;OYL-025;;ale;liquid;;10;low;73;18;24
-Bayern Lager;;Omega Yeast Labs;;Omega;OYL-114;;lager;liquid;;9;medium;74;11;17
-Belgian Ale A;;Omega Yeast Labs;;Omega;OYL-024;;ale;liquid;;12;high;79;18;26
-Belgian Ale D;;Omega Yeast Labs;;Omega;OYL-019;;ale;liquid;;12;low;76;18;27
-Belgian Ale DK;;Omega Yeast Labs;;Omega;OYL-049;;ale;liquid;;10;medium;77;19;21
-Belgian Ale O;;Omega Yeast Labs;;Omega;OYL-046;;ale;liquid;;12;medium;77;19;22
-Belgian Ale R;;Omega Yeast Labs;;Omega;OYL-020;;ale;liquid;;12;medium;78;18;24
-Belgian Ale W;;Omega Yeast Labs;;Omega;OYL-028;;ale;liquid;;11;medium;76;18;26
-Belgian Dark Ale A;;Omega Yeast Labs;;Omega;OYL-040;;ale;liquid;high;;medium;76.5;18;27
-Belgian Saison I;;Omega Yeast Labs;;Omega;OYL-027;;ale;liquid;;12;low;78;21;35
-Belgian Saison II;;Omega Yeast Labs;;Omega;OYL-042;;ale;liquid;;12;medium;77;21;29
-Belgian Wheat;;Omega Yeast Labs;;Omega;OYL-029;;ale;liquid;;12;medium;74;18;23
-Biere de Garde;;Omega Yeast Labs;;Omega;OYL-039;;ale;liquid;;9;low;77;21;29
-Brett Blend #1 Where Da Funk?;;Omega Yeast Labs;;Omega;OYL-210;;brett-bacteria;liquid;;11;low;83;20;27
-Brett Blend #2 Bit O' Funk;;Omega Yeast Labs;;Omega;OYL-211;;brett-bacteria;liquid;;11;low;48;20;27
-Brett Blend #3 Bring On Da Funk;;Omega Yeast Labs;;Omega;OYL-212;;brett-bacteria;liquid;;11;low;48;20;27
-Brettanomyces Bruxellensis;;Omega Yeast Labs;;Omega;OYL-202;;brett-bacteria;liquid;;10;low;48;20;29
-Brettanomyces Claussenii;;Omega Yeast Labs;;Omega;OYL-201;;brett-bacteria;liquid;;10;low;48;20;29
-Brettanomyces Lambicus;;Omega Yeast Labs;;Omega;OYL-203;;brett-bacteria;liquid;;10;low;48;20;29
-British Ale I;;Omega Yeast Labs;;Omega;OYL-006;;ale;liquid;;10;medium-high;75;18;22
-British Ale II;;Omega Yeast Labs;;Omega;OYL-007;;ale;liquid;;10;medium-high;70;18;24
-British Ale III;;Omega Yeast Labs;;Omega;OYL-008;;ale;liquid;;10;high;71;18;23
-British Ale IV;;Omega Yeast Labs;;Omega;OYL-010;;ale;liquid;;10;medium-low;73;17;23
-British Ale V;;Omega Yeast Labs;;Omega;OYL-011;;ale;liquid;;10;high;73;18;23
-British Ale VI;;Omega Yeast Labs;;Omega;OYL-013;;ale;liquid;;10;high;75;17;24
-British Ale VII;;Omega Yeast Labs;;Omega;OYL-014;;ale;liquid;;9;high;69;18;22
-British Ale VIII;;Omega Yeast Labs;;Omega;OYL-016;;ale;liquid;;9;very-high;69;18;22
-British Ale XI;;Omega Yeast Labs;;Omega;OYL-048;;ale;liquid;high;;high;77;19;21
-British Cask;;Omega Yeast Labs;;Omega;OYL-038;;ale;liquid;medium;;high;75.5;17;22
-C2C American Farmhouse;;Omega Yeast Labs;;Omega;OYL-217;;brett-bacteria;liquid;;10;low;78;20;27
-CL-50 Ale;;Omega Yeast Labs;;Omega;OYL-041;;ale;liquid;;10;low;75;16;21
-Danish Lager;;Omega Yeast Labs;;Omega;OYL-104;;lager;liquid;;9;low;75;8;13
-DIPA Ale;;Omega Yeast Labs;;Omega;OYL-052;;ale;liquid;;11;medium-low;76;18;22
-East Coast Ale;;Omega Yeast Labs;;Omega;OYL-032;;ale;liquid;;10;medium-low;73;20;23
-Espe Kveik;;Omega Yeast Labs;;Omega;OYL090;;ale;liquid;high;;medium;77;20;37
-French Saison;;Omega Yeast Labs;;Omega;OYL-026;;ale;liquid;;12;low;85;18;25
-German Bock;;Omega Yeast Labs;;Omega;OYL-111;;lager;liquid;;10;medium;73;9;13
-German Lager I;;Omega Yeast Labs;;Omega;OYL-106;;lager;liquid;;9;medium-low;75;7;20
-German Lager II;;Omega Yeast Labs;;Omega;OYL-109;;lager;liquid;;9;medium-high;72;10;13
-Grand Cru;;Omega Yeast Labs;;Omega;OYL-023;;ale;liquid;;12;low;74;17;24
-Gulo Ale;;Omega Yeast Labs;;Omega;OYL-501;;ale;liquid;high;;medium;87.5;20;25
-Hefeweizen Ale I;;Omega Yeast Labs;;Omega;OYL-021;;ale;liquid;;10;low;75;18;24
-Hefeweizen Ale II;;Omega Yeast Labs;;Omega;OYL-022;;ale;liquid;;10;high;73;17;24
-Hornindal Kveik;;Omega Yeast Labs;;Omega;OYL-091;;ale;liquid;;12;high;79;21;35
-HotHead Ale;;Omega Yeast Labs;;Omega;OYL-057;;ale;liquid;;11;medium-high;80;17;37
-Irish Ale;;Omega Yeast Labs;;Omega;OYL-005;;ale;liquid;;12;medium;72;17;22
-Jovaru Lithuanian Farmhouse;;Omega Yeast Labs;;Omega;OYL-033;;ale;liquid;medium;;high;85;21;35
-Kolsch I;;Omega Yeast Labs;;Omega;OYL-017;;ale;liquid;;10;low;75;13;21
-Kolsch II;;Omega Yeast Labs;;Omega;OYL-044;;ale;liquid;;10;medium;75;18;21
-Lactobacillus Blend;;Omega Yeast Labs;;Omega;OYL-605;;brett-bacteria;liquid;;12;;0;20;35
-Lager I;;Omega Yeast Labs;;Omega;OYL-100;;lager;liquid;;;medium-high;73;9;13
-London Ale;;Omega Yeast Labs;;Omega;OYL-003;;ale;liquid;;11;medium;72;19;22
-Lutra Kveik;;Omega Yeast Labs;;Omega;OYL-071;;ale;liquid;high;;medium;78;20;35
-Mexican Lager;;Omega Yeast Labs;;Omega;OYL-113;;lager;liquid;;9;medium;74;10;13
-New Jersey Ale;;Omega Yeast Labs;;Omega;OYL-045;;ale;liquid;high;;high;76;19;22
-Oktoberfest;;Omega Yeast Labs;;Omega;OYL-107;;lager;liquid;;9;medium-high;75;8;14
-Pacific NW Ale;;Omega Yeast Labs;;Omega;OYL-012;;ale;liquid;;10;high;69;18;24
-Pilsner I;;Omega Yeast Labs;;Omega;OYL-101;;lager;liquid;;9;medium-high;74;9;13
-Pilsner II;;Omega Yeast Labs;;Omega;OYL-108;;lager;liquid;;9;medium-high;72;10;14
-Saisonstein’s Monster;;Omega Yeast Labs;;Omega;OYL-500;;ale;liquid;high;;low;80;18;26
-Scottish Ale;;Omega Yeast Labs;;Omega;OYL-015;;ale;liquid;;10;medium;75;18;21
-Swiss Lager;;Omega Yeast Labs;;Omega;OYL-112;;lager;liquid;low;;medium;75;10;13
-Tropical IPA;;Omega Yeast Labs;;Omega;OYL-200;;ale;liquid;;10;low;92.5;24;29
-Voss Kveik;;Omega Yeast Labs;;Omega;OYL-061;;ale;liquid;;12;medium;79;20;37
-West Coast Ale I;;Omega Yeast Labs;;Omega;OYL-004;;ale;liquid;;11;medium-low;77;16;23
-West Coast Ale II;;Omega Yeast Labs;;Omega;OYL-009;;ale;liquid;;10;medium;74;16;22
-West Coast Ale III;;Omega Yeast Labs;;Omega;OYL-043;;ale;liquid;;11;medium-high;80;18;20
-West Coast Ale IV;;Omega Yeast Labs;;Omega;OYL-050;;ale;liquid;;10;medium-high;77;17;23
-West Coast Lager;;Omega Yeast Labs;;Omega;OYL-105;;lager;liquid;;9;high;69;14;20
-Wit;;Omega Yeast Labs;;Omega;OYL-030;;ale;liquid;;11;medium;74;17;24
-Lucky No. 7;;Real Brewers;;;;;ale;liquid;;10;high;75;20;24
-The Monk;;Real Brewers;;;;;ale;liquid;;15;medium;78;19;22
-The One;;Real Brewers;;;;;ale;liquid;;;high;75;20;24
-Ye Olde English;;Real Brewers;;;;;ale;liquid;;;medium;70;18;21
-DADY;;Red Star;;RedStar;DADY;;ale;dry;high;;low;65;18;27
-Premier Blanc;;Red Star;;RedStar;UCD595;;wine-cider;dry;high;;low;0;15;30
-Chico Ale;;RVA Yeast Labs;;RVA;RVA 101;;ale;liquid;high;;medium;77.5;19;23
-Boston Ale;;RVA Yeast Labs;;RVA;RVA 102;;ale;liquid;high;;medium;72.5;18;23
-Pacman Ale;;RVA Yeast Labs;;RVA;RVA 103;;ale;liquid;high;;medium-high;76;17;22
-Hoptopper Ale;;RVA Yeast Labs;;RVA;RVA 104;;ale;liquid;high;;medium-low;77.5;18;24
-Chiswick Ale;;RVA Yeast Labs;;RVA;RVA 131;;ale;liquid;medium;;very-high;68.5;18;21
-Manchester Ale;;RVA Yeast Labs;;RVA;RVA 132;;ale;liquid;medium;;high;72.5;18;22
-Scotch Ale;;RVA Yeast Labs;;RVA;RVA 141;;ale;liquid;high;;medium;72.5;18;21
-Dublin Ale;;RVA Yeast Labs;;RVA;RVA 151;;ale;liquid;high;;medium-high;72.5;18;21
-German Ale I;;RVA Yeast Labs;;RVA;RVA 161;;ale;liquid;medium;;medium;73;16;20
-Trappist Ale I;;RVA Yeast Labs;;RVA;RVA 201;;ale;liquid;high;;medium;77.5;18;22
-Trappist Ale II;;RVA Yeast Labs;;RVA;RVA 202;;ale;liquid;high;;medium;77.5;18;22
-Trappist Ale III;;RVA Yeast Labs;;RVA;RVA 203;;ale;liquid;high;;medium;77.5;18;22
-Trappist Ale IV;;RVA Yeast Labs;;RVA;RVA 204;;ale;liquid;high;;medium;77.5;18;22
-Belgian 1833 Ale;;RVA Yeast Labs;;RVA;RVA 221;;ale;liquid;medium;;medium;76.5;19;21
-Belgian Gnome Ale;;RVA Yeast Labs;;RVA;RVA 222;;ale;liquid;high;;high;76.5;19;24
-Verboten Ale;;RVA Yeast Labs;;RVA;RVA 241;;ale;liquid;high;;low;72.5;18;24
-Golden Strong Ale;;RVA Yeast Labs;;RVA;RVA 251;;ale;liquid;high;;medium;76.5;20;24
-Saison I;;RVA Yeast Labs;;RVA;RVA 261;;ale;liquid;medium;;medium;70;24;29
-Saison II;;RVA Yeast Labs;;RVA;RVA 262;;ale;liquid;medium;;medium;78.5;19;25
-Ghost Ale;;RVA Yeast Labs;;RVA;RVA 263;;ale;liquid;medium;;medium;80.5;18;27
-American Lager;;RVA Yeast Labs;;RVA;RVA 301;;lager;liquid;medium;;medium;77.5;10;13
-München Lager;;RVA Yeast Labs;;RVA;RVA 302;;lager;liquid;medium;;high;77.5;14;18
-Oktoberfest Lager;;RVA Yeast Labs;;RVA;RVA 303;;lager;liquid;medium;;medium;69;11;14
-Czech Lager;;RVA Yeast Labs;;RVA;RVA 304;;lager;liquid;medium;;medium;77.5;10;13
-Alt Ale;;Siebel Institute;;Siebel;BRY 144;;ale;liquid;;;medium;78;15;20
-American Ale;;Siebel Institute;;Siebel;BRY 96;;ale;liquid;;;medium;78;18;22
-American Lager;;Siebel Institute;;Siebel;BRY 118;;lager;liquid;;;high;72;20;22
-Bavarian Weizen Ale;;Siebel Institute;;Siebel;BRY 235;;ale;liquid;;;high;73;10;14
-English Ale;;Siebel Institute;;Siebel;BRY 264;;ale;liquid;;;medium;78;15;20
-German Kölsch;;Siebel Institute;;Siebel;BRY 401;;ale;liquid;;;low;72;13;15
-North European Lager;;Siebel Institute;;Siebel;BRY 203;;lager;liquid;;;low;78;20;22
-Trappist Ale;;Siebel Institute;;Siebel;BRY 204;;ale;liquid;;;medium;78;18;22
-Amalgamation - Brett Super Blend;;The Yeast Bay;;TYB;WLP4637;;brett-bacteria;liquid;low;;low;85;21;27
-Amalgamation - Brett Super Blend II;;The Yeast Bay;;TYB;WLP4641;;brett-bacteria;liquid;high;;low;84;21;27
-Beersel Brettanomyces Blend;;The Yeast Bay;;TYB;WLP4603;;brett-bacteria;liquid;low;;medium;78;21;27
-Brettanomyces bruxellensis - Strain TYB261;;The Yeast Bay;;TYB;TYB261;;brett-bacteria;liquid;high;;low;81;22;28
-Brettanomyces bruxellensis - Strain TYB184;;The Yeast Bay;;TYB;TYB184;;brett-bacteria;liquid;high;;medium;85;22;28
-Brettanomyces bruxellensis - Strain TYB207;;The Yeast Bay;;TYB;TYB207;;brett-bacteria;liquid;high;;low;81;22;28
-Brettanomyces bruxellensis - Strain TYB307;;The Yeast Bay;;TYB;TYB307;;brett-bacteria;liquid;high;;low;82;21;27
-Brettanomyces bruxellensis - Strain TYB415;;The Yeast Bay;;TYB;TYB415;;brett-bacteria;liquid;high;;low;84;21;27
-Brussels Brettanomyces Blend;;The Yeast Bay;;TYB;WLP4613;;brett-bacteria;liquid;high;;medium;80;21;27
-Dark Belgian Cask;;The Yeast Bay;;TYB;WLP4653;;brett-bacteria;liquid;high;;medium;82.5;20;24
-Dry Belgian Ale;;The Yeast Bay;;TYB;WLP4025;;ale;liquid;high;;high;92.5;20;23
-Farmhouse Sour Ale;;The Yeast Bay;;TYB;WLP4675;;brett-bacteria;liquid;low;;medium;90;21;26
-Flanders Specialty Ale;;The Yeast Bay;;TYB;WLP4001;;ale;liquid;high;;medium;80;20;27
-Framgarden Kveik;;The Yeast Bay;;TYB;WLP4051;;ale;liquid;high;;medium;80;27;35
-Franconian Dark Lager;;The Yeast Bay;;TYB;WLP4030;;ale;liquid;low;;medium;71;8;11
-Funktown Pale Ale;;The Yeast Bay;;TYB;WLP4627;;ale;liquid;low;;medium;79;20;23
-Hazy Daze;;The Yeast Bay;;TYB;WLP4042;;ale;liquid;medium;;low;81;18;21
-Hazy Daze II;;The Yeast Bay;;TYB;WLP4044;;ale;liquid;low;;low;83;19;22
-Hessian Pils;;The Yeast Bay;;TYB;WLP4035;;ale;liquid;low;;medium;73.5;7;9
-Hornindal Kveik;;The Yeast Bay;;TYB;WLP4050;;ale;liquid;high;;medium;79;27;35
-Lactobacillus Blend;;The Yeast Bay;;TYB;WLP4682;;brett-bacteria;liquid;low;;low;80;21;32
-Lactobacillus brevis - Strain TYB282;;The Yeast Bay;;TYB;WLP4681;;brett-bacteria;liquid;low;;low;4;21;32
-Lida Kveik;;The Yeast Bay;;TYB;WLP4052;;ale;liquid;high;;low;79;27;32
-Lochristi Brettanomyces Blend;;The Yeast Bay;;TYB;WLP4623;;brett-bacteria;liquid;low;;medium;80;21;27
-Sour Blend;;The Yeast Bay;;TYB;WLP4633;;brett-bacteria;liquid;low;;medium;85;20;26
-Metschnikowia reukaufii ;;The Yeast Bay;;TYB;WLP4650;;ale;liquid;medium;;low;22.5;16;32
-Midtbust Kveik;;The Yeast Bay;;TYB;WLP4053;;ale;liquid;high;;low;78;24;35
-Midwestern Ale;;The Yeast Bay;;TYB;WLP4040;;ale;liquid;medium;;medium;78;18;22
-Northeastern Abbey;;The Yeast Bay;;TYB;WLP4015;;ale;liquid;low;;medium;79;20;24
-Pakruojis Lithuanian Farmhouse;;The Yeast Bay;;TYB;WLP4047;;ale;liquid;high;;low;95;24;35
-Saison Blend;;The Yeast Bay;;TYB;WLP4007;;ale;liquid;low;;medium;79;22;28
-Saison Blend II;;The Yeast Bay;;TYB;WLP4021;;ale;liquid;medium;;medium;85;20;27
-Saison/Brettanomyces Blend;;The Yeast Bay;;TYB;WLP4626;;brett-bacteria;liquid;low;;medium;80;21;26
-Saison/Brettanomyces Blend II;;The Yeast Bay;;TYB;WLP4636;;brett-bacteria;liquid;medium;;medium;83;22;27
-Sigmund's Voss Kveik;;The Yeast Bay;;TYB;WLP4045;;ale;liquid;low;;high;80.5;21;38
-Simonaitis Lithuanian Farmhouse;;The Yeast Bay;;TYB;WLP4046;;ale;liquid;high;;high;79;24;35
-Transatlantic Berliner Blend;;The Yeast Bay;;TYB;WLP4645;;brett-bacteria;liquid;medium;;medium;92.5;19;24
-TYB House Sour Blend;;The Yeast Bay;;TYB;;;brett-bacteria;liquid;high;;low;92.5;20;26
-Vermont Ale;;The Yeast Bay;;TYB;WLP4000;;ale;liquid;low;;medium;78.5;18;22
-Wallonian Farmhouse;;The Yeast Bay;;TYB;WLP4020;;ale;liquid;low;;medium;84.5;20;26
-Wallonian Farmhouse II;;The Yeast Bay;;TYB;WLP4022;;ale;liquid;high;;medium;81;20;27
-Wallonian III Farmhouse;;The Yeast Bay;;TYB;WLP4023;;ale;liquid;low;;low;83;20;27
-Kveik;;WHC Lab;;WHC;;;ale;liquid;high;;high;75;30;35
-Funky Pineapple;;WHC Lab;;WHC;;;ale;liquid;medium;;low;80;18;28
-Odin;;WHC Lab;;WHC;;;ale;liquid;high;;high;76;25;37
-Sanders;;WHC Lab;;WHC;;;ale;liquid;medium;;medium;75;16;21
-Saturated;;WHC Lab;;WHC;;;ale;liquid;medium;;medium;73;20;23
-The Wall;;WHC Lab;;WHC;;;ale;liquid;medium;;medium;77;16;21
-Abbey Ale;;White Labs;;White Lab;WLP530;;ale;liquid;high;;medium-high;77.5;19;22
-Abbey IV Ale;;White Labs;;White Lab;WLP540;;ale;liquid;high;;medium;78;19;22
-American Ale Blend;;White Labs;;White Lab;WLP060;;ale;liquid;medium;;medium;76;20;22
-American Farmhouse Blend;;White Labs;;White Lab;WLP670;;ale;liquid;medium;;medium;78.5;20;22
-American Hefeweizen Ale;;White Labs;;White Lab;WLP320;;ale;liquid;medium;;low;72.5;18;21
-American Lager;;White Labs;;White Lab;WLP840;;lager;liquid;medium;;medium;77.5;10;13
-American Whiskey;;White Labs;;White Lab;WLP065;;ale;liquid;high;;medium;79;24;28
-Antwerp Ale;;White Labs;;White Lab;WLP515;;ale;liquid;medium;;medium;76.5;19;21
-Artisanal Country Ale;;White Labs;;White Lab;WLP073;;ale;liquid;medium;;medium;77.5;21;28
-Australian Ale;;White Labs;;White Lab;WLP009;;ale;liquid;medium;;high;72.5;18;21
-Bavarian Weizen;;White Labs;;White Lab;WLP351;;wheat;liquid;medium;;low;75;19;21
-Bedford British;;White Labs;;White Lab;WLP006;;ale;liquid;medium;;high;76;18;21
-Belgian Ale;;White Labs;;White Lab;WLP550;;ale;liquid;medium;;medium;81.5;20;26
-Belgian Bastogne Ale;;White Labs;;White Lab;WLP510;;ale;liquid;high;;medium;77;19;22
-Belgian Golden Ale;;White Labs;;White Lab;WLP570;;ale;liquid;high;;low;75.5;20;24
-Belgian Lager;;White Labs;;White Lab;WLP815;;lager;liquid;medium;;medium;75;10;13
-Belgian Saison I;;White Labs;;White Lab;WLP565;;ale;liquid;medium;;medium;70;20;24
-Belgian Saison II;;White Labs;;White Lab;WLP566;;ale;liquid;medium;;medium;81.5;20;26
-Belgian Saison III;;White Labs;;White Lab;WLP585;;ale;liquid;medium;;low;72;20;24
-Belgian Sour Mix 1;;White Labs;;White Lab;WLP655;;brett-bacteria;liquid;medium;;medium-low;75;27;29
-Belgian Strong Ale;;White Labs;;White Lab;WLP545;;ale;liquid;high;;medium;81.5;19;22
-Belgian Style Ale Blend;;White Labs;;White Lab;WLP575;;ale;liquid;medium;;medium;77;20;24
-Belgian Style Saison Blend;;White Labs;;White Lab;WLP568;;ale;liquid;medium;;medium;75;21;27
-Belgian Wit Ale;;White Labs;;White Lab;WLP400;;ale;liquid;medium;;low;76;19;23
-Belgian Wit II Ale;;White Labs;;White Lab;WLP410;;ale;liquid;medium;;low;72.5;19;23
-Berliner Weisse Blend;;White Labs;;White Lab;WLP630;;brett-bacteria;liquid;medium;;medium;76.5;20;21
-Best Of Both Worlds;;White Labs;;White Lab;WLP200;;ale;liquid;medium;;medium;76.5;18;23
-Bourbon;;White Labs;;White Lab;WLP070;;ale;liquid;high;;medium;77;22;25
-Brettanomyces Anomalus;;White Labs;;White Lab;WLP640;;brett-bacteria;liquid;medium;;low;77;21;29
-Brettanomyces Bruxellensis Trois Vrai;;White Labs;;White Lab;WLP648;;brett-bacteria;liquid;medium;;low;85;21;29
-Brettanomyces Bruxellensis;;White Labs;;White Lab;WLP650;;brett-bacteria;liquid;medium;;low;78;29;35
-Brettanomyces Claussenii;;White Labs;;White Lab;WLP645;;brett-bacteria;liquid;medium;;low;78;29;35
-Brettanomyces Lambicus;;White Labs;;White Lab;WLP653;;brett-bacteria;liquid;medium;;low;78;29;35
-British Ale;;White Labs;;White Lab;WLP005;;ale;liquid;medium;;high;70.5;18;21
-Burlington Ale;;White Labs;;White Lab;WLP095;;ale;liquid;medium;;medium;75.5;19;21
-Burton Ale;;White Labs;;White Lab;WLP023;;ale;liquid;medium;;medium;72;20;23
-California Ale V;;White Labs;;White Lab;WLP051;;ale;liquid;medium;;medium-high;72.5;19;21
-California Ale;;White Labs;;White Lab;WLP001;;ale;liquid;high;;medium;76.5;20;23
-Champagne;;White Labs;;White Lab;WLP715;;wine-cider;liquid;;17;low;90;21;24
-Coastal Haze Ale Blend;Coastal Haze;White Labs;;White Lab;WLP067;;ale;liquid;high;;medium;78;18;26
-Copenhagen Lager;;White Labs;;White Lab;WLP850;;lager;liquid;medium;;medium;75;10;14
-Cream Ale Blend;;White Labs;;White Lab;WLP080;;ale;liquid;medium;;medium;77.5;18;21
-Cry Havoc;;White Labs;;White Lab;WLP862;;ale;liquid;medium;;medium-low;68;20;23
-Czech Budejovice Lager;;White Labs;;White Lab;WLP802;;lager;liquid;medium;;medium;77.5;10;13
-Dry English Ale;;White Labs;;White Lab;WLP007;;ale;liquid;medium;;medium-high;75;18;21
-Dusseldorf Alt;;White Labs;;White Lab;WLP036;;ale;liquid;medium;;medium;68.5;18;22
-East Coast Ale;;White Labs;;White Lab;WLP008;;ale;liquid;medium;;medium-low;72.5;20;23
-East Midlands Ale;;White Labs;;White Lab;WLP039;;ale;liquid;medium;;medium-high;77.5;19;21
-Edinburgh Scottish Ale;;White Labs;;White Lab;WLP028;;ale;liquid;medium;;medium;72.5;18;21
-English Ale Blend;;White Labs;;White Lab;WLP085;;ale;liquid;medium;;medium-high;72.5;20;22
-English Ale;;White Labs;;White Lab;WLP002;;ale;liquid;medium;;very-high;66.5;18;20
-English Cider;;White Labs;;White Lab;WLP775;;wine-cider;liquid;medium;;medium;90;20;24
-Essex Ale;;White Labs;;White Lab;WLP022;;ale;liquid;medium;;medium-high;73.5;19;21
-European Ale;;White Labs;;White Lab;WLP011;;ale;liquid;medium;;medium;67.5;18;21
-Flemish Ale Blend;;White Labs;;White Lab;WLP665;;ale;liquid;medium;;low;83;20;27
-French Ale;;White Labs;;White Lab;WLP072;;ale;liquid;medium;;medium-high;71.5;17;19
-French Saison Ale;;White Labs;;White Lab;WLP590;;ale;liquid;medium;;medium;81;21;24
-German Ale II;;White Labs;;White Lab;WLP003;;ale;liquid;medium;;medium;76.5;18;21
-German Ale/ Kölsch;;White Labs;;White Lab;WLP029;;ale;liquid;medium;;medium;75;18;21
-German Bock Lager;;White Labs;;White Lab;WLP833;;lager;liquid;medium;;medium;73;9;13
-German Lager X;;White Labs;;White Lab;WLP835;;lager;liquid;medium;;medium;73;10;12
-German Lager;;White Labs;;White Lab;WLP830;;lager;liquid;medium;;medium;76.5;10;13
-Hansen Ale Blend;;White Labs;;White Lab;WLP075;;ale;liquid;high;;medium;77;19;21
-Hefeweizen Ale;;White Labs;;White Lab;WLP300;;wheat;liquid;medium;;low;74;20;22
-Hefeweizen IV Ale;;White Labs;;White Lab;WLP380;;wheat;liquid;medium;;low;76.5;19;21
-HP Lager;;White Labs;;White Lab;WLP925;;lager;liquid;medium;;medium;77.5;17;20
-Irish Ale;;White Labs;;White Lab;WLP004;;ale;liquid;medium;;medium-high;71.5;18;20
-Klassic Ale;;White Labs;;White Lab;WLP033;;ale;liquid;medium;;medium;70;19;21
-Lactobacillus Brevis;;White Labs;;White Lab;WLP672;;brett-bacteria;liquid;low;;low;80;21;35
-Lactobacillus Delbrueckii Bacteria;;White Labs;;White Lab;WLP677;;brett-bacteria;liquid;medium;;low;0;21;24
-Leeuwenhoek Saison Blend;;White Labs;;White Lab;WLP564;;ale;liquid;high;;low;79;19;24
-London Ale;;White Labs;;White Lab;WLP013;;ale;liquid;medium;;medium;71;19;22
-London Fog Ale;;White Labs;;White Lab;WLP066;;ale;liquid;high;;medium;78.5;18;22
-Manchester Ale;;White Labs;;White Lab;WLP038;;ale;liquid;medium;;medium-high;72;18;21
-Marañón Canyon Wild Cacao;;White Labs;;White Lab;WLP546;;ale;liquid;medium;;low;67.5;18;24
-Mexican Lager;;White Labs;;White Lab;WLP940;;lager;liquid;medium;;medium;74;10;13
-Monastary Ale;;White Labs;;White Lab;WLP500;;ale;liquid;high;;medium;77.5;18;22
-Munich Helles;;White Labs;;White Lab;WLP860;;lager;liquid;medium;;medium;70;9;11
-Neutral Grain;;White Labs;;White Lab;WLP078;;ale;liquid;high;;medium;81;24;29
-New Nordic Ale;;White Labs;;White Lab;WLP611;;ale;liquid;medium;;medium;70;10;30
-Oktoberfest/Märzen Lager;;White Labs;;White Lab;WLP820;;lager;liquid;medium;;medium;69;11;14
-Old Bavarian Lager;;White Labs;;White Lab;WLP920;;lager;liquid;medium;;medium;69.5;10;13
-Old Sonoma Ale;;White Labs;;White Lab;WLP076;;ale;liquid;medium;;medium;72;19;21
-Opshaug Kveik Ale;;White Labs;;White Lab;WLP518;;ale;liquid;medium;;medium;75;25;30
-Pacific Ale;;White Labs;;White Lab;WLP041;;ale;liquid;medium;;high;67.5;18;20
-Pilsner Lager;;White Labs;;White Lab;WLP800;;lager;liquid;medium;;medium-high;74.5;10;13
-Premium Bitter Ale;;White Labs;;White Lab;WLP026;;ale;liquid;medium;;medium;72.5;19;16
-Ringwood Ale: Strain 1187;;White Labs;;White Lab;;;ale;liquid;high;;high;77;20;22
-"Saccharomyces ""Bruxellensis"" Trois";;White Labs;;White Lab;WLP644;;ale;liquid;medium;;low;85;21;29
-Sake #7;;White Labs;;White Lab;WLP705;;wine-cider;liquid;high;;low;90;21;38
-Sake #9;;White Labs;;White Lab;WLP709;;wine-cider;liquid;low;;low;75;17;20
-San Diego Super;;White Labs;;White Lab;WLP090;;ale;liquid;high;;medium-high;79.5;18;20
-San Francisco Lager;;White Labs;;White Lab;WLP810;;lager;liquid;medium;;high;67.5;14;18
-Scotch Whiskey;;White Labs;;White Lab;WLP045;;ale;liquid;high;;medium;77;22;25
-Southern German Lager;;White Labs;;White Lab;WLP838;;lager;liquid;medium;;medium-high;72;10;13
-Southwold Ale;;White Labs;;White Lab;WLP025;;ale;liquid;medium;;medium;71.5;19;21
-Super High Gravity Ale;;White Labs;;White Lab;WLP099;;ale;liquid;high;;medium;85;18;21
-Sweet Mead/Wine;;White Labs;;White Lab;WLP720;;wine-cider;liquid;;15;low;75;21;24
-Tennessee Whiskey;;White Labs;;White Lab;WLP050;;ale;liquid;high;;medium;77;24;26
-Whitbread Ale;;White Labs;;White Lab;WLP017;;ale;liquid;medium;;high;70;19;21
-Hazy Daze;;White Labs;;White Lab;WLP4044;;ale;liquid;low;;low;81;18;21
-Charlie;;White Labs;;White Lab;WLP1983;;ale;liquid;medium;;low;68;20;23
-Hornindal Kveik Ale;;White Labs;;White Lab;WLP521;;ale;liquid;high;;high;79;22;37
-Torulaspora delbrueckii;;White Labs;;White Lab;WLP603;;ale;liquid;low;;low;40;18;26
-Thai Rice Chong;;White Labs;;White Lab;WLP780;;ale;liquid;high;;medium;76;21;26
-Yorkshire Square Ale;;White Labs;;White Lab;WLP037;;ale;liquid;medium;;high;70;18;21
-Zurich Lager;;White Labs;;White Lab;WLP885;;lager;liquid;medium;;medium;75;10;13
-Sigmund Kveik Ale;;White Labs;;White Lab;WLP520;;ale;liquid;high;;medium;79;22;37
-Stranda Kveik Ale;;White Labs;;White Lab;WLP519;;ale;liquid;high;;medium;80;22;37
-American Ale;;Wyeast;;;1056;;ale;liquid;;10;medium-low;75;16;22
-American Ale II;;Wyeast;;;1272;;ale;liquid;;10;high;74;16;22
-American Lager;;Wyeast;;;2035;;lager;liquid;;9;medium;75;9;14
-American Wheat;;Wyeast;;;1010;;wheat;liquid;;10;low;76;14;23
-Bavarian Lager;;Wyeast;;;2206;;lager;liquid;;9;medium-high;75;8;14
-Bavarian Wheat;;Wyeast;;;3056;;wheat;liquid;;10;medium;75;18;23
-Bavarian Wheat;;Wyeast;;;3638;;wheat;liquid;;10;low;73;18;24
-Belgian Abby Ale II;;Wyeast;;;1762;;ale;liquid;;12;medium;75;18;24
-Belgian Ale;;Wyeast;;;1214;;ale;liquid;;12;medium-low;75;20;26
-Belgian Ardennes;;Wyeast;;;3522;;ale;liquid;;12;high;74;18;29
-Belgian Dark Ale;;Wyeast;;;3822;;ale;liquid;;12;medium;76;18;27
-Belgian Lambic Blend;;Wyeast;;;3278;;ale;liquid;;12;medium;75;17;24
-Belgian Saison;;Wyeast;;;3724;;ale;liquid;;12;low;78;21;35
-Belgian Schelde;;Wyeast;;;3655;;ale;liquid;;11;medium;75;17;23
-Belgian Stout;;Wyeast;;;1581;;ale;liquid;;12;medium;80;18;24
-Belgian Strong Ale;;Wyeast;;;1388;;ale;liquid;;12;low;76;18;27
-Belgian Wheat;;Wyeast;;;3942;;wheat;liquid;;12;medium;74;18;23
-Belgian Witbier;;Wyeast;;;3944;;ale;liquid;;12;medium-low;74;17;24
-Berliner Weisse Blend;;Wyeast;;;3191;;brett-bacteria;liquid;;6;low;75;20;22
-Bier de Garde;;Wyeast;;;3725;;ale;liquid;;12;low;76;21;35
-Bohemian Lager;;Wyeast;;;2124;;lager;liquid;;9;medium;75;9;14
-Brettanomyces bruxellensis;;Wyeast;;;5112;;brett-bacteria;liquid;;12;medium;90;16;24
-Brettanomyces Claussenii;;Wyeast;;;5151-PC;;brett-bacteria;dry;high;;medium;80;16;24
-Brettanomyces lambicus;;Wyeast;;;5526;;brett-bacteria;liquid;;12;medium;90;16;24
-British Ale;;Wyeast;;;1098;;ale;liquid;;10;medium-high;74;18;22
-British Ale;;Wyeast;;;1335;;ale;liquid;;10;high;74.5;17;24
-British Cask Ale;;Wyeast;;;1026;;ale;liquid;;10;medium-high;76;17;22
-Budvar Lager;;Wyeast;;;2000;;lager;liquid;;9;medium-high;73;9;13
-California Lager;;Wyeast;;;2112;;lager;liquid;;9;high;69;14;20
-Canadian/Belgian Ale;;Wyeast;;;3864;;ale;liquid;;12;medium;77;18;27
-Cider;;Wyeast;;;4766;;wine-cider;liquid;;12;low;85;18;21
-Czech Pils;;Wyeast;;;2278;;lager;liquid;;9;medium-high;72;10;14
-Danish Lager;;Wyeast;;;2042;;lager;liquid;;9;low;75;8;13
-Denny's Favorite 50;;Wyeast;;;1450;;ale;liquid;;10;low;75;16;21
-Dry Mead;;Wyeast;;;4632;;wine-cider;liquid;;18;low;95;13;24
-English Special Bitter;;Wyeast;;;1768;;ale;liquid;;9;high;70;18;22
-European Ale;;Wyeast;;;1338;;ale;liquid;;10;high;69;17;22
-European Lager;;Wyeast;;;2247;;lager;liquid;;9;low;75;8;13
-Farmhouse Ale;;Wyeast;;;3726;;ale;liquid;;12;;76;21;35
-Flanders Golden Ale;;Wyeast;;;3739;;ale;liquid;;12;medium-low;76;18;27
-Forbidden Fruit;;Wyeast;;;3463;;ale;liquid;;12;low;74;17;24
-French Saison;;Wyeast;;;3711;;ale;liquid;;12;low;80;18;25
-Gambrinus Style Lager;;Wyeast;;;2002-PC;;lager;liquid;;9;medium-high;73;8;13
-German Ale;;Wyeast;;;1007;;ale;liquid;;11;low;75;13;20
-German Wheat;;Wyeast;;;3333;;wheat;liquid;;10;high;73;17;24
-Hella Bock;;Wyeast;;;2487;;ale;liquid;;12;medium;72;9;13
-Irish Ale;;Wyeast;;;1084;;ale;liquid;;10;medium;73;17;22
-Kölsch;;Wyeast;;;2565;;ale;liquid;;10;low;75;13;21
-Kölsch II;;Wyeast;;;2575;;ale;liquid;;10;low;75;13;21
-Lactobacillus brevis;;Wyeast;;;5223-PC;;brett-bacteria;liquid;high;;low;0;16;35
-Lactobacillus;;Wyeast;;;5335;;brett-bacteria;liquid;;9;-0;75;16;35
-Leuven Pale Ale;;Wyeast;;;3538;;ale;liquid;;12;high;76;18;27
-London Ale;;Wyeast;;;1028;;ale;liquid;;10;medium-low;75;16;22
-London Ale III;;Wyeast;;;1318;;ale;liquid;;10;high;73;18;23
-London ESB Ale;;Wyeast;;;1968;;ale;liquid;;10;very-high;69;18;22
-Munich Lager;;Wyeast;;;2308;;lager;liquid;;9;medium;72;9;13
-Munich Lager II;;Wyeast;;;2352;;lager;liquid;;10;medium;73;11;17
-NB NeoBritannia;;Wyeast;;;1945;;ale;liquid;;10;medium-high;74;19;23
-North American Lager;;Wyeast;;;2272;;lager;liquid;;9;high;73;11;14
-Northwest Ale;;Wyeast;;;1332;;ale;liquid;;10;high;69;18;24
-Octoberfest Lager Blend;;Wyeast;;;2633;;lager;liquid;;9;medium-low;75;9;14
-Pediococcus;;Wyeast;;;5733;;ale;liquid;;9;-0;75;16;35
-Pilsen Lager;;Wyeast;;;2007;;lager;liquid;;9;medium;73;9;13
-Pilsner Urquell H-Strain;;Wyeast;;;2001-PC;;lager;liquid;medium;;medium;74;9;13
-Private Collection West Coast IPA;;Wyeast;;;1217;;ale;liquid;;10;medium-high;75;17;23
-Rasenmäher Lager;;Wyeast;;;2252;;lager;liquid;;9;low;75;9;20
-Ringwood Ale;;Wyeast;;;1187;;ale;liquid;;10;high;70;18;23
-Rocky Mountain Lager;;Wyeast;;;2105;;lager;liquid;;10;medium-high;72;9;13
-Roeselare Ale Blend;;Wyeast;;;3763;;ale;liquid;;11;;80;18;29
-Rogue Pacman;;Wyeast;;;1764;;ale;liquid;;12;medium-high;75;16;22
-Saison-Brett Blend;;Wyeast;;;3031-PC;;brett-bacteria;liquid;;12;low;85;18;27
-Sake;;Wyeast;;;WY4134;;wine-cider;dry;high;;low;65;16;24
-Scottish Ale;;Wyeast;;;1728;;ale;liquid;;12;high;71;13;24
-Staro Prague Lager;;Wyeast;;;2782;;lager;liquid;;11;high;72;10;14
-Sweet Mead;;Wyeast;;;4184;;wine-cider;liquid;;11;medium;75;18;24
-Thames Valley Ale;;Wyeast;;;1275;;ale;liquid;;10;medium-low;77;17;22
-Thames Valley II;;Wyeast;;;1882;;ale;liquid;;10;high;75;16;21
-Trappist Blend;;Wyeast;;;3789;;ale;liquid;;12;medium;77;20;29
-Trappist High Gravity;;Wyeast;;;3787;;ale;liquid;;12;medium-high;76;18;26
-Urquell Lager;;Wyeast;;;2001;;lager;liquid;;9;medium-high;74;9;14
-Weihenstephan Weizen;;Wyeast;;;3068;;wheat;liquid;;10;low;75;18;24
-West Yorkshire;;Wyeast;;;1469;;ale;liquid;;9;high;69;18;22
-Whitbread Ale;;Wyeast;;;1099;;ale;liquid;;10;high;70;18;24
+name;alt_names;alt_names_extra;lab;alt_lab;brand;alt_brand;product_id;alt_product_id;type;form;tolerance;tolerance_percent;flocculation;attenuation;min_temperature;max_temperature
+Fermoale;;;AEB;;;;;;ale;dry;;;high;72.5;18;25
+Fermoale AY3;;;AEB;;;;;;ale;dry;;;high;;14;22
+Fermoale AY4;;;AEB;;;;;;ale;dry;medium;;high;75;17;25
+Fermolager W;;;AEB;;;;;;lager;dry;high;;high;87;9;15
+Fermolager Berlin;;;AEB;;;;;;lager;dry;;;;82.5;10;15
+Weiss Arome+;;;AEB;;;;;;wheat;dry;;12;high;95;12;25
+American Ale;;;Bio4;Bio 4;;;SY025;;ale;liquid;high;;medium;77;15;22
+Heffeweizen Ale;;;Bio4;Bio 4;;;SY055;;wheat;liquid;medium;;low;74;16;22
+London ESB;;;Bio4;Bio 4;;;SY030;;ale;liquid;medium;;high;71;18;22
+Norwegian Kveik ;;;Bio4;Bio 4;;;SY081;;ale;liquid;high;;medium;65;22;37
+Norwegian Kveik 2;;;Bio4;Bio 4;;;SY084;;ale;liquid;high;;high;76;20;37
+Superyeast High Gravity Ale;;;Bio4;Bio 4;;;SY042;;ale;liquid;high;;medium;80;18;22
+Aurora;;;Bootleg Biology;Bootleg;;;BBAUR ;;ale;liquid;medium;;medium;81;24;37
+NEEPAH Blend;;;Bootleg Biology;Bootleg;;;BBXNPA ;;ale;liquid;low;;low;80;19;21
+Belgian Blend;;;Bootleg Biology;Bootleg;;;BBXBELG;;ale;liquid;medium;;low;72;17;22
+Berliner Blend;;;Bootleg Biology;Bootleg;;;BBXBRLN ;;brett-bacteria;liquid;low;;low;98;18;24
+Brulosophy Blend;;;Bootleg Biology;Bootleg;;;BBXBRU1;;ale;liquid;low;;medium;76;10;20
+Chardonnay;;;Bootleg Biology;Bootleg;;;BB99301A;;wine-cider;liquid;medium;;low;70;18;24
+Funk Weapon #1;;;Bootleg Biology;Bootleg;;;BB0034A ;;brett-bacteria;liquid;medium;;low;80;18;24
+Funk Weapon #2;;;Bootleg Biology;Bootleg;;;BB0035C ;;brett-bacteria;liquid;medium;;low;80;18;24
+Funk Weapon #3;;;Bootleg Biology;Bootleg;;;BB0022 ;;brett-bacteria;liquid;medium;;low;80;18;24
+Oslo;;;Bootleg Biology;Bootleg;;;OSLO;;ale;liquid;medium;;medium;82;18;41
+S. Arlingtonesis;;;Bootleg Biology;Bootleg;;;BB22204;;ale;liquid;medium;;medium;85;16;24
+Saison Parfait;;;Bootleg Biology;Bootleg;;;BBX0104;;ale;liquid;medium;;medium;90;18;29
+Sour Solera Blend;;;Bootleg Biology;Bootleg;;;BBXSS;;brett-bacteria;liquid;medium;;medium;95;18;24
+Sour Weapon L;;;Bootleg Biology;Bootleg;;;BBXSWL ;;brett-bacteria;liquid;low;;low;;29;37
+Sour Weapon P;;;Bootleg Biology;Bootleg;;;BBX0089;;brett-bacteria;liquid;medium;;low;;27;38
+The Mad Fermentationist Saison Blend;;;Bootleg Biology;Bootleg;;;BBXMAD1;;brett-bacteria;liquid;medium;;medium;90;20;27
+Blanche;;;Brewferm;;;;Y015;;ale;dry;;;low;78;18;23
+Lager;;;Brewferm;;;;Y016;;lager;dry;;;high;78;10;15
+Top;;;Brewferm;;;;;;ale;dry;medium;;medium-high;75;18;25
+Ringwood Ale;;;BSI;;;;1187;;ale;liquid;medium;;high;72;18;23
+Pasteur Champagne;;;BSI;;;;1868;;wine-cider;liquid;high;;low;68;4;34
+German Lager;;;BSI;;;;3470;;lager;liquid;medium;;medium;75;8;12
+German Ale;;;BSI;;;;A-07;;ale;liquid;low;;low;75;13;19
+American White Ale;;;BSI;;;;A-10;;ale;liquid;medium;;low;76;16;22
+London Ale III;;;BSI;;;;A-18;;ale;liquid;medium;;medium;73;18;23
+London Ale I;;;BSI;;;;A-28;;ale;liquid;medium;;medium;75;16;22
+British Ale III;;;BSI;;;;A-32;;ale;liquid;medium;;high;69;16;22
+British Ale II;;;BSI;;;;A-35;;ale;liquid;medium;;high;74;17;24
+Old German Ale;;;BSI;;;;A-38;;ale;liquid;medium;;low;75;16;22
+Chico Ale;;;BSI;;;;A-56;;ale;liquid;medium;;medium;75;16;22
+Kolsch;;;BSI;;;;A-65;;ale;liquid;medium;;low;75;12;18
+London Ale II;;;BSI;;;;A-68;;ale;liquid;medium;;high;69;18;22
+Timothy Taylor Ale;;;BSI;;;;A-69;;ale;liquid;medium;;high;69;18;22
+American Microbrewery Ale;;;BSI;;;;A-72;;ale;liquid;medium;;high;74;17;22
+Henley on Thames Ale;;;BSI;;;;A-75;;ale;liquid;medium;;medium;74;17;22
+Scotch Ale;;;BSI;;;;A-78;;ale;liquid;high;;high;71;13;21
+Irish Ale;;;BSI;;;;A-84;;ale;liquid;medium;;medium;73;18;22
+British Ale;;;BSI;;;;A-98;;ale;liquid;medium;;high;74;18;22
+Whitbread Ale;;;BSI;;;;A-99;;ale;liquid;low;;high;70;18;24
+Belgian Ale;;;BSI;;;;ABS3;;ale;liquid;medium;;high;74;18;24
+Andechs Lager;;;BSI;;;;;;lager;liquid;medium;;medium;73;10;12
+Andechs Weizen;;;BSI;;;;;;ale;liquid;medium;;low;74;18;21
+Augustiner Lager;;;BSI;;;;;;lager;liquid;medium;;medium;73;11;17
+Amber Lager;;;Bulldog;;;;B38;;lager;dry;medium;;high;73;9;14
+American West;;;Bulldog;;;;B5;;ale;dry;medium;;medium;73;16;21
+Belgian Saison;;;Bulldog;;;;B16;;ale;dry;high;;medium;85;18;30
+Bavarian Wheat;;;Bulldog;;;;B49;;wheat;dry;medium;;low;78;18;25
+Belgian Trappix;;;Bulldog;;;;B19;;ale;dry;medium;;high;78;18;25
+English Ale;;;Bulldog;;;;B4;;ale;dry;medium;;high;67;16;21
+European Ale;;;Bulldog;;;;B44;;ale;dry;medium;;high;73;15;21
+German Lager;;;Bulldog;;;;B34;;lager;dry;medium;;high;78;9;14
+Steam Lager;;;Bulldog;;;;B23;;lager;dry;medium;;high;78;13;20
+Universal Ale;;;Bulldog;;;;B01;;ale;dry;medium;;medium;73;18;23
+London's Calling;;;Crescat Labs;Crescat;;;CL001;;ale;liquid;;9;medium;76.5;18;22
+Northern Shire;;;Crescat Labs;Crescat;;;CL002;;ale;liquid;;9;medium;75;18;22
+Bagpipes Chanter;;;Crescat Labs;Crescat;;;CL003;;ale;liquid;;10;high;77;18;22
+Black Clover;;;Crescat Labs;Crescat;;;CL004;;ale;liquid;;12;very-high;73;16;22
+Flemish Rhapsody;;;Crescat Labs;Crescat;;;CL005;;ale;liquid;;10;low;73.5;16;24
+Saison's Season;;;Crescat Labs;Crescat;;;CL006;;ale;liquid;;11;medium-low;79.5;18;25
+Abbey's Sellection;;;Crescat Labs;Crescat;;;CL007;;ale;liquid;;12;medium-low;76;19;24
+Belgian Meander;;;Crescat Labs;Crescat;;;CL008;;ale;liquid;;12;very-high;74;18;24
+Trapeze Trappist;;;Crescat Labs;Crescat;;;CL009;;ale;liquid;;12;medium;76;19;25
+Moravian Vale;;;Crescat Labs;Crescat;;;CL010;;lager;liquid;;12;high;75;8;12
+Bayernfest;;;Crescat Labs;Crescat;;;CL011;;lager;liquid;;11;high;76.5;8;14
+Witty Pretty;;;Crescat Labs;Crescat;;;CL012;;ale;liquid;;10;low;78;18;22
+Cologne Definition;;;Crescat Labs;Crescat;;;CL013;;ale;liquid;;11;medium-low;75;14;22
+American Cream;;;Crescat Labs;Crescat;;;CL014;;ale;liquid;;10;medium;76;14;22
+Piwo Cells;;;Crescat Labs;Crescat;;;CL015;;ale;liquid;;9;low;69.5;18;22
+USA1933;;;Crescat Labs;Crescat;;;CL016;;ale;liquid;;11;medium;75;16;22
+Friar's Strong;;;Crescat Labs;Crescat;;;CL017;;ale;liquid;;15;high;77.5;18;24
+Kveik & Fox;;;Crescat Labs;Crescat;;;CL018;;ale;liquid;;10;high;74;20;40
+Belgian;;;Crossmyloof Brew;Crossmyloof;;;;;ale;dry;medium;;medium;80;18;28
+BEòIR;;;Crossmyloof Brew ;Crossmyloof;;;;;ale;dry;medium;;medium;74;15;22
+Californian ;;;Crossmyloof Brew;Crossmyloof;;;;;lager;dry;medium;;medium;79;15;22
+Five;;;Crossmyloof Brew;Crossmyloof;;;;;ale;dry;medium;;high;78;17;28
+Four;;;Crossmyloof Brew ;Crossmyloof;;;;;ale;dry;medium;;medium;73.5;15;22
+Haze;;;Crossmyloof Brew;Crossmyloof;;;;;ale;dry;medium;;low;75;15;20
+Hell;;;Crossmyloof Brew;Crossmyloof;;;;;lager;dry;medium;;high;79;12;21
+HøG-NORSK;;;Crossmyloof Brew ;Crossmyloof;;;;;ale;dry;medium;;high;77.5;18;27
+Kentucky;;;Crossmyloof Brew;Crossmyloof;;;;;ale;dry;medium;;high;75.5;13;22
+Kölsch;;;Crossmyloof Brew ;Crossmyloof;;;;;ale;liquid;medium;;high;79;15;22
+Kristallweizen;;;Crossmyloof Brew ;Crossmyloof;;;;;wheat;dry;medium;;medium;76;18;28
+Lille Saison;;;Crossmyloof Brew ;Crossmyloof;;;;;ale;dry;high;;medium;85;17;28
+Midland;;;Crossmyloof Brew;Crossmyloof;;;;;ale;dry;high;;high;75;13;22
+Monk;;;Crossmyloof Brew;Crossmyloof;;;;;ale;dry;medium;;medium;69;15;20
+Pia;;;Crossmyloof Brew;Crossmyloof;;;;;ale;dry;medium;;medium;74;15;22
+Real Ale ;;;Crossmyloof Brew;Crossmyloof;;;;;ale;dry;low;;medium;75;17;22
+Real Ale;;;Crossmyloof Brew;Crossmyloof;;;;;ale;dry;medium;;medium;76;17;22
+US Pale Ale;;;Crossmyloof Brew;Crossmyloof;;;;;ale;dry;low;;medium;77;17;22
+Baltic Lager;;;East Coast Yeast;ECY;;;ECY22;;lager;liquid;;;medium;77;8;12
+Belgian Abbaye;;;East Coast Yeast;ECY;;;ECY09;;ale;liquid;;;medium;75;19;22
+Belgian White;;;East Coast Yeast;ECY;;;ECY11;;ale;liquid;;;low;76;21;24
+Berliner Blend;;;East Coast Yeast;ECY;;;ECY06;;brett-bacteria;liquid;;;;76;21;23
+Brett Blend #1 Anomala;;;East Coast Yeast;ECY;;;ECY04;;brett-bacteria;liquid;;;;75;21;21
+Brett Blend #9;;;East Coast Yeast;ECY;;;ECY05;;brett-bacteria;liquid;;;;75;21;21
+Brett Custersianus;;;East Coast Yeast;ECY;;;ECY19;;brett-bacteria;liquid;;;;75;16;23
+Brett Nanus;;;East Coast Yeast;ECY;;;ECY24;;brett-bacteria;liquid;;;;75;21;21
+British Mild;;;East Coast Yeast;ECY;;;ECY18;;ale;liquid;;;low;68;16;20
+BugCounty;;;East Coast Yeast;ECY;;;ECY20;;ale;liquid;;;;80;16;23
+BugFarm ;;;East Coast Yeast;ECY;;;ECY01;;ale;liquid;low;;low;80;16;23
+BugFarm 2;;;East Coast Yeast;ECY;;;ECY45;;brett-bacteria;liquid;high;;medium;65;16;27
+Burton Union;;;East Coast Yeast;ECY;;;ECY17;;ale;liquid;;;medium;74;18;21
+Farmhouse Brett;;;East Coast Yeast;ECY;;;ECY03;;brett-bacteria;liquid;;;;75;21;21
+Flemish Ale;;;East Coast Yeast;ECY;;;ECY02;;ale;liquid;;;;80;16;23
+Kellerbier;;;East Coast Yeast;ECY;;;ECY28;;lager;liquid;medium;;medium;75;8;12
+Kölschbier;;;East Coast Yeast;ECY;;;ECY21;;ale;liquid;;;high;77;14;19
+Munich Festbier;;;East Coast Yeast;ECY;;;ECY15;;lager;liquid;;;medium;75;8;12
+Northeast Ale;;;East Coast Yeast;ECY;;;ECY29;;ale;liquid;;;high;81;18;21
+Old Newark Ale;;;East Coast Yeast;ECY;;;ECY10;;ale;liquid;;;high;72;16;20
+Old Newark Beer;;;East Coast Yeast;ECY;;;ECY12;;ale;liquid;;;medium;72;14;20
+Oud Brune;;;East Coast Yeast;ECY;;;ECY23;;ale;liquid;;;;77;20;23
+Saison Brasserie;;;East Coast Yeast;ECY;;;ECY08;;ale;liquid;;;medium;80;24;29
+Saison Single;;;East Coast Yeast;ECY;;;ECY14;;ale;liquid;;;medium;77;24;28
+Scottish Heavy;;;East Coast Yeast;ECY;;;ECY07;;ale;liquid;;;medium;78;16;20
+Senne Valley;;;East Coast Yeast;ECY;;;ECY31;;ale;liquid;high;;high;85;18;26
+Trappist Ale;;;East Coast Yeast;ECY;;;ECY13;;ale;liquid;;;medium;75;19;22
+American Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;medium;74;16;22
+Anchorman Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;high;77.5;18;20
+Ardennes Belgian Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;medium-high;76;18;24
+Årset Kveik Blend;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;high;75;20;37
+Belgian Sour Blend;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;low;;low;0;21;32
+Berliner Brett I;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;high;;medium;0;18;24
+Biergarten Lager;;;Escarpment Labs;Escarpment;;;;;lager;liquid;medium;;medium;73;9;13
+Brett B;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;medium;;low;77.5;27;27
+Brett D;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;;12;medium-low;80;22;25
+Brett Q;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;high;;medium-low;80;20;25
+Brussels Brett;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;;12;medium-low;80;22;25
+Cali Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;medium;80;18;22
+Cali Common Lager;;;Escarpment Labs;Escarpment;;;;;lager;liquid;medium;;medium;67.5;14;18
+Cerberus;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;low;75;22;28
+Classic Witbier;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;medium-low;75;19;24
+Copenhagen Lager;;;Escarpment Labs;Escarpment;;;;;lager;liquid;medium;;medium-low;74;8;13
+Czech Lager;;;Escarpment Labs;Escarpment;;;;;lager;liquid;medium;;medium;74;9;13
+Dry Belgian Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;;12;medium-low;85;22;26
+Ebbegarden Kveik Blend;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;medium;75;22;37
+English Ale I;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;very-high;67;18;21
+English Ale II;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;medium-high;76;18;22
+Marina Russian Farmhouse;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;low;72;25;39
+Foggy London Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;medium;74.5;18;23
+Fruit Bomb Saison;;;Escarpment Labs;Escarpment;;;;;ale;liquid;;12;medium-low;80;22;27
+Fruity Witbier;;;Escarpment Labs;Escarpment;;;;;ale;liquid;;12;medium-low;72.5;17;24
+Goldrush Lager;;;Escarpment Labs;Escarpment;;;;;lager;liquid;medium;;medium;72;14;18
+Hornindal Kveik Blend;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;high;79;25;35
+Irish Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;medium-high;72.5;18;22
+Isar Lager;;;Escarpment Labs;Escarpment;;;;;lager;liquid;medium;;medium-high;77;10;15
+Kölsch Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;medium;75;18;21
+Krispy;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;high;76;18;30
+Lactobacillus Blend;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;;;;0;32;42
+Lactobacillus Blend 2.0;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;low;;low;0;30;45
+Lactobacillus brevis;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;;;;0;35;45
+Lactobacillus Secondary Souring Blend;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;low;;low;0;18;25
+Lærdal Kveik;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;high;75;22;37
+Mexican Lager;;;Escarpment Labs;Escarpment;;;;;lager;liquid;medium;;medium;75;10;14
+Munich Lager;;;Escarpment Labs;Escarpment;;;;;lager;liquid;high;;medium;78;12;15
+New World Saison;;;Escarpment Labs;Escarpment;;;;;ale;liquid;;12;medium;80;20;25
+Old World Saison Blend;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;medium-low;85;22;27
+Ontario Farmhouse Ale Blend;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;low;80;22;27
+Scotia Sauvage;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;medium;80;18;25
+Scottish Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;medium;73.5;14;22
+Skare Kveik;;;Escarpment Labs;Escarpment;;;;;ale;liquid;low;;low;76;18;30
+Spooky Saison;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;low;85;25;-18
+St-Remy Abbey Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;;10;medium;76;18;24
+St. Lucifer Belgian Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;;12;medium;80;20;24
+Sterling Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;medium;78;14;22
+Uberweizen;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;medium;76;18;24
+Vermont Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;medium;78;19;22
+Voss Kveik;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;high;72.5;25;42
+Weizen I;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;low;72.5;18;24
+Weizen II;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;medium-low;76;18;24
+Wild Thing;;;Escarpment Labs;Escarpment;;;;;ale;liquid;;9;medium;78.5;25;25
+Safcider;;;Fermentis;;;;;;wine-cider;dry;high;;high;75;10;27
+SafSpirit HG-1;;;Fermentis;;SafSpirit;Saf Spirit;HG-1;;ale;dry;high;;low;80;25;35
+SafSpirit USW-6;;;Fermentis;;SafSpirit;Saf Spirit;USW-6;;ale;liquid;high;;medium;80;20;32
+SafAle HA-18;;;Fermentis;;Safale;Saf Ale;HA-18;;ale;dry;high;;medium;97;25;35
+American Ale;;;Fermentis;;Safale;Saf Ale;US-05;;ale;dry;low;;medium;81;12;25
+American Ale;;;Fermentis;;Safale;Saf Ale;US-56;;ale;dry;medium;;medium;72;15;24
+Belgian Saison Ale;;;Fermentis;;Safale;Saf Ale;BE-134;;ale;dry;;;low;90;18;28
+English Ale;;;Fermentis;;Safale;Saf Ale;S-04;;ale;dry;;9.75;high;75;12;25
+German Ale;;;Fermentis;;Safale;Saf Ale;K-97;;ale;dry;;10.4;high;81;12;25
+Abbaye;;;Fermentis;;Safale;Saf Ale;BE-256;;ale;dry;;11;high;82;12;25
+General/Belgian;;;Fermentis;;Safale;Saf Ale;S-33;;ale;dry;;11.5;high;70;12;25
+Specialty Ale;;;Fermentis;;Safale;Saf Ale;T-58;;ale;dry;;11.5;high;70;12;25
+Wheat Beer;;;Fermentis;;Safale;Saf Ale;WB-06;;wheat;dry;;10.5;low;86;12;25
+German Lager;;;Fermentis;;Saflager;Saf Lager;S-23;;lager;dry;;10.5;high;82;9;22
+German Lager;;;Fermentis;;Saflager;Saf Lager;W-34/70;34/70;lager;dry;;10.5;high;83;9;22
+Swiss Lager;;;Fermentis;;Saflager;Saf Lager;S-189;;lager;dry;;10.5;high;84;9;22
+Achouffe Belgian Ale;;;GigaYeast;Giga;;;GY003;;ale;liquid;;;medium-low;82.5;20;25
+Altstadt Ale;;;GigaYeast;Giga;;;GY016;;ale;liquid;;;low;79;13;20
+American Lager;;;GigaYeast;Giga;;;GY030;;lager;liquid;;;medium;81;9;16
+Bavarian Hefe;;;GigaYeast;Giga;;;GY017;;ale;liquid;;;low;79;18;27
+Belgian Mix;;;GigaYeast;Giga;;;GY007;;ale;liquid;;;low;80;19;25
+Belgian Wit;;;GigaYeast;Giga;;;GY028;;ale;liquid;;;low;77.5;18;27
+Berliner Blend;;;GigaYeast;Giga;;;GB122;;brett-bacteria;liquid;;;;89;21;27
+British Ale #3;;;GigaYeast;Giga;;;GY041;;ale;liquid;;;medium-high;81;18;25
+British Ale #1;;;GigaYeast;Giga;;;GY011;;ale;liquid;;;high;77;18;25
+British Ale #2;;;GigaYeast;Giga;;;GY031;;ale;liquid;;;high;81;18;24
+Czech Pilsner;;;GigaYeast;Giga;;;GY002;;lager;liquid;;;medium-high;77;9;13
+Farmhouse Sour;;;GigaYeast;Giga;;;GB121;;brett-bacteria;liquid;;;;89;20;27
+Fast Souring Lacto;;;GigaYeast;Giga;;;GB110;;brett-bacteria;liquid;;;;40;20;37
+German Lager;;;GigaYeast;Giga;;;GY045;;lager;liquid;;;medium-low;76;10;16
+Golden Gate Lager;;;GigaYeast;Giga;;;GY005;;lager;liquid;;;medium;81;13;21
+Golden Pear Belgian Ale;;;GigaYeast;Giga;;;GY048;;ale;liquid;;;low;84;18;27
+Hornindal Kveik #5;;;GigaYeast;Giga;;;GY135;;ale;liquid;medium;;medium;77;10;38
+Kölsch Bier;;;GigaYeast;Giga;;;GY021;;ale;liquid;;;medium-high;81;16;22
+NorCal Ale #1;;;GigaYeast;Giga;;;GY001;;ale;liquid;;;medium;78;18;25
+NorCal Ale #5;;;GigaYeast;Giga;;;GY029;;ale;liquid;;;medium-high;71;19;24
+Portland Hefe;;;GigaYeast;Giga;;;GY020;;ale;liquid;;;low;78;18;23
+Saison Blend;;;GigaYeast;Giga;;;GY047;;ale;liquid;;;low;81.5;18;27
+Saison Sour;;;GigaYeast;Giga;;;GB124;;brett-bacteria;liquid;;;;78;20;27
+Saison #1;;;GigaYeast;Giga;;;GY018;;ale;liquid;;;low;82;18;27
+Saison #2;;;GigaYeast;Giga;;;GY027;;ale;liquid;;;low;81;18;27
+Scotch Ale #1;;;GigaYeast;Giga;;;GY044;;ale;liquid;;;medium-low;81;18;24
+Scourmont Abbey Ale;;;GigaYeast;Giga;;;GY014;;ale;liquid;;;low;80;18;27
+Sour Cherry Funk;;;GigaYeast;Giga;;;GB150;;brett-bacteria;liquid;medium;;low;65;20;27
+Sour Plum Belgian;;;GigaYeast;Giga;;;GB123;;brett-bacteria;liquid;;;;77;20;27
+Sweet Flemish Brett;;;GigaYeast;Giga;;;GB144;;brett-bacteria;liquid;;;;83;20;24
+Trappist Tripel;;;GigaYeast;Giga;;;GY015;;ale;liquid;;;low;75;19;23
+Vermont IPA;;;GigaYeast;Giga;;;GY054;;ale;liquid;;;medium-low;80;17;24
+Bubbles;;;Imperial Yeast;Imperial;;;A40;;wine-cider;liquid;high;;medium;90;14;25
+House;;;Imperial Yeast;Imperial;;;A01;;ale;liquid;;;high;73;17;21
+Barbarian;;;Imperial Yeast;Imperial;;;A04;;ale;liquid;;;medium;73;17;21
+Voyager ;Four Square;;Imperial Yeast;Imperial;;;A05;;ale;liquid;medium;;high;68;18;23
+Flagship;;;Imperial Yeast;Imperial;;;A07;;ale;liquid;;;medium-low;73;16;22
+Pub;;;Imperial Yeast;Imperial;;;A09;;ale;liquid;;;very-high;69;18;21
+Darkness;;;Imperial Yeast;Imperial;;;A10;;ale;liquid;;;medium;71;17;22
+Sovereign;;;Imperial Yeast;Imperial;;;A13;;ale;liquid;;;medium-low;73;16;21
+Independence;;;Imperial Yeast;Imperial;;;A15;;ale;liquid;;;medium;72;17;22
+Joystick;;;Imperial Yeast;Imperial;;;A18;;ale;liquid;;;medium-high;73;16;21
+Citrus;;;Imperial Yeast;Imperial;;;A20;;ale;liquid;;;low;74;19;27
+Dry Hop;;;Imperial Yeast;Imperial;;;A24;;ale;liquid;;;medium;76;18;23
+Tartan;;;Imperial Yeast;Imperial;;;A31;;ale;liquid;;;medium;72.5;18;21
+Julius;;;Imperial Yeast;Imperial;;;A34;;ale;liquid;medium;;high;75;18;20
+POG;;;Imperial Yeast;Imperial;;;A37;;ale;liquid;high;;high;80;29;38
+Juice;;;Imperial Yeast;Imperial;;;A38;;ale;liquid;medium;;medium;74;18;23
+Loki;;;Imperial Yeast;Imperial;;;A43;;ale;liquid;;;medium-high;80;16;38
+Kveiking;;;Imperial Yeast;Imperial;;;A44;;ale;liquid;high;;low;80;24;36
+Bell;;;Imperial Yeast;Imperial;;;A62;;ale;liquid;medium;;medium;79;18;22
+Whiteout;;;Imperial Yeast;Imperial;;;B44;;ale;liquid;;;medium-low;72;17;22
+Gnome;;;Imperial Yeast;Imperial;;;B45;;ale;liquid;;;medium-high;72;18;24
+Triple Double;;;Imperial Yeast;Imperial;;;B48;;ale;liquid;;;medium;74;18;25
+Workhorse;;;Imperial Yeast;Imperial;;;B51;;ale;liquid;;;medium;72;18;24
+Fish Finder;;;Imperial Yeast;Imperial;;;B53;;ale;liquid;;;medium;74;18;23
+Rustic;;;Imperial Yeast;Imperial;;;B56;;ale;liquid;;;medium;72;20;32
+Monastic;;;Imperial Yeast;Imperial;;;B63;;ale;liquid;;;medium-low;74;20;26
+Napoleon;;;Imperial Yeast;Imperial;;;B64;;ale;liquid;;;low;77;18;26
+Sour Batch Kidz;;;Imperial Yeast;Imperial;;;F08;;brett-bacteria;liquid;;;low;80;20;24
+Stefon;;;Imperial Yeast;Imperial;;;G01;;ale;liquid;;;low;73;17;23
+Kaiser;;;Imperial Yeast;Imperial;;;G02;;ale;liquid;;;low;73;13;18
+Dieter;;;Imperial Yeast;Imperial;;;G03;;ale;liquid;;;medium;75;16;21
+Fest;;;Imperial Yeast;Imperial;;;L02;;lager;liquid;;;medium-high;71;8;13
+Cablecar;;;Imperial Yeast;Imperial;;;L05;;lager;liquid;;;medium-high;71;13;18
+Que Bueno;;;Imperial Yeast;Imperial;;;L09;;lager;liquid;;;medium;73;8;13
+Gateway;;;Imperial Yeast;Imperial;;;L11;;lager;liquid;;;medium;72;8;13
+Global;;;Imperial Yeast;Imperial;;;L13;;lager;liquid;;;medium-low;73;8;13
+Harvest;;;Imperial Yeast;Imperial;;;L17;;lager;liquid;;;medium;70;10;16
+Pilgrimage;;;Imperial Yeast;Imperial;;;L26;;lager;liquid;medium;;medium;75;7;13
+Urkel;;;Imperial Yeast;Imperial;;;L28;;lager;liquid;;;medium;73;11;14
+Suburban Brett;;;Imperial Yeast;Imperial;;;W15;;brett-bacteria;liquid;;;low;77.5;18;23
+American Ale;;;Inland Island Yeast;Inland Island;;;INIS-007;;ale;liquid;high;;medium;71;20;23
+Belgian Gnome Ale;;;Inland Island Yeast;Inland Island;;;INIS-222;;ale;liquid;high;;high;74;18;24
+Brett Barrel III;;;Inland Island Yeast;Inland Island;;;INIS-913;;brett-bacteria;liquid;medium;;medium;90;16;24
+Colorado IPA;;;Inland Island Yeast;Inland Island;;;INIS-003;;ale;liquid;high;;medium;76;17;24
+Eccentric Ale;;;Inland Island Yeast;Inland Island;;;INIS-006;;ale;liquid;medium;;medium;72;20;22
+English Ale V;;;Inland Island Yeast;Inland Island;;;INIS-315;;ale;liquid;medium;;very-high;66.5;18;20
+English Dry Ale;;;Inland Island Yeast;Inland Island;;;INIS-318;;ale;liquid;medium;;medium-high;75;18;21
+German Monk Lager;;;Inland Island Yeast;Inland Island;;;INIS-711;;lager;liquid;medium;;medium;73;10;12
+East Coast IPA;;;Inland Island Yeast;Inland Island;;;INIS-008;;ale;liquid;high;;high;73;18;23
+Fog Machine;;;Inland Island Yeast;Inland Island;;;INIS-009;;ale;liquid;medium;;medium;74;19;23
+American Weizen;;;Inland Island Yeast;Inland Island;;;INIS-055;;ale;liquid;medium;;low;72;18;21
+Belgian Wit Ale;;;Inland Island Yeast;Inland Island;;;INIS-241;;ale;liquid;high;;medium;74;18;23
+Saison : Baron;;;Inland Island Yeast;Inland Island;;;INIS-298;;ale;liquid;medium;;medium;75;21;26
+Norwegian Farmhouse;;;Inland Island Yeast;Inland Island;;;INIS-441;;ale;liquid;medium;;high;80;21;38
+French Ale;;;Inland Island Yeast;Inland Island;;;INIS-451;;ale;liquid;medium;;high;72;17;23
+Golden Kolsch Style Ale;;;Inland Island Yeast;Inland Island;;;INIS-572;;ale;liquid;medium;;medium;76;13;18
+German Hybrid Ale;;;Inland Island Yeast;Inland Island;;;INIS-573;;ale;liquid;medium;;medium;75;18;21
+Session Lager;;;Inland Island Yeast;Inland Island;;;INIS 701;;lager;liquid;medium;;medium;77.5;10;13
+Northern California Ale;;;Inland Island Yeast;Inland Island;;;INIS-001;;ale;liquid;high;;medium;75;16;22
+Saison Farmhouse;;;Inland Island Yeast;Inland Island;;;INIS-291;;ale;liquid;high;;medium;76.5;21;35
+West Coast;;;Lallemand;Danstar;LalBrew;;BRY-97;;ale;dry;high;;high;75;15;22
+Abbaye Belgian Ale;;Abbaye Ale;Lallemand;Danstar;LalBrew;;;;ale;dry;high;;medium;88;17;25
+Belle Saison;;;Lallemand;Danstar;LalBrew;;;;ale;dry;high;;low;90;15;35
+Diamond Lager;;;Lallemand;Danstar;LalBrew;;;;lager;dry;low;;high;80;10;15
+New England;;;Lallemand;Danstar;LalBrew;;;;ale;dry;medium;;medium;75;15;22
+Cask and Bottle Conditioning;;;Lallemand;Danstar;LalBrew;;CBC-1;;ale;dry;high;;high;65;15;25
+Köln Kölsch Style Ale;;;Lallemand;;LalBrew;;;;ale;dry;medium;;medium;75;15;22
+London English-Style Ale;London ESB Yeast;;Lallemand;Danstar;LalBrew;;;;ale;dry;high;;low;65;18;22
+Munich Classic Wheat Beer;Munich Dry Wheat Yeast;;Lallemand;Danstar;LalBrew;;;;ale;dry;high;;low;78;18;22
+Nottingham Ale;Nottingham High Performance Ale Yeast;Nottingham;Lallemand;Danstar;LalBrew;;;;ale;dry;medium;;high;80;10;22
+Voss Kveik Ale;;;Lallemand;;LalBrew;;;;ale;dry;high;;high;80;25;40
+Windsor Ale;Windsor British-Style Beer Yeast;Windsor;Lallemand;Danstar;LalBrew;;;;ale;dry;medium;;low;70;15;22
+Verdant IPA;;;Lallemand;;LalBrew;;;;ale;dry;high;;high;80;18;23
+Lalvin 71B ;;;Lallemand;;Lalvin;;71B;;wine-cider;dry;high;;high;100;15;30
+Lalvin EC-1118;;;Lallemand;;Lalvin;;EC-1118;;wine-cider;dry;high;;high;65;15;25
+Lalvin ICV D47;;;Lallemand;;Lalvin;;;;wine-cider;liquid;high;;medium;95;15;30
+Lalvin V1116;;;Lallemand;;Lalvin;;;;wine-cider;dry;medium;;high;65;10;35
+Sourvisiae;;;Lallemand;;;;;;ale;dry;high;;medium;85;10;22
+WildBrew Philly Sour;;;Lallemand;;WildBrew;;;;ale;dry;medium;;high;85;20;25
+WildBrew Helveticus Pitch;;;Lallemand;;WildBrew;;;;brett-bacteria;dry;low;;low;0;38;45
+Wildbrew Sour Pitch;;;Lallemand;;WildBrew;;;;brett-bacteria;dry;low;;low;;30;40
+Arset;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;medium;;medium;78;18;35
+Aurland;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;medium;;medium;0;16;35
+BB 3;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;medium;;medium;76;20;26
+Brettanomainer;;;Mainiacal Yeast Labs;Mainiacal;;;;;brett-bacteria;liquid;medium;;low;93;11;27
+Citrus King;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;low;;low;82;18;26
+Ebbegarden Kveik ;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;high;;medium;85;27;32
+Espe;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;medium;;medium;75;16;34
+Framgarden;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;high;;medium;78;24;43
+Granvin;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;medium;;low;78;20;43
+Infectious Behaviour;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;high;;medium;90;18;27
+Juggernaut;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;medium;;medium;79;18;27
+Lærdal;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;low;;low;80;27;41
+Midtbust;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;medium;;medium;78;24;41
+MTF Blend;;;Mainiacal Yeast Labs;Mainiacal;;;;;brett-bacteria;liquid;high;;medium;80;21;38
+Muri;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;medium;;medium;80;16;38
+MYBrett86;;;Mainiacal Yeast Labs;Mainiacal;;;;;brett-bacteria;liquid;medium;;low;85;13;28
+Bavarian Lager;;;Mangrove Jack's;Mangrove;;;M76;;lager;dry;;;medium;77.5;7;14
+Bavarian Wheat;;;Mangrove Jack's;Mangrove;;;M20;;ale;dry;;;low;73;15;30
+Belgian Abbey;;;Mangrove Jack's;Mangrove;;;M47;;ale;dry;;;medium-high;75;18;25
+Belgian Ale;;;Mangrove Jack's;Mangrove;;;M41;;ale;dry;;;medium;85;18;28
+Belgian Tripel;;;Mangrove Jack's;Mangrove;;;M31;;ale;dry;;;medium;85;18;28
+Belgian Wit;;;Mangrove Jack's;Mangrove;;;M21;;ale;dry;;;medium-low;72.5;18;25
+Bohemian Lager;;;Mangrove Jack's;Mangrove;;;M84;;lager;dry;;;high;78;10;15
+British Ale;;;Mangrove Jack's;Mangrove;;;M07;;ale;dry;;;high;78;14;22
+Burton Union;;;Mangrove Jack's;Mangrove;;;M79;;ale;dry;;;high;78;17;23
+Californian Lager;;;Mangrove Jack's;Mangrove;;;M54;;lager;dry;;;medium-high;79.5;18;20
+Cider;Craft Series Cider Yeast;;Mangrove Jack's;Mangrove;;;M02;;wine-cider;dry;;;high;78;18;24
+Empire Ale;;;Mangrove Jack's;Mangrove;;;M15;;ale;dry;;;medium-high;72.5;21;24
+French Saison Ale;;;Mangrove Jack's;Mangrove;;;M29;;ale;dry;;;medium;87.5;26;32
+Kveik;;;Mangrove Jack's;Mangrove;;;M12;;ale;dry;high;;high;80;20;40
+Liberty Bell Ale;;;Mangrove Jack's;Mangrove;;;M36;;ale;dry;;;medium-high;76;17;23
+Belgian Wit;;;Mangrove Jack's;Mangrove;;;M27;;ale;liquid;high;;medium;95;26;32
+Mead;;;Mangrove Jack's;Mangrove;;;M05;;wine-cider;dry;;;medium-high;97.5;15;30
+New World Strong Ale;;;Mangrove Jack's;Mangrove;;;M42;;ale;dry;;;high;79.5;16;22
+UK Dark Ale;Newcastle Dark Ale Yeast;;Mangrove Jack's;Mangrove;;;M03;;ale;dry;;;medium;73;18;22
+US West Coast;;;Mangrove Jack's;Mangrove;;;M44;;ale;dry;;;high;78;15;23
+Workhorse Beer;;;Mangrove Jack's;Mangrove;;;M10;;ale;dry;;;medium;78;15;20
+Gervin Ale ;;;Muntons;;;;GV-12;;ale;dry;low;;low;70;16;22
+Abbey Ale C;;;Omega Yeast Labs;Omega;;;OYL-018;;ale;liquid;;12;medium-low;76;20;26
+All the Bretts;;;Omega Yeast Labs;Omega;;;OYL-218;;brett-bacteria;liquid;;11;low;48;20;29
+Alt;;;Omega Yeast Labs;Omega;;;OYL-001;;ale;liquid;;11;low;75;13;20
+American Lager;;;Omega Yeast Labs;Omega;;;OYL-103;;lager;liquid;;9;medium;75;9;13
+American Pilsner;;;Omega Yeast Labs;Omega;;;OYL-102;;lager;liquid;;9;medium;73;9;13
+American Wheat;;;Omega Yeast Labs;Omega;;;OYL-002;;ale;liquid;;10;low;76;14;23
+Bavarian Wheat;;;Omega Yeast Labs;Omega;;;OYL-025;;ale;liquid;;10;low;73;18;24
+Bayern Lager;;;Omega Yeast Labs;Omega;;;OYL-114;;lager;liquid;;9;medium;74;11;17
+Belgian Ale A;;;Omega Yeast Labs;Omega;;;OYL-024;;ale;liquid;;12;high;79;18;26
+Belgian Ale D;;;Omega Yeast Labs;Omega;;;OYL-019;;ale;liquid;;12;low;76;18;27
+Belgian Ale DK;;;Omega Yeast Labs;Omega;;;OYL-049;;ale;liquid;;10;medium;77;19;21
+Belgian Ale O;;;Omega Yeast Labs;Omega;;;OYL-046;;ale;liquid;;12;medium;77;19;22
+Belgian Ale R;;;Omega Yeast Labs;Omega;;;OYL-020;;ale;liquid;;12;medium;78;18;24
+Belgian Ale W;;;Omega Yeast Labs;Omega;;;OYL-028;;ale;liquid;;11;medium;76;18;26
+Belgian Dark Ale A;;;Omega Yeast Labs;Omega;;;OYL-040;;ale;liquid;high;;medium;76.5;18;27
+Belgian Saison I;;;Omega Yeast Labs;Omega;;;OYL-027;;ale;liquid;;12;low;78;21;35
+Belgian Saison II;;;Omega Yeast Labs;Omega;;;OYL-042;;ale;liquid;;12;medium;77;21;29
+Belgian Wheat;;;Omega Yeast Labs;Omega;;;OYL-029;;ale;liquid;;12;medium;74;18;23
+Biere de Garde;;;Omega Yeast Labs;Omega;;;OYL-039;;ale;liquid;;9;low;77;21;29
+Brett Blend #1 Where Da Funk?;;;Omega Yeast Labs;Omega;;;OYL-210;;brett-bacteria;liquid;;11;low;83;20;27
+Brett Blend #2 Bit O' Funk;;;Omega Yeast Labs;Omega;;;OYL-211;;brett-bacteria;liquid;;11;low;48;20;27
+Brett Blend #3 Bring On Da Funk;;;Omega Yeast Labs;Omega;;;OYL-212;;brett-bacteria;liquid;;11;low;48;20;27
+Brettanomyces Bruxellensis;;;Omega Yeast Labs;Omega;;;OYL-202;;brett-bacteria;liquid;;10;low;48;20;29
+Brettanomyces Claussenii;;;Omega Yeast Labs;Omega;;;OYL-201;;brett-bacteria;liquid;;10;low;48;20;29
+Brettanomyces Lambicus;;;Omega Yeast Labs;Omega;;;OYL-203;;brett-bacteria;liquid;;10;low;48;20;29
+British Ale I;;;Omega Yeast Labs;Omega;;;OYL-006;;ale;liquid;;10;medium-high;75;18;22
+British Ale II;;;Omega Yeast Labs;Omega;;;OYL-007;;ale;liquid;;10;medium-high;70;18;24
+British Ale III;;;Omega Yeast Labs;Omega;;;OYL-008;;ale;liquid;;10;high;71;18;23
+British Ale IV;;;Omega Yeast Labs;Omega;;;OYL-010;;ale;liquid;;10;medium-low;73;17;23
+British Ale V;;;Omega Yeast Labs;Omega;;;OYL-011;;ale;liquid;;10;high;73;18;23
+British Ale VI;;;Omega Yeast Labs;Omega;;;OYL-013;;ale;liquid;;10;high;75;17;24
+British Ale VII;;;Omega Yeast Labs;Omega;;;OYL-014;;ale;liquid;;9;high;69;18;22
+British Ale VIII;;;Omega Yeast Labs;Omega;;;OYL-016;;ale;liquid;;9;very-high;69;18;22
+British Ale XI;;;Omega Yeast Labs;Omega;;;OYL-048;;ale;liquid;high;;high;77;19;21
+British Cask;;;Omega Yeast Labs;Omega;;;OYL-038;;ale;liquid;medium;;high;75.5;17;22
+C2C American Farmhouse;;;Omega Yeast Labs;Omega;;;OYL-217;;brett-bacteria;liquid;;10;low;78;20;27
+CL-50 Ale;;;Omega Yeast Labs;Omega;;;OYL-041;;ale;liquid;;10;low;75;16;21
+Danish Lager;;;Omega Yeast Labs;Omega;;;OYL-104;;lager;liquid;;9;low;75;8;13
+DIPA Ale;;;Omega Yeast Labs;Omega;;;OYL-052;;ale;liquid;;11;medium-low;76;18;22
+East Coast Ale;;;Omega Yeast Labs;Omega;;;OYL-032;;ale;liquid;;10;medium-low;73;20;23
+Espe Kveik;;;Omega Yeast Labs;Omega;;;OYL090;;ale;liquid;high;;medium;77;20;37
+French Saison;;;Omega Yeast Labs;Omega;;;OYL-026;;ale;liquid;;12;low;85;18;25
+German Bock;;;Omega Yeast Labs;Omega;;;OYL-111;;lager;liquid;;10;medium;73;9;13
+German Lager I;;;Omega Yeast Labs;Omega;;;OYL-106;;lager;liquid;;9;medium-low;75;7;20
+German Lager II;;;Omega Yeast Labs;Omega;;;OYL-109;;lager;liquid;;9;medium-high;72;10;13
+Grand Cru;;;Omega Yeast Labs;Omega;;;OYL-023;;ale;liquid;;12;low;74;17;24
+Gulo Ale;;;Omega Yeast Labs;Omega;;;OYL-501;;ale;liquid;high;;medium;87.5;20;25
+Hefeweizen Ale I;;;Omega Yeast Labs;Omega;;;OYL-021;;ale;liquid;;10;low;75;18;24
+Hefeweizen Ale II;;;Omega Yeast Labs;Omega;;;OYL-022;;ale;liquid;;10;high;73;17;24
+Hornindal Kveik;;;Omega Yeast Labs;Omega;;;OYL-091;;ale;liquid;;12;high;79;21;35
+HotHead Ale;;;Omega Yeast Labs;Omega;;;OYL-057;;ale;liquid;;11;medium-high;80;17;37
+Irish Ale;;;Omega Yeast Labs;Omega;;;OYL-005;;ale;liquid;;12;medium;72;17;22
+Jovaru Lithuanian Farmhouse;;;Omega Yeast Labs;Omega;;;OYL-033;;ale;liquid;medium;;high;85;21;35
+Kolsch I;;;Omega Yeast Labs;Omega;;;OYL-017;;ale;liquid;;10;low;75;13;21
+Kolsch II;;;Omega Yeast Labs;Omega;;;OYL-044;;ale;liquid;;10;medium;75;18;21
+Lactobacillus Blend;;;Omega Yeast Labs;Omega;;;OYL-605;;brett-bacteria;liquid;;12;;0;20;35
+Lager I;;;Omega Yeast Labs;Omega;;;OYL-100;;lager;liquid;;;medium-high;73;9;13
+London Ale;;;Omega Yeast Labs;Omega;;;OYL-003;;ale;liquid;;11;medium;72;19;22
+Lutra Kveik;;;Omega Yeast Labs;Omega;;;OYL-071;;ale;liquid;high;;medium;78;20;35
+Mexican Lager;;;Omega Yeast Labs;Omega;;;OYL-113;;lager;liquid;;9;medium;74;10;13
+New Jersey Ale;;;Omega Yeast Labs;Omega;;;OYL-045;;ale;liquid;high;;high;76;19;22
+Oktoberfest;;;Omega Yeast Labs;Omega;;;OYL-107;;lager;liquid;;9;medium-high;75;8;14
+Pacific NW Ale;;;Omega Yeast Labs;Omega;;;OYL-012;;ale;liquid;;10;high;69;18;24
+Pilsner I;;;Omega Yeast Labs;Omega;;;OYL-101;;lager;liquid;;9;medium-high;74;9;13
+Pilsner II;;;Omega Yeast Labs;Omega;;;OYL-108;;lager;liquid;;9;medium-high;72;10;14
+Saisonstein’s Monster;;;Omega Yeast Labs;Omega;;;OYL-500;;ale;liquid;high;;low;80;18;26
+Scottish Ale;;;Omega Yeast Labs;Omega;;;OYL-015;;ale;liquid;;10;medium;75;18;21
+Swiss Lager;;;Omega Yeast Labs;Omega;;;OYL-112;;lager;liquid;low;;medium;75;10;13
+Tropical IPA;;;Omega Yeast Labs;Omega;;;OYL-200;;ale;liquid;;10;low;92.5;24;29
+Voss Kveik;;;Omega Yeast Labs;Omega;;;OYL-061;;ale;liquid;;12;medium;79;20;37
+West Coast Ale I;;;Omega Yeast Labs;Omega;;;OYL-004;;ale;liquid;;11;medium-low;77;16;23
+West Coast Ale II;;;Omega Yeast Labs;Omega;;;OYL-009;;ale;liquid;;10;medium;74;16;22
+West Coast Ale III;;;Omega Yeast Labs;Omega;;;OYL-043;;ale;liquid;;11;medium-high;80;18;20
+West Coast Ale IV;;;Omega Yeast Labs;Omega;;;OYL-050;;ale;liquid;;10;medium-high;77;17;23
+West Coast Lager;;;Omega Yeast Labs;Omega;;;OYL-105;;lager;liquid;;9;high;69;14;20
+Wit;;;Omega Yeast Labs;Omega;;;OYL-030;;ale;liquid;;11;medium;74;17;24
+Lucky No. 7;;;Real Brewers;;;;;;ale;liquid;;10;high;75;20;24
+The Monk;;;Real Brewers;;;;;;ale;liquid;;15;medium;78;19;22
+The One;;;Real Brewers;;;;;;ale;liquid;;;high;75;20;24
+Ye Olde English;;;Real Brewers;;;;;;ale;liquid;;;medium;70;18;21
+DADY;;;Red Star;RedStar;;;DADY;;ale;dry;high;;low;65;18;27
+Premier Blanc;;;Red Star;RedStar;;;UCD595;;wine-cider;dry;high;;low;0;15;30
+Chico Ale;;;RVA Yeast Labs;RVA;;;RVA 101;;ale;liquid;high;;medium;77.5;19;23
+Boston Ale;;;RVA Yeast Labs;RVA;;;RVA 102;;ale;liquid;high;;medium;72.5;18;23
+Pacman Ale;;;RVA Yeast Labs;RVA;;;RVA 103;;ale;liquid;high;;medium-high;76;17;22
+Hoptopper Ale;;;RVA Yeast Labs;RVA;;;RVA 104;;ale;liquid;high;;medium-low;77.5;18;24
+Chiswick Ale;;;RVA Yeast Labs;RVA;;;RVA 131;;ale;liquid;medium;;very-high;68.5;18;21
+Manchester Ale;;;RVA Yeast Labs;RVA;;;RVA 132;;ale;liquid;medium;;high;72.5;18;22
+Scotch Ale;;;RVA Yeast Labs;RVA;;;RVA 141;;ale;liquid;high;;medium;72.5;18;21
+Dublin Ale;;;RVA Yeast Labs;RVA;;;RVA 151;;ale;liquid;high;;medium-high;72.5;18;21
+German Ale I;;;RVA Yeast Labs;RVA;;;RVA 161;;ale;liquid;medium;;medium;73;16;20
+Trappist Ale I;;;RVA Yeast Labs;RVA;;;RVA 201;;ale;liquid;high;;medium;77.5;18;22
+Trappist Ale II;;;RVA Yeast Labs;RVA;;;RVA 202;;ale;liquid;high;;medium;77.5;18;22
+Trappist Ale III;;;RVA Yeast Labs;RVA;;;RVA 203;;ale;liquid;high;;medium;77.5;18;22
+Trappist Ale IV;;;RVA Yeast Labs;RVA;;;RVA 204;;ale;liquid;high;;medium;77.5;18;22
+Belgian 1833 Ale;;;RVA Yeast Labs;RVA;;;RVA 221;;ale;liquid;medium;;medium;76.5;19;21
+Belgian Gnome Ale;;;RVA Yeast Labs;RVA;;;RVA 222;;ale;liquid;high;;high;76.5;19;24
+Verboten Ale;;;RVA Yeast Labs;RVA;;;RVA 241;;ale;liquid;high;;low;72.5;18;24
+Golden Strong Ale;;;RVA Yeast Labs;RVA;;;RVA 251;;ale;liquid;high;;medium;76.5;20;24
+Saison I;;;RVA Yeast Labs;RVA;;;RVA 261;;ale;liquid;medium;;medium;70;24;29
+Saison II;;;RVA Yeast Labs;RVA;;;RVA 262;;ale;liquid;medium;;medium;78.5;19;25
+Ghost Ale;;;RVA Yeast Labs;RVA;;;RVA 263;;ale;liquid;medium;;medium;80.5;18;27
+American Lager;;;RVA Yeast Labs;RVA;;;RVA 301;;lager;liquid;medium;;medium;77.5;10;13
+München Lager;;;RVA Yeast Labs;RVA;;;RVA 302;;lager;liquid;medium;;high;77.5;14;18
+Oktoberfest Lager;;;RVA Yeast Labs;RVA;;;RVA 303;;lager;liquid;medium;;medium;69;11;14
+Czech Lager;;;RVA Yeast Labs;RVA;;;RVA 304;;lager;liquid;medium;;medium;77.5;10;13
+Alt Ale;;;Siebel Institute;Siebel;;;BRY 144;;ale;liquid;;;medium;78;15;20
+American Ale;;;Siebel Institute;Siebel;;;BRY 96;;ale;liquid;;;medium;78;18;22
+American Lager;;;Siebel Institute;Siebel;;;BRY 118;;lager;liquid;;;high;72;20;22
+Bavarian Weizen Ale;;;Siebel Institute;Siebel;;;BRY 235;;ale;liquid;;;high;73;10;14
+English Ale;;;Siebel Institute;Siebel;;;BRY 264;;ale;liquid;;;medium;78;15;20
+German Kölsch;;;Siebel Institute;Siebel;;;BRY 401;;ale;liquid;;;low;72;13;15
+North European Lager;;;Siebel Institute;Siebel;;;BRY 203;;lager;liquid;;;low;78;20;22
+Trappist Ale;;;Siebel Institute;Siebel;;;BRY 204;;ale;liquid;;;medium;78;18;22
+Amalgamation - Brett Super Blend;;;The Yeast Bay;TYB;;;WLP4637;;brett-bacteria;liquid;low;;low;85;21;27
+Amalgamation - Brett Super Blend II;;;The Yeast Bay;TYB;;;WLP4641;;brett-bacteria;liquid;high;;low;84;21;27
+Beersel Brettanomyces Blend;;;The Yeast Bay;TYB;;;WLP4603;;brett-bacteria;liquid;low;;medium;78;21;27
+Brettanomyces bruxellensis - Strain TYB261;;;The Yeast Bay;TYB;;;TYB261;;brett-bacteria;liquid;high;;low;81;22;28
+Brettanomyces bruxellensis - Strain TYB184;;;The Yeast Bay;TYB;;;TYB184;;brett-bacteria;liquid;high;;medium;85;22;28
+Brettanomyces bruxellensis - Strain TYB207;;;The Yeast Bay;TYB;;;TYB207;;brett-bacteria;liquid;high;;low;81;22;28
+Brettanomyces bruxellensis - Strain TYB307;;;The Yeast Bay;TYB;;;TYB307;;brett-bacteria;liquid;high;;low;82;21;27
+Brettanomyces bruxellensis - Strain TYB415;;;The Yeast Bay;TYB;;;TYB415;;brett-bacteria;liquid;high;;low;84;21;27
+Brussels Brettanomyces Blend;;;The Yeast Bay;TYB;;;WLP4613;;brett-bacteria;liquid;high;;medium;80;21;27
+Dark Belgian Cask;;;The Yeast Bay;TYB;;;WLP4653;;brett-bacteria;liquid;high;;medium;82.5;20;24
+Dry Belgian Ale;;;The Yeast Bay;TYB;;;WLP4025;;ale;liquid;high;;high;92.5;20;23
+Farmhouse Sour Ale;;;The Yeast Bay;TYB;;;WLP4675;;brett-bacteria;liquid;low;;medium;90;21;26
+Flanders Specialty Ale;;;The Yeast Bay;TYB;;;WLP4001;;ale;liquid;high;;medium;80;20;27
+Framgarden Kveik;;;The Yeast Bay;TYB;;;WLP4051;;ale;liquid;high;;medium;80;27;35
+Franconian Dark Lager;;;The Yeast Bay;TYB;;;WLP4030;;ale;liquid;low;;medium;71;8;11
+Funktown Pale Ale;;;The Yeast Bay;TYB;;;WLP4627;;ale;liquid;low;;medium;79;20;23
+Hazy Daze;;;The Yeast Bay;TYB;;;WLP4042;;ale;liquid;medium;;low;81;18;21
+Hazy Daze II;;;The Yeast Bay;TYB;;;WLP4044;;ale;liquid;low;;low;83;19;22
+Hessian Pils;;;The Yeast Bay;TYB;;;WLP4035;;ale;liquid;low;;medium;73.5;7;9
+Hornindal Kveik;;;The Yeast Bay;TYB;;;WLP4050;;ale;liquid;high;;medium;79;27;35
+Lactobacillus Blend;;;The Yeast Bay;TYB;;;WLP4682;;brett-bacteria;liquid;low;;low;80;21;32
+Lactobacillus brevis - Strain TYB282;;;The Yeast Bay;TYB;;;WLP4681;;brett-bacteria;liquid;low;;low;4;21;32
+Lida Kveik;;;The Yeast Bay;TYB;;;WLP4052;;ale;liquid;high;;low;79;27;32
+Lochristi Brettanomyces Blend;;;The Yeast Bay;TYB;;;WLP4623;;brett-bacteria;liquid;low;;medium;80;21;27
+Sour Blend;;;The Yeast Bay;TYB;;;WLP4633;;brett-bacteria;liquid;low;;medium;85;20;26
+Metschnikowia reukaufii ;;;The Yeast Bay;TYB;;;WLP4650;;ale;liquid;medium;;low;22.5;16;32
+Midtbust Kveik;;;The Yeast Bay;TYB;;;WLP4053;;ale;liquid;high;;low;78;24;35
+Midwestern Ale;;;The Yeast Bay;TYB;;;WLP4040;;ale;liquid;medium;;medium;78;18;22
+Northeastern Abbey;;;The Yeast Bay;TYB;;;WLP4015;;ale;liquid;low;;medium;79;20;24
+Pakruojis Lithuanian Farmhouse;;;The Yeast Bay;TYB;;;WLP4047;;ale;liquid;high;;low;95;24;35
+Saison Blend;;;The Yeast Bay;TYB;;;WLP4007;;ale;liquid;low;;medium;79;22;28
+Saison Blend II;;;The Yeast Bay;TYB;;;WLP4021;;ale;liquid;medium;;medium;85;20;27
+Saison/Brettanomyces Blend;;;The Yeast Bay;TYB;;;WLP4626;;brett-bacteria;liquid;low;;medium;80;21;26
+Saison/Brettanomyces Blend II;;;The Yeast Bay;TYB;;;WLP4636;;brett-bacteria;liquid;medium;;medium;83;22;27
+Sigmund's Voss Kveik;;;The Yeast Bay;TYB;;;WLP4045;;ale;liquid;low;;high;80.5;21;38
+Simonaitis Lithuanian Farmhouse;;;The Yeast Bay;TYB;;;WLP4046;;ale;liquid;high;;high;79;24;35
+Transatlantic Berliner Blend;;;The Yeast Bay;TYB;;;WLP4645;;brett-bacteria;liquid;medium;;medium;92.5;19;24
+TYB House Sour Blend;;;The Yeast Bay;TYB;;;;;brett-bacteria;liquid;high;;low;92.5;20;26
+Vermont Ale;;;The Yeast Bay;TYB;;;WLP4000;;ale;liquid;low;;medium;78.5;18;22
+Wallonian Farmhouse;;;The Yeast Bay;TYB;;;WLP4020;;ale;liquid;low;;medium;84.5;20;26
+Wallonian Farmhouse II;;;The Yeast Bay;TYB;;;WLP4022;;ale;liquid;high;;medium;81;20;27
+Wallonian III Farmhouse;;;The Yeast Bay;TYB;;;WLP4023;;ale;liquid;low;;low;83;20;27
+Kveik;;;WHC Lab;WHC;;;;;ale;liquid;high;;high;75;30;35
+Funky Pineapple;;;WHC Lab;WHC;;;;;ale;liquid;medium;;low;80;18;28
+Odin;;;WHC Lab;WHC;;;;;ale;liquid;high;;high;76;25;37
+Sanders;;;WHC Lab;WHC;;;;;ale;liquid;medium;;medium;75;16;21
+Saturated;;;WHC Lab;WHC;;;;;ale;liquid;medium;;medium;73;20;23
+The Wall;;;WHC Lab;WHC;;;;;ale;liquid;medium;;medium;77;16;21
+Abbey Ale;;;White Labs;White Lab;;;WLP530;;ale;liquid;high;;medium-high;77.5;19;22
+Abbey IV Ale;;;White Labs;White Lab;;;WLP540;;ale;liquid;high;;medium;78;19;22
+American Ale Blend;;;White Labs;White Lab;;;WLP060;;ale;liquid;medium;;medium;76;20;22
+American Farmhouse Blend;;;White Labs;White Lab;;;WLP670;;ale;liquid;medium;;medium;78.5;20;22
+American Hefeweizen Ale;;;White Labs;White Lab;;;WLP320;;ale;liquid;medium;;low;72.5;18;21
+American Lager;;;White Labs;White Lab;;;WLP840;;lager;liquid;medium;;medium;77.5;10;13
+American Whiskey;;;White Labs;White Lab;;;WLP065;;ale;liquid;high;;medium;79;24;28
+Antwerp Ale;;;White Labs;White Lab;;;WLP515;;ale;liquid;medium;;medium;76.5;19;21
+Artisanal Country Ale;;;White Labs;White Lab;;;WLP073;;ale;liquid;medium;;medium;77.5;21;28
+Australian Ale;;;White Labs;White Lab;;;WLP009;;ale;liquid;medium;;high;72.5;18;21
+Bavarian Weizen;;;White Labs;White Lab;;;WLP351;;wheat;liquid;medium;;low;75;19;21
+Bedford British;;;White Labs;White Lab;;;WLP006;;ale;liquid;medium;;high;76;18;21
+Belgian Ale;;;White Labs;White Lab;;;WLP550;;ale;liquid;medium;;medium;81.5;20;26
+Belgian Bastogne Ale;;;White Labs;White Lab;;;WLP510;;ale;liquid;high;;medium;77;19;22
+Belgian Golden Ale;;;White Labs;White Lab;;;WLP570;;ale;liquid;high;;low;75.5;20;24
+Belgian Lager;;;White Labs;White Lab;;;WLP815;;lager;liquid;medium;;medium;75;10;13
+Belgian Saison I;;;White Labs;White Lab;;;WLP565;;ale;liquid;medium;;medium;70;20;24
+Belgian Saison II;;;White Labs;White Lab;;;WLP566;;ale;liquid;medium;;medium;81.5;20;26
+Belgian Saison III;;;White Labs;White Lab;;;WLP585;;ale;liquid;medium;;low;72;20;24
+Belgian Sour Mix 1;;;White Labs;White Lab;;;WLP655;;brett-bacteria;liquid;medium;;medium-low;75;27;29
+Belgian Strong Ale;;;White Labs;White Lab;;;WLP545;;ale;liquid;high;;medium;81.5;19;22
+Belgian Style Ale Blend;;;White Labs;White Lab;;;WLP575;;ale;liquid;medium;;medium;77;20;24
+Belgian Style Saison Blend;;;White Labs;White Lab;;;WLP568;;ale;liquid;medium;;medium;75;21;27
+Belgian Wit Ale;;;White Labs;White Lab;;;WLP400;;ale;liquid;medium;;low;76;19;23
+Belgian Wit II Ale;;;White Labs;White Lab;;;WLP410;;ale;liquid;medium;;low;72.5;19;23
+Berliner Weisse Blend;;;White Labs;White Lab;;;WLP630;;brett-bacteria;liquid;medium;;medium;76.5;20;21
+Best Of Both Worlds;;;White Labs;White Lab;;;WLP200;;ale;liquid;medium;;medium;76.5;18;23
+Bourbon;;;White Labs;White Lab;;;WLP070;;ale;liquid;high;;medium;77;22;25
+Brettanomyces Anomalus;;;White Labs;White Lab;;;WLP640;;brett-bacteria;liquid;medium;;low;77;21;29
+Brettanomyces Bruxellensis Trois Vrai;;;White Labs;White Lab;;;WLP648;;brett-bacteria;liquid;medium;;low;85;21;29
+Brettanomyces Bruxellensis;;;White Labs;White Lab;;;WLP650;;brett-bacteria;liquid;medium;;low;78;29;35
+Brettanomyces Claussenii;;;White Labs;White Lab;;;WLP645;;brett-bacteria;liquid;medium;;low;78;29;35
+Brettanomyces Lambicus;;;White Labs;White Lab;;;WLP653;;brett-bacteria;liquid;medium;;low;78;29;35
+British Ale;;;White Labs;White Lab;;;WLP005;;ale;liquid;medium;;high;70.5;18;21
+Burlington Ale;;;White Labs;White Lab;;;WLP095;;ale;liquid;medium;;medium;75.5;19;21
+Burton Ale;;;White Labs;White Lab;;;WLP023;;ale;liquid;medium;;medium;72;20;23
+California Ale V;;;White Labs;White Lab;;;WLP051;;ale;liquid;medium;;medium-high;72.5;19;21
+California Ale;;;White Labs;White Lab;;;WLP001;;ale;liquid;high;;medium;76.5;20;23
+Champagne;;;White Labs;White Lab;;;WLP715;;wine-cider;liquid;;17;low;90;21;24
+Coastal Haze Ale Blend;Coastal Haze;;White Labs;White Lab;;;WLP067;;ale;liquid;high;;medium;78;18;26
+Copenhagen Lager;;;White Labs;White Lab;;;WLP850;;lager;liquid;medium;;medium;75;10;14
+Cream Ale Blend;;;White Labs;White Lab;;;WLP080;;ale;liquid;medium;;medium;77.5;18;21
+Cry Havoc;;;White Labs;White Lab;;;WLP862;;ale;liquid;medium;;medium-low;68;20;23
+Czech Budejovice Lager;;;White Labs;White Lab;;;WLP802;;lager;liquid;medium;;medium;77.5;10;13
+Dry English Ale;;;White Labs;White Lab;;;WLP007;;ale;liquid;medium;;medium-high;75;18;21
+Dusseldorf Alt;;;White Labs;White Lab;;;WLP036;;ale;liquid;medium;;medium;68.5;18;22
+East Coast Ale;;;White Labs;White Lab;;;WLP008;;ale;liquid;medium;;medium-low;72.5;20;23
+East Midlands Ale;;;White Labs;White Lab;;;WLP039;;ale;liquid;medium;;medium-high;77.5;19;21
+Edinburgh Scottish Ale;;;White Labs;White Lab;;;WLP028;;ale;liquid;medium;;medium;72.5;18;21
+English Ale Blend;;;White Labs;White Lab;;;WLP085;;ale;liquid;medium;;medium-high;72.5;20;22
+English Ale;;;White Labs;White Lab;;;WLP002;;ale;liquid;medium;;very-high;66.5;18;20
+English Cider;;;White Labs;White Lab;;;WLP775;;wine-cider;liquid;medium;;medium;90;20;24
+Essex Ale;;;White Labs;White Lab;;;WLP022;;ale;liquid;medium;;medium-high;73.5;19;21
+European Ale;;;White Labs;White Lab;;;WLP011;;ale;liquid;medium;;medium;67.5;18;21
+Flemish Ale Blend;;;White Labs;White Lab;;;WLP665;;ale;liquid;medium;;low;83;20;27
+French Ale;;;White Labs;White Lab;;;WLP072;;ale;liquid;medium;;medium-high;71.5;17;19
+French Saison Ale;;;White Labs;White Lab;;;WLP590;;ale;liquid;medium;;medium;81;21;24
+German Ale II;;;White Labs;White Lab;;;WLP003;;ale;liquid;medium;;medium;76.5;18;21
+German Ale/ Kölsch;;;White Labs;White Lab;;;WLP029;;ale;liquid;medium;;medium;75;18;21
+German Bock Lager;;;White Labs;White Lab;;;WLP833;;lager;liquid;medium;;medium;73;9;13
+German Lager X;;;White Labs;White Lab;;;WLP835;;lager;liquid;medium;;medium;73;10;12
+German Lager;;;White Labs;White Lab;;;WLP830;;lager;liquid;medium;;medium;76.5;10;13
+Hansen Ale Blend;;;White Labs;White Lab;;;WLP075;;ale;liquid;high;;medium;77;19;21
+Hefeweizen Ale;;;White Labs;White Lab;;;WLP300;;wheat;liquid;medium;;low;74;20;22
+Hefeweizen IV Ale;;;White Labs;White Lab;;;WLP380;;wheat;liquid;medium;;low;76.5;19;21
+HP Lager;;;White Labs;White Lab;;;WLP925;;lager;liquid;medium;;medium;77.5;17;20
+Irish Ale;;;White Labs;White Lab;;;WLP004;;ale;liquid;medium;;medium-high;71.5;18;20
+Klassic Ale;;;White Labs;White Lab;;;WLP033;;ale;liquid;medium;;medium;70;19;21
+Lactobacillus Brevis;;;White Labs;White Lab;;;WLP672;;brett-bacteria;liquid;low;;low;80;21;35
+Lactobacillus Delbrueckii Bacteria;;;White Labs;White Lab;;;WLP677;;brett-bacteria;liquid;medium;;low;0;21;24
+Leeuwenhoek Saison Blend;;;White Labs;White Lab;;;WLP564;;ale;liquid;high;;low;79;19;24
+London Ale;;;White Labs;White Lab;;;WLP013;;ale;liquid;medium;;medium;71;19;22
+London Fog Ale;;;White Labs;White Lab;;;WLP066;;ale;liquid;high;;medium;78.5;18;22
+Manchester Ale;;;White Labs;White Lab;;;WLP038;;ale;liquid;medium;;medium-high;72;18;21
+Marañón Canyon Wild Cacao;;;White Labs;White Lab;;;WLP546;;ale;liquid;medium;;low;67.5;18;24
+Mexican Lager;;;White Labs;White Lab;;;WLP940;;lager;liquid;medium;;medium;74;10;13
+Monastary Ale;;;White Labs;White Lab;;;WLP500;;ale;liquid;high;;medium;77.5;18;22
+Munich Helles;;;White Labs;White Lab;;;WLP860;;lager;liquid;medium;;medium;70;9;11
+Neutral Grain;;;White Labs;White Lab;;;WLP078;;ale;liquid;high;;medium;81;24;29
+New Nordic Ale;;;White Labs;White Lab;;;WLP611;;ale;liquid;medium;;medium;70;10;30
+Oktoberfest/Märzen Lager;;;White Labs;White Lab;;;WLP820;;lager;liquid;medium;;medium;69;11;14
+Old Bavarian Lager;;;White Labs;White Lab;;;WLP920;;lager;liquid;medium;;medium;69.5;10;13
+Old Sonoma Ale;;;White Labs;White Lab;;;WLP076;;ale;liquid;medium;;medium;72;19;21
+Opshaug Kveik Ale;;;White Labs;White Lab;;;WLP518;;ale;liquid;medium;;medium;75;25;30
+Pacific Ale;;;White Labs;White Lab;;;WLP041;;ale;liquid;medium;;high;67.5;18;20
+Pilsner Lager;;;White Labs;White Lab;;;WLP800;;lager;liquid;medium;;medium-high;74.5;10;13
+Premium Bitter Ale;;;White Labs;White Lab;;;WLP026;;ale;liquid;medium;;medium;72.5;19;16
+Ringwood Ale: Strain 1187;;;White Labs;White Lab;;;;;ale;liquid;high;;high;77;20;22
+"Saccharomyces ""Bruxellensis"" Trois";;;White Labs;White Lab;;;WLP644;;ale;liquid;medium;;low;85;21;29
+Sake #7;;;White Labs;White Lab;;;WLP705;;wine-cider;liquid;high;;low;90;21;38
+Sake #9;;;White Labs;White Lab;;;WLP709;;wine-cider;liquid;low;;low;75;17;20
+San Diego Super;;;White Labs;White Lab;;;WLP090;;ale;liquid;high;;medium-high;79.5;18;20
+San Francisco Lager;;;White Labs;White Lab;;;WLP810;;lager;liquid;medium;;high;67.5;14;18
+Scotch Whiskey;;;White Labs;White Lab;;;WLP045;;ale;liquid;high;;medium;77;22;25
+Southern German Lager;;;White Labs;White Lab;;;WLP838;;lager;liquid;medium;;medium-high;72;10;13
+Southwold Ale;;;White Labs;White Lab;;;WLP025;;ale;liquid;medium;;medium;71.5;19;21
+Super High Gravity Ale;;;White Labs;White Lab;;;WLP099;;ale;liquid;high;;medium;85;18;21
+Sweet Mead/Wine;;;White Labs;White Lab;;;WLP720;;wine-cider;liquid;;15;low;75;21;24
+Tennessee Whiskey;;;White Labs;White Lab;;;WLP050;;ale;liquid;high;;medium;77;24;26
+Whitbread Ale;;;White Labs;White Lab;;;WLP017;;ale;liquid;medium;;high;70;19;21
+Hazy Daze;;;White Labs;White Lab;;;WLP4044;;ale;liquid;low;;low;81;18;21
+Charlie;;;White Labs;White Lab;;;WLP1983;;ale;liquid;medium;;low;68;20;23
+Hornindal Kveik Ale;;;White Labs;White Lab;;;WLP521;;ale;liquid;high;;high;79;22;37
+Torulaspora delbrueckii;;;White Labs;White Lab;;;WLP603;;ale;liquid;low;;low;40;18;26
+Thai Rice Chong;;;White Labs;White Lab;;;WLP780;;ale;liquid;high;;medium;76;21;26
+Yorkshire Square Ale;;;White Labs;White Lab;;;WLP037;;ale;liquid;medium;;high;70;18;21
+Zurich Lager;;;White Labs;White Lab;;;WLP885;;lager;liquid;medium;;medium;75;10;13
+Sigmund Kveik Ale;;;White Labs;White Lab;;;WLP520;;ale;liquid;high;;medium;79;22;37
+Stranda Kveik Ale;;;White Labs;White Lab;;;WLP519;;ale;liquid;high;;medium;80;22;37
+American Ale;;;Wyeast;;;;1056;;ale;liquid;;10;medium-low;75;16;22
+American Ale II;;;Wyeast;;;;1272;;ale;liquid;;10;high;74;16;22
+American Lager;;;Wyeast;;;;2035;;lager;liquid;;9;medium;75;9;14
+American Wheat;;;Wyeast;;;;1010;;wheat;liquid;;10;low;76;14;23
+Bavarian Lager;;;Wyeast;;;;2206;;lager;liquid;;9;medium-high;75;8;14
+Bavarian Wheat;;;Wyeast;;;;3056;;wheat;liquid;;10;medium;75;18;23
+Bavarian Wheat;;;Wyeast;;;;3638;;wheat;liquid;;10;low;73;18;24
+Belgian Abby Ale II;;;Wyeast;;;;1762;;ale;liquid;;12;medium;75;18;24
+Belgian Ale;;;Wyeast;;;;1214;;ale;liquid;;12;medium-low;75;20;26
+Belgian Ardennes;;;Wyeast;;;;3522;;ale;liquid;;12;high;74;18;29
+Belgian Dark Ale;;;Wyeast;;;;3822;;ale;liquid;;12;medium;76;18;27
+Belgian Lambic Blend;;;Wyeast;;;;3278;;ale;liquid;;12;medium;75;17;24
+Belgian Saison;;;Wyeast;;;;3724;;ale;liquid;;12;low;78;21;35
+Belgian Schelde;;;Wyeast;;;;3655;;ale;liquid;;11;medium;75;17;23
+Belgian Stout;;;Wyeast;;;;1581;;ale;liquid;;12;medium;80;18;24
+Belgian Strong Ale;;;Wyeast;;;;1388;;ale;liquid;;12;low;76;18;27
+Belgian Wheat;;;Wyeast;;;;3942;;wheat;liquid;;12;medium;74;18;23
+Belgian Witbier;;;Wyeast;;;;3944;;ale;liquid;;12;medium-low;74;17;24
+Berliner Weisse Blend;;;Wyeast;;;;3191;;brett-bacteria;liquid;;6;low;75;20;22
+Bier de Garde;;;Wyeast;;;;3725;;ale;liquid;;12;low;76;21;35
+Bohemian Lager;;;Wyeast;;;;2124;;lager;liquid;;9;medium;75;9;14
+Brettanomyces bruxellensis;;;Wyeast;;;;5112;;brett-bacteria;liquid;;12;medium;90;16;24
+Brettanomyces Claussenii;;;Wyeast;;;;5151-PC;;brett-bacteria;dry;high;;medium;80;16;24
+Brettanomyces lambicus;;;Wyeast;;;;5526;;brett-bacteria;liquid;;12;medium;90;16;24
+British Ale;;;Wyeast;;;;1098;;ale;liquid;;10;medium-high;74;18;22
+British Ale;;;Wyeast;;;;1335;;ale;liquid;;10;high;74.5;17;24
+British Cask Ale;;;Wyeast;;;;1026;;ale;liquid;;10;medium-high;76;17;22
+Budvar Lager;;;Wyeast;;;;2000;;lager;liquid;;9;medium-high;73;9;13
+California Lager;;;Wyeast;;;;2112;;lager;liquid;;9;high;69;14;20
+Canadian/Belgian Ale;;;Wyeast;;;;3864;;ale;liquid;;12;medium;77;18;27
+Cider;;;Wyeast;;;;4766;;wine-cider;liquid;;12;low;85;18;21
+Czech Pils;;;Wyeast;;;;2278;;lager;liquid;;9;medium-high;72;10;14
+Danish Lager;;;Wyeast;;;;2042;;lager;liquid;;9;low;75;8;13
+Denny's Favorite 50;;;Wyeast;;;;1450;;ale;liquid;;10;low;75;16;21
+Dry Mead;;;Wyeast;;;;4632;;wine-cider;liquid;;18;low;95;13;24
+English Special Bitter;;;Wyeast;;;;1768;;ale;liquid;;9;high;70;18;22
+European Ale;;;Wyeast;;;;1338;;ale;liquid;;10;high;69;17;22
+European Lager;;;Wyeast;;;;2247;;lager;liquid;;9;low;75;8;13
+Farmhouse Ale;;;Wyeast;;;;3726;;ale;liquid;;12;;76;21;35
+Flanders Golden Ale;;;Wyeast;;;;3739;;ale;liquid;;12;medium-low;76;18;27
+Forbidden Fruit;;;Wyeast;;;;3463;;ale;liquid;;12;low;74;17;24
+French Saison;;;Wyeast;;;;3711;;ale;liquid;;12;low;80;18;25
+Gambrinus Style Lager;;;Wyeast;;;;2002-PC;;lager;liquid;;9;medium-high;73;8;13
+German Ale;;;Wyeast;;;;1007;;ale;liquid;;11;low;75;13;20
+German Wheat;;;Wyeast;;;;3333;;wheat;liquid;;10;high;73;17;24
+Hella Bock;;;Wyeast;;;;2487;;ale;liquid;;12;medium;72;9;13
+Irish Ale;;;Wyeast;;;;1084;;ale;liquid;;10;medium;73;17;22
+Kölsch;;;Wyeast;;;;2565;;ale;liquid;;10;low;75;13;21
+Kölsch II;;;Wyeast;;;;2575;;ale;liquid;;10;low;75;13;21
+Lactobacillus brevis;;;Wyeast;;;;5223-PC;;brett-bacteria;liquid;high;;low;0;16;35
+Lactobacillus;;;Wyeast;;;;5335;;brett-bacteria;liquid;;9;;75;16;35
+Leuven Pale Ale;;;Wyeast;;;;3538;;ale;liquid;;12;high;76;18;27
+London Ale;;;Wyeast;;;;1028;;ale;liquid;;10;medium-low;75;16;22
+London Ale III;;;Wyeast;;;;1318;;ale;liquid;;10;high;73;18;23
+London ESB Ale;;;Wyeast;;;;1968;;ale;liquid;;10;very-high;69;18;22
+Munich Lager;;;Wyeast;;;;2308;;lager;liquid;;9;medium;72;9;13
+Munich Lager II;;;Wyeast;;;;2352;;lager;liquid;;10;medium;73;11;17
+NB NeoBritannia;;;Wyeast;;;;1945;;ale;liquid;;10;medium-high;74;19;23
+North American Lager;;;Wyeast;;;;2272;;lager;liquid;;9;high;73;11;14
+Northwest Ale;;;Wyeast;;;;1332;;ale;liquid;;10;high;69;18;24
+Octoberfest Lager Blend;;;Wyeast;;;;2633;;lager;liquid;;9;medium-low;75;9;14
+Pediococcus;;;Wyeast;;;;5733;;ale;liquid;;9;;75;16;35
+Pilsen Lager;;;Wyeast;;;;2007;;lager;liquid;;9;medium;73;9;13
+Pilsner Urquell H-Strain;;;Wyeast;;;;2001-PC;;lager;liquid;medium;;medium;74;9;13
+Private Collection West Coast IPA;;;Wyeast;;;;1217;;ale;liquid;;10;medium-high;75;17;23
+Rasenmäher Lager;;;Wyeast;;;;2252;;lager;liquid;;9;low;75;9;20
+Ringwood Ale;;;Wyeast;;;;1187;;ale;liquid;;10;high;70;18;23
+Rocky Mountain Lager;;;Wyeast;;;;2105;;lager;liquid;;10;medium-high;72;9;13
+Roeselare Ale Blend;;;Wyeast;;;;3763;;ale;liquid;;11;;80;18;29
+Rogue Pacman;;;Wyeast;;;;1764;;ale;liquid;;12;medium-high;75;16;22
+Saison-Brett Blend;;;Wyeast;;;;3031-PC;;brett-bacteria;liquid;;12;low;85;18;27
+Sake;;;Wyeast;;;;WY4134;;wine-cider;dry;high;;low;65;16;24
+Scottish Ale;;;Wyeast;;;;1728;;ale;liquid;;12;high;71;13;24
+Staro Prague Lager;;;Wyeast;;;;2782;;lager;liquid;;11;high;72;10;14
+Sweet Mead;;;Wyeast;;;;4184;;wine-cider;liquid;;11;medium;75;18;24
+Thames Valley Ale;;;Wyeast;;;;1275;;ale;liquid;;10;medium-low;77;17;22
+Thames Valley II;;;Wyeast;;;;1882;;ale;liquid;;10;high;75;16;21
+Trappist Blend;;;Wyeast;;;;3789;;ale;liquid;;12;medium;77;20;29
+Trappist High Gravity;;;Wyeast;;;;3787;;ale;liquid;;12;medium-high;76;18;26
+Urquell Lager;;;Wyeast;;;;2001;;lager;liquid;;9;medium-high;74;9;14
+Weihenstephan Weizen;;;Wyeast;;;;3068;;wheat;liquid;;10;low;75;18;24
+West Yorkshire;;;Wyeast;;;;1469;;ale;liquid;;9;high;69;18;22
+Whitbread Ale;;;Wyeast;;;;1099;;ale;liquid;;10;high;70;18;24
+Coopers Ale;;Coopers;Coopers;;;;;;ale;dry;medium;;high;75;20;24
+Premium Gold;;;Muntons;;;;;;ale;dry;;;medium;75;14;25
