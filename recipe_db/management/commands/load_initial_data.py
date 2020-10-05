@@ -129,7 +129,7 @@ def load_yeasts():
 
         row = map(cast_values, row)
         data = dict(zip(header, row))
-        yeast_id = Yeast.create_id(data['name'], data['brand'], data['product_id'])
+        yeast_id = Yeast.create_id(data['name'], data['lab'], data['brand'], data['product_id'])
 
         try:
             yeast = Yeast.objects.get(pk=yeast_id)

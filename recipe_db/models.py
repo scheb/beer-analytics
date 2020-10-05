@@ -441,9 +441,10 @@ class Yeast(models.Model):
     name = models.CharField(max_length=255)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
     alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
+    lab = models.CharField(max_length=255)
+    alt_lab = models.CharField(max_length=255, default=None, blank=True, null=True)
     brand = models.CharField(max_length=255, default=None, blank=True, null=True)
     alt_brand = models.CharField(max_length=255, default=None, blank=True, null=True)
-    alt_brand_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
     form = models.CharField(max_length=16, choices=FORM_CHOICES, default=None, blank=True, null=True)
     type = models.CharField(max_length=16, choices=TYPE_CHOICES, default=None, blank=True, null=True)
     attenuation = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
@@ -458,20 +459,29 @@ class Yeast(models.Model):
     recipes_percentile = models.FloatField(default=None, blank=True, null=True)
 
     class Meta:
-        unique_together = ('brand', 'product_id')
+        unique_together = ('lab', 'product_id')
 
     def save(self, *args, **kwargs) -> None:
         if self.id == '':
-            self.id = self.create_id(self.name, self.brand, self.product_id)
+            self.id = self.create_id(self.name, self.lab, self.brand, self.product_id)
         super().save(*args, **kwargs)
 
     @classmethod
-    def create_id(cls, name: str, brand: str, product_id: Optional[str]) -> str:
-        if product_id is not None and str(product_id) not in name:
-            combined = "{} {} {}".format(brand, name, product_id)
-        else:
-            combined = "{} {}".format(brand, name)
-        return create_human_readable_id(combined)
+    def create_id(cls, name: str, lab: str, brand: str, product_id: Optional[str]) -> str:
+        # Prefix name with brand
+        if brand is not None and brand not in name:
+            name = "%s %s" % (brand, name)
+
+        # Prefix with lab
+        name = "%s %s" % (lab, name)
+
+        # Suffix with product id
+        if product_id is not None:
+            product_id = str(product_id)
+            if product_id not in name:
+                name = "%s %s" % (name, product_id)
+
+        return create_human_readable_id(name)
 
     @classmethod
     def get_brands(cls) -> list:

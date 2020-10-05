@@ -123,9 +123,9 @@ class GenericMapper(Mapper):
             self.mapping.add(item.name, item)
 
             # Add alternative names
-            if item.alt_names is not None:
+            if hasattr(item, 'alt_names') and item.alt_names is not None:
                 self.add_alt_names(item.alt_names, item)
-            if item.alt_names_extra is not None:
+            if hasattr(item, 'alt_names_extra') and item.alt_names_extra is not None:
                 self.add_alt_names(item.alt_names_extra, item)
 
     def add_alt_names(self, alt_names: str, item: object):
@@ -301,21 +301,29 @@ class FermentableMapper(GenericMapper):
 class YeastBrandMapper(GenericMapper):
     def __init__(self) -> None:
         super().__init__()
-        self.create_mapping(Yeast.objects.filter().exclude(brand=None))
+        self.create_mapping(Yeast.objects.filter())
 
     def create_mapping(self, yeasts: Iterable[Yeast]) -> None:
         for yeast in yeasts:
-            # Add names
-            self.mapping.add(yeast.brand, yeast.brand)
+            # Add lab name
+            if yeast.lab is not None:
+                self.mapping.add(yeast.lab, yeast.lab)
+                if yeast.alt_lab is not None:
+                    self.add_alt_names(yeast.alt_lab, yeast.lab)
 
-            # Add alternative names
-            if yeast.alt_brand is not None:
-                self.add_alt_names(yeast.alt_brand, yeast.brand)
-            if yeast.alt_brand_extra is not None:
-                self.add_alt_names(yeast.alt_brand_extra, yeast.brand)
+            # Add brand name
+            if yeast.brand is not None:
+                self.mapping.add(yeast.brand, yeast.brand)
+                if yeast.alt_brand is not None:
+                    self.add_alt_names(yeast.alt_brand, yeast.brand)
 
     def get_clean_name(self, item: RecipeYeast) -> str:
-        value = item.lab or item.kind_raw or ''
+        value = item.kind_raw or ''
+
+        # Make sure there's meaningful lab name
+        if item.lab is not None and len(item.lab) > 2 and item.lab not in value:
+            value = "%s %s" % (item.lab, value)
+
         return self.normalize(value)
 
     def get_name_variants(self, name: str) -> iter:
@@ -348,13 +356,13 @@ class YeastProductIdMapper(GenericMapper):
 
     def get_name_variants(self, name: str) -> iter:
         name = self.normalize(name)
-        if re.fullmatch('\\w{2,10}', name):
+        if re.fullmatch('[\\w-]{2,10}', name):
             yield from get_product_id_variants(name)
         else:
             yield name
 
     def normalize(self, value: str) -> str:
-        return value.lower().strip()
+        return normalize_name(value, TRANSLIT_SHORT)
 
 
 class YeastProductNameMapper(GenericMapper):
@@ -391,9 +399,17 @@ class YeastBrandProductIdMapper(Mapper):
         for yeast in yeasts:
             if yeast.product_id is None:
                 continue  # No product id available, skip
-            if yeast.brand not in brand_yeasts:
-                brand_yeasts[yeast.brand] = []
-            brand_yeasts[yeast.brand].append(yeast)
+
+            # Lab name
+            if yeast.lab not in brand_yeasts:
+                brand_yeasts[yeast.lab] = []
+            brand_yeasts[yeast.lab].append(yeast)
+
+            # Brand name
+            if yeast.brand is not None:
+                if yeast.brand not in brand_yeasts:
+                    brand_yeasts[yeast.brand] = []
+                brand_yeasts[yeast.brand].append(yeast)
 
         for brand in brand_yeasts:
             self.brand_id_mappers[brand] = YeastProductIdMapper(brand_yeasts[brand])
@@ -420,9 +436,16 @@ class YeastBrandProductNameMapper(Mapper):
         brand_yeasts = {}
         yeasts = Yeast.objects.all()
         for yeast in yeasts:
-            if yeast.brand not in brand_yeasts:
-                brand_yeasts[yeast.brand] = []
-            brand_yeasts[yeast.brand].append(yeast)
+            # Lab name
+            if yeast.lab not in brand_yeasts:
+                brand_yeasts[yeast.lab] = []
+            brand_yeasts[yeast.lab].append(yeast)
+
+            # Brand name
+            if yeast.brand is not None:
+                if yeast.brand not in brand_yeasts:
+                    brand_yeasts[yeast.brand] = []
+                brand_yeasts[yeast.brand].append(yeast)
 
         for brand in brand_yeasts:
             self.brand_name_mappers[brand] = YeastProductNameMapper(brand_yeasts[brand])
