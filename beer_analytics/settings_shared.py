@@ -123,6 +123,7 @@ PIPELINE = {
                 'scss/beer_analytics.scss',
             ),
             'output_filename': 'css/style.css',
+            'variant': 'datauri',
         },
     },
     'JAVASCRIPT': {

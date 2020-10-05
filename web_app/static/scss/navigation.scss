@@ -30,7 +30,7 @@ header {
             @include navbar-icon;
             margin-right: 0.3rem;
             vertical-align: bottom;
-            background-image: url('../img/logo.svg');
+            background-image: url('../img/embed/logo.svg');
             opacity: 0.9;
         }
     }
@@ -80,7 +80,7 @@ header {
 
 .icon-beer {
     width: 32px;
-    background-image: url('../img/icon-beer.svg');
+    background-image: url('../img/embed/icon-beer.svg');
 
     @include media-breakpoint-up('md') {
         width: 19px;
@@ -89,7 +89,7 @@ header {
 
 .icon-hop {
     width: 32px;
-    background-image: url('../img/icon-hop.svg');
+    background-image: url('../img/embed/icon-hop.svg');
 
     @include media-breakpoint-up('md') {
         width: 26px;
@@ -98,7 +98,7 @@ header {
 
 .icon-fermentable {
     width: 32px;
-    background-image: url('../img/icon-fermentable.svg');
+    background-image: url('../img/embed/icon-fermentable.svg');
 
     @include media-breakpoint-up('md') {
         width: 18px;
@@ -107,12 +107,12 @@ header {
 
 .icon-yeast {
     width: 32px;
-    background-image: url('../img/icon-yeast.svg');
+    background-image: url('../img/embed/icon-yeast.svg');
 }
 
 .icon-github {
     width: 32px;
-    background-image: url('../img/icon-github.svg');
+    background-image: url('../img/embed/icon-github.svg');
 }
 
 .nav-link {
@@ -136,11 +136,11 @@ header {
 
 .navbar-burger-icon {
     @include navbar-toggler-icon;
-    background-image: url('../img/icon-burger.svg');
+    background-image: url('../img/embed/icon-burger.svg');
 }
 
 
 .navbar-filter-icon {
     @include navbar-toggler-icon;
-    background-image: url('../img/icon-filter.svg');
+    background-image: url('../img/embed/icon-filter.svg');
 }
