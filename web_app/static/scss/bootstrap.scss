@@ -19,6 +19,8 @@ $gray-700: shade-color($gray, 4);
 $gray-800: shade-color($gray, 6);
 $gray-900: shade-color($gray, 8);
 
+$primary-light: tint-color($primary, 8);
+
 $theme-colors: (
     "primary": $primary,
     "secondary": $secondary,

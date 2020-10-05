@@ -11,4 +11,23 @@
     .sidebar-content {
         margin: 0 1rem;
     }
+
+    a {
+        color: $primary-light;
+    }
+
+    .table-of-contents {
+        ul {
+            @include list-unstyled();
+            margin-top: 0.25rem;
+            padding: 0 0.5rem;
+
+            a {
+                text-decoration: none;
+                &:hover {
+                    color: $primary;
+                }
+            }
+        }
+    }
 }
