@@ -45,44 +45,56 @@
         </dl>
     </div>
 
-    <section class="card card-chart">
-        <div class="card-header">
-            <h2><a href="#popularity" id="popularity" class="anchor"><span></span></a>Popularity Over Time</h2>
-        </div>
-        <div class="card-body">
-            <div id="chart-popularity" class="chart-m">
-                <noscript>
-                    {{ yeast|chart_image:"popularity"|safe }}
-                </noscript>
+    {% with chart_type="popularity" anchor="popularity" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Popularity Over Time</h2>
             </div>
-        </div>
-    </section>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-m">
+                    <noscript>
+                        {{ yeast|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
 
-    <section class="card card-chart">
-        <div class="card-header">
-            <h2><a href="#styles-number-recipes" id="styles-number-recipes" class="anchor"><span></span></a>Typical Styles <small class="text-muted">by Number of Recipes</small></h2>
-        </div>
-        <div class="card-body">
-            <div id="chart-styles-abs" class="chart-l">
-                <noscript>
-                    {{ yeast|chart_image:"typical-styles-absolute"|safe }}
-                </noscript>
+    {% with chart_type="typical-styles-absolute" anchor="styles-number-recipes" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2>
+                    <a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>
+                    Typical Styles <small class="text-muted">by Number of Recipes</small>
+                </h2>
             </div>
-        </div>
-    </section>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-l">
+                    <noscript>
+                        {{ yeast|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
 
-    <section class="card card-chart">
-        <div class="card-header">
-            <h2><a href="#styles-percent-recipes" id="styles-percent-recipes" class="anchor"><span></span></a>Typical Styles <small class="text-muted">by Percent of Recipes</small></h2>
-        </div>
-        <div class="card-body">
-            <div id="chart-styles-rel" class="chart-l">
-                <noscript>
-                    {{ yeast|chart_image:"typical-styles-relative"|safe }}
-                </noscript>
+    {% with chart_type="typical-styles-relative" anchor="styles-percent-recipes" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2>
+                    <a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>
+                    Typical Styles <small class="text-muted">by Percent of Recipes</small>
+                </h2>
             </div>
-        </div>
-    </section>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-l">
+                    <noscript>
+                        {{ yeast|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
 {% endblock %}
 
 {% block script %}
@@ -91,8 +103,8 @@ window.addEventListener('load', function ()
 {
     // Charts
     display_graph('chart-popularity', '{{ yeast|chart_js:"popularity" }}');
-    display_graph('chart-styles-abs', '{{ yeast|chart_js:"typical-styles-absolute" }}');
-    display_graph('chart-styles-rel', '{{ yeast|chart_js:"typical-styles-relative" }}');
+    display_graph('chart-typical-styles-absolute', '{{ yeast|chart_js:"typical-styles-absolute" }}');
+    display_graph('chart-typical-styles-relative', '{{ yeast|chart_js:"typical-styles-relative" }}');
 });
 </script>
 {% endblock %}
