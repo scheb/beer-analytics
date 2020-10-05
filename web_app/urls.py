@@ -43,5 +43,6 @@ urlpatterns = [
     path('yeasts/<str:type>/<str:slug>/', yeast.detail, name='yeast_detail'),
     path('yeasts/<str:type>/<str:slug>/charts/<str:chart_type>.<cformat:format>', yeast.chart, name='yeast_chart'),
 
+    path('trends/', trend.overview, name='trend_overview'),
     path('trends/<str:chart_type>.<cformat:format>', trend.chart, name='trend_chart'),
 ]
