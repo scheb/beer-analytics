@@ -19,48 +19,42 @@
     }
 }
 
-.chart-s {
-    min-height: 10rem;
+@mixin chart-size($height) {
+    min-height: $height;
+
+    &.chart-loading {
+        height: $height;
+    }
+
+    &.chart-no-data {
+        min-height: 0;
+        transition: min-height 0.15s ease-in-out;
+    }
 }
 
-.chart-s .chart-loading,
-.chart-s .no-data {
-    height: 10rem;
+.chart-s {
+    @include chart-size(10rem)
 }
 
 .chart-m {
-    min-height: 20rem;
-}
-
-.chart-m .chart-loading,
-.chart-m .no-data {
-    height: 20rem;
+    @include chart-size(20rem)
 }
 
 .chart-l {
-    min-height: 30rem;
+    @include chart-size(30rem)
 }
 
-.chart-l .chart-loading,
-.chart-l .no-data {
-    height: 30rem;
-}
-
-.no-data {
-    display: flex;
+.chart-no-data p {
     width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
+    margin: 0;
+    text-align: center;
     font-size: 1.5rem;
     line-height: 100%;
-    color: #5d5d5d;
-    background: #f7f7f7;
+    color: $gray-500;
 }
 
 .chart-loading {
     display: flex;
-    width: 100%;
     justify-content: center;
     align-items: center;
 }

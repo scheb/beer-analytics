@@ -127,7 +127,8 @@ h2, h3 {
 
 
 // Column lists
-.column-list {
+.column-list,
+.column-list-wide {
     @include list-unstyled();
     margin-left: 2rem;
     margin-right: 2rem;
@@ -135,7 +136,9 @@ h2, h3 {
     li {
         break-inside: avoid;
     }
+}
 
+.column-list {
     @include media-breakpoint-up('sm') {
         column-count: 2;
     }
@@ -150,6 +153,22 @@ h2, h3 {
 
     @include media-breakpoint-up('xxl') {
         column-count: 5;
+    }
+}
+
+.column-list-wide {
+    column-gap: 3rem;
+
+    @include media-breakpoint-up('sm') {
+        column-count: 1;
+    }
+
+    @include media-breakpoint-up('lg') {
+        column-count: 2;
+    }
+
+    @include media-breakpoint-up('xxl') {
+        column-count: 3;
     }
 }
 
