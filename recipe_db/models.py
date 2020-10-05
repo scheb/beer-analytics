@@ -244,6 +244,7 @@ class Fermentable(models.Model):
     type = models.CharField(max_length=32, choices=TYPE_CHOICES, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
     alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
+    description = models.CharField(max_length=255, default=None, blank=True, null=True)
 
     # Calculated metrics from recipes
     recipes_count = models.IntegerField(default=None, blank=True, null=True)
@@ -315,6 +316,10 @@ class Hop(models.Model):
     use = models.CharField(max_length=16, choices=USE_CHOICES, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
     alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
+    substitutes = models.CharField(max_length=255, default=None, blank=True, null=True)
+    used_for = models.CharField(max_length=255, default=None, blank=True, null=True)
+    aroma_tags = models.CharField(max_length=255, default=None, blank=True, null=True)
+    description = models.CharField(max_length=255, default=None, blank=True, null=True)
 
     # Calculated metrics from recipes
     recipes_count = models.IntegerField(default=None, blank=True, null=True)
@@ -453,6 +458,7 @@ class Yeast(models.Model):
     flocculation = models.CharField(max_length=16, choices=FLOCCULATION_CHOICES, default=None, blank=True, null=True)
     tolerance = models.CharField(max_length=16, choices=TOLERANCE_CHOICES, default=None, blank=True, null=True)
     tolerance_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    description = models.CharField(max_length=255, default=None, blank=True, null=True)
 
     # Calculated metrics from recipes
     recipes_count = models.IntegerField(default=None, blank=True, null=True)
