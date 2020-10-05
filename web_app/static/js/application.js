@@ -42,7 +42,8 @@ ChartMount.prototype.load = function(query) {
         this.current_request.abort()
     }
 
-    this.container.innerHTML = '<div class="chart-loading"><span></span></div>'
+    this.container.classList.add('chart-loading')
+    this.container.innerHTML = '<span></span>'
 
     var query_string = this.serializeFilter(query)
     var url = this.chartUrl + (query_string ? '?'+query_string : '')
@@ -53,14 +54,17 @@ ChartMount.prototype.load = function(query) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             self.current_request = null
+            self.container.classList.remove('chart-loading')
             if (xhr.status === 204) {
-                self.container.innerHTML = '<p class="no-data"><span>No data</span></p>'
+                self.container.classList.add('chart-no-data')
+                self.container.innerHTML = '<p>No data</p>'
             } else if (xhr.status === 200) {
-                self.container.innerHTML = '';
+                self.container.innerHTML = ''
                 var data = JSON.parse(xhr.responseText);
                 Plotly.newPlot(self.container.id, data.data, data.layout, self.chartConfig)
             } else {
-                self.container.innerHTML = '<p class="no-data"><span>Failed loading data</span></p>'
+                self.container.classList.add('chart-no-data')
+                self.container.innerHTML = '<p>Failed loading data</p>'
             }
         }
     }
