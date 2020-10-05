@@ -2,11 +2,16 @@ import math
 
 from django.core.management.base import BaseCommand
 
-from recipe_db.analytics import load_all_recipes, calculate_style_metric, calculate_style_recipe_count, \
-    calculate_hop_recipe_count, calculate_hop_metric, calculate_fermentable_recipe_count, \
-    calculate_fermentable_metric, load_all_recipe_fermentables_aggregated, load_all_recipe_hops_aggregated, \
-    get_hop_use_counts, get_style_percentiles, get_fermentables_percentiles, get_hops_percentiles, \
-    get_yeasts_percentiles, load_all_recipe_yeasts_aggregated, calculate_yeast_recipe_count
+from recipe_db.analytics.charts.hop import get_hop_use_counts
+from recipe_db.analytics.metrics.fermentable import calculate_fermentable_metric, calculate_fermentable_recipe_count, \
+    get_fermentables_percentiles, load_all_recipe_fermentables_aggregated
+from recipe_db.analytics.metrics.hop import calculate_hop_metric, calculate_hop_recipe_count, get_hops_percentiles, \
+    load_all_recipe_hops_aggregated
+from recipe_db.analytics.metrics.style import calculate_style_metric, calculate_style_recipe_count, \
+    get_style_percentiles
+from recipe_db.analytics.metrics.yeast import calculate_yeast_recipe_count, get_yeasts_percentiles, \
+    load_all_recipe_yeasts_aggregated
+from recipe_db.analytics.utils import load_all_recipes
 from recipe_db.models import Style, Hop, Fermentable, Yeast
 
 STYLE_METRICS = ['abv', 'ibu', 'ebc', 'srm', 'og', 'fg', 'original_plato', 'final_plato']

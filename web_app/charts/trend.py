@@ -1,6 +1,7 @@
 from abc import ABC
 
-from recipe_db.analytics import get_hops_popularity, get_styles_popularity, get_most_popular_hops
+from recipe_db.analytics.charts.hop import get_most_popular_hops, get_hops_popularity
+from recipe_db.analytics.charts.style import get_styles_popularity
 from recipe_db.models import Hop, Style
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.plot import LinesChart

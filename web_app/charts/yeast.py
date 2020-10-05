@@ -1,6 +1,7 @@
 from abc import ABC
 
-from recipe_db.analytics import get_yeast_popularity, get_yeast_common_styles_absolute, get_yeast_common_styles_relative
+from recipe_db.analytics.charts.yeast import get_yeast_common_styles_relative, get_yeast_common_styles_absolute, \
+    get_yeast_popularity
 from recipe_db.models import Yeast
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.plot import LinesChart, BarChart
