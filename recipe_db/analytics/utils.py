@@ -23,10 +23,6 @@ def get_yeast_names_dict() -> dict:
     return dict(connection.cursor().execute("SELECT id, name FROM recipe_db_yeast"))
 
 
-def load_all_recipes():
-    return pd.read_sql('SELECT * FROM recipe_db_recipe', connection)
-
-
 def remove_outliers(df: DataFrame, field: str, cutoff_percentile: float) -> DataFrame:
     lower_limit = df[field].quantile(cutoff_percentile)
     upper_limit = df[field].quantile(1.0 - cutoff_percentile)

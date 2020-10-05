@@ -2,8 +2,7 @@ from abc import ABC
 
 from recipe_db.analytics.charts.hop import get_hop_pairing_hops, get_hop_amount_range_per_use, \
     get_hop_amount_range_per_style, get_hop_usage, get_hop_common_styles_relative, get_hop_common_styles_absolute, \
-    get_hop_popularity, get_hop_amount_range
-from recipe_db.analytics.metrics.hop import get_hop_metric_values
+    get_hop_popularity, get_hop_amount_range, get_hop_metric_values
 from recipe_db.models import Hop
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.plot import LinesChart, BarChart, PreAggregatedPairsBoxPlot, PreAggregateHistogramChart, \

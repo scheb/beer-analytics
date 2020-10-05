@@ -2,10 +2,10 @@ import pandas as pd
 from django.db import connection
 from pandas import DataFrame
 
-from recipe_db.analytics import lowerfence, q1, q3, upperfence, POPULARITY_MIN_MONTH
+from recipe_db.analytics import lowerfence, q1, q3, upperfence, POPULARITY_MIN_MONTH, METRIC_PRECISION
 from recipe_db.analytics.charts.style import get_num_recipes_per_style
 from recipe_db.analytics.utils import get_hop_names_dict, get_style_names_dict, get_num_recipes_per_month, \
-    set_multiple_series_start, set_series_start
+    set_multiple_series_start, set_series_start, remove_outliers
 from recipe_db.models import Style, Hop, RecipeHop
 
 
@@ -123,25 +123,8 @@ def get_hop_amount_range_per_use(hop: Hop) -> DataFrame:
     return aggregated
 
 
-def get_hop_use_counts(hop: Hop) -> dict:
-    results = connection.cursor().execute('''
-        SELECT use, count(DISTINCT recipe_id) AS num_recipes
-        FROM recipe_db_recipehop
-        WHERE kind_id = %s AND use IS NOT NULL
-        GROUP BY use
-    ''', params=[hop.id])
-
-    count_per_use = {}
-    for result in results:
-        (use, count) = result
-        count_per_use[use] = count
-
-    return count_per_use
-
-
 def get_hop_usage(hop: Hop) -> DataFrame:
     return DataFrame(hop.use_count)
-
 
 
 def get_style_hop_pairings(style: Style) -> DataFrame:
@@ -347,3 +330,24 @@ def get_hop_pairing_hops(hop: Hop) -> DataFrame:
 
     hops = pd.read_sql(query, connection, params=[hop_id])
     return get_hop_pairings(hops, pair_must_include=hop)
+
+
+def get_hop_metric_values(hop: Hop, metric: str) -> DataFrame:
+    precision = METRIC_PRECISION[metric] if metric in METRIC_PRECISION else METRIC_PRECISION['default']
+
+    query = '''
+            SELECT round({}, {}) as {}
+            FROM recipe_db_recipehop
+            WHERE kind_id = %s
+        '''.format(metric, precision, metric)
+
+    df = pd.read_sql(query, connection, params=[hop.id])
+    df = remove_outliers(df, metric, 0.02)
+
+    histogram = df.groupby([pd.cut(df[metric], 16, precision=precision)])[metric].agg(['count'])
+    histogram = histogram.reset_index()
+    histogram[metric] = histogram[metric].map(str)
+
+    return histogram
+
+
