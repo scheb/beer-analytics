@@ -5,7 +5,7 @@
         Specifications
     </h2>
     <div class="row row-cols-1 row-cols-lg-5 g-1 mb-4">
-        {% if style.recipes_abv_min or style.abv_min %}
+        {% if style.recipes_abv_min or style.abv_min %}{% with chart_type="abv-histogram" %}
             <div class="col">
                 <div class="card text-center h-100">
                     <div class="card-header"><h3 class="h5">Alcohol</h3></div>
@@ -23,16 +23,16 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent"><div id="chart-spec-abv" class="chart-s">
+                    <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">
                         <noscript>
-                            {{ style|chart_image:"abv-histogram"|safe }}
+                            {{ style|chart_image:chart_type|safe }}
                         </noscript>
                     </div></div>
                 </div>
             </div>
-        {% endif %}
+        {% endwith %}{% endif %}
 
-        {% if style.ibu_min or style.recipes_ibu_min %}
+        {% if style.ibu_min or style.recipes_ibu_min %}{% with chart_type="ibu-histogram" %}
             <div class="col">
                 <div class="card text-center h-100">
                     <div class="card-header"><h3 class="h5">Bitterness</h3></div>
@@ -50,16 +50,16 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent"><div id="chart-spec-ibu" class="chart-s">
+                    <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">
                         <noscript>
-                            {{ style|chart_image:"ibu-histogram"|safe }}
+                            {{ style|chart_image:chart_type|safe }}
                         </noscript>
                     </div></div>
                 </div>
             </div>
-        {% endif %}
+        {% endwith %}{% endif %}
 
-        {% if style.recipes_ebc_min or style.ebc_min %}
+        {% if style.recipes_ebc_min or style.ebc_min %}{% with chart_type="color-srm-histogram" %}
             <div class="col">
                 <div class="card text-center h-100">
                     <div class="card-header"><h3 class="h5">Color</h3></div>
@@ -79,16 +79,16 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent"><div id="chart-spec-color" class="chart-s">
+                    <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">
                         <noscript>
-                            {{ style|chart_image:"color-srm-histogram"|safe }}
+                            {{ style|chart_image:chart_type|safe }}
                         </noscript>
                     </div></div>
                 </div>
             </div>
-        {% endif %}
+        {% endwith %}{% endif %}
 
-        {% if style.recipes_original_plato_min or style.original_plato_min %}
+        {% if style.recipes_original_plato_min or style.original_plato_min %}{% with chart_type="original-gravity-histogram" %}
             <div class="col">
                 <div class="card text-center h-100">
                     <div class="card-header"><h3 class="h5">Original Extract</h3></div>
@@ -108,16 +108,16 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent"><div id="chart-spec-og" class="chart-s">
+                    <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">
                         <noscript>
-                            {{ style|chart_image:"original-gravity-histogram"|safe }}
+                            {{ style|chart_image:chart_type|safe }}
                         </noscript>
                     </div></div>
                 </div>
             </div>
-        {% endif %}
+        {% endwith %}{% endif %}
 
-        {% if style.recipes_final_plato_min or style.final_plato_min %}
+        {% if style.recipes_final_plato_min or style.final_plato_min %}{% with chart_type="final-gravity-histogram" %}
             <div class="col">
                 <div class="card text-center h-100">
                     <div class="card-header"><h3 class="h5">Final Gravity</h3></div>
@@ -137,14 +137,14 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent"><div id="chart-spec-fg" class="chart-s">
+                    <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">
                         <noscript>
-                            {{ style|chart_image:"final-gravity-histogram"|safe }}
+                            {{ style|chart_image:chart_type|safe }}
                         </noscript>
                     </div></div>
                 </div>
             </div>
-        {% endif %}
+        {% endwith %}{% endif %}
     </div>
 
 {% endif %}

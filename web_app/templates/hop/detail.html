@@ -28,83 +28,101 @@
 
     {% include './metrics.html' %}
 
-    <section class="card card-chart">
-        <div class="card-header">
-            <h2><a href="#popularity" id="popularity" class="anchor"><span></span></a>Popularity Over Time</h2>
-        </div>
-        <div class="card-body">
-            <div id="chart-popularity" class="chart-m">
-                <noscript>
-                    {{ hop|chart_image:"popularity"|safe }}
-                </noscript>
+    {% with chart_type="popularity" anchor="popularity" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Popularity Over Time</h2>
             </div>
-        </div>
-    </section>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-m">
+                    <noscript>
+                        {{ hop|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
 
-    <section class="card card-chart">
-        <div class="card-header">
-            <h2><a href="#styles-number-recipes" id="styles-number-recipes" class="anchor"><span></span></a>Typical Styles <small class="text-muted">by Number of Recipes</small></h2>
-        </div>
-        <div class="card-body">
-            <div id="chart-styles-abs" class="chart-l">
-                <noscript>
-                    {{ hop|chart_image:"typical-styles-absolute"|safe }}
-                </noscript>
+    {% with chart_type="typical-styles-absolute" anchor="styles-number-recipes" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2>
+                    <a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>
+                    Typical Styles <small class="text-muted">by Number of Recipes</small>
+                </h2>
             </div>
-        </div>
-    </section>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-l">
+                    <noscript>
+                        {{ hop|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
 
-    <section class="card card-chart">
-        <div class="card-header">
-            <h2><a href="#styles-percent-recipes" id="styles-percent-recipes" class="anchor"><span></span></a>Typical Styles <small class="text-muted">by Percent of Recipes</small></h2>
-        </div>
-        <div class="card-body">
-            <div id="chart-styles-rel" class="chart-l">
-                <noscript>
-                    {{ hop|chart_image:"typical-styles-relative"|safe }}
-                </noscript>
+    {% with chart_type="typical-styles-relative" anchor="styles-percent-recipes" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2>
+                    <a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>
+                    Typical Styles <small class="text-muted">by Percent of Recipes</small>
+                </h2>
             </div>
-        </div>
-    </section>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-l">
+                    <noscript>
+                        {{ hop|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
 
-     <section class="card card-chart">
-        <div class="card-header">
-            <h2><a href="#style-amount" id="style-amount" class="anchor"><span></span></a>Amount per Style</h2>
-        </div>
-        <div class="card-body">
-            <div id="chart-style-amount" class="chart-l">
-                <noscript>
-                    {{ hop|chart_image:"amount-used-per-style"|safe }}
-                </noscript>
+    {% with chart_type="amount-used-per-style" anchor="style-amount" %}
+         <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Amount per Style</h2>
             </div>
-        </div>
-    </section>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-l">
+                    <noscript>
+                        {{ hop|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
 
-    <section class="card card-chart">
-        <div class="card-header">
-            <h2><a href="#usage-amount" id="usage-amount" class="anchor"><span></span></a>Amount per Use</h2>
-        </div>
-        <div class="card-body">
-            <div id="chart-usage-amount" class="chart-l">
-                <noscript>
-                    {{ hop|chart_image:"amount-used-per-use"|safe }}
-                </noscript>
+    {% with chart_type="amount-used-per-use" anchor="usage-amount" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Amount per Use</h2>
             </div>
-        </div>
-    </section>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-l">
+                    <noscript>
+                        {{ hop|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
 
-    <section class="card card-chart">
-        <div class="card-header">
-            <h2><a href="#hop-pairings" id="hop-pairings" class="anchor"><span></span></a>Common Pairings</h2>
-        </div>
-        <div class="card-body">
-            <div id="chart-hop-pairings" class="chart-l">
-                <noscript>
-                    {{ hop|chart_image:"hop-pairings"|safe }}
-                </noscript>
+    {% with chart_type="hop-pairings" anchor="hop-pairings" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Common Pairings</h2>
             </div>
-        </div>
-    </section>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-l">
+                    <noscript>
+                        {{ hop|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
 {% endblock %}
 
 {% block script %}
@@ -112,17 +130,17 @@
 window.addEventListener('load', function ()
 {
     // Metrics
-    display_graph('chart-metric-alpha', '{{ hop|chart_js:"alpha-histogram" }}', {displayModeBar: false});
-    display_graph('chart-metric-beta', '{{ hop|chart_js:"beta-histogram" }}', {displayModeBar: false});
-    display_graph('chart-metric-amount-percent', '{{ hop|chart_js:"amount-percent-range" }}', {displayModeBar: false});
-    display_graph('chart-metric-usage', '{{ hop|chart_js:"usage-types" }}', {displayModeBar: false});
+    display_graph('chart-alpha-histogram', '{{ hop|chart_js:"alpha-histogram" }}', {displayModeBar: false});
+    display_graph('chart-beta-histogram', '{{ hop|chart_js:"beta-histogram" }}', {displayModeBar: false});
+    display_graph('chart-amount-percent-range', '{{ hop|chart_js:"amount-percent-range" }}', {displayModeBar: false});
+    display_graph('chart-usage-types', '{{ hop|chart_js:"usage-types" }}', {displayModeBar: false});
 
     // Charts
     display_graph('chart-popularity', '{{ hop|chart_js:"popularity" }}');
-    display_graph('chart-styles-abs', '{{ hop|chart_js:"typical-styles-absolute" }}');
-    display_graph('chart-styles-rel', '{{ hop|chart_js:"typical-styles-relative" }}');
-    display_graph('chart-style-amount', '{{ hop|chart_js:"amount-used-per-style" }}');
-    display_graph('chart-usage-amount', '{{ hop|chart_js:"amount-used-per-use" }}');
+    display_graph('chart-typical-styles-absolute', '{{ hop|chart_js:"typical-styles-absolute" }}');
+    display_graph('chart-typical-styles-relative', '{{ hop|chart_js:"typical-styles-relative" }}');
+    display_graph('chart-amount-used-per-style', '{{ hop|chart_js:"amount-used-per-style" }}');
+    display_graph('chart-amount-used-per-use', '{{ hop|chart_js:"amount-used-per-use" }}');
     display_graph('chart-hop-pairings', '{{ hop|chart_js:"hop-pairings" }}');
 });
 </script>

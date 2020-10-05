@@ -47,90 +47,100 @@
 
     {% include './metrics.html' %}
 
-    <section class="card card-chart">
-        <div class="card-header">
-            <h2><a href="#popularity" id="popularity" class="anchor"><span></span></a>Popularity Over Time</h2>
-        </div>
-        <div class="card-body">
-            <div id="chart-popularity" class="chart-m">
-                <noscript>
-                    {{ style|chart_image:"popularity"|safe }}
-                </noscript>
+    {% with chart_type="popularity" anchor="popularity" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Popularity Over Time</h2>
             </div>
-        </div>
-    </section>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-m">
+                    <noscript>
+                        {{ style|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
 
-    <section class="card card-chart">
-        <div class="card-header">
-            <h2><a href="#trending-hops" id="trending-hops" class="anchor"><span></span></a>Trending Hops</h2>
-        </div>
-        <div class="card-body">
-            <div id="chart-trending-hops" class="chart-m">
-                <noscript>
-                    {{ style|chart_image:"trending-hops"|safe }}
-                </noscript>
+    {% with chart_type="trending-hops" anchor="trending-hops" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Trending Hops</h2>
             </div>
-        </div>
-    </section>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-m">
+                    <noscript>
+                        {{ style|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
 
-    <section class="card card-chart">
-        <div class="card-header">
-            <h2><a href="#most-used-hops" id="most-used-hops" class="anchor"><span></span></a>Most Used Hops</h2>
-            <nav id="chart-hops-tabs" class="d-none">
-                <ul class="nav" role="tablist">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="" href="#chart-hops">Any</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="bittering" href="#chart-hops-bittering">Bittering</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="aroma" href="#chart-hops-aroma">Aroma</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="dry-hop" href="#chart-hops-dry-hop">Dry-Hop</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="card-body">
-            <div id="chart-hops" class="chart-l">
-                <noscript>
-                    {{ style|chart_image:"popular-hops"|safe }}
-                </noscript>
+    {% with chart_type="popular-hops" anchor="most-used-hops" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Used Hops</h2>
+                <nav id="chart-{{ chart_type }}-tabs" class="d-none">
+                    <ul class="nav" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="" href="#chart-hops">Any</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="bittering" href="#chart-hops-bittering">Bittering</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="aroma" href="#chart-hops-aroma">Aroma</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="dry-hop" href="#chart-hops-dry-hop">Dry-Hop</a></li>
+                    </ul>
+                </nav>
             </div>
-        </div>
-    </section>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-l">
+                    <noscript>
+                        {{ style|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
 
-    <section class="card card-chart">
-        <div class="card-header">
-            <h2><a href="#hop-pairings" id="hop-pairings" class="anchor"><span></span></a>Common Hop Pairings</h2>
-        </div>
-        <div class="card-body">
-            <div id="chart-hop-pairings" class="chart-l">
-                <noscript>
-                    {{ style|chart_image:"hop-pairings"|safe }}
-                </noscript>
+    {% with chart_type="hop-pairings" anchor="hop-pairings" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Common Hop Pairings</h2>
             </div>
-        </div>
-    </section>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-l">
+                    <noscript>
+                        {{ style|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
 
-    <section class="card card-chart">
-        <div class="card-header">
-            <h2><a href="#most-used-fermentables" id="most-used-fermentables" class="anchor"><span></span></a>Most Used Fermentables</h2>
-            <nav id="chart-fermentables-tabs" class="d-none">
-                <ul class="nav" role="tablist">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="" href="#chart-fermentables">Any</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="base" href="#chart-fermentables-base">Base Malt</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="cara-crystal" href="#chart-fermentables-cara-crystal">Caramel/Crystal</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="toasted" href="#chart-fermentables-toasted">Toasted</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="roasted" href="#chart-fermentables-roasted">Roasted</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="other-grain" href="#chart-fermentables-other-grain">Other Grain</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="sugar" href="#chart-fermentables-sugar">Sugar</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="fruit" href="#chart-fermentables-fruit">Fruit</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="card-body">
-            <div id="chart-fermentables" class="chart-l">
-                <noscript>
-                    {{ style|chart_image:"popular-fermentables"|safe }}
-                </noscript>
+    {% with chart_type="popular-fermentables" anchor="most-used-fermentables" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Used Fermentables</h2>
+                <nav id="chart-{{ chart_type }}-tabs" class="d-none">
+                    <ul class="nav" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="" href="#chart-fermentables">Any</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="base" href="#chart-fermentables-base">Base Malt</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="cara-crystal" href="#chart-fermentables-cara-crystal">Caramel/Crystal</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="toasted" href="#chart-fermentables-toasted">Toasted</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="roasted" href="#chart-fermentables-roasted">Roasted</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="other-grain" href="#chart-fermentables-other-grain">Other Grain</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="sugar" href="#chart-fermentables-sugar">Sugar</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="fruit" href="#chart-fermentables-fruit">Fruit</a></li>
+                    </ul>
+                </nav>
             </div>
-        </div>
-    </section>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-l">
+                    <noscript>
+                        {{ style|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
 {% endblock %}
 
 {% block script %}
@@ -138,18 +148,18 @@
 window.addEventListener('load', function ()
 {
     // Metrics
-    display_graph('chart-spec-abv', '{{ style|chart_js:"abv-histogram" }}', {displayModeBar: false});
-    display_graph('chart-spec-ibu', '{{ style|chart_js:"ibu-histogram" }}', {displayModeBar: false});
-    display_graph('chart-spec-color', '{{ style|chart_js:"color-srm-histogram" }}', {displayModeBar: false});
-    display_graph('chart-spec-og', '{{ style|chart_js:"original-gravity-histogram" }}', {displayModeBar: false});
-    display_graph('chart-spec-fg', '{{ style|chart_js:"final-gravity_histogram" }}', {displayModeBar: false});
+    display_graph('chart-abv-histogram', '{{ style|chart_js:"abv-histogram" }}', {displayModeBar: false});
+    display_graph('chart-ibu-histogram', '{{ style|chart_js:"ibu-histogram" }}', {displayModeBar: false});
+    display_graph('chart-color-srm-histogram', '{{ style|chart_js:"color-srm-histogram" }}', {displayModeBar: false});
+    display_graph('chart-original-gravity-histogram', '{{ style|chart_js:"original-gravity-histogram" }}', {displayModeBar: false});
+    display_graph('chart-final-gravity-histogram', '{{ style|chart_js:"final-gravity-histogram" }}', {displayModeBar: false});
 
     // Charts
     display_graph('chart-popularity', '{{ style|chart_js:"popularity" }}');
     display_graph('chart-trending-hops', '{{ style|chart_js:"trending-hops" }}');
-    display_graph_with_navigation('chart-hops', 'chart-hops-tabs', '{{ style|chart_js:"popular-hops" }}');
+    display_graph_with_navigation('chart-popular-hops', 'chart-popular-hops-tabs', '{{ style|chart_js:"popular-hops" }}');
     display_graph('chart-hop-pairings', '{{ style|chart_js:"hop-pairings" }}');
-    display_graph_with_navigation('chart-fermentables', 'chart-fermentables-tabs', '{{ style|chart_js:"popular-fermentables" }}');
+    display_graph_with_navigation('chart-popular-fermentables', 'chart-popular-fermentables-tabs', '{{ style|chart_js:"popular-fermentables" }}');
 });
 </script>
 {% endblock %}
