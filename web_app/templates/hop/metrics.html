@@ -3,7 +3,7 @@
     <a id="characteristics" href="#characteristics" class="anchor"><span></span></a>
     Characteristics
 </h2>
-<div class="row row-cols-1 row-cols-lg-3 g-1 mb-4">
+<div class="row row-cols-1 row-cols-lg-4 g-1 mb-4">
     {% if hop.recipes_alpha_min %}
         <div class="col">
             <div class="card text-center h-100">
@@ -14,6 +14,21 @@
                 <div class="card-footer bg-transparent"><div id="chart-metric-alpha" class="chart-s">
                     <noscript>
                         {{ hop|chart_image:"alpha-histogram"|safe }}
+                    </noscript>
+                </div></div>
+            </div>
+        </div>
+    {% endif %}
+    {% if hop.recipes_beta_min %}
+        <div class="col">
+            <div class="card text-center h-100">
+                <div class="card-header"><h3 class="h5 mb-0">Beta Acid</h3></div>
+                <div class="card-body">
+                    {{ hop.recipes_beta_min|floatformat:1 }} &lt; <strong>{{ hop.recipes_beta_mean|floatformat:1 }}</strong> &lt; {{ hop.recipes_beta_max|floatformat:1 }} <small class="text-muted">%</small>
+                </div>
+                <div class="card-footer bg-transparent"><div id="chart-metric-beta" class="chart-s">
+                    <noscript>
+                        {{ hop|chart_image:"beta-histogram"|safe }}
                     </noscript>
                 </div></div>
             </div>

@@ -75,7 +75,7 @@ def load_all_recipe_hops_aggregated():
     df = pd.read_sql_query('SELECT * FROM recipe_db_recipehop', connection)
 
     # Aggregate per recipe
-    df = df.groupby(["recipe_id", "kind_id"]).agg({"amount_percent": "sum", "alpha": "mean"}).reset_index()
+    df = df.groupby(["recipe_id", "kind_id"]).agg({"amount_percent": "sum", "alpha": "mean", "beta": "mean"}).reset_index()
     df = df.reset_index()
 
     return df

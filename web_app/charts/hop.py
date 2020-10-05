@@ -25,7 +25,7 @@ class HopChart(ChartDefinition, ABC):
 
 class HopAlphaChart(HopChart):
     CHART_TITLE = "Alpha acid of <b>%s</b> hops"
-    IMAGE_ALT = "Amount of %s hops used in beer recipes"
+    IMAGE_ALT = "Histogram of alpha acid in %s hops"
 
     def plot(self) -> Chart:
         df = get_hop_metric_values(self.hop, 'alpha')
@@ -33,6 +33,19 @@ class HopAlphaChart(HopChart):
             raise NoDataException()
 
         figure = PreAggregateHistogramChart().plot(df, 'alpha', 'count')
+        return Chart(figure, 500, 350, title=self.get_chart_title())
+
+
+class HopBetaChart(HopChart):
+    CHART_TITLE = "Beta acid of <b>%s</b> hops"
+    IMAGE_ALT = "Histogram of beta acid in %s hops"
+
+    def plot(self) -> Chart:
+        df = get_hop_metric_values(self.hop, 'beta')
+        if len(df) == 0:
+            raise NoDataException()
+
+        figure = PreAggregateHistogramChart().plot(df, 'beta', 'count')
         return Chart(figure, 500, 350, title=self.get_chart_title())
 
 
@@ -143,6 +156,7 @@ class HopPairingsChart(HopChart):
 class HopChartFactory:
     CHARTS = dict(
         alpha_histogram=HopAlphaChart,
+        beta_histogram=HopBetaChart,
         amount_percent_range=HopAmountRangeChart,
         usage_types=HopUsageChart,
         popularity=HopPopularityChart,
