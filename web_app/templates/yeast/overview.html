@@ -37,7 +37,10 @@
                     <p class="most-popular">Most popular:
                         {% for yeast in type.most_popular %}
                             {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
-                            <a class="badge" href="{{ yeast|url }}">{{ yeast.full_name }}</a>
+                            <a class="badge" href="
+                                {{ yeast|url }}">{{ yeast.full_name }}
+                                {% if yeast.has_extra_product_id %}({{ yeast.product_id }}){% endif %}
+                            </a>
                         {% endfor %}
                     </p>
                 {% endif %}
