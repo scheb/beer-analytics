@@ -113,6 +113,7 @@ window.addEventListener('load', function ()
 {
     // Metrics
     display_graph('chart-metric-alpha', '{{ hop|chart_js:"alpha-histogram" }}', {displayModeBar: false});
+    display_graph('chart-metric-beta', '{{ hop|chart_js:"beta-histogram" }}', {displayModeBar: false});
     display_graph('chart-metric-amount-percent', '{{ hop|chart_js:"amount-percent-range" }}', {displayModeBar: false});
     display_graph('chart-metric-usage', '{{ hop|chart_js:"usage-types" }}', {displayModeBar: false});
 

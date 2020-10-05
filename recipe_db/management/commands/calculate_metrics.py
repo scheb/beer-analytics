@@ -10,7 +10,7 @@ from recipe_db.analytics import load_all_recipes, calculate_style_metric, calcul
 from recipe_db.models import Style, Hop, Fermentable, Yeast
 
 STYLE_METRICS = ['abv', 'ibu', 'ebc', 'srm', 'og', 'fg', 'original_plato', 'final_plato']
-HOP_METRICS = ['alpha', 'amount_percent']
+HOP_METRICS = ['alpha', 'beta', 'amount_percent']
 FERMENTABLE_METRICS = ['amount_percent', 'color_lovibond', 'color_ebc']
 
 
