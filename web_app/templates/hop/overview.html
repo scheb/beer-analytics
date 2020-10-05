@@ -31,9 +31,9 @@
                 <a href="{% url "hop_category" category.id %}" class="text-body">{{ category.name }}</a>
             </h2>
             <div class="mb-4">
-                <p class="most-popular">Most popular:
+                <p class="most-popular"><label>Most popular:</label>
                     {% for hop in category.most_popular %}
-                        {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
+                        {% if forloop.counter0 > 0 %}<span class="d-none">, </span>{% endif %}
                         <a class="badge" href="{{ hop|url }}">{{ hop.name }}</a>
                     {% endfor %}
                 </p>

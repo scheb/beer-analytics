@@ -13,7 +13,7 @@
 
     <p class="most-popular mb-4">Most popular beer styles:
         {% for style in most_popular %}
-            {% if forloop.counter0 > 0 %}<span class="invisible">, </span>{% endif %}
+            {% if forloop.counter0 > 0 %}<span class="d-none">, </span>{% endif %}
             <a class="badge" href="{{ style|url }}">{{ style.name }}</a>
         {% endfor %}
     </p>
