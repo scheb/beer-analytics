@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load web_app %}
 
-{% block title %}{{ yeast.full_name }} ‹ Yeasts{% endblock %}
+{% block title %}{{ yeast.full_name }}{% if yeast.has_extra_product_id %} ({{ yeast.product_id }}){% endif %} ‹ Yeasts{% endblock %}
 
 {% block content %}
     <nav aria-label="breadcrumb" class="mt-3">
@@ -13,7 +13,7 @@
     </nav>
 
     <div class="detail-head">
-        <h1>{{ yeast.brand }} · {{ yeast.name }}{% if yeast.product_id and not yeast.has_product_id_included %} <small class="text-muted">{{ yeast.product_id }}</small>{% endif %}</h1>
+        <h1>{{ yeast.full_name }}{% if yeast.has_extra_product_id %} <small class="text-muted">{{ yeast.product_id }}</small>{% endif %}</h1>
         <dl class="detail-info">
             <dt>Recipes:</dt>
             <dd>{{ yeast.recipes_count }}</dd>

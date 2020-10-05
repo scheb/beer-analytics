@@ -490,23 +490,26 @@ class Yeast(models.Model):
         return create_human_readable_id(name)
 
     @classmethod
-    def get_brands(cls) -> list:
-        return list(cls.objects.order_by('brand').values_list('brand', flat=True).distinct())
+    def get_labs(cls) -> list:
+        return list(cls.objects.order_by('lab').values_list('lab', flat=True).distinct())
 
     @classmethod
     def get_types(cls) -> dict:
         return dict(cls.TYPE_CHOICES)
 
     @property
-    def has_product_id_included(self):
-        return self.product_id is not None and self.product_id in self.name
+    def has_extra_product_id(self):
+        return self.product_id is not None and self.product_id not in self.name
+
+    @property
+    def product_name(self):
+        if self.brand is not None and self.brand not in self.name:
+            return "{} {}".format(self.brand, self.name)
+        return self.name
 
     @property
     def full_name(self):
-        full_name = "{} · {}".format(self.brand, self.name)
-        if self.product_id is not None and not self.has_product_id_included:
-            full_name += " ({})".format(self.product_id)
-        return full_name
+        return "{} · {}".format(self.lab, self.product_name)
 
     @property
     def type_name(self) -> Optional[str]:

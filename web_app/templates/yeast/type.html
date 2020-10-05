@@ -23,13 +23,14 @@
     {% endif %}
 
     <div class="yeasts-overview">
-        {% for brand in brands %}
-            <h3>{{ brand.name }}</h3>
-            {% if brand.yeasts %}
-                <ul class="column-list">
-                    {% for yeast in brand.yeasts %}
+        {% for lab in labs %}
+            <h3>{{ lab.name }}</h3>
+            {% if lab.yeasts %}
+                <ul class="column-list-wide">
+                    {% for yeast in lab.yeasts %}
                         <li>
                             {% if yeast.is_popular %}<strong>{% endif %}<a href="{{ yeast|url }}">{{ yeast.name }}</a>{% if yeast.is_popular %}</strong>{% endif %}
+                            {% if yeast.has_extra_product_id %}<small class="text-muted">({{ yeast.product_id }})</small>{% endif %}
                             <small class="recipes-count" title="Recipes">{{ yeast.recipes_count }}</small>
                         </li>
                     {% endfor %}
@@ -38,13 +39,14 @@
         {% endfor %}
 
         {% if yeasts %}
-            {% if brands %}
+            {% if labs %}
                 <h3>Other</h3>
             {% endif %}
-            <ul class="column-list">
+            <ul class="column-list-wide">
                 {% for yeast in yeasts %}
                     <li>
                         {% if yeast.is_popular %}<strong>{% endif %}<a href="{{ yeast|url }}">{{ yeast.full_name }}</a>{% if yeast.is_popular %}</strong>{% endif %}
+                        {% if yeast.has_extra_product_id %}<small class="text-muted">({{ yeast.product_id }})</small>{% endif %}
                         <small class="recipes-count" title="Recipes">{{ yeast.recipes_count }}</small>
                     </li>
                 {% endfor %}
