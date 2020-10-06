@@ -316,9 +316,10 @@ class Hop(models.Model):
     use = models.CharField(max_length=16, choices=USE_CHOICES, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
     alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
+    origin = models.CharField(max_length=32, default=None, blank=True, null=True)
     substitutes = models.CharField(max_length=255, default=None, blank=True, null=True)
     used_for = models.CharField(max_length=255, default=None, blank=True, null=True)
-    aroma_tags = models.CharField(max_length=255, default=None, blank=True, null=True)
+    aromas = models.CharField(max_length=255, default=None, blank=True, null=True)
     description = models.CharField(max_length=255, default=None, blank=True, null=True)
 
     # Calculated metrics from recipes
