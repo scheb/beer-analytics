@@ -93,9 +93,9 @@ class Command(BaseCommand):
             self.stdout.write('Calculate {} for style {}'.format(metric.value, style.name))
             (min, mean, max) = calculator.calc_metric(style, metric)
             self.stdout.write(str((min, mean, max)))
-            setattr(style, "recipes_%s_min" % metric, None if math.isnan(min) else min)
-            setattr(style, "recipes_%s_mean" % metric, None if math.isnan(mean) else mean)
-            setattr(style, "recipes_%s_max" % metric, None if math.isnan(max) else max)
+            setattr(style, "recipes_%s_min" % metric.value, None if math.isnan(min) else min)
+            setattr(style, "recipes_%s_mean" % metric.value, None if math.isnan(mean) else mean)
+            setattr(style, "recipes_%s_max" % metric.value, None if math.isnan(max) else max)
 
     def calculate_all_hop_metrics(self, calculator: HopMetricCalculator, hop: Hop) -> None:
         hop.recipes_count = calculator.calc_recipes_count(hop)
@@ -108,9 +108,9 @@ class Command(BaseCommand):
             self.stdout.write('Calculate {} for hop {}'.format(metric.value, hop.name))
             (min, mean, max) = calculator.calc_metric(hop, metric)
             self.stdout.write(str((min, mean, max)))
-            setattr(hop, "recipes_%s_min" % metric, None if math.isnan(min) else min)
-            setattr(hop, "recipes_%s_mean" % metric, None if math.isnan(mean) else mean)
-            setattr(hop, "recipes_%s_max" % metric, None if math.isnan(max) else max)
+            setattr(hop, "recipes_%s_min" % metric.value, None if math.isnan(min) else min)
+            setattr(hop, "recipes_%s_mean" % metric.value, None if math.isnan(mean) else mean)
+            setattr(hop, "recipes_%s_max" % metric.value, None if math.isnan(max) else max)
 
     def calculate_all_fermentable_metrics(self, calculator: FermentableMetricCalculator, fermentable: Fermentable) -> None:
         fermentable.recipes_count = calculator.calc_recipes_count(fermentable)
@@ -119,9 +119,9 @@ class Command(BaseCommand):
             self.stdout.write('Calculate {} for fermentable {}'.format(metric.value, fermentable.name))
             (min, mean, max) = calculator.calc_metric(fermentable, metric)
             self.stdout.write(str((min, mean, max)))
-            setattr(fermentable, "recipes_%s_min" % metric, None if math.isnan(min) else min)
-            setattr(fermentable, "recipes_%s_mean" % metric, None if math.isnan(mean) else mean)
-            setattr(fermentable, "recipes_%s_max" % metric, None if math.isnan(max) else max)
+            setattr(fermentable, "recipes_%s_min" % metric.value, None if math.isnan(min) else min)
+            setattr(fermentable, "recipes_%s_mean" % metric.value, None if math.isnan(mean) else mean)
+            setattr(fermentable, "recipes_%s_max" % metric.value, None if math.isnan(max) else max)
 
     def calculate_all_yeast_metrics(self, calculator: YeastMetricCalculator, yeast: Yeast) -> None:
         yeast.recipes_count = calculator.get_recipes_count(yeast)
