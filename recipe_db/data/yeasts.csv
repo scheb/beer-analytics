@@ -131,8 +131,8 @@ American Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;medium;74;16;22
 Anchorman Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;high;77.5;18;20
 Ardennes Belgian Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;medium-high;76;18;24
 Årset Kveik Blend;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;high;75;20;37
-Belgian Sour Blend;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;low;;low;0;21;32
-Berliner Brett I;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;high;;medium;0;18;24
+Belgian Sour Blend;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;low;;low;;21;32
+Berliner Brett I;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;high;;medium;;18;24
 Biergarten Lager;;;Escarpment Labs;Escarpment;;;;;lager;liquid;medium;;medium;73;9;13
 Brett B;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;medium;;low;77.5;27;27
 Brett D;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;;12;medium-low;80;22;25
@@ -158,10 +158,10 @@ Irish Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;medium-high;72.5;1
 Isar Lager;;;Escarpment Labs;Escarpment;;;;;lager;liquid;medium;;medium-high;77;10;15
 Kölsch Ale;;;Escarpment Labs;Escarpment;;;;;ale;liquid;medium;;medium;75;18;21
 Krispy;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;high;76;18;30
-Lactobacillus Blend;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;;;;0;32;42
-Lactobacillus Blend 2.0;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;low;;low;0;30;45
-Lactobacillus brevis;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;;;;0;35;45
-Lactobacillus Secondary Souring Blend;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;low;;low;0;18;25
+Lactobacillus Blend;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;;;;;32;42
+Lactobacillus Blend 2.0;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;low;;low;;30;45
+Lactobacillus brevis;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;;;;;35;45
+Lactobacillus Secondary Souring Blend;;;Escarpment Labs;Escarpment;;;;;brett-bacteria;liquid;low;;low;;18;25
 Lærdal Kveik;;;Escarpment Labs;Escarpment;;;;;ale;liquid;high;;high;75;22;37
 Mexican Lager;;;Escarpment Labs;Escarpment;;;;;lager;liquid;medium;;medium;75;10;14
 Munich Lager;;;Escarpment Labs;Escarpment;;;;;lager;liquid;high;;medium;78;12;15
@@ -308,10 +308,10 @@ Lalvin ICV D47;;;Lallemand;;Lalvin;;;;wine-cider;liquid;high;;medium;95;15;30
 Lalvin V1116;;;Lallemand;;Lalvin;;;;wine-cider;dry;medium;;high;65;10;35
 Sourvisiae;;;Lallemand;;;;;;ale;dry;high;;medium;85;10;22
 WildBrew Philly Sour;;;Lallemand;;WildBrew;;;;ale;dry;medium;;high;85;20;25
-WildBrew Helveticus Pitch;;;Lallemand;;WildBrew;;;;brett-bacteria;dry;low;;low;0;38;45
+WildBrew Helveticus Pitch;;;Lallemand;;WildBrew;;;;brett-bacteria;dry;low;;low;;38;45
 Wildbrew Sour Pitch;;;Lallemand;;WildBrew;;;;brett-bacteria;dry;low;;low;;30;40
 Arset;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;medium;;medium;78;18;35
-Aurland;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;medium;;medium;0;16;35
+Aurland;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;medium;;medium;;16;35
 BB 3;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;medium;;medium;76;20;26
 Brettanomainer;;;Mainiacal Yeast Labs;Mainiacal;;;;;brett-bacteria;liquid;medium;;low;93;11;27
 Citrus King;;;Mainiacal Yeast Labs;Mainiacal;;;;;ale;liquid;low;;low;82;18;26
@@ -403,7 +403,7 @@ Irish Ale;;;Omega Yeast Labs;Omega;;;OYL-005;;ale;liquid;;12;medium;72;17;22
 Jovaru Lithuanian Farmhouse;;;Omega Yeast Labs;Omega;;;OYL-033;;ale;liquid;medium;;high;85;21;35
 Kolsch I;;;Omega Yeast Labs;Omega;;;OYL-017;;ale;liquid;;10;low;75;13;21
 Kolsch II;;;Omega Yeast Labs;Omega;;;OYL-044;;ale;liquid;;10;medium;75;18;21
-Lactobacillus Blend;;;Omega Yeast Labs;Omega;;;OYL-605;;brett-bacteria;liquid;;12;;0;20;35
+Lactobacillus Blend;;;Omega Yeast Labs;Omega;;;OYL-605;;brett-bacteria;liquid;;12;;;20;35
 Lager I;;;Omega Yeast Labs;Omega;;;OYL-100;;lager;liquid;;;medium-high;73;9;13
 London Ale;;;Omega Yeast Labs;Omega;;;OYL-003;;ale;liquid;;11;medium;72;19;22
 Lutra Kveik;;;Omega Yeast Labs;Omega;;;OYL-071;;ale;liquid;high;;medium;78;20;35
@@ -429,7 +429,7 @@ The Monk;;;Real Brewers;;;;;;ale;liquid;;15;medium;78;19;22
 The One;;;Real Brewers;;;;;;ale;liquid;;;high;75;20;24
 Ye Olde English;;;Real Brewers;;;;;;ale;liquid;;;medium;70;18;21
 DADY;;;Red Star;RedStar;;;DADY;;ale;dry;high;;low;65;18;27
-Premier Blanc;;;Red Star;RedStar;;;UCD595;;wine-cider;dry;high;;low;0;15;30
+Premier Blanc;;;Red Star;RedStar;;;UCD595;;wine-cider;dry;high;;low;;15;30
 Chico Ale;;;RVA Yeast Labs;RVA;;;RVA 101;;ale;liquid;high;;medium;77.5;19;23
 Boston Ale;;;RVA Yeast Labs;RVA;;;RVA 102;;ale;liquid;high;;medium;72.5;18;23
 Pacman Ale;;;RVA Yeast Labs;RVA;;;RVA 103;;ale;liquid;high;;medium-high;76;17;22
@@ -579,7 +579,7 @@ HP Lager;;;White Labs;White Lab;;;WLP925;;lager;liquid;medium;;medium;77.5;17;20
 Irish Ale;;;White Labs;White Lab;;;WLP004;;ale;liquid;medium;;medium-high;71.5;18;20
 Klassic Ale;;;White Labs;White Lab;;;WLP033;;ale;liquid;medium;;medium;70;19;21
 Lactobacillus Brevis;;;White Labs;White Lab;;;WLP672;;brett-bacteria;liquid;low;;low;80;21;35
-Lactobacillus Delbrueckii Bacteria;;;White Labs;White Lab;;;WLP677;;brett-bacteria;liquid;medium;;low;0;21;24
+Lactobacillus Delbrueckii Bacteria;;;White Labs;White Lab;;;WLP677;;brett-bacteria;liquid;medium;;low;;21;24
 Leeuwenhoek Saison Blend;;;White Labs;White Lab;;;WLP564;;ale;liquid;high;;low;79;19;24
 London Ale;;;White Labs;White Lab;;;WLP013;;ale;liquid;medium;;medium;71;19;22
 London Fog Ale;;;White Labs;White Lab;;;WLP066;;ale;liquid;high;;medium;78.5;18;22
@@ -668,7 +668,7 @@ Hella Bock;;;Wyeast;;;;2487;;ale;liquid;;12;medium;72;9;13
 Irish Ale;;;Wyeast;;;;1084;;ale;liquid;;10;medium;73;17;22
 Kölsch;;;Wyeast;;;;2565;;ale;liquid;;10;low;75;13;21
 Kölsch II;;;Wyeast;;;;2575;;ale;liquid;;10;low;75;13;21
-Lactobacillus brevis;;;Wyeast;;;;5223-PC;;brett-bacteria;liquid;high;;low;0;16;35
+Lactobacillus brevis;;;Wyeast;;;;5223-PC;;brett-bacteria;liquid;high;;low;;16;35
 Lactobacillus;;;Wyeast;;;;5335;;brett-bacteria;liquid;;9;;75;16;35
 Leuven Pale Ale;;;Wyeast;;;;3538;;ale;liquid;;12;high;76;18;27
 London Ale;;;Wyeast;;;;1028;;ale;liquid;;10;medium-low;75;16;22
