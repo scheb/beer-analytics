@@ -2,11 +2,13 @@ from typing import Tuple
 
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 
 from recipe_db.models import Fermentable
 from web_app.charts.fermentable import FermentableChartFactory
 from web_app.charts.utils import NoDataException
-from web_app.views.utils import render_chart
+from web_app.meta import FermentableMeta, FermentableOverviewMeta
+from web_app.views.utils import render_chart, FORMAT_PNG
 
 
 def overview(request: HttpRequest) -> HttpResponse:
@@ -17,7 +19,10 @@ def overview(request: HttpRequest) -> HttpResponse:
             fermentable_category['most_popular'] = Fermentable.objects.filter(category=fermentable_category['id']).order_by('-recipes_count')[:5]
         (fermentable_category['fermentables'], fermentable_category['types']) = group_by_type(fermentable_category['fermentables'])
 
-    return render(request, 'fermentable/overview.html', {'categories': fermentable_categories})
+    meta = FermentableOverviewMeta().get_meta()
+    context = {'categories': fermentable_categories, 'meta': meta}
+
+    return render(request, 'fermentable/overview.html', context)
 
 
 def category(request: HttpRequest, category: str) -> HttpResponse:
@@ -34,12 +39,16 @@ def category(request: HttpRequest, category: str) -> HttpResponse:
     if fermentables_query.count() > 5:
         most_popular = fermentables_query.order_by('-recipes_count')[:5]
 
-    return render(request, 'fermentable/category.html', {
+    meta = FermentableOverviewMeta(category_name).get_meta()
+    context = {
         'category_name': category_name,
         'fermentables': fermentables,
         'types': types,
-        'most_popular': most_popular
-    })
+        'most_popular': most_popular,
+        'meta': meta,
+    }
+
+    return render(request, 'fermentable/category.html', context)
 
 
 def detail(request: HttpRequest, slug: str, category: str) -> HttpResponse:
@@ -58,7 +67,19 @@ def detail(request: HttpRequest, slug: str, category: str) -> HttpResponse:
     if category != fermentable.category or slug != fermentable.id:
         return redirect('fermentable_detail', category=fermentable.category, slug=fermentable.id)
 
-    return render(request, 'fermentable/detail.html', {'fermentable': fermentable})
+    meta_provider = FermentableMeta(fermentable)
+    meta = meta_provider.get_meta()
+    if fermentable.recipes_count > 100:
+        meta.image = reverse('fermentable_chart', kwargs=dict(
+            category=fermentable.category,
+            slug=fermentable.id,
+            chart_type='og',
+            format=FORMAT_PNG,
+        ))
+
+    context = {'fermentable': fermentable, 'description': meta_provider.get_description_html(), 'meta': meta}
+
+    return render(request, 'fermentable/detail.html', context)
 
 
 def chart(request: HttpRequest, slug: str, category: str, chart_type: str, format: str) -> HttpResponse:

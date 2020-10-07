@@ -6,6 +6,7 @@ from recipe_db.analytics.charts.fermentable import get_fermentable_pairing_ferme
     get_fermentable_metric_values
 from recipe_db.models import Fermentable
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
+from web_app.meta import OPEN_GRAPH_IMAGE_WIDTH, OPEN_GRAPH_IMAGE_HEIGHT
 from web_app.plot import LinesChart, BarChart, PreAggregateHistogramChart, RangeBoxPlot, \
     PreAggregatedPairsBoxPlot, PreAggregatedBoxPlot
 
@@ -115,8 +116,17 @@ class FermentablePairingsChart(FermentableChart):
         return Chart(figure, title=self.get_chart_title())
 
 
+class FermentableOpenGraphChart(FermentablePopularityChart):
+    def plot(self) -> Chart:
+        chart = super().plot()
+        chart.width = OPEN_GRAPH_IMAGE_WIDTH
+        chart.height = OPEN_GRAPH_IMAGE_HEIGHT
+        return chart
+
+
 class FermentableChartFactory:
     CHARTS = dict(
+        og=FermentableOpenGraphChart,
         color_histogram=FermentableColorChart,
         amount_percent_range=FermentableAmountRangeChart,
         popularity=FermentablePopularityChart,

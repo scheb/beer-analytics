@@ -1,17 +1,22 @@
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 
 from recipe_db.models import Style
 from web_app.charts.style import StyleChartFactory
 from web_app.charts.utils import NoDataException
-from web_app.views.utils import render_chart
+from web_app.meta import StyleOverviewMeta, StyleMeta
+from web_app.views.utils import render_chart, FORMAT_PNG
 
 
 def overview(request: HttpRequest) -> HttpResponse:
     categories = Style.objects.filter(parent_style=None).order_by('-recipes_count')
     most_popular = Style.objects.exclude(parent_style=None).order_by('-recipes_count')[:5]
 
-    return render(request, 'style/overview.html', {'categories': categories, 'most_popular': most_popular})
+    meta = StyleOverviewMeta().get_meta()
+    context = {'categories': categories, 'most_popular': most_popular, 'meta': meta}
+
+    return render(request, 'style/overview.html', context)
 
 
 def category(request: HttpRequest, category_slug: str) -> HttpResponse:
@@ -35,7 +40,17 @@ def detail(request: HttpRequest, slug: str, category_slug: str) -> HttpResponse:
 
 
 def display_style(request: HttpRequest, style: Style) -> HttpResponse:
-    return render(request, 'style/detail.html', {"style": style})
+    meta = StyleMeta(style).get_meta()
+    if style.recipes_count > 100:
+        meta.image = reverse('style_chart', kwargs=dict(
+            category_slug=style.category.slug,
+            slug=style.slug,
+            chart_type='og',
+            format=FORMAT_PNG,
+        ))
+
+    context = {"style": style, 'meta': meta}
+    return render(request, 'style/detail.html', context)
 
 
 def category_chart(request: HttpRequest, category_slug: str, chart_type: str, format: str) -> HttpResponse:

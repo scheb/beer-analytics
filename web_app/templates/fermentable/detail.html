@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% load web_app %}
 
-{% block title %}{{ fermentable.name }} ‹ Fermentables{% endblock %}
-
 {% block sidebar %}
 <nav class="table-of-contents">
     <strong>Table of Contents</strong>
@@ -40,6 +38,8 @@
             {% endfor %}
             {% endif %}
         </dl>
+
+        {% if description %}<p>{{ description|safe }}</p>{% endif %}
     </div>
 
     {% include './metrics.html' %}

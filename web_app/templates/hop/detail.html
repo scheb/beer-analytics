@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% load web_app %}
 
-{% block title %}{{ hop.name }} ‹ Hops{% endblock %}
-
 {% block sidebar %}
 <nav class="table-of-contents">
     <strong>Table of Contents</strong>
@@ -39,6 +37,11 @@
             {% endfor %}
             {% endif %}
         </dl>
+
+        {% if description %}<p>{{ description|safe }}</p>{% endif %}
+
+        <p>Aromas: {{ hop.aromas }}</p>
+        <p>Substitutes: {{ hop.substitutes }}</p>
     </div>
 
     {% include './metrics.html' %}

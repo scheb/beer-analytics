@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% load web_app %}
 
-{% block title %}{{ yeast.full_name }}{% if yeast.has_extra_product_id %} ({{ yeast.product_id }}){% endif %} ‹ Yeasts{% endblock %}
-
 {% block sidebar %}
 <nav class="table-of-contents">
     <strong>Table of Contents</strong>
@@ -54,6 +52,8 @@
             </dd>
             {% endif %}
         </dl>
+
+        {% if description %}<p>{{ description|safe }}</p>{% endif %}
     </div>
 
     {% with chart_type="popularity" anchor="popularity" %}

@@ -2,11 +2,13 @@ from typing import Tuple
 
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 
 from recipe_db.models import Yeast
 from web_app.charts.utils import NoDataException
 from web_app.charts.yeast import YeastChartFactory
-from web_app.views.utils import render_chart
+from web_app.meta import YeastMeta, YeastOverviewMeta
+from web_app.views.utils import render_chart, FORMAT_PNG
 
 
 def overview(request: HttpRequest) -> HttpResponse:
@@ -17,7 +19,10 @@ def overview(request: HttpRequest) -> HttpResponse:
             yeast_type['most_popular'] = Yeast.objects.filter(type=yeast_type['id']).order_by('-recipes_count')[:5]
         (yeast_type['yeasts'], yeast_type['labs']) = group_by_lab(yeast_type['yeasts'])
 
-    return render(request, 'yeast/overview.html', {'types': yeast_types})
+    meta = YeastOverviewMeta().get_meta()
+    context = {'types': yeast_types, 'meta': meta}
+
+    return render(request, 'yeast/overview.html', context)
 
 
 def type_overview(request: HttpRequest, type: str) -> HttpResponse:
@@ -34,12 +39,16 @@ def type_overview(request: HttpRequest, type: str) -> HttpResponse:
     if yeasts_query.count() > 5:
         most_popular = yeasts_query.order_by('-recipes_count')[:5]
 
-    return render(request, 'yeast/type.html', {
+    meta = YeastOverviewMeta(type_name).get_meta()
+    context = {
         'type_name': type_name,
         'yeasts': yeasts,
         'labs': labs,
-        'most_popular': most_popular
-    })
+        'most_popular': most_popular,
+        'meta': meta,
+    }
+
+    return render(request, 'yeast/type.html', context)
 
 
 def detail(request: HttpRequest, slug: str, type: str) -> HttpResponse:
@@ -51,7 +60,19 @@ def detail(request: HttpRequest, slug: str, type: str) -> HttpResponse:
     if type != yeast.type or slug != yeast.id:
         return redirect('yeast_detail', type=yeast.type, slug=yeast.id)
 
-    return render(request, 'yeast/detail.html', {'yeast': yeast})
+    meta_provider = YeastMeta(yeast)
+    meta = meta_provider.get_meta()
+    if yeast.recipes_count > 100:
+        meta.image = reverse('yeast_chart', kwargs=dict(
+            type=yeast.type,
+            slug=yeast.id,
+            chart_type='og',
+            format=FORMAT_PNG,
+        ))
+
+    context = {'yeast': yeast, 'description': meta_provider.get_description_html(), 'meta': meta}
+
+    return render(request, 'yeast/detail.html', context)
 
 
 def chart(request: HttpRequest, slug: str, type: str, chart_type: str, format: str) -> HttpResponse:

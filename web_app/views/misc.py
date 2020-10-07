@@ -6,20 +6,23 @@ from web_app.charts.fermentable import FermentableChartFactory
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.style import StyleChartFactory
 from web_app.charts.yeast import YeastChartFactory
+from web_app.meta import PageMeta
 
 
 def home(request: HttpRequest) -> HttpResponse:
     recipes = Recipe.objects.count()
-    return render(request, 'index.html', {'recipes': recipes})
+    return render(request, 'index.html', {'recipes': recipes, 'meta': meta})
 
 
 def legal(request: HttpRequest) -> HttpResponse:
-    return render(request, 'legal.html')
+    meta = PageMeta.create('Legal', 'Legal information about Beer Analytics')
+    return render(request, 'legal.html', {'meta': meta})
 
 
 def about(request: HttpRequest) -> HttpResponse:
     recipes = Recipe.objects.count()
-    return render(request, 'about.html', {'recipes': recipes})
+    meta = PageMeta.create('About')
+    return render(request, 'about.html', {'recipes': recipes, 'meta': meta})
 
 
 def sitemap(request: HttpRequest) -> HttpResponse:
