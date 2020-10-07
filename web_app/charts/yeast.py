@@ -4,6 +4,7 @@ from recipe_db.analytics.charts.yeast import get_yeast_common_styles_relative, g
     get_yeast_popularity
 from recipe_db.models import Yeast
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
+from web_app.meta import OPEN_GRAPH_IMAGE_WIDTH, OPEN_GRAPH_IMAGE_HEIGHT
 from web_app.plot import LinesChart, BarChart
 
 
@@ -60,8 +61,17 @@ class YeastCommonStylesRelativeChart(YeastChart):
         return Chart(figure, title=self.get_chart_title())
 
 
+class YeastOpenGraphChart(YeastPopularityChart):
+    def plot(self) -> Chart:
+        chart = super().plot()
+        chart.width = OPEN_GRAPH_IMAGE_WIDTH
+        chart.height = OPEN_GRAPH_IMAGE_HEIGHT
+        return chart
+
+
 class YeastChartFactory:
     CHARTS = dict(
+        og=YeastOpenGraphChart,
         popularity=YeastPopularityChart,
         typical_styles_absolute=YeastCommonStylesAbsoluteChart,
         typical_styles_relative=YeastCommonStylesRelativeChart,

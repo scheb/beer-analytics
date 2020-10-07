@@ -6,6 +6,7 @@ from recipe_db.analytics.charts.hop import get_style_hop_pairings, get_style_pop
 from recipe_db.analytics.charts.style import get_style_metric_values, get_style_trending_hops, get_style_popularity
 from recipe_db.models import Style, RecipeHop, Fermentable
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
+from web_app.meta import OPEN_GRAPH_IMAGE_WIDTH, OPEN_GRAPH_IMAGE_HEIGHT
 from web_app.plot import LinesChart, PreAggregatedBoxPlot, \
     PreAggregateHistogramChart, PreAggregatedPairsBoxPlot
 
@@ -182,8 +183,17 @@ class StyleHopPairingsChart(StyleChart):
         return Chart(figure, title=self.get_chart_title())
 
 
+class StyleOpenGraphChart(StylePopularityChart):
+    def plot(self) -> Chart:
+        chart = super().plot()
+        chart.width = OPEN_GRAPH_IMAGE_WIDTH
+        chart.height = OPEN_GRAPH_IMAGE_HEIGHT
+        return chart
+
+
 class StyleChartFactory:
     CHARTS = dict(
+        og=StyleOpenGraphChart,
         abv_histogram=StyleAbvChart,
         ibu_histogram=StyleIbuChart,
         color_srm_histogram=StyleColorChart,

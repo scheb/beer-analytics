@@ -1,10 +1,12 @@
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 
 from recipe_db.models import Hop
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.utils import NoDataException
-from web_app.views.utils import render_chart
+from web_app.meta import HopMeta, HopOverviewMeta
+from web_app.views.utils import render_chart, FORMAT_PNG
 
 
 def overview(request: HttpRequest) -> HttpResponse:
@@ -18,7 +20,10 @@ def overview(request: HttpRequest) -> HttpResponse:
     for hop in hops:
         hop_categories[hop.use]['hops'].append(hop)
 
-    return render(request, 'hop/overview.html', {'categories': hop_categories.values()})
+    meta = HopOverviewMeta().get_meta()
+    context = {'categories': hop_categories.values(), 'meta': meta}
+
+    return render(request, 'hop/overview.html', context)
 
 
 def category(request: HttpRequest, category: str) -> HttpResponse:
@@ -32,7 +37,10 @@ def category(request: HttpRequest, category: str) -> HttpResponse:
     most_popular = hops_query.order_by('-recipes_count')[:5]
     category_name = categories[category]
 
-    return render(request, 'hop/category.html', {'category_name': category_name, 'hops': hops, 'most_popular': most_popular})
+    meta = HopOverviewMeta(category_name).get_meta()
+    context = {'category_name': category_name, 'hops': hops, 'most_popular': most_popular, 'meta': meta}
+
+    return render(request, 'hop/category.html', context)
 
 
 def detail(request: HttpRequest, slug: str, category: str) -> HttpResponse:
@@ -44,7 +52,19 @@ def detail(request: HttpRequest, slug: str, category: str) -> HttpResponse:
     if category != hop.category:
         return redirect('hop_detail', category=hop.category, slug=hop.id)
 
-    return render(request, 'hop/detail.html', {'hop': hop})
+    meta_provider = HopMeta(hop)
+    meta = meta_provider.get_meta()
+    if hop.recipes_count > 100:
+        meta.image = reverse('hop_chart', kwargs=dict(
+            category=hop.category,
+            slug=hop.id,
+            chart_type='og',
+            format=FORMAT_PNG,
+        ))
+
+    context = {'hop': hop, 'description': meta_provider.get_description_html(), 'meta': meta}
+
+    return render(request, 'hop/detail.html', context)
 
 
 def chart(request: HttpRequest, slug: str, category: str, chart_type: str, format: str) -> HttpResponse:

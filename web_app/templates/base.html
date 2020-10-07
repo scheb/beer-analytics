@@ -1,10 +1,11 @@
-<!doctype html>{% with request.resolver_match.url_name as url_name %}{% load static %}{% load pipeline %}
+<!doctype html>{% with request.resolver_match.url_name as url_name %}{% load static %}{% load pipeline %}{% load meta %}
 <html lang="en">
-<head>
-    <title>{% if url_name == "home" %}Beer Analytics &ndash; The analytical beer recipe database{% else %}{% block title %}{% endblock %} | Beer Analytics{% endif %}</title>
+<head {% meta_namespaces %}>
+    {% if meta.title %}{% autoescape off %}{% title_prop meta.title %}{% endautoescape %}
+    {% else %}<title>Beer Analytics &ndash; The analytical beer recipe database</title>{% endif %}
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content=""/>
+    {% include "meta.html" %}
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}"/>
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}"/>
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}"/>

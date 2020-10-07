@@ -5,6 +5,7 @@ from recipe_db.analytics.charts.hop import get_hop_pairing_hops, get_hop_amount_
     get_hop_popularity, get_hop_amount_range, get_hop_metric_values
 from recipe_db.models import Hop
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
+from web_app.meta import OPEN_GRAPH_IMAGE_WIDTH, OPEN_GRAPH_IMAGE_HEIGHT
 from web_app.plot import LinesChart, BarChart, PreAggregatedPairsBoxPlot, PreAggregateHistogramChart, \
     RangeBoxPlot, PreAggregatedBoxPlot
 
@@ -153,8 +154,17 @@ class HopPairingsChart(HopChart):
         return Chart(figure, title=self.get_chart_title())
 
 
+class HopOpenGraphChart(HopPopularityChart):
+    def plot(self) -> Chart:
+        chart = super().plot()
+        chart.width = OPEN_GRAPH_IMAGE_WIDTH
+        chart.height = OPEN_GRAPH_IMAGE_HEIGHT
+        return chart
+
+
 class HopChartFactory:
     CHARTS = dict(
+        og=HopOpenGraphChart,
         alpha_histogram=HopAlphaChart,
         beta_histogram=HopBetaChart,
         amount_percent_range=HopAmountRangeChart,

@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'web_app.apps.WebAppStaticFilesConfig',
     'pipeline',
+    'meta',
 ]
 
 try:
@@ -135,5 +136,14 @@ PIPELINE = {
         }
     }
 }
+
+META_SITE_PROTOCOL = 'https'
+META_SITE_DOMAIN = 'www.beer-analytics.com'
+META_SITE_NAME = 'Beer Analytics'
+META_INCLUDE_KEYWORDS = ['beer', 'brewing', 'recipe', 'ingredients', 'analysis', 'analytics']
+META_USE_OG_PROPERTIES = True
+META_USE_TWITTER_PROPERTIES = True
+META_USE_TITLE_TAG = True
+META_DEFAULT_IMAGE = 'favicon/favicon.png'
 
 RAW_DATA_DIR = env.str('RAW_DATA_DIR')

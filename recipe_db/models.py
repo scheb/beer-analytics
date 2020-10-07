@@ -5,7 +5,7 @@ import datetime
 import math
 import re
 from collections import OrderedDict
-from typing import Optional
+from typing import Optional, List, Tuple
 
 import numpy as np
 # noinspection PyUnresolvedReferences
@@ -176,6 +176,7 @@ class Style(models.Model):
         if self.alt_names is not None:
             items = self.alt_names.split(',')
             return list(map(lambda x: x.strip(), items))
+        return []
 
     @property
     def has_specified_metrics(self) -> bool:
@@ -229,13 +230,13 @@ class Fermentable(models.Model):
     )
 
     TYPE_CHOICES = (
-        (BASE, "Base Malts"),
-        (CARA_CRYSTAL, "Caramel/Crystal Malts"),
+        (BASE, "Base Malt"),
+        (CARA_CRYSTAL, "Caramel/Crystal Malt"),
         (TOASTED, "Toasted"),
         (ROASTED, "Roasted"),
-        (OTHER_MALT, "Other Malts"),
-        (ADJUNCT, "Adjunct Malts"),
-        (UNMALTED_ADJUNCT, "Unmalted Adjuncts"),
+        (OTHER_MALT, "Other Malt"),
+        (ADJUNCT, "Adjunct Malt"),
+        (UNMALTED_ADJUNCT, "Unmalted Adjunct"),
     )
 
     id = models.CharField(max_length=255, primary_key=True)
@@ -293,6 +294,22 @@ class Fermentable(models.Model):
         if self.alt_names is not None:
             items = self.alt_names.split(',')
             return list(map(lambda x: x.strip(), items))
+        return []
+
+    @property
+    def color_level(self) -> Optional[str]:
+        if self.recipes_color_ebc_mean is None:
+            return None
+        if self.recipes_color_ebc_mean < 8:
+            return 'light'
+        if self.recipes_color_ebc_mean < 25:
+            return 'golden'
+        if self.recipes_color_ebc_mean < 40:
+            return 'amber'
+        if self.recipes_color_ebc_mean < 70:
+            return 'dark'
+        if self.recipes_color_ebc_mean < 100:
+            return 'very dark'
 
     @property
     def is_popular(self) -> bool:
@@ -304,6 +321,22 @@ class Hop(models.Model):
     AROMA = 'aroma'
     BITTERING = 'bittering'
     DUAL_PURPOSE = 'dual-purpose'
+
+    COUNTRIES = (
+        ('AUS', 'Australia'),
+        ('BEL', 'Belgium'),
+        ('CAN', 'Canada'),
+        ('CZH', 'Czech Republic'),
+        ('FRA', 'France'),
+        ('GBR', 'Great Britain'),
+        ('GER', 'Germany'),
+        ('JPN', 'Japan'),
+        ('NZL', 'New Zealand'),
+        ('POL', 'Poland'),
+        ('SLO', 'Slovenia'),
+        ('USA', 'United States'),
+        ('ZAF', 'South Africa'),
+    )
 
     USE_CHOICES = (
         (AROMA, 'Aroma'),
@@ -366,6 +399,32 @@ class Hop(models.Model):
         if self.alt_names is not None:
             items = self.alt_names.split(',')
             return list(map(lambda x: x.strip(), items))
+        return []
+
+    @property
+    def origin_list(self):
+        if self.origin is not None:
+            items = self.origin.split(',')
+            return list(map(lambda x: x.strip(), items))
+        return []
+
+    @property
+    # Returns tuple of country code and country name
+    def origin_tuples(self) -> List[Tuple[str, str]]:
+        names = dict(self.COUNTRIES)
+        return list(map(lambda o: (o, names[o]), self.origin_list))
+
+    @property
+    def alpha_level(self) -> Optional[str]:
+        if self.recipes_alpha_mean is None:
+            return None
+        if self.recipes_alpha_mean < 5:
+            return 'low'
+        if self.recipes_alpha_mean > 15:
+            return 'super high'
+        if self.recipes_alpha_mean > 9:
+            return 'high'
+        return 'moderate'
 
     @property
     def use_count(self) -> list:
@@ -531,10 +590,32 @@ class Yeast(models.Model):
         return dict(self.FLOCCULATION_CHOICES)[self.flocculation]
 
     @property
-    def tolerance_name(self):
-        if self.tolerance is None:
+    def attenuation_level(self):
+        if self.attenuation is None:
             return None
-        return dict(self.TOLERANCE_CHOICES)[self.tolerance]
+        if self.attenuation < 30:
+            return 'very low'
+        if self.attenuation < 50:
+            return 'low'
+        if self.attenuation < 70:
+            return 'medium'
+        if self.attenuation < 85:
+            return 'high'
+        return 'very high'
+
+    @property
+    def tolerance_name(self):
+        if self.tolerance is not None:
+            return dict(self.TOLERANCE_CHOICES)[self.tolerance]
+        if self.tolerance_percent is not None:
+            if self.tolerance_percent < 7:
+                return self.LOW
+            if self.tolerance_percent < 10:
+                return self.MEDIUM
+            if self.tolerance_percent < 14:
+                return self.HIGH
+            return self.VERY_HIGH
+        return None
 
     @property
     def is_popular(self) -> bool:
