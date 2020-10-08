@@ -140,6 +140,7 @@ PIPELINE = {
 META_SITE_PROTOCOL = 'https'
 META_SITE_DOMAIN = 'www.beer-analytics.com'
 META_SITE_NAME = 'Beer Analytics'
+META_SITE_TYPE = 'website'
 META_INCLUDE_KEYWORDS = ['beer', 'brewing', 'recipe', 'ingredients', 'analysis', 'analytics']
 META_USE_OG_PROPERTIES = True
 META_USE_TWITTER_PROPERTIES = True
