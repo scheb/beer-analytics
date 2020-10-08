@@ -74,8 +74,14 @@ class HopOverviewMeta(PageMeta):
         return Meta(
             title=self.get_title(),
             description=self.get_description(),
-            keywords=['hops'],
+            keywords=self.get_keywords(),
         )
+
+    def get_keywords(self):
+        kwds = ['hops']
+        if self.category_name is not None:
+            kwds.append(self.category_name.lower())
+        return kwds
 
 
 class HopMeta(PageMeta):
