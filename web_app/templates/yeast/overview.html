@@ -39,7 +39,7 @@
             </h2>
             <div class="mb-4">
                 {% if type.most_popular %}
-                    <p class="most-popular"><label>Most popular:</label>
+                    <p class="badge-list"><label>Most popular:</label>
                         {% for yeast in type.most_popular %}
                             {% if forloop.counter0 > 0 %}<span class="d-none">, </span>{% endif %}
                             <a class="badge" href="

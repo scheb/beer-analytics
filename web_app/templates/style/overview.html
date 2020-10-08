@@ -11,7 +11,7 @@
         and additions.
     </p>
 
-    <p class="most-popular mb-4">Most popular beer styles:
+    <p class="badge-list mb-4">Most popular beer styles:
         {% for style in most_popular %}
             {% if forloop.counter0 > 0 %}<span class="d-none">, </span>{% endif %}
             <a class="badge" href="{{ style|url }}">{{ style.name }}</a>

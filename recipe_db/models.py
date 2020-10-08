@@ -35,6 +35,11 @@ def create_human_readable_id(value: str) -> str:
     return re.sub('[\\s\\/-]+', '-', re.sub('[^\\w\\s\\/-]', '', value)).lower()
 
 
+class Tag(models.Model):
+    id = models.CharField(max_length=255, primary_key=True)
+    name = models.CharField(max_length=255, default=None, blank=True, null=True)
+
+
 # https://www.bjcp.org/docs/2015_Guidelines_Beer.pdf
 # -> https://www.bjcp.org/docs/2015_Guidelines.xlsx
 # -> https://www.bjcp.org/docs/2015_Styles.xlsx
@@ -350,10 +355,10 @@ class Hop(models.Model):
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
     alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
     origin = models.CharField(max_length=32, default=None, blank=True, null=True)
-    substitutes = models.CharField(max_length=255, default=None, blank=True, null=True)
     used_for = models.CharField(max_length=255, default=None, blank=True, null=True)
-    aromas = models.CharField(max_length=255, default=None, blank=True, null=True)
     description = models.CharField(max_length=255, default=None, blank=True, null=True)
+    substitutes = models.ManyToManyField("self")
+    aroma_tags = models.ManyToManyField(Tag)
 
     # Calculated metrics from recipes
     recipes_count = models.IntegerField(default=None, blank=True, null=True)

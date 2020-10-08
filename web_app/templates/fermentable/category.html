@@ -12,7 +12,7 @@
     <h1>{{ category_name }} Fermentables</h1>
 
     {% if most_popular %}
-        <p class="most-popular"><label>Most popular:</label>
+        <p class="badge-list"><label>Most popular:</label>
             {% for fermentable in most_popular %}
                 {% if forloop.counter0 > 0 %}<span class="d-none">, </span>{% endif %}
                 <a class="badge" href="{{ fermentable|url }}">{{ fermentable.name }}</a>
