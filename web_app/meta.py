@@ -107,7 +107,8 @@ class HopMeta(PageMeta):
         )
 
         # Origin
-        if self.hop.origin_tuples is not None:
+        origin = self.hop.origin_tuples
+        if len(origin) > 0:
             countries_verb = " grown in " if len(self.hop.origin_tuples) > 1 else "from"
             countries = comma_and(map(lambda c: country(c), self.hop.origin_tuples))
             text += " {} {}".format(
