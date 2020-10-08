@@ -11,7 +11,7 @@ from web_app.meta import PageMeta
 
 def home(request: HttpRequest) -> HttpResponse:
     recipes = Recipe.objects.count()
-    return render(request, 'index.html', {'recipes': recipes, 'meta': meta})
+    return render(request, 'index.html', {'recipes': recipes})
 
 
 def legal(request: HttpRequest) -> HttpResponse:
