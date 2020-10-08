@@ -351,6 +351,7 @@ class Hop(models.Model):
         ('JPN', 'Japan'),
         ('NZL', 'New Zealand'),
         ('POL', 'Poland'),
+        ('SER', 'Serbia'),
         ('SLO', 'Slovenia'),
         ('USA', 'United States'),
         ('ZAF', 'South Africa'),
