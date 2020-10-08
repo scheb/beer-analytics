@@ -17,6 +17,7 @@ def home(request: HttpRequest) -> HttpResponse:
 
 def legal(request: HttpRequest) -> HttpResponse:
     meta = PageMeta.create('Legal', 'Legal information about Beer Analytics')
+    meta.extra_props = {'robots': 'noindex'}
     return render(request, 'legal.html', {'meta': meta})
 
 
