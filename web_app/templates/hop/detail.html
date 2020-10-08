@@ -40,8 +40,22 @@
 
         {% if description %}<p>{{ description|safe }}</p>{% endif %}
 
-        <p>Aromas: {{ hop.aromas }}</p>
-        <p>Substitutes: {{ hop.substitutes }}</p>
+        {% if hop.accessible_substitutes.count %}{% spaceless %}
+        <p class="badge-list"><label>Substitutes:</label>
+            {% for substitute in hop.accessible_substitutes %}<a href="{{ substitute|url }}" class="badge">{{ substitute.name }}</a>{% endfor %}
+        </p>
+        {% endspaceless %}{% endif %}
+
+        {% if hop.aroma_tags.count %}{% spaceless %}
+        <p class="badge-list"><label>Aromas:</label>
+            {% for tag in hop.aroma_tags.all %}
+                <a href="{% url "hop_category" tag.id %}" class="badge bg-primary">
+                    {{ tag.name }}
+                    <small>({{ tag.accessible_hops_count }})</small>
+                </a>
+            {% endfor %}
+        </p>
+        {% endspaceless %}{% endif %}
     </div>
 
     {% include './metrics.html' %}

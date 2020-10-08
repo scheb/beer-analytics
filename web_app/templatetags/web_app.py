@@ -34,7 +34,7 @@ def url(item: object):
             return reverse('style_detail', kwargs={'category_slug': item.category.slug, 'slug': item.slug})
 
     if isinstance(item, Hop):
-        return reverse('hop_detail', kwargs={'category': item.use, 'slug': item.id})
+        return reverse('hop_detail', kwargs={'category_id': item.use, 'slug': item.id})
 
     if isinstance(item, Fermentable):
         return reverse('fermentable_detail', kwargs={'category': item.category, 'slug': item.id})
@@ -112,7 +112,7 @@ def chart_url(item: object, chart_type: str, format: str):
 
     if isinstance(item, Hop):
         return reverse('hop_chart', kwargs={
-            'category': item.use,
+            'category_id': item.use,
             'slug': item.id,
             'chart_type': chart_type.replace('_', '-'),
             'format': format

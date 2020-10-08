@@ -4,7 +4,7 @@ from os import path
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from recipe_db.models import Style, Hop, Fermentable, Yeast
+from recipe_db.models import Style, Hop, Fermentable, Yeast, Tag
 
 
 def make_style_id(value):
@@ -77,23 +77,65 @@ def load_hops():
     csv_file = load_csv('hops.csv')
     header = next(csv_file)
 
+    hops_by_name = {}
+
+    data_rows = []
     for row in csv_file:
         if len(row) == 1:
             continue  # Skip empty lines
-
-        hop_id = Hop.create_id(row[0])
         row = map(cast_values, row)
         data = dict(zip(header, row))
+        data_rows.append(data)
 
+    # Add/update hops
+    for data in data_rows:
+        hop_id = Hop.create_id(data['name'])
         try:
             hop = Hop.objects.get(pk=hop_id)
+            hop.substitutes.remove()
+            hop.aroma_tags.remove()
         except Hop.DoesNotExist:
             hop = Hop()
             pass
 
         for field in data:
-            setattr(hop, field, data[field])
+            if field not in ["aromas", "substitutes"]:
+                setattr(hop, field, data[field])
+
         hop.save()
+        hops_by_name[hop.name] = hop
+
+    # Update tags & substitutes
+    for data in data_rows:
+        hop = hops_by_name[data['name']]
+        for tag_name in split_list(data['aromas']):
+            tag = get_or_create_tag(tag_name)
+            hop.aroma_tags.add(tag)
+
+        substitutes = split_list(data['substitutes'])
+        for substitute_name in substitutes:
+            if substitute_name in hops_by_name:
+                substitute = hops_by_name[substitute_name]
+                hop.substitutes.add(substitute)
+            else:
+                print("Substitute hop {} not found".format(substitute_name))
+
+
+def get_or_create_tag(tag_name: str) -> Tag:
+    try:
+        return Tag.objects.get(pk=Tag.create_id(tag_name))
+    except Tag.DoesNotExist:
+        tag = Tag(name=tag_name)
+        tag.save()
+        return tag
+
+
+def split_list(data) -> list:
+    if data is None:
+        return []
+    items = data.split(",")
+    items = list(map(lambda s: s.strip(), items))
+    return items
 
 
 def load_fermentables():

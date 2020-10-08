@@ -29,9 +29,9 @@ urlpatterns = [
     path('styles/<str:category_slug>/<str:slug>/charts/<str:chart_type>.<cformat:format>', style.chart, name='style_chart'),
 
     path('hops/', views.hop.overview, name='hop_overview'),
-    path('hops/<str:category>/', hop.category, name='hop_category'),
-    path('hops/<str:category>/<str:slug>/', hop.detail, name='hop_detail'),
-    path('hops/<str:category>/<str:slug>/charts/<str:chart_type>.<cformat:format>', hop.chart, name='hop_chart'),
+    path('hops/<str:category_id>/', hop.category_or_tag, name='hop_category'),
+    path('hops/<str:category_id>/<str:slug>/', hop.detail, name='hop_detail'),
+    path('hops/<str:category_id>/<str:slug>/charts/<str:chart_type>.<cformat:format>', hop.chart, name='hop_chart'),
 
     path('fermentables/', fermentable.overview, name='fermentable_overview'),
     path('fermentables/<str:category>/', fermentable.category, name='fermentable_category'),
