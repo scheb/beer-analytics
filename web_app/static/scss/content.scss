@@ -52,7 +52,7 @@ dl.detail-info {
         padding: 0.25em 0.5em 0.25em 0;
     }
 
-    a.badge {
+    .badge {
         margin: 0.125rem;
         color: $white;
         font-size: inherit;
@@ -67,6 +67,13 @@ dl.detail-info {
         &:hover {
             color: $white;
             text-decoration: underline;
+        }
+
+        small {
+            font-size: 0.75em;
+            color: $white;
+            opacity: 0.8;
+            font-weight: normal;
         }
     }
 }

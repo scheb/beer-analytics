@@ -39,10 +39,10 @@ Bouclier;dual-purpose;;;Grassy, Herbal, Spicy;;
 Bramling;aroma;;East Kent Golding, Progress, Whitbread Golding;;;
 Bramling Cross;dual-purpose;USA;Bullion, East Kent Golding, Galena, Northern Brewer, Progress, Whitbread Golding;Currant, Lemon, Loganberry, Spicy, Vanilla;;Bambling Cross
 Bravo;bittering;USA;Centennial, Chinook, Columbus, Nugget;Candy, Floral, Fruity, Lime, Orange, Vanilla;;
-Brewer's Gold;bittering;USA;Brewer'S Gold, Bullion, Chinook, Eroica, Galena, Northdown, Northern Brewer, Nugget;Currant, Spicy;;
+Brewer's Gold;bittering;USA;Brewer's Gold, Bullion, Chinook, Eroica, Galena, Northdown, Northern Brewer, Nugget;Currant, Spicy;;
 BRU-1;bittering;USA;;Fruity, Pineapple;;
 Buket;dual-purpose;SLO;;;;
-Bullion;bittering;;Bramling Cross, Brewer'S Gold, Galena, Mount Rainier;Currant, Spicy;;
+Bullion;bittering;;Bramling Cross, Brewer's Gold, Galena, Mount Rainier;Currant, Spicy;;
 Bullion 10A;bittering;USA;;;;
 Buzz Bullets;dual-purpose;;;Citrus, Floral;;
 Calicross;dual-purpose;NZL;;;;
@@ -92,7 +92,7 @@ Elsaesser;aroma;GER;;;;
 Endeavor;dual-purpose;GER;;Citrus, Currant, Spicy;;Endeavour, Endevour
 Enigma;bittering;;Hallertauer Blanc, Nelson Sauvin;Berry, Currant, Raspberry, Stonefruit, Tropical Fruits, Whitewine;;
 Epic;aroma;;;Berry, Fruity, Herbal;;
-Eroica;bittering;GER;Brewer'S Gold, Chinook, Cluster, Galena, Nugget;;;
+Eroica;bittering;GER;Brewer's Gold, Chinook, Cluster, Galena, Nugget;;;
 Eureka;dual-purpose;;Apollo, Columbus, Merkur, Simcoe, Summit;Citrus, Currant, Herbal, Mandarin, Mint, Peach, Pine, Stonefruit;;
 Falconer's Flight 7 C's;dual-purpose;GER;Cascade, Centennial, Chinook, Citra, Cluster, Columbus, Crystal;Citrus, Earthy, Fruity, Spicy;;Falconer's Flight, Falconer Flight, Falcon Flight, Falcones Flight, Seven C's, 7 C's, 7C's
 Fantasia;dual-purpose;GER;;Caramel, Cream, Fruity, Noble;;
@@ -108,10 +108,10 @@ Fuggle Tetraploid;dual-purpose;GER;;;;
 Furano Ace;aroma;GER;;;;
 Fusion;aroma;;;Spicy, Tropical Fruits;;Fuison
 Galaxy;dual-purpose;GER;Amarillo, Citra, Simcoe;Citrus, Passionfruit, Peach, Pineapple, Tropical Fruits;;
-Galena;bittering;;Brewer'S Gold, Chinook, Cluster, Columbus, Eroica, Northern Brewer, Nugget;Currant, Fruity, Gooseberry, Grapefruit, Lime, Pear, Pineapple, Spicy, Woody;;
+Galena;bittering;;Brewer's Gold, Chinook, Cluster, Columbus, Eroica, Northern Brewer, Nugget;Currant, Fruity, Gooseberry, Grapefruit, Lime, Pear, Pineapple, Spicy, Woody;;
 Gargoyle;aroma;GER;;;;
 Glacier;dual-purpose;;Fuggle, Styrian Golding, Willamette;Blackberry, Cedar, Plum, Woody;;Galcier
-Godiva;aroma;USA;Hallertauer Blanc, Wai-Iti;Gooseberry, Spicy, Tangerine, Whitegrape;;
+Godiva;aroma;USA;Hallertauer Blanc, Wai-iti;Gooseberry, Spicy, Tangerine, Whitegrape;;
 Golden Star;aroma;NZL;;;;
 Golding;aroma;NZL;East Kent Golding, Fuggle, Styrian Golding, Willamette;;;Goldings, Golding, Goldins
 Green Bullet;dual-purpose;AUS;Crystal, Hallertauer Mittelfrüh, Liberty, Mount Hood, Styrian Golding, Ultra;Floral, Fruity, Pepper, Pine, Plum, Resin;;
@@ -161,13 +161,13 @@ Keyworth's Early;aroma;CZH;;;;
 Keyworth's Midseason;aroma;GBR;;;;
 Kirin II;dual-purpose;FRA;;;;Kirin, Kirin 2
 Kitamidori;bittering;GER;;;;
-Kohatu;aroma;USA;Motueka, Wai-Iti;Tropical Fruits;;Kuhatu
+Kohatu;aroma;USA;Motueka, Wai-iti;Tropical Fruits;;Kuhatu
 Korsta;dual-purpose;NZL;;;;
 Landhopfen;aroma;USA;;;;
 Legacy;dual-purpose;USA;Cluster, Galena, Northern Brewer;Blackberry, Currant, Floral, Grapefruit, Grassy, Orange, Spicy;;
 Lemondrop;aroma;NZL;Cascade, Centennial, Liberty, Mandarina Bavaria, Motueka;Citrus, Floral, Green Tea, Lemon, Melon, Mint;;Lemon Drop
 Liberty;aroma;;Crystal, Hallertauer Mittelfrüh, Mount Hood;Citrus, Floral, Herbal, Lemon, Noble, Spicy;;
-Loral;dual-purpose;;Glacier, Nugget, Strisselspalt, Tardif De Bourgogne;Citrus, Floral, Fruity, Pepper;HBC 291;Loral Nobel, Loral Noble
+Loral;dual-purpose;;Glacier, Nugget, Strisselspalt, Tardif de Bourgogne;Citrus, Floral, Fruity, Pepper;HBC 291;Loral Nobel, Loral Noble
 Lotus;aroma;;;Berry, Cream, Orange, Tropical Fruits, Vanilla;;
 Lubelska;aroma;NZL;Saaz, Sterling, Tettnanger;Floral, Lavender, Magnolia, Spicy;Lublin;Lubelski, Luboloski, Lubliner
 Lubelska-Pulawy;aroma;NZL;;;;
@@ -202,14 +202,14 @@ Nectaron;dual-purpose;;Citra, Mosaic, Waimea;Citrus, Grapefruit, Passionfruit, P
 Nelson Sauvin;dual-purpose;GBR;Enigma, Hallertauer Blanc, Motueka, Riwaka;Fruity, Gooseberry, Grape, Whitewine;;Nelson, Nels, Nel, Neslson Sauvin
 Neo1;dual-purpose;GBR;;;;Neo 1
 Neoplanta;dual-purpose;GBR;;;;
-Newport;bittering;USA;Brewer'S Gold, Fuggle, Galena, Magnum, Nugget;Balsamic, Citrus, Earthy, Whitewine;;
+Newport;bittering;USA;Brewer's Gold, Fuggle, Galena, Magnum, Nugget;Balsamic, Citrus, Earthy, Whitewine;;
 Nordgaard;aroma;GBR;;;;
 Northdown;dual-purpose;;Northern Brewer;;;
-Northern Brewer;dual-purpose;GER;Brewer'S Gold, Chinook, Galena, Magnum, Northern Brewer, Perle;;;Norther, Norther Brewer, Norther Browser, Northerm Brewer, Northern, Nother Brewer
+Northern Brewer;dual-purpose;GER;Brewer's Gold, Chinook, Galena, Magnum, Northern Brewer, Perle;;;Norther, Norther Brewer, Norther Browser, Northerm Brewer, Northern, Nother Brewer
 Nugget;dual-purpose;;Chinook, Columbus, Galena, Magnum;Citrus, Earthy, Geranium, Ginger, Herbal, Lychee, Pineapple;;Nugeet, nuggets
 Oktawia;bittering;CZH;;;;
 Olicana;dual-purpose;;;Floral, Grapefruit, Mango, Passionfruit;;
-Olympic;aroma;AUS;Brewer'S Gold, Chinook, Galena;Citrus, Spicy;;
+Olympic;aroma;AUS;Brewer's Gold, Chinook, Galena;Citrus, Spicy;;
 Omega;aroma;GBR;;;;
 Opal;dual-purpose;;;;;
 Opus;aroma;;;;;

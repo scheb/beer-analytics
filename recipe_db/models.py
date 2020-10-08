@@ -39,6 +39,19 @@ class Tag(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     name = models.CharField(max_length=255, default=None, blank=True, null=True)
 
+    @property
+    def accessible_hops_count(self) -> int:
+        return self.hop_set.filter(recipes_count__gt=0).count()
+
+    @classmethod
+    def create_id(cls, name: str) -> str:
+        return create_human_readable_id(name)
+
+    def save(self, *args, **kwargs) -> None:
+        if self.id == '':
+            self.id = self.create_id(self.name)
+        super().save(*args, **kwargs)
+
 
 # https://www.bjcp.org/docs/2015_Guidelines_Beer.pdf
 # -> https://www.bjcp.org/docs/2015_Guidelines.xlsx
@@ -357,7 +370,7 @@ class Hop(models.Model):
     origin = models.CharField(max_length=32, default=None, blank=True, null=True)
     used_for = models.CharField(max_length=255, default=None, blank=True, null=True)
     description = models.CharField(max_length=255, default=None, blank=True, null=True)
-    substitutes = models.ManyToManyField("self")
+    substitutes = models.ManyToManyField("self", symmetrical=False)
     aroma_tags = models.ManyToManyField(Tag)
 
     # Calculated metrics from recipes
@@ -449,6 +462,10 @@ class Hop(models.Model):
                 use_counts.append({"use_id": use, "use": use_names[use], "recipes": value})
 
         return use_counts
+
+    @property
+    def accessible_substitutes(self):
+        return self.substitutes.filter(recipes_count__gt=0).order_by('name')
 
     @property
     def is_popular(self) -> bool:
