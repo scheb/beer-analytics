@@ -1,7 +1,7 @@
 beer-analytics 🕵️🍺
 ===================
 
-Django application to **analyze beer recipes and visualize results**.
+**Analyzing the composition of beer recipes and visualize results**, built with Django, Pandas and Plotly.
 
 Live website: https://www.beer-analytics.com/
 
