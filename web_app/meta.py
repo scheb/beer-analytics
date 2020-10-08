@@ -34,7 +34,7 @@ class StyleOverviewMeta(PageMeta):
     def get_meta(self) -> Meta:
         return Meta(
             title=NORMAL_TITLE.format('Beer Styles'),
-            description='Overview of all beer styles which can be analyzed on Beer Analytics.',
+            description='Overview of all beer styles to analyze on Beer Analytics.',
             keywords=['styles'],
         )
 
@@ -66,7 +66,7 @@ class HopOverviewMeta(PageMeta):
 
     def get_description(self):
         if self.category_name is not None:
-            return 'Overview of {}hops which can be analyzed on Beer Analytics.'.format(
+            return 'Overview of {}hops to analyze on Beer Analytics.'.format(
                 self.category_name.lower()
             )
 
@@ -155,7 +155,7 @@ class FermentableOverviewMeta(PageMeta):
 
     def get_description(self):
         if self.category_name is not None:
-            return 'Overview of {}fermentables which can be analyzed on Beer Analytics.'.format(
+            return 'Overview of {}fermentables to analyze on Beer Analytics.'.format(
                 self.category_name.lower()
             )
 
@@ -225,7 +225,7 @@ class YeastOverviewMeta(PageMeta):
 
     def get_description(self):
         if self.type_name is not None:
-            return 'Overview of {}yeasts which can be analyzed on Beer Analytics.'.format(
+            return 'Overview of {}yeasts to analyze on Beer Analytics.'.format(
                 self.type_name.lower()
             )
 
