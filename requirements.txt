@@ -5,7 +5,7 @@ cycler==0.10.0
 Django==3.1
 django-environ==0.4.5
 django-meta==1.7.0
-django-pipeline==2.0.5
+-e git+ssh://git@github.com:scheb/django-pipeline.git@19fb65d7fb0886255828c833ebf4dda30494a137#egg=django_pipeline
 idna==2.10
 kaleido==0.0.3.post1
 kiwisolver==1.2.0
