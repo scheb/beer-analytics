@@ -113,3 +113,31 @@ ChartNavigation.prototype.update_style = function() {
         nav_element.className += " nav-tabs card-header-tabs"
     }
 }
+
+function DetailList(element) {
+    this.element = element
+    this.update_first_elements()
+    window.addEventListener("resize", this.update_first_elements.bind(this))
+}
+
+DetailList.prototype.update_first_elements = function() {
+    var parent_left = this.element.offsetLeft
+    console.log("Parent: "+parent_left)
+    var previous_top = null
+    this.element.querySelectorAll("dt").forEach(function (dt_element) {
+        var first_in_line = (null === previous_top || dt_element.offsetTop > previous_top)
+            && parent_left === dt_element.offsetLeft
+        previous_top = dt_element.offsetTop
+
+        dt_element.classList.remove('first-in-line')
+        if (first_in_line) {
+            dt_element.classList.add('first-in-line')
+        }
+    })
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll("dl.detail-info").forEach(function (element) {
+        new DetailList(element)
+    })
+})
