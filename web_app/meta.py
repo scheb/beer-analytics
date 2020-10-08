@@ -12,7 +12,7 @@ OPEN_GRAPH_IMAGE_WIDTH = 1200
 OPEN_GRAPH_IMAGE_HEIGHT = 630
 DETAIL_PAGE_TITLE = "{} ‹ {} | Beer-Analytics"
 NORMAL_TITLE = "{} | Beer-Analytics"
-META_DEFAULT_DESCRIPTION = 'Beer Analytics is a database of brewing recipes dedicated to beer enthusiasts, who want ' \
+META_DEFAULT_DESCRIPTION = 'Beer Analytics is a database of brewing recipes for beer enthusiasts, who want ' \
    'to learn how certain beer styles are composed and how ingredients are used.'
 
 
@@ -28,6 +28,13 @@ class PageMeta:
             description=description or META_DEFAULT_DESCRIPTION,
             keywords=[] if keywords is None else keywords,
         )
+
+
+class HomeMeta(PageMeta):
+    def get_meta(self) -> Meta:
+        meta = self.create('')
+        meta.title = 'Beer Analytics – The analytical beer recipe database'
+        return meta
 
 
 class StyleOverviewMeta(PageMeta):

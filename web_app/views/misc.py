@@ -6,12 +6,13 @@ from web_app.charts.fermentable import FermentableChartFactory
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.style import StyleChartFactory
 from web_app.charts.yeast import YeastChartFactory
-from web_app.meta import PageMeta
+from web_app.meta import PageMeta, HomeMeta
 
 
 def home(request: HttpRequest) -> HttpResponse:
     recipes = Recipe.objects.count()
-    return render(request, 'index.html', {'recipes': recipes})
+    meta = HomeMeta().get_meta()
+    return render(request, 'index.html', {'recipes': recipes, 'meta': meta})
 
 
 def legal(request: HttpRequest) -> HttpResponse:
