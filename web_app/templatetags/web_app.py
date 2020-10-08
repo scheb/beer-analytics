@@ -10,6 +10,7 @@ from web_app.charts.fermentable import FermentableChartFactory
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.style import StyleChartFactory
 from web_app.charts.yeast import YeastChartFactory
+from web_app.views.utils import object_url
 
 register = template.Library()
 
@@ -27,22 +28,7 @@ def startswith(text, starts):
 
 @register.filter('url')
 def url(item: object):
-    if isinstance(item, Style):
-        if item.is_category:
-            return reverse('style_category', kwargs={'category_slug': item.slug})
-        else:
-            return reverse('style_detail', kwargs={'category_slug': item.category.slug, 'slug': item.slug})
-
-    if isinstance(item, Hop):
-        return reverse('hop_detail', kwargs={'category_id': item.use, 'slug': item.id})
-
-    if isinstance(item, Fermentable):
-        return reverse('fermentable_detail', kwargs={'category': item.category, 'slug': item.id})
-
-    if isinstance(item, Yeast):
-        return reverse('yeast_detail', kwargs={'type': item.type, 'slug': item.id})
-
-    return None
+    return object_url(item)
 
 
 @register.filter('hop')
@@ -120,7 +106,7 @@ def chart_url(item: object, chart_type: str, format: str):
 
     if isinstance(item, Fermentable):
         return reverse('fermentable_chart', kwargs={
-            'category': item.category,
+            'category_id': item.category,
             'slug': item.id,
             'chart_type': chart_type.replace('_', '-'),
             'format': format
@@ -128,7 +114,7 @@ def chart_url(item: object, chart_type: str, format: str):
 
     if isinstance(item, Yeast):
         return reverse('yeast_chart', kwargs={
-            'type': item.type,
+            'type_id': item.type,
             'slug': item.id,
             'chart_type': chart_type.replace('_', '-'),
             'format': format

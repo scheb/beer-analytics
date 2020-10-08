@@ -34,14 +34,14 @@ urlpatterns = [
     path('hops/<str:category_id>/<str:slug>/charts/<str:chart_type>.<cformat:format>', hop.chart, name='hop_chart'),
 
     path('fermentables/', fermentable.overview, name='fermentable_overview'),
-    path('fermentables/<str:category>/', fermentable.category, name='fermentable_category'),
-    path('fermentables/<str:category>/<str:slug>/', fermentable.detail, name='fermentable_detail'),
-    path('fermentables/<str:category>/<str:slug>/charts/<str:chart_type>.<cformat:format>', fermentable.chart, name='fermentable_chart'),
+    path('fermentables/<str:category_id>/', fermentable.category, name='fermentable_category'),
+    path('fermentables/<str:category_id>/<str:slug>/', fermentable.detail, name='fermentable_detail'),
+    path('fermentables/<str:category_id>/<str:slug>/charts/<str:chart_type>.<cformat:format>', fermentable.chart, name='fermentable_chart'),
 
     path('yeasts/', yeast.overview, name='yeast_overview'),
-    path('yeasts/<str:type>/', yeast.type_overview, name='yeast_type'),
-    path('yeasts/<str:type>/<str:slug>/', yeast.detail, name='yeast_detail'),
-    path('yeasts/<str:type>/<str:slug>/charts/<str:chart_type>.<cformat:format>', yeast.chart, name='yeast_chart'),
+    path('yeasts/<str:type_id>/', yeast.type_overview, name='yeast_type'),
+    path('yeasts/<str:type_id>/<str:slug>/', yeast.detail, name='yeast_detail'),
+    path('yeasts/<str:type_id>/<str:slug>/charts/<str:chart_type>.<cformat:format>', yeast.chart, name='yeast_chart'),
 
     path('trends/', trend.overview, name='trend_overview'),
     path('trends/<str:chart_type>.<cformat:format>', trend.chart, name='trend_chart'),
