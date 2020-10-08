@@ -25,21 +25,21 @@ def overview(request: HttpRequest) -> HttpResponse:
     return render(request, 'fermentable/overview.html', context)
 
 
-def category(request: HttpRequest, category: str) -> HttpResponse:
+def category(request: HttpRequest, category_id: str) -> HttpResponse:
     categories = Fermentable.get_categories()
-    if category not in categories:
-        raise Http404('Unknown fermentable category %s.' % category)
+    if category_id not in categories:
+        raise Http404('Unknown fermentable category %s.' % category_id)
 
-    category_name = categories[category]
+    category_name = categories[category_id]
 
-    fermentables_query = Fermentable.objects.filter(category=category, recipes_count__gt=0)
+    fermentables_query = Fermentable.objects.filter(category=category_id, recipes_count__gt=0)
     (fermentables, types) = group_by_type(fermentables_query.order_by('name'))
 
     most_popular = []
     if fermentables_query.count() > 5:
         most_popular = fermentables_query.order_by('-recipes_count')[:5]
 
-    meta = FermentableOverviewMeta(category_name).get_meta()
+    meta = FermentableOverviewMeta((category_id, category_name)).get_meta()
     context = {
         'category_name': category_name,
         'fermentables': fermentables,
@@ -51,7 +51,7 @@ def category(request: HttpRequest, category: str) -> HttpResponse:
     return render(request, 'fermentable/category.html', context)
 
 
-def detail(request: HttpRequest, slug: str, category: str) -> HttpResponse:
+def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
     try:
         fermentable = get_object_or_404(Fermentable, pk=slug)
     except Http404 as err:
@@ -64,14 +64,14 @@ def detail(request: HttpRequest, slug: str, category: str) -> HttpResponse:
     if fermentable.recipes_count <= 0:
         raise Http404("Fermentable doesn't have any data.")
 
-    if category != fermentable.category or slug != fermentable.id:
-        return redirect('fermentable_detail', category=fermentable.category, slug=fermentable.id)
+    if category_id != fermentable.category or slug != fermentable.id:
+        return redirect('fermentable_detail', category_id=fermentable.category, slug=fermentable.id)
 
     meta_provider = FermentableMeta(fermentable)
     meta = meta_provider.get_meta()
     if fermentable.recipes_count > 100:
         meta.image = reverse('fermentable_chart', kwargs=dict(
-            category=fermentable.category,
+            category_id=fermentable.category,
             slug=fermentable.id,
             chart_type='og',
             format=FORMAT_PNG,
@@ -82,14 +82,14 @@ def detail(request: HttpRequest, slug: str, category: str) -> HttpResponse:
     return render(request, 'fermentable/detail.html', context)
 
 
-def chart(request: HttpRequest, slug: str, category: str, chart_type: str, format: str) -> HttpResponse:
+def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, format: str) -> HttpResponse:
     fermentable = get_object_or_404(Fermentable, pk=slug)
 
     if fermentable.recipes_count <= 0:
         raise Http404("Fermentable doesn't have any data.")
 
-    if category != fermentable.category:
-        return redirect('fermentable_chart', category=fermentable.category, slug=fermentable.id, chart_type=chart_type, format=format)
+    if category_id != fermentable.category:
+        return redirect('fermentable_chart', category_id=fermentable.category, slug=fermentable.id, chart_type=chart_type, format=format)
 
     if FermentableChartFactory.is_supported_chart(chart_type):
         try:

@@ -2,11 +2,13 @@ import abc
 import html
 import re
 from functools import lru_cache
-from typing import List, Iterable, Optional
+from typing import List, Iterable, Optional, Tuple
 
+from django.urls import reverse
 from meta.views import Meta
 
 from recipe_db.models import Hop, Yeast, Fermentable, Style
+from web_app.views.utils import object_url
 
 OPEN_GRAPH_IMAGE_WIDTH = 1200
 OPEN_GRAPH_IMAGE_HEIGHT = 630
@@ -22,17 +24,24 @@ class PageMeta:
         raise NotImplementedError
 
     @classmethod
-    def create(cls, title: str, description: Optional[str] = None, keywords: Optional[List[str]] = None):
+    def create(
+        cls,
+        title: str,
+        description: Optional[str] = None,
+        keywords: Optional[List[str]] = None,
+        url: Optional[str] = None,
+    ):
         return Meta(
             title=NORMAL_TITLE.format(title),
             description=description or META_DEFAULT_DESCRIPTION,
             keywords=[] if keywords is None else keywords,
+            url=url,
         )
 
 
 class HomeMeta(PageMeta):
     def get_meta(self) -> Meta:
-        meta = self.create('')
+        meta = self.create('', url=reverse('home'))
         meta.title = 'Beer Analytics – The analytical beer recipe database'
         return meta
 
@@ -43,6 +52,7 @@ class StyleOverviewMeta(PageMeta):
             title=NORMAL_TITLE.format('Beer Styles'),
             description='Overview of all beer styles to analyze on Beer Analytics.',
             keywords=['styles'],
+            url=reverse('style_overview'),
         )
 
 
@@ -61,34 +71,44 @@ class StyleMeta(PageMeta):
             title=self.get_title(),
             description=self.get_description(),
             keywords=[self.style.name.lower(), 'style'],
+            url=object_url(self.style),
         )
 
 
 class HopOverviewMeta(PageMeta):
-    def __init__(self, category_name: Optional[str] = None) -> None:
-        self.category_name = category_name+" " if category_name is not None else ''
+    def __init__(self, category: Optional[Tuple[str, str]] = None) -> None:
+        self.category_id = None
+        self.category_name = ''
+        if category is not None:
+            (self.category_id, self.category_name) = category
+            self.category_name += " "  # Add extra space for title/description
 
     def get_title(self):
         return NORMAL_TITLE.format(self.category_name+"Hops Overview")
 
     def get_description(self):
-        if self.category_name is not None:
-            return 'Overview of {}hops to analyze on Beer Analytics.'.format(
-                self.category_name.lower()
-            )
+        return 'Overview of {}hops to analyze on Beer Analytics.'.format(
+            self.category_name.lower()
+        )
+
+    def get_keywords(self):
+        keywords = ['hops']
+        if self.category_id is not None:
+            keywords.append(self.category_name.strip().lower())
+        return keywords
+
+    def get_url(self):
+        if self.category_id is not None:
+            return reverse('hop_category', kwargs={'category_id': self.category_id})
+        return reverse('hop_overview')
 
     def get_meta(self) -> Meta:
         return Meta(
             title=self.get_title(),
             description=self.get_description(),
             keywords=self.get_keywords(),
+            url=self.get_url(),
         )
-
-    def get_keywords(self):
-        kwds = ['hops']
-        if self.category_name is not None:
-            kwds.append(self.category_name.lower())
-        return kwds
 
 
 class HopMeta(PageMeta):
@@ -151,27 +171,37 @@ class HopMeta(PageMeta):
             title=self.get_title(),
             description=html2text(self.get_description()),
             keywords=[self.hop.name.lower(), 'hop', 'dry-hopping', 'bittering', 'aroma'],
+            url=object_url(self.hop),
         )
 
 
 class FermentableOverviewMeta(PageMeta):
-    def __init__(self, category_name: Optional[str] = None) -> None:
-        self.category_name = category_name+" " if category_name is not None else ''
+    def __init__(self, category: Optional[Tuple[str, str]] = None) -> None:
+        self.category_id = None
+        self.category_name = ''
+        if category is not None:
+            (self.category_id, self.category_name) = category
+            self.category_name += " "  # Add extra space for title/description
 
     def get_title(self):
         return NORMAL_TITLE.format(self.category_name+"Fermentables Overview")
 
     def get_description(self):
-        if self.category_name is not None:
-            return 'Overview of {}fermentables to analyze on Beer Analytics.'.format(
-                self.category_name.lower()
-            )
+        return 'Overview of {}fermentables to analyze on Beer Analytics.'.format(
+            self.category_name.lower()
+        )
+
+    def get_url(self):
+        if self.category_id is not None:
+            return reverse('fermentable_category', kwargs={'category_id': self.category_id})
+        return reverse('fermentable_overview')
 
     def get_meta(self) -> Meta:
         return Meta(
             title=self.get_title(),
             description=self.get_description(),
             keywords=['malts', 'fermentables'],
+            url=self.get_url(),
         )
 
 
@@ -221,27 +251,37 @@ class FermentableMeta(PageMeta):
             title=self.get_title(),
             description=html2text(self.get_description()),
             keywords=[self.fermentable.name.lower(), 'fermentable', 'malt', 'mashing'],
+            url=object_url(self.fermentable),
         )
 
 
 class YeastOverviewMeta(PageMeta):
-    def __init__(self, type_name: Optional[str] = None) -> None:
-        self.type_name = type_name + " " if type_name is not None else ''
+    def __init__(self, y_type: Optional[Tuple[str, str]] = None) -> None:
+        self.type_id = None
+        self.type_name = ''
+        if y_type is not None:
+            (self.type_id, self.type_name) = y_type
+            self.type_name += " "  # Add extra space for title/description
 
     def get_title(self):
         return NORMAL_TITLE.format(self.type_name + "Yeasts Overview")
 
     def get_description(self):
-        if self.type_name is not None:
-            return 'Overview of {}yeasts to analyze on Beer Analytics.'.format(
-                self.type_name.lower()
-            )
+        return 'Overview of {}yeasts to analyze on Beer Analytics.'.format(
+            self.type_name.lower()
+        )
+
+    def get_url(self):
+        if self.type_id is not None:
+            return reverse('yeast_type', kwargs={'type_id': self.type_id})
+        return reverse('yeast_overview')
 
     def get_meta(self) -> Meta:
         return Meta(
             title=self.get_title(),
             description=self.get_description(),
             keywords=['yeasts'],
+            url=self.get_url(),
         )
 
 
@@ -309,6 +349,7 @@ class YeastMeta(PageMeta):
             title=self.get_title(),
             description=html2text(self.get_description()),
             keywords=[self.yeast.name.lower(), 'yeast', 'fermentation'],
+            url=object_url(self.yeast),
         )
 
 

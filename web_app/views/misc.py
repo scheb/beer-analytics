@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render
+from django.urls import reverse
 
 from recipe_db.models import Recipe, Style, Hop, Fermentable, Yeast
 from web_app.charts.fermentable import FermentableChartFactory
@@ -16,14 +17,14 @@ def home(request: HttpRequest) -> HttpResponse:
 
 
 def legal(request: HttpRequest) -> HttpResponse:
-    meta = PageMeta.create('Legal', 'Legal information about Beer Analytics')
+    meta = PageMeta.create('Legal', 'Legal information about Beer Analytics', url=reverse('legal'))
     meta.extra_props = {'robots': 'noindex'}
     return render(request, 'legal.html', {'meta': meta})
 
 
 def about(request: HttpRequest) -> HttpResponse:
     recipes = Recipe.objects.count()
-    meta = PageMeta.create('About')
+    meta = PageMeta.create('About', url=reverse('about'))
     return render(request, 'about.html', {'recipes': recipes, 'meta': meta})
 
 

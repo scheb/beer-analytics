@@ -25,21 +25,21 @@ def overview(request: HttpRequest) -> HttpResponse:
     return render(request, 'yeast/overview.html', context)
 
 
-def type_overview(request: HttpRequest, type: str) -> HttpResponse:
+def type_overview(request: HttpRequest, type_id: str) -> HttpResponse:
     types = Yeast.get_types()
-    if type not in types:
-        raise Http404('Unknown yeast type %s.' % type)
+    if type_id not in types:
+        raise Http404('Unknown yeast type %s.' % type_id)
 
-    type_name = types[type]
+    type_name = types[type_id]
 
-    yeasts_query = Yeast.objects.filter(type=type, recipes_count__gt=0)
+    yeasts_query = Yeast.objects.filter(type=type_id, recipes_count__gt=0)
     (yeasts, labs) = group_by_lab(yeasts_query.order_by('name'))
 
     most_popular = []
     if yeasts_query.count() > 5:
         most_popular = yeasts_query.order_by('-recipes_count')[:5]
 
-    meta = YeastOverviewMeta(type_name).get_meta()
+    meta = YeastOverviewMeta((type_id, type_name)).get_meta()
     context = {
         'type_name': type_name,
         'yeasts': yeasts,
@@ -51,20 +51,20 @@ def type_overview(request: HttpRequest, type: str) -> HttpResponse:
     return render(request, 'yeast/type.html', context)
 
 
-def detail(request: HttpRequest, slug: str, type: str) -> HttpResponse:
+def detail(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
     yeast = get_object_or_404(Yeast, pk=slug)
 
     if yeast.recipes_count <= 0:
         raise Http404("Yeast doesn't have any data.")
 
-    if type != yeast.type or slug != yeast.id:
+    if type_id != yeast.type or slug != yeast.id:
         return redirect('yeast_detail', type=yeast.type, slug=yeast.id)
 
     meta_provider = YeastMeta(yeast)
     meta = meta_provider.get_meta()
     if yeast.recipes_count > 100:
         meta.image = reverse('yeast_chart', kwargs=dict(
-            type=yeast.type,
+            type_id=yeast.type,
             slug=yeast.id,
             chart_type='og',
             format=FORMAT_PNG,
@@ -75,14 +75,14 @@ def detail(request: HttpRequest, slug: str, type: str) -> HttpResponse:
     return render(request, 'yeast/detail.html', context)
 
 
-def chart(request: HttpRequest, slug: str, type: str, chart_type: str, format: str) -> HttpResponse:
+def chart(request: HttpRequest, slug: str, type_id: str, chart_type: str, format: str) -> HttpResponse:
     yeast = get_object_or_404(Yeast, pk=slug)
 
     if yeast.recipes_count <= 0:
         raise Http404("Yeast doesn't have any data.")
 
-    if type != yeast.type:
-        return redirect('yeast_chart', type=yeast.type, slug=yeast.id, chart_type=chart_type, format=format)
+    if type_id != yeast.type:
+        return redirect('yeast_chart', type_id=yeast.type, slug=yeast.id, chart_type=chart_type, format=format)
 
     if YeastChartFactory.is_supported_chart(chart_type):
         try:

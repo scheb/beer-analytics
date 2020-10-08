@@ -48,7 +48,7 @@ def category(request: HttpRequest, category_id: str) -> HttpResponse:
     most_popular = hops_query.order_by('-recipes_count')[:5]
     category_name = categories[category_id]
 
-    meta = HopOverviewMeta(category_name).get_meta()
+    meta = HopOverviewMeta((category_id, category_name)).get_meta()
     context = {'category_name': category_name, 'hops': hops, 'most_popular': most_popular, 'meta': meta}
 
     return render(request, 'hop/category.html', context)
@@ -58,7 +58,7 @@ def tag(request: HttpRequest, tag_obj: Tag) -> HttpResponse:
     hops_query = Hop.objects.filter(aroma_tags=tag_obj ,recipes_count__gt=0)
 
     hops = hops_query.order_by('name')
-    meta = HopOverviewMeta(tag_obj.name+" Flavor").get_meta()
+    meta = HopOverviewMeta((tag_obj.id, tag_obj.name+" Flavor")).get_meta()
     context = {'tag_name': tag_obj.name, 'hops': hops, 'meta': meta}
 
     return render(request, 'hop/tag.html', context)
