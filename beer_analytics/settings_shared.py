@@ -144,6 +144,6 @@ META_INCLUDE_KEYWORDS = ['beer', 'brewing', 'recipe', 'ingredients', 'analysis',
 META_USE_OG_PROPERTIES = True
 META_USE_TWITTER_PROPERTIES = True
 META_USE_TITLE_TAG = True
-META_DEFAULT_IMAGE = 'favicon/favicon.png'
+META_DEFAULT_IMAGE = 'img/og.png'
 
 RAW_DATA_DIR = env.str('RAW_DATA_DIR')
