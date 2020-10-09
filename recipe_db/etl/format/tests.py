@@ -2,8 +2,8 @@ from os import path
 
 from django.test import TestCase
 
-from recipe_db.format import beersmith, beerxml
-from recipe_db.format.parser import ParserResult
+from recipe_db.etl.format import beersmith, beerxml
+from recipe_db.etl.format.parser import ParserResult
 from recipe_db.models import RecipeHop, RecipeFermentable, RecipeYeast
 
 

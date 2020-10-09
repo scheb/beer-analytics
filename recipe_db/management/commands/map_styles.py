@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from recipe_db.mapping import StylesProcessor, RecipeNameStyleMapper, StyleMapper, RecipeNameStyleExactMatchMapper
+from recipe_db.etl.mapping import StylesProcessor, RecipeNameStyleMapper, StyleMapper, RecipeNameStyleExactMatchMapper
 
 
 class Command(BaseCommand):
