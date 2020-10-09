@@ -29,21 +29,6 @@ def remove_outliers(df: DataFrame, field: str, cutoff_percentile: float) -> Data
     return df[df[field].between(lower_limit, upper_limit)]
 
 
-def get_num_recipes_per_month() -> DataFrame:
-    query = '''
-        SELECT date(created, 'start of month') AS month, count(uid) AS total_recipes
-        FROM recipe_db_recipe
-        WHERE created IS NOT NULL
-        GROUP BY date(created, 'start of month')
-        ORDER BY month ASC
-    '''
-
-    df = pd.read_sql(query, connection)
-    df = df.set_index('month')
-
-    return df
-
-
 def filter_trending(df: DataFrame, series_column: str, time_column: str, value_column: str) -> DataFrame:
     # Take only last months
     num_months = 18
@@ -125,4 +110,3 @@ def set_series_start(
     filtered = filtered[filtered[value_column].notnull()]
 
     return filtered.reset_index()
-

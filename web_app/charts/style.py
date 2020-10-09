@@ -3,7 +3,7 @@ from typing import Optional, Tuple
 
 from recipe_db.analytics.charts.fermentable import get_style_popular_fermentables
 from recipe_db.analytics.charts.hop import get_style_hop_pairings, get_style_popular_hops
-from recipe_db.analytics.charts.style import get_style_metric_values, get_style_trending_hops, get_style_popularity
+from recipe_db.analytics.charts.style import StyleAnalysis
 from recipe_db.models import Style, RecipeHop, Fermentable
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.meta import OPEN_GRAPH_IMAGE_WIDTH, OPEN_GRAPH_IMAGE_HEIGHT
@@ -31,7 +31,7 @@ class StyleAbvChart(StyleChart):
     IMAGE_ALT = "Histogram of Alcohol per Volume (ABV) in the %s beer style"
 
     def plot(self) -> Chart:
-        df = get_style_metric_values(self.style, 'abv')
+        df = StyleAnalysis(self.style).metric_histogram('abv')
         if len(df) == 0:
             raise NoDataException()
 
@@ -44,7 +44,7 @@ class StyleIbuChart(StyleChart):
     IMAGE_ALT = "Histogram of bitterness (IBU) in the %s beer style"
 
     def plot(self) -> Chart:
-        df = get_style_metric_values(self.style, 'ibu')
+        df = StyleAnalysis(self.style).metric_histogram('ibu')
         if len(df) == 0:
             raise NoDataException()
 
@@ -57,7 +57,7 @@ class StyleColorChart(StyleChart):
     IMAGE_ALT = "Histogram of beer color (SRM) in the %s beer style"
 
     def plot(self) -> Chart:
-        df = get_style_metric_values(self.style, 'srm')
+        df = StyleAnalysis(self.style).metric_histogram('srm')
         if len(df) == 0:
             raise NoDataException()
 
@@ -70,7 +70,7 @@ class StyleOGChart(StyleChart):
     IMAGE_ALT = "Histogram of original gravity (OG) in the %s beer style"
 
     def plot(self) -> Chart:
-        df = get_style_metric_values(self.style, 'og')
+        df = StyleAnalysis(self.style).metric_histogram('og')
         if len(df) == 0:
             raise NoDataException()
 
@@ -83,7 +83,7 @@ class StyleFGChart(StyleChart):
     IMAGE_ALT = "Histogram of final gravity (FG) in the %s beer style"
 
     def plot(self) -> Chart:
-        df = get_style_metric_values(self.style, 'fg')
+        df = StyleAnalysis(self.style).metric_histogram('fg')
         if len(df) == 0:
             raise NoDataException()
 
@@ -96,7 +96,7 @@ class StylePopularityChart(StyleChart):
     IMAGE_ALT = "Popularity of the %s beer style over time"
 
     def plot(self) -> Chart:
-        df = get_style_popularity(self.style)
+        df = StyleAnalysis(self.style).popularity()
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
@@ -109,7 +109,7 @@ class StyleTrendingHopsChart(StyleChart):
     IMAGE_ALT = "Trending hops in the %s beer style"
 
     def plot(self) -> Chart:
-        df = get_style_trending_hops(self.style)
+        df = StyleAnalysis(self.style).trending_hops()
         if len(df) == 0:
             raise NoDataException()
 

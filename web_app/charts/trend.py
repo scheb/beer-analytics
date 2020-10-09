@@ -1,7 +1,7 @@
 from abc import ABC
 
 from recipe_db.analytics.charts.hop import get_most_popular_hops, get_hops_popularity
-from recipe_db.analytics.charts.style import get_styles_popularity
+from recipe_db.analytics.charts.trend import get_specific_styles_popularity
 from recipe_db.models import Hop, Style
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.plot import LinesChart
@@ -14,7 +14,7 @@ class StylesPopularityChart(ChartDefinition, ABC):
         self.styles = Style.objects.filter(pk__in=self.IDS)
 
     def plot(self) -> Chart:
-        df = get_styles_popularity(self.styles)
+        df = get_specific_styles_popularity(self.styles)
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 

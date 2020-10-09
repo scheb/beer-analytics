@@ -3,9 +3,9 @@ from django.db import connection
 from pandas import DataFrame
 
 from recipe_db.analytics import lowerfence, q1, q3, upperfence, POPULARITY_MIN_MONTH, METRIC_PRECISION
-from recipe_db.analytics.charts.style import get_num_recipes_per_style
-from recipe_db.analytics.utils import get_style_names_dict, get_num_recipes_per_month, set_series_start, \
-    remove_outliers, get_fermentable_names_dict
+from recipe_db.analytics.analysis import get_num_recipes_per_month, get_num_recipes_per_style
+from recipe_db.analytics.utils import get_style_names_dict, set_series_start, remove_outliers, \
+    get_fermentable_names_dict
 from recipe_db.models import Style, Fermentable
 
 
