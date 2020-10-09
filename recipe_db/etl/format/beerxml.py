@@ -5,7 +5,7 @@ from pybeerxml.hop import Hop
 from pybeerxml.parser import Parser
 from pybeerxml.recipe import Recipe as BeerXMLRecipe
 
-from recipe_db.format.parser import FormatParser, ParserResult, float_or_none, clean_kind, \
+from recipe_db.etl.format.parser import FormatParser, ParserResult, float_or_none, clean_kind, \
     MalformedDataError
 from recipe_db.models import Recipe, RecipeYeast, RecipeFermentable, RecipeHop
 

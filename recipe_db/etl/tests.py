@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from recipe_db.mapping import get_product_id_variants
+from recipe_db.etl.mapping import get_product_id_variants
 
 
 class ProductIdTest(TestCase):

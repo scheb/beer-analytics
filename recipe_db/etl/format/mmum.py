@@ -2,7 +2,7 @@ from datetime import datetime
 from json import JSONDecodeError
 from math import ceil
 
-from recipe_db.format.parser import JsonParser, clean_kind, FormatParser, ParserResult, MalformedDataError
+from recipe_db.etl.format.parser import JsonParser, clean_kind, FormatParser, ParserResult, MalformedDataError
 from recipe_db.formulas import attenuation_to_final_plato, abv_to_to_final_plato
 from recipe_db.models import Recipe, RecipeYeast, RecipeFermentable, RecipeHop
 

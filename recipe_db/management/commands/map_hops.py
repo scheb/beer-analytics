@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from recipe_db.mapping import HopsProcessor, HopMapper
+from recipe_db.etl.mapping import HopsProcessor, HopMapper
 
 
 class Command(BaseCommand):

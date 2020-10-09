@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 
-from recipe_db.format.beerxml import BeerXMLParser
-from recipe_db.loader import RecipeFileProcessor, RecipeLoader
+from recipe_db.etl.format.beerxml import BeerXMLParser
+from recipe_db.etl.loader import RecipeFileProcessor, RecipeLoader
 
 
 class Command(BaseCommand):

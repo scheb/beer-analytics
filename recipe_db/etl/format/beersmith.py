@@ -7,7 +7,7 @@ from typing import Optional, List, Iterable
 from lxml import etree
 from lxml.etree import Element
 
-from recipe_db.format.parser import FormatParser, ParserResult, float_or_none, int_or_none, clean_kind, \
+from recipe_db.etl.format.parser import FormatParser, ParserResult, float_or_none, int_or_none, clean_kind, \
     MalformedDataError, to_lower, string_or_none
 from recipe_db.formulas import fluid_ounces_to_liters, ounces_to_gramms, fahrenheit_to_celsius
 from recipe_db.models import Recipe, RecipeYeast, RecipeFermentable, RecipeHop
