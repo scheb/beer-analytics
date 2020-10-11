@@ -74,6 +74,28 @@ python manage.py load_mmum_recipe recipe.json unique_id
 python manage.py load_beersmith_recipe recipe.bsmx unique_id
 ```
 
+Data Mapping
+------------
+
+Once recipes are imported, they need to be mapped to their respective styles and ingredients. Run the following
+commands to execute the mapping. Any unmapped recipes will be processed:
+
+```
+python manage.py map_styles
+python manage.py map_hops
+python manage.py map_fermentables
+python manage.py map_yeasts
+```
+
+Pre-calculated metrics
+----------------------
+
+The application is pre-calculating asn persisting some metrics on style and ingredients. To update these metrics, run:
+
+```
+python manage.py calculate_metrics
+```
+
 Security
 --------
 
