@@ -646,6 +646,10 @@ class Yeast(models.Model):
 
 
 class Recipe(models.Model):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.__original_style = self.style
+
     # Identifiers
     uid = models.CharField(max_length=32, primary_key=True)
     name = models.CharField(max_length=255, default=None, blank=True, null=True)
@@ -654,6 +658,7 @@ class Recipe(models.Model):
 
     # Characteristics
     style = models.ForeignKey(Style, on_delete=models.SET_NULL, default=None, blank=True, null=True)
+    associated_styles = models.ManyToManyField(Style, related_name='all_recipes')
     style_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
     extract_efficiency = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
     og = models.FloatField(default=None, blank=True, null=True, validators=[MinValueValidator(0.95), MaxValueValidator(1.5)])
@@ -691,6 +696,14 @@ class Recipe(models.Model):
             self.abv = alcohol_by_volume(self.og, self.fg)
 
         super().save(*args, **kwargs)
+
+        # Update linked styles (style including parents)
+        if self.__original_style != self.style:
+            self.associated_styles.remove()
+            if self.style is not None:
+                self.associated_styles.add(self.style)
+                for style in self.style.parent_styles:
+                    self.associated_styles.add(style)
 
     def derive_missing_values(self, from_field_name: str, to_field_name: str, calc_function: callable) -> None:
         if getattr(self, to_field_name) is None:
