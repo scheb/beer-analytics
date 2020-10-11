@@ -3,9 +3,22 @@ from django.db import connection
 from pandas import DataFrame
 
 from recipe_db.analytics import POPULARITY_MIN_MONTH
-from recipe_db.analytics.analysis import get_num_recipes_per_month, get_num_recipes_per_style
+from recipe_db.analytics.analysis import get_num_recipes_per_month, get_num_recipes_per_style, RecipesPopularityAnalysis
+from recipe_db.analytics.scope import RecipeScope, YeastProjection
 from recipe_db.analytics.utils import set_series_start
 from recipe_db.models import Yeast
+
+
+class YeastAnalysis:
+    def __init__(self, yeast: Yeast) -> None:
+        self.yeast = yeast
+        self.scope = RecipeScope()
+        self.projection = YeastProjection()
+        self.projection.yeast_ids = [yeast.id]
+
+    def popularity(self) -> DataFrame:
+        analysis = RecipesPopularityAnalysis(self.scope)
+        return analysis.popularity_per_yeast(self.projection)
 
 
 def get_yeast_popularity(yeast: Yeast) -> DataFrame:

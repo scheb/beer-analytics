@@ -1,12 +1,13 @@
 import math
 from abc import ABC
+from typing import Optional
 
 import pandas as pd
 from django.db import connection
 from pandas import DataFrame
 
 from recipe_db.analytics import POPULARITY_MIN_MONTH, METRIC_PRECISION
-from recipe_db.analytics.scope import RecipeScope
+from recipe_db.analytics.scope import RecipeScope, StyleProjection
 from recipe_db.analytics.utils import set_multiple_series_start, remove_outliers, get_style_names_dict, filter_trending, \
     get_hop_names_dict
 
@@ -61,25 +62,31 @@ class RecipesPopularityAnalysis(RecipesAnalysis):
         scope.creation_date_min = POPULARITY_MIN_MONTH
         super().__init__(scope)
 
-    def _total_recipes_per_month(self) -> DataFrame:
-        return RecipesCountAnalysis(RecipeScope()).per_month()
-
-    def popularity_per_style(self) -> DataFrame:
+    def popularity_per_style(self, projection: Optional[StyleProjection] = None) -> DataFrame:
+        projection = projection or StyleProjection()
         scope_filter = self.scope.get_filter()
+        projection_filter = projection.get_filter()
         query = '''
                 SELECT
                     date(r.created, 'start of month') AS month,
-                    r.style_id,
+                    ras.style_id,
                     count(r.uid) AS recipes
                 FROM recipe_db_recipe AS r
+                JOIN recipe_db_recipe_associated_styles AS ras
+                    ON r.uid = ras.recipe_id
                 WHERE
                     r.created IS NOT NULL
                     {}
-                GROUP BY month, r.style_id
-            '''.format(scope_filter.where)
+                    {}
+                GROUP BY month, ras.style_id
+            '''.format(scope_filter.where, projection_filter.where)
 
-        per_month = pd.read_sql(query, connection, params=scope_filter.parameters)
-        per_month = per_month.merge(self._total_recipes_per_month(), on="month")
+        per_month = pd.read_sql(query, connection, params=scope_filter.parameters + projection_filter.parameters)
+        if len(per_month) == 0:
+            return per_month
+
+        recipes_per_month = RecipesCountAnalysis(RecipeScope()).per_month()
+        per_month = per_month.merge(recipes_per_month, on="month")
         per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes'] * 100
 
         per_month = set_multiple_series_start(per_month, 'style_id', 'month', 'recipes_percent')
