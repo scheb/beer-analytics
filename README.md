@@ -51,6 +51,8 @@ DJANGO_SETTINGS_MODULE=beer_analytics.settings_dev
 Recipe data import
 ------------------
 
+Please note that for legal reasons the project comes with no recipe data included.
+
 After setting up the application, recipes can be imported via CLI in various formats. Each recipe must have a unique id
 assigned, which can be an arbitrary string.
 
