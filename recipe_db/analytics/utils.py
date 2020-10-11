@@ -89,6 +89,9 @@ def set_series_start(
     time_column: str,
     value_column: str
 ) -> DataFrame:
+    if len(df) == 0:
+        return df
+
     time_indexed = df.set_index(pd.DatetimeIndex(df[time_column]))
 
     # Fill in missing months with NaN

@@ -1,26 +1,16 @@
 import itertools
-from typing import List, Optional, Set, Tuple
+from typing import List, Optional, Tuple
 
-from recipe_db.models import Style
-
-
-def min_max_filter(field: str, min_value, max_value) -> Tuple[str, list]:
-    if min_value is not None and max_value is not None:
-        return "{} BETWEEN %s AND %s".format(field), [min_value, max_value]
-    if min_value is not None:
-        return "{} >= %s".format(field), [min_value]
-    if max_value is not None:
-        return "{} <= %s".format(field), [max_value]
-    raise ValueError("Neither min nor max value given")
+from recipe_db.models import Style, Yeast
 
 
-def in_filter(field: str, values):
-    return "{} IN ({})".format(field, ','.join('%s' for _ in values)), values
-
-
-class ScopeFilter:
+# Holds all filter criteria (SQL WHERE statement) and parameters
+class Filter:
     def __init__(self, filters: List[Tuple[str, list]]) -> None:
         self.filters = filters
+
+    def has_filter(self):
+        return len(self.filters) > 0
 
     @property
     def where(self) -> str:
@@ -32,11 +22,42 @@ class ScopeFilter:
     def parameters(self) -> list:
         return list(itertools.chain.from_iterable(map(lambda f: f[1], self.filters)))
 
+    def combine(self):
+        return [self.where, self.parameters]
 
-class RecipeScope:
+
+class StyleCriteriaMixin:
+    @property
+    def styles(self) -> List[Style]:
+        return self._styles
+
+    @styles.setter
+    def styles(self, styles: List[Style]) -> None:
+        self._styles = styles
+
+    def get_style_filter(self) -> Tuple[str, list]:
+        style_ids = list(map(lambda s: s.id, self.styles))
+        return in_filter('ras.style_id', style_ids)
+
+
+class YeastCriteriaMixin:
+    @property
+    def yeasts(self) -> List[Yeast]:
+        return self._yeasts
+
+    @yeasts.setter
+    def yeasts(self, yeasts: List[Yeast]) -> None:
+        self._yeasts = yeasts
+
+    def get_yeast_filter(self):
+        yeast_ids = list(map(lambda y: y.id, self._yeasts))
+        return in_filter('ry.kind_id', yeast_ids)
+
+
+# The scope defines which recipes should be analyzed. The set of these recipes equals 100%.
+class RecipeScope(StyleCriteriaMixin):
     def __init__(self) -> None:
-        self._style_ids: Set[str] = set()
-        self.include_sub_styles: bool = True
+        self._styles = []
 
         self.creation_date_min = None
         self.creation_date_max = None
@@ -56,35 +77,17 @@ class RecipeScope:
         self.fg_min: Optional[float] = None
         self.fg_max: Optional[float] = None
 
-    @property
-    def style_ids(self):
-        return self._style_ids
+        self.yeast_scope: Optional[YeastScope] = None
 
-    @style_ids.setter
-    def style_ids(self, value):
-        if isinstance(value, set):
-            self._style_ids = value
-            return
-        if isinstance(value, list):
-            self._style_ids = set(value)
-            return
-        raise ValueError("style_ids value has to be set or list, {} given".format(type(value)))
-
-    def get_style_ids(self) -> List[str]:
-        style_ids_incl_sub_styles = set()
-        style_ids = self.style_ids
-        if self.include_sub_styles:
-            for style_id in style_ids:
-                style = Style.objects.get(pk=style_id)
-                style_ids_incl_sub_styles.update(style.get_ids_including_sub_styles())
-        return list(style_ids_incl_sub_styles)
-
-    def get_filter(self) -> ScopeFilter:
+    def get_filter(self) -> Filter:
         filters = []
 
-        style_ids = self.get_style_ids()
-        if len(style_ids) > 0:
-            filters.append(in_filter('r.style_id', style_ids))
+        if len(self.styles) > 0:
+            style_filter = self.get_style_filter()
+            filters.append((
+                'r.uid IN (SELECT DISTINCT ras.recipe_id FROM recipe_db_recipe_associated_styles AS ras WHERE {})'.format(style_filter[0]),
+                style_filter[1]
+            ))
 
         if self.creation_date_min is not None or self.creation_date_max is not None:
             filters.append(min_max_filter('r.created', self.creation_date_min, self.creation_date_max))
@@ -104,4 +107,64 @@ class RecipeScope:
         if self.fg_min is not None or self.fg_max is not None:
             filters.append(min_max_filter('r.fg', self.fg_min, self.fg_max))
 
-        return ScopeFilter(filters)
+        if self.yeast_scope is not None:
+            yeast_filter = self.yeast_scope.get_filter()
+            if yeast_filter.has_filter():
+                (query_string, parameters) = yeast_filter.combine()
+                query_string = 'r.uid IN (SELECT DISTINCT ry.recipe_id FROM recipe_db_recipeyeast AS ry WHERE TRUE{})'.format(query_string)
+                filters.append((query_string, parameters))
+
+        return Filter(filters)
+
+
+class YeastScope(YeastCriteriaMixin):
+    def __init__(self) -> None:
+        self._yeasts = []
+
+    def get_filter(self) -> Filter:
+        filters = []
+
+        if len(self.yeasts) > 0:
+            filters.append(self.get_yeast_filter())
+
+        return Filter(filters)
+
+
+class StyleProjection(StyleCriteriaMixin):
+    def __init__(self) -> None:
+        self._styles = []
+
+    def get_filter(self) -> Filter:
+        filters = []
+
+        if len(self.styles) > 0:
+            filters.append(self.get_style_filter())
+
+        return Filter(filters)
+
+
+class YeastProjection(YeastCriteriaMixin):
+    def __init__(self) -> None:
+        self._yeasts = []
+
+    def get_filter(self) -> Filter:
+        filters = []
+
+        if len(self.yeasts) > 0:
+            filters.append(self.get_yeast_filter())
+
+        return Filter(filters)
+
+
+def min_max_filter(field: str, min_value, max_value) -> Tuple[str, list]:
+    if min_value is not None and max_value is not None:
+        return "{} BETWEEN %s AND %s".format(field), [min_value, max_value]
+    if min_value is not None:
+        return "{} >= %s".format(field), [min_value]
+    if max_value is not None:
+        return "{} <= %s".format(field), [max_value]
+    raise ValueError("Neither min nor max value given")
+
+
+def in_filter(field: str, values) -> Tuple[str, list]:
+    return "{} IN ({})".format(field, ','.join('%s' for _ in values)), values
