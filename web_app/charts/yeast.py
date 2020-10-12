@@ -1,7 +1,6 @@
 from abc import ABC
 
-from recipe_db.analytics.charts.yeast import get_yeast_common_styles_relative, get_yeast_common_styles_absolute, \
-    get_yeast_popularity
+from recipe_db.analytics.charts.yeast import YeastAnalysis
 from recipe_db.models import Yeast
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.meta import OPEN_GRAPH_IMAGE_WIDTH, OPEN_GRAPH_IMAGE_HEIGHT
@@ -27,7 +26,7 @@ class YeastPopularityChart(YeastChart):
     IMAGE_ALT = "Popularity of the %s yeast over time"
 
     def plot(self) -> Chart:
-        df = get_yeast_popularity(self.yeast)
+        df = YeastAnalysis(self.yeast).popularity()
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
@@ -40,7 +39,7 @@ class YeastCommonStylesAbsoluteChart(YeastChart):
     IMAGE_ALT = "Typical beer styles using %s yeast (by number of recipes)"
 
     def plot(self) -> Chart:
-        df = get_yeast_common_styles_absolute(self.yeast)
+        df = YeastAnalysis(self.yeast).common_styles_absolute()
         if len(df) == 0:
             raise NoDataException()
 
@@ -53,7 +52,7 @@ class YeastCommonStylesRelativeChart(YeastChart):
     IMAGE_ALT = "Typical beer styles using %s yeast (by percent of recipes)"
 
     def plot(self) -> Chart:
-        df = get_yeast_common_styles_relative(self.yeast)
+        df = YeastAnalysis(self.yeast).common_styles_relative()
         if len(df) == 0:
             raise NoDataException()
 

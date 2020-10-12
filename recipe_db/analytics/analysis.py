@@ -7,9 +7,9 @@ from django.db import connection
 from pandas import DataFrame
 
 from recipe_db.analytics import POPULARITY_MIN_MONTH, METRIC_PRECISION
-from recipe_db.analytics.scope import RecipeScope, StyleProjection
+from recipe_db.analytics.scope import RecipeScope, StyleProjection, YeastProjection
 from recipe_db.analytics.utils import set_multiple_series_start, remove_outliers, get_style_names_dict, filter_trending, \
-    get_hop_names_dict
+    get_hop_names_dict, get_yeast_names_dict
 
 
 class RecipesAnalysis(ABC):
@@ -41,14 +41,15 @@ class RecipesCountAnalysis(RecipesAnalysis):
         scope_filter = self.scope.get_filter()
         query = '''
                 SELECT
-                    r.style_id,
-                    count(r.uid) AS total_recipes
+                    ras.style_id,
+                    count(DISTINCT r.uid) AS total_recipes
                 FROM recipe_db_recipe AS r
+                JOIN recipe_db_recipe_associated_styles ras
+                    ON r.uid = ras.recipe_id
                 WHERE
-                    style_id IS NOT NULL
-                    {}
-                GROUP BY r.style_id
-                ORDER BY r.style_id ASC
+                    TRUE {}
+                GROUP BY ras.style_id
+                ORDER BY ras.style_id ASC
             '''.format(scope_filter.where)
 
         df = pd.read_sql(query, connection, params=scope_filter.parameters)
@@ -59,11 +60,12 @@ class RecipesCountAnalysis(RecipesAnalysis):
 
 class RecipesPopularityAnalysis(RecipesAnalysis):
     def __init__(self, scope: RecipeScope) -> None:
-        scope.creation_date_min = POPULARITY_MIN_MONTH
+        scope.creation_date_min = POPULARITY_MIN_MONTH  # TODO: check if something is set
         super().__init__(scope)
 
     def popularity_per_style(self, projection: Optional[StyleProjection] = None) -> DataFrame:
         projection = projection or StyleProjection()
+
         scope_filter = self.scope.get_filter()
         projection_filter = projection.get_filter()
         query = '''
@@ -85,13 +87,46 @@ class RecipesPopularityAnalysis(RecipesAnalysis):
         if len(per_month) == 0:
             return per_month
 
-        recipes_per_month = RecipesCountAnalysis(RecipeScope()).per_month()
+        recipes_per_month = get_num_recipes_per_month()
         per_month = per_month.merge(recipes_per_month, on="month")
         per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes'] * 100
 
         per_month = set_multiple_series_start(per_month, 'style_id', 'month', 'recipes_percent')
 
         per_month['style'] = per_month['style_id'].map(get_style_names_dict())
+        return per_month
+
+    def popularity_per_yeast(self, projection: Optional[YeastProjection] = None) -> DataFrame:
+        projection = projection or YeastProjection()
+
+        scope_filter = self.scope.get_filter()
+        projection_filter = projection.get_filter()
+        query = '''
+                SELECT
+                    date(r.created, 'start of month') AS month,
+                    ry.kind_id,
+                    count(DISTINCT r.uid) AS recipes
+                FROM recipe_db_recipe AS r
+                JOIN recipe_db_recipeyeast AS ry
+                    ON r.uid = ry.recipe_id
+                WHERE
+                    r.created IS NOT NULL
+                    {}
+                    {}
+                GROUP BY date(r.created, 'start of month'), ry.kind_id
+            '''.format(scope_filter.where, projection_filter.where)
+
+        per_month = pd.read_sql(query, connection, params=scope_filter.parameters + projection_filter.parameters)
+        if len(per_month) == 0:
+            return per_month
+
+        recipes_per_month = RecipesCountAnalysis(RecipeScope()).per_month()
+        per_month = per_month.merge(recipes_per_month, on="month")
+        per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes'] * 100
+
+        per_month = set_multiple_series_start(per_month, 'kind_id', 'month', 'recipes_percent')
+
+        per_month['yeast'] = per_month['kind_id'].map(get_yeast_names_dict())
         return per_month
 
 
@@ -165,6 +200,53 @@ class RecipesTrendAnalysis(RecipesAnalysis):
 
     def trending_yeasts(self) -> DataFrame:
         return DataFrame()
+
+
+class CommonStylesAnalysis(RecipesAnalysis):
+    NUM_TOP = 20
+
+    def common_styles_absolute(self) -> DataFrame:
+        df = self._common_styles_data()
+        if len(df) == 0:
+            return df
+
+        df = df.sort_values('recipes', ascending=False)
+        return self._return_top(df)
+
+    def common_styles_relative(self) -> DataFrame:
+        df = self._common_styles_data()
+        if len(df) == 0:
+            return df
+
+        # Calculate percent
+        recipes_per_style = get_num_recipes_per_style()
+        df = df.merge(recipes_per_style, on="style_id")
+        df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
+
+        df = df.sort_values('recipes_percent', ascending=False)
+        return self._return_top(df)
+
+    def _common_styles_data(self) -> DataFrame:
+        scope_filter = self.scope.get_filter()
+        query = '''
+            SELECT
+                ras.style_id,
+                count(DISTINCT r.uid) AS recipes
+            FROM recipe_db_recipe AS r
+            JOIN recipe_db_recipe_associated_styles AS ras
+                ON r.uid = ras.recipe_id
+                    AND length(ras.style_id) > 2  -- Quick & dirty to remove top-level categories
+            WHERE
+                TRUE {}
+            GROUP BY ras.style_id
+        '''.format(scope_filter.where)
+
+        return pd.read_sql(query, connection, params=scope_filter.parameters)
+
+    def _return_top(self, df: DataFrame) -> DataFrame:
+        df = df[:self.NUM_TOP]
+        df['style_name'] = df['style_id'].map(get_style_names_dict())
+        return df
 
 
 # Helper function used for ingredients analysis
