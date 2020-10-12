@@ -19,7 +19,7 @@ class RecipesAnalysis(ABC):
 
 class RecipesCountAnalysis(RecipesAnalysis):
     def per_month(self) -> DataFrame:
-        scope_filter = self.scope.get_filter()
+        scope_filter = self.scope.get_filter(available_schemas=['r'])
         query = '''
                 SELECT
                     date(r.created, 'start of month') AS month,
@@ -38,7 +38,7 @@ class RecipesCountAnalysis(RecipesAnalysis):
         return df
 
     def per_style(self) -> DataFrame:
-        scope_filter = self.scope.get_filter()
+        scope_filter = self.scope.get_filter(available_schemas=['r', 'ras'])
         query = '''
                 SELECT
                     ras.style_id,
@@ -66,8 +66,8 @@ class RecipesPopularityAnalysis(RecipesAnalysis):
     def popularity_per_style(self, projection: Optional[StyleProjection] = None) -> DataFrame:
         projection = projection or StyleProjection()
 
-        scope_filter = self.scope.get_filter()
-        projection_filter = projection.get_filter()
+        scope_filter = self.scope.get_filter(available_schemas=['r', 'ras'])
+        projection_filter = projection.get_filter(available_schemas=['r', 'ras'])
         query = '''
                 SELECT
                     date(r.created, 'start of month') AS month,
@@ -99,7 +99,7 @@ class RecipesPopularityAnalysis(RecipesAnalysis):
     def popularity_per_yeast(self, projection: Optional[YeastProjection] = None) -> DataFrame:
         projection = projection or YeastProjection()
 
-        scope_filter = self.scope.get_filter()
+        scope_filter = self.scope.get_filter(available_schemas=['r', 'ry'])
         projection_filter = projection.get_filter()
         query = '''
                 SELECT
@@ -129,11 +129,17 @@ class RecipesPopularityAnalysis(RecipesAnalysis):
         per_month['yeast'] = per_month['kind_id'].map(get_yeast_names_dict())
         return per_month
 
+    def popularity_per_hop(self, projection):
+        pass
+
+    def popularity_per_fermentable(self, projection):
+        pass
+
 
 class RecipesMetricHistogram(RecipesAnalysis):
     def metric_histogram(self, metric: str) -> DataFrame:
         precision = METRIC_PRECISION[metric] if metric in METRIC_PRECISION else METRIC_PRECISION['default']
-        scope_filter = self.scope.get_filter()
+        scope_filter = self.scope.get_filter(available_schemas=['r'])
 
         query = '''
                 SELECT round({}, {}) as {}
@@ -170,7 +176,7 @@ class RecipesTrendAnalysis(RecipesAnalysis):
 
     def trending_hops(self) -> DataFrame:
         recipes_per_month = self._recipes_per_month_in_scope()
-        scope_filter = self.scope.get_filter()
+        scope_filter = self.scope.get_filter(available_schemas=['r', 'rh'])
 
         query = '''
                 SELECT
@@ -199,7 +205,7 @@ class RecipesTrendAnalysis(RecipesAnalysis):
         return trending
 
     def trending_yeasts(self) -> DataFrame:
-        return DataFrame()
+        return DataFrame()  # TODO
 
 
 class CommonStylesAnalysis(RecipesAnalysis):
@@ -227,7 +233,7 @@ class CommonStylesAnalysis(RecipesAnalysis):
         return self._return_top(df)
 
     def _common_styles_data(self) -> DataFrame:
-        scope_filter = self.scope.get_filter()
+        scope_filter = self.scope.get_filter(available_schemas=['r', 'ras'])
         query = '''
             SELECT
                 ras.style_id,
