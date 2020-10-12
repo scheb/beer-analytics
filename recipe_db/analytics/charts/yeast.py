@@ -20,10 +20,10 @@ class YeastAnalysis:
         analysis = RecipesPopularityAnalysis(RecipeScope())
         return analysis.popularity_per_yeast(self.projection)
 
-    def common_styles_absolute(self):
+    def common_styles_absolute(self) -> DataFrame:
         analysis = CommonStylesAnalysis(self.scope)
         return analysis.common_styles_absolute()
 
-    def common_styles_relative(self):
+    def common_styles_relative(self) -> DataFrame:
         analysis = CommonStylesAnalysis(self.scope)
         return analysis.common_styles_relative()

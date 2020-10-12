@@ -12,7 +12,7 @@ class StyleAnalysis:
         self.scope = RecipeScope()
         self.scope.styles = [style]
 
-    def recipes_per_month(self):
+    def recipes_per_month(self) -> DataFrame:
         analysis = RecipesCountAnalysis(self.scope)
         return analysis.per_month()
 
@@ -26,10 +26,10 @@ class StyleAnalysis:
         analysis = RecipesMetricHistogram(self.scope)
         return analysis.metric_histogram(metric)
 
-    def trending_hops(self):
+    def trending_hops(self) -> DataFrame:
         analysis = RecipesTrendAnalysis(self.scope)
         return analysis.trending_hops()
 
-    def trending_yeasts(self):
+    def trending_yeasts(self) -> DataFrame:
         analysis = RecipesTrendAnalysis(self.scope)
         return analysis.trending_yeasts()
