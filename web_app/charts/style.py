@@ -1,10 +1,8 @@
 from abc import ABC
-from typing import Optional, Tuple
+from typing import Optional
 
-from recipe_db.analytics.charts.fermentable import get_style_popular_fermentables
-from recipe_db.analytics.charts.hop import get_style_hop_pairings, get_style_popular_hops
 from recipe_db.analytics.charts.style import StyleAnalysis
-from recipe_db.models import Style, RecipeHop, Fermentable
+from recipe_db.models import Style
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.meta import OPEN_GRAPH_IMAGE_WIDTH, OPEN_GRAPH_IMAGE_HEIGHT
 from web_app.plot import LinesChart, PreAggregatedBoxPlot, \
@@ -100,7 +98,33 @@ class StylePopularityChart(StyleChart):
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'style', 'Month/Year', '% Recipes')
+        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'style', None, '% of All Recipes')
+        return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
+
+
+class StyleTrendingYeastsChart(StyleChart):
+    CHART_TITLE = "Trending yeasts in <b>%s</b>"
+    IMAGE_ALT = "Trending yeasts in the %s beer style"
+
+    def plot(self) -> Chart:
+        df = StyleAnalysis(self.style).trending_yeasts()
+        if len(df) == 0:
+            raise NoDataException()
+
+        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'yeast', None, '% of Style Recipes')
+        return Chart(figure, title=self.get_chart_title())
+
+
+class StylePopularYeastsChart(StyleChart):
+    CHART_TITLE = "Popular yeasts used in <b>%s</b>"
+    IMAGE_ALT = "Popular yeasts used in the %s beer style"
+
+    def plot(self) -> Chart:
+        df = StyleAnalysis(self.style).popular_yeasts()
+        if len(df) == 0:
+            raise NoDataException()
+
+        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'yeast', None, '% of Style Recipes')
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -113,61 +137,34 @@ class StyleTrendingHopsChart(StyleChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'hop', 'Month/Year', '% Style Recipes')
+        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'hop', None, '% of Style Recipes')
         return Chart(figure, title=self.get_chart_title())
+
 
 class StylePopularHopsChart(StyleChart):
     CHART_TITLE = "Popular hops used in <b>%s</b>"
     IMAGE_ALT = "Popular hops used in the %s beer style"
 
     def plot(self) -> Chart:
-        df = get_style_popular_hops(self.style, self.get_use_filter())
+        df = StyleAnalysis(self.style).popular_hops(use_filter=self.filter_param)
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregatedBoxPlot().plot(df, 'hop', 'amount_percent', 'Hops by Popularity', '% Amount')
-        return Chart(figure, title=self.get_chart_title())
-
-    def get_use_filter(self):
-        if self.filter_param == 'bittering':
-            return [RecipeHop.MASH, RecipeHop.FIRST_WORT, RecipeHop.BOIL]
-        if self.filter_param == 'aroma':
-            return [RecipeHop.AROMA]
-        if self.filter_param == 'dry-hop':
-            return [RecipeHop.DRY_HOP]
-        return []
+        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'hop', None, '% of Style Recipes')
+        return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
-class StylePopularFermentablesChart(StyleChart):
-    CHART_TITLE = "Popular fermentables/malts used in <b>%s</b>"
-    IMAGE_ALT = "Popular fermentables/malts used in the %s beer style"
+class StylePopularHopsAmountChart(StyleChart):
+    CHART_TITLE = "Typical amount of hops used in <b>%s</b>"
+    IMAGE_ALT = "Typical amount of hops used in the %s beer style"
 
     def plot(self) -> Chart:
-        (categories, types) = self.get_filter()
-        df = get_style_popular_fermentables(self.style, categories, types)
+        df = StyleAnalysis(self.style).popular_hops_amount(use_filter=self.filter_param)
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregatedBoxPlot().plot(df, 'fermentable', 'amount_percent', 'Fermentables by Popularity', '% Amount')
+        figure = PreAggregatedBoxPlot().plot(df, 'hop', 'amount_percent', None, '% of Weight in Recipe')
         return Chart(figure, title=self.get_chart_title())
-
-    def get_filter(self) -> Tuple[list, list]:
-        if self.filter_param == 'base':
-            return [], [Fermentable.BASE]
-        if self.filter_param == 'cara-crystal':
-            return [], [Fermentable.CARA_CRYSTAL]
-        if self.filter_param == 'toasted':
-            return [], [Fermentable.TOASTED]
-        if self.filter_param == 'roasted':
-            return [], [Fermentable.ROASTED]
-        if self.filter_param == 'other-grain':
-            return [], [Fermentable.OTHER_MALT, Fermentable.ADJUNCT, Fermentable.UNMALTED_ADJUNCT]
-        if self.filter_param == 'sugar':
-            return [Fermentable.SUGAR], []
-        if self.filter_param == 'fruit':
-            return [Fermentable.FRUIT], []
-
-        return [], []
 
 
 class StyleHopPairingsChart(StyleChart):
@@ -175,11 +172,37 @@ class StyleHopPairingsChart(StyleChart):
     IMAGE_ALT = "Popular hop pairings used in the %s beer style"
 
     def plot(self) -> Chart:
-        df = get_style_hop_pairings(self.style)
+        df = StyleAnalysis(self.style).hop_pairings()
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% Amount')
+        figure = PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% of Weight in Recipe')
+        return Chart(figure, title=self.get_chart_title())
+
+
+class StylePopularFermentablesChart(StyleChart):
+    CHART_TITLE = "Popular fermentables/malts used in <b>%s</b>"
+    IMAGE_ALT = "Popular fermentables/malts used in the %s beer style"
+
+    def plot(self) -> Chart:
+        df = StyleAnalysis(self.style).popular_fermentables(type_filter=self.filter_param)
+        if len(df) == 0:
+            raise NoDataException()
+
+        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'fermentable', None, '% of Style Recipes')
+        return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
+
+
+class StylePopularFermentablesAmountChart(StyleChart):
+    CHART_TITLE = "Typical amount of fermentables/malts used in <b>%s</b>"
+    IMAGE_ALT = "Typical amount of fermentables/malts used in the %s beer style"
+
+    def plot(self) -> Chart:
+        df = StyleAnalysis(self.style).popular_fermentables_amount(type_filter=self.filter_param)
+        if len(df) == 0:
+            raise NoDataException()
+
+        figure = PreAggregatedBoxPlot().plot(df, 'fermentable', 'amount_percent', None, '% of Weight in Recipe')
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -200,10 +223,20 @@ class StyleChartFactory:
         original_gravity_histogram=StyleOGChart,
         final_gravity_histogram=StyleFGChart,
         popularity=StylePopularityChart,
-        trending_hops=StyleTrendingHopsChart,
+
+        # Yeasts
+        popular_yeasts=StylePopularYeastsChart,
+        trending_yeasts=StyleTrendingYeastsChart,
+
+        # Hops
         popular_hops=StylePopularHopsChart,
-        popular_fermentables=StylePopularFermentablesChart,
+        popular_hops_amount=StylePopularHopsAmountChart,
+        trending_hops=StyleTrendingHopsChart,
         hop_pairings=StyleHopPairingsChart,
+
+        # Fermentables
+        popular_fermentables=StylePopularFermentablesChart,
+        popular_fermentables_amount=StylePopularFermentablesAmountChart,
     )
 
     @classmethod

@@ -5,6 +5,7 @@ from django.db import connection
 from pandas import DataFrame
 
 from recipe_db.analytics import slope
+from recipe_db.models import Yeast
 
 
 def get_style_names_dict() -> dict:
@@ -20,7 +21,13 @@ def get_hop_names_dict() -> dict:
 
 
 def get_yeast_names_dict() -> dict:
-    return dict(connection.cursor().execute("SELECT id, name FROM recipe_db_yeast"))
+    yeast_names = {}
+    for yeast in Yeast.objects.all():
+        product_name = yeast.full_name
+        if yeast.has_extra_product_id:
+            product_name += " ("+yeast.product_id+")"
+        yeast_names[yeast.id] = product_name
+    return yeast_names
 
 
 def remove_outliers(df: DataFrame, field: str, cutoff_percentile: float) -> DataFrame:

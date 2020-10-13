@@ -119,7 +119,6 @@ class HopStyleAmountChart(HopChart):
 
     def plot(self) -> Chart:
         df = HopAnalysis(self.hop).amount_per_style()
-        print(df)
         if len(df) == 0:
             raise NoDataException()
 

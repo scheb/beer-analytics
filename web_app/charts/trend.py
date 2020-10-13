@@ -1,6 +1,6 @@
 from abc import ABC
 
-from recipe_db.analytics.analysis import RecipesPopularityAnalysis
+from recipe_db.analytics.recipe import RecipesPopularityAnalysis
 from recipe_db.analytics.scope import RecipeScope, HopProjection, StyleProjection
 from recipe_db.models import Hop, Style
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
