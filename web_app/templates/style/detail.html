@@ -7,10 +7,17 @@
     <ul>
         <li><a href="#specifications">Specifications</a></li>
         <li><a href="#popularity">Popularity Over Time</a></li>
+
+        <li class="mt-3"><a href="#most-used-yeasts">Most Used Yeasts</a></li>
+        <li><a href="#trending-yeasts">Trending Yeasts</a></li>
+
+        <li class="mt-3"><a href="#most-used-hops">Most Used Hops</a></li>
+        <li><a href="#most-used-hops-amount">Typical Amount of Hops</a></li>
         <li><a href="#trending-hops">Trending Hops</a></li>
-        <li><a href="#most-used-hops">Most Used Hops</a></li>
         <li><a href="#hop-pairings">Common Hop Pairings</a></li>
-        <li><a href="#most-used-fermentables">Most Used Fermentables</a></li>
+
+        <li class="mt-3"><a href="#most-used-fermentables">Most Used Fermentables</a></li>
+        <li><a href="#most-used-fermentables-amount">Typical Amount of Fermentables</a></li>
     </ul>
 </nav>
 {% endblock %}
@@ -74,10 +81,25 @@
         </section>
     {% endwith %}
 
-    {% with chart_type="trending-hops" anchor="trending-hops" %}
+    {% with chart_type="popular-yeasts" anchor="most-used-yeasts" %}
         <section class="card card-chart">
             <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Trending Hops</h2>
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Used Yeasts</h2>
+            </div>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-m">
+                    <noscript>
+                        {{ style|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
+
+    {% with chart_type="trending-yeasts" anchor="trending-yeasts" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Trending Yeasts</h2>
             </div>
             <div class="card-body">
                 <div id="chart-{{ chart_type }}" class="chart-m">
@@ -94,16 +116,56 @@
             <div class="card-header">
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Used Hops</h2>
                 <nav id="chart-{{ chart_type }}-tabs" class="d-none">
+                    <label>Used for:</label>
                     <ul class="nav" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="" href="#chart-hops">Overall</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="bittering" href="#chart-hops-bittering">Bittering</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="aroma" href="#chart-hops-aroma">Aroma</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="dry-hop" href="#chart-hops-dry-hop">Dry-Hop</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="">Any</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="bittering">Bittering</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="aroma">Aroma</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="dry-hop">Dry-Hop</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-m">
+                    <noscript>
+                        {{ style|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
+
+    {% with chart_type="popular-hops-amount" anchor="most-used-hops-amount" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Typical Amount of Hops</h2>
+                <nav id="chart-{{ chart_type }}-tabs" class="d-none">
+                    <label>Used for:</label>
+                    <ul class="nav" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="">Any</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="bittering">Bittering</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="aroma">Aroma</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="dry-hop">Dry-Hop</a></li>
                     </ul>
                 </nav>
             </div>
             <div class="card-body">
                 <div id="chart-{{ chart_type }}" class="chart-l">
+                    <noscript>
+                        {{ style|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
+
+    {% with chart_type="trending-hops" anchor="trending-hops" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Trending Hops</h2>
+            </div>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-m">
                     <noscript>
                         {{ style|chart_image:chart_type|safe }}
                     </noscript>
@@ -132,15 +194,44 @@
             <div class="card-header">
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Used Fermentables</h2>
                 <nav id="chart-{{ chart_type }}-tabs" class="d-none">
+                    <label>Type:</label>
                     <ul class="nav" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="" href="#chart-fermentables">Any</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="base" href="#chart-fermentables-base">Base Malt</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="cara-crystal" href="#chart-fermentables-cara-crystal">Caramel/Crystal</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="toasted" href="#chart-fermentables-toasted">Toasted</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="roasted" href="#chart-fermentables-roasted">Roasted</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="other-grain" href="#chart-fermentables-other-grain">Other Grain</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="sugar" href="#chart-fermentables-sugar">Sugar</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="fruit" href="#chart-fermentables-fruit">Fruit</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="">Any</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="base">Base Malt</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="cara-crystal">Caramel/Crystal</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="toasted">Toasted</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="roasted">Roasted</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="other-grain">Other Grain</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="sugar">Sugar</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="fruit">Fruit</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-m">
+                    <noscript>
+                        {{ style|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
+
+    {% with chart_type="popular-fermentables-amount" anchor="most-used-fermentables-amount" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Typical Amount of Fermentables</h2>
+                <nav id="chart-{{ chart_type }}-tabs" class="d-none">
+                    <label>Type:</label>
+                    <ul class="nav" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="">Any</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="base">Base Malt</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="cara-crystal">Caramel/Crystal</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="toasted">Toasted</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="roasted">Roasted</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="other-grain">Other Grain</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="sugar">Sugar</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="fruit">Fruit</a></li>
                     </ul>
                 </nav>
             </div>
@@ -153,6 +244,9 @@
             </div>
         </section>
     {% endwith %}
+
+    {# Added this to fix scroll position flipping around when changing tabs on the last chart #}
+    <div style="height: 1px;"></div>
 {% endblock %}
 
 {% block script %}
@@ -168,10 +262,14 @@ window.addEventListener('load', function ()
 
     // Charts
     display_graph('chart-popularity', '{{ style|chart_js:"popularity" }}');
-    display_graph('chart-trending-hops', '{{ style|chart_js:"trending-hops" }}');
+    display_graph('chart-popular-yeasts', '{{ style|chart_js:"popular-yeasts" }}');
+    display_graph('chart-trending-yeasts', '{{ style|chart_js:"trending-yeasts" }}');
     display_graph_with_navigation('chart-popular-hops', 'chart-popular-hops-tabs', '{{ style|chart_js:"popular-hops" }}');
+    display_graph_with_navigation('chart-popular-hops-amount', 'chart-popular-hops-amount-tabs', '{{ style|chart_js:"popular-hops-amount" }}');
+    display_graph('chart-trending-hops', '{{ style|chart_js:"trending-hops" }}');
     display_graph('chart-hop-pairings', '{{ style|chart_js:"hop-pairings" }}');
     display_graph_with_navigation('chart-popular-fermentables', 'chart-popular-fermentables-tabs', '{{ style|chart_js:"popular-fermentables" }}');
+    display_graph_with_navigation('chart-popular-fermentables-amount', 'chart-popular-fermentables-amount-tabs', '{{ style|chart_js:"popular-fermentables-amount" }}');
 });
 </script>
 {% endblock %}

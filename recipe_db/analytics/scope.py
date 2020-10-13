@@ -35,9 +35,11 @@ class StyleCriteriaMixin:
     def styles(self, styles: List[Style]) -> None:
         self._styles = styles
 
+    def get_style_ids(self) -> List[str]:
+        return list(map(lambda s: s.id if isinstance(s, Style) else s, self.styles))
+
     def get_style_filter(self) -> Tuple[str, list]:
-        style_ids = list(map(lambda s: s.id, self.styles))
-        return in_filter('ras.style_id', style_ids)
+        return in_filter('ras.style_id', self.get_style_ids())
 
 
 class HopCriteriaMixin:
@@ -109,19 +111,15 @@ class RecipeScope(StyleCriteriaMixin):
         self.fermentable_scope: Optional[FermentableScope] = None
         self.yeast_scope: Optional[YeastScope] = None
 
-    def get_filter(self, available_schemas: List[str] = None) -> Filter:
+    def get_filter(self) -> Filter:
         filters = []
-        available_schemas = available_schemas or []
 
         if len(self.styles) > 0:
             style_filter = self.get_style_filter()
-            if 'ras' in available_schemas:
-                filters.append(style_filter)
-            else:
-                filters.append((
-                    'r.uid IN (SELECT DISTINCT ras.recipe_id FROM recipe_db_recipe_associated_styles AS ras WHERE {})'.format(style_filter[0]),
-                    style_filter[1]
-                ))
+            filters.append((
+                'r.uid IN (SELECT DISTINCT ras.recipe_id FROM recipe_db_recipe_associated_styles AS ras WHERE {})'.format(style_filter[0]),
+                style_filter[1]
+            ))
 
         if self.creation_date_min is not None or self.creation_date_max is not None:
             filters.append(min_max_filter('r.created', self.creation_date_min, self.creation_date_max))
@@ -144,32 +142,23 @@ class RecipeScope(StyleCriteriaMixin):
         if self.hop_scope is not None:
             hop_filter = self.hop_scope.get_filter()
             if hop_filter.has_filter():
-                if 'rh' in available_schemas:
-                    filters.append(hop_filter)
-                else:
-                    (query_string, parameters) = hop_filter.combine()
-                    query_string = 'r.uid IN (SELECT DISTINCT rh.recipe_id FROM recipe_db_recipehop AS rh WHERE TRUE{})'.format(query_string)
-                    filters.append((query_string, parameters))
+                (query_string, parameters) = hop_filter.combine()
+                query_string = 'r.uid IN (SELECT DISTINCT rh.recipe_id FROM recipe_db_recipehop AS rh WHERE TRUE{})'.format(query_string)
+                filters.append((query_string, parameters))
 
         if self.fermentable_scope is not None:
             fermentable_filter = self.fermentable_scope.get_filter()
             if fermentable_filter.has_filter():
-                if 'rf' in available_schemas:
-                    filters.append(fermentable_filter)
-                else:
-                    (query_string, parameters) = fermentable_filter.combine()
-                    query_string = 'r.uid IN (SELECT DISTINCT rf.recipe_id FROM recipe_db_recipefermentable AS rf WHERE TRUE{})'.format(query_string)
-                    filters.append((query_string, parameters))
+                (query_string, parameters) = fermentable_filter.combine()
+                query_string = 'r.uid IN (SELECT DISTINCT rf.recipe_id FROM recipe_db_recipefermentable AS rf WHERE TRUE{})'.format(query_string)
+                filters.append((query_string, parameters))
 
         if self.yeast_scope is not None:
             yeast_filter = self.yeast_scope.get_filter()
             if yeast_filter.has_filter():
-                if 'ry' in available_schemas:
-                    filters.append(yeast_filter)
-                else:
-                    (query_string, parameters) = yeast_filter.combine()
-                    query_string = 'r.uid IN (SELECT DISTINCT ry.recipe_id FROM recipe_db_recipeyeast AS ry WHERE TRUE{})'.format(query_string)
-                    filters.append((query_string, parameters))
+                (query_string, parameters) = yeast_filter.combine()
+                query_string = 'r.uid IN (SELECT DISTINCT ry.recipe_id FROM recipe_db_recipeyeast AS ry WHERE TRUE{})'.format(query_string)
+                filters.append((query_string, parameters))
 
         return Filter(filters)
 
@@ -229,6 +218,7 @@ class StyleProjection(StyleCriteriaMixin):
 class HopProjection(HopCriteriaMixin):
     def __init__(self) -> None:
         self._hops = []
+        self.uses = []
 
     def get_filter(self) -> Filter:
         filters = []
@@ -236,18 +226,33 @@ class HopProjection(HopCriteriaMixin):
         if len(self.hops) > 0:
             filters.append(self.get_hop_filter())
 
+        if len(self.uses) > 0:
+            filters.append(in_filter('rh.use', self.uses))
+
         return Filter(filters)
 
 
 class FermentableProjection(FermentableCriteriaMixin):
     def __init__(self) -> None:
         self._fermentables = []
+        self.categories = []
+        self.types = []
 
     def get_filter(self) -> Filter:
         filters = []
 
         if len(self.fermentables) > 0:
             filters.append(self.get_fermentable_filter())
+
+        if len(self.categories) > 0:
+            (query_string, parameters) = in_filter('f.category', self.categories)
+            query_string = 'rf.kind_id IN (SELECT f.id FROM recipe_db_fermentable AS f WHERE {})'.format(query_string)
+            filters.append((query_string, parameters))
+
+        if len(self.types) > 0:
+            (query_string, parameters) = in_filter('f.type', self.types)
+            query_string = 'rf.kind_id IN (SELECT f.id FROM recipe_db_fermentable AS f WHERE {})'.format(query_string)
+            filters.append((query_string, parameters))
 
         return Filter(filters)
 
