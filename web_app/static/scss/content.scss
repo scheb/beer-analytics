@@ -64,6 +64,11 @@ dl.detail-info {
             width: 100%;
         }
 
+        @include media-breakpoint-down('md') {
+            // More space to make links easier to click on mobile
+            margin-bottom: 0.3rem;
+        }
+
         &:hover {
             color: $white;
             text-decoration: underline;
@@ -148,12 +153,26 @@ h2, h3 {
 }
 
 
+// Style overview
+@include media-breakpoint-down('md') {
+    .styles-overview ul ul {
+        // More space to make links easier to click on mobile
+        line-height: 1.8;
+    }
+}
+
+
 // Column lists
 .column-list,
 .column-list-wide {
     @include list-unstyled();
     margin-left: 2rem;
     margin-right: 2rem;
+
+    @include media-breakpoint-down('md') {
+        // More space to make links easier to click on mobile
+        line-height: 1.8;
+    }
 
     li {
         break-inside: avoid;
