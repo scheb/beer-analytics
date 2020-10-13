@@ -8,20 +8,7 @@ from plotly.graph_objs import Figure
 from plotly.subplots import make_subplots
 
 COLORS_PRISM = px.colors.qualitative.Prism
-
-COLORS_DISTINCT = [
-    "rgb(93, 105, 177)",
-    "rgb(229, 134, 6)",
-    "rgb(82, 188, 163)",
-    "rgb(204, 97, 176)",
-    "rgb(153, 201, 69)",
-    "rgb(36, 121, 108)",
-    "rgb(218, 165, 27)",
-    "rgb(47, 138, 196)",
-    "rgb(118, 78, 159)",
-    "rgb(237, 100, 90)",
-    "rgb(165, 170, 153)",
-]
+COLORS_DISTINCT = COLORS_PRISM
 
 COLOR_SEQUENTIAL = [
     '#fcd99d',
@@ -247,12 +234,12 @@ class RangeBoxPlot:
         fig = make_subplots()
         trace = go.Box(
             x=[[1]],
-            lowerfence=df[value_field]['lowerfence'],
-            q1=df[value_field]['q1'],
-            median=df[value_field]['median'],
-            mean=df[value_field]['mean'],
-            q3=df[value_field]['q3'],
-            upperfence=df[value_field]['upperfence'],
+            lowerfence=[df.loc['lowerfence'][value_field]],
+            q1=[df.loc['q1'][value_field]],
+            median=[df.loc['median'][value_field]],
+            mean=[df.loc['mean'][value_field]],
+            q3=[df.loc['q3'][value_field]],
+            upperfence=[df.loc['upperfence'][value_field]],
             boxpoints=False,
             marker=dict(color=COLORS_PRISM[0]),
         )
