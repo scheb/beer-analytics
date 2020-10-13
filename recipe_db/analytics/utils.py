@@ -120,3 +120,42 @@ def set_series_start(
     filtered = filtered[filtered[value_column].notnull()]
 
     return filtered.reset_index()
+
+
+def rolling(df, day_column: str) -> DataFrame:
+    if len(df) == 0:
+        return df
+
+    df = df.set_index(pd.DatetimeIndex(df[day_column]))
+
+    # Fill in missing days with NaN
+    day_min = df.index.min()
+    day_max = df.index.max()
+    day_range = pd.date_range(start=day_min, end=day_max, freq='1D', name=day_column)
+    df = df.reindex(day_range, fill_value=0)
+
+    # Rolling calculation
+    rolling_df = df.rolling(90).mean()
+
+    # Find non-zero start and remove all NaN rows
+    start_timestamp = rolling_df[rolling_df.notnull()].index.min()
+    filtered = rolling_df[rolling_df.index >= start_timestamp]
+    filtered = filtered[filtered.notnull().any(axis=1)]
+    filtered = filtered[filtered.index.day == 1]
+
+    return filtered.reset_index()
+
+
+def rolling_series(df, series_column: str, day_column: str) -> DataFrame:
+    if len(df) == 0:
+        return df
+
+    series_dfs = []
+    series_values = df[series_column].unique()
+    for series_value in series_values:
+        series_df = df[df[series_column].eq(series_value)]
+        rolling_series_df = rolling(series_df, day_column)
+        rolling_series_df[series_column] = series_value
+        series_dfs.append(rolling_series_df)
+
+    return pd.concat(series_dfs)

@@ -6,11 +6,11 @@ import pandas as pd
 from django.db import connection
 from pandas import DataFrame
 
-from recipe_db.analytics import METRIC_PRECISION
+from recipe_db.analytics import METRIC_PRECISION, POPULARITY_MIN_MONTH
 from recipe_db.analytics.scope import RecipeScope, StyleProjection, YeastProjection, HopProjection, \
     FermentableProjection
 from recipe_db.analytics.utils import set_multiple_series_start, remove_outliers, get_style_names_dict, filter_trending, \
-    get_hop_names_dict, get_yeast_names_dict, get_fermentable_names_dict
+    get_hop_names_dict, get_yeast_names_dict, get_fermentable_names_dict, rolling_series
 
 
 class RecipeLevelAnalysis(ABC):
@@ -19,6 +19,24 @@ class RecipeLevelAnalysis(ABC):
 
 
 class RecipesCountAnalysis(RecipeLevelAnalysis):
+    def per_day(self) -> DataFrame:
+        scope_filter = self.scope.get_filter()
+        query = '''
+                SELECT
+                    date(r.created) AS day,
+                    count(r.uid) AS total_recipes
+                FROM recipe_db_recipe AS r
+                WHERE
+                    created IS NOT NULL
+                    {}
+                GROUP BY date(r.created)
+            '''.format(scope_filter.where)
+
+        df = pd.read_sql(query, connection, params=scope_filter.parameters)
+        df = df.set_index('day')
+
+        return df
+
     def per_month(self) -> DataFrame:
         scope_filter = self.scope.get_filter()
         query = '''
@@ -60,6 +78,57 @@ class RecipesCountAnalysis(RecipeLevelAnalysis):
 
 
 class RecipesPopularityAnalysis(RecipeLevelAnalysis):
+    def popularity_per_style_day(
+        self,
+        projection: Optional[StyleProjection] = None,
+        num_top: Optional[int] = None,
+    ) -> DataFrame:
+        projection = projection or StyleProjection()
+
+        scope_filter = self.scope.get_filter()
+        projection_filter = projection.get_filter()
+        query = '''
+                SELECT
+                    date(r.created) AS day,
+                    ras.style_id,
+                    count(r.uid) AS recipes
+                FROM recipe_db_recipe AS r
+                JOIN recipe_db_recipe_associated_styles AS ras
+                    ON r.uid = ras.recipe_id
+                WHERE
+                    r.created IS NOT NULL
+                    {}
+                    {}
+                GROUP BY date(r.created), ras.style_id
+            '''.format(scope_filter.where, projection_filter.where)
+
+        per_day = pd.read_sql(query, connection, params=scope_filter.parameters + projection_filter.parameters)
+        if len(per_day) == 0:
+            return per_day
+
+        # Filter top values
+        if num_top is not None:
+            top_ids = per_day.groupby('style_id')['recipes'].sum().sort_values(ascending=False).index.values[:num_top]
+            per_day = per_day[per_day['style_id'].isin(top_ids)]
+            # Sort by top styles
+            per_day['style_id'] = pd.Categorical(per_day['style_id'], top_ids)
+            per_day = per_day.sort_values('style_id')
+
+        # Cut-off date for popularity charts
+        per_day = per_day[per_day['day'] > POPULARITY_MIN_MONTH]
+
+        # Calculate percent
+        recipes_per_day = RecipesCountAnalysis(self.scope).per_day()
+        per_day = per_day.merge(recipes_per_day, on="day")
+        per_day['recipes_percent'] = per_day['recipes'] / per_day['total_recipes'] * 100
+
+        # Rolling average
+        per_day_rolling = rolling_series(per_day, 'style_id', 'day')
+
+        # Add style names
+        per_day_rolling['style'] = per_day_rolling['style_id'].map(get_style_names_dict())
+        return per_day_rolling
+
     def popularity_per_style(
         self,
         projection: Optional[StyleProjection] = None,

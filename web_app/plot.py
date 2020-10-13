@@ -34,7 +34,7 @@ class LinesChart:
         legend_title: str = None,
     ) -> Figure:
         fig = px.line(df, x=x_field, y=y_field, color=category_field, color_discrete_sequence=COLORS_DISTINCT)
-        fig.update_traces(line=dict(width=4))
+        fig.update_traces(line=dict(width=4), line_shape='spline')
 
         fig.update_xaxes(title_text=x_title)
         fig.update_yaxes(title_text=y_title)
