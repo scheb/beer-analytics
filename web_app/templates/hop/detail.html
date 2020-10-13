@@ -7,11 +7,16 @@
     <ul>
         <li><a href="#characteristics">Characteristics</a></li>
         <li><a href="#popularity">Popularity Over Time</a></li>
+
+        <li class="mt-3"><a href="#styles-percent-recipes">Typical Styles (Percent)</a></li>
         <li><a href="#styles-number-recipes">Typical Styles (Recipes)</a></li>
-        <li><a href="#styles-percent-recipes">Typical Styles (Percent)</a></li>
-        <li><a href="#style-amount">Amount per Style</a></li>
+
+        <li class="mt-3"><a href="#style-amount">Amount per Style</a></li>
         <li><a href="#usage-amount">Amount per Use</a></li>
         <li><a href="#hop-pairings">Common Pairings</a></li>
+
+        <li class="mt-3"><a href="#most-used-yeasts">Most Used Yeasts</a></li>
+        <li><a href="#trending-yeasts">Trending Yeasts</a></li>
     </ul>
 </nav>
 {% endblock %}
@@ -75,12 +80,12 @@
         </section>
     {% endwith %}
 
-    {% with chart_type="typical-styles-absolute" anchor="styles-number-recipes" %}
+    {% with chart_type="typical-styles-relative" anchor="styles-percent-recipes" %}
         <section class="card card-chart">
             <div class="card-header">
                 <h2>
                     <a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>
-                    Typical Styles <small class="text-muted">by Number of Recipes</small>
+                    Typical Styles <small class="text-muted">by Percent of Recipes</small>
                 </h2>
             </div>
             <div class="card-body">
@@ -93,12 +98,12 @@
         </section>
     {% endwith %}
 
-    {% with chart_type="typical-styles-relative" anchor="styles-percent-recipes" %}
+    {% with chart_type="typical-styles-absolute" anchor="styles-number-recipes" %}
         <section class="card card-chart">
             <div class="card-header">
                 <h2>
                     <a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>
-                    Typical Styles <small class="text-muted">by Percent of Recipes</small>
+                    Typical Styles <small class="text-muted">by Number of Recipes</small>
                 </h2>
             </div>
             <div class="card-body">
@@ -155,6 +160,37 @@
             </div>
         </section>
     {% endwith %}
+
+
+    {% with chart_type="popular-yeasts" anchor="most-used-yeasts" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Used Yeasts</h2>
+            </div>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-m">
+                    <noscript>
+                        {{ hop|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
+
+    {% with chart_type="trending-yeasts" anchor="trending-yeasts" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Trending Yeasts</h2>
+            </div>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-m">
+                    <noscript>
+                        {{ hop|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
 {% endblock %}
 
 {% block script %}
@@ -169,11 +205,13 @@ window.addEventListener('load', function ()
 
     // Charts
     display_graph('chart-popularity', '{{ hop|chart_js:"popularity" }}');
-    display_graph('chart-typical-styles-absolute', '{{ hop|chart_js:"typical-styles-absolute" }}');
     display_graph('chart-typical-styles-relative', '{{ hop|chart_js:"typical-styles-relative" }}');
+    display_graph('chart-typical-styles-absolute', '{{ hop|chart_js:"typical-styles-absolute" }}');
     display_graph('chart-amount-used-per-style', '{{ hop|chart_js:"amount-used-per-style" }}');
     display_graph('chart-amount-used-per-use', '{{ hop|chart_js:"amount-used-per-use" }}');
     display_graph('chart-hop-pairings', '{{ hop|chart_js:"hop-pairings" }}');
+    display_graph('chart-popular-yeasts', '{{ hop|chart_js:"popular-yeasts" }}');
+    display_graph('chart-trending-yeasts', '{{ hop|chart_js:"trending-yeasts" }}');
 });
 </script>
 {% endblock %}

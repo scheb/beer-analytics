@@ -6,8 +6,12 @@
     <strong>Table of Contents</strong>
     <ul>
         <li><a href="#popularity">Popularity Over Time</a></li>
-        <li><a href="#styles-number-recipes">Typical Styles (Recipes)</a></li>
+
+        <li class="mt-3"><a href="#styles-number-recipes">Typical Styles (Recipes)</a></li>
         <li><a href="#styles-percent-recipes">Typical Styles (Percent)</a></li>
+
+        <li class="mt-3"><a href="#most-used-hops">Most Used Hops</a></li>
+        <li><a href="#trending-hops">Trending Hops</a></li>
     </ul>
 </nav>
 {% endblock %}
@@ -106,6 +110,36 @@
             </div>
         </section>
     {% endwith %}
+
+    {% with chart_type="popular-hops" anchor="most-used-hops" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Used Hops</h2>
+            </div>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-m">
+                    <noscript>
+                        {{ yeast|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
+
+    {% with chart_type="trending-hops" anchor="trending-hops" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Trending Hops</h2>
+            </div>
+            <div class="card-body">
+                <div id="chart-{{ chart_type }}" class="chart-m">
+                    <noscript>
+                        {{ yeast|chart_image:chart_type|safe }}
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
 {% endblock %}
 
 {% block script %}
@@ -116,6 +150,9 @@ window.addEventListener('load', function ()
     display_graph('chart-popularity', '{{ yeast|chart_js:"popularity" }}');
     display_graph('chart-typical-styles-absolute', '{{ yeast|chart_js:"typical-styles-absolute" }}');
     display_graph('chart-typical-styles-relative', '{{ yeast|chart_js:"typical-styles-relative" }}');
+
+    display_graph('chart-popular-hops', '{{ yeast|chart_js:"popular-hops" }}');
+    display_graph('chart-trending-hops', '{{ yeast|chart_js:"trending-hops" }}');
 });
 </script>
 {% endblock %}

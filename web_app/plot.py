@@ -33,6 +33,9 @@ COLOR_SEQUENTIAL = [
 
 
 class LinesChart:
+    def __init__(self, force_legend: bool = False) -> None:
+        self.force_legend = force_legend
+
     def plot(
         self,
         df: DataFrame,
@@ -41,7 +44,7 @@ class LinesChart:
         category_field: str,
         x_title: Optional[str] = None,
         y_title: Optional[str] = None,
-        legend_title: str = None
+        legend_title: str = None,
     ) -> Figure:
         fig = px.line(df, x=x_field, y=y_field, color=category_field, color_discrete_sequence=COLORS_DISTINCT)
         fig.update_traces(line=dict(width=4))
@@ -53,7 +56,7 @@ class LinesChart:
         fig.update_layout(
             plot_bgcolor='#f1efee',
             title=None,
-            showlegend=len(fig.data) > 1,
+            showlegend=self.force_legend or len(fig.data) > 1,
             margin=dict(l=10, r=0, t=20, b=10),
             xaxis=dict(
                 fixedrange=True,

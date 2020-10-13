@@ -5,6 +5,16 @@
 
     .card-header {
         nav {
+            label {
+                display: inline-block;
+                float: left;
+                white-space: nowrap;
+                padding: 0.5rem 0.5rem 0 0;
+                margin-bottom: -2px;
+                line-height: 1;
+                color: $text-muted;
+            }
+
             margin-top: 0.25rem;
 
             .card-header-tabs {
@@ -12,6 +22,7 @@
             }
 
             .nav-link {
+                cursor: pointer;
                 padding: 0.25rem 0.5rem;
                 margin-bottom: -2px;
             }

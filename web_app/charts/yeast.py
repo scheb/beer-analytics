@@ -30,7 +30,7 @@ class YeastPopularityChart(YeastChart):
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'yeast', 'Month/Year', '% Recipes')
+        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'yeast', 'Month/Year', '% of All Recipes')
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -43,7 +43,7 @@ class YeastCommonStylesAbsoluteChart(YeastChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = BarChart().plot(df, 'style_name', 'recipes', 'Style', 'Number Recipes')
+        figure = BarChart().plot(df, 'style_name', 'recipes', None, 'Total Number of Recipes')
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -56,8 +56,34 @@ class YeastCommonStylesRelativeChart(YeastChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = BarChart().plot(df, 'style_name', 'recipes_percent', 'Style', 'Used in % Recipes')
+        figure = BarChart().plot(df, 'style_name', 'recipes_percent', None, 'Used in % of the Style\'s Recipes')
         return Chart(figure, title=self.get_chart_title())
+
+
+class YeastTrendingHopsChart(YeastChart):
+    CHART_TITLE = "Trending hops combined with <b>%s</b> yeast"
+    IMAGE_ALT = "Trending hops combined with %s yeast"
+
+    def plot(self) -> Chart:
+        df = YeastAnalysis(self.yeast).trending_hops()
+        if len(df) == 0:
+            raise NoDataException()
+
+        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'hop', None, '% of Yeast Recipes')
+        return Chart(figure, title=self.get_chart_title())
+
+
+class YeastPopularHopsChart(YeastChart):
+    CHART_TITLE = "Popular hops combined with <b>%s</b> yeast"
+    IMAGE_ALT = "Popular hops combined with %s yeast"
+
+    def plot(self) -> Chart:
+        df = YeastAnalysis(self.yeast).popular_hops()
+        if len(df) == 0:
+            raise NoDataException()
+
+        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'hop', None, '% of Yeast Recipes')
+        return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
 class YeastOpenGraphChart(YeastPopularityChart):
@@ -74,6 +100,10 @@ class YeastChartFactory:
         popularity=YeastPopularityChart,
         typical_styles_absolute=YeastCommonStylesAbsoluteChart,
         typical_styles_relative=YeastCommonStylesRelativeChart,
+
+        # Hops
+        popular_hops=YeastPopularHopsChart,
+        trending_hops=YeastTrendingHopsChart,
     )
 
     @classmethod

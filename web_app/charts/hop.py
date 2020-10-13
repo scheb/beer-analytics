@@ -1,8 +1,6 @@
 from abc import ABC
 
-from recipe_db.analytics.charts.hop import get_hop_pairing_hops, get_hop_amount_range_per_use, \
-    get_hop_amount_range_per_style, get_hop_usage, get_hop_common_styles_relative, get_hop_common_styles_absolute, \
-    get_hop_popularity, get_hop_amount_range, get_hop_metric_values
+from recipe_db.analytics.charts.hop import HopAnalysis
 from recipe_db.models import Hop
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.meta import OPEN_GRAPH_IMAGE_WIDTH, OPEN_GRAPH_IMAGE_HEIGHT
@@ -29,7 +27,7 @@ class HopAlphaChart(HopChart):
     IMAGE_ALT = "Histogram of alpha acid in %s hops"
 
     def plot(self) -> Chart:
-        df = get_hop_metric_values(self.hop, 'alpha')
+        df = HopAnalysis(self.hop).metric_histogram('alpha')
         if len(df) == 0:
             raise NoDataException()
 
@@ -42,7 +40,7 @@ class HopBetaChart(HopChart):
     IMAGE_ALT = "Histogram of beta acid in %s hops"
 
     def plot(self) -> Chart:
-        df = get_hop_metric_values(self.hop, 'beta')
+        df = HopAnalysis(self.hop).metric_histogram('beta')
         if len(df) == 0:
             raise NoDataException()
 
@@ -55,11 +53,24 @@ class HopAmountRangeChart(HopChart):
     IMAGE_ALT = "How %s hops are typically used in beer recipes"
 
     def plot(self) -> Chart:
-        df = get_hop_amount_range(self.hop)
+        df = HopAnalysis(self.hop).amount_range()
         if len(df) == 0:
             raise NoDataException()
 
         figure = RangeBoxPlot().plot(df, 'amount_percent')
+        return Chart(figure, 500, 350, title=self.get_chart_title())
+
+
+class HopUsageChart(HopChart):
+    CHART_TITLE = "How <b>%s</b> hops are used"
+    IMAGE_ALT = "Amount of %s hops used per beer style"
+
+    def plot(self) -> Chart:
+        df = HopAnalysis(self.hop).usages()
+        if len(df) == 0:
+            raise NoDataException()
+
+        figure = BarChart(add_margin=False).plot(df, 'use', 'recipes', None, None)
         return Chart(figure, 500, 350, title=self.get_chart_title())
 
 
@@ -68,11 +79,11 @@ class HopPopularityChart(HopChart):
     IMAGE_ALT = "Popularity of the %s hop over time"
 
     def plot(self) -> Chart:
-        df = get_hop_popularity(self.hop)
+        df = HopAnalysis(self.hop).popularity()
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'hop', 'Month/Year', '% Recipes')
+        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'hop', 'Month/Year', '% of All Recipes')
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -81,11 +92,11 @@ class HopCommonStylesAbsoluteChart(HopChart):
     IMAGE_ALT = "Typical beer styles using %s hops (by number of recipes)"
 
     def plot(self) -> Chart:
-        df = get_hop_common_styles_absolute(self.hop)
+        df = HopAnalysis(self.hop).common_styles_absolute()
         if len(df) == 0:
             raise NoDataException()
 
-        figure = BarChart().plot(df, 'style_name', 'recipes', 'Style', 'Number Recipes')
+        figure = BarChart().plot(df, 'style_name', 'recipes', None, 'Total Number of Recipes')
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -94,25 +105,12 @@ class HopCommonStylesRelativeChart(HopChart):
     IMAGE_ALT = "Typical beer styles using %s hops (by percent of recipes)"
 
     def plot(self) -> Chart:
-        df = get_hop_common_styles_relative(self.hop)
+        df = HopAnalysis(self.hop).common_styles_relative()
         if len(df) == 0:
             raise NoDataException()
 
-        figure = BarChart().plot(df, 'style_name', 'recipes_percent', 'Style', 'Used in % Recipes')
+        figure = BarChart().plot(df, 'style_name', 'recipes_percent', None, 'Used in % of the Style\'s Recipes')
         return Chart(figure, title=self.get_chart_title())
-
-
-class HopUsageChart(HopChart):
-    CHART_TITLE = "How <b>%s</b> hops are used"
-    IMAGE_ALT = "Amount of %s hops used per beer style"
-
-    def plot(self) -> Chart:
-        df = get_hop_usage(self.hop)
-        if len(df) == 0:
-            raise NoDataException()
-
-        figure = BarChart(add_margin=False).plot(df, 'use', 'recipes', None, None)
-        return Chart(figure, 500, 350, title=self.get_chart_title())
 
 
 class HopStyleAmountChart(HopChart):
@@ -120,11 +118,12 @@ class HopStyleAmountChart(HopChart):
     IMAGE_ALT = "Amount of %s hops per on usage type"
 
     def plot(self) -> Chart:
-        df = get_hop_amount_range_per_style(self.hop)
+        df = HopAnalysis(self.hop).amount_per_style()
+        print(df)
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregatedBoxPlot().plot(df, 'style', 'amount_percent', 'Style', '% Amount')
+        figure = PreAggregatedBoxPlot().plot(df, 'style_name', 'amount_percent', None, '% of Weight in Recipe')
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -133,11 +132,11 @@ class HopUsageAmountChart(HopChart):
     IMAGE_ALT = "Amount of %s hops per on usage type"
 
     def plot(self) -> Chart:
-        df = get_hop_amount_range_per_use(self.hop)
+        df = HopAnalysis(self.hop).amount_per_use()
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregatedBoxPlot().plot(df, 'use', 'amount_percent', 'Usage', '% Amount')
+        figure = PreAggregatedBoxPlot().plot(df, 'use', 'amount_percent', 'Usage', '% of Weight in Recipe')
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -146,12 +145,38 @@ class HopPairingsChart(HopChart):
     IMAGE_ALT = "Hops typically paired with %s hops"
 
     def plot(self) -> Chart:
-        df = get_hop_pairing_hops(self.hop)
+        df = HopAnalysis(self.hop).pairings()
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% Amount')
+        figure = PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% of Weight in Recipe')
         return Chart(figure, title=self.get_chart_title())
+
+
+class HopTrendingYeastsChart(HopChart):
+    CHART_TITLE = "Trending yeasts combined with <b>%s</b> hops"
+    IMAGE_ALT = "Trending yeasts combined with %s hops"
+
+    def plot(self) -> Chart:
+        df = HopAnalysis(self.hop).trending_yeasts()
+        if len(df) == 0:
+            raise NoDataException()
+
+        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'yeast', None, '% of Recipes')
+        return Chart(figure, title=self.get_chart_title())
+
+
+class HopPopularYeastsChart(HopChart):
+    CHART_TITLE = "Popular yeasts combined with <b>%s</b> hops"
+    IMAGE_ALT = "Popular yeasts combined with %s hops"
+
+    def plot(self) -> Chart:
+        df = HopAnalysis(self.hop).popular_yeasts()
+        if len(df) == 0:
+            raise NoDataException()
+
+        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'yeast', None, '% of Recipes')
+        return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
 class HopOpenGraphChart(HopPopularityChart):
@@ -175,6 +200,8 @@ class HopChartFactory:
         amount_used_per_style=HopStyleAmountChart,
         amount_used_per_use=HopUsageAmountChart,
         hop_pairings=HopPairingsChart,
+        popular_yeasts=HopPopularYeastsChart,
+        trending_yeasts=HopTrendingYeastsChart,
     )
 
     @classmethod

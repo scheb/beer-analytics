@@ -1,7 +1,7 @@
 from abc import ABC
 
-from recipe_db.analytics.charts.hop import get_most_popular_hops, get_hops_popularity
-from recipe_db.analytics.charts.trend import get_specific_styles_popularity
+from recipe_db.analytics.analysis import RecipesPopularityAnalysis
+from recipe_db.analytics.scope import RecipeScope, HopProjection, StyleProjection
 from recipe_db.models import Hop, Style
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.plot import LinesChart
@@ -14,11 +14,14 @@ class StylesPopularityChart(ChartDefinition, ABC):
         self.styles = Style.objects.filter(pk__in=self.IDS)
 
     def plot(self) -> Chart:
-        df = get_specific_styles_popularity(self.styles)
+        projection = StyleProjection()
+        projection.styles = self.styles
+        analysis = RecipesPopularityAnalysis(RecipeScope())
+        df = analysis.popularity_per_style(projection)
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'style', 'Month/Year', '% Recipes')
+        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'style', 'Month/Year', '% of All Recipes')
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -49,11 +52,14 @@ class HopsPopularityChart(ChartDefinition, ABC):
         self.hops = Hop.objects.filter(pk__in=self.IDS)
 
     def plot(self) -> Chart:
-        df = get_hops_popularity(self.hops)
+        analysis = RecipesPopularityAnalysis(RecipeScope())
+        projection = HopProjection()
+        projection.hops = self.hops
+        df = analysis.popularity_per_hop(projection)
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'hop', 'Month/Year', '% Recipes')
+        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'hop', 'Month/Year', '% of All Recipes')
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -85,11 +91,12 @@ class FavouriteHopsPopularityChart(ChartDefinition):
         return "Brewer's favourite hops"
 
     def plot(self) -> Chart:
-        df = get_most_popular_hops()
+        analysis = RecipesPopularityAnalysis(RecipeScope())
+        df = analysis.popularity_per_hop(num_top=8)
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'hop', 'Month/Year', '% Recipes')
+        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'hop', 'Month/Year', '% of All Recipes')
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
