@@ -1,21 +1,28 @@
 beer-analytics 🕵️🍺
 ===================
 
-**Analyzing the composition of beer recipes and visualize results**, built with Django, Pandas and Plotly.
+**Analyzing the composition of beer recipes and visualize results in a human-friendly way.**
 
-Live website: https://www.beer-analytics.com/
+Check out the live website: https://www.beer-analytics.com/
 
-The goal is to expand the knowledge how different beer styles are typically brewed and potentially uncover trends in
-craft/home brewing.
+<p align="center"><img alt="Logo" src="web_app/static/img/logo-dark.svg" width="128" height="128" /></p>
 
-The project has two components:
+What is Beer Analytics?
+-----------------------
 
-1) a recipe database with reliable data (clean and normalized, reduce outliers and bad data)
-2) a user interface to execute data analysis (filtering, slicing and dicing) and present results in a visually appealing
-   way
+*Beer Analytics* is a **database of beer brewing recipes**, built specifically for data analysis. It is made for beer
+enthusiasts and (home)brewers to provide detailed insights into brewing recipes, even when they're not an expert in data
+analysis. The goal is to expand the knowledge how certain types of beer are typically brewed, ultimately helping
+(home)brewers to compose better recipes themselves, and potentially uncover some trends in craft/home brewing.
 
-Setup
------
+The project has two main components:
+
+1) a recipe database with (hopefully) reliable data (clean and normalized, reduce outliers and bad data)
+2) a user interface to execute data analysis (filtering, slicing and dicing) and to present results in a visually
+   appealing way
+
+Application Setup
+-----------------
 
 ### Requirements
 
@@ -26,35 +33,40 @@ Setup
 
 ### Steps
 
-- `yarn install`
+- Install yarn dependencies: `yarn install`
 - Initialize `virtualenv` and enable it
 - Install Python dependencies: `pip -r requirements.txt`
 - Configure the application (see below)
-- Apply database migrations `python makemigrations` + `python manage.py migrate`
-- Load initial data `python manage.py load_initial_data`
+- Apply database migrations to creates tables: `python makemigrations` and `python manage.py migrate`
+- Load initial data (known styles and ingredients) via `python manage.py load_initial_data`
 
 ### Configuration
 
 Provide a `.env` file in the `beer_analytics` folder. An example can be found in `beer_analytics/.env.example`.
 
-Per default the application starts with "dev" settings. Use `DJANGO_SETTINGS_MODULE` to use different settings according
-to the environment:
+Per default the application starts with "dev" settings, which is likely what you want. Use `DJANGO_SETTINGS_MODULE` to
+use different settings according to the environment:
 
 ```
-# Production settings
-DJANGO_SETTINGS_MODULE=beer_analytics.settings_prod
-
 # Dev settings
 DJANGO_SETTINGS_MODULE=beer_analytics.settings_dev
+
+# Production settings
+DJANGO_SETTINGS_MODULE=beer_analytics.settings_prod
 ```
 
-Recipe data import
-------------------
+Recipe data
+-----------
 
-Please note that for legal reasons the project comes with no recipe data included.
+For legal reasons the project does not come with any recipe data included. You have to retrieve and import recipe data 
+from the sources you'd like to analyze.
 
-After setting up the application, recipes can be imported via CLI in various formats. Each recipe must have a unique id
-assigned, which can be an arbitrary string.
+ℹ️ It is planned to add a database with anonymized data samples at some point. Sorry for inconvenience.
+
+### Data Import
+
+Recipes can be imported via CLI in various formats. Each recipe must have a unique id assigned, which can be an
+arbitrary string. The following recipe formats are supported with their respective commands:
 
 **[BeerXML](http://www.beerxml.com/)**:
 
@@ -74,10 +86,9 @@ python manage.py load_mmum_recipe recipe.json unique_id
 python manage.py load_beersmith_recipe recipe.bsmx unique_id
 ```
 
-Data Mapping
-------------
+### Data Mapping
 
-Once recipes are imported, they need to be mapped to their respective styles and ingredients. Run the following
+Once recipes are imported, they need to be mapped to the list of known styles and ingredients. Run the following
 commands to execute the mapping. Any unmapped recipes will be processed:
 
 ```
@@ -87,24 +98,28 @@ python manage.py map_fermentables
 python manage.py map_yeasts
 ```
 
-Pre-calculated metrics
-----------------------
+These commands can be repeated any time and will process any recipes, which haven't been mapped yet. Please note that,
+depending on the amount if recipes, this step can take a while.
 
-The application is pre-calculating asn persisting some metrics on style and ingredients. To update these metrics, run:
+### Pre-calculate metrics
+
+The application is pre-calculating and persisting some metrics for style and ingredients. To update these metrics, run:
 
 ```
 python manage.py calculate_metrics
 ```
 
-Security
---------
-
-For information about the security policy and know security issues, see [SECURITY.md](SECURITY.md).
-
 Contributing
 ------------
 
-Want to contribute to this project? See [CONTRIBUTING.md](CONTRIBUTING.md).
+You're welcome to contribute new features, such as new analysis/chart types or bug fixes, by creating a Pull Request.
+
+Please see [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
+
+Security
+--------
+
+For information about the security policy and know security issues, see [SECURITY.md](SECURITY.md). 
 
 License
 -------
