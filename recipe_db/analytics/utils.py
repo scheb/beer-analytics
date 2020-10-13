@@ -79,14 +79,14 @@ def set_multiple_series_start(
     time_column: str,
     value_column: str
 ) -> DataFrame:
-    series_dfs = []
     if len(df) == 0:
         return df
 
+    series_dfs = []
     series_values = df[series_column].unique()
     for series_value in series_values:
-        series = df[df[series_column].eq(series_value)]
-        series_dfs.append(set_series_start(series, time_column, value_column))
+        series_df = df[df[series_column].eq(series_value)]
+        series_dfs.append(set_series_start(series_df, time_column, value_column))
 
     return pd.concat(series_dfs)
 
