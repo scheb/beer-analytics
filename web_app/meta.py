@@ -15,7 +15,7 @@ OPEN_GRAPH_IMAGE_HEIGHT = 630
 DETAIL_PAGE_TITLE = "{} ‹ {} | Beer-Analytics"
 NORMAL_TITLE = "{} | Beer-Analytics"
 META_DEFAULT_DESCRIPTION = 'Data analysis of brewing recipes for beer enthusiasts, who want to learn how certain ' \
-                           'beer styles are composed and how ingredients are used.'
+                           'beer types are composed and how ingredients are used.'
 
 
 class PageMeta:
@@ -64,7 +64,7 @@ class StyleMeta(PageMeta):
         return DETAIL_PAGE_TITLE.format(self.style.name, 'Beer Styles')
 
     def get_description(self) -> str:
-        return "Data analysis how the {} beer style is brewed. ".format(self.style.name)
+        return "Data analysis how {} beers are brewed. ".format(self.style.name)
 
     def get_meta(self) -> Meta:
         return Meta(
