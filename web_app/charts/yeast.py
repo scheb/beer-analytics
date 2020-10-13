@@ -1,6 +1,6 @@
 from abc import ABC
 
-from recipe_db.analytics.charts.yeast import YeastAnalysis
+from recipe_db.analytics.spotlight.yeast import YeastAnalysis
 from recipe_db.models import Yeast
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.meta import OPEN_GRAPH_IMAGE_WIDTH, OPEN_GRAPH_IMAGE_HEIGHT

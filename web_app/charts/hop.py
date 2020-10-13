@@ -1,6 +1,6 @@
 from abc import ABC
 
-from recipe_db.analytics.charts.hop import HopAnalysis
+from recipe_db.analytics.spotlight.hop import HopAnalysis
 from recipe_db.models import Hop
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.meta import OPEN_GRAPH_IMAGE_WIDTH, OPEN_GRAPH_IMAGE_HEIGHT

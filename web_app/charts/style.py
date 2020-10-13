@@ -1,7 +1,7 @@
 from abc import ABC
 from typing import Optional
 
-from recipe_db.analytics.charts.style import StyleAnalysis
+from recipe_db.analytics.spotlight.style import StyleAnalysis
 from recipe_db.models import Style
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.meta import OPEN_GRAPH_IMAGE_WIDTH, OPEN_GRAPH_IMAGE_HEIGHT
