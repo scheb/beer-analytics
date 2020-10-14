@@ -123,22 +123,25 @@ def set_series_start(
 
 
 def rolling(df, day_column: str) -> DataFrame:
-    if len(df) == 0:
-        return df
+    if len(df) <= 4:
+        return DataFrame()
 
-    df = df.set_index(pd.DatetimeIndex(df[day_column]))
+    df = df.set_index(day_column)
+    df = df.set_index(pd.DatetimeIndex(df.index))
 
-    # Fill in missing days with NaN
+    # Fill in missing days with zeros
+    freq = '1d' if day_column == 'day' else 'MS'
     day_min = df.index.min()
     day_max = df.index.max()
-    day_range = pd.date_range(start=day_min, end=day_max, freq='1D', name=day_column)
+    day_range = pd.date_range(start=day_min, end=day_max, freq=freq, name=day_column)
     df = df.reindex(day_range, fill_value=0)
 
     # Rolling calculation
-    rolling_df = df.rolling(90).mean()
+    window = 90 if day_column == 'day' else 5
+    rolling_df = df.rolling(window, min_periods=4, win_type='cosine', center=True).mean()
 
-    # Find non-zero start and remove all NaN rows
-    start_timestamp = rolling_df[rolling_df.notnull()].index.min()
+    # Find non-zero start
+    start_timestamp = rolling_df[rolling_df > 0].index.min()
     filtered = rolling_df[rolling_df.index >= start_timestamp]
     filtered = filtered[filtered.notnull().any(axis=1)]
     filtered = filtered[filtered.index.day == 1]
@@ -146,7 +149,7 @@ def rolling(df, day_column: str) -> DataFrame:
     return filtered.reset_index()
 
 
-def rolling_series(df, series_column: str, day_column: str) -> DataFrame:
+def rolling_multiple_series(df, series_column: str, day_column: str) -> DataFrame:
     if len(df) == 0:
         return df
 
@@ -154,8 +157,10 @@ def rolling_series(df, series_column: str, day_column: str) -> DataFrame:
     series_values = df[series_column].unique()
     for series_value in series_values:
         series_df = df[df[series_column].eq(series_value)]
+        series_df = series_df.drop([series_column], axis=1)
         rolling_series_df = rolling(series_df, day_column)
-        rolling_series_df[series_column] = series_value
-        series_dfs.append(rolling_series_df)
+        if len(rolling_series_df) > 0:
+            rolling_series_df[series_column] = series_value
+            series_dfs.append(rolling_series_df)
 
     return pd.concat(series_dfs)
