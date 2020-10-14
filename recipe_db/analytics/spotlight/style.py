@@ -53,7 +53,7 @@ class StyleAnalysis:
         analysis = RecipesPopularityAnalysis(RecipeScope())
         projection = StyleProjection()
         projection.styles = list(self.style.get_style_including_sub_styles())
-        return analysis.popularity_per_style_day(projection)
+        return analysis.popularity_per_style(projection)
 
     def metric_histogram(self, metric: str) -> DataFrame:
         analysis = RecipesMetricHistogram(self.recipe_scope)

@@ -98,7 +98,7 @@ class StylePopularityChart(StyleChart):
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        figure = LinesChart().plot(df, 'day', 'recipes_percent', 'style', None, '% of All Recipes')
+        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'style', None, '% of All Recipes')
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
