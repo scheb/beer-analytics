@@ -57,7 +57,7 @@ ChartMount.prototype.load = function(query) {
             self.container.classList.remove('chart-loading')
             if (xhr.status === 204) {
                 self.container.classList.add('chart-no-data')
-                self.container.innerHTML = '<p>Not enough data</p>'
+                self.container.innerHTML = '<p>No result</p>'
             } else if (xhr.status === 200) {
                 self.container.innerHTML = ''
                 var data = JSON.parse(xhr.responseText);
