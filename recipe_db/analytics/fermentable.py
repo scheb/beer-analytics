@@ -23,7 +23,7 @@ class FermentableAmountRangeAnalysis(FermentableLevelAnalysis):
         query = '''
             SELECT rf.recipe_id, sum(rf.amount_percent) AS amount_percent
             FROM recipe_db_recipefermentable AS rf
-            WHERE TRUE {}
+            WHERE 1 {}
             GROUP BY rf.recipe_id, rf.kind_id
         '''.format(scope_filter.where)
 
@@ -46,7 +46,7 @@ class FermentableMetricHistogram(FermentableLevelAnalysis):
         query = '''
                 SELECT round({}, {}) as {}
                 FROM recipe_db_recipefermentable AS rf
-                WHERE TRUE {}
+                WHERE 1 {}
             '''.format(metric, precision, metric, scope_filter.where)
 
         df = pd.read_sql(query, connection, params=scope_filter.parameters)
@@ -80,7 +80,7 @@ class FermentableAmountAnalysis(RecipeLevelAnalysis):
             FROM recipe_db_recipe AS r
             JOIN recipe_db_recipefermentable AS rf
                 ON r.uid = rf.recipe_id
-            WHERE TRUE
+            WHERE 1
                 {}
                 {}
             GROUP BY rf.recipe_id, rf.kind_id
@@ -128,7 +128,7 @@ class FermentableAmountAnalysis(RecipeLevelAnalysis):
             JOIN recipe_db_recipe_associated_styles ras
                 ON r.uid = ras.recipe_id
                     AND length(ras.style_id) > 2  -- Quick & dirty to remove top-level categories
-            WHERE TRUE
+            WHERE 1
                 {}
                 {}
             GROUP BY rf.recipe_id, ras.style_id, rf.kind_id

@@ -24,7 +24,7 @@ class HopAmountRangeAnalysis(HopLevelAnalysis):
         query = '''
             SELECT rh.recipe_id, sum(rh.amount_percent) AS amount_percent
             FROM recipe_db_recipehop AS rh
-            WHERE TRUE {}
+            WHERE 1 {}
             GROUP BY rh.recipe_id, rh.kind_id
         '''.format(scope_filter.where)
 
@@ -47,7 +47,7 @@ class HopMetricHistogram(HopLevelAnalysis):
         query = '''
                 SELECT round({}, {}) as {}
                 FROM recipe_db_recipehop AS rh
-                WHERE TRUE {}
+                WHERE 1 {}
             '''.format(metric, precision, metric, scope_filter.where)
 
         df = pd.read_sql(query, connection, params=scope_filter.parameters)
@@ -81,7 +81,7 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
             FROM recipe_db_recipe AS r
             JOIN recipe_db_recipehop AS rh
                 ON r.uid = rh.recipe_id
-            WHERE TRUE
+            WHERE 1
                 {}
                 {}
             GROUP BY rh.recipe_id, rh.kind_id
@@ -129,7 +129,7 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
             JOIN recipe_db_recipe_associated_styles ras
                 ON r.uid = ras.recipe_id
                     AND length(ras.style_id) > 2  -- Quick & dirty to remove top-level categories
-            WHERE TRUE
+            WHERE 1
                 {}
                 {}
             GROUP BY rh.recipe_id, ras.style_id, rh.kind_id
@@ -205,11 +205,11 @@ class HopPairingAnalysis(RecipeLevelAnalysis):
                 rh.recipe_id,
                 rh.kind_id,
                 rh.amount_percent,
-                (TRUE {}) AS in_projection
+                (1 {}) AS in_projection
             FROM recipe_db_recipe AS r
             JOIN recipe_db_recipehop AS rh
                 ON r.uid = rh.recipe_id
-            WHERE TRUE {}
+            WHERE 1 {}
         '''.format(projection_filter.where, scope_filter.where)
 
         df = pd.read_sql(query, connection, params=projection_filter.parameters + scope_filter.parameters)

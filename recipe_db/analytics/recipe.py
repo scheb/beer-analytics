@@ -66,7 +66,7 @@ class RecipesCountAnalysis(RecipeLevelAnalysis):
                 JOIN recipe_db_recipe_associated_styles ras
                     ON r.uid = ras.recipe_id
                 WHERE
-                    TRUE {}
+                    1 {}
                 GROUP BY ras.style_id
                 ORDER BY ras.style_id ASC
             '''.format(scope_filter.where)
@@ -444,7 +444,7 @@ class CommonStylesAnalysis(RecipeLevelAnalysis):
                 ON r.uid = ras.recipe_id
                     AND length(ras.style_id) > 2  -- Quick & dirty to remove top-level categories
             WHERE
-                TRUE {}
+                1 {}
             GROUP BY ras.style_id
         '''.format(scope_filter.where)
 

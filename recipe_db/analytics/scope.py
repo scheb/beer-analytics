@@ -15,7 +15,7 @@ class Filter:
     @property
     def where(self) -> str:
         if len(self.filters) == 0:
-            return " AND TRUE"
+            return " AND 1"
         return " AND "+(" AND ".join(map(lambda f: f[0], self.filters)))
 
     @property
@@ -143,21 +143,21 @@ class RecipeScope(StyleCriteriaMixin):
             hop_filter = self.hop_scope.get_filter()
             if hop_filter.has_filter():
                 (query_string, parameters) = hop_filter.combine()
-                query_string = 'r.uid IN (SELECT DISTINCT rh.recipe_id FROM recipe_db_recipehop AS rh WHERE TRUE{})'.format(query_string)
+                query_string = 'r.uid IN (SELECT DISTINCT rh.recipe_id FROM recipe_db_recipehop AS rh WHERE 1{})'.format(query_string)
                 filters.append((query_string, parameters))
 
         if self.fermentable_scope is not None:
             fermentable_filter = self.fermentable_scope.get_filter()
             if fermentable_filter.has_filter():
                 (query_string, parameters) = fermentable_filter.combine()
-                query_string = 'r.uid IN (SELECT DISTINCT rf.recipe_id FROM recipe_db_recipefermentable AS rf WHERE TRUE{})'.format(query_string)
+                query_string = 'r.uid IN (SELECT DISTINCT rf.recipe_id FROM recipe_db_recipefermentable AS rf WHERE 1{})'.format(query_string)
                 filters.append((query_string, parameters))
 
         if self.yeast_scope is not None:
             yeast_filter = self.yeast_scope.get_filter()
             if yeast_filter.has_filter():
                 (query_string, parameters) = yeast_filter.combine()
-                query_string = 'r.uid IN (SELECT DISTINCT ry.recipe_id FROM recipe_db_recipeyeast AS ry WHERE TRUE{})'.format(query_string)
+                query_string = 'r.uid IN (SELECT DISTINCT ry.recipe_id FROM recipe_db_recipeyeast AS ry WHERE 1{})'.format(query_string)
                 filters.append((query_string, parameters))
 
         return Filter(filters)
