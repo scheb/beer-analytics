@@ -79,40 +79,6 @@ class CompactHistogramChart:
         return fig
 
 
-class BoxPlot:
-    def plot(
-        self,
-        df: DataFrame,
-        type_field: str,
-        value_field: str,
-        x_title: Optional[str] = None,
-        y_title: Optional[str] = None,
-    ) -> Figure:
-        fig = px.box(df, x=type_field, y=value_field, points="all", color=type_field, color_discrete_sequence=COLORS_PRISM)
-        fig.update_traces(boxpoints="outliers", jitter=0.3, hoveron="boxes", marker=dict(opacity=0.3, size=4))
-        fig.update_layout(
-            plot_bgcolor='#f1efee',
-            title=None,
-            showlegend=False,
-            margin=dict(l=10, r=0, t=20, b=10),
-            xaxis=dict(
-                fixedrange=True,
-                categoryorder="total descending",
-            ),
-            yaxis=dict(
-                fixedrange=True,
-                title=dict(
-                    standoff=30,
-                ),
-            )
-        )
-
-        fig.update_xaxes(title_text=x_title)
-        fig.update_yaxes(title_text=y_title)
-
-        return fig
-
-
 class PreAggregatedBoxPlot:
     def plot(
         self,
