@@ -127,7 +127,7 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
             smoothened['kind_id'] = pd.Categorical(smoothened['kind_id'], top_ids)
             smoothened = smoothened.sort_values(['kind_id', 'month'])
 
-        smoothened['style'] = smoothened['style_id'].map(get_style_names_dict())
+        smoothened['beer_style'] = smoothened['style_id'].map(get_style_names_dict())
         return smoothened
 
     def popularity_per_hop(
@@ -436,7 +436,7 @@ class CommonStylesAnalysis(RecipeLevelAnalysis):
         return pd.read_sql(query, connection, params=scope_filter.parameters)
 
     def _return(self, df: DataFrame, num_top: Optional[int]) -> DataFrame:
-        df['style_name'] = df['style_id'].map(get_style_names_dict())
+        df['beer_style'] = df['style_id'].map(get_style_names_dict())
         if num_top is not None:
             df = df[:num_top]
         return df

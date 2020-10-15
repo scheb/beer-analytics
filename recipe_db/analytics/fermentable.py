@@ -151,5 +151,5 @@ class FermentableAmountAnalysis(RecipeLevelAnalysis):
             per_style = per_style[:num_top]
 
         # Add style names
-        per_style['style_name'] = per_style['style_id'].map(get_style_names_dict())
+        per_style['beer_style'] = per_style['style_id'].map(get_style_names_dict())
         return per_style
