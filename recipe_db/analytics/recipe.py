@@ -117,7 +117,7 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
 
         recipes_per_month = RecipesCountAnalysis(self.scope).per_month()
         per_month = per_month.merge(recipes_per_month, on="month")
-        per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes'] * 100
+        per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes']
 
         # Rolling average
         smoothened = rolling_multiple_series(per_month, 'style_id', 'month')
@@ -169,7 +169,7 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
 
         recipes_per_month = RecipesCountAnalysis(self.scope).per_month()
         per_month = per_month.merge(recipes_per_month, on="month")
-        per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes'] * 100
+        per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes']
 
         # Rolling average
         smoothened = rolling_multiple_series(per_month, 'kind_id', 'month')
@@ -221,7 +221,7 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
 
         recipes_per_month = RecipesCountAnalysis(self.scope).per_month()
         per_month = per_month.merge(recipes_per_month, on="month")
-        per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes'] * 100
+        per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes']
 
         # Rolling average
         smoothened = rolling_multiple_series(per_month, 'kind_id', 'month')
@@ -273,7 +273,7 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
 
         recipes_per_month = RecipesCountAnalysis(self.scope).per_month()
         per_month = per_month.merge(recipes_per_month, on="month")
-        per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes'] * 100
+        per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes']
 
         # Rolling average
         smoothened = rolling_multiple_series(per_month, 'kind_id', 'month')
@@ -347,7 +347,7 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
 
         per_month = per_month.merge(recipes_per_month, on="month")
         per_month['month'] = pd.to_datetime(per_month['month'])
-        per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes'] * 100
+        per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes']
 
         # Rolling average
         smoothened = rolling_multiple_series(per_month, 'kind_id', 'month')
@@ -384,7 +384,7 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
 
         per_month = per_month.merge(recipes_per_month, on="month")
         per_month['month'] = pd.to_datetime(per_month['month'])
-        per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes'] * 100
+        per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes']
 
         # Rolling average
         smoothened = rolling_multiple_series(per_month, 'kind_id', 'month')
@@ -413,7 +413,7 @@ class CommonStylesAnalysis(RecipeLevelAnalysis):
         # Calculate percent
         recipes_per_style = RecipesCountAnalysis(RecipeScope()).per_style()
         df = df.merge(recipes_per_style, on="style_id")
-        df['recipes_percent'] = df['recipes'] / df['total_recipes'] * 100
+        df['recipes_percent'] = df['recipes'] / df['total_recipes']
 
         df = df.sort_values('recipes_percent', ascending=False)
         return self._return(df, num_top)

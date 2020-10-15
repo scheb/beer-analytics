@@ -33,7 +33,22 @@ class LinesChart:
         y_title: Optional[str] = None,
         legend_title: str = None,
     ) -> Figure:
-        fig = px.line(df, x=x_field, y=y_field, color=category_field, color_discrete_sequence=COLORS_DISTINCT)
+        # When the value is percent, format it with 2 decimals
+        if 'percent' in y_field:
+            hover_data = {y_field: ':.2p'}
+            tick_format = '.2p'
+        else:
+            hover_data = None
+            tick_format = None
+
+        fig = px.line(
+            df,
+            x=x_field,
+            y=y_field,
+            color=category_field,
+            color_discrete_sequence=COLORS_DISTINCT,
+            hover_data=hover_data
+        )
         fig.update_traces(line=dict(width=4), line_shape='spline')
 
         fig.update_xaxes(title_text=x_title)
@@ -49,6 +64,7 @@ class LinesChart:
                 fixedrange=True,
             ),
             yaxis=dict(
+                tickformat=tick_format,
                 fixedrange=True,
                 title=dict(
                     standoff=30,
@@ -88,6 +104,14 @@ class PreAggregatedBoxPlot:
         x_title: Optional[str] = None,
         y_title: Optional[str] = None,
     ) -> Figure:
+        # When the value is percent, format it with 2 decimals
+        if 'percent' in value_field:
+            hover_format = '.2p'
+            tick_format = '.2p'
+        else:
+            hover_format = None
+            tick_format = None
+
         fig = make_subplots()
         column = 0
         for trace_name in df[type_field].values.tolist():
@@ -118,6 +142,8 @@ class PreAggregatedBoxPlot:
             ),
             yaxis=dict(
                 fixedrange=True,
+                tickformat=tick_format,
+                hoverformat=hover_format,
                 title=dict(
                     standoff=30,
                 ),
@@ -140,6 +166,14 @@ class PreAggregatedPairsBoxPlot:
         x_title: Optional[str] = None,
         y_title: Optional[str] = None,
     ) -> Figure:
+        # When the value is percent, format it with 2 decimals
+        if 'percent' in value_field:
+            hover_format = '.2p'
+            tick_format = '.2p'
+        else:
+            hover_format = None
+            tick_format = None
+
         pairings = df[pair_field].unique()
         num_pairings = len(pairings)
 
@@ -175,17 +209,20 @@ class PreAggregatedPairsBoxPlot:
             title=None,
             showlegend=False,
             margin=dict(l=30, r=0, t=20, b=10),
+            yaxis=dict(
+                tickformat=tick_format,
+            ),
         )
 
         # When fixedrange=True is set, shared axis do no longer align, so we manually calculate the overall value range
         # and set it to all the axis so they match.
         y_range = (
-            max([0, math.floor((df[value_field]['lowerfence'].min() - 5) / 10) * 10]),
-            min([100, math.ceil((df[value_field]['upperfence'].max() + 5) / 10) * 10]),
+            max([0, math.floor((df[value_field]['lowerfence'].min()*100 - 5) / 10) * 10]) / 100,
+            min([100, math.ceil((df[value_field]['upperfence'].max()*100 + 5) / 10) * 10]) / 100,
         )
 
         fig.update_xaxes(title_text=x_title, fixedrange=True)
-        fig.update_yaxes(fixedrange=True, range=y_range, showticklabels=False)
+        fig.update_yaxes(fixedrange=True, range=y_range, showticklabels=False, hoverformat=hover_format)
         fig.update_yaxes(title_text=y_title, showticklabels=True, row=1, col=1)
 
         return fig
@@ -197,26 +234,29 @@ class RangeBoxPlot:
         df: DataFrame,
         value_field: str,
     ) -> Figure:
-        fig = make_subplots()
-        trace = go.Box(
-            x=[[1]],
-            lowerfence=[df.loc['lowerfence'][value_field]],
-            q1=[df.loc['q1'][value_field]],
-            median=[df.loc['median'][value_field]],
-            mean=[df.loc['mean'][value_field]],
-            q3=[df.loc['q3'][value_field]],
-            upperfence=[df.loc['upperfence'][value_field]],
-            boxpoints=False,
-            marker=dict(color=COLORS_PRISM[0]),
-        )
-        fig.add_trace(trace)
+        # When the value is percent, format it with 2 decimals
+        if 'percent' in value_field:
+            hover_format = '.3p'
+            tick_format = '.0%'
+        else:
+            hover_format = None
+            tick_format = None
 
+        fig = px.box(df, x=df[value_field], color_discrete_sequence=COLORS_PRISM)
+        fig.update_traces(
+            boxpoints=False,
+            boxmean=True,
+        )
+
+        fig.update_xaxes(title_text=None)
         fig.update_layout(
             plot_bgcolor='#f1efee',
             title=None,
             showlegend=False,
             margin=dict(l=0, r=0, t=0, b=0),
             xaxis=dict(
+                tickformat=tick_format,
+                hoverformat=hover_format,
                 fixedrange=True,
             ),
             yaxis=dict(
@@ -240,12 +280,21 @@ class BarChart:
         x_title: Optional[str] = None,
         y_title: Optional[str] = None,
     ) -> Figure:
+        # When the value is percent, format it with 2 decimals
+        if 'percent' in value_field:
+            hover_data = {value_field: ':.2p'}
+            tick_format = '.2p'
+        else:
+            hover_data = None
+            tick_format = None
+
         fig = px.bar(
             df,
             x=df[type_field],
             y=df[value_field],
             color=df[value_field],
-            color_continuous_scale=COLOR_SEQUENTIAL
+            color_continuous_scale=COLOR_SEQUENTIAL,
+            hover_data=hover_data,
         )
 
         margin = dict(l=30, r=0, t=20, b=10) if self.add_margin else dict(l=0, r=0, t=0, b=0)
@@ -262,6 +311,7 @@ class BarChart:
             ),
             yaxis=dict(
                 fixedrange=True,
+                tickformat=tick_format,
                 title=dict(
                     standoff=30,
                 ),
