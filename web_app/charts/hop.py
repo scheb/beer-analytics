@@ -96,7 +96,7 @@ class HopCommonStylesAbsoluteChart(HopChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = BarChart().plot(df, 'style_name', 'recipes', None, 'Total Number of Recipes')
+        figure = BarChart().plot(df, 'beer_style', 'recipes', None, 'Total Number of Recipes')
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -109,7 +109,7 @@ class HopCommonStylesRelativeChart(HopChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = BarChart().plot(df, 'style_name', 'recipes_percent', None, 'Used in % of the Style\'s Recipes')
+        figure = BarChart().plot(df, 'beer_style', 'recipes_percent', None, 'Used in % of the Style\'s Recipes')
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -122,7 +122,7 @@ class HopStyleAmountChart(HopChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregatedBoxPlot().plot(df, 'style_name', 'amount_percent', None, '% of Weight in Recipe')
+        figure = PreAggregatedBoxPlot().plot(df, 'beer_style', 'amount_percent', None, '% of Weight in Recipe')
         return Chart(figure, title=self.get_chart_title())
 
 

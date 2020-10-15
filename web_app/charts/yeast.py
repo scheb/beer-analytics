@@ -43,7 +43,7 @@ class YeastCommonStylesAbsoluteChart(YeastChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = BarChart().plot(df, 'style_name', 'recipes', None, 'Total Number of Recipes')
+        figure = BarChart().plot(df, 'beer_style', 'recipes', None, 'Total Number of Recipes')
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -56,7 +56,7 @@ class YeastCommonStylesRelativeChart(YeastChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = BarChart().plot(df, 'style_name', 'recipes_percent', None, 'Used in % of the Style\'s Recipes')
+        figure = BarChart().plot(df, 'beer_style', 'recipes_percent', None, 'Used in % of the Style\'s Recipes')
         return Chart(figure, title=self.get_chart_title())
 
 
