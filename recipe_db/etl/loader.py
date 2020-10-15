@@ -48,7 +48,7 @@ class RecipeLoader:
         if total_amount:
             for item in items:
                 if item.amount is not None:
-                    item.amount_percent = item.amount / total_amount * 100
+                    item.amount_percent = item.amount / total_amount
 
     def validate_and_fix_recipe(self, recipe: Recipe):
         self.unset_bad_data(recipe)
