@@ -735,6 +735,10 @@ class RecipeFermentable(models.Model):
         (ADJUNCT, "Adjunct"),
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._extras: List[Tuple[str, str]] = []
+
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     kind = models.ForeignKey(Fermentable, on_delete=models.SET_NULL, default=None, blank=True, null=True)
     kind_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
@@ -745,13 +749,18 @@ class RecipeFermentable(models.Model):
     color_lovibond = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     color_ebc = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     _yield = models.FloatField(default=None, blank=True, null=True, db_column='yield', validators=[GreaterThanValueValidator(0)])
-    notes = models.TextField(default=None, blank=True, null=True)
+
+    def set_extra(self, key: str, value: Optional[str]) -> None:
+        if value is not None:
+            self._extras.append((key, value))
 
     def save(self, *args, **kwargs) -> None:
         self.derive_missing_values('color_lovibond', 'color_ebc', lovibond_to_ebc)
         self.derive_missing_values('color_ebc', 'color_lovibond', ebc_to_lovibond)
-
         super().save(*args, **kwargs)
+
+        for extra in self._extras:
+            RecipeFermentableExtra(fermentable=self, key=extra[0], value=extra[1]).save()
 
     def derive_missing_values(self, from_field_name: str, to_field_name: str, calc_function: callable) -> None:
         if getattr(self, to_field_name) is None:
@@ -802,6 +811,13 @@ class RecipeFermentable(models.Model):
         return ppg * amount_lbs / gallons
 
 
+# Extra metadata that was parsed, but is not represented in the data model
+class RecipeFermentableExtra(models.Model):
+    fermentable = models.ForeignKey(RecipeFermentable, on_delete=models.CASCADE)
+    key = models.CharField(max_length=255, default=None, blank=True, null=True)
+    value = models.TextField(default=None, blank=True, null=True)
+
+
 class RecipeHop(models.Model):
     MASH = 'mash'
     FIRST_WORT = 'first_wort'
@@ -837,27 +853,30 @@ class RecipeHop(models.Model):
         (LEAF, 'Leaf'),
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._extras: List[Tuple[str, str]] = []
+
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     kind = models.ForeignKey(Hop, on_delete=models.SET_NULL, default=None, blank=True, null=True)
     kind_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
     form = models.CharField(max_length=16, choices=FORM_CHOICES, default=None, blank=True, null=True)
     type = models.CharField(max_length=16, choices=TYPE_CHOICES, default=None, blank=True, null=True)
+    alpha = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    beta = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     use = models.CharField(max_length=16, choices=USE_CHOICES, default=None, blank=True, null=True)
     amount = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     amount_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
     time = models.IntegerField(default=None, blank=True, null=True, validators=[MinValueValidator(0)])
 
-    alpha = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    beta = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    hsi = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    humulene = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    caryophyllene = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    cohumulone = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    myrcene = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    substitutes = models.CharField(max_length=255, default=None, blank=True, null=True)
-    used_for = models.CharField(max_length=255, default=None, blank=True, null=True)
-    aroma = models.CharField(max_length=255, default=None, blank=True, null=True)
-    notes = models.TextField(default=None, blank=True, null=True)
+    def set_extra(self, key: str, value: Optional[str]) -> None:
+        if value is not None:
+            self._extras.append((key, value))
+
+    def save(self, *args, **kwargs) -> None:
+        super().save(*args, **kwargs)
+        for extra in self._extras:
+            RecipeHopExtra(hop=self, key=extra[0], value=extra[1]).save()
 
     @classmethod
     def get_uses(cls) -> dict:
@@ -876,6 +895,13 @@ class RecipeHop(models.Model):
     def utilization_factor(self) -> float:
         """Account for better utilization from pellets vs. whole"""
         return 1.15 if self.form == self.PELLET else 1.0
+
+
+# Extra metadata that was parsed, but is not represented in the data model
+class RecipeHopExtra(models.Model):
+    hop = models.ForeignKey(RecipeHop, on_delete=models.CASCADE)
+    key = models.CharField(max_length=255, default=None, blank=True, null=True)
+    value = models.TextField(default=None, blank=True, null=True)
 
 
 class RecipeYeast(models.Model):
@@ -917,6 +943,10 @@ class RecipeYeast(models.Model):
         (VERY_HIGH, "Very High"),
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._extras: List[Tuple[str, str]] = []
+
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     kind = models.ForeignKey(Yeast, on_delete=models.SET_NULL, default=None, blank=True, null=True)
     kind_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
@@ -929,11 +959,15 @@ class RecipeYeast(models.Model):
     amount_is_weight: models.BooleanField(default=None, blank=True, null=True)
     min_attenuation = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     max_attenuation = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    min_temperature = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    max_temperature = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    flocculation = models.CharField(max_length=16, choices=FLOCCULATION_CHOICES, default=None, blank=True, null=True)
-    best_for = models.CharField(max_length=255, default=None, blank=True, null=True)
-    notes = models.TextField(default=None, blank=True, null=True)
+
+    def set_extra(self, key: str, value: Optional[str]) -> None:
+        if value is not None:
+            self._extras.append((key, str(value)))
+
+    def save(self, *args, **kwargs) -> None:
+        super().save(*args, **kwargs)
+        for extra in self._extras:
+            RecipeYeastExtra(yeast=self, key=extra[0], value=extra[1]).save()
 
     @property
     def attenuation(self) -> Optional[float]:
@@ -947,3 +981,10 @@ class RecipeYeast(models.Model):
             return np.mean(attenuations)
 
         return None
+
+
+# Extra metadata that was parsed, but is not represented in the data model
+class RecipeYeastExtra(models.Model):
+    yeast = models.ForeignKey(RecipeYeast, on_delete=models.CASCADE)
+    key = models.CharField(max_length=255, default=None, blank=True, null=True)
+    value = models.TextField(default=None, blank=True, null=True)

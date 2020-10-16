@@ -296,7 +296,9 @@ class BeerSmithParser(FormatParser):
             fermentable.origin_raw = clean_kind(bs_fermentable.string_or_none('origin'))
             fermentable.color_lovibond = bs_fermentable.float_or_none('color')
             fermentable._yield = bs_fermentable.float_or_none('yield')
-            fermentable.notes = bs_fermentable.string_or_none('notes')
+
+            # Extra values
+            fermentable.set_extra('notes', bs_fermentable.string_or_none('notes'))
 
             yield fermentable
 
@@ -321,27 +323,27 @@ class BeerSmithParser(FormatParser):
             hop.use = self.get_hop_use(bs_hop)
             hop.type = self.get_hop_type(bs_hop)
             hop.form = self.get_hop_form(bs_hop)
-
             hop.alpha = bs_hop.float_or_none('alpha')
             hop.beta = bs_hop.float_or_none('beta')
-            hop.hsi = bs_hop.float_or_none('hsi')
 
+            # Extra values
+            hop.set_extra('hsi', bs_hop.float_or_none('hsi'))
             notes = bs_hop.string_or_none('notes')
             if notes is not None:
                 sub_search = re.search('Subst\\w*:(.+)', notes, flags=re.IGNORECASE)
                 if sub_search:
-                    hop.substitutes = sub_search.group(1).strip()
+                    hop.set_extra('substitutes', sub_search.group(1).strip())
                 aroma_search = re.search('Aroma\\w*:(.+)', notes, flags=re.IGNORECASE)
                 if aroma_search:
-                    hop.aroma = aroma_search.group(1).strip()
+                    hop.set_extra('aroma', aroma_search.group(1).strip())
                 used_for_search = re.search('Used\\s*for\\w*:(.+)', notes, flags=re.IGNORECASE)
                 if used_for_search:
-                    hop.used_for = used_for_search.group(1).strip()
+                    hop.set_extra('used_for', used_for_search.group(1).strip())
                 descr_search = re.search('(.+)\n[\\w\\s]+:', notes, flags=re.IGNORECASE | re.MULTILINE)
                 if descr_search:
-                    hop.notes = descr_search.group(1).strip()
+                    hop.set_extra('notes', descr_search.group(1).strip())
                 else:
-                    hop.notes = notes
+                    hop.set_extra('notes', notes)
 
             # Add an extra attribute to pass the value around
             hop.ibu_contrib = bs_hop.float_or_none('ibu_contrib') or 0.0
@@ -390,16 +392,16 @@ class BeerSmithParser(FormatParser):
             yeast.type = self.get_yeast_type(bs_yeast)
             yeast.min_attenuation = bs_yeast.float_or_none('min_attenuation')
             yeast.max_attenuation = bs_yeast.float_or_none('max_attenuation')
-            yeast.flocculation = self.get_yeast_flocculation(bs_yeast)
-            yeast.best_for = bs_yeast.string_or_none('best_for')
 
+            # Extra values
             notes = bs_yeast.string_or_none('notes')
-            yeast.notes = None if notes is None else notes.strip()
-
             min_temp = bs_yeast.float_or_none('min_temp')
             max_temp = bs_yeast.float_or_none('max_temp')
-            yeast.min_temperature = None if min_temp is None else fahrenheit_to_celsius(min_temp)
-            yeast.max_temperature = None if max_temp is None else fahrenheit_to_celsius(max_temp)
+            yeast.set_extra('notes', None if notes is None else notes.strip())
+            yeast.set_extra('min_temperature', None if min_temp is None else fahrenheit_to_celsius(min_temp))
+            yeast.set_extra('max_temperature', None if max_temp is None else fahrenheit_to_celsius(max_temp))
+            yeast.set_extra('flocculation', self.get_yeast_flocculation(bs_yeast))
+            yeast.set_extra('best_for', bs_yeast.string_or_none('best_for'))
 
             yield yeast
 

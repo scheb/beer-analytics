@@ -218,15 +218,16 @@ class BeerXMLParser(FormatParser):
             hop.time = beerxml_hop.time
             hop.type = self.get_hop_type(beerxml_hop.type)
             hop.form = self.get_hop_form(beerxml_hop.form)
-
             hop.alpha = beerxml_hop.alpha
             hop.beta = beerxml_hop.beta
-            hop.hsi = beerxml_hop.hsi
-            hop.humulene = beerxml_hop.humulene
-            hop.caryophyllene = beerxml_hop.caryophyllene
-            hop.cohumulone = beerxml_hop.cohumulone
-            hop.myrcene = beerxml_hop.myrcene
-            hop.substitutes = clean_kind(beerxml_hop.substitutes)
+
+            # Extra values
+            hop.set_extra('hsi', beerxml_hop.hsi)
+            hop.set_extra('humulene', beerxml_hop.humulene)
+            hop.set_extra('caryophyllene', beerxml_hop.caryophyllene)
+            hop.set_extra('cohumulone', beerxml_hop.cohumulone)
+            hop.set_extra('myrcene', beerxml_hop.myrcene)
+            hop.set_extra('substitutes', clean_kind(beerxml_hop.substitutes))
 
             yield hop
 
@@ -287,9 +288,11 @@ class BeerXMLParser(FormatParser):
             yeast.amount_is_weight = beerxml_yeast.amount_is_weight
             yeast.min_attenuation = beerxml_yeast.attenuation
             yeast.max_attenuation = beerxml_yeast.attenuation
-            yeast.min_temperature = beerxml_yeast.min_temperature
-            yeast.max_temperature = beerxml_yeast.max_temperature
-            yeast.flocculation = self.get_yeast_flocculation(beerxml_yeast.flocculation)
+
+            # Extra values
+            yeast.set_extra('min_temperature', beerxml_yeast.min_temperature)
+            yeast.set_extra('max_temperature', beerxml_yeast.max_temperature)
+            yeast.set_extra('flocculation', self.get_yeast_flocculation(beerxml_yeast.flocculation))
 
             yield yeast
 
