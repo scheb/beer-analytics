@@ -49,7 +49,11 @@ class LinesChart:
             color_discrete_sequence=COLORS_DISTINCT,
             hover_data=hover_data
         )
-        fig.update_traces(line=dict(width=4), line_shape='spline')
+        try:
+            fig.update_traces(line=dict(width=4), line_shape='spline')
+        except ValueError:
+            # Spline rendering is sometimes causing issues when there's too much data
+            fig.update_traces(line=dict(width=4))
 
         fig.update_xaxes(title_text=x_title)
         fig.update_yaxes(title_text=y_title)
