@@ -36,7 +36,15 @@ class StyleCriteriaMixin:
         self._styles = styles
 
     def get_style_ids(self) -> List[str]:
-        return list(map(lambda s: s.id if isinstance(s, Style) else s, self.styles))
+        ids = set()
+        for style in self._styles:
+            # Categories cannot be filtered directly, instead use the contained styles
+            if style.is_category:
+                sub_styles = list(style.style_set.all())
+                ids.update(list(map(lambda s: s.id, sub_styles)))
+            else:
+                ids.add(style.id)
+        return list(ids)
 
     def get_style_filter(self) -> Tuple[str, list]:
         return in_filter('ras.style_id', self.get_style_ids())

@@ -127,7 +127,6 @@ class FermentableAmountAnalysis(RecipeLevelAnalysis):
                 ON r.uid = rf.recipe_id
             JOIN recipe_db_recipe_associated_styles ras
                 ON r.uid = ras.recipe_id
-                    AND length(ras.style_id) > 2  -- Quick & dirty to remove top-level categories
             WHERE 1
                 {}
                 {}

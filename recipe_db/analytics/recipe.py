@@ -427,7 +427,6 @@ class CommonStylesAnalysis(RecipeLevelAnalysis):
             FROM recipe_db_recipe AS r
             JOIN recipe_db_recipe_associated_styles AS ras
                 ON r.uid = ras.recipe_id
-                    AND length(ras.style_id) > 2  -- Quick & dirty to remove top-level categories
             WHERE
                 1 {}
             GROUP BY ras.style_id
