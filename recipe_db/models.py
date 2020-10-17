@@ -327,7 +327,7 @@ class Fermentable(models.Model):
         if self.recipes_color_ebc_mean < 70:
             return 'dark'
         if self.recipes_color_ebc_mean < 100:
-            return 'very dark'
+            return 'black'
 
     @property
     def is_popular(self) -> bool:

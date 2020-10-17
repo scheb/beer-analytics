@@ -230,8 +230,7 @@ class FermentableMeta(PageMeta):
         )
         if self.fermentable.color_level is not None:
             color_name = self.fermentable.color_level
-            text += " with {} <strong>{} color</strong>".format(
-                article(color_name),
+            text += " with <strong>{} color</strong>".format(
                 escape(color_name)
             )
         text += "."
