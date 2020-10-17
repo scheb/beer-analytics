@@ -297,13 +297,13 @@ class YeastMeta(PageMeta):
 
     def get_title(self) -> str:
         yeast_name = self.get_yeast_full_name()
-        return DETAIL_PAGE_TITLE.format(yeast_name, self.yeast.type_name+" Yeasts")
+        return DETAIL_PAGE_TITLE.format(yeast_name, (self.yeast.type_name or '')+" Yeast")
 
     def get_description(self) -> str:
         return 'Data analysis how "{}" {} {} yeast is used in beer brewing recipes. '.format(
             self.get_yeast_full_name(),
-            self.yeast.form_name.lower(),
-            self.yeast.type_name.lower(),
+            (self.yeast.form_name or '').lower(),
+            (self.yeast.type_name or '').lower(),
         )
 
     def get_description_html(self) -> str:
@@ -313,8 +313,8 @@ class YeastMeta(PageMeta):
             name_incl_id += " ({})".format(self.yeast.product_id)
         product_name = em(escape(name_incl_id))
         lab_name = em(escape(self.yeast.lab))
-        form_name = escape(self.yeast.form_name.lower())
-        type_name = escape(self.yeast.type_name.lower())
+        form_name = escape((self.yeast.form_name or '').lower())
+        type_name = escape((self.yeast.type_name or '').lower())
         text = "{} is a <strong>{} {} yeast</strong> produced by {}".format(
             product_name,
             form_name,

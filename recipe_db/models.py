@@ -602,7 +602,7 @@ class Yeast(models.Model):
 
     @property
     def form_name(self):
-        if self.flocculation is None:
+        if self.form is None:
             return None
         return dict(self.FORM_CHOICES)[self.form]
 
