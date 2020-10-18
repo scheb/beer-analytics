@@ -339,8 +339,9 @@ class YeastMeta(PageMeta):
             fermentation.append(" has a <strong>{} alcohol tolerance</strong>".format(
                 self.yeast.tolerance_name.lower())
             )
+        if len(fermentation) > 0:
+            text += " It " + (comma_and(fermentation)) + "."
 
-        text += " It " + (comma_and(fermentation)) + "."
         return text
 
     def get_meta(self) -> Meta:
