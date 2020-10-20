@@ -3,14 +3,20 @@
 
 {% block content %}
     <h1 class="home">Welcome to Beer Analytics</h1>
-    <h2 class="home">The analytical beer recipe database</h2>
+    <p><strong>The analytical beer recipe database</strong></p>
 
-    <p class="mb-5">
-        Explore how certain <strong><a href="{% url "style_overview" %}">beer styles</a> are typically composed</strong>
-        and <strong>discover trends in home/craft beer brewing</strong>.
-        Or just browse the index of <a href="{% url "fermentable_overview" %}">fermentables</a>,
+    <p>
+        <em>Beer Analytics</em> is a <strong>database of beer brewing recipes</strong>, built specifically for data
+        analysis. It is made for beer enthusiasts and (home)brewers to provide detailed insights how brewing recipes are
+        composed, even when you're not an expert in data analysis. Currently, the database contains
+        <strong>{{ recipes }} recipes</strong>, mostly from the homebrewing community.
+    </p>
+
+    <p>
+        Start exploring how certain <a href="{% url "style_overview" %}">beer styles</a> are typically composed or just
+        browse the index of <a href="{% url "fermentable_overview" %}">fermentables</a>,
         <a href="{% url "fermentable_category" "grain" %}">malts</a>, <a href="{% url "hop_overview" %}">hops</a> and
-        <a href="{% url "yeast_overview" %}">yeasts</a>.
+        <a href="{% url "yeast_overview" %}">yeasts</a> to learn how they're used.
     </p>
 
     {% include "updates.html" %}
