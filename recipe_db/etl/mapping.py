@@ -630,9 +630,26 @@ class StylesProcessor(TransactionalProcessor):
         recipes = Recipe.objects.all()
         self.map_list(recipes)
 
-    def save_match(self, item: Recipe, match: Style):
-        item.style = match
+    def save_match(self, item: Recipe, style: Style):
+        if not self.is_within_limits('abv', item, style):
+            style = None
+        elif not self.is_within_limits('ibu', item, style):
+            style = None
+        elif not self.is_within_limits('srm', item, style):
+            style = None
+
+        item.style = style
         item.save()
+
+    def is_within_limits(self, property: str, recipe: Recipe, style: Style):
+        min = getattr(style, property+"_min")
+        max = getattr(style, property+"_max")
+        value = getattr(recipe, property)
+
+        if value is None or min is None or max is None:
+            return True
+
+        return (min * 0.9) <= value <= (max * 1.1)
 
 
 class YeastsProcessor(TransactionalProcessor):
