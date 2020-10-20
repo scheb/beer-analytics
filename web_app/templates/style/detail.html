@@ -25,7 +25,7 @@
 {% block content %}
     {% include './breadcrumb.html' %}
     <div class="detail-head">
-        <h1>{{ style.name }} <small class="text-muted ml-2" title="BJCP ID">{{ style.id }}</small></h1>
+        <h1>{{ style.name }}{% if style.id|length <= 3 %} <small class="text-muted ml-2" title="BJCP ID">{{ style.id }}</small>{% endif %}</h1>
 
         <dl class="detail-info">
             <dt>Recipes:</dt>
