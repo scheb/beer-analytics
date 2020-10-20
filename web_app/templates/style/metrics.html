@@ -18,7 +18,7 @@
                         {% endif %}
                         {% if style.recipes_abv_min %}
                             <p>
-                                <small class="text-muted">Actual</small><br/>
+                                <small class="text-muted">In Database</small><br/>
                                 {{ style.recipes_abv_min|floatformat:1 }} &lt; <strong>{{ style.recipes_abv_mean|floatformat:1 }}</strong> &lt; {{ style.recipes_abv_max|floatformat:1 }}  <small class="text-muted">%</small>
                             </p>
                         {% endif %}
@@ -45,7 +45,7 @@
                         {% endif %}
                         {% if style.recipes_ibu_min %}
                             <p>
-                                <small class="text-muted">Actual</small><br/>
+                                <small class="text-muted">In Database</small><br/>
                                 {{ style.recipes_ibu_min|floatformat:0 }} &lt; <strong>{{ style.recipes_ibu_mean|floatformat:0 }}</strong> &lt; {{ style.recipes_ibu_max|floatformat:0 }} <small class="text-muted" title="International Bitterness Unit">IBU</small>
                             </p>
                         {% endif %}
@@ -73,7 +73,7 @@
                         {% endif %}
                         {% if style.recipes_ebc_min %}
                             <p>
-                                <small class="text-muted">Actual</small><br/>
+                                <small class="text-muted">In Database</small><br/>
                                 {{ style.recipes_ebc_min|floatformat:0 }} &lt; <strong>{{ style.recipes_ebc_mean|floatformat:0 }}</strong> &lt; {{ style.recipes_ebc_max|floatformat:0 }} <small class="text-muted" title="European Brewery Convention">EBC</small><br/>
                                 {{ style.recipes_srm_min|floatformat:0 }} &lt; <strong>{{ style.recipes_srm_mean|floatformat:0 }}</strong> &lt; {{ style.recipes_srm_max|floatformat:0 }} <small class="text-muted" title="Standard Reference Method (Lovibond)">SRM</small>
                             </p>
@@ -102,7 +102,7 @@
                         {% endif %}
                         {% if style.recipes_ebc_min %}
                             <p class="mb-0">
-                                <small class="text-muted">Actual</small><br/>
+                                <small class="text-muted">In Database</small><br/>
                                 {{ style.recipes_original_plato_min|floatformat:1 }} &lt; <strong>{{ style.recipes_original_plato_mean|floatformat:1 }}</strong> &lt; {{ style.recipes_original_plato_max|floatformat:1 }} <small class="text-muted" title="Degrees Plato">°P</small><br/>
                                 {{ style.recipes_og_min|floatformat:3 }} &lt; <strong>{{ style.recipes_og_mean|floatformat:3 }}</strong> &lt; {{ style.recipes_og_max|floatformat:3 }} <small class="text-muted" title="Original Gravity">OG</small>
                             </p>
@@ -131,7 +131,7 @@
                         {% endif %}
                         {% if style.recipes_ebc_min %}
                             <p class="mb-0">
-                                <small class="text-muted">Actual</small><br/>
+                                <small class="text-muted">In Database</small><br/>
                                 {{ style.recipes_final_plato_min|floatformat:1 }} &lt; <strong>{{ style.recipes_final_plato_mean|floatformat:1 }}</strong> &lt; {{ style.recipes_final_plato_max|floatformat:1 }} <small class="text-muted" title="Degrees Plato">°P</small><br/>
                                 {{ style.recipes_fg_min|floatformat:3 }} &lt; <strong>{{ style.recipes_fg_mean|floatformat:3 }}</strong> &lt; {{ style.recipes_fg_max|floatformat:3 }} <small class="text-muted" title="Final Gravity">FG</small>
                             </p>
