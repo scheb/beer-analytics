@@ -1,12 +1,14 @@
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
+from django.views.decorators.cache import cache_page
 
+from recipe_db.analytics.spotlight.style import StyleAnalysis
 from recipe_db.models import Style
 from web_app.charts.style import StyleChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.meta import StyleOverviewMeta, StyleMeta
-from web_app.views.utils import render_chart, FORMAT_PNG
+from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list
 
 
 def overview(request: HttpRequest) -> HttpResponse:
@@ -71,6 +73,19 @@ def chart(request: HttpRequest, slug: str, category_slug: str, chart_type: str, 
         return redirect('style_chart', category_slug=style.category.slug, slug=style.slug, chart_type=chart_type, format=format)
 
     return display_chart(request, style, chart_type, format)
+
+
+@cache_page(0)
+def recipes(request: HttpRequest, slug: str, category_slug: str) -> HttpResponse:
+    style = get_object_or_404(Style, slug=slug)
+
+    if style.is_category:
+        return redirect('style_category_recipes', category_slug=style.category.slug)
+    if category_slug != style.category.slug:
+        return redirect('style_recipes', category_slug=style.category.slug, slug=style.slug)
+
+    recipes_list = StyleAnalysis(style).random_recipes(24)
+    return render_recipes_list(recipes_list)
 
 
 def display_chart(request: HttpRequest, style: Style, chart_type: str, format: str) -> HttpResponse:

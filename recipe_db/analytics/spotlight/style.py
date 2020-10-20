@@ -1,13 +1,13 @@
-from typing import Optional
+from typing import Optional, Iterable
 
 from pandas import DataFrame
 
 from recipe_db.analytics.fermentable import FermentableAmountAnalysis
 from recipe_db.analytics.hop import HopPairingAnalysis, HopAmountAnalysis
 from recipe_db.analytics.recipe import RecipesCountAnalysis, RecipesPopularityAnalysis, RecipesMetricHistogram, \
-    RecipesTrendAnalysis
+    RecipesTrendAnalysis, RecipesListAnalysis
 from recipe_db.analytics.scope import RecipeScope, StyleProjection, HopProjection, FermentableProjection
-from recipe_db.models import Style, RecipeHop, Fermentable
+from recipe_db.models import Style, RecipeHop, Fermentable, Recipe
 
 
 class StyleAnalysis:
@@ -102,3 +102,7 @@ class StyleAnalysis:
             (projection.categories, projection.types) = self.FERMENTABLE_FILTER_TO_TYPES[type_filter]
         analysis = FermentableAmountAnalysis(self.recipe_scope)
         return analysis.per_fermentable(projection, num_top=8)
+
+    def random_recipes(self, num_recipes: int) -> Iterable[Recipe]:
+        analysis = RecipesListAnalysis(self.recipe_scope)
+        return analysis.random(num_recipes)

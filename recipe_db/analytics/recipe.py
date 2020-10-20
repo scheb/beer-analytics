@@ -1,6 +1,6 @@
 import math
 from abc import ABC
-from typing import Optional
+from typing import Optional, Iterable
 
 import pandas as pd
 from django.db import connection
@@ -11,11 +11,31 @@ from recipe_db.analytics.scope import RecipeScope, StyleProjection, YeastProject
     FermentableProjection
 from recipe_db.analytics.utils import remove_outliers, get_style_names_dict, filter_trending, get_hop_names_dict, \
     get_yeast_names_dict, get_fermentable_names_dict, rolling_multiple_series
+from recipe_db.models import Recipe
 
 
 class RecipeLevelAnalysis(ABC):
     def __init__(self, scope: RecipeScope) -> None:
         self.scope = scope
+
+
+class RecipesListAnalysis(RecipeLevelAnalysis):
+    def random(self, num_recipes: int) -> Iterable[Recipe]:
+        scope_filter = self.scope.get_filter()
+        query = '''
+                SELECT r.uid AS recipe_id
+                FROM recipe_db_recipe AS r
+                WHERE r.name IS NOT NULL {}
+                ORDER BY random()
+                LIMIT %s
+            '''.format(scope_filter.where)
+
+        df = pd.read_sql(query, connection, params=scope_filter.parameters + [num_recipes])
+        recipe_ids = df['recipe_id'].values.tolist()
+        if len(recipe_ids) == 0:
+            return []
+
+        return Recipe.objects.filter(uid__in=recipe_ids).order_by('name')
 
 
 class RecipesCountAnalysis(RecipeLevelAnalysis):

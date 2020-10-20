@@ -1,9 +1,12 @@
+from typing import Iterable
+
 from pandas import DataFrame
 
 from recipe_db.analytics.hop import HopPairingAnalysis, HopAmountAnalysis, HopAmountRangeAnalysis, HopMetricHistogram
-from recipe_db.analytics.recipe import RecipesPopularityAnalysis, CommonStylesAnalysis, RecipesTrendAnalysis
+from recipe_db.analytics.recipe import RecipesPopularityAnalysis, CommonStylesAnalysis, RecipesTrendAnalysis, \
+    RecipesListAnalysis
 from recipe_db.analytics.scope import RecipeScope, HopProjection, HopScope
-from recipe_db.models import Hop
+from recipe_db.models import Hop, Recipe
 
 
 class HopAnalysis:
@@ -61,3 +64,7 @@ class HopAnalysis:
     def trending_yeasts(self) -> DataFrame:
         analysis = RecipesTrendAnalysis(self.recipe_scope)
         return analysis.trending_yeasts()
+
+    def random_recipes(self, num_recipes: int) -> Iterable[Recipe]:
+        analysis = RecipesListAnalysis(self.recipe_scope)
+        return analysis.random(num_recipes)

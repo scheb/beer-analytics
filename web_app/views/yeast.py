@@ -3,12 +3,14 @@ from typing import Tuple
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
+from django.views.decorators.cache import cache_page
 
+from recipe_db.analytics.spotlight.yeast import YeastAnalysis
 from recipe_db.models import Yeast
 from web_app.charts.utils import NoDataException
 from web_app.charts.yeast import YeastChartFactory
 from web_app.meta import YeastMeta, YeastOverviewMeta
-from web_app.views.utils import render_chart, FORMAT_PNG
+from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list
 
 
 def overview(request: HttpRequest) -> HttpResponse:
@@ -93,6 +95,20 @@ def chart(request: HttpRequest, slug: str, type_id: str, chart_type: str, format
         raise Http404('Unknown chart type %s.' % chart_type)
 
     return render_chart(chart, format)
+
+
+@cache_page(0)
+def recipes(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
+    yeast = get_object_or_404(Yeast, pk=slug)
+
+    if yeast.recipes_count <= 0:
+        raise Http404("Yeast doesn't have any data.")
+
+    if type_id != yeast.type:
+        return redirect('yeast_recipes', type_id=yeast.type, slug=yeast.id)
+
+    recipes_list = YeastAnalysis(yeast).random_recipes(24)
+    return render_recipes_list(recipes_list)
 
 
 def group_by_type(yeasts: iter) -> list:

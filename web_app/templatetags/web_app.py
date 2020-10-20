@@ -123,6 +123,44 @@ def chart_url(item: object, chart_type: str, format: str):
     return None
 
 
+@register.filter('recipes')
+def recipes(item: object):
+    return recipes_url(item)
+
+
+def recipes_url(item: object):
+    if isinstance(item, Style):
+        if item.is_category:
+            return reverse('style_category_recipes', kwargs={
+                'category_slug': item.category.slug,
+            })
+        else:
+            return reverse('style_recipes', kwargs={
+                'category_slug': item.category.slug,
+                'slug': item.slug,
+            })
+
+    if isinstance(item, Hop):
+        return reverse('hop_recipes', kwargs={
+            'category_id': item.use,
+            'slug': item.id,
+        })
+
+    if isinstance(item, Fermentable):
+        return reverse('fermentable_recipes', kwargs={
+            'category_id': item.category,
+            'slug': item.id,
+        })
+
+    if isinstance(item, Yeast):
+        return reverse('yeast_recipes', kwargs={
+            'type_id': item.type,
+            'slug': item.id,
+        })
+
+    return None
+
+
 @register.filter('priority')
 def priority(item: object):
     if isinstance(item, Style):
