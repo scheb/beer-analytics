@@ -1,10 +1,12 @@
+from typing import Iterable
+
 from pandas import DataFrame
 
 from recipe_db.analytics.fermentable import FermentableAmountAnalysis, FermentableAmountRangeAnalysis, \
     FermentableMetricHistogram
-from recipe_db.analytics.recipe import RecipesPopularityAnalysis, CommonStylesAnalysis
+from recipe_db.analytics.recipe import RecipesPopularityAnalysis, CommonStylesAnalysis, RecipesListAnalysis
 from recipe_db.analytics.scope import FermentableScope, RecipeScope, FermentableProjection
-from recipe_db.models import Fermentable
+from recipe_db.models import Fermentable, Recipe
 
 
 class FermentableAnalysis:
@@ -43,3 +45,7 @@ class FermentableAnalysis:
     def common_styles_relative(self) -> DataFrame:
         analysis = CommonStylesAnalysis(self.recipe_scope)
         return analysis.common_styles_relative(num_top=20)
+
+    def random_recipes(self, num_recipes: int) -> Iterable[Recipe]:
+        analysis = RecipesListAnalysis(self.recipe_scope)
+        return analysis.random(num_recipes)

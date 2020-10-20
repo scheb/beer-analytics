@@ -18,6 +18,8 @@
 
         <li class="mt-3"><a href="#most-used-fermentables">Most Used Fermentables</a></li>
         <li><a href="#most-used-fermentables-amount">Typical Amount of Fermentables</a></li>
+
+        <li class="mt-3"><a href="#recipes">Random Recipes</a></li>
     </ul>
 </nav>
 {% endblock %}
@@ -245,8 +247,16 @@
         </section>
     {% endwith %}
 
-    {# Added this to fix scroll position flipping around when changing tabs on the last chart #}
-    <div style="height: 1px;"></div>
+    {% with anchor="recipes" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Random Recipes</h2>
+            </div>
+            <div class="card-body">
+                <div id="recipes-list" class="chart-s"></div>
+            </div>
+        </section>
+    {% endwith %}
 {% endblock %}
 
 {% block script %}
@@ -270,6 +280,9 @@ window.addEventListener('load', function ()
     display_graph('chart-hop-pairings', '{{ style|chart_js:"hop-pairings" }}');
     display_graph_with_navigation('chart-popular-fermentables', 'chart-popular-fermentables-tabs', '{{ style|chart_js:"popular-fermentables" }}');
     display_graph_with_navigation('chart-popular-fermentables-amount', 'chart-popular-fermentables-amount-tabs', '{{ style|chart_js:"popular-fermentables-amount" }}');
+
+    // Random recipes
+    display_recipes('recipes-list', '{{ style|recipes }}');
 });
 </script>
 {% endblock %}

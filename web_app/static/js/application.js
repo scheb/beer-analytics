@@ -122,7 +122,6 @@ function DetailList(element) {
 
 DetailList.prototype.update_first_elements = function() {
     var parent_left = this.element.offsetLeft
-    console.log("Parent: "+parent_left)
     var previous_top = null
     this.element.querySelectorAll("dt").forEach(function (dt_element) {
         var first_in_line = (null === previous_top || dt_element.offsetTop > previous_top)
@@ -134,6 +133,49 @@ DetailList.prototype.update_first_elements = function() {
             dt_element.classList.add('first-in-line')
         }
     })
+}
+
+function escape_html(str) {
+    var map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return str.replace(/[&<>"']/g, function (m) {return map[m];});
+}
+
+function display_recipes(container_id, chart_url) {
+    var container = document.getElementById(container_id)
+    container.classList.add('chart-loading')
+    container.innerHTML = '<span></span>'
+    var url = chart_url
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            container.classList.remove('chart-loading')
+            if (xhr.status === 204) {
+                container.classList.add('chart-no-data')
+                container.innerHTML = '<p>No result</p>'
+            } else if (xhr.status === 200) {
+                container.innerHTML = ''
+                var content = ''
+                var data = JSON.parse(xhr.responseText);
+                data.forEach(function (item) {
+                    content += '<li><a href="'+escape_html(item.url)+'">'+escape_html(item.name)+'</a>'+(item.author !== null ? ' by '+escape_html(item.author) : '')+'</li>'
+                });
+                container.innerHTML = '<ul class="column-list-wide">'+content+'</ul>'
+            } else {
+                container.classList.add('chart-no-data')
+                container.innerHTML = '<p>Failed loading data</p>'
+            }
+        }
+    }
+
+    this.current_request = xhr
+    xhr.send();
 }
 
 document.addEventListener("DOMContentLoaded", function() {

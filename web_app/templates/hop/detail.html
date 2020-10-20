@@ -17,6 +17,8 @@
 
         <li class="mt-3"><a href="#most-used-yeasts">Most Used Yeasts</a></li>
         <li><a href="#trending-yeasts">Trending Yeasts</a></li>
+
+        <li class="mt-3"><a href="#recipes">Random Recipes</a></li>
     </ul>
 </nav>
 {% endblock %}
@@ -191,6 +193,17 @@
             </div>
         </section>
     {% endwith %}
+
+    {% with anchor="recipes" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Random Recipes</h2>
+            </div>
+            <div class="card-body">
+                <div id="recipes-list" class="chart-s"></div>
+            </div>
+        </section>
+    {% endwith %}
 {% endblock %}
 
 {% block script %}
@@ -212,6 +225,9 @@ window.addEventListener('load', function ()
     display_graph('chart-hop-pairings', '{{ hop|chart_js:"hop-pairings" }}');
     display_graph('chart-popular-yeasts', '{{ hop|chart_js:"popular-yeasts" }}');
     display_graph('chart-trending-yeasts', '{{ hop|chart_js:"trending-yeasts" }}');
+
+    // Random recipes
+    display_recipes('recipes-list', '{{ hop|recipes }}');
 });
 </script>
 {% endblock %}

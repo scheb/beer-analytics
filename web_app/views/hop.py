@@ -1,12 +1,14 @@
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
+from django.views.decorators.cache import cache_page
 
+from recipe_db.analytics.spotlight.hop import HopAnalysis
 from recipe_db.models import Hop, Tag
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.meta import HopMeta, HopOverviewMeta
-from web_app.views.utils import render_chart, FORMAT_PNG
+from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list
 
 
 def overview(request: HttpRequest) -> HttpResponse:
@@ -106,3 +108,17 @@ def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, fo
         raise Http404('Unknown chart type %s.' % chart_type)
 
     return render_chart(chart, format)
+
+
+@cache_page(0)
+def recipes(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
+    hop = get_object_or_404(Hop, pk=slug)
+
+    if hop.recipes_count <= 0:
+        raise Http404("Hop doesn't have any data.")
+
+    if category_id != hop.category:
+        return redirect('hop_recipes', category_id=hop.category, slug=hop.id)
+
+    recipes_list = HopAnalysis(hop).random_recipes(24)
+    return render_recipes_list(recipes_list)

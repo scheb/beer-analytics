@@ -1,4 +1,6 @@
+import json
 import platform
+from json import JSONDecodeError
 from pathlib import Path
 
 from environ import Env
@@ -148,3 +150,4 @@ META_USE_TITLE_TAG = True
 META_DEFAULT_IMAGE = 'img/og.png'
 
 RAW_DATA_DIR = env.str('RAW_DATA_DIR')
+SOURCE_URL_PATTERNS = json.loads(env.str('SOURCE_URL_PATTERNS'))

@@ -3,12 +3,14 @@ from typing import Tuple
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
+from django.views.decorators.cache import cache_page
 
+from recipe_db.analytics.spotlight.fermentable import FermentableAnalysis
 from recipe_db.models import Fermentable
 from web_app.charts.fermentable import FermentableChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.meta import FermentableMeta, FermentableOverviewMeta
-from web_app.views.utils import render_chart, FORMAT_PNG
+from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list
 
 
 def overview(request: HttpRequest) -> HttpResponse:
@@ -100,6 +102,20 @@ def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, fo
         raise Http404('Unknown chart type %s.' % chart_type)
 
     return render_chart(chart, format)
+
+
+@cache_page(0)
+def recipes(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
+    fermentable = get_object_or_404(Fermentable, pk=slug)
+
+    if fermentable.recipes_count <= 0:
+        raise Http404("Fermentable doesn't have any data.")
+
+    if category_id != fermentable.category:
+        return redirect('fermentable_recipes', category_id=fermentable.category, slug=fermentable.id)
+
+    recipes_list = FermentableAnalysis(fermentable).random_recipes(24)
+    return render_recipes_list(recipes_list)
 
 
 def group_by_category(fermentables: iter) -> list:

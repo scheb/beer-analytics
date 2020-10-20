@@ -10,6 +10,7 @@
         <li class="mt-3"><a href="#styles-percent-recipes">Typical Styles (Percent)</a></li>
         <li><a href="#styles-number-recipes">Typical Styles (Recipes)</a></li>
         <li><a href="#style-amount">Amount per Style</a></li>
+        <li class="mt-3"><a href="#recipes">Random Recipes</a></li>
     </ul>
 </nav>
 {% endblock %}
@@ -108,6 +109,17 @@
             </div>
         </section>
     {% endwith %}
+
+    {% with anchor="recipes" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Random Recipes</h2>
+            </div>
+            <div class="card-body">
+                <div id="recipes-list" class="chart-s"></div>
+            </div>
+        </section>
+    {% endwith %}
 {% endblock %}
 
 {% block script %}
@@ -123,6 +135,9 @@ window.addEventListener('load', function ()
     display_graph('chart-typical-styles-relative', '{{ fermentable|chart_js:"typical-styles-relative" }}');
     display_graph('chart-typical-styles-absolute', '{{ fermentable|chart_js:"typical-styles-absolute" }}');
     display_graph('chart-amount-used-per-style', '{{ fermentable|chart_js:"amount-used-per-style" }}');
+
+    // Random recipes
+    display_recipes('recipes-list', '{{ fermentable|recipes }}');
 });
 </script>
 {% endblock %}
