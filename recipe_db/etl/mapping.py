@@ -646,10 +646,19 @@ class StylesProcessor(TransactionalProcessor):
         max = getattr(style, property+"_max")
         value = getattr(recipe, property)
 
-        if value is None or min is None or max is None:
+        if property == 'srm' and max is not None and max >= 40:
+            max = None
+
+        if value is None:
             return True
 
-        return (min * 0.9) <= value <= (max * 1.1)
+        if min is not None and value < (min * 0.9):
+            return False
+
+        if max is not None and value > (max * 1.1):
+            return False
+
+        return True
 
 
 class YeastsProcessor(TransactionalProcessor):
