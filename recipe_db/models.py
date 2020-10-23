@@ -668,7 +668,7 @@ class Recipe(models.Model):
     abv = models.FloatField(default=None, blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
     ebc = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     srm = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    ibu = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    ibu = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(5000)])
 
     # Mashing
     mash_water = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
