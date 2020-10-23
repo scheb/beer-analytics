@@ -12,7 +12,7 @@ class MmumParser(FormatParser):
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 data = f.read()
-                json_data = JsonParser(data)
+                json_data = JsonParser.from_string(data)
         except JSONDecodeError:
             raise MalformedDataError("Cannot decode JSON")
 

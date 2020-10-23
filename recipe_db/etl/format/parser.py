@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import abc
 import json
 import re
@@ -25,20 +27,39 @@ class FormatParser:
 
 
 class JsonParser:
-    def __init__(self, json_string) -> None:
-        self.json_data = json.loads(json_string)
+    def __init__(self, json_data: dict) -> None:
+        self.json_data = json_data
 
-    def get(self, field_name):
+    @classmethod
+    def from_string(cls, json_string: str) -> JsonParser:
+        return JsonParser(json.loads(json_string))
+
+    def has(self, field_name: str) -> bool:
+        return field_name in self.json_data
+
+    def get(self, field_name: str):
         return self.json_data.get(field_name)
 
-    def int_or_none(self, field_name):
+    def int_or_none(self, field_name: str) -> Optional[int]:
         return int_or_none(self.get(field_name))
 
-    def float_or_none(self, field_name):
+    def float_or_none(self, field_name: str) -> Optional[float]:
         return float_or_none(self.get(field_name))
 
-    def string_or_none(self, field_name):
+    def string_or_none(self, field_name: str) -> Optional[str]:
         return string_or_none(self.get(field_name))
+
+    def get_structure(self, field_name: str) -> JsonParser:
+        data = self.json_data.get(field_name)
+        if isinstance(data, dict):
+            return JsonParser(self.json_data.get(field_name))
+        return JsonParser({})
+
+    def get_list(self, field_name) -> iter:
+        data = self.json_data.get(field_name)
+        if isinstance(data, list):
+            for list_item in data:
+                yield JsonParser(list_item)
 
 
 def int_or_none(value):

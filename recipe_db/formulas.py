@@ -85,7 +85,7 @@ def abv_to_to_final_plato(abv: float, original_plato: float):
 
 def fluid_ounces_to_liters(oz: float) -> float:
     """
-    Calculate fluid ounces to gallons
+    Calculate fluid ounces to liters
     """
     return oz / 33.814
 
@@ -101,12 +101,24 @@ def kg_to_lbs(kg: float) -> float:
     return kg * 2.20462
 
 
+def lbs_to_kg(lbs: float) -> float:
+    return lbs / 2.20462
+
+
 def yield_to_ppg(_yield: float) -> float:
     return _yield * 0.46214
 
 
+def ppg_to_yield(ppg: float) -> float:
+    return ppg / 0.46214
+
+
 def liters_to_gallons(liters: float) -> float:
     return liters * 0.264172
+
+
+def gallons_to_liters(liters: float) -> float:
+    return liters / 0.264172
 
 
 def fahrenheit_to_celsius(fahrenheit: float) -> float:
