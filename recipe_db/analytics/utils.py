@@ -115,30 +115,32 @@ def set_series_start(
     if start_timestamp is None:
         return df
 
-    # Filter
-    filtered = time_indexed[time_indexed.index >= start_timestamp]
-    filtered = filtered[filtered[value_column].notnull()]
+class RollingAverage:
+    TIME_UNIT_MONTH = 'month'
+    TIME_UNIT_DAY = 'day'
 
-    return filtered.reset_index()
+    def __init__(self, window: int = 7, time_unit: str = TIME_UNIT_MONTH) -> None:
+        self.window = window
+        self.min_data_points = math.floor(window / 2)
+        self.time_freq = '1d' if time_unit == 'day' else 'MS'
 
+    def rolling(self, df: DataFrame, time_column: str) -> DataFrame:
+        if len(df) <= self.min_data_points:
+            return DataFrame()
 
-def rolling(df, day_column: str) -> DataFrame:
-    if len(df) <= 4:
-        return DataFrame()
+        df = df.set_index(time_column)
+        df = df.set_index(pd.DatetimeIndex(df.index))
 
-    df = df.set_index(day_column)
-    df = df.set_index(pd.DatetimeIndex(df.index))
+        # Fill in missing days with zeros
 
-    # Fill in missing days with zeros
-    freq = '1d' if day_column == 'day' else 'MS'
-    day_min = df.index.min()
-    day_max = df.index.max()
-    day_range = pd.date_range(start=day_min, end=day_max, freq=freq, name=day_column)
-    df = df.reindex(day_range, fill_value=0)
+        # Pad in zeros on the left (half window width) to smoothen spikes at the beginning of a time series
+        day_min = df.index.min() - pd.DateOffset(months=math.floor(self.window/2))
+        day_max = df.index.max()
+        day_range = pd.date_range(start=day_min, end=day_max, freq=self.time_freq, name=time_column)
+        df = df.reindex(day_range, fill_value=0)
 
-    # Rolling calculation
-    window = 90 if day_column == 'day' else 5
-    rolling_df = df.rolling(window, min_periods=4, win_type='cosine', center=True).mean()
+        # Rolling calculation
+        rolling_df = df.rolling(self.window, min_periods=4, win_type='cosine', center=True).mean()
 
     # Find non-zero start
     start_timestamp = rolling_df[rolling_df > 0].index.min()
@@ -148,19 +150,18 @@ def rolling(df, day_column: str) -> DataFrame:
 
     return filtered.reset_index()
 
+    def rolling_multiple_series(self, df: DataFrame, series_column: str, time_column: str) -> DataFrame:
+        if len(df) == 0:
+            return df
 
-def rolling_multiple_series(df, series_column: str, day_column: str) -> DataFrame:
-    if len(df) == 0:
-        return df
-
-    series_dfs = []
-    series_values = df[series_column].unique()
-    for series_value in series_values:
-        series_df = df[df[series_column].eq(series_value)]
-        series_df = series_df.drop([series_column], axis=1)
-        rolling_series_df = rolling(series_df, day_column)
-        if len(rolling_series_df) > 0:
-            rolling_series_df[series_column] = series_value
-            series_dfs.append(rolling_series_df)
+        series_dfs = []
+        series_values = df[series_column].unique()
+        for series_value in series_values:
+            series_df = df[df[series_column].eq(series_value)]
+            series_df = series_df.drop([series_column], axis=1)
+            rolling_series_df = self.rolling(series_df, time_column)
+            if len(rolling_series_df) > 0:
+                rolling_series_df[series_column] = series_value
+                series_dfs.append(rolling_series_df)
 
     return pd.concat(series_dfs)
