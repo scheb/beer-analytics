@@ -1,6 +1,7 @@
 import numpy as np
 
-POPULARITY_MIN_MONTH = '2012-01-01'
+POPULARITY_START_MONTH = '2012-01-01'
+POPULARITY_CUT_OFF_DATE = '2011-12-01'  # One month more to calculate a smooth start
 METRIC_PRECISION = {
     'default': 1,
     'abv': 1,
