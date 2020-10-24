@@ -44,7 +44,7 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 11;;British Bitter;;;;;;;;;;;;;;;;;;;false;;;;;
 11A;11;Ordinary Bitter;Bitter;;3.2;3.8;25;35;8;14;1030;1039;1007;1011;session;amber;top;;british_isles;amber_ale;false;traditional;bitter;;;
 11B;11;Best Bitter;Special Bitter, Premium Bitter;;3.8;4.6;25;40;8;16;1040;1048;1008;1012;standard;amber;top;;british_isles;amber_ale;false;traditional;bitter;;;
-11C;11;Strong Bitter;;;4.6;6.2;30;50;8;18;1048;1060;1010;1016;standard;amber;top;;british_isles;amber_ale;false;traditional;bitter;;;
+11C;11;Strong Bitter;English Pale Ale, EPA;;4.6;6.2;30;50;8;18;1048;1060;1010;1016;standard;amber;top;;british_isles;amber_ale;false;traditional;bitter;;;
 12;;Pale Commonwealth Beer;;;;;;;;;;;;;;;;;;;false;;;;;
 12A;12;British Golden Ale;;;3.8;5;20;45;2;6;1038;1053;1006;1012;standard;pale;top;;british_isles;pale_ale;false;craft;bitter;hoppy;;
 12B;12;Australian Sparkling Ale;;;4.5;6;20;35;4;7;1038;1050;1004;1006;standard;pale;top;;pacific;pale_ale;false;traditional;bitter;;;
