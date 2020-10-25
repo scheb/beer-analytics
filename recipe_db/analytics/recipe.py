@@ -9,8 +9,8 @@ from pandas import DataFrame
 from recipe_db.analytics import METRIC_PRECISION, POPULARITY_START_MONTH, POPULARITY_CUT_OFF_DATE
 from recipe_db.analytics.scope import RecipeScope, StyleProjection, YeastProjection, HopProjection, \
     FermentableProjection
-from recipe_db.analytics.utils import remove_outliers, get_style_names_dict, filter_trending, get_hop_names_dict, \
-    get_yeast_names_dict, get_fermentable_names_dict, RollingAverage
+from recipe_db.analytics.utils import remove_outliers, get_style_names_dict, get_hop_names_dict, get_yeast_names_dict, \
+    get_fermentable_names_dict, RollingAverage, Trending
 from recipe_db.models import Recipe
 
 
@@ -382,18 +382,27 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
         per_month['month'] = pd.to_datetime(per_month['month'])
         per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes']
 
+        trend_filter = Trending(RollingAverage(window=13), trending_window=12)
+        trending_ids = trend_filter.get_trending_series(per_month, 'kind_id', 'month', 'recipes_percent', 'recipes')
+
+        # Filter trending series
+        trending = per_month[per_month['kind_id'].isin(trending_ids)]
+        if len(trending) == 0:
+            return trending
+
         # Rolling average
-        smoothened = RollingAverage().rolling_multiple_series(per_month, 'kind_id', 'month')
+        smoothened = RollingAverage().rolling_multiple_series(trending, 'kind_id', 'month')
         smoothened['recipes_percent'] = smoothened['recipes_percent'].apply(lambda x: max([x, 0]))
 
         # Start date for popularity charts
         smoothened = smoothened[smoothened['month'] >= POPULARITY_START_MONTH]
 
-        # Filter trending series
-        trending = filter_trending(smoothened, 'kind_id', 'month', 'recipes_percent')
+        # Order by relevance
+        smoothened['kind_id'] = pd.Categorical(smoothened['kind_id'], trending_ids)
+        smoothened = smoothened.sort_values(['kind_id', 'month'])
 
-        trending['hop'] = trending['kind_id'].map(get_hop_names_dict())
-        return trending
+        smoothened['hop'] = smoothened['kind_id'].map(get_hop_names_dict())
+        return smoothened
 
     def trending_yeasts(self) -> DataFrame:
         recipes_per_month = self._recipes_per_month_in_scope()
@@ -422,18 +431,27 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
         per_month['month'] = pd.to_datetime(per_month['month'])
         per_month['recipes_percent'] = per_month['recipes'] / per_month['total_recipes']
 
+        trend_filter = Trending(RollingAverage(window=13), trending_window=12)
+        trending_ids = trend_filter.get_trending_series(per_month, 'kind_id', 'month', 'recipes_percent', 'recipes')
+
+        # Filter trending series
+        trending = per_month[per_month['kind_id'].isin(trending_ids)]
+        if len(trending) == 0:
+            return trending
+
         # Rolling average
-        smoothened = RollingAverage().rolling_multiple_series(per_month, 'kind_id', 'month')
+        smoothened = RollingAverage().rolling_multiple_series(trending, 'kind_id', 'month')
         smoothened['recipes_percent'] = smoothened['recipes_percent'].apply(lambda x: max([x, 0]))
 
         # Start date for popularity charts
         smoothened = smoothened[smoothened['month'] >= POPULARITY_START_MONTH]
 
-        # Filter trending series
-        trending = filter_trending(smoothened, 'kind_id', 'month', 'recipes_percent')
+        # Order by relevance
+        smoothened['kind_id'] = pd.Categorical(smoothened['kind_id'], trending_ids)
+        smoothened = smoothened.sort_values(['kind_id', 'month'])
 
-        trending['yeast'] = trending['kind_id'].map(get_yeast_names_dict())
-        return trending
+        smoothened['yeast'] = smoothened['kind_id'].map(get_yeast_names_dict())
+        return smoothened
 
 
 class CommonStylesAnalysis(RecipeLevelAnalysis):
