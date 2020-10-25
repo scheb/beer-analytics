@@ -224,7 +224,7 @@ window.addEventListener('load', function ()
     display_graph('chart-amount-used-per-use', '{{ hop|chart_js:"amount-used-per-use" }}');
     display_graph('chart-hop-pairings', '{{ hop|chart_js:"hop-pairings" }}');
     display_graph('chart-popular-yeasts', '{{ hop|chart_js:"popular-yeasts" }}');
-    display_graph('chart-trending-yeasts', '{{ hop|chart_js:"trending-yeasts" }}');
+    display_graph('chart-trending-yeasts', '{{ hop|chart_js:"trending-yeasts" }}', {noDataText: "No trends detected"});
 
     // Random recipes
     display_recipes('recipes-list', '{{ hop|recipes }}');

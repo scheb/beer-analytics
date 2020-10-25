@@ -273,10 +273,10 @@ window.addEventListener('load', function ()
     // Charts
     display_graph('chart-popularity', '{{ style|chart_js:"popularity" }}');
     display_graph('chart-popular-yeasts', '{{ style|chart_js:"popular-yeasts" }}');
-    display_graph('chart-trending-yeasts', '{{ style|chart_js:"trending-yeasts" }}');
+    display_graph('chart-trending-yeasts', '{{ style|chart_js:"trending-yeasts" }}', {noDataText: "No trends detected"});
     display_graph_with_navigation('chart-popular-hops', 'chart-popular-hops-tabs', '{{ style|chart_js:"popular-hops" }}');
     display_graph_with_navigation('chart-popular-hops-amount', 'chart-popular-hops-amount-tabs', '{{ style|chart_js:"popular-hops-amount" }}');
-    display_graph('chart-trending-hops', '{{ style|chart_js:"trending-hops" }}');
+    display_graph('chart-trending-hops', '{{ style|chart_js:"trending-hops" }}', {noDataText: "No trends detected"});
     display_graph('chart-hop-pairings', '{{ style|chart_js:"hop-pairings" }}');
     display_graph_with_navigation('chart-popular-fermentables', 'chart-popular-fermentables-tabs', '{{ style|chart_js:"popular-fermentables" }}');
     display_graph_with_navigation('chart-popular-fermentables-amount', 'chart-popular-fermentables-amount-tabs', '{{ style|chart_js:"popular-fermentables-amount" }}');
