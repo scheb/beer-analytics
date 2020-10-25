@@ -46,9 +46,9 @@
                 <div class="card-header"><h3 class="h5 mb-0">Amount</h3></div>
                 <div class="card-body">
                     {% if hop.recipes_amount_percent_min %}
-                        {{ hop.recipes_amount_percent_min|floatformat:1 }}
-                        &lt; <strong>{{ hop.recipes_amount_percent_mean|floatformat:1 }}</strong>
-                        &lt; {{ hop.recipes_amount_percent_max|floatformat:1 }} <small class="text-muted">%</small>
+                        {{ hop.recipes_amount_percent_min|float2percent|floatformat:1 }}
+                        &lt; <strong>{{ hop.recipes_amount_percent_mean|float2percent|floatformat:1 }}</strong>
+                        &lt; {{ hop.recipes_amount_percent_max|float2percent|floatformat:1 }} <small class="text-muted">%</small>
                     {% endif %}
                 </div>
                 <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">

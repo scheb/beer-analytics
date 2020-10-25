@@ -161,7 +161,7 @@ class HopMeta(PageMeta):
         # Common range
         if self.hop.recipes_amount_percent_mean is not None:
             text += " When used in a recipe, it typically accounts for <strong>{}% of the hops</strong>.".format(
-                round(self.hop.recipes_amount_percent_mean)
+                round(self.hop.recipes_amount_percent_mean*100)
             )
 
         return text
@@ -240,7 +240,7 @@ class FermentableMeta(PageMeta):
         # Common range
         if self.fermentable.recipes_amount_percent_mean is not None:
             text += " When used in a recipe, it typically accounts for <strong>{}% of the fermentables</strong>.".format(
-                round(self.fermentable.recipes_amount_percent_mean)
+                round(self.fermentable.recipes_amount_percent_mean*100)
             )
 
         return text
