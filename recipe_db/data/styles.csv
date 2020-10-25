@@ -146,8 +146,10 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 32;;Smoked Beer;;;;;;;;;;;;;;;;;;;true;;;;;
 32A;32;Classic Style Smoked Beer;;;;;;;;;;;;;;;;;;;true;;;;;smoke
 32B;32;Specialty Smoked Beer;;;;;;;;;;;;;;;;;;;true;;;;;smoke
-33A;32;Wood-Aged Beer;;;;;;;;;;;;;;;;;;;true;;;;;wood
-33B;32;Specialty Wood-Aged Beer;;;;;;;;;;;;;;;;;;;true;;;;;wood
-34A;32;Clone Beer;;;;;;;;;;;;;;;;;;;true;;;;;
-34B;32;Mixed-Style Beer;;;;;;;;;;;;;;;;;;;true;;;;;
-34C;32;Experimental Beer;;;;;;;;;;;;;;;;;;;true;;;;;
+33;;Wood Beer;;;;;;;;;;;;;;;;;;;true;;;;;
+33A;33;Wood-Aged Beer;;;;;;;;;;;;;;;;;;;true;;;;;wood
+33B;33;Specialty Wood-Aged Beer;;;;;;;;;;;;;;;;;;;true;;;;;wood
+34;;Specialty Beer;;;;;;;;;;;;;;;;;;;true;;;;;
+34A;34;Clone Beer;;;;;;;;;;;;;;;;;;;true;;;;;
+34B;34;Mixed-Style Beer;;;;;;;;;;;;;;;;;;;true;;;;;
+34C;34;Experimental Beer;;;;;;;;;;;;;;;;;;;true;;;;;
