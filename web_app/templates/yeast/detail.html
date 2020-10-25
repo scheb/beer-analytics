@@ -165,7 +165,7 @@ window.addEventListener('load', function ()
     display_graph('chart-typical-styles-absolute', '{{ yeast|chart_js:"typical-styles-absolute" }}');
 
     display_graph('chart-popular-hops', '{{ yeast|chart_js:"popular-hops" }}');
-    display_graph('chart-trending-hops', '{{ yeast|chart_js:"trending-hops" }}');
+    display_graph('chart-trending-hops', '{{ yeast|chart_js:"trending-hops" }}', {noDataText: "No trends detected"});
 
     // Random recipes
     display_recipes('recipes-list', '{{ yeast|recipes }}');

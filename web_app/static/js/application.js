@@ -34,6 +34,7 @@ function ChartMount(container, chartUrl, chartConfig) {
     this.chartConfig = chartConfig
     this.chartConfig.responsive = this.chartConfig.responsive === undefined ? true : this.chartConfig.responsive
     this.chartConfig.displayModeBar = this.chartConfig.displayModeBar === undefined ? true : this.chartConfig.displayModeBar
+    this.chartConfig.noDataText = this.chartConfig.noDataText === undefined ? 'Not enough data' : this.chartConfig.noDataText
 }
 
 ChartMount.prototype.load = function(query) {
@@ -57,7 +58,7 @@ ChartMount.prototype.load = function(query) {
             self.container.classList.remove('chart-loading')
             if (xhr.status === 204) {
                 self.container.classList.add('chart-no-data')
-                self.container.innerHTML = '<p>No result</p>'
+                self.container.innerHTML = '<p>'+self.chartConfig.noDataText+'</p>'
             } else if (xhr.status === 200) {
                 self.container.innerHTML = ''
                 var data = JSON.parse(xhr.responseText);
