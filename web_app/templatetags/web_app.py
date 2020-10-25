@@ -19,6 +19,11 @@ MIN_PRIORITY = 0.1
 DEFAULT_PRIORITY = 0.3
 
 
+@register.filter('float2percent')
+def float2percent(value):
+    return value*100
+
+
 @register.filter('startswith')
 def startswith(text, starts):
     if isinstance(text, str):
