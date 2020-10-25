@@ -79,26 +79,6 @@ class LinesChart:
         return fig
 
 
-class CompactHistogramChart:
-    def plot(self, df: DataFrame, x_field: str, count_field: str) -> Figure:
-        fig = px.histogram(df, x=x_field, y=count_field, histfunc="sum", nbins=30)
-
-        fig.update_layout(
-            plot_bgcolor='#f1efee',
-            margin=dict(l=0, r=0, t=0, b=0),
-            xaxis=dict(
-                title_text=None,
-                fixedrange=True,
-            ),
-            yaxis=dict(
-                visible=False,
-                fixedrange=True,
-            ),
-        )
-
-        return fig
-
-
 class PreAggregatedBoxPlot:
     def plot(
         self,
