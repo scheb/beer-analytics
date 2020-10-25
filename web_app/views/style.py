@@ -76,6 +76,17 @@ def chart(request: HttpRequest, slug: str, category_slug: str, chart_type: str, 
 
 
 @cache_page(0)
+def category_recipes(request: HttpRequest, category_slug: str) -> HttpResponse:
+    style = get_object_or_404(Style, slug=category_slug)
+
+    if not style.is_category:
+        return redirect('style_category_recipes', category_slug=style.category.slug)
+
+    recipes_list = StyleAnalysis(style).random_recipes(24)
+    return render_recipes_list(recipes_list)
+
+
+@cache_page(0)
 def recipes(request: HttpRequest, slug: str, category_slug: str) -> HttpResponse:
     style = get_object_or_404(Style, slug=slug)
 
