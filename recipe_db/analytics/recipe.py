@@ -333,6 +333,16 @@ class RecipesMetricHistogram(RecipeLevelAnalysis):
             bins = max([1, round(abs / 0.002)])
             if bins > 18:
                 bins = round(bins / math.ceil(bins / 12))
+        if metric in ['abv', 'srm'] and len(df) > 0:
+            abs = df[metric].max() - df[metric].min()
+            bins = max([1, round(abs / 0.1)])
+            if bins > 18:
+                bins = round(bins / math.ceil(bins / 12))
+        if metric in ['ibu'] and len(df) > 0:
+            abs = df[metric].max() - df[metric].min()
+            bins = max([1, round(abs)])
+            if bins > 18:
+                bins = round(bins / math.ceil(bins / 12))
 
         histogram = df.groupby([pd.cut(df[metric], bins, precision=precision)])[metric].agg(['count'])
         histogram = histogram.reset_index()
