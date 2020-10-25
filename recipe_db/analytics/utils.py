@@ -164,4 +164,8 @@ class RollingAverage:
                 rolling_series_df[series_column] = series_value
                 series_dfs.append(rolling_series_df)
 
-    return pd.concat(series_dfs)
+        if len(series_dfs) == 0:
+            dummy = DataFrame(columns=df.columns)
+            return dummy
+
+        return pd.concat(series_dfs)
