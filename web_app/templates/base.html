@@ -1,4 +1,4 @@
-<!doctype html>{% with request.resolver_match.url_name as url_name %}{% load static %}{% load pipeline %}{% load meta %}
+<!doctype html>{% with request.resolver_match.url_name as url_name %}{% load static %}{% load meta %}
 <html lang="en">
 <head {% meta_namespaces %}>
     {% if meta.title %}{% autoescape off %}{% title_prop meta.title %}{% endautoescape %}
@@ -17,7 +17,7 @@
     <meta name="msapplication-TileColor" content="#da532c"/>
     <meta name="msapplication-config" content="{% static 'favicon/browserconfig.xml' %}"/>
     <meta name="theme-color" content="#ffffff"/>
-    {% stylesheet 'base' %}
+    <link rel="stylesheet" type="text/css" href="{% static 'beer_analytics.css' %}">
 </head>
 <body>
 
@@ -68,9 +68,10 @@
     </div>
 </div>
 
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/plotly.min.js' %}"></script>
-{% javascript 'app' %}
+{#<script src="{% static 'js/bootstrap.min.js' %}"></script>#}
+{#<script src="{% static 'js/plotly.min.js' %}"></script>#}
+{#{% javascript 'app' %}#}
+<script type="text/javascript" src="{% static 'app.js' %}"></script>
 {% block script %}{% endblock %}
 
 </body>

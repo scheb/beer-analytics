@@ -1,6 +1,7 @@
 import json
 import platform
 from json import JSONDecodeError
+from os import path
 from pathlib import Path
 
 from environ import Env
@@ -19,7 +20,6 @@ INSTALLED_APPS = [
     'web_app.apps.WebAppConfig',
     'django.contrib.humanize',
     'web_app.apps.WebAppStaticFilesConfig',
-    'pipeline',
     'meta',
 ]
 
@@ -102,42 +102,10 @@ NUMBER_GROUPING = 3
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
-STATICFILES_STORAGE = 'pipeline.storage.PipelineManifestStorage'
-
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'pipeline.finders.PipelineFinder',
+STATICFILES_DIRS = (
+    path.join(BASE_DIR, 'bundles'),
 )
-
-PIPELINE = {
-    'PIPELINE_ENABLED': False,
-    'CSS_COMPRESSOR': 'pipeline.compressors.yuglify.YuglifyCompressor',
-    'JS_COMPRESSOR': 'pipeline.compressors.yuglify.YuglifyCompressor',
-    'DISABLE_WRAPPER': True,
-    'COMPILERS': (
-      'pipeline.compilers.sass.SASSCompiler',
-    ),
-    'YUGLIFY_BINARY': str(BASE_DIR / "node_modules/.bin/yuglify") + (".cmd" if platform.system() == "Windows" else ""),
-    'SASS_BINARY': str(BASE_DIR / "node_modules/.bin/sass") + (".cmd" if platform.system() == "Windows" else ""),
-    'STYLESHEETS': {
-        'base': {
-            'source_filenames': (
-                'scss/beer_analytics.scss',
-            ),
-            'output_filename': 'css/style.css',
-            'variant': 'datauri',
-        },
-    },
-    'JAVASCRIPT': {
-        'app': {
-            'source_filenames': (
-                'js/application.js',
-            ),
-            'output_filename': 'js/app.js',
-        }
-    }
-}
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 META_SITE_PROTOCOL = 'https'
 META_SITE_DOMAIN = 'www.beer-analytics.com'
