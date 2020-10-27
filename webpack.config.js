@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     entry: {
-        app: "./web_app/static/js/application.js",
+        app: "./web_app/static/ts/application.ts",
         style: "./web_app/static/scss/beer_analytics.scss"
     },
     output: {
@@ -23,6 +23,11 @@ module.exports = {
     ],
     module: {
         rules: [
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
             {
                 test: /\.(svg)$/,
                 use: {
@@ -57,5 +62,8 @@ module.exports = {
                 ]
             }
         ],
+    },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
     },
 };
