@@ -1,10 +1,11 @@
+/bundles/
 /static
 /node_modules
 /var
 /venv
+/yarn-error.log
 .env
 *.log
 *.pot
 *.pyc
 __pycache__/
-local_settings.py
