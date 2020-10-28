@@ -37,7 +37,7 @@ Application Setup
 - Initialize `virtualenv` and enable it
 - Install Python dependencies: `pip -r requirements.txt`
 - Configure the application (see below)
-- Apply database migrations to creates tables: `python makemigrations` and `python manage.py migrate`
+- Apply database migrations to creates tables: `python manage.py makemigrations` and `python manage.py migrate`
 - Load initial data (known styles and ingredients) via `python manage.py load_initial_data`
 
 ### Configuration
