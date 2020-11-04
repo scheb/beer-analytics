@@ -23,11 +23,13 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">
-                        <noscript>
-                            {{ style|chart_image:chart_type|safe }}
-                        </noscript>
-                    </div></div>
+                    <div class="card-footer bg-transparent">
+                        <div class="chart-s" data-chart="{{ style|chart_js:chart_type }}" data-chart-options="{displayModeBar:false}">
+                            <noscript>
+                                {{ style|chart_image:chart_type|safe }}
+                            </noscript>
+                        </div>
+                    </div>
                 </div>
             </div>
         {% endwith %}{% endif %}
@@ -50,11 +52,13 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">
-                        <noscript>
-                            {{ style|chart_image:chart_type|safe }}
-                        </noscript>
-                    </div></div>
+                    <div class="card-footer bg-transparent">
+                        <div class="chart-s" data-chart="{{ style|chart_js:chart_type }}" data-chart-options="{displayModeBar:false}">
+                            <noscript>
+                                {{ style|chart_image:chart_type|safe }}
+                            </noscript>
+                        </div>
+                    </div>
                 </div>
             </div>
         {% endwith %}{% endif %}
@@ -79,11 +83,13 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">
-                        <noscript>
-                            {{ style|chart_image:chart_type|safe }}
-                        </noscript>
-                    </div></div>
+                    <div class="card-footer bg-transparent">
+                        <div class="chart-s" data-chart="{{ style|chart_js:chart_type }}" data-chart-options="{displayModeBar:false}">
+                            <noscript>
+                                {{ style|chart_image:chart_type|safe }}
+                            </noscript>
+                        </div>
+                    </div>
                 </div>
             </div>
         {% endwith %}{% endif %}
@@ -108,11 +114,13 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">
-                        <noscript>
-                            {{ style|chart_image:chart_type|safe }}
-                        </noscript>
-                    </div></div>
+                    <div class="card-footer bg-transparent">
+                        <div class="chart-s" data-chart="{{ style|chart_js:chart_type }}" data-chart-options="{displayModeBar:false}">
+                            <noscript>
+                                {{ style|chart_image:chart_type|safe }}
+                            </noscript>
+                        </div>
+                    </div>
                 </div>
             </div>
         {% endwith %}{% endif %}
@@ -137,14 +145,15 @@
                             </p>
                         {% endif %}
                     </div>
-                    <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">
-                        <noscript>
-                            {{ style|chart_image:chart_type|safe }}
-                        </noscript>
-                    </div></div>
+                    <div class="card-footer bg-transparent">
+                        <div class="chart-s" data-chart="{{ style|chart_js:chart_type }}" data-chart-options="{displayModeBar:false}">
+                            <noscript>
+                                {{ style|chart_image:chart_type|safe }}
+                            </noscript>
+                        </div>
+                    </div>
                 </div>
             </div>
         {% endwith %}{% endif %}
     </div>
-
 {% endif %}

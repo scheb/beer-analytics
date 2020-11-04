@@ -12,11 +12,13 @@
                     {{ fermentable.recipes_color_ebc_min|floatformat:0 }} &lt; <strong>{{ fermentable.recipes_color_ebc_mean|floatformat:0 }}</strong> &lt; {{ fermentable.recipes_color_ebc_max|floatformat:0 }} <small class="text-muted" title="European Brewery Convention">EBC</small><br/>
                     {{ fermentable.recipes_color_lovibond_min|floatformat:0 }} &lt; <strong>{{ fermentable.recipes_color_lovibond_mean|floatformat:0 }}</strong> &lt; {{ fermentable.recipes_color_lovibond_max|floatformat:0 }} <small class="text-muted" title="Degrees Lovibond">°L</small>
                 </div>
-                <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">
-                    <noscript>
-                        {{ fermentable|chart_image:chart_type|safe }}
-                    </noscript>
-                </div></div>
+                <div class="card-footer bg-transparent">
+                    <div class="chart-s" data-chart="{{ fermentable|chart_js:chart_type }}" data-chart-options="{displayModeBar:false}">
+                        <noscript>
+                            {{ fermentable|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
+                </div>
             </div>
         </div>
     {% endwith %}{% endif %}
@@ -29,11 +31,13 @@
                         {{ fermentable.recipes_amount_percent_min|float2percent|floatformat:1 }} &lt; <strong>{{ fermentable.recipes_amount_percent_mean|float2percent|floatformat:1 }}</strong> &lt; {{ fermentable.recipes_amount_percent_max|float2percent|floatformat:1 }} <small class="text-muted">%</small>
                     {% endif %}
                 </div>
-                <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">
-                    <noscript>
-                        {{ fermentable|chart_image:chart_type|safe }}
-                    </noscript>
-                </div></div>
+                <div class="card-footer bg-transparent">
+                    <div class="chart-s" data-chart="{{ fermentable|chart_js:chart_type }}" data-chart-options="{displayModeBar:false}">
+                        <noscript>
+                            {{ fermentable|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
+                </div>
             </div>
         </div>
     {% endwith %}{% endif %}

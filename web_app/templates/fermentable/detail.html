@@ -50,7 +50,7 @@
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Popularity Over Time</h2>
             </div>
             <div class="card-body">
-                <div id="chart-{{ chart_type }}" class="chart-m">
+                <div class="chart-m" data-chart="{{ fermentable|chart_js:chart_type }}">
                     <noscript>
                         {{ fermentable|chart_image:chart_type|safe }}
                     </noscript>
@@ -68,7 +68,7 @@
                 </h2>
             </div>
             <div class="card-body">
-                <div id="chart-{{ chart_type }}" class="chart-l">
+                <div class="chart-l" data-chart="{{ fermentable|chart_js:chart_type }}">
                     <noscript>
                         {{ fermentable|chart_image:chart_type|safe }}
                     </noscript>
@@ -86,7 +86,7 @@
                 </h2>
             </div>
             <div class="card-body">
-                <div id="chart-{{ chart_type }}" class="chart-l">
+                <div class="chart-l" data-chart="{{ fermentable|chart_js:chart_type }}">
                     <noscript>
                         {{ fermentable|chart_image:chart_type|safe }}
                     </noscript>
@@ -101,7 +101,7 @@
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Amount per Style</h2>
             </div>
             <div class="card-body">
-                <div id="chart-{{ chart_type }}" class="chart-l">
+                <div class="chart-l" data-chart="{{ fermentable|chart_js:chart_type }}">
                     <noscript>
                         {{ fermentable|chart_image:chart_type|safe }}
                     </noscript>
@@ -116,28 +116,8 @@
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Random Recipes</h2>
             </div>
             <div class="card-body">
-                <div id="recipes-list" class="chart-s"></div>
+                <div class="chart-s" data-recipes="{{ fermentable|recipes }}"></div>
             </div>
         </section>
     {% endwith %}
-{% endblock %}
-
-{% block script %}
-<script>
-window.addEventListener('load', function ()
-{
-    // Metrics
-    display_graph('chart-color-histogram', '{{ fermentable|chart_js:"color-histogram" }}', {displayModeBar: false});
-    display_graph('chart-amount-percent-range', '{{ fermentable|chart_js:"amount-percent-range" }}', {displayModeBar: false});
-
-    // Charts
-    display_graph('chart-popularity', '{{ fermentable|chart_js:"popularity" }}');
-    display_graph('chart-typical-styles-relative', '{{ fermentable|chart_js:"typical-styles-relative" }}');
-    display_graph('chart-typical-styles-absolute', '{{ fermentable|chart_js:"typical-styles-absolute" }}');
-    display_graph('chart-amount-used-per-style', '{{ fermentable|chart_js:"amount-used-per-style" }}');
-
-    // Random recipes
-    display_recipes('recipes-list', '{{ fermentable|recipes }}');
-});
-</script>
 {% endblock %}
