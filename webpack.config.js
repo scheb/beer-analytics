@@ -65,5 +65,11 @@ module.exports = {
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
-    },
+        fallback: {
+            "assert": false,
+            "buffer": false,
+            "fs": false,
+            "path": false,
+        }
+    }
 };

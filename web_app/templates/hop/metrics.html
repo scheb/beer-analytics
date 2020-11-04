@@ -13,11 +13,13 @@
                     &lt; <strong>{{ hop.recipes_alpha_mean|floatformat:1 }}</strong>
                     &lt; {{ hop.recipes_alpha_max|floatformat:1 }} <small class="text-muted">%</small>
                 </div>
-                <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">
-                    <noscript>
-                        {{ hop|chart_image:chart_type|safe }}
-                    </noscript>
-                </div></div>
+                <div class="card-footer bg-transparent">
+                    <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options="{displayModeBar:false}">
+                        <noscript>
+                            {{ hop|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
+                </div>
             </div>
         </div>
     {% endwith %}{% endif %}
@@ -31,11 +33,13 @@
                     &lt; <strong>{{ hop.recipes_beta_mean|floatformat:1 }}</strong>
                     &lt; {{ hop.recipes_beta_max|floatformat:1 }} <small class="text-muted">%</small>
                 </div>
-                <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">
-                    <noscript>
-                        {{ hop|chart_image:chart_type|safe }}
-                    </noscript>
-                </div></div>
+                <div class="card-footer bg-transparent">
+                    <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options="{displayModeBar:false}">
+                        <noscript>
+                            {{ hop|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
+                </div>
             </div>
         </div>
     {% endwith %}{% endif %}
@@ -51,11 +55,13 @@
                         &lt; {{ hop.recipes_amount_percent_max|float2percent|floatformat:1 }} <small class="text-muted">%</small>
                     {% endif %}
                 </div>
-                <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">
-                    <noscript>
-                        {{ hop|chart_image:chart_type|safe }}
-                    </noscript>
-                </div></div>
+                <div class="card-footer bg-transparent">
+                    <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options="{displayModeBar:false}">
+                        <noscript>
+                            {{ hop|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
+                </div>
             </div>
         </div>
     {% endwith %}{% endif %}
@@ -67,11 +73,13 @@
                 <div class="card-body">
                     <strong>{{ hop.category_name }} Hop</strong>
                 </div>
-                <div class="card-footer bg-transparent"><div id="chart-{{ chart_type }}" class="chart-s">
-                    <noscript>
-                        {{ hop|chart_image:chart_type|safe }}
-                    </noscript>
-                </div></div>
+                <div class="card-footer bg-transparent">
+                    <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options="{displayModeBar:false}">
+                        <noscript>
+                            {{ hop|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
+                </div>
             </div>
         </div>
     {% endwith %}{% endif %}

@@ -74,7 +74,7 @@
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Popularity Over Time</h2>
             </div>
             <div class="card-body">
-                <div id="chart-{{ chart_type }}" class="chart-m">
+                <div class="chart-m" data-chart="{{ style|chart_js:chart_type }}">
                     <noscript>
                         {{ style|chart_image:chart_type|safe }}
                     </noscript>
@@ -89,7 +89,7 @@
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Used Yeasts</h2>
             </div>
             <div class="card-body">
-                <div id="chart-{{ chart_type }}" class="chart-m">
+                <div class="chart-m" data-chart="{{ style|chart_js:chart_type }}">
                     <noscript>
                         {{ style|chart_image:chart_type|safe }}
                     </noscript>
@@ -104,7 +104,7 @@
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Trending Yeasts</h2>
             </div>
             <div class="card-body">
-                <div id="chart-{{ chart_type }}" class="chart-m">
+                <div class="chart-m" data-chart="{{ style|chart_js:chart_type }}">
                     <noscript>
                         {{ style|chart_image:chart_type|safe }}
                     </noscript>
@@ -117,7 +117,7 @@
         <section class="card card-chart">
             <div class="card-header">
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Used Hops</h2>
-                <nav id="chart-{{ chart_type }}-tabs" class="d-none">
+                <nav class="d-none" data-chart-navigation="chart-{{ chart_type }}">
                     <label>Used for:</label>
                     <ul class="nav" role="tablist">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="">Any</a></li>
@@ -128,7 +128,7 @@
                 </nav>
             </div>
             <div class="card-body">
-                <div id="chart-{{ chart_type }}" class="chart-m">
+                <div id="chart-{{ chart_type }}" class="chart-m" data-chart="{{ style|chart_js:chart_type }}">
                     <noscript>
                         {{ style|chart_image:chart_type|safe }}
                     </noscript>
@@ -152,7 +152,7 @@
                 </nav>
             </div>
             <div class="card-body">
-                <div id="chart-{{ chart_type }}" class="chart-l">
+                <div class="chart-l" data-chart="{{ style|chart_js:chart_type }}">
                     <noscript>
                         {{ style|chart_image:chart_type|safe }}
                     </noscript>
@@ -167,7 +167,7 @@
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Trending Hops</h2>
             </div>
             <div class="card-body">
-                <div id="chart-{{ chart_type }}" class="chart-m">
+                <div class="chart-m" data-chart="{{ style|chart_js:chart_type }}">
                     <noscript>
                         {{ style|chart_image:chart_type|safe }}
                     </noscript>
@@ -182,7 +182,7 @@
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Common Hop Pairings</h2>
             </div>
             <div class="card-body">
-                <div id="chart-{{ chart_type }}" class="chart-l">
+                <div class="chart-l" data-chart="{{ style|chart_js:chart_type }}">
                     <noscript>
                         {{ style|chart_image:chart_type|safe }}
                     </noscript>
@@ -195,7 +195,7 @@
         <section class="card card-chart">
             <div class="card-header">
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Used Fermentables</h2>
-                <nav id="chart-{{ chart_type }}-tabs" class="d-none">
+                <nav class="d-none" data-chart-navigation="chart-{{ chart_type }}">
                     <label>Type:</label>
                     <ul class="nav" role="tablist">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="">Any</a></li>
@@ -210,7 +210,7 @@
                 </nav>
             </div>
             <div class="card-body">
-                <div id="chart-{{ chart_type }}" class="chart-m">
+                <div id="chart-{{ chart_type }}" class="chart-m" data-chart="{{ style|chart_js:chart_type }}">
                     <noscript>
                         {{ style|chart_image:chart_type|safe }}
                     </noscript>
@@ -238,7 +238,7 @@
                 </nav>
             </div>
             <div class="card-body">
-                <div id="chart-{{ chart_type }}" class="chart-l">
+                <div class="chart-l" data-chart="{{ style|chart_js:chart_type }}">
                     <noscript>
                         {{ style|chart_image:chart_type|safe }}
                     </noscript>
@@ -253,7 +253,7 @@
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Random Recipes</h2>
             </div>
             <div class="card-body">
-                <div id="recipes-list" class="chart-s"></div>
+                <div class="chart-s" data-recipes="{{ style|recipes }}"></div>
             </div>
         </section>
     {% endwith %}
