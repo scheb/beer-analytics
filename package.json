@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "start": "webpack serve"
+        "start": "webpack serve --mode development"
     },
     "dependencies": {
         "@types/bootstrap": "^5.0.0",
