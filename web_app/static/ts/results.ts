@@ -55,9 +55,9 @@ export class Chart {
 }
 
 class ChartMount {
-    readonly container: HTMLElement
-    readonly chartUrl: string
-    readonly chartConfig: ChartConfig
+    private readonly container: HTMLElement
+    private readonly chartUrl: string
+    private readonly chartConfig: ChartConfig
     private currentRequest: any
 
     constructor(container: Element, chartUrl: string, chartConfig: ChartConfig) {
@@ -159,7 +159,7 @@ class ChartNavigation {
 }
 
 export class Recipes {
-    readonly container: HTMLElement
+    private readonly container: HTMLElement
 
     constructor(container: Element) {
         if (!(container instanceof HTMLElement)) {
