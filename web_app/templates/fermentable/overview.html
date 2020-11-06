@@ -21,58 +21,62 @@
         &quot;includes&quot; list on the fermentable pages.
     </p>
 
-    <form class="search d-none">
+    <form class="search" data-search-target="fermentables-overview">
         <p>
             <label for="input-search" class="visually-hidden">Search fermentables</label>
             <input type="search" class="search-term form-control" id="input-search" placeholder="Search fermentables">
         </p>
     </form>
 
-    <div class="fermentables-overview">
+    <div id="fermentables-overview">
         {% for category in categories %}
-            <h2>
-                <a href="#{{ category.id }}" id="{{ category.id }}" class="anchor"><span></span></a>
-                <a href="{% url "fermentable_category" category.id %}" class="text-body">{{ category.name }}</a>
-            </h2>
-            <div class="mb-4">
-                {% if category.most_popular %}
-                    <p class="badge-list"><label>Most popular:</label>
-                        {% for fermentable in category.most_popular %}
-                            {% if forloop.counter0 > 0 %}<span class="d-none">, </span>{% endif %}
-                            <a class="badge" href="{{ fermentable|url }}">{{ fermentable.name }}</a>
-                        {% endfor %}
-                    </p>
-                {% endif %}
+            <div class="search-group">
+                <h2>
+                    <a href="#{{ category.id }}" id="{{ category.id }}" class="anchor"><span></span></a>
+                    <a href="{% url "fermentable_category" category.id %}" class="text-body">{{ category.name }}</a>
+                </h2>
+                <div class="mb-4">
+                    {% if category.most_popular %}
+                        <p class="badge-list search-hide"><label>Most popular:</label>
+                            {% for fermentable in category.most_popular %}
+                                {% if forloop.counter0 > 0 %}<span class="d-none">, </span>{% endif %}
+                                <a class="badge" href="{{ fermentable|url }}">{{ fermentable.name }}</a>
+                            {% endfor %}
+                        </p>
+                    {% endif %}
 
-                {% if category.fermentables %}
-                    <ul class="column-list">
-                        {% for fermentable in category.fermentables %}
-                            <li>
-                                {% if fermentable.is_popular %}<strong>{% endif %}<a href="{{ fermentable|url }}">{{ fermentable.name }}</a>{% if fermentable.is_popular %}</strong>{% endif %}
-                                <small class="recipes-count" title="Recipes">{{ fermentable.recipes_count }}</small>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+                    {% if category.fermentables %}
+                        <ul class="column-list">
+                            {% for fermentable in category.fermentables %}
+                                <li data-search-term="{{ fermentable.name }}{% if fermentable.alt_names %}, {{ fermentable.alt_names }}{% endif %}">
+                                    {% if fermentable.is_popular %}<strong>{% endif %}<a href="{{ fermentable|url }}">{{ fermentable.name }}</a>{% if fermentable.is_popular %}</strong>{% endif %}
+                                    <small class="recipes-count" title="Recipes">{{ fermentable.recipes_count }}</small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
 
-                {% if category.types %}
-                    {% for type in category.types %}
-                        <h3>
-                            <a href="#{{ type.id }}" id="{{ type.id }}" class="anchor"><span></span></a>
-                            {{ type.name }}
-                        </h3>
-                        {% if type.fermentables %}
-                            <ul class="column-list">
-                                {% for fermentable in type.fermentables %}
-                                    <li>
-                                        {% if fermentable.is_popular %}<strong>{% endif %}<a href="{{ fermentable|url }}">{{ fermentable.name }}</a>{% if fermentable.is_popular %}</strong>{% endif %}
-                                        <small class="recipes-count" title="Recipes">{{ fermentable.recipes_count }}</small>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
+                    {% if category.types %}
+                        {% for type in category.types %}
+                            <div class="search-group">
+                                <h3>
+                                    <a href="#{{ type.id }}" id="{{ type.id }}" class="anchor"><span></span></a>
+                                    {{ type.name }}
+                                </h3>
+                                {% if type.fermentables %}
+                                    <ul class="column-list">
+                                        {% for fermentable in type.fermentables %}
+                                            <li data-search-term="{{ fermentable.name }}{% if fermentable.alt_names %}, {{ fermentable.alt_names }}{% endif %}">
+                                                {% if fermentable.is_popular %}<strong>{% endif %}<a href="{{ fermentable|url }}">{{ fermentable.name }}</a>{% if fermentable.is_popular %}</strong>{% endif %}
+                                                <small class="recipes-count" title="Recipes">{{ fermentable.recipes_count }}</small>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
             </div>
         {% endfor %}
     </div>

@@ -1,6 +1,7 @@
 import Tab from 'bootstrap/js/dist/tab'
 import {DetailList} from "./lists"
 import {Chart, Recipes} from "./results";
+import {SearchBox} from "./search";
 
 document.addEventListener("DOMContentLoaded", function() {
     // Init tabs
@@ -18,4 +19,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Init recipes lists
     document.querySelectorAll("[data-recipes]")
         .forEach(recipesNode => new Recipes(recipesNode))
+
+    // Init search boxes
+    document.querySelectorAll("form[data-search-target]")
+        .forEach(formNode => new SearchBox(formNode))
 })

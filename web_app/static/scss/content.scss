@@ -221,6 +221,33 @@ h2, h3 {
 }
 
 
+// Search
+
+.search-filtered {
+    // Elements that should be hidden when a search result is shown
+    .search-hide {
+        display: none;
+    }
+
+    // Hide search items and containers that are not flagged "matched"
+    .search-group,
+    .search-item {
+        &:not(.search-match) {
+            display: none;
+        }
+    }
+}
+
+.search-no-result {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    font-size: 1.5rem;
+    line-height: 100%;
+    color: $gray-500;
+}
+
+
 // Static content
 
 .about-logo {

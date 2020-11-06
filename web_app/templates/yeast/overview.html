@@ -24,61 +24,67 @@
         among brewers, yeast that have proven to deliver solid results.
     </p>
 
-    <form class="search d-none">
+    <form class="search" data-search-target="yeasts-overview">
         <p>
             <label for="input-search" class="visually-hidden">Search yeasts</label>
             <input type="search" class="search-term form-control" id="input-search" placeholder="Search yeasts">
         </p>
     </form>
 
-    <div class="yeasts-overview">
+    <div id="yeasts-overview">
         {% for type in types %}
-            <h2>
-                <a href="#{{ type.id }}" id="{{ type.id }}" class="anchor"><span></span></a>
-                <a href="{% url "yeast_type" type.id %}" class="text-body">{{ type.name }}</a>
-            </h2>
-            <div class="mb-4">
-                {% if type.most_popular %}
-                    <p class="badge-list"><label>Most popular:</label>
-                        {% for yeast in type.most_popular %}
-                            {% if forloop.counter0 > 0 %}<span class="d-none">, </span>{% endif %}
-                            <a class="badge" href="
-                                {{ yeast|url }}">{{ yeast.full_name }}
-                                {% if yeast.has_extra_product_id %}({{ yeast.product_id }}){% endif %}
-                            </a>
-                        {% endfor %}
-                    </p>
-                {% endif %}
-
-                {% for lab in type.labs %}
-                    <h3>{{ lab.name }}</h3>
-                    {% if lab.yeasts %}
-                        <ul class="column-list-wide">
-                            {% for yeast in lab.yeasts %}
-                                <li>
-                                    {% if yeast.is_popular %}<strong>{% endif %}<a href="{{ yeast|url }}">{{ yeast.product_name }}</a>{% if yeast.is_popular %}</strong>{% endif %}
-                                    {% if yeast.has_extra_product_id %}<small class="text-muted">({{ yeast.product_id }})</small>{% endif %}
-                                    <small class="recipes-count" title="Recipes">{{ yeast.recipes_count }}</small>
-                                </li>
+            <div class="search-group">
+                <h2>
+                    <a href="#{{ type.id }}" id="{{ type.id }}" class="anchor"><span></span></a>
+                    <a href="{% url "yeast_type" type.id %}" class="text-body">{{ type.name }}</a>
+                </h2>
+                <div class="mb-4">
+                    {% if type.most_popular %}
+                        <p class="badge-list search-hide"><label>Most popular:</label>
+                            {% for yeast in type.most_popular %}
+                                {% if forloop.counter0 > 0 %}<span class="d-none">, </span>{% endif %}
+                                <a class="badge" href="
+                                    {{ yeast|url }}">{{ yeast.full_name }}
+                                    {% if yeast.has_extra_product_id %}({{ yeast.product_id }}){% endif %}
+                                </a>
                             {% endfor %}
-                        </ul>
+                        </p>
                     {% endif %}
-                {% endfor %}
 
-                {% if type.yeasts %}
-                    {% if type.labs %}
-                        <h3>Other</h3>
+                    {% for lab in type.labs %}
+                        <div class="search-group">
+                            <h3>{{ lab.name }}</h3>
+                            {% if lab.yeasts %}
+                                <ul class="column-list-wide">
+                                    {% for yeast in lab.yeasts %}
+                                        <li data-search-term="{{ yeast.full_name }}{% if yeast.alt_names %}, {{ yeast.alt_names }}{% endif %}{% if yeast.has_extra_product_id %}, {{ yeast.product_id }}{% endif %}">
+                                            {% if yeast.is_popular %}<strong>{% endif %}<a href="{{ yeast|url }}">{{ yeast.product_name }}</a>{% if yeast.is_popular %}</strong>{% endif %}
+                                            {% if yeast.has_extra_product_id %}<small class="text-muted">({{ yeast.product_id }})</small>{% endif %}
+                                            <small class="recipes-count" title="Recipes">{{ yeast.recipes_count }}</small>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    {% if type.yeasts %}
+                        <div class="search-group">
+                            {% if type.labs %}
+                                <h3>Other</h3>
+                            {% endif %}
+                            <ul class="column-list-wide">
+                                {% for yeast in type.yeasts %}
+                                    <li data-search-term="{{ yeast.full_name }}{% if yeast.alt_names %}, {{ yeast.alt_names }}{% endif %}{% if yeast.has_extra_product_id %}, {{ yeast.product_id }}{% endif %}">
+                                        {% if yeast.is_popular %}<strong>{% endif %}<a href="{{ yeast|url }}">{{ yeast.full_name }}</a>{% if yeast.is_popular %}</strong>{% endif %}
+                                        {% if yeast.has_extra_product_id %}<small class="text-muted">({{ yeast.product_id }})</small>{% endif %}
+                                        <small class="recipes-count" title="Recipes">{{ yeast.recipes_count }}</small>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     {% endif %}
-                    <ul class="column-list-wide">
-                        {% for yeast in type.yeasts %}
-                            <li>
-                                {% if yeast.is_popular %}<strong>{% endif %}<a href="{{ yeast|url }}">{{ yeast.full_name }}</a>{% if yeast.is_popular %}</strong>{% endif %}
-                                {% if yeast.has_extra_product_id %}<small class="text-muted">({{ yeast.product_id }})</small>{% endif %}
-                                <small class="recipes-count" title="Recipes">{{ yeast.recipes_count }}</small>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+                </div>
             </div>
         {% endfor %}
     </div>

@@ -20,35 +20,37 @@
         You'll see alternative names in the &quot;includes&quot; list on hop detail pages.
     </p>
 
-    <form class="search d-none">
+    <form class="search" data-search-target="hops-overview">
         <p>
             <label for="input-search" class="visually-hidden">Search hops</label>
             <input type="search" class="search-term form-control" id="input-search" placeholder="Search hops">
         </p>
     </form>
 
-    <div class="hops-overview">
+    <div id="hops-overview">
         {% for category in categories %}
-            <h2>
-                <a href="#{{ category.id }}" id="{{ category.id }}" class="anchor"><span></span></a>
-                <a href="{% url "hop_category" category.id %}" class="text-body">{{ category.name }}</a>
-            </h2>
-            <div class="mb-4">
-                <p class="badge-list"><label>Most popular:</label>
-                    {% for hop in category.most_popular %}
-                        {% if forloop.counter0 > 0 %}<span class="d-none">, </span>{% endif %}
-                        <a class="badge" href="{{ hop|url }}">{{ hop.name }}</a>
-                    {% endfor %}
-                </p>
+            <div class="search-group">
+                <h2>
+                    <a href="#{{ category.id }}" id="{{ category.id }}" class="anchor"><span></span></a>
+                    <a href="{% url "hop_category" category.id %}" class="text-body">{{ category.name }}</a>
+                </h2>
+                <div class="mb-4">
+                    <p class="badge-list search-hide"><label>Most popular:</label>
+                        {% for hop in category.most_popular %}
+                            {% if forloop.counter0 > 0 %}<span class="d-none">, </span>{% endif %}
+                            <a class="badge" href="{{ hop|url }}">{{ hop.name }}</a>
+                        {% endfor %}
+                    </p>
 
-                <ul class="column-list">
-                    {% for hop in category.hops %}
-                        <li data-search-term="{{ hop.name }}">
-                            {% if hop.is_popular %}<strong>{% endif %}<a href="{{ hop|url }}">{{ hop.name }}</a>{% if hop.is_popular %}</strong>{% endif %}
-                            <small class="recipes-count" title="Recipes">{{ hop.recipes_count }}</small>
-                        </li>
-                    {% endfor %}
-                </ul>
+                    <ul class="column-list">
+                        {% for hop in category.hops %}
+                            <li data-search-term="{{ hop.name }}{% if hop.alt_names %}, {{ hop.alt_names }}{% endif %}">
+                                {% if hop.is_popular %}<strong>{% endif %}<a href="{{ hop|url }}">{{ hop.name }}</a>{% if hop.is_popular %}</strong>{% endif %}
+                                <small class="recipes-count" title="Recipes">{{ hop.recipes_count }}</small>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         {% endfor %}
     </div>
