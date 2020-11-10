@@ -106,6 +106,7 @@ export class SearchBox {
         if (!(input instanceof HTMLInputElement)) {
             return
         }
+        input.focus()
 
         this.searchItemsContainer = document.getElementById(searchForm.dataset['searchTarget'])
         if (null === this.searchItemsContainer) {
