@@ -6,34 +6,39 @@ function delay(fn: Function, ms: number) {
     }
 }
 
-class SearchGroup {
-    private readonly element: HTMLElement
+abstract class SearchElement {
+    public readonly element: HTMLElement
 
     constructor(element: HTMLElement) {
         this.element = element
     }
 
-    public isMatching(): boolean {
-        // Has a matching search item contained
-        return null !== this.element.querySelector('.search-item.search-match')
-    }
+    public abstract isShown(): boolean
 
     public refreshView(): void {
-        if (this.isMatching()) {
-            this.element.classList.add('search-match')
+        if (this.isShown()) {
+            this.element.classList.add('search-show')
         } else {
-            this.element.classList.remove('search-match')
+            this.element.classList.remove('search-show')
         }
     }
 }
 
-class SearchItem {
-    private readonly element: HTMLElement
-    private matching: boolean = false
+class SearchGroup extends SearchElement {
+    public isShown(): boolean {
+        // Has a matching search item contained
+        return null !== this.element.querySelector('.search-item.search-show')
+    }
+}
+
+class SearchItem extends SearchElement {
     private readonly term: string = ''
+    private termMatching: boolean = false
+    private children: Set<SearchItem> = new Set<SearchItem>()
+    private parents: Set<SearchItem> = new Set<SearchItem>()
 
     constructor(element: HTMLElement) {
-        this.element = element
+        super(element)
         this.element.classList.add('search-item')
 
         let dataTerm = element.dataset['searchTerm'];
@@ -42,29 +47,53 @@ class SearchItem {
         }
     }
 
-    public isMatching(): boolean {
-        return this.matching
+    public addChildItem(searchItem: SearchItem) {
+        this.children.add(searchItem)
+    }
+
+    public addParentItem(searchItem: SearchItem) {
+        this.parents.add(searchItem)
     }
 
     public applySearchTerm(term: string): void {
-        this.matching = this.term.indexOf(term) >= 0
+        if (term.length > 0) {
+            this.termMatching = this.term.indexOf(term) >= 0
+        } else {
+            this.termMatching = false
+        }
     }
 
-    public refreshView(): void {
-        if (this.isMatching()) {
-            this.element.classList.add('search-match')
-        } else {
-            this.element.classList.remove('search-match')
+    public isTermMatching(): boolean {
+        return this.termMatching
+    }
+
+    public isShown(): boolean {
+        if (this.termMatching) {
+            return true
         }
+
+        if (this.childrenIsTermMatching()) {
+            return true
+        }
+
+        return this.parentsIsTermMatching()
+    }
+
+    private childrenIsTermMatching() {
+        return [...this.children].reduce((result, searchItem: SearchItem) => result || searchItem.isTermMatching(), false);
+    }
+
+    private parentsIsTermMatching() {
+        return [...this.parents].reduce((result, searchItem: SearchItem) => result || searchItem.isTermMatching(), false);
     }
 }
 
 export class SearchBox {
-    private searchItems: SearchItem[];
-    private searchGroups: SearchGroup[];
-    private noResultElement: HTMLParagraphElement;
-    private readonly searchItemsContainer: HTMLElement;
-    private searchTerm: string;
+    private readonly searchItems: Map<string, SearchItem>
+    private readonly searchGroups: SearchGroup[]
+    private readonly searchItemsContainer: HTMLElement
+    private noResultElement: HTMLParagraphElement
+    private searchTerm: string
 
     constructor(searchForm: Element) {
         if (!(searchForm instanceof HTMLFormElement)) {
@@ -83,14 +112,34 @@ export class SearchBox {
             return
         }
 
+        // Collect all search terms
+        let idInc = 0
         const searchItemElements = this.searchItemsContainer.querySelectorAll('[data-search-term]')
-        this.searchItems = Array<SearchItem>()
+        this.searchItems = new Map<string, SearchItem>()
         searchItemElements.forEach(function (elem: Element) {
             if (elem instanceof HTMLElement) {
-                this.searchItems.push(new SearchItem(elem))
+                // Assign a unique id, if there is none
+                if (null === elem.id || '' === elem.id) {
+                    elem.id = 'search-'+(++idInc)
+                }
+                this.searchItems.set(elem.id, new SearchItem(elem))
             }
         }, this)
 
+        // Add SearchItems as children to their respective parent SearchItems and reverse
+        this.searchItems.forEach(function (searchItem: SearchItem): void {
+            let node: Node = searchItem.element;
+            while (node !== document) {
+                node = node.parentNode
+                if (node instanceof HTMLElement && this.searchItems.has(node.id)) {
+                    let parentSearchItem = this.searchItems.get(node.id)
+                    parentSearchItem.addChildItem(searchItem)
+                    searchItem.addParentItem(parentSearchItem)
+                }
+            }
+        }, this)
+
+        // Collect all search group elements (only shown when they contain a matching search term)
         const searchGroupElements = this.searchItemsContainer.querySelectorAll('.search-group')
         this.searchGroups = Array<SearchGroup>()
         searchGroupElements.forEach(function (elem: Element) {
@@ -133,12 +182,16 @@ export class SearchBox {
             this.searchItemsContainer.classList.remove('search-filtered')
         }
 
-        // Execute search, refresh search items view
-        let hasAnyMatch = false
+        // Execute search
         this.searchItems.forEach(function (searchItem: SearchItem) {
             searchItem.applySearchTerm(this.searchTerm)
+        }, this)
+
+        // refresh search items view
+        let hasAnyMatch = false
+        this.searchItems.forEach(function (searchItem: SearchItem) {
             searchItem.refreshView()
-            hasAnyMatch = hasAnyMatch || searchItem.isMatching()
+            hasAnyMatch = hasAnyMatch || searchItem.isShown()
         }, this)
 
         // Refresh view of search groups

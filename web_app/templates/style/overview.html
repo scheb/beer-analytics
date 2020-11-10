@@ -18,28 +18,28 @@
         {% endfor %}
     </p>
 
-    <form class="search d-none">
+    <form class="search" data-search-target="styles-overview">
         <p>
             <label for="input-search" class="visually-hidden">Search styles</label>
             <input type="search" class="search-term form-control" id="input-search" placeholder="Search styles">
         </p>
     </form>
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 styles-overview">
+    <div id="styles-overview" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
         {% for category in categories %}
-            <div class="col">
+            <div class="col search-group">
                 <div class="card" data-search-term="{{ category.name }}{% if category.alt_names %}, {{ category.alt_names }}{% endif %}">
                     <div class="card-header">
                         <h2 class="h5 p-0 m-0"><a href="{{ category|url }}" class="text-body">{{ category.name }}</a></h2>
                     </div>
-                    <ul class="list-group list-group-flush">
+                    <ul class="search-group list-group list-group-flush">
                         {% for style1 in category.sub_styles %}
                             <li class="list-group-item" data-search-term="{{ style1.name }}{% if style1.alt_names %}, {{ style1.alt_names }}{% endif %}">
                                 {% if style1.recipes_count %}<span class="recipes-count" title="Recipes">{{ style1.recipes_count }}</span>{% endif %}
                                 {% if style1.is_popular %}<strong>{% endif %}<a href="{{ style1|url }}">{{ style1.name }}</a>{% if style1.is_popular %}</strong>{% endif %}
 
                                 {% if style1.has_sub_styles %}
-                                    <ul class="list-unstyled mt-1 ml-2">
+                                    <ul class="search-group list-unstyled mt-1 ml-2">
                                         {% for style2 in style1.sub_styles %}
                                             <li data-search-term="{{ style2.name }}{% if style2.alt_names %}, {{ style2.alt_names }}{% endif %}">
                                                 {% if style2.recipes_count %}<span class="recipes-count" title="Recipes">{{ style2.recipes_count }}</span>{% endif %}
