@@ -31,12 +31,12 @@ Application Setup
 - virtualenv (ideally)
 - yarn (JS package manager)
 
-### Steps
+### Setup Steps
 
 - Install yarn dependencies: `yarn install`
 - Initialize `virtualenv` and enable it
 - Install Python dependencies: `pip -r requirements.txt`
-- Configure the application (see below)
+- Create a configuration file (see below)
 - Apply database migrations to creates tables: `python manage.py makemigrations` and `python manage.py migrate`
 - Load initial data (known styles and ingredients) via `python manage.py load_initial_data`
 
@@ -44,8 +44,8 @@ Application Setup
 
 Provide a `.env` file in the `beer_analytics` folder. An example can be found in `beer_analytics/.env.example`.
 
-Per default the application starts with "dev" settings, which is likely what you want. Use `DJANGO_SETTINGS_MODULE` to
-use different settings according to the environment:
+Per default the application starts with "dev" settings, which is likely what you want. Use the `DJANGO_SETTINGS_MODULE`
+environment variable to use different settings according to the environment:
 
 ```
 # Dev settings
@@ -54,6 +54,18 @@ DJANGO_SETTINGS_MODULE=beer_analytics.settings_dev
 # Production settings
 DJANGO_SETTINGS_MODULE=beer_analytics.settings_prod
 ```
+
+### Development
+
+To start the application for development run
+
+`python manage.py runserver`
+
+to start a webserver at `localhost:8000` and in a second terminal run
+
+`yarn start`
+
+to start the Webpack dev server to compile CSS and JS files.
 
 Recipe data
 -----------
