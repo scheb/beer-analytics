@@ -138,7 +138,7 @@ h2, h3 {
     margin-left: 0.5rem;
 }
 
-.styles-overview {
+#styles-overview {
     .recipes-count {
         float: right;
     }
@@ -155,7 +155,7 @@ h2, h3 {
 
 // Style overview
 @include media-breakpoint-down('md') {
-    .styles-overview ul ul {
+    #styles-overview ul ul {
         // More space to make links easier to click on mobile
         line-height: 1.8;
     }
@@ -232,9 +232,16 @@ h2, h3 {
     // Hide search items and containers that are not flagged "matched"
     .search-group,
     .search-item {
-        &:not(.search-match) {
+        &:not(.search-show) {
             display: none;
         }
+
+        //// Any search item within a matching search item is shown
+        //&.search-show {
+        //    .search-item {
+        //        display: block;
+        //    }
+        //}
     }
 }
 
