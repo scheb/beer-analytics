@@ -1,13 +1,12 @@
-import Tab from 'bootstrap/js/dist/tab'
-import Collapse from "bootstrap/js/dist/collapse";
 import {DetailList} from "./lists"
 import {Chart, Recipes} from "./results"
 import {SearchBox} from "./search"
+import {Collapse, Tab} from "bootstrap"
 
 document.addEventListener("DOMContentLoaded", function() {
     // Init navigation toggle
     document.querySelectorAll('[data-toggle="collapse"]')
-        .forEach(tabNode => new Collapse(tabNode))
+        .forEach(toggleNode => new Collapse(toggleNode))
 
     // Init tabs
     document.querySelectorAll('.tabs')
