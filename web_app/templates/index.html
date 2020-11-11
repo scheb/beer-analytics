@@ -30,7 +30,7 @@
         <a href="{{ "idaho-7"|hop|url }}">Idaho 7</a> and <a href="{{ "cashmere"|hop|url }}">Cashmere</a> have been
         popular last year, but it seems the trend has reached it's peak.
     </p>
-    <div id="chart-increasing-popularity-hops" class="chart-m">
+    <div class="chart-m" data-chart="{% url "trend_chart" "increasing-popularity-hops" "json" %}">
         <noscript>
             <img src="{% url "trend_chart" "increasing-popularity-hops" "svg" %}" alt="Trending hops, popularity currently increasing"/>
         </noscript>
@@ -40,7 +40,7 @@
         <a href="{{ "lemondrop"|hop|url }}">Lemondrop</a> have been trending since 2017, but their popularity is now
         plateauing.
     </p>
-    <div id="chart-plateauing-popularity-hops" class="chart-m">
+    <div class="chart-m" data-chart="{% url "trend_chart" "plateauing-popularity-hops" "json" %}">
         <noscript>
             <img src="{% url "trend_chart" "plateauing-popularity-hops" "svg" %}" alt="Previously trending hops, popularity currently plateauing"/>
         </noscript>
@@ -57,7 +57,7 @@
         some of the most used hop kinds.
     </p>
 
-    <div id="chart-favourite-hops" class="chart-m">
+    <div class="chart-m" data-chart="{% url "trend_chart" "favourite-hops" "json" %}">
         <noscript>
             <img src="{% url "trend_chart" "favourite-hops" "svg" %}" alt="All-time favourite hops"/>
         </noscript>
@@ -70,7 +70,7 @@
         <a href="{{ "20"|style|url }}">Porter and Stouts</a> and they're mashing in seasonal
         <a href="{{ "30"|style|url }}">spiced beers</a>.
     </p>
-    <div id="chart-winter-styles" class="chart-m">
+    <div class="chart-m" data-chart="{% url "trend_chart" "winter-styles" "json" %}">
         <noscript>
             <img src="{% url "trend_chart" "winter-styles" "svg" %}" alt="Trending winter beer styles"/>
         </noscript>
@@ -81,7 +81,7 @@
         <a href="{{ "02A"|style|url }}">International Pale Lager</a> and <a href="{{ "12C"|style|url }}">English IPA</a>
         are growing slightly.
     </p>
-    <div id="chart-trending-styles" class="chart-m">
+    <div class="chart-m" data-chart="{% url "trend_chart" "trending-styles" "json" %}">
         <noscript>
             <img src="{% url "trend_chart" "trending-styles" "svg" %}" alt="Trending beer styles"/>
         </noscript>
@@ -89,26 +89,10 @@
 
     <h3>Fermentables</h3>
     <p>People are brewing less and less with <a href="{{ "malt-extract"|fermentable|url }}">malt extract</a> and are switching to all-grain instead.</p>
-    <div id="chart-malt-extract" class="chart-m">
+    <div class="chart-m" data-chart="{{ "malt-extract"|fermentable|chart_js:"popularity" }}">
         <noscript>
             {{ "malt-extract"|fermentable|chart_image:"popularity"|safe }}
         </noscript>
     </div>
 
-{% endblock %}
-
-{% block script %}
-<script>
-window.addEventListener('load', function ()
-{
-    display_graph('chart-trending-styles', '{% url "trend_chart" "trending-styles" "json" %}');
-    display_graph('chart-winter-styles', '{% url "trend_chart" "winter-styles" "json" %}');
-
-    display_graph('chart-increasing-popularity-hops', '{% url "trend_chart" "increasing-popularity-hops" "json" %}');
-    display_graph('chart-plateauing-popularity-hops', '{% url "trend_chart" "plateauing-popularity-hops" "json" %}');
-    display_graph('chart-favourite-hops', '{% url "trend_chart" "favourite-hops" "json" %}');
-
-    display_graph('chart-malt-extract', '{{ "malt-extract"|fermentable|chart_js:"popularity" }}');
-});
-</script>
 {% endblock %}
