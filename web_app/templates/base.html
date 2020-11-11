@@ -39,7 +39,7 @@
                     <li class="nav-item"><a class="nav-link{% if url_name|startswith:'fermentable' %} active{% endif %}" href="{% url "fermentable_overview" %}"><span class="nav-icon icon-fermentable"></span>Fermentables</a></li>
                     <li class="nav-item"><a class="nav-link{% if url_name|startswith:'hop' %} active{% endif %}" href="{% url "hop_overview" %}"><span class="nav-icon icon-hop"></span>Hops</a></li>
                     <li class="nav-item"><a class="nav-link{% if url_name|startswith:'yeast' %} active{% endif %}" href="{% url "yeast_overview" %}"><span class="nav-icon icon-yeast"></span>Yeasts</a></li>
-{#                    <li class="nav-item"><a class="nav-link{% if url_name|startswith:'trends' %} active{% endif %}" href="{% url "trend_overview" %}"><span class="nav-icon icon-trend"></span>Trends</a></li>#}
+                    <li class="nav-item"><a class="nav-link{% if url_name|startswith:'trend' %} active{% endif %}" href="{% url "trend_overview" %}"><span class="nav-icon icon-trend"></span>Trends</a></li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link{% if url_name == 'about' %} active{% endif %}" href="{% url "about" %}">About</a></li>
