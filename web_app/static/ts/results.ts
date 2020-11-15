@@ -35,6 +35,21 @@ export class Chart {
         }
 
         const chartConfig = new ChartConfig()
+        if (undefined !== container.dataset['chartOptions']) {
+            try {
+                let options = JSON.parse(container.dataset['chartOptions'])
+                if (undefined !== options.displayModeBar) {
+                    chartConfig.displayModeBar = !!options.displayModeBar
+                }
+                if (undefined !== options.noDataText) {
+                    chartConfig.noDataText = options.noDataText
+                }
+            } catch (e) {
+                // JSON syntax error, ignore
+                console.log(container.dataset['chartOptions'], e)
+            }
+        }
+
         const chart = new ChartMount(container, container.dataset['chart'], chartConfig)
 
         if (container.id !== undefined) {

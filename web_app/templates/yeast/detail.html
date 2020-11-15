@@ -134,7 +134,7 @@
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Trending Hops</h2>
             </div>
             <div class="card-body">
-                <div class="chart-m" data-chart="{{ yeast|chart_js:chart_type }}">
+                <div class="chart-m" data-chart="{{ yeast|chart_js:chart_type }}" data-chart-options='{"noDataText":"No trends detected"}'>
                     <noscript>
                         {{ yeast|chart_image:chart_type|safe }}
                     </noscript>
