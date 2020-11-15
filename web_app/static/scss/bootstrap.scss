@@ -2,24 +2,23 @@
 
 $black: #000;
 $white: #fff;
-$theme-color-interval: 8%;
 $primary: #d07330;
 $secondary: #e29b1f;
 
 $gray: #877c74;
-$gray-25: tint-color($gray, 11);
-$gray-50: tint-color($gray, 10.5);
-$gray-100: tint-color($gray, 8);
-$gray-200: tint-color($gray, 6);
-$gray-300: tint-color($gray, 4);
-$gray-400: tint-color($gray, 2);
-$gray-500: color-level($gray, 0);
-$gray-600: shade-color($gray, 2);
-$gray-700: shade-color($gray, 4);
-$gray-800: shade-color($gray, 6);
-$gray-900: shade-color($gray, 8);
+$gray-25: tint-color($gray, 88%);
+$gray-50: tint-color($gray, 84%);
+$gray-100: tint-color($gray, 64%);
+$gray-200: tint-color($gray, 48%);
+$gray-300: tint-color($gray, 32%);
+$gray-400: tint-color($gray, 16%);
+$gray-500: $gray;
+$gray-600: shade-color($gray, 16%);
+$gray-700: shade-color($gray, 32%);
+$gray-800: shade-color($gray, 48%);
+$gray-900: shade-color($gray, 64%);
 
-$primary-light: tint-color($primary, 8);
+$primary-light: tint-color($primary, 64%);
 
 $theme-colors: (
     "primary": $primary,
@@ -29,7 +28,7 @@ $theme-colors: (
     "dark": $gray-800,
 );
 
-$link-color: shade-color($primary, 2);
+$link-color: shade-color($primary, 16%);
 
 // Configuration
 @import "~bootstrap/scss/variables";
