@@ -14,7 +14,7 @@
                     &lt; {{ hop.recipes_alpha_max|floatformat:1 }} <small class="text-muted">%</small>
                 </div>
                 <div class="card-footer bg-transparent">
-                    <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options="{displayModeBar:false}">
+                    <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options='{"displayModeBar":false}'>
                         <noscript>
                             {{ hop|chart_image:chart_type|safe }}
                         </noscript>
@@ -34,7 +34,7 @@
                     &lt; {{ hop.recipes_beta_max|floatformat:1 }} <small class="text-muted">%</small>
                 </div>
                 <div class="card-footer bg-transparent">
-                    <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options="{displayModeBar:false}">
+                    <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options='{"displayModeBar":false}'>
                         <noscript>
                             {{ hop|chart_image:chart_type|safe }}
                         </noscript>
@@ -56,7 +56,7 @@
                     {% endif %}
                 </div>
                 <div class="card-footer bg-transparent">
-                    <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options="{displayModeBar:false}">
+                    <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options='{"displayModeBar":false}'>
                         <noscript>
                             {{ hop|chart_image:chart_type|safe }}
                         </noscript>
@@ -74,7 +74,7 @@
                     <strong>{{ hop.category_name }} Hop</strong>
                 </div>
                 <div class="card-footer bg-transparent">
-                    <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options="{displayModeBar:false}">
+                    <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options='{"displayModeBar":false}'>
                         <noscript>
                             {{ hop|chart_image:chart_type|safe }}
                         </noscript>
