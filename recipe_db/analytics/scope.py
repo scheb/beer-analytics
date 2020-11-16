@@ -268,12 +268,19 @@ class FermentableProjection(FermentableCriteriaMixin):
 class YeastProjection(YeastCriteriaMixin):
     def __init__(self) -> None:
         self._yeasts = []
+        self.types = []
 
     def get_filter(self) -> Filter:
         filters = []
 
         if len(self.yeasts) > 0:
             filters.append(self.get_yeast_filter())
+
+        if len(self.types) > 0:
+            (query_string, parameters) = in_filter('y.type', self.types)
+            query_string = 'ry.kind_id IN (SELECT y.id FROM recipe_db_yeast AS y WHERE {})'.format(
+                query_string)
+            filters.append((query_string, parameters))
 
         return Filter(filters)
 
