@@ -141,7 +141,7 @@
         <section class="card card-chart">
             <div class="card-header">
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Typical Amount of Hops</h2>
-                <nav id="chart-{{ chart_type }}-tabs" class="d-none">
+                <nav class="d-none" data-chart-navigation="chart-{{ chart_type }}">
                     <label>Used for:</label>
                     <ul class="nav" role="tablist">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="">Any</a></li>
@@ -152,7 +152,7 @@
                 </nav>
             </div>
             <div class="card-body">
-                <div class="chart-l" data-chart="{{ style|chart_js:chart_type }}">
+                <div id="chart-{{ chart_type }}" class="chart-l" data-chart="{{ style|chart_js:chart_type }}">
                     <noscript>
                         {{ style|chart_image:chart_type|safe }}
                     </noscript>
@@ -223,7 +223,7 @@
         <section class="card card-chart">
             <div class="card-header">
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Typical Amount of Fermentables</h2>
-                <nav id="chart-{{ chart_type }}-tabs" class="d-none">
+                <nav class="d-none" data-chart-navigation="chart-{{ chart_type }}">
                     <label>Type:</label>
                     <ul class="nav" role="tablist">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="">Any</a></li>
@@ -238,7 +238,7 @@
                 </nav>
             </div>
             <div class="card-body">
-                <div class="chart-l" data-chart="{{ style|chart_js:chart_type }}">
+                <div id="chart-{{ chart_type }}" class="chart-l" data-chart="{{ style|chart_js:chart_type }}">
                     <noscript>
                         {{ style|chart_image:chart_type|safe }}
                     </noscript>
