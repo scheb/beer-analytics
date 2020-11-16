@@ -28,9 +28,9 @@
         <a href="{{ "idaho-7"|hop|url }}">Idaho 7</a> and <a href="{{ "cashmere"|hop|url }}">Cashmere</a> have been
         popular last year, but it seems the trend has reached it's peak.
     </p>
-    <div class="chart-m" data-chart="{% url "trend_chart" "increasing-popularity-hops" "json" %}">
+    <div class="chart-m" data-chart="{% url "home_chart" "increasing-popularity-hops" "json" %}">
         <noscript>
-            <img src="{% url "trend_chart" "increasing-popularity-hops" "svg" %}" alt="Trending hops, popularity currently increasing"/>
+            <img src="{% url "home_chart" "increasing-popularity-hops" "svg" %}" alt="Trending hops, popularity currently increasing"/>
         </noscript>
     </div>
     <p class="mt-3">
@@ -38,9 +38,9 @@
         <a href="{{ "lemondrop"|hop|url }}">Lemondrop</a> have been trending since 2017, but their popularity is now
         plateauing.
     </p>
-    <div class="chart-m" data-chart="{% url "trend_chart" "plateauing-popularity-hops" "json" %}">
+    <div class="chart-m" data-chart="{% url "home_chart" "plateauing-popularity-hops" "json" %}">
         <noscript>
-            <img src="{% url "trend_chart" "plateauing-popularity-hops" "svg" %}" alt="Previously trending hops, popularity currently plateauing"/>
+            <img src="{% url "home_chart" "plateauing-popularity-hops" "svg" %}" alt="Previously trending hops, popularity currently plateauing"/>
         </noscript>
     </div>
 
@@ -55,9 +55,9 @@
         some of the most used hop kinds.
     </p>
 
-    <div class="chart-m" data-chart="{% url "trend_chart" "favourite-hops" "json" %}">
+    <div class="chart-m" data-chart="{% url "home_chart" "favourite-hops" "json" %}">
         <noscript>
-            <img src="{% url "trend_chart" "favourite-hops" "svg" %}" alt="All-time favourite hops"/>
+            <img src="{% url "home_chart" "favourite-hops" "svg" %}" alt="All-time favourite hops"/>
         </noscript>
     </div>
 
@@ -68,9 +68,9 @@
         <a href="{{ "20"|style|url }}">Porter and Stouts</a> and they're mashing in seasonal
         <a href="{{ "30"|style|url }}">spiced beers</a>.
     </p>
-    <div class="chart-m" data-chart="{% url "trend_chart" "winter-styles" "json" %}">
+    <div class="chart-m" data-chart="{% url "home_chart" "winter-styles" "json" %}">
         <noscript>
-            <img src="{% url "trend_chart" "winter-styles" "svg" %}" alt="Trending winter beer styles"/>
+            <img src="{% url "home_chart" "winter-styles" "svg" %}" alt="Trending winter beer styles"/>
         </noscript>
     </div>
 
@@ -79,9 +79,9 @@
         <a href="{{ "02A"|style|url }}">International Pale Lager</a> and <a href="{{ "12C"|style|url }}">English IPA</a>
         are growing slightly.
     </p>
-    <div class="chart-m" data-chart="{% url "trend_chart" "trending-styles" "json" %}">
+    <div class="chart-m" data-chart="{% url "home_chart" "trending-styles" "json" %}">
         <noscript>
-            <img src="{% url "trend_chart" "trending-styles" "svg" %}" alt="Trending beer styles"/>
+            <img src="{% url "home_chart" "trending-styles" "svg" %}" alt="Trending beer styles"/>
         </noscript>
     </div>
 

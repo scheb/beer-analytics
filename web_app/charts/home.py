@@ -100,7 +100,7 @@ class FavouriteHopsPopularityChart(ChartDefinition):
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
-class TrendChartFactory:
+class HomeChartFactory:
     CHARTS = dict(
         trending_styles=TrendingStylesChart,
         winter_styles=WinterStylesChart,
