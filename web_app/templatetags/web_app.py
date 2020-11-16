@@ -9,6 +9,7 @@ from recipe_db.models import Style, Hop, Fermentable, Yeast
 from web_app.charts.fermentable import FermentableChartFactory
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.style import StyleChartFactory
+from web_app.charts.trend import TrendChartFactory, TrendPeriod
 from web_app.charts.yeast import YeastChartFactory
 from web_app.views.utils import object_url
 
@@ -70,6 +71,9 @@ def chart_image_url(item: object, chart_type):
 
 @register.filter('chart_image_alt')
 def chart_image_alt(item: object, chart_type):
+    if isinstance(item, TrendPeriod):
+        return TrendChartFactory.get_chart(chart_type, item).get_image_alt()
+
     if isinstance(item, Style):
         return StyleChartFactory.get_chart(item, chart_type).get_image_alt()
 
