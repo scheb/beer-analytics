@@ -143,10 +143,10 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
         # Start date for popularity charts
         smoothened = smoothened[smoothened['month'] >= POPULARITY_START_MONTH]
 
-        # Sort by top kinds
+        # Sort by top styles
         if top_ids is not None:
-            smoothened['kind_id'] = pd.Categorical(smoothened['kind_id'], top_ids)
-            smoothened = smoothened.sort_values(['kind_id', 'month'])
+            smoothened['style_id'] = pd.Categorical(smoothened['style_id'], top_ids)
+            smoothened = smoothened.sort_values(['style_id', 'month'])
 
         smoothened['beer_style'] = smoothened['style_id'].map(get_style_names_dict())
         return smoothened
