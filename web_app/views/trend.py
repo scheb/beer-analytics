@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse, Http404
 from django.shortcuts import render, redirect
 
-from web_app.charts.trend import TrendChartFactory
+from web_app.charts.home import HomeChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.views.utils import render_chart
 
@@ -15,9 +15,9 @@ def overview(request: HttpRequest, period: str) -> HttpResponse:
 
 
 def chart(request: HttpRequest, chart_type: str, format: str) -> HttpResponse:
-    if TrendChartFactory.is_supported_chart(chart_type):
+    if HomeChartFactory.is_supported_chart(chart_type):
         try:
-            chart = TrendChartFactory.plot_chart(chart_type)
+            chart = HomeChartFactory.plot_chart(chart_type)
         except NoDataException:
             return HttpResponse(status=204)
     else:
