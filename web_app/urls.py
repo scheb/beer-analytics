@@ -14,7 +14,9 @@ class ChartFormat:
     def to_url(self, value):
         return str(value)
 
+
 register_converter(ChartFormat, 'cformat')
+
 
 urlpatterns = [
     path('', views.misc.home, name='home'),
@@ -52,5 +54,5 @@ urlpatterns = [
 
     path('trends/', trend.start, name='trend_root'),
     path('trends/<str:period>/', trend.overview, name='trend_overview'),
-    path('trends/<str:chart_type>.<cformat:format>', trend.chart, name='trend_chart'),
+    path('trends/<str:period>/<str:chart_type>.<cformat:format>', trend.chart, name='trend_chart'),
 ]

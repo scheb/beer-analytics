@@ -9,6 +9,10 @@ from recipe_db.analytics import slope
 from recipe_db.models import Yeast
 
 
+def months_ago(top_months: int) -> pd.Timestamp:
+    return pd.Timestamp('now').floor('D') - pd.DateOffset(months=top_months)
+
+
 def get_style_names_dict() -> dict:
     return dict(connection.cursor().execute("SELECT id, name FROM recipe_db_style"))
 
@@ -94,7 +98,7 @@ class RollingAverage:
 
 
 class Trending:
-    def __init__(self, smoothing: RollingAverage, trending_window: int = 12) -> None:
+    def __init__(self, smoothing: RollingAverage, trending_window: int = 24) -> None:
         self.smoothing = smoothing
         self.trending_window = trending_window
 
