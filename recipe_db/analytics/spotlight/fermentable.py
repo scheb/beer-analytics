@@ -8,6 +8,24 @@ from recipe_db.analytics.recipe import RecipesPopularityAnalysis, CommonStylesAn
 from recipe_db.analytics.scope import FermentableScope, RecipeScope, FermentableProjection
 from recipe_db.models import Fermentable, Recipe
 
+TYPE_FILTER_BASE = 'base'
+TYPE_FILTER_CARA_CRYSTAL = 'cara-crystal'
+TYPE_FILTER_TOASTED = 'toasted'
+TYPE_FILTER_ROASTED = 'roasted'
+TYPE_FILTER_OTHER_GRAIN = 'other-grain'
+TYPE_FILTER_SUGAR = 'sugar'
+TYPE_FILTER_FRUIT = 'fruit'
+
+FERMENTABLE_FILTER_TO_TYPES = {
+    TYPE_FILTER_BASE: ([], [Fermentable.BASE]),
+    TYPE_FILTER_CARA_CRYSTAL: ([], [Fermentable.CARA_CRYSTAL]),
+    TYPE_FILTER_TOASTED: ([], [Fermentable.TOASTED]),
+    TYPE_FILTER_ROASTED: ([], [Fermentable.ROASTED]),
+    TYPE_FILTER_OTHER_GRAIN: ([], [Fermentable.OTHER_MALT, Fermentable.ADJUNCT, Fermentable.UNMALTED_ADJUNCT]),
+    TYPE_FILTER_SUGAR: ([Fermentable.SUGAR], []),
+    TYPE_FILTER_FRUIT: ([Fermentable.FRUIT], []),
+}
+
 
 class FermentableAnalysis:
     def __init__(self, fermentable: Fermentable) -> None:

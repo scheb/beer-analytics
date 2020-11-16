@@ -6,7 +6,17 @@ from recipe_db.analytics.hop import HopPairingAnalysis, HopAmountAnalysis, HopAm
 from recipe_db.analytics.recipe import RecipesPopularityAnalysis, CommonStylesAnalysis, RecipesTrendAnalysis, \
     RecipesListAnalysis
 from recipe_db.analytics.scope import RecipeScope, HopProjection, HopScope
-from recipe_db.models import Hop, Recipe
+from recipe_db.models import Hop, Recipe, RecipeHop
+
+USE_FILTER_BITTERING = 'bittering'
+USE_FILTER_AROMA = 'aroma'
+USE_FILTER_DRY_HOP = 'dry-hop'
+
+HOP_FILTER_TO_USES = {
+    USE_FILTER_BITTERING: [RecipeHop.MASH, RecipeHop.FIRST_WORT, RecipeHop.BOIL],
+    USE_FILTER_AROMA: [RecipeHop.AROMA],
+    USE_FILTER_DRY_HOP: [RecipeHop.DRY_HOP],
+}
 
 
 class HopAnalysis:
