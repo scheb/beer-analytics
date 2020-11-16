@@ -20,7 +20,7 @@ register_converter(ChartFormat, 'cformat')
 
 urlpatterns = [
     path('', views.misc.home, name='home'),
-    path('charts/<str:chart_type>.<cformat:format>', trend.chart, name='home_chart'),
+    path('charts/<str:chart_type>.<cformat:format>', views.misc.home_chart, name='home_chart'),
 
     path('legal/', misc.legal, name='legal'),
     path('about/', misc.about, name='about'),
