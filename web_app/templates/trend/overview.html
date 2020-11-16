@@ -2,21 +2,43 @@
 {% load web_app %}
 
 {% block content %}
-    <h1>Trends in Homebrewing</h1>
-    <p>Time frame: 1.5Y, 5Y, All-Time</p>
+    <h1>{% if period == 'seasonal' %}Seasonal{% else %}Recent{% endif %} Trends in Homebrewing</h1>
+    <p>
+        These trends are <strong>automatically filtered</strong> from the data provided by homebrewing recipe databases
+        &ndash; without human review. Sometimes the algorithm is detecting something that isn't really a trend,
+        sometimes trends have different reasons, such as changing availability of ingredients. So please take these
+        results with a healthy amount of skepticism.
+    </p>
+    <p>
+        You can choose between <strong>recent trends</strong> (looking at a 2 year time frame) and <strong>seasonal
+        trends</strong> (looking only at the last 6 months).
+    </p>
+
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link{% if period == 'recent' %} active" aria-current="page{% endif %}" href="{% url "trend_overview" "recent" %}">Recent Trends</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link{% if period == 'seasonal' %} active" aria-current="page{% endif %}" href="{% url "trend_overview" "seasonal" %}">Seasonal Trends</a>
+        </li>
+    </ul>
 
     <h2>Trending Hops</h2>
+
     <h2>Most Popular Hops</h2>
-    <p>Used for: Bittering/Aroma/Dry-Hop</p>
+
+    <p>Used for: Bittering/Aroma/Dry -Hop</p>
 
     <h2>Trending Yeasts</h2>
     <h2>Most Popular Yeasts</h2>
     <p>Type: Ale/Lager/Wheat/Brett</p>
 
     <h2>Trending Styles</h2>
+
     <h2>Most Popular Styles</h2>
 
     <h2>Trending Fermentables</h2>
+
     <h2>Most Popular Fermentables</h2>
 
     <p>
