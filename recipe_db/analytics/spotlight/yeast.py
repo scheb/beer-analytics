@@ -7,6 +7,18 @@ from recipe_db.analytics.recipe import RecipesPopularityAnalysis, CommonStylesAn
 from recipe_db.analytics.scope import RecipeScope, YeastProjection, YeastScope
 from recipe_db.models import Yeast, Recipe
 
+USE_FILTER_ALE = 'ale'
+USE_FILTER_LAGER = 'lager'
+USE_FILTER_WHEAT = 'wheat'
+USE_FILTER_BRETT_BACTERIA = 'brett-bacteria'
+
+YEAST_FILTER_TO_TYPES = {
+    USE_FILTER_ALE: [Yeast.ALE],
+    USE_FILTER_LAGER: [Yeast.LAGER],
+    USE_FILTER_WHEAT: [Yeast.WHEAT],
+    USE_FILTER_BRETT_BACTERIA: [Yeast.BRETT_BACTERIA],
+}
+
 
 class YeastAnalysis:
     def __init__(self, yeast: Yeast) -> None:
