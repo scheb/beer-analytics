@@ -1,13 +1,17 @@
 from django.http import HttpRequest, HttpResponse, Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from web_app.charts.trend import TrendChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.views.utils import render_chart
 
 
-def overview(request: HttpRequest) -> HttpResponse:
-    return render(request, 'trend/overview.html', )
+def start(request: HttpRequest) -> HttpResponse:
+    return redirect('trend_overview', period='recent')
+
+
+def overview(request: HttpRequest, period: str) -> HttpResponse:
+    return render(request, 'trend/overview.html', {'period': period})
 
 
 def chart(request: HttpRequest, chart_type: str, format: str) -> HttpResponse:

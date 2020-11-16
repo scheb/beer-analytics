@@ -48,6 +48,7 @@ urlpatterns = [
     path('yeasts/<str:type_id>/<str:slug>/charts/<str:chart_type>.<cformat:format>', yeast.chart, name='yeast_chart'),
     path('yeasts/<str:type_id>/<str:slug>/recipes/random.json', yeast.recipes, name='yeast_recipes'),
 
-    path('trends/', trend.overview, name='trend_overview'),
+    path('trends/', trend.start, name='trend_root'),
+    path('trends/<str:period>/', trend.overview, name='trend_overview'),
     path('trends/<str:chart_type>.<cformat:format>', trend.chart, name='trend_chart'),
 ]
