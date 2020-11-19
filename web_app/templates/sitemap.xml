@@ -31,7 +31,17 @@
     <url>
         <loc>{{ request.scheme }}://{{ request.get_host }}{% url "yeast_overview" %}</loc>
         <changefreq>weekly</changefreq>
-        <priority>0.1</priority>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "trend_overview" "recent" %}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "trend_overview" "seasonal" %}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.3</priority>
     </url>
     {% for style in styles %}
     <url>
