@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("path");1
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -58,7 +58,16 @@ module.exports = {
                     },
                     'extract-loader',
                     "css-loader",
-                    "sass-loader"
+                    "sass-loader",
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            sassOptions: {
+                                indentWidth: 4,
+                                includePaths :"node_modules/@syncfusion"
+                            },
+                        },
+                    },
                 ]
             }
         ],

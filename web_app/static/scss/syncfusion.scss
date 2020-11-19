@@ -1,0 +1,40 @@
+// Minimal set of CSS required
+@import "~@syncfusion/ej2-icons/styles/bootstrap4.scss";
+
+@import "~@syncfusion/ej2-inputs/styles/input/bootstrap4.scss";
+@import "~@syncfusion/ej2-inputs/styles/textbox/bootstrap4.scss";
+@import "~@syncfusion/ej2-inputs/styles/slider/bootstrap4.scss";
+
+@import '~@syncfusion/ej2-dropdowns/styles/drop-down-base/bootstrap4.scss';
+@import '~@syncfusion/ej2-dropdowns/styles/drop-down-list/bootstrap4.scss';
+@import '~@syncfusion/ej2-dropdowns/styles/drop-down-tree/bootstrap4.scss';
+@import "~@syncfusion/ej2-dropdowns/styles/multi-select/bootstrap4.scss";
+
+@import "~@syncfusion/ej2-popups/styles/bootstrap4.scss";
+@import "~@syncfusion/ej2-buttons/styles/check-box/bootstrap4.scss";
+
+// Overwrite some styles
+.e-control,
+.e-input-group.e-control-wrapper,
+.e-tooltip-wrap .e-tip-content {
+    font-family: $font-family-sans-serif;
+}
+
+.e-multi-select-wrapper .e-delim-values,
+.e-multi-select-wrapper input[type="text"],
+.e-multi-select-wrapper .e-dropdownbase {
+    font-size: 1rem;
+}
+
+.e-control-wrapper.e-slider-container {
+    display: block;
+}
+
+.e-control-wrapper.e-slider-container.e-horizontal {
+    height: 1rem;
+}
+
+.e-control-wrapper.e-slider-container.e-horizontal .e-slider {
+    height: 1rem;
+    top: calc(50% - 0.5rem);
+}
