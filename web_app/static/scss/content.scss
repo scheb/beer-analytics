@@ -235,13 +235,6 @@ h2, h3 {
         &:not(.search-show) {
             display: none;
         }
-
-        //// Any search item within a matching search item is shown
-        //&.search-show {
-        //    .search-item {
-        //        display: block;
-        //    }
-        //}
     }
 }
 
