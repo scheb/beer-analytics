@@ -268,3 +268,15 @@ h2.home {
     border-bottom: none;
     font-size: 1.5rem;
 }
+
+.with-toogle {
+    @include media-breakpoint-up('md') {
+        display: none;
+    }
+}
+
+.with-sidebar {
+    @include media-breakpoint-down('md') {
+        display: none;
+    }
+}
