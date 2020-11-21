@@ -59,3 +59,9 @@ def sitemap(request: HttpRequest) -> HttpResponse:
         'fermentable_chart_types': FermentableChartFactory.get_types(),
         'yeast_chart_types': YeastChartFactory.get_types(),
     }, content_type='text/xml')
+
+
+def analyze(request: HttpRequest) -> HttpResponse:
+    meta = PageMeta.create('Analyze', '', url=reverse('legal'))
+    meta.extra_props = {'robots': 'noindex'}
+    return render(request, 'analyze.html', {'meta': meta})

@@ -132,7 +132,7 @@ class ChartMount {
 class ChartNavigation {
     private navigation: HTMLElement;
 
-    constructor(navigationContainer: Element, onSelect: CallableFunction) {
+    constructor(navigationContainer: Element, onSelect: Function) {
         if (!(navigationContainer instanceof HTMLElement)) {
             return
         }
