@@ -1,28 +1,6 @@
 {% extends 'base.html' %}
 {% load web_app %}
 
-{% block sidebar %}
-<nav class="table-of-contents">
-    <strong>Table of Contents</strong>
-    <ul>
-        <li><a href="#characteristics">Characteristics</a></li>
-        <li><a href="#popularity">Popularity Over Time</a></li>
-
-        <li class="mt-3"><a href="#styles-percent-recipes">Typical Styles (Percent)</a></li>
-        <li><a href="#styles-number-recipes">Typical Styles (Recipes)</a></li>
-
-        <li class="mt-3"><a href="#style-amount">Amount per Style</a></li>
-        <li><a href="#usage-amount">Amount per Use</a></li>
-        <li><a href="#hop-pairings">Common Pairings</a></li>
-
-        <li class="mt-3"><a href="#most-used-yeasts">Most Used Yeasts</a></li>
-        <li><a href="#trending-yeasts">Trending Yeasts</a></li>
-
-        <li class="mt-3"><a href="#recipes">Random Recipes</a></li>
-    </ul>
-</nav>
-{% endblock %}
-
 {% block content %}
     <nav aria-label="breadcrumb" class="mt-3">
         <ol class="breadcrumb">
