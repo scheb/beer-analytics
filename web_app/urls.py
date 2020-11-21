@@ -24,6 +24,7 @@ urlpatterns = [
 
     path('legal/', misc.legal, name='legal'),
     path('about/', misc.about, name='about'),
+    path('analyze/', misc.analyze, name='analyze'),
     path('sitemap.xml', misc.sitemap, name='sitemap'),
 
     path('styles/', style.overview, name='style_overview'),

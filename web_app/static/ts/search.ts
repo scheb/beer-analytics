@@ -1,10 +1,4 @@
-function delay(fn: Function, ms: number) {
-    let timer: any = null
-    return function (...args: any) {
-        clearTimeout(timer)
-        timer = setTimeout(fn.bind(this, ...args), ms || 0)
-    }
-}
+import {delay} from "./utils";
 
 abstract class SearchElement {
     public readonly element: HTMLElement

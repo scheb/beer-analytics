@@ -2,8 +2,7 @@ import {DetailList} from "./lists"
 import {Chart, Recipes} from "./results"
 import {SearchBox} from "./search"
 import {Collapse, Tab} from "bootstrap"
-import {Slider} from '@syncfusion/ej2-inputs'
-import {CheckBoxSelection, MultiSelect} from '@syncfusion/ej2-dropdowns'
+import {Analyzer} from "./filtering";
 
 document.addEventListener("DOMContentLoaded", function() {
     // Init navigation toggle
@@ -30,35 +29,11 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll("form[data-search-target]")
         .forEach(formNode => new SearchBox(formNode))
 
-    // Init recipes lists
-    document.querySelectorAll("[data-range-slider]")
-        .forEach(function (container: HTMLElement) {
-            let defaultObj: Slider = new Slider({
-                // Set the initial range values for slider
-                value: [30, 70],
-                // Set the type to render range slider
-                type: 'Range',
-                // Initialize tooltip with placement and showOn
-                tooltip: { isVisible: true, placement: 'Before', showOn: 'Auto' },
-            })
-            defaultObj.appendTo(container)
+    // Init custom filtering
+    new Analyzer(document.querySelector('main'), () => {
+        // When the result loads, remove active flags from navigation
+        document.getElementById('top-navigation').querySelectorAll('.nav-link').forEach((element: Element) => {
+            element.classList.remove('active')
         })
-
-    MultiSelect.Inject(CheckBoxSelection);
-
-    let listObj1: MultiSelect = new MultiSelect({
-        // set the country data to dataSource property
-        mode: 'CheckBox',
-        // set the placeholder to MultiSelect input element
-        placeholder: 'Filter styles',
-        // set true for enable the selectAll support.
-        // showSelectAll: true,
-        // set true for enable the dropdown icon.
-        showDropDownIcon: true,
-        // set the placeholder to MultiSelect filter input element
-        filterBarPlaceholder: 'Search styles',
-        // set the MultiSelect popup height
-        popupHeight: '350px'
     })
-    listObj1.appendTo('#styleSelect');
 })
