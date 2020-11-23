@@ -1,7 +1,7 @@
 import {Slider, SliderChangeEventArgs} from "@syncfusion/ej2-inputs";
 import {CheckBoxSelection, MultiSelect, MultiSelectChangeEventArgs} from "@syncfusion/ej2-dropdowns";
 import {delay, groupBy, intersect, queryParamsToObject} from "./utils";
-import {ABV_RANGE, CHARTS, IBU_RANGE, OG_RANGE, SRM_RANGE, STYLES} from "./data";
+import {ABV_RANGE, ChartDefinition, CHARTS, IBU_RANGE, OG_RANGE, SRM_RANGE, STYLES} from "./data";
 import {getRequest, RequestResult} from "./request";
 import {Chart, ChartConfig} from "./results";
 
@@ -452,8 +452,8 @@ class ResultUi {
 
     private onFiltersChange(): void {
         // Refresh recipe count and charts
-        this.chartUis.forEach((chartUi: ChartUi) => chartUi.refresh())
         this.recipeCountUi.refresh()
+        this.chartUis.forEach((chartUi: ChartUi) => chartUi.refresh())
     }
 
     private onClickAddButton(evt: Event): void {
@@ -471,11 +471,13 @@ class ChartUi {
     private readonly element: HTMLElement
     private readonly analyzerState: AnalyzerState
     public readonly chartType: string
+    public readonly chartDefinition: ChartDefinition
     private readonly onRemove: Function
     private readonly chart: Chart
 
     constructor(container: HTMLElement, analyzerState: AnalyzerState, chartType: string, onRemove: Function) {
         this.chartType = chartType
+        this.chartDefinition = this.getChartDefinition(chartType)
         this.analyzerState = analyzerState
         this.onRemove = onRemove
 
@@ -487,10 +489,10 @@ class ChartUi {
             <section class="card card-chart">
                 <div class="card-header">
                     <button type="button" class="btn-close mt-2 float-right" aria-label="Close"></button>
-                    <h2><a href="#${anchor}" id="${anchor}" class="anchor"><span></span></a>${this.getTitle()}</h2>
+                    <h2><a href="#${anchor}" id="${anchor}" class="anchor"><span></span></a>${this.chartDefinition.title}</h2>
                 </div>
                 <div class="card-body">
-                    <div class="chart-m"></div>
+                    <div class="chart-container chart-${this.chartDefinition.size}"></div>
                 </div>
             </section>
         `
@@ -500,20 +502,11 @@ class ChartUi {
         container.appendChild(this.element)
 
         // Init Plotly
-        const plotlyContainer = this.element.querySelector('.chart-m')
+        const plotlyContainer = this.element.querySelector('.chart-container')
         this.chart = new Chart(plotlyContainer, chartUrl, new ChartConfig())
 
         // Display recipes count based on current filter state
         this.refresh()
-    }
-
-    private getTitle(): string {
-        for (let chart of CHARTS) {
-            if (chart.id === this.chartType) {
-                return chart.title
-            }
-        }
-        return ''
     }
 
     public refresh(): void {
@@ -525,6 +518,14 @@ class ChartUi {
     public onClickCloseButton(): void {
         this.element.remove()
         this.onRemove()
+    }
+
+    private getChartDefinition(chartType: string): ChartDefinition {
+        for (let chart of CHARTS) {
+            if (chart.id === chartType) {
+                return chart
+            }
+        }
     }
 }
 
