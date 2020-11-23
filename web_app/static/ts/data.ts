@@ -157,6 +157,6 @@ export const CHARTS: ChartDefinition[] = [
     {id: 'hop-pairings', title: 'Common Hop Pairings', category: 'Hops'},
 
     // Yeasts
-    {id: 'trending-yeasts', title: 'Popular Yeasts', category: 'Yeasts'},
     {id: 'popular-yeasts', title: 'Most Used Yeasts', category: 'Yeasts'},
+    {id: 'trending-yeasts', title: 'Trending Yeasts', category: 'Yeasts'},
 ]
