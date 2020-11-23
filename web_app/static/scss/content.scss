@@ -248,6 +248,68 @@ h2, h3 {
 }
 
 
+// Custom filtering
+
+.analyzer-results {
+    .analyzer-count {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+
+        .loading {
+            display: inline-block;
+            width: 1.5em;
+            height: 1.1em;
+            background-repeat: no-repeat;
+            background-position: right center;
+            background-size: contain;
+            background-image: url('../img/embed/loading.svg');
+            vertical-align: middle;
+        }
+    }
+
+    .add-chart-btn {
+        width: 100%;
+        padding: 1rem;
+        border: 2px dashed $gray-500;
+        border-radius: 0.5rem;
+        opacity: 0.5;
+
+        .head {
+            font-size: 1.5rem;
+            color: $gray-500;
+        }
+
+        .add-chart-list {
+            @include media-breakpoint-up('sm') {
+                column-count: 2;
+            }
+
+            @include media-breakpoint-up('xl') {
+                column-count: 4;
+            }
+
+            .add-chart-group,
+            .add-chart-group ul,
+            .add-chart-group li {
+                break-inside: avoid;
+            }
+
+            li {
+                margin-top: 0.25rem;
+            }
+
+            button:disabled {
+                opacity: 0.4;
+            }
+        }
+
+        &:hover {
+            opacity: 1.0;
+            transition: opacity 0.15s ease-in-out;
+        }
+    }
+}
+
 // Static content
 
 .about-logo {
