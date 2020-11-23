@@ -62,7 +62,7 @@ class StylesRelativeChart(CustomChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = BarChart().plot(df, 'beer_style', 'recipes_percent', None, 'Used in % of the Style\'s Recipes')
+        figure = BarChart().plot(df, 'beer_style', 'recipes_percent', None, '% of the Style\'s Recipes')
         return Chart(figure, title=self.get_chart_title())
 
 
