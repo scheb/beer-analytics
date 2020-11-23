@@ -69,7 +69,7 @@ export class ChartContainer {
     }
 }
 
-class Chart {
+export class Chart {
     private readonly container: HTMLElement
     private readonly chartUrl: string
     private readonly chartConfig: ChartConfig
