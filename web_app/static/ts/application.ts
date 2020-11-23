@@ -1,5 +1,5 @@
 import {DetailList} from "./lists"
-import {Chart, Recipes} from "./results"
+import {ChartContainer, Recipes} from "./results"
 import {SearchBox} from "./search"
 import {Collapse, Tab} from "bootstrap"
 import {Analyzer} from "./filtering";
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Init charts
     document.querySelectorAll("[data-chart]")
-        .forEach(chartNode => new Chart(chartNode))
+        .forEach(chartNode => new ChartContainer(chartNode))
 
     // Init recipes lists
     document.querySelectorAll("[data-recipes]")
