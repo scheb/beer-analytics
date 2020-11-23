@@ -136,14 +136,15 @@ export const OG_RANGE: number[] = [1000, 1100]
 export interface ChartDefinition {
     id: string
     title: string
+    subtitle?: string
     category: string
     size: string
 }
 
 export const CHARTS: ChartDefinition[] = [
     // Styles
-    {id: 'typical-styles-absolute', title: 'Styles Breakdown (Number of Recipes)', category: 'Beer Styles', size: 'l'},
-    {id: 'typical-styles-relative', title: 'Styles Breakdown (Percent of Recipes)', category: 'Beer Styles', size: 'l'},
+    {id: 'typical-styles-absolute', title: 'Styles Breakdown', subtitle: 'by Number of Recipes', category: 'Beer Styles', size: 'l'},
+    {id: 'typical-styles-relative', title: 'Styles Breakdown', subtitle: 'by Percent of Recipes', category: 'Beer Styles', size: 'l'},
     {id: 'popular-styles', title: 'Popular Styles', category: 'Beer Styles', size: 'm'},
     {id: 'trending-styles', title: 'Trending Styles', category: 'Beer Styles', size: 'm'},
 

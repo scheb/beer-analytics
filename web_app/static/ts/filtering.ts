@@ -401,7 +401,8 @@ class ResultUi {
         for (let chartGroup in chartGroups) {
             let chartGroupHtml = ''
             for (let chart of chartGroups[chartGroup]) {
-                chartGroupHtml += `<li><button class="btn btn-secondary px-2 py-1" data-chart-type="${chart.id}">${chart.title}</button></li>`
+
+                chartGroupHtml += `<li><button class="btn btn-secondary px-2 py-1" data-chart-type="${chart.id}">${chart.title} ${chart.subtitle}</button></li>`
             }
             chartsList += `<div class="add-chart-group"><strong>${chartGroup}</strong><ul class="list-unstyled">${chartGroupHtml}</ul></div>`
         }
@@ -485,11 +486,16 @@ class ChartUi {
         this.element.id = 'chart-element-'+this.chartType
         const anchor = 'chart-'+this.chartType
         const chartUrl = '/analyze/charts/'+this.chartType+'.json'
+        let subtitle = ''
+        console.log(this.chartDefinition.subtitle)
+        if (null !== this.chartDefinition.subtitle && undefined !== this.chartDefinition.subtitle) {
+            subtitle = `<small class="text-muted">${this.chartDefinition.subtitle}</small>`
+        }
         this.element.innerHTML = `
             <section class="card card-chart">
                 <div class="card-header">
                     <button type="button" class="btn-close mt-2 float-right" aria-label="Close"></button>
-                    <h2><a href="#${anchor}" id="${anchor}" class="anchor"><span></span></a>${this.chartDefinition.title}</h2>
+                    <h2><a href="#${anchor}" id="${anchor}" class="anchor"><span></span></a>${this.chartDefinition.title} ${subtitle}</h2>
                 </div>
                 <div class="card-body">
                     <div class="chart-container chart-${this.chartDefinition.size}"></div>
