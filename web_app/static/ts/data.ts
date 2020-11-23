@@ -127,6 +127,7 @@ export const STYLES: Style[] = [
     {id: "34C", name: "Experimental Beer", parent: "Specialty Beer"},
 ]
 
+// Update values in analyze.py when limits are changed
 export const IBU_RANGE: number[] = [0, 100]
 export const ABV_RANGE: number[] = [0, 15]
 export const SRM_RANGE: number[] = [0, 300]
