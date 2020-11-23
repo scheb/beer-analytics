@@ -43,6 +43,7 @@ def chart(request: HttpRequest, chart_type: str) -> HttpResponse:
 def get_scope(request: HttpRequest) -> RecipeScope:
     scope = RecipeScope()
 
+    # Update values in data.ts when limits are changed
     if 'styles' in request.GET:
         scope.styles = get_styles(str(request.GET['styles']))
     if 'ibu' in request.GET:
