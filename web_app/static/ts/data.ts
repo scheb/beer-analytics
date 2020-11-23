@@ -133,30 +133,31 @@ export const ABV_RANGE: number[] = [0, 15]
 export const SRM_RANGE: number[] = [0, 300]
 export const OG_RANGE: number[] = [1000, 1100]
 
-interface ChartDefinition {
+export interface ChartDefinition {
     id: string
     title: string
     category: string
+    size: string
 }
 
 export const CHARTS: ChartDefinition[] = [
     // Styles
-    {id: 'typical-styles-absolute', title: 'Styles Breakdown (Number of Recipes)', category: 'Beer Styles'},
-    {id: 'typical-styles-relative', title: 'Styles Breakdown (Percent of Recipes)', category: 'Beer Styles'},
-    {id: 'popular-styles', title: 'Popular Styles', category: 'Beer Styles'},
-    {id: 'trending-styles', title: 'Trending Styles', category: 'Beer Styles'},
+    {id: 'typical-styles-absolute', title: 'Styles Breakdown (Number of Recipes)', category: 'Beer Styles', size: 'l'},
+    {id: 'typical-styles-relative', title: 'Styles Breakdown (Percent of Recipes)', category: 'Beer Styles', size: 'l'},
+    {id: 'popular-styles', title: 'Popular Styles', category: 'Beer Styles', size: 'm'},
+    {id: 'trending-styles', title: 'Trending Styles', category: 'Beer Styles', size: 'm'},
 
     // Fermentables
-    {id: 'popular-fermentables', title: 'Most Used Fermentables', category: 'Fermentables'},
-    {id: 'popular-fermentables-amount', title: 'Typical Amount of Fermentables', category: 'Fermentables'},
+    {id: 'popular-fermentables', title: 'Most Used Fermentables', category: 'Fermentables', size: 'm'},
+    {id: 'popular-fermentables-amount', title: 'Typical Amount of Fermentables', category: 'Fermentables', size: 'l'},
 
     // Hops
-    {id: 'popular-hops', title: 'Most Used Hops', category: 'Hops'},
-    {id: 'trending-hops', title: 'Trending Hops', category: 'Hops'},
-    {id: 'popular-hops-amount', title: 'Typical Amount of Hops', category: 'Hops'},
-    {id: 'hop-pairings', title: 'Common Hop Pairings', category: 'Hops'},
+    {id: 'popular-hops', title: 'Most Used Hops', category: 'Hops', size: 'm'},
+    {id: 'trending-hops', title: 'Trending Hops', category: 'Hops', size: 'm'},
+    {id: 'popular-hops-amount', title: 'Typical Amount of Hops', category: 'Hops', size: 'l'},
+    {id: 'hop-pairings', title: 'Common Hop Pairings', category: 'Hops', size: 'l'},
 
     // Yeasts
-    {id: 'popular-yeasts', title: 'Most Used Yeasts', category: 'Yeasts'},
-    {id: 'trending-yeasts', title: 'Trending Yeasts', category: 'Yeasts'},
+    {id: 'popular-yeasts', title: 'Most Used Yeasts', category: 'Yeasts', size: 'm'},
+    {id: 'trending-yeasts', title: 'Trending Yeasts', category: 'Yeasts', size: 'm'},
 ]
