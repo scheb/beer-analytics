@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .forEach(formNode => new SearchBox(formNode))
 
     // Init custom filtering
-    new Analyzer(document.querySelector('main'), () => {
+    new Analyzer(() => {
         // When the result loads, remove active flags from navigation
         document.getElementById('top-navigation').querySelectorAll('.nav-link').forEach((element: Element) => {
             element.classList.remove('active')

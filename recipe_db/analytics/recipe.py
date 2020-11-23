@@ -39,6 +39,23 @@ class RecipesListAnalysis(RecipeLevelAnalysis):
 
 
 class RecipesCountAnalysis(RecipeLevelAnalysis):
+    def total(self) -> int:
+        scope_filter = self.scope.get_filter()
+        query = '''
+                SELECT
+                    count(r.uid) AS total_recipes
+                FROM recipe_db_recipe AS r
+                WHERE
+                    created IS NOT NULL
+                    {}
+            '''.format(scope_filter.where)
+
+        df = pd.read_sql(query, connection, params=scope_filter.parameters)
+        if len(df) == 0:
+            return 0
+
+        return df['total_recipes'].values.tolist()[0]
+
     def per_day(self) -> DataFrame:
         scope_filter = self.scope.get_filter()
         query = '''

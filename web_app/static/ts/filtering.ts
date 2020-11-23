@@ -1,7 +1,8 @@
 import {Slider, SliderChangeEventArgs} from "@syncfusion/ej2-inputs";
 import {CheckBoxSelection, MultiSelect, MultiSelectChangeEventArgs} from "@syncfusion/ej2-dropdowns";
-import {delay, intersect} from "./utils";
-import {ABV_RANGE, IBU_RANGE, OG_RANGE, SRM_RANGE, STYLES} from "./data";
+import {delay, groupBy, intersect} from "./utils";
+import {ABV_RANGE, CHARTS, IBU_RANGE, OG_RANGE, SRM_RANGE, STYLES} from "./data";
+import {getRequest, RequestResult} from "./request";
 
 class MinMaxValue {
     public readonly minLimit: number
@@ -66,29 +67,34 @@ class MinMaxValue {
 
 class MultiSelectValue {
     public readonly allowedValues: Array<string>
-    private readonly _onChange: Function;
+    private readonly onChange: Function;
     private _selected: Array<string> = new Array<string>()
 
     constructor(allowedValues: Array<string>, onChange: Function) {
         this.allowedValues = allowedValues
-        this._onChange = onChange;
+        this.onChange = onChange;
     }
 
     get selected(): Array<string> {
         return this._selected;
     }
 
+    public isSelected(value: string): boolean {
+        return this._selected.indexOf(value) !== -1
+    }
+
     public setSelection(values: Array<string>): void {
-        const oldSelected = this.selected
+        const oldSelected = this._selected
         this._selected = intersect<string>(values, this.allowedValues)
+        this._selected = Array.from(new Set(this._selected))  // Unique list
 
         // Has it changed?
-        if (oldSelected.length !== this.selected.length) {
+        if (oldSelected.length !== this._selected.length) {
             // Simple check, did the number of elements change?
-            this._onChange()
+            this.onChange()
         } else if (intersect(oldSelected, this._selected).length === this._selected.length) {
             // More complex check, did the elements change?
-            this._onChange()
+            this.onChange()
         }
     }
 
@@ -102,6 +108,25 @@ class MultiSelectValue {
 
     public toQueryValue(): string {
         return this._selected.join(',')
+    }
+
+    public add(value: string): void {
+        if (this.isSelected(value)) {
+            return  // Already in list
+        }
+
+        this._selected.push(value)
+        this.onChange()
+    }
+
+    public remove(value: string): void {
+        const index = this._selected.indexOf(value, 0)
+        if (index === -1) {
+            return  // Not in list
+        }
+
+        this._selected.splice(index, 1)
+        this.onChange()
     }
 }
 
@@ -147,7 +172,7 @@ class AnalyzerState {
 
     constructor() {
         this.filters = new FilterState(this.onFiltersChange.bind(this))
-        this.charts = new MultiSelectValue([], this.onChartsChange.bind(this))  // TODO allowed values
+        this.charts = new MultiSelectValue(CHARTS.map((chart) => chart.id), this.onChartsChange.bind(this))
     }
 
     public loadState(queryValues: URLSearchParams) {
@@ -161,13 +186,13 @@ class AnalyzerState {
     }
 
     private onFiltersChange(): void {
-        this.stateChangeCallback()
         this.filtersChangeCallback()
+        this.stateChangeCallback()
     }
 
     private onChartsChange(): void {
-        this.stateChangeCallback()
         this.chartsChangeCallback()
+        this.stateChangeCallback()
     }
 
     public listenStateChange(callback: Function): void {
@@ -184,16 +209,13 @@ class AnalyzerState {
 }
 
 export class Analyzer {
-    private readonly mainContainer: HTMLElement
-    private analyzerQuery: AnalyzerQuery
-    private analyzerState: AnalyzerState
-    private analyzerFilterUi: AnalyzerFilterUi
-    private isInitialized: boolean = false
-    private resultsContainer: HTMLElement
-    private onInitialize: Function
+    private readonly analyzerQuery: AnalyzerQuery
+    private readonly analyzerState: AnalyzerState
+    private readonly analyzerFilterUi: AnalyzerFilterUi
+    private readonly onInitialize: Function
+    private resultUi?: ResultUi = null
 
-    constructor(mainElement: HTMLElement, onInitialize: Function) {
-        this.mainContainer = mainElement
+    constructor(onInitialize: Function) {
         this.onInitialize = onInitialize
 
         this.analyzerQuery = new AnalyzerQuery()
@@ -208,68 +230,29 @@ export class Analyzer {
 
         // Load the current state
         if (loadState) {
-            this.loadAnalyzerResults()
+            this.ensureInitialized()
         }
 
         // Register events
         this.analyzerState.listenStateChange(this.onStateChange.bind(this))
-
-        // // When the state changes, update the query parameters
-        // this.analyzerState.onChange(function () {
-        //     this.analyzerQuery.setQuery(this.analyzerState)
-        // })
-        //
-        // // When the filter options change, refresh the charts
-        // this.analyzerState.filters.onChange(function () {
-        //     this.refreshCharts()
-        // })
-        //
-        // this.analyzerState.charts.onAdd(function () {
-        //     this.addChart()
-        // })
-        //
-        // this.analyzerState.charts.onRemove(function () {
-        //     this.removeChart()
-        // })
     }
 
-    private initialize(): void {
-        if (this.isInitialized) {
+    private ensureInitialized(): void {
+        if (null !== this.resultUi) {
             return
         }
 
-        this.isInitialized = true
-        this.mainContainer.innerHTML = '<h1>Results</h1><div id="analyzerResults"></div>'
-        this.resultsContainer = document.getElementById('analyzerResults')
-
+        this.resultUi = new ResultUi(this.analyzerState)
         this.onInitialize()
     }
 
-    private loadAnalyzerResults(): void {
-        this.initialize()
-        // TODO add graphs
-    }
-
     // Update the query on state change
-    private onStateChange() {
-        console.log(this.analyzerState)
+    private onStateChange(): void {
         const queryParams = new URLSearchParams()
         this.analyzerState.toQuery(queryParams)
         this.analyzerQuery.setQuery(queryParams)
+        this.ensureInitialized()
     }
-
-    // private refreshView(): void {
-    //     this.initialize()
-    //     // TODO when filter options changed
-    // }
-    //
-    // private addChart(): void {
-    //     // TODO when a graph was added
-    // }
-    //
-    // private removeChart(): void {
-    //     // TODO when a graph was removed
-    // }
 }
 
 class AnalyzerQuery {
@@ -290,7 +273,8 @@ class AnalyzerQuery {
         if (null !== (queryString = queryParams.toString())) {
             url += '?'+queryString
         }
-        history.pushState({}, 'Beer Analytics – The analytical beer recipe database', url)
+        history.pushState({}, 'Custom Analysis | Beer-Analytics', url)
+        document.querySelector('title').text = 'Custom Analysis | Beer-Analytics'
     }
 }
 
@@ -367,7 +351,7 @@ class StyleSelectUi {
             filterBarPlaceholder: 'Search beer styles',
             enableGroupCheckBox: true,
         })
-        select.appendTo(container);
+        select.appendTo(container)
         select.addEventListener('change', this.onChange.bind(this))
     }
 
@@ -379,3 +363,195 @@ class StyleSelectUi {
     }
 }
 
+class ResultUi {
+    private analyzerState: AnalyzerState
+    private recipeCountUi: RecipeCountUi
+    private chartUis: Array<ChartUi> = new Array<ChartUi>()
+    private resultsContainer: HTMLElement
+    private addChartButtonText: HTMLElement
+
+    constructor(analyzerState: AnalyzerState) {
+        this.analyzerState = analyzerState
+        this.initializeUi()
+        this.analyzerState.listenFiltersChange(this.onFiltersChange.bind(this))
+    }
+
+    private initializeUi(): void {
+        const mainContainer = document.querySelector('main')
+
+        // Render results UI scaffold
+        mainContainer.innerHTML = `
+            <div class="analyzer-results">
+                <p class="analyzer-count">Found <strong id="analyzerRecipesCount"></strong> matching recipes.</p>
+                <div id="analyzerCharts"></div>
+                <div id="analyzerAddButton" class="add-chart-btn">
+                    <p class="head">Select the data analysis you're interested in</p>
+                    <div id="analyzerChartSelect" class="add-chart-list"></div>
+                </div>
+            </div>
+        `
+        const recipesCountContainer = document.getElementById('analyzerRecipesCount')
+        this.resultsContainer = document.getElementById('analyzerCharts')
+
+        // Render in available charts
+        const chartSelect = document.getElementById('analyzerChartSelect')
+        const chartGroups = groupBy(CHARTS, c => c.category)
+        let chartsList = ''
+        for (let chartGroup in chartGroups) {
+            let chartGroupHtml = ''
+            for (let chart of chartGroups[chartGroup]) {
+                chartGroupHtml += `<li><button class="btn btn-secondary px-2 py-1" data-chart-type="${chart.id}">${chart.title}</button></li>`
+            }
+            chartsList += `<div class="add-chart-group"><strong>${chartGroup}</strong><ul class="list-unstyled">${chartGroupHtml}</ul></div>`
+        }
+        chartSelect.innerHTML = chartsList
+        this.updateChartListState()
+        document.querySelectorAll('#analyzerAddButton button').forEach((button: HTMLElement) => {
+            button.addEventListener('click', this.onClickAddButton.bind(this))
+        })
+
+        // Display number of recipes
+        this.recipeCountUi = new RecipeCountUi(recipesCountContainer, this.analyzerState)
+
+        // Initialize selected charts
+        this.analyzerState.charts.selected.forEach((chartType: string) => {
+            this.createChart(chartType)
+        })
+    }
+
+    private createChart(chartType: string) {
+        const chartUi = new ChartUi(this.resultsContainer, chartType, () => {
+            this.onChartRemoved(chartType)
+        })
+        this.chartUis.push(chartUi)
+        this.analyzerState.charts.add(chartType)
+    }
+
+    private updateChartListState(): void {
+        document.querySelectorAll('#analyzerChartSelect button').forEach((button: HTMLButtonElement) => {
+            const chartType = button.dataset['chartType']
+            button.disabled = this.analyzerState.charts.isSelected(chartType)
+        })
+    }
+
+    private onChartRemoved(chartType: string) {
+        // When a chart is remove, remove it from the state and refresh button
+        this.analyzerState.charts.remove(chartType)
+        this.updateChartListState()
+    }
+
+    private onFiltersChange(): void {
+        // Refresh recipe count and charts
+        this.chartUis.forEach((chartUi: ChartUi) => chartUi.refresh())
+        this.recipeCountUi.refresh()
+    }
+
+    private onClickAddButton(evt: Event): void {
+        if (evt.target instanceof HTMLElement && undefined !== evt.target.dataset['chartType']) {
+            const chartType = evt.target.dataset['chartType']
+            if (!this.analyzerState.charts.isSelected(chartType)) {
+                this.createChart(chartType)
+                this.updateChartListState()
+            }
+        }
+    }
+}
+
+class ChartUi {
+    public readonly chartType: string
+    private readonly element: HTMLElement
+    private readonly onRemove: Function
+
+    constructor(container: HTMLElement, chartType: string, onRemove: Function) {
+        this.chartType = chartType
+        this.onRemove = onRemove;
+
+        this.element = document.createElement('div')
+        this.element.id = 'chart-element-'+this.chartType
+        const anchor = 'chart-'+this.chartType
+        const chartUrl = '/analyze/chart/'+this.chartType+'.json'
+        this.element.innerHTML = `
+            <section class="card card-chart">
+                <div class="card-header">
+                    <button type="button" class="btn-close mt-2 float-right" aria-label="Close"></button>
+                    <h2><a href="#${anchor}" id="${anchor}" class="anchor"><span></span></a>${this.getTitle()}</h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-m" data-chart="${chartUrl}"></div>
+                </div>
+            </section>
+        `
+        this.element.querySelector('button.btn-close').addEventListener('click', this.onClickCloseButton.bind(this))
+
+        // Add to results container
+        container.appendChild(this.element)
+
+        // Display recipes count based on current filter state
+        this.refresh()
+    }
+
+    private getTitle(): string {
+        for (let chart of CHARTS) {
+            if (chart.id === this.chartType) {
+                return chart.title
+            }
+        }
+        return ''
+    }
+
+    public refresh(): void {
+        // TODO
+    }
+
+    public onClickCloseButton(): void {
+        this.element.remove()
+        this.onRemove()
+    }
+}
+
+class RecipeCountUi {
+    private container: HTMLElement
+    private analyzerState: AnalyzerState
+
+    constructor(container: HTMLElement, analyzerState: AnalyzerState) {
+        this.container = container
+        this.analyzerState = analyzerState;
+
+        // Display recipes count based on current filter state
+        this.refresh()
+    }
+
+    public refresh(): void {
+        this.container.innerHTML = ''
+        this.container.classList.add('loading')
+
+        const requestUrl = '/analyze/count.json'
+        const queryParams = new URLSearchParams()
+        this.analyzerState.toQuery(queryParams)
+        getRequest(requestUrl+'?'+queryParams.toString(), {}, this.handleResponse.bind(this))
+    }
+
+    private handleResponse(response: RequestResult) {
+        this.container.classList.remove('chart-loading')
+        if (response.status === 200) {
+            this.handleRenderCount(response)
+        } else {
+            this.handleFailedLoadingData()
+        }
+    }
+
+    private handleRenderCount(response: RequestResult) {
+        this.container.classList.remove('loading')
+        const data = response.json<CountData>()
+        this.container.innerHTML = (new Intl.NumberFormat('en-US')).format(data.count)
+    }
+
+    private handleFailedLoadingData() {
+        this.container.classList.remove('loading')
+        this.container.innerHTML = '?'
+    }
+}
+
+interface CountData {
+    count: number
+}
