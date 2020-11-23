@@ -1,8 +1,9 @@
 import {Slider, SliderChangeEventArgs} from "@syncfusion/ej2-inputs";
 import {CheckBoxSelection, MultiSelect, MultiSelectChangeEventArgs} from "@syncfusion/ej2-dropdowns";
-import {delay, groupBy, intersect} from "./utils";
+import {delay, groupBy, intersect, queryParamsToObject} from "./utils";
 import {ABV_RANGE, CHARTS, IBU_RANGE, OG_RANGE, SRM_RANGE, STYLES} from "./data";
 import {getRequest, RequestResult} from "./request";
+import {Chart, ChartConfig} from "./results";
 
 class MinMaxValue {
     public readonly minLimit: number
@@ -420,7 +421,7 @@ class ResultUi {
     }
 
     private createChart(chartType: string) {
-        const chartUi = new ChartUi(this.resultsContainer, chartType, () => {
+        const chartUi = new ChartUi(this.resultsContainer, this.analyzerState, chartType, () => {
             this.onChartRemoved(chartType)
         })
         this.chartUis.push(chartUi)
@@ -438,6 +439,15 @@ class ResultUi {
         // When a chart is remove, remove it from the state and refresh button
         this.analyzerState.charts.remove(chartType)
         this.updateChartListState()
+
+        // Remove ChartUi
+        for (let index = 0; index < this.chartUis.length; index++) {
+            let chartUi = this.chartUis[index]
+            if (chartUi.chartType === chartType) {
+                this.chartUis.splice(index, 1)
+                break
+            }
+        }
     }
 
     private onFiltersChange(): void {
@@ -458,18 +468,21 @@ class ResultUi {
 }
 
 class ChartUi {
-    public readonly chartType: string
     private readonly element: HTMLElement
+    private readonly analyzerState: AnalyzerState
+    public readonly chartType: string
     private readonly onRemove: Function
+    private readonly chart: Chart
 
-    constructor(container: HTMLElement, chartType: string, onRemove: Function) {
+    constructor(container: HTMLElement, analyzerState: AnalyzerState, chartType: string, onRemove: Function) {
         this.chartType = chartType
-        this.onRemove = onRemove;
+        this.analyzerState = analyzerState
+        this.onRemove = onRemove
 
         this.element = document.createElement('div')
         this.element.id = 'chart-element-'+this.chartType
         const anchor = 'chart-'+this.chartType
-        const chartUrl = '/analyze/chart/'+this.chartType+'.json'
+        const chartUrl = '/analyze/charts/'+this.chartType+'.json'
         this.element.innerHTML = `
             <section class="card card-chart">
                 <div class="card-header">
@@ -477,7 +490,7 @@ class ChartUi {
                     <h2><a href="#${anchor}" id="${anchor}" class="anchor"><span></span></a>${this.getTitle()}</h2>
                 </div>
                 <div class="card-body">
-                    <div class="chart-m" data-chart="${chartUrl}"></div>
+                    <div class="chart-m"></div>
                 </div>
             </section>
         `
@@ -485,6 +498,10 @@ class ChartUi {
 
         // Add to results container
         container.appendChild(this.element)
+
+        // Init Plotly
+        const plotlyContainer = this.element.querySelector('.chart-m')
+        this.chart = new Chart(plotlyContainer, chartUrl, new ChartConfig())
 
         // Display recipes count based on current filter state
         this.refresh()
@@ -500,7 +517,9 @@ class ChartUi {
     }
 
     public refresh(): void {
-        // TODO
+        const queryParams = new URLSearchParams()
+        this.analyzerState.filters.toQuery(queryParams)
+        this.chart.load(queryParamsToObject(queryParams.entries()))
     }
 
     public onClickCloseButton(): void {
@@ -528,7 +547,7 @@ class RecipeCountUi {
         const requestUrl = '/analyze/count.json'
         const queryParams = new URLSearchParams()
         this.analyzerState.toQuery(queryParams)
-        getRequest(requestUrl+'?'+queryParams.toString(), {}, this.handleResponse.bind(this))
+        getRequest(requestUrl, queryParamsToObject(queryParams.entries()), this.handleResponse.bind(this))
     }
 
     private handleResponse(response: RequestResult) {

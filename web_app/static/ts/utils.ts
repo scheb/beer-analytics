@@ -20,3 +20,11 @@ export function groupBy<T, K extends keyof any>(list: T[], getKey: (item: T) => 
         return previous;
     }, {} as Record<K, T[]>);
 }
+
+export function queryParamsToObject(entries: IterableIterator<[string, string]>) {
+    const result: any = {}
+    for (const [key, value] of entries) { // each 'entry' is a [key, value] tupple
+        result[key] = value;
+    }
+    return result;
+}
