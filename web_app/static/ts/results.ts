@@ -25,7 +25,7 @@ interface RecipeData {
     url: string
 }
 
-export class Chart {
+export class ChartContainer {
     constructor(container: Element) {
         if (!(container instanceof HTMLElement)) {
             return
@@ -50,7 +50,7 @@ export class Chart {
             }
         }
 
-        const chart = new ChartMount(container, container.dataset['chart'], chartConfig)
+        const chart = new Chart(container, container.dataset['chart'], chartConfig)
 
         if (container.id !== undefined) {
             const navigationContainer = document.querySelector('[data-chart-navigation="'+container.id+'"]')
@@ -69,7 +69,7 @@ export class Chart {
     }
 }
 
-class ChartMount {
+class Chart {
     private readonly container: HTMLElement
     private readonly chartUrl: string
     private readonly chartConfig: ChartConfig
