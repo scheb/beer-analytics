@@ -128,10 +128,10 @@ export const STYLES: Style[] = [
 ]
 
 // Update values in analyze.py when limits are changed
-export const IBU_RANGE: number[] = [0, 100]
-export const ABV_RANGE: number[] = [0, 15]
-export const SRM_RANGE: number[] = [0, 300]
-export const OG_RANGE: number[] = [1000, 1100]
+export const IBU_RANGE: number[] = [0, 301]
+export const ABV_RANGE: number[] = [0, 21]
+export const SRM_RANGE: number[] = [0, 101]
+export const OG_RANGE: number[] = [1000, 1151]
 
 export interface ChartDefinition {
     id: string

@@ -47,13 +47,13 @@ def get_scope(request: HttpRequest) -> RecipeScope:
     if 'styles' in request.GET:
         scope.styles = get_styles(str(request.GET['styles']))
     if 'ibu' in request.GET:
-        (scope.ibu_min, scope.ibu_max) = get_min_max(str(request.GET['ibu']), 0, 100)
+        (scope.ibu_min, scope.ibu_max) = get_min_max(str(request.GET['ibu']), 0, 301)
     if 'abv' in request.GET:
-        (scope.abv_min, scope.abv_max) = get_min_max(str(request.GET['abv']), 0, 15)
+        (scope.abv_min, scope.abv_max) = get_min_max(str(request.GET['abv']), 0, 21)
     if 'srm' in request.GET:
-        (scope.srm_min, scope.srm_max) = get_min_max(str(request.GET['srm']), 0, 300)
+        (scope.srm_min, scope.srm_max) = get_min_max(str(request.GET['srm']), 0, 101)
     if 'og' in request.GET:
-        (scope.og_min, scope.og_max) = get_min_max(str(request.GET['og']), 1000, 1100, factor=0.001)
+        (scope.og_min, scope.og_max) = get_min_max(str(request.GET['og']), 1000, 1151, factor=0.001)
 
     return scope
 
