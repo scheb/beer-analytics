@@ -1,4 +1,4 @@
-import {Slider, SliderChangeEventArgs} from "@syncfusion/ej2-inputs";
+import {Slider, SliderChangeEventArgs, SliderTooltipEventArgs} from "@syncfusion/ej2-inputs";
 import {
     CheckBoxSelection,
     FilteringEventArgs,
@@ -300,14 +300,14 @@ class AnalyzerFilterUi {
         this.ibuSlider = new SliderUi('ibu', this.state.filters.ibu)
         this.abvSlider = new SliderUi('abv', this.state.filters.abv)
         this.srmSlider = new SliderUi('srm', this.state.filters.srm)
-        this.ogSlider = new SliderUi('og', this.state.filters.og)
+        this.ogSlider = new SliderUi('og', this.state.filters.og, 0.001)
     }
 }
 
 class SliderUi {
     private state: MinMaxValue
 
-    constructor(sliderName: string, state: MinMaxValue) {
+    constructor(sliderName: string, state: MinMaxValue, factor: number = 1) {
         this.state = state
 
         const container: Element = document.querySelector('[data-range-slider="'+sliderName+'"]')
@@ -323,9 +323,24 @@ class SliderUi {
             step: this.state.step,
             value: [this.state.minValue, this.state.maxValue],
             tooltip: { isVisible: true, placement: 'Before', showOn: 'Auto' },
+            tooltipChange: function (args: SliderTooltipEventArgs): void {
+                if (args.value instanceof Array && args.value.length === 2) {
+                    args.text = ""+this.formatNumber(args.value[0], factor)+" – "+this.formatNumber(args.value[1], factor)
+                }
+            }.bind(this),
         })
         rangeSlider.appendTo(container)
         rangeSlider.addEventListener('change', delay(this.onChange.bind(this), 500))
+    }
+
+    private formatNumber(value: number, factor: number): string {
+        if (value <= this.state.minLimit) {
+            return 'Min'
+        }
+        if (value >= this.state.maxLimit) {
+            return 'Max'
+        }
+        return (new Intl.NumberFormat('en-US')).format(value*factor)
     }
 
     private onChange(evt: SliderChangeEventArgs) {
@@ -363,7 +378,7 @@ class StyleSelectUi {
                 //pass the filter data source, filter query to updateData method.
                 // @ts-ignore
                 e.updateData(STYLES, query)
-            }
+            },
         })
         select.appendTo(container)
         select.addEventListener('change', this.onChange.bind(this))
