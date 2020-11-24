@@ -397,7 +397,6 @@ class ResultUi {
     private recipeCountUi: RecipeCountUi
     private chartUis: Array<ChartUi> = new Array<ChartUi>()
     private resultsContainer: HTMLElement
-    private addChartButtonText: HTMLElement
 
     constructor(analyzerState: AnalyzerState) {
         this.analyzerState = analyzerState
