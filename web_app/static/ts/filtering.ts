@@ -1,5 +1,11 @@
 import {Slider, SliderChangeEventArgs} from "@syncfusion/ej2-inputs";
-import {CheckBoxSelection, MultiSelect, MultiSelectChangeEventArgs} from "@syncfusion/ej2-dropdowns";
+import {
+    CheckBoxSelection,
+    FilteringEventArgs,
+    MultiSelect,
+    MultiSelectChangeEventArgs
+} from "@syncfusion/ej2-dropdowns";
+import {Query} from '@syncfusion/ej2-data';
 import {delay, groupBy, intersect, queryParamsToObject} from "./utils";
 import {ABV_RANGE, ChartDefinition, CHARTS, IBU_RANGE, OG_RANGE, SRM_RANGE, STYLES} from "./data";
 import {getRequest, RequestResult} from "./request";
@@ -351,6 +357,13 @@ class StyleSelectUi {
             showDropDownIcon: true,
             filterBarPlaceholder: 'Search beer styles',
             enableGroupCheckBox: true,
+            filtering: function (e: FilteringEventArgs): void {
+                let query = new Query()
+                query = (e.text != "") ? query.where("name", "contains", e.text, true) : query
+                //pass the filter data source, filter query to updateData method.
+                // @ts-ignore
+                e.updateData(STYLES, query)
+            }
         })
         select.appendTo(container)
         select.addEventListener('change', this.onChange.bind(this))
