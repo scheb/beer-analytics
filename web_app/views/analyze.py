@@ -4,6 +4,7 @@ from typing import List, Tuple
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render
 from django.urls import reverse
+from django.views.decorators.cache import cache_page
 
 from recipe_db.analytics.recipe import RecipesCountAnalysis
 from recipe_db.analytics.scope import RecipeScope
@@ -21,12 +22,14 @@ def result(request: HttpRequest) -> HttpResponse:
     return render(request, 'analyze.html', {'meta': meta})
 
 
+@cache_page(0)
 def count(request: HttpRequest) -> HttpResponse:
     recipes_scope = get_scope(request)
     count = RecipesCountAnalysis(recipes_scope).total()
     return HttpResponse(json.dumps({'count': count}), content_type='application/json')
 
 
+@cache_page(0)
 def chart(request: HttpRequest, chart_type: str) -> HttpResponse:
     recipes_scope = get_scope(request)
     if AnalyzeChartFactory.is_supported_chart(chart_type):
