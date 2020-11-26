@@ -428,8 +428,11 @@ class ResultUi {
         for (let chartGroup in chartGroups) {
             let chartGroupHtml = ''
             for (let chart of chartGroups[chartGroup]) {
-
-                chartGroupHtml += `<li><button class="btn btn-secondary px-2 py-1" data-chart-type="${chart.id}">${chart.title} ${chart.subtitle}</button></li>`
+                let subtitle = ''
+                if (null !== chart.subtitle && undefined !== chart.subtitle) {
+                    subtitle = chart.subtitle
+                }
+                chartGroupHtml += `<li><button class="btn btn-secondary px-2 py-1" data-chart-type="${chart.id}">${chart.title} ${subtitle}</button></li>`
             }
             chartsList += `<div class="add-chart-group"><strong>${chartGroup}</strong><ul class="list-unstyled">${chartGroupHtml}</ul></div>`
         }
