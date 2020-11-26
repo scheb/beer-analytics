@@ -5,7 +5,7 @@ beer-analytics 🕵️🍺
 
 Check out the live website: https://www.beer-analytics.com/
 
-<p align="center"><img alt="Logo" src="web_app/static/img/logo-dark.svg" width="128" height="128" /></p>
+<p align="center"><img alt="Logo" src="screenshot.png" width="480" height="283" /></p>
 
 What is Beer Analytics?
 -----------------------
