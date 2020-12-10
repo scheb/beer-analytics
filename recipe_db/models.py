@@ -229,6 +229,7 @@ class Fermentable(models.Model):
     GRAIN = "grain"
     SUGAR = "sugar"
     FRUIT = "fruit"
+    SPICE_HERB = "spice_herb"
     EXTRACT = "extract"
 
     # Types
@@ -244,6 +245,7 @@ class Fermentable(models.Model):
         (GRAIN, "Grain"),
         (SUGAR, "Sugar"),
         (FRUIT, "Fruit"),
+        (SPICE_HERB, "Spices & Herbs"),
         (EXTRACT, "Malt Extract"),
     )
 
