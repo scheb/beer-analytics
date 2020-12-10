@@ -119,6 +119,7 @@ Acerola;fruit;;;
 Apple;fruit;;;
 Apricot;fruit;;;
 Banana;fruit;;;
+Beets ;fruit;;;Beet
 Blackberry;fruit;;;
 Blueberry;fruit;;;
 Boysenberry;fruit;;;
@@ -131,6 +132,7 @@ Celery;fruit;;;
 Cherry;fruit;;;
 Crabapple;fruit;;;
 Cranberry;fruit;;;
+Cucumber ;fruit;;;
 Currant;fruit;;;
 Date;fruit;;;
 Dewberry;fruit;;;
@@ -175,6 +177,7 @@ Tangerine;fruit;;;
 Tomato;fruit;;;
 Watermelon;fruit;;;
 Youngberry;fruit;;;
+Yuzu ;fruit;;;
 Agave Nectar;sugar;;;
 Brown Sugar;sugar;;;
 Candi Sugar;sugar;;;
@@ -191,3 +194,57 @@ Rice Syrup;sugar;;;
 Sugar;sugar;;;Zucker, Haushaltszucker
 Turbinado;sugar;;;
 Sorghum Syrup;sugar;;;
+Allspice;spice_herb;;;
+Basil;spice_herb;;;
+Bay Leaves;spice_herb;;;Bay Leaf
+Birch Bark;spice_herb;;;
+Black Pepper;spice_herb;;;
+Bourbon Oak;spice_herb;;;
+Camomille;spice_herb;;;Camomila, Camomile, Chamomile, Chamomille, Kamille
+Caramel;spice_herb;;;
+Cardamom;spice_herb;;;
+Chai;spice_herb;;;Chai Tea 
+Chicory;spice_herb;;;
+Chili;spice_herb;;;Chilli
+Chipotle Pepper;spice_herb;;;Chipotle 
+Cinnamon;spice_herb;;;Canela, Cinammon, Cinnimon
+Clementine;spice_herb;;;
+Clove;spice_herb;;;
+Coca;spice_herb;;;
+Cocoa;spice_herb;;;Cocao
+Coconut;spice_herb;;;
+Coconut Water;spice_herb;;;
+Coffee Beans;spice_herb;;;
+Coriander;spice_herb;;;Coriandr, Cilantro, Coriande, Coriandre, Koriander
+Cumin;spice_herb;;;
+Earl Grey Tea;spice_herb;;;Earl Grey
+Fennel;spice_herb;;;
+Ginger;spice_herb;;;
+Green Pepper;spice_herb;;;
+Green Tea;spice_herb;;;
+Habanero Pepper;spice_herb;;;
+Hazelnut;spice_herb;;;
+Hibiscus;spice_herb;;;
+Jalapeño Pepper;spice_herb;;;
+Jasmine;spice_herb;;;
+Juniper;spice_herb;;;
+Lavender;spice_herb;;;Lavendar
+Lemongrass;spice_herb;;;
+Mint;spice_herb;;Peppermint ;
+Nutmeg;spice_herb;;;
+Oak Chip;spice_herb;;;
+Orange Peel;spice_herb;;;Orange Zest 
+Rooibos;spice_herb;;;
+Rosemary;spice_herb;;;
+Star Anis;spice_herb;;;
+Szechuan Pepper;spice_herb;;;Szechuan, Sichuan
+Tamarind;spice_herb;;;
+Thyme;spice_herb;;;
+Vanilla;spice_herb;;;Bourbon, Vanilla Bean, Vanille
+Walnuts;spice_herb;;;
+White Pepper;spice_herb;;;
+Yarrow;spice_herb;;;
+Brandy;spice_herb;;;
+Coffee;spice_herb;;;Cafe, Espresso, Kaffee
+Tequila;spice_herb;;;
+Whisky;spice_herb;;;Whiskey
