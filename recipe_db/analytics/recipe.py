@@ -356,6 +356,8 @@ class RecipesMetricHistogram(RecipeLevelAnalysis):
 
         df = pd.read_sql(query, connection, params=scope_filter.parameters)
         df = remove_outliers(df, metric, 0.02)
+        if len(df) == 0:
+            return df
 
         bins = 16
         if metric in ['og', 'fg'] and len(df) > 0:

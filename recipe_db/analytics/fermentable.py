@@ -54,6 +54,9 @@ class FermentableMetricHistogram(FermentableLevelAnalysis):
             return df
 
         df = remove_outliers(df, metric, 0.02)
+        if len(df) == 0:
+            return df
+
         histogram = df.groupby([pd.cut(df[metric], 16, precision=precision)])[metric].agg(['count'])
         histogram = histogram.reset_index()
         histogram[metric] = histogram[metric].map(str)
