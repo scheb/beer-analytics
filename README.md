@@ -121,19 +121,25 @@ The application is pre-calculating and persisting some metrics for style and ing
 python manage.py calculate_metrics
 ```
 
-Contributing
-------------
-
-You're welcome to contribute new features, such as new analysis/chart types or bug fixes, by creating a Pull Request.
-
-Please see [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
-
 Security
 --------
-
 For information about the security policy and know security issues, see [SECURITY.md](SECURITY.md). 
 
 License
 -------
-
 This software is available under the [Beerware License](LICENSE).
+
+Contributing
+------------
+You're welcome to contribute new features, such as new analysis/chart types or bug fixes, by creating a Pull Request.
+
+Please see [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
+
+Support Me
+----------
+I love to hear from people using my work, it's giving me the motivation to keep working on it.
+
+If you want to let me know you're finding it useful, please consider giving it a star ⭐ on GitHub.
+
+If you love my work and want to say thank you, you can help me out for a beer 🍻️
+[via PayPal](https://paypal.me/ChristianScheb).
