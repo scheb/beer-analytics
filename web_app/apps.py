@@ -3,8 +3,8 @@ from django.contrib.staticfiles.apps import StaticFilesConfig
 
 
 class WebAppConfig(AppConfig):
-    name = 'web_app'
+    name = "web_app"
 
 
 class WebAppStaticFilesConfig(StaticFilesConfig):
-    ignore_patterns = ['CVS', '.*', '*~', 'LICENSE']
+    ignore_patterns = ["CVS", ".*", "*~", "LICENSE"]

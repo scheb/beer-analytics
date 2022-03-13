@@ -10,7 +10,7 @@ from recipe_db.models import Recipe, RecipeYeast, RecipeFermentable, RecipeHop
 class MmumParser(FormatParser):
     def parse(self, result: ParserResult, file_path: str) -> None:
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
+            with open(file_path, "r", encoding="utf-8") as f:
                 data = f.read()
                 json_data = JsonParser.from_string(data)
         except JSONDecodeError:
@@ -22,28 +22,28 @@ class MmumParser(FormatParser):
         result.yeasts.extend(self.get_yeasts(json_data))
 
     def parse_recipe(self, recipe: Recipe, json_data: JsonParser):
-        recipe.name = json_data.string_or_none('Name')
-        recipe.author = json_data.string_or_none('Autor')
-        date_created = json_data.string_or_none('Datum')
+        recipe.name = json_data.string_or_none("Name")
+        recipe.author = json_data.string_or_none("Autor")
+        date_created = json_data.string_or_none("Datum")
         if date_created is not None:
-            recipe.created = datetime.strptime(date_created, '%d.%m.%Y')
+            recipe.created = datetime.strptime(date_created, "%d.%m.%Y")
 
         # Characteristics
-        recipe.style_raw = json_data.string_or_none('Sorte')
-        recipe.extract_efficiency = json_data.float_or_none('Sudhausausbeute')
-        recipe.abv = json_data.float_or_none('Alkohol')
-        recipe.ebc = json_data.int_or_none('Farbe')
-        recipe.ibu = json_data.int_or_none('Bittere')
-        recipe.original_plato = json_data.float_or_none('Stammwuerze')
+        recipe.style_raw = json_data.string_or_none("Sorte")
+        recipe.extract_efficiency = json_data.float_or_none("Sudhausausbeute")
+        recipe.abv = json_data.float_or_none("Alkohol")
+        recipe.ebc = json_data.int_or_none("Farbe")
+        recipe.ibu = json_data.int_or_none("Bittere")
+        recipe.original_plato = json_data.float_or_none("Stammwuerze")
         recipe.final_plato = self.get_final_plato(json_data, recipe)
 
         # Mashing
-        recipe.mash_water = json_data.float_or_none('Infusion_Hauptguss')
-        recipe.sparge_water = json_data.float_or_none('Nachguss')
+        recipe.mash_water = json_data.float_or_none("Infusion_Hauptguss")
+        recipe.sparge_water = json_data.float_or_none("Nachguss")
 
         # Boiling
-        recipe.cast_out_wort = json_data.int_or_none('Ausschlagswuerze')
-        recipe.boiling_time = json_data.int_or_none('Kochzeit_Wuerze')
+        recipe.cast_out_wort = json_data.int_or_none("Ausschlagswuerze")
+        recipe.boiling_time = json_data.int_or_none("Kochzeit_Wuerze")
 
         return recipe
 
@@ -54,12 +54,11 @@ class MmumParser(FormatParser):
         if recipe.abv is not None:
             return abv_to_to_final_plato(recipe.abv, recipe.original_plato)
 
-        attenuation = json_data.int_or_none('Endvergaerungsgrad')
+        attenuation = json_data.int_or_none("Endvergaerungsgrad")
         if attenuation is not None:
             return attenuation_to_final_plato(attenuation / 100, recipe.original_plato)
 
         return None
-
 
     def get_fermentables(self, json_data: JsonParser) -> iter:
         i = 1
@@ -69,18 +68,18 @@ class MmumParser(FormatParser):
             amount = json_data.float_or_none("Malz%d_Menge" % i)
             if amount is not None:
                 unit = json_data.string_or_none("Malz%d_Einheit" % i)
-                if unit is not None and unit == 'kg':
+                if unit is not None and unit == "kg":
                     amount *= 1000
 
             yield RecipeFermentable(kind_raw=kind, amount=amount)
             i += 1
 
     def get_hops(self, json_data: JsonParser) -> iter:
-        for hop in self.parse_hops(json_data, 'Hopfen_VWH'):
+        for hop in self.parse_hops(json_data, "Hopfen_VWH"):
             hop.use = RecipeHop.FIRST_WORT
             yield hop
-        yield from self.parse_hops(json_data, 'Hopfen')
-        for hop in self.parse_hops(json_data, 'Stopfhopfen'):
+        yield from self.parse_hops(json_data, "Hopfen")
+        for hop in self.parse_hops(json_data, "Stopfhopfen"):
             hop.use = RecipeHop.DRY_HOP
             yield hop
 
@@ -94,7 +93,7 @@ class MmumParser(FormatParser):
             amount = json_data.float_or_none("{}_{}_Menge".format(prefix, i))
             time = json_data.string_or_none("{}_{}_Kochzeit".format(prefix, i))
             if time is not None:
-                if time == 'Whirlpool':
+                if time == "Whirlpool":
                     use = RecipeHop.AROMA
                     time = 0
                 else:
@@ -108,6 +107,6 @@ class MmumParser(FormatParser):
             i += 1
 
     def get_yeasts(self, json_data: JsonParser) -> iter:
-        yeast_kind = json_data.string_or_none('Hefe')
+        yeast_kind = json_data.string_or_none("Hefe")
         if yeast_kind is not None:
             yield RecipeYeast(kind_raw=yeast_kind)

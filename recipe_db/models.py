@@ -8,19 +8,31 @@ from collections import OrderedDict
 from typing import Optional, List, Tuple
 
 import numpy as np
+
 # noinspection PyUnresolvedReferences
 import translitcodec
 from django.core.validators import MaxValueValidator, BaseValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from recipe_db.formulas import ebc_to_srm, srm_to_ebc, plato_to_gravity, gravity_to_plato, abv_to_to_final_plato, \
-    alcohol_by_volume, lovibond_to_ebc, ebc_to_lovibond, kg_to_lbs, yield_to_ppg, liters_to_gallons
+from recipe_db.formulas import (
+    ebc_to_srm,
+    srm_to_ebc,
+    plato_to_gravity,
+    gravity_to_plato,
+    abv_to_to_final_plato,
+    alcohol_by_volume,
+    lovibond_to_ebc,
+    ebc_to_lovibond,
+    kg_to_lbs,
+    yield_to_ppg,
+    liters_to_gallons,
+)
 
 
 class GreaterThanValueValidator(BaseValidator):
-    message = _('Ensure this value is greater than %(limit_value)s (it is %(show_value)s).')
-    code = 'greater_min_value'
+    message = _("Ensure this value is greater than %(limit_value)s (it is %(show_value)s).")
+    code = "greater_min_value"
 
     def compare(self, a, b):
         return a <= b
@@ -31,8 +43,8 @@ def get_tomorrow_date():
 
 
 def create_human_readable_id(value: str) -> str:
-    value = codecs.encode(value, 'translit/long')
-    return re.sub('[\\s\\/-]+', '-', re.sub('[^\\w\\s\\/-]', '', value)).lower()
+    value = codecs.encode(value, "translit/long")
+    return re.sub("[\\s\\/-]+", "-", re.sub("[^\\w\\s\\/-]", "", value)).lower()
 
 
 class Tag(models.Model):
@@ -48,7 +60,7 @@ class Tag(models.Model):
         return create_human_readable_id(name)
 
     def save(self, *args, **kwargs) -> None:
-        if self.id == '':
+        if self.id == "":
             self.id = self.create_id(self.name)
         super().save(*args, **kwargs)
 
@@ -127,20 +139,20 @@ class Style(models.Model):
     smoke_roast = models.CharField(max_length=255, default=None, blank=True, null=True)
 
     def save(self, *args, **kwargs) -> None:
-        if self.slug == '':
+        if self.slug == "":
             self.slug = create_human_readable_id(self.name)
 
-        self.derive_missing_values('ebc', 'srm', ebc_to_srm)
-        self.derive_missing_values('srm', 'ebc', srm_to_ebc)
-        self.derive_missing_values('original_plato', 'og', plato_to_gravity)
-        self.derive_missing_values('og', 'original_plato', gravity_to_plato)
-        self.derive_missing_values('final_plato', 'fg', plato_to_gravity)
-        self.derive_missing_values('fg', 'final_plato', gravity_to_plato)
+        self.derive_missing_values("ebc", "srm", ebc_to_srm)
+        self.derive_missing_values("srm", "ebc", srm_to_ebc)
+        self.derive_missing_values("original_plato", "og", plato_to_gravity)
+        self.derive_missing_values("og", "original_plato", gravity_to_plato)
+        self.derive_missing_values("final_plato", "fg", plato_to_gravity)
+        self.derive_missing_values("fg", "final_plato", gravity_to_plato)
 
         super().save(*args, **kwargs)
 
     def derive_missing_values(self, from_field: str, to_field: str, calc_function: callable) -> None:
-        fields = ['{}_min', '{}_max', 'recipes_{}_min', 'recipes_{}_mean', 'recipes_{}_max']
+        fields = ["{}_min", "{}_max", "recipes_{}_min", "recipes_{}_mean", "recipes_{}_max"]
         for pattern in fields:
             to_field_name = pattern.format(to_field)
             if getattr(self, to_field_name) is None:
@@ -169,7 +181,7 @@ class Style(models.Model):
 
     @property
     def sub_styles(self) -> iter:
-        return self.style_set.order_by('id')
+        return self.style_set.order_by("id")
 
     @property
     def has_sub_styles(self) -> bool:
@@ -192,15 +204,30 @@ class Style(models.Model):
     @property
     def alt_names_list(self):
         if self.alt_names is not None:
-            items = self.alt_names.split(',')
+            items = self.alt_names.split(",")
             return list(map(lambda x: x.strip(), items))
         return []
 
     @property
     def has_specified_metrics(self) -> bool:
-        fields = ['abv_min', 'abv_max', 'ibu_min', 'ibu_max', 'ebc_min', 'ebc_max', 'srm_min', 'srm_max', 'og_min',
-                  'og_max', 'original_plato_min', 'original_plato_max', 'fg_min', 'fg_max', 'final_plato_min',
-                  'final_plato_max']
+        fields = [
+            "abv_min",
+            "abv_max",
+            "ibu_min",
+            "ibu_max",
+            "ebc_min",
+            "ebc_max",
+            "srm_min",
+            "srm_max",
+            "og_min",
+            "og_max",
+            "original_plato_min",
+            "original_plato_max",
+            "fg_min",
+            "fg_max",
+            "final_plato_min",
+            "final_plato_max",
+        ]
         for field in fields:
             if getattr(self, field) is not None:
                 return True
@@ -208,12 +235,32 @@ class Style(models.Model):
 
     @property
     def has_recipes_metrics(self) -> bool:
-        fields = ['recipes_abv_min', 'recipes_abv_mean', 'recipes_abv_max', 'recipes_ibu_min', 'recipes_ibu_mean',
-                  'recipes_ibu_max', 'recipes_ebc_min', 'recipes_ebc_mean', 'recipes_ebc_max', 'recipes_srm_min',
-                  'recipes_srm_mean', 'recipes_srm_max', 'recipes_og_min', 'recipes_og_mean', 'recipes_og_max',
-                  'recipes_original_plato_min', 'recipes_original_plato_mean', 'recipes_original_plato_max',
-                  'recipes_fg_min', 'recipes_fg_mean', 'recipes_fg_max', 'recipes_final_plato_min',
-                  'recipes_final_plato_mean', 'recipes_final_plato_max']
+        fields = [
+            "recipes_abv_min",
+            "recipes_abv_mean",
+            "recipes_abv_max",
+            "recipes_ibu_min",
+            "recipes_ibu_mean",
+            "recipes_ibu_max",
+            "recipes_ebc_min",
+            "recipes_ebc_mean",
+            "recipes_ebc_max",
+            "recipes_srm_min",
+            "recipes_srm_mean",
+            "recipes_srm_max",
+            "recipes_og_min",
+            "recipes_og_mean",
+            "recipes_og_max",
+            "recipes_original_plato_min",
+            "recipes_original_plato_mean",
+            "recipes_original_plato_max",
+            "recipes_fg_min",
+            "recipes_fg_mean",
+            "recipes_fg_max",
+            "recipes_final_plato_min",
+            "recipes_final_plato_mean",
+            "recipes_final_plato_max",
+        ]
         for field in fields:
             if getattr(self, field) is not None:
                 return True
@@ -281,7 +328,7 @@ class Fermentable(models.Model):
     recipes_color_ebc_max = models.FloatField(default=None, blank=True, null=True)
 
     def save(self, *args, **kwargs) -> None:
-        if self.id == '':
+        if self.id == "":
             self.id = self.create_id(self.name)
         super().save(*args, **kwargs)
 
@@ -312,7 +359,7 @@ class Fermentable(models.Model):
     @property
     def alt_names_list(self):
         if self.alt_names is not None:
-            items = self.alt_names.split(',')
+            items = self.alt_names.split(",")
             return list(map(lambda x: x.strip(), items))
         return []
 
@@ -321,15 +368,15 @@ class Fermentable(models.Model):
         if self.recipes_color_ebc_mean is None:
             return None
         if self.recipes_color_ebc_mean < 8:
-            return 'light'
+            return "light"
         if self.recipes_color_ebc_mean < 25:
-            return 'golden'
+            return "golden"
         if self.recipes_color_ebc_mean < 40:
-            return 'amber'
+            return "amber"
         if self.recipes_color_ebc_mean < 70:
-            return 'dark'
+            return "dark"
         if self.recipes_color_ebc_mean < 100:
-            return 'black'
+            return "black"
 
     @property
     def is_popular(self) -> bool:
@@ -338,31 +385,31 @@ class Fermentable(models.Model):
 
 # http://www.hopslist.com/hops/
 class Hop(models.Model):
-    AROMA = 'aroma'
-    BITTERING = 'bittering'
-    DUAL_PURPOSE = 'dual-purpose'
+    AROMA = "aroma"
+    BITTERING = "bittering"
+    DUAL_PURPOSE = "dual-purpose"
 
     COUNTRIES = (
-        ('AUS', 'Australia'),
-        ('BEL', 'Belgium'),
-        ('CAN', 'Canada'),
-        ('CZH', 'Czech Republic'),
-        ('FRA', 'France'),
-        ('GBR', 'Great Britain'),
-        ('GER', 'Germany'),
-        ('JPN', 'Japan'),
-        ('NZL', 'New Zealand'),
-        ('POL', 'Poland'),
-        ('SER', 'Serbia'),
-        ('SLO', 'Slovenia'),
-        ('USA', 'United States'),
-        ('ZAF', 'South Africa'),
+        ("AUS", "Australia"),
+        ("BEL", "Belgium"),
+        ("CAN", "Canada"),
+        ("CZH", "Czech Republic"),
+        ("FRA", "France"),
+        ("GBR", "Great Britain"),
+        ("GER", "Germany"),
+        ("JPN", "Japan"),
+        ("NZL", "New Zealand"),
+        ("POL", "Poland"),
+        ("SER", "Serbia"),
+        ("SLO", "Slovenia"),
+        ("USA", "United States"),
+        ("ZAF", "South Africa"),
     )
 
     USE_CHOICES = (
-        (AROMA, 'Aroma'),
-        (BITTERING, 'Bittering'),
-        (DUAL_PURPOSE, 'Dual Purpose'),
+        (AROMA, "Aroma"),
+        (BITTERING, "Bittering"),
+        (DUAL_PURPOSE, "Dual Purpose"),
     )
 
     id = models.CharField(max_length=255, primary_key=True)
@@ -395,7 +442,7 @@ class Hop(models.Model):
     recipes_use_dry_hop_count = models.IntegerField(default=None, blank=True, null=True)
 
     def save(self, *args, **kwargs) -> None:
-        if self.id == '':
+        if self.id == "":
             self.id = self.create_id(self.name)
         super().save(*args, **kwargs)
 
@@ -418,14 +465,14 @@ class Hop(models.Model):
     @property
     def alt_names_list(self):
         if self.alt_names is not None:
-            items = self.alt_names.split(',')
+            items = self.alt_names.split(",")
             return list(map(lambda x: x.strip(), items))
         return []
 
     @property
     def origin_list(self):
         if self.origin is not None:
-            items = self.origin.split(',')
+            items = self.origin.split(",")
             return list(map(lambda x: x.strip(), items))
         return []
 
@@ -440,12 +487,12 @@ class Hop(models.Model):
         if self.recipes_alpha_mean is None:
             return None
         if self.recipes_alpha_mean < 5:
-            return 'low'
+            return "low"
         if self.recipes_alpha_mean > 15:
-            return 'super high'
+            return "super high"
         if self.recipes_alpha_mean > 9:
-            return 'high'
-        return 'moderate'
+            return "high"
+        return "moderate"
 
     @property
     def use_count(self) -> list:
@@ -460,7 +507,7 @@ class Hop(models.Model):
         use_names = RecipeHop.get_uses()
         use_counts = []
         for use in uses:
-            value = getattr(self, 'recipes_use_%s_count' % use)
+            value = getattr(self, "recipes_use_%s_count" % use)
             if value is not None:
                 use_counts.append({"use_id": use, "use": use_names[use], "recipes": value})
 
@@ -468,7 +515,7 @@ class Hop(models.Model):
 
     @property
     def accessible_substitutes(self):
-        return self.substitutes.filter(recipes_count__gt=0).order_by('name')
+        return self.substitutes.filter(recipes_count__gt=0).order_by("name")
 
     @property
     def is_popular(self) -> bool:
@@ -542,7 +589,9 @@ class Yeast(models.Model):
     max_temperature = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     flocculation = models.CharField(max_length=16, choices=FLOCCULATION_CHOICES, default=None, blank=True, null=True)
     tolerance = models.CharField(max_length=16, choices=TOLERANCE_CHOICES, default=None, blank=True, null=True)
-    tolerance_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
+    tolerance_percent = models.FloatField(
+        default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)]
+    )
     description = models.CharField(max_length=255, default=None, blank=True, null=True)
 
     # Calculated metrics from recipes
@@ -550,10 +599,10 @@ class Yeast(models.Model):
     recipes_percentile = models.FloatField(default=None, blank=True, null=True)
 
     class Meta:
-        unique_together = ('lab', 'product_id')
+        unique_together = ("lab", "product_id")
 
     def save(self, *args, **kwargs) -> None:
-        if self.id == '':
+        if self.id == "":
             self.id = self.create_id(self.name, self.lab, self.brand, self.product_id)
         super().save(*args, **kwargs)
 
@@ -576,7 +625,7 @@ class Yeast(models.Model):
 
     @classmethod
     def get_labs(cls) -> list:
-        return list(cls.objects.order_by('lab').values_list('lab', flat=True).distinct())
+        return list(cls.objects.order_by("lab").values_list("lab", flat=True).distinct())
 
     @classmethod
     def get_types(cls) -> dict:
@@ -619,14 +668,14 @@ class Yeast(models.Model):
         if self.attenuation is None:
             return None
         if self.attenuation < 30:
-            return 'very low'
+            return "very low"
         if self.attenuation < 50:
-            return 'low'
+            return "low"
         if self.attenuation < 70:
-            return 'medium'
+            return "medium"
         if self.attenuation < 85:
-            return 'high'
-        return 'very high'
+            return "high"
+        return "very high"
 
     @property
     def tolerance_name(self):
@@ -656,21 +705,40 @@ class Recipe(models.Model):
     uid = models.CharField(max_length=32, primary_key=True)
     name = models.CharField(max_length=255, default=None, blank=True, null=True)
     author = models.CharField(max_length=255, default=None, blank=True, null=True)
-    created = models.DateField(default=None, blank=True, null=True, validators=[MinValueValidator(datetime.date(1990, 1, 1)), MaxValueValidator(get_tomorrow_date)])
+    created = models.DateField(
+        default=None,
+        blank=True,
+        null=True,
+        validators=[MinValueValidator(datetime.date(1990, 1, 1)), MaxValueValidator(get_tomorrow_date)],
+    )
 
     # Characteristics
     style = models.ForeignKey(Style, on_delete=models.SET_NULL, default=None, blank=True, null=True)
-    associated_styles = models.ManyToManyField(Style, related_name='all_recipes')
+    associated_styles = models.ManyToManyField(Style, related_name="all_recipes")
     style_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
-    extract_efficiency = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
-    og = models.FloatField(default=None, blank=True, null=True, validators=[MinValueValidator(0.95), MaxValueValidator(1.5)])
-    fg = models.FloatField(default=None, blank=True, null=True, validators=[MinValueValidator(0.95), MaxValueValidator(1.5)])
-    original_plato = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
-    final_plato = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
-    abv = models.FloatField(default=None, blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    extract_efficiency = models.FloatField(
+        default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)]
+    )
+    og = models.FloatField(
+        default=None, blank=True, null=True, validators=[MinValueValidator(0.95), MaxValueValidator(1.5)]
+    )
+    fg = models.FloatField(
+        default=None, blank=True, null=True, validators=[MinValueValidator(0.95), MaxValueValidator(1.5)]
+    )
+    original_plato = models.FloatField(
+        default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)]
+    )
+    final_plato = models.FloatField(
+        default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)]
+    )
+    abv = models.FloatField(
+        default=None, blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(100)]
+    )
     ebc = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     srm = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    ibu = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(5000)])
+    ibu = models.FloatField(
+        default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(5000)]
+    )
 
     # Mashing
     mash_water = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
@@ -681,17 +749,17 @@ class Recipe(models.Model):
     cast_out_wort = models.IntegerField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
 
     def save(self, *args, **kwargs) -> None:
-        self.derive_missing_values('ebc', 'srm', ebc_to_srm)
-        self.derive_missing_values('srm', 'ebc', srm_to_ebc)
-        self.derive_missing_values('original_plato', 'og', plato_to_gravity)
-        self.derive_missing_values('og', 'original_plato', gravity_to_plato)
+        self.derive_missing_values("ebc", "srm", ebc_to_srm)
+        self.derive_missing_values("srm", "ebc", srm_to_ebc)
+        self.derive_missing_values("original_plato", "og", plato_to_gravity)
+        self.derive_missing_values("og", "original_plato", gravity_to_plato)
 
         # When no final plato/gravity is available, but there's original plato and abv
         if self.fg is None and self.final_plato is None and self.original_plato is not None and self.abv is not None:
             self.final_plato = abv_to_to_final_plato(self.abv, self.original_plato)
 
-        self.derive_missing_values('final_plato', 'fg', plato_to_gravity)
-        self.derive_missing_values('fg', 'final_plato', gravity_to_plato)
+        self.derive_missing_values("final_plato", "fg", plato_to_gravity)
+        self.derive_missing_values("fg", "final_plato", gravity_to_plato)
 
         # Calculate ABV when missing
         if self.abv is None and self.og is not None and self.fg is not None:
@@ -719,15 +787,15 @@ class Recipe(models.Model):
 
 
 class RecipeFermentable(models.Model):
-    BOIL = 'boil'
-    MASH = 'mash'
-    STEEP = 'steep'
+    BOIL = "boil"
+    MASH = "mash"
+    STEEP = "steep"
 
-    GRAIN = 'grain'
-    SUGAR = 'sugar'
-    EXTRACT = 'extract'
-    DRY_EXTRACT = 'dry-extract'
-    ADJUNCT = 'adjunct'
+    GRAIN = "grain"
+    SUGAR = "sugar"
+    EXTRACT = "extract"
+    DRY_EXTRACT = "dry-extract"
+    ADJUNCT = "adjunct"
 
     FORM_CHOICES = (
         (GRAIN, "Grain"),
@@ -747,18 +815,22 @@ class RecipeFermentable(models.Model):
     origin_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
     form = models.CharField(max_length=16, choices=FORM_CHOICES, default=None, blank=True, null=True)
     amount = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    amount_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
+    amount_percent = models.FloatField(
+        default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)]
+    )
     color_lovibond = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     color_ebc = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    _yield = models.FloatField(default=None, blank=True, null=True, db_column='yield', validators=[GreaterThanValueValidator(0)])
+    _yield = models.FloatField(
+        default=None, blank=True, null=True, db_column="yield", validators=[GreaterThanValueValidator(0)]
+    )
 
     def set_extra(self, key: str, value: Optional[str]) -> None:
         if value is not None:
             self._extras.append((key, value))
 
     def save(self, *args, **kwargs) -> None:
-        self.derive_missing_values('color_lovibond', 'color_ebc', lovibond_to_ebc)
-        self.derive_missing_values('color_ebc', 'color_lovibond', ebc_to_lovibond)
+        self.derive_missing_values("color_lovibond", "color_ebc", lovibond_to_ebc)
+        self.derive_missing_values("color_ebc", "color_lovibond", ebc_to_lovibond)
         super().save(*args, **kwargs)
 
         for extra in self._extras:
@@ -782,7 +854,10 @@ class RecipeFermentable(models.Model):
             (re.compile("/steep/i"), self.STEEP),
             (re.compile("/boil/i"), self.BOIL),
             (re.compile("/boil/i"), self.BOIL),
-            (re.compile("/biscuit|black|cara|chocolate|crystal|munich|roast|special|toast|victory|vienna/i"), self.STEEP),
+            (
+                re.compile("/biscuit|black|cara|chocolate|crystal|munich|roast|special|toast|victory|vienna/i"),
+                self.STEEP,
+            ),
             (re.compile("/candi|candy|dme|dry|extract|honey|lme|liquid|sugar|syrup|turbinado/i"), self.BOIL),
         ]
 
@@ -821,38 +896,38 @@ class RecipeFermentableExtra(models.Model):
 
 
 class RecipeHop(models.Model):
-    MASH = 'mash'
-    FIRST_WORT = 'first_wort'
-    BOIL = 'boil'
-    AROMA = 'aroma'
-    DRY_HOP = 'dry_hop'
+    MASH = "mash"
+    FIRST_WORT = "first_wort"
+    BOIL = "boil"
+    AROMA = "aroma"
+    DRY_HOP = "dry_hop"
 
-    BITTERING = 'bittering'
-    DUAL_PURPOSE = 'dual-purpose'
+    BITTERING = "bittering"
+    DUAL_PURPOSE = "dual-purpose"
 
-    PELLET = 'pellet'
-    PLUG = 'plug'
-    LEAF = 'leaf'
-    EXTRACT = 'extract'
+    PELLET = "pellet"
+    PLUG = "plug"
+    LEAF = "leaf"
+    EXTRACT = "extract"
 
     USE_CHOICES = (
-        (MASH, 'Mash'),
-        (FIRST_WORT, 'First Wort'),
-        (BOIL, 'Boil'),
-        (AROMA, 'Aroma'),
-        (DRY_HOP, 'Dry Hop'),
+        (MASH, "Mash"),
+        (FIRST_WORT, "First Wort"),
+        (BOIL, "Boil"),
+        (AROMA, "Aroma"),
+        (DRY_HOP, "Dry Hop"),
     )
 
     TYPE_CHOICES = (
-        (AROMA, 'Aroma'),
-        (BITTERING, 'Bittering'),
-        (DUAL_PURPOSE, 'Dual-Purpose'),
+        (AROMA, "Aroma"),
+        (BITTERING, "Bittering"),
+        (DUAL_PURPOSE, "Dual-Purpose"),
     )
 
     FORM_CHOICES = (
-        (PELLET, 'Pellet'),
-        (PLUG, 'Plug'),
-        (LEAF, 'Leaf'),
+        (PELLET, "Pellet"),
+        (PLUG, "Plug"),
+        (LEAF, "Leaf"),
     )
 
     def __init__(self, *args, **kwargs):
@@ -868,7 +943,9 @@ class RecipeHop(models.Model):
     beta = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     use = models.CharField(max_length=16, choices=USE_CHOICES, default=None, blank=True, null=True)
     amount = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    amount_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
+    amount_percent = models.FloatField(
+        default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)]
+    )
     time = models.IntegerField(default=None, blank=True, null=True, validators=[MinValueValidator(0)])
 
     def set_extra(self, key: str, value: Optional[str]) -> None:
@@ -891,8 +968,13 @@ class RecipeHop(models.Model):
         if self.alpha is None or self.amount is None or self.time is None:
             return 0.0
 
-        return 1.65 * math.pow(0.000125, og_wort - 1.0) * ((1 - math.pow(math.e, -0.04 * self.time)) / 4.15) * (
-                (self.alpha / 100.0 * self.amount * 1000) / batch_size) * self.utilization_factor()
+        return (
+            1.65
+            * math.pow(0.000125, og_wort - 1.0)
+            * ((1 - math.pow(math.e, -0.04 * self.time)) / 4.15)
+            * ((self.alpha / 100.0 * self.amount * 1000) / batch_size)
+            * self.utilization_factor()
+        )
 
     def utilization_factor(self) -> float:
         """Account for better utilization from pellets vs. whole"""
@@ -957,7 +1039,9 @@ class RecipeYeast(models.Model):
     form = models.CharField(max_length=16, choices=FORM_CHOICES, default=None, blank=True, null=True)
     type = models.CharField(max_length=16, choices=TYPE_CHOICES, default=None, blank=True, null=True)
     amount = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
-    amount_percent = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)])
+    amount_percent = models.FloatField(
+        default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)]
+    )
     amount_is_weight: models.BooleanField(default=None, blank=True, null=True)
     min_attenuation = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
     max_attenuation = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])

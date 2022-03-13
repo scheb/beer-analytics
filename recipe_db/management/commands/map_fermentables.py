@@ -7,10 +7,10 @@ class Command(BaseCommand):
     help = "Map fermentable values"
 
     def add_arguments(self, parser):
-        parser.add_argument('--all', action='store_true', help='Map all fermentables (again)')
+        parser.add_argument("--all", action="store_true", help="Map all fermentables (again)")
 
     def handle(self, *args, **options):
-        map_all = options['all']
+        map_all = options["all"]
         fermentables_mapper = FermentablesProcessor([FermentableMapper()])
 
         if map_all:

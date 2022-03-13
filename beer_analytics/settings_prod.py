@@ -6,16 +6,13 @@ except ImportError:
 DEBUG = False
 
 MIDDLEWARE += [
-    'django.middleware.cache.UpdateCacheMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    "django.middleware.cache.UpdateCacheMiddleware",
+    "django.middleware.cache.FetchFromCacheMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': env.str('CACHE_DIR')
-    }
+    "default": {"BACKEND": "django.core.cache.backends.filebased.FileBasedCache", "LOCATION": env.str("CACHE_DIR")}
 }
 
 SESSION_COOKIE_SECURE = True

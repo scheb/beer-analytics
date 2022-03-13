@@ -5,8 +5,7 @@ from recipe_db.analytics.spotlight.style import StyleAnalysis
 from recipe_db.models import Style
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.meta import OPEN_GRAPH_IMAGE_WIDTH, OPEN_GRAPH_IMAGE_HEIGHT
-from web_app.plot import LinesChart, PreAggregatedBoxPlot, \
-    PreAggregateHistogramChart, PreAggregatedPairsBoxPlot
+from web_app.plot import LinesChart, PreAggregatedBoxPlot, PreAggregateHistogramChart, PreAggregatedPairsBoxPlot
 
 
 class StyleChart(ChartDefinition, ABC):
@@ -29,11 +28,11 @@ class StyleAbvChart(StyleChart):
     IMAGE_ALT = "Histogram of Alcohol per Volume (ABV) in the %s beer style"
 
     def plot(self) -> Chart:
-        df = StyleAnalysis(self.style).metric_histogram('abv')
+        df = StyleAnalysis(self.style).metric_histogram("abv")
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregateHistogramChart().plot(df, 'abv', 'count')
+        figure = PreAggregateHistogramChart().plot(df, "abv", "count")
         return Chart(figure, 500, 350, title=self.get_chart_title())
 
 
@@ -42,11 +41,11 @@ class StyleIbuChart(StyleChart):
     IMAGE_ALT = "Histogram of bitterness (IBU) in the %s beer style"
 
     def plot(self) -> Chart:
-        df = StyleAnalysis(self.style).metric_histogram('ibu')
+        df = StyleAnalysis(self.style).metric_histogram("ibu")
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregateHistogramChart().plot(df, 'ibu', 'count')
+        figure = PreAggregateHistogramChart().plot(df, "ibu", "count")
         return Chart(figure, 500, 350, title=self.get_chart_title())
 
 
@@ -55,11 +54,11 @@ class StyleColorChart(StyleChart):
     IMAGE_ALT = "Histogram of beer color (SRM) in the %s beer style"
 
     def plot(self) -> Chart:
-        df = StyleAnalysis(self.style).metric_histogram('srm')
+        df = StyleAnalysis(self.style).metric_histogram("srm")
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregateHistogramChart().plot(df, 'srm', 'count')
+        figure = PreAggregateHistogramChart().plot(df, "srm", "count")
         return Chart(figure, 500, 350, title=self.get_chart_title())
 
 
@@ -68,11 +67,11 @@ class StyleOGChart(StyleChart):
     IMAGE_ALT = "Histogram of original gravity (OG) in the %s beer style"
 
     def plot(self) -> Chart:
-        df = StyleAnalysis(self.style).metric_histogram('og')
+        df = StyleAnalysis(self.style).metric_histogram("og")
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregateHistogramChart().plot(df, 'og', 'count')
+        figure = PreAggregateHistogramChart().plot(df, "og", "count")
         return Chart(figure, 500, 350, title=self.get_chart_title())
 
 
@@ -81,11 +80,11 @@ class StyleFGChart(StyleChart):
     IMAGE_ALT = "Histogram of final gravity (FG) in the %s beer style"
 
     def plot(self) -> Chart:
-        df = StyleAnalysis(self.style).metric_histogram('fg')
+        df = StyleAnalysis(self.style).metric_histogram("fg")
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregateHistogramChart().plot(df, 'fg', 'count')
+        figure = PreAggregateHistogramChart().plot(df, "fg", "count")
         return Chart(figure, 500, 350, title=self.get_chart_title())
 
 
@@ -98,7 +97,7 @@ class StylePopularityChart(StyleChart):
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'beer_style', None, '% of All Recipes')
+        figure = LinesChart().plot(df, "month", "recipes_percent", "beer_style", None, "% of All Recipes")
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -111,7 +110,7 @@ class StyleTrendingYeastsChart(StyleChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'yeast', None, '% of Style Recipes')
+        figure = LinesChart(force_legend=True).plot(df, "month", "recipes_percent", "yeast", None, "% of Style Recipes")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -124,7 +123,7 @@ class StylePopularYeastsChart(StyleChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'yeast', None, '% of Style Recipes')
+        figure = LinesChart(force_legend=True).plot(df, "month", "recipes_percent", "yeast", None, "% of Style Recipes")
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -137,7 +136,7 @@ class StyleTrendingHopsChart(StyleChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'hop', None, '% of Style Recipes')
+        figure = LinesChart(force_legend=True).plot(df, "month", "recipes_percent", "hop", None, "% of Style Recipes")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -150,7 +149,7 @@ class StylePopularHopsChart(StyleChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'hop', None, '% of Style Recipes')
+        figure = LinesChart(force_legend=True).plot(df, "month", "recipes_percent", "hop", None, "% of Style Recipes")
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -163,7 +162,7 @@ class StylePopularHopsAmountChart(StyleChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregatedBoxPlot().plot(df, 'hop', 'amount_percent', None, '% of Weight in Recipe')
+        figure = PreAggregatedBoxPlot().plot(df, "hop", "amount_percent", None, "% of Weight in Recipe")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -176,7 +175,7 @@ class StyleHopPairingsChart(StyleChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% of Weight in Recipe')
+        figure = PreAggregatedPairsBoxPlot().plot(df, "pairing", "hop", "amount_percent", None, "% of Weight in Recipe")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -189,7 +188,9 @@ class StylePopularFermentablesChart(StyleChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'fermentable', None, '% of Style Recipes')
+        figure = LinesChart(force_legend=True).plot(
+            df, "month", "recipes_percent", "fermentable", None, "% of Style Recipes"
+        )
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -202,7 +203,7 @@ class StylePopularFermentablesAmountChart(StyleChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregatedBoxPlot().plot(df, 'fermentable', 'amount_percent', None, '% of Weight in Recipe')
+        figure = PreAggregatedBoxPlot().plot(df, "fermentable", "amount_percent", None, "% of Weight in Recipe")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -223,17 +224,14 @@ class StyleChartFactory:
         original_gravity_histogram=StyleOGChart,
         final_gravity_histogram=StyleFGChart,
         popularity=StylePopularityChart,
-
         # Yeasts
         popular_yeasts=StylePopularYeastsChart,
         trending_yeasts=StyleTrendingYeastsChart,
-
         # Hops
         popular_hops=StylePopularHopsChart,
         popular_hops_amount=StylePopularHopsAmountChart,
         trending_hops=StyleTrendingHopsChart,
         hop_pairings=StyleHopPairingsChart,
-
         # Fermentables
         popular_fermentables=StylePopularFermentablesChart,
         popular_fermentables_amount=StylePopularFermentablesAmountChart,
@@ -256,7 +254,7 @@ class StyleChartFactory:
 
     @classmethod
     def normalize_type(cls, chart_type: str) -> str:
-        return chart_type.replace('-', '_')
+        return chart_type.replace("-", "_")
 
     @classmethod
     def get_types(cls):

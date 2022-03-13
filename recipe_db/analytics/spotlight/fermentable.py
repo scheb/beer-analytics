@@ -2,19 +2,22 @@ from typing import Iterable
 
 from pandas import DataFrame
 
-from recipe_db.analytics.fermentable import FermentableAmountAnalysis, FermentableAmountRangeAnalysis, \
-    FermentableMetricHistogram
+from recipe_db.analytics.fermentable import (
+    FermentableAmountAnalysis,
+    FermentableAmountRangeAnalysis,
+    FermentableMetricHistogram,
+)
 from recipe_db.analytics.recipe import RecipesPopularityAnalysis, CommonStylesAnalysis, RecipesListAnalysis
 from recipe_db.analytics.scope import FermentableScope, RecipeScope, FermentableProjection
 from recipe_db.models import Fermentable, Recipe
 
-TYPE_FILTER_BASE = 'base'
-TYPE_FILTER_CARA_CRYSTAL = 'cara-crystal'
-TYPE_FILTER_TOASTED = 'toasted'
-TYPE_FILTER_ROASTED = 'roasted'
-TYPE_FILTER_OTHER_GRAIN = 'other-grain'
-TYPE_FILTER_SUGAR = 'sugar'
-TYPE_FILTER_FRUIT = 'fruit'
+TYPE_FILTER_BASE = "base"
+TYPE_FILTER_CARA_CRYSTAL = "cara-crystal"
+TYPE_FILTER_TOASTED = "toasted"
+TYPE_FILTER_ROASTED = "roasted"
+TYPE_FILTER_OTHER_GRAIN = "other-grain"
+TYPE_FILTER_SUGAR = "sugar"
+TYPE_FILTER_FRUIT = "fruit"
 
 FERMENTABLE_FILTER_TO_TYPES = {
     TYPE_FILTER_BASE: ([], [Fermentable.BASE]),

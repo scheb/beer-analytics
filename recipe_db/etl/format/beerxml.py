@@ -5,8 +5,7 @@ from pybeerxml.hop import Hop
 from pybeerxml.parser import Parser
 from pybeerxml.recipe import Recipe as BeerXMLRecipe
 
-from recipe_db.etl.format.parser import FormatParser, ParserResult, float_or_none, clean_kind, \
-    MalformedDataError
+from recipe_db.etl.format.parser import FormatParser, ParserResult, float_or_none, clean_kind, MalformedDataError
 from recipe_db.models import Recipe, RecipeYeast, RecipeFermentable, RecipeHop
 
 
@@ -65,7 +64,7 @@ class BeerXMLParser(FormatParser):
 
     def parse(self, result: ParserResult, file_path: str) -> None:
         try:
-            with open(file_path, "rt", encoding='utf-8') as f:
+            with open(file_path, "rt", encoding="utf-8") as f:
                 parser = Parser()
                 recipes = parser.parse_from_string(f.read())
 
@@ -121,11 +120,11 @@ class BeerXMLParser(FormatParser):
         # If it's a string, check for units
         if isinstance(color_value, str):
             color_value = color_value.strip().lower()
-            if color_value.endswith('ebc'):
-                ebc = float_or_none(color_value.replace('ebc', '').strip())
+            if color_value.endswith("ebc"):
+                ebc = float_or_none(color_value.replace("ebc", "").strip())
                 return None, ebc
-            elif color_value.endswith('srm'):
-                srm = float_or_none(color_value.replace('srm', '').strip())
+            elif color_value.endswith("srm"):
+                srm = float_or_none(color_value.replace("srm", "").strip())
                 return srm, None
 
         return None, None
@@ -143,7 +142,7 @@ class BeerXMLParser(FormatParser):
     def strip_abv_unit(self, value):
         if value is None:
             return None
-        return value.replace('%', '').replace('vol', '').strip()
+        return value.replace("%", "").replace("vol", "").strip()
 
     def child_element_value(self, node: Element, tag_name: str) -> Optional[str]:
         child_node = self.find_child_element(node, tag_name)
@@ -175,8 +174,7 @@ class BeerXMLParser(FormatParser):
                 if temp >= sparge_temp:
                     sparge_water += amount
 
-        return mash_water if mash_water > 0 else None,\
-            sparge_water if sparge_water > 0 else None
+        return mash_water if mash_water > 0 else None, sparge_water if sparge_water > 0 else None
 
     def get_fermentables(self, beerxml: BeerXMLRecipe) -> iter:
         for beerxml_fermentable in beerxml.fermentables:
@@ -222,12 +220,12 @@ class BeerXMLParser(FormatParser):
             hop.beta = beerxml_hop.beta
 
             # Extra values
-            hop.set_extra('hsi', beerxml_hop.hsi)
-            hop.set_extra('humulene', beerxml_hop.humulene)
-            hop.set_extra('caryophyllene', beerxml_hop.caryophyllene)
-            hop.set_extra('cohumulone', beerxml_hop.cohumulone)
-            hop.set_extra('myrcene', beerxml_hop.myrcene)
-            hop.set_extra('substitutes', clean_kind(beerxml_hop.substitutes))
+            hop.set_extra("hsi", beerxml_hop.hsi)
+            hop.set_extra("humulene", beerxml_hop.humulene)
+            hop.set_extra("caryophyllene", beerxml_hop.caryophyllene)
+            hop.set_extra("cohumulone", beerxml_hop.cohumulone)
+            hop.set_extra("myrcene", beerxml_hop.myrcene)
+            hop.set_extra("substitutes", clean_kind(beerxml_hop.substitutes))
 
             yield hop
 
@@ -242,7 +240,7 @@ class BeerXMLParser(FormatParser):
         if time is not None:
             if time <= 5:
                 return RecipeHop.AROMA
-            if time > 24*60:
+            if time > 24 * 60:
                 return RecipeHop.DRY_HOP
 
         return RecipeHop.BOIL
@@ -290,9 +288,9 @@ class BeerXMLParser(FormatParser):
             yeast.max_attenuation = beerxml_yeast.attenuation
 
             # Extra values
-            yeast.set_extra('min_temperature', beerxml_yeast.min_temperature)
-            yeast.set_extra('max_temperature', beerxml_yeast.max_temperature)
-            yeast.set_extra('flocculation', self.get_yeast_flocculation(beerxml_yeast.flocculation))
+            yeast.set_extra("min_temperature", beerxml_yeast.min_temperature)
+            yeast.set_extra("max_temperature", beerxml_yeast.max_temperature)
+            yeast.set_extra("flocculation", self.get_yeast_flocculation(beerxml_yeast.flocculation))
 
             yield yeast
 

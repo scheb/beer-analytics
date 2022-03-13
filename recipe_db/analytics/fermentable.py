@@ -20,34 +20,38 @@ class FermentableAmountRangeAnalysis(FermentableLevelAnalysis):
     def amount_range(self) -> DataFrame:
         scope_filter = self.scope.get_filter()
 
-        query = '''
+        query = """
             SELECT rf.recipe_id, sum(rf.amount_percent) AS amount_percent
             FROM recipe_db_recipefermentable AS rf
             WHERE 1 {}
             GROUP BY rf.recipe_id, rf.kind_id
-        '''.format(scope_filter.where)
+        """.format(
+            scope_filter.where
+        )
 
         df = pd.read_sql(query, connection, params=scope_filter.parameters)
         if len(df) == 0:
             return df
 
         # Calculate ranges
-        agg = [lowerfence, q1, 'median', 'mean', q3, upperfence]
-        aggregated = df.agg({'amount_percent': agg})
+        agg = [lowerfence, q1, "median", "mean", q3, upperfence]
+        aggregated = df.agg({"amount_percent": agg})
 
         return aggregated
 
 
 class FermentableMetricHistogram(FermentableLevelAnalysis):
     def metric_histogram(self, metric: str) -> DataFrame:
-        precision = METRIC_PRECISION[metric] if metric in METRIC_PRECISION else METRIC_PRECISION['default']
+        precision = METRIC_PRECISION[metric] if metric in METRIC_PRECISION else METRIC_PRECISION["default"]
 
         scope_filter = self.scope.get_filter()
-        query = '''
+        query = """
                 SELECT round({}, {}) as {}
                 FROM recipe_db_recipefermentable AS rf
                 WHERE 1 {}
-            '''.format(metric, precision, metric, scope_filter.where)
+            """.format(
+            metric, precision, metric, scope_filter.where
+        )
 
         df = pd.read_sql(query, connection, params=scope_filter.parameters)
         if len(df) == 0:
@@ -57,7 +61,7 @@ class FermentableMetricHistogram(FermentableLevelAnalysis):
         if len(df) == 0:
             return df
 
-        histogram = df.groupby([pd.cut(df[metric], 16, precision=precision)])[metric].agg(['count'])
+        histogram = df.groupby([pd.cut(df[metric], 16, precision=precision)])[metric].agg(["count"])
         histogram = histogram.reset_index()
         histogram[metric] = histogram[metric].map(str)
 
@@ -75,7 +79,7 @@ class FermentableAmountAnalysis(RecipeLevelAnalysis):
         scope_filter = self.scope.get_filter()
         projection_filter = projection.get_filter()
 
-        query = '''
+        query = """
             SELECT
                 rf.recipe_id,
                 rf.kind_id,
@@ -87,26 +91,28 @@ class FermentableAmountAnalysis(RecipeLevelAnalysis):
                 {}
                 {}
             GROUP BY rf.recipe_id, rf.kind_id
-        '''.format(scope_filter.where, projection_filter.where)
+        """.format(
+            scope_filter.where, projection_filter.where
+        )
 
         df = pd.read_sql(query, connection, params=scope_filter.parameters + projection_filter.parameters)
         if len(df) == 0:
             return df
 
         # Calculate range
-        agg = [lowerfence, q1, 'median', 'mean', q3, upperfence]
-        per_style = df.groupby('kind_id').agg({'amount_percent': agg, 'recipe_id': 'nunique'})
+        agg = [lowerfence, q1, "median", "mean", q3, upperfence]
+        per_style = df.groupby("kind_id").agg({"amount_percent": agg, "recipe_id": "nunique"})
         per_style = per_style.reset_index()
 
         # Sort by number of recipes
-        per_style = per_style.sort_values(by=('recipe_id', 'nunique'), ascending=False)
+        per_style = per_style.sort_values(by=("recipe_id", "nunique"), ascending=False)
 
         # Show only top values
         if num_top is not None:
             per_style = per_style[:num_top]
 
         # Add style names
-        per_style['fermentable'] = per_style['kind_id'].map(get_fermentable_names_dict())
+        per_style["fermentable"] = per_style["kind_id"].map(get_fermentable_names_dict())
         return per_style
 
     def per_style(
@@ -119,7 +125,7 @@ class FermentableAmountAnalysis(RecipeLevelAnalysis):
         scope_filter = self.scope.get_filter()
         projection_filter = projection.get_filter()
 
-        query = '''
+        query = """
             SELECT
                 rf.recipe_id,
                 ras.style_id,
@@ -134,24 +140,26 @@ class FermentableAmountAnalysis(RecipeLevelAnalysis):
                 {}
                 {}
             GROUP BY rf.recipe_id, ras.style_id, rf.kind_id
-        '''.format(scope_filter.where, projection_filter.where)
+        """.format(
+            scope_filter.where, projection_filter.where
+        )
 
         df = pd.read_sql(query, connection, params=scope_filter.parameters + projection_filter.parameters)
         if len(df) == 0:
             return df
 
         # Calculate range
-        agg = [lowerfence, q1, 'median', 'mean', q3, upperfence]
-        per_style = df.groupby('style_id').agg({'amount_percent': agg, 'recipe_id': 'nunique'})
+        agg = [lowerfence, q1, "median", "mean", q3, upperfence]
+        per_style = df.groupby("style_id").agg({"amount_percent": agg, "recipe_id": "nunique"})
         per_style = per_style.reset_index()
 
         # Sort by number of recipes
-        per_style = per_style.sort_values(by=('recipe_id', 'nunique'), ascending=False)
+        per_style = per_style.sort_values(by=("recipe_id", "nunique"), ascending=False)
 
         # Show only top values
         if num_top is not None:
             per_style = per_style[:num_top]
 
         # Add style names
-        per_style['beer_style'] = per_style['style_id'].map(get_style_names_dict())
+        per_style["beer_style"] = per_style["style_id"].map(get_style_names_dict())
         return per_style

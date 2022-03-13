@@ -11,11 +11,11 @@ COLORS_PRISM = px.colors.qualitative.Prism
 COLORS_DISTINCT = COLORS_PRISM
 
 COLOR_SEQUENTIAL = [
-    '#fcd99d',
-    '#f5a452',
-    '#d15483',
-    '#bd4d8d',
-    '#883b7e',
+    "#fcd99d",
+    "#f5a452",
+    "#d15483",
+    "#bd4d8d",
+    "#883b7e",
 ]
 
 
@@ -34,9 +34,9 @@ class LinesChart:
         legend_title: str = None,
     ) -> Figure:
         # When the value is percent, format it with 2 decimals
-        if 'percent' in y_field:
-            hover_data = {y_field: ':.2p'}
-            tick_format = '.2p'
+        if "percent" in y_field:
+            hover_data = {y_field: ":.2p"}
+            tick_format = ".2p"
         else:
             hover_data = None
             tick_format = None
@@ -47,10 +47,10 @@ class LinesChart:
             y=y_field,
             color=category_field,
             color_discrete_sequence=COLORS_DISTINCT,
-            hover_data=hover_data
+            hover_data=hover_data,
         )
         try:
-            fig.update_traces(line=dict(width=4), line_shape='spline')
+            fig.update_traces(line=dict(width=4), line_shape="spline")
         except ValueError:
             # Spline rendering is sometimes causing issues when there's too much data
             fig.update_traces(line=dict(width=4))
@@ -60,7 +60,7 @@ class LinesChart:
 
         fig.update_layout(legend=dict(title=legend_title))
         fig.update_layout(
-            plot_bgcolor='#f1efee',
+            plot_bgcolor="#f1efee",
             title=None,
             showlegend=self.force_legend or len(fig.data) > 1,
             margin=dict(l=10, r=0, t=20, b=10),
@@ -73,7 +73,7 @@ class LinesChart:
                 title=dict(
                     standoff=30,
                 ),
-            )
+            ),
         )
 
         return fig
@@ -89,9 +89,9 @@ class PreAggregatedBoxPlot:
         y_title: Optional[str] = None,
     ) -> Figure:
         # When the value is percent, format it with 2 decimals
-        if 'percent' in value_field:
-            hover_format = '.2p'
-            tick_format = '.2p'
+        if "percent" in value_field:
+            hover_format = ".2p"
+            tick_format = ".2p"
         else:
             hover_format = None
             tick_format = None
@@ -103,12 +103,12 @@ class PreAggregatedBoxPlot:
             trace = go.Box(
                 x=[trace_name],
                 y=[[1]],
-                lowerfence=trace_df[value_field]['lowerfence'],
-                q1=trace_df[value_field]['q1'],
-                median=trace_df[value_field]['median'],
-                mean=trace_df[value_field]['mean'],
-                q3=trace_df[value_field]['q3'],
-                upperfence=trace_df[value_field]['upperfence'],
+                lowerfence=trace_df[value_field]["lowerfence"],
+                q1=trace_df[value_field]["q1"],
+                median=trace_df[value_field]["median"],
+                mean=trace_df[value_field]["mean"],
+                q3=trace_df[value_field]["q3"],
+                upperfence=trace_df[value_field]["upperfence"],
                 boxpoints=False,
                 name=trace_name,
                 marker=dict(color=COLORS_PRISM[column % len(COLORS_PRISM)]),
@@ -117,7 +117,7 @@ class PreAggregatedBoxPlot:
             column += 1
 
         fig.update_layout(
-            plot_bgcolor='#f1efee',
+            plot_bgcolor="#f1efee",
             title=None,
             showlegend=False,
             margin=dict(l=10, r=0, t=20, b=10),
@@ -131,7 +131,7 @@ class PreAggregatedBoxPlot:
                 title=dict(
                     standoff=30,
                 ),
-            )
+            ),
         )
 
         fig.update_xaxes(title_text=x_title)
@@ -151,9 +151,9 @@ class PreAggregatedPairsBoxPlot:
         y_title: Optional[str] = None,
     ) -> Figure:
         # When the value is percent, format it with 2 decimals
-        if 'percent' in value_field:
-            hover_format = '.2p'
-            tick_format = '.2p'
+        if "percent" in value_field:
+            hover_format = ".2p"
+            tick_format = ".2p"
         else:
             hover_format = None
             tick_format = None
@@ -161,11 +161,7 @@ class PreAggregatedPairsBoxPlot:
         pairings = df[pair_field].unique()
         num_pairings = len(pairings)
 
-        fig = make_subplots(
-            rows=1,
-            cols=num_pairings,
-            horizontal_spacing=0.005
-        )
+        fig = make_subplots(rows=1, cols=num_pairings, horizontal_spacing=0.005)
 
         column = 0
         for pairing in pairings:
@@ -176,12 +172,12 @@ class PreAggregatedPairsBoxPlot:
                 trace = go.Box(
                     x=[trace_name],
                     y=[[1]],
-                    lowerfence=trace_df[value_field]['lowerfence'],
-                    q1=trace_df[value_field]['q1'],
-                    median=trace_df[value_field]['median'],
-                    mean=trace_df[value_field]['mean'],
-                    q3=trace_df[value_field]['q3'],
-                    upperfence=trace_df[value_field]['upperfence'],
+                    lowerfence=trace_df[value_field]["lowerfence"],
+                    q1=trace_df[value_field]["q1"],
+                    median=trace_df[value_field]["median"],
+                    mean=trace_df[value_field]["mean"],
+                    q3=trace_df[value_field]["q3"],
+                    upperfence=trace_df[value_field]["upperfence"],
                     boxpoints=False,
                     name=trace_name,
                     marker=dict(color=COLORS_PRISM[column % len(COLORS_PRISM)]),
@@ -189,7 +185,7 @@ class PreAggregatedPairsBoxPlot:
                 fig.add_trace(trace, row=1, col=column)
 
         fig.update_layout(
-            plot_bgcolor='#f1efee',
+            plot_bgcolor="#f1efee",
             title=None,
             showlegend=False,
             margin=dict(l=30, r=0, t=20, b=10),
@@ -201,8 +197,8 @@ class PreAggregatedPairsBoxPlot:
         # When fixedrange=True is set, shared axis do no longer align, so we manually calculate the overall value range
         # and set it to all the axis so they match.
         y_range = (
-            max([0, math.floor((df[value_field]['lowerfence'].min()*100 - 5) / 10) * 10]) / 100,
-            min([100, math.ceil((df[value_field]['upperfence'].max()*100 + 5) / 10) * 10]) / 100,
+            max([0, math.floor((df[value_field]["lowerfence"].min() * 100 - 5) / 10) * 10]) / 100,
+            min([100, math.ceil((df[value_field]["upperfence"].max() * 100 + 5) / 10) * 10]) / 100,
         )
 
         fig.update_xaxes(title_text=x_title, fixedrange=True)
@@ -219,9 +215,9 @@ class RangeBoxPlot:
         value_field: str,
     ) -> Figure:
         # When the value is percent, format it with 2 decimals
-        if 'percent' in value_field:
-            hover_format = '.3p'
-            tick_format = '.0%'
+        if "percent" in value_field:
+            hover_format = ".3p"
+            tick_format = ".0%"
         else:
             hover_format = None
             tick_format = None
@@ -234,7 +230,7 @@ class RangeBoxPlot:
 
         fig.update_xaxes(title_text=None)
         fig.update_layout(
-            plot_bgcolor='#f1efee',
+            plot_bgcolor="#f1efee",
             title=None,
             showlegend=False,
             margin=dict(l=0, r=0, t=0, b=0),
@@ -246,7 +242,7 @@ class RangeBoxPlot:
             yaxis=dict(
                 showticklabels=False,
                 fixedrange=True,
-            )
+            ),
         )
 
         return fig
@@ -265,9 +261,9 @@ class BarChart:
         y_title: Optional[str] = None,
     ) -> Figure:
         # When the value is percent, format it with 2 decimals
-        if 'percent' in value_field:
-            hover_data = {value_field: ':.2p'}
-            tick_format = '.2p'
+        if "percent" in value_field:
+            hover_data = {value_field: ":.2p"}
+            tick_format = ".2p"
         else:
             hover_data = None
             tick_format = None
@@ -283,7 +279,7 @@ class BarChart:
 
         margin = dict(l=30, r=0, t=20, b=10) if self.add_margin else dict(l=0, r=0, t=0, b=0)
         fig.update_layout(
-            plot_bgcolor='#f1efee',
+            plot_bgcolor="#f1efee",
             title=None,
             showlegend=False,
             coloraxis=dict(
@@ -299,7 +295,7 @@ class BarChart:
                 title=dict(
                     standoff=30,
                 ),
-            )
+            ),
         )
 
         fig.update_xaxes(title_text=x_title)
@@ -318,16 +314,12 @@ class PreAggregateHistogramChart:
         y_title: Optional[str] = None,
     ) -> Figure:
         fig = px.bar(
-            df,
-            x=df[type_field],
-            y=df[value_field],
-            color=df[value_field],
-            color_continuous_scale=COLOR_SEQUENTIAL
+            df, x=df[type_field], y=df[value_field], color=df[value_field], color_continuous_scale=COLOR_SEQUENTIAL
         )
         fig.update_traces(marker=dict(line=dict(width=0)))
 
         fig.update_layout(
-            plot_bgcolor='#f1efee',
+            plot_bgcolor="#f1efee",
             title=None,
             showlegend=False,
             bargap=0,
@@ -344,7 +336,7 @@ class PreAggregateHistogramChart:
                 title=dict(
                     standoff=30,
                 ),
-            )
+            ),
         )
 
         fig.update_xaxes(title_text=x_title)

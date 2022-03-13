@@ -12,7 +12,9 @@ class Chart:
     DEFAULT_WIDTH = 1280
     DEFAULT_HEIGHT = 450
 
-    def __init__(self, figure: Figure, width: int = DEFAULT_WIDTH, height: int = DEFAULT_HEIGHT, title: str = None) -> None:
+    def __init__(
+        self, figure: Figure, width: int = DEFAULT_WIDTH, height: int = DEFAULT_HEIGHT, title: str = None
+    ) -> None:
         self.figure = figure
         self.title = title
         self.width = width
@@ -37,7 +39,7 @@ class Chart:
             title = dict(
                 text=self.title,
                 x=0.5,
-                xanchor='center',
+                xanchor="center",
             )
         self.figure.update_layout(
             title=title,
