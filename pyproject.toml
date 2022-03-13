@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "beer-analytics"
+version = "1.0"
+description = "Beer-Analytics website project"
+authors = ["Christian Scheb <me@christianscheb.de>"]
+license = "THE BEER-WARE LICENSE"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+Django = "^3.2"
+django-environ = "^0.8"
+django-meta = "^2.0"
+kaleido = "0.2.1"
+numpy = "^1.22.3"
+pandas = "^1.4.1"
+pybeerxml = "^2.1.2"
+requests = "^2.27.1"
+translitcodec = "^0.7.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
