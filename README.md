@@ -35,7 +35,7 @@ Application Setup
 
 - Install yarn dependencies: `yarn install`
 - Initialize `virtualenv` and enable it
-- Install Python dependencies: `pip -r requirements.txt`
+- Install Python dependencies: `pip install -r requirements.txt`
 - Create a configuration file (see below)
 - Apply database migrations to creates tables: `python manage.py makemigrations` and `python manage.py migrate`
 - Load initial data (known styles and ingredients) via `python manage.py load_initial_data`
