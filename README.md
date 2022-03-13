@@ -27,15 +27,15 @@ Application Setup
 ### Requirements
 
 - Python 3.8
-- pip
 - virtualenv (ideally)
-- yarn (JS package manager)
+- [Poetry](https://python-poetry.org/) (Python package manager)
+- [yarn](https://yarnpkg.com/) (JavaScript package manager)
 
 ### Setup Steps
 
 - Install yarn dependencies: `yarn install`
 - Initialize `virtualenv` and enable it
-- Install Python dependencies: `pip install -r requirements.txt`
+- Install Python dependencies: `poetry install`
 - Create a configuration file (see below)
 - Apply database migrations to creates tables: `python manage.py makemigrations` and `python manage.py migrate`
 - Load initial data (known styles and ingredients) via `python manage.py load_initial_data`
