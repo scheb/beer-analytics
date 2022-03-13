@@ -65,6 +65,7 @@ DATABASES = {
     }
 }
 DATABASE_ROUTERS = ['beer_analytics.DataImportRouter']
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGGING = {
     'version': 1,
