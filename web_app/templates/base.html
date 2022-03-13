@@ -24,11 +24,11 @@
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap shadow">
     <nav class="container-fluid navbar-expand-md p-0">
         <a class="navbar-brand col-md-3 col-lg-2" href="/"><span class="logo"></span>Beer Analytics</a>
-        <button class="navbar-toggler d-md-none ml-auto" type="button" data-toggle="collapse" data-target="#sidebar"
+        <button class="navbar-toggler d-md-none ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar"
                 aria-controls="sidebar" aria-expanded="false" aria-label="Toggle filters" title="Toggle filters">
             <span class="navbar-filter-icon"></span>
         </button>
-        <button class="navbar-toggler d-md-none ml-1 mr-3" type="button" data-toggle="collapse" data-target="#top-navigation"
+        <button class="navbar-toggler d-md-none ms-1 me-3" type="button" data-bs-toggle="collapse" data-bs-target="#top-navigation"
                 aria-controls="top-navigation" aria-expanded="false" aria-label="Toggle navigation" title="Toggle navigation">
             <span class="navbar-burger-icon"></span>
         </button>
@@ -41,7 +41,7 @@
                     <li class="nav-item"><a class="nav-link{% if url_name|startswith:'yeast' %} active{% endif %}" href="{% url "yeast_overview" %}"><span class="nav-icon icon-yeast"></span>Yeasts</a></li>
                     <li class="nav-item"><a class="nav-link{% if url_name|startswith:'trend' %} active{% endif %}" href="{% url "trend_overview" "recent" %}"><span class="nav-icon icon-trend"></span>Trends</a></li>
                 </ul>
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link{% if url_name == 'about' %} active{% endif %}" href="{% url "about" %}">About</a></li>
                     <li class="nav-item"><a class="nav-link{% if url_name == 'legal' %} active{% endif %}" href="{% url "legal" %}" title="Legal Notice / Impressum (German)">Legal</a></li>
                     <li class="nav-item"><a class="nav-link" href="https://github.com/scheb/beer-analytics">
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 pb-4">
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pb-4">
             {% block content %}{% endblock %}
         </main>
     </div>

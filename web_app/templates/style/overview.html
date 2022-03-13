@@ -39,7 +39,7 @@
                                 {% if style1.is_popular %}<strong>{% endif %}<a href="{{ style1|url }}">{{ style1.name }}</a>{% if style1.is_popular %}</strong>{% endif %}
 
                                 {% if style1.has_sub_styles %}
-                                    <ul class="search-group list-unstyled mt-1 ml-2">
+                                    <ul class="search-group list-unstyled mt-1 ms-2">
                                         {% for style2 in style1.sub_styles %}
                                             <li data-search-term="{{ style2.name }}{% if style2.alt_names %}, {{ style2.alt_names }}{% endif %}">
                                                 {% if style2.recipes_count %}<span class="recipes-count" title="Recipes">{{ style2.recipes_count }}</span>{% endif %}

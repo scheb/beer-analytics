@@ -6,7 +6,7 @@ import {Analyzer} from "./filtering";
 
 document.addEventListener("DOMContentLoaded", function() {
     // Init navigation toggle
-    document.querySelectorAll('[data-toggle="collapse"]')
+    document.querySelectorAll('[data-bs-toggle="collapse"]')
         .forEach(toggleNode => new Collapse(toggleNode))
 
     // Init tabs

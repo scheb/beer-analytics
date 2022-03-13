@@ -147,7 +147,7 @@ class ChartNavigation {
     }
 
     private initTabs(onSelect: Function) {
-        const navigationTabList = this.navigation.querySelectorAll('a[data-toggle="tab"]')
+        const navigationTabList = this.navigation.querySelectorAll('a[data-bs-toggle="tab"]')
         navigationTabList.forEach(function (tab) {
             tab.addEventListener('shown.bs.tab', function (e) {
                 if (e.target instanceof HTMLElement) {

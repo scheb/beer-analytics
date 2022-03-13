@@ -524,7 +524,7 @@ class ChartUi {
         this.element.innerHTML = `
             <section class="card card-chart">
                 <div class="card-header">
-                    <button type="button" class="btn-close mt-2 float-right" aria-label="Close"></button>
+                    <button type="button" class="btn-close mt-2 float-end" aria-label="Close"></button>
                     <h2><a href="#${anchor}" id="${anchor}" class="anchor"><span></span></a>${this.chartDefinition.title} ${subtitle}</h2>
                 </div>
                 <div class="card-body">

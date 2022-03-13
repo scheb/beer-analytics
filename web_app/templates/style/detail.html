@@ -4,7 +4,7 @@
 {% block content %}
     {% include './breadcrumb.html' %}
     <div class="detail-head">
-        <h1>{{ style.name }}{% if style.id|length <= 3 %} <small class="text-muted ml-2" title="BJCP ID">{{ style.id }}</small>{% endif %}</h1>
+        <h1>{{ style.name }}{% if style.id|length <= 3 %} <small class="text-muted ms-2" title="BJCP ID">{{ style.id }}</small>{% endif %}</h1>
 
         <dl class="detail-info">
             <dt>Recipes:</dt>
@@ -29,7 +29,7 @@
                     <li>
                         <a href="{% url "style_detail" style1.category.slug style1.slug %}">{{ style1.name }}</a>
                         {% if style1.has_sub_styles %}
-                            <ul class="list-unstyled mt-1 mb-2 ml-2">
+                            <ul class="list-unstyled mt-1 mb-2 ms-2">
                                 {% for style2 in style1.sub_styles %}
                                     <li>
                                         <a href="{% url "style_detail" style2.category.slug style2.slug %}">{{ style2.name }}</a>
@@ -97,10 +97,10 @@
                 <nav class="d-none" data-chart-navigation="chart-{{ chart_type }}">
                     <label>Used for:</label>
                     <ul class="nav" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="">Any</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="bittering">Bittering</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="aroma">Aroma</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="dry-hop">Dry-Hop</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" data-bs-toggle="tab" role="tab" data-filter="">Any</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="bittering">Bittering</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="aroma">Aroma</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="dry-hop">Dry-Hop</a></li>
                     </ul>
                 </nav>
             </div>
@@ -121,10 +121,10 @@
                 <nav class="d-none" data-chart-navigation="chart-{{ chart_type }}">
                     <label>Used for:</label>
                     <ul class="nav" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="">Any</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="bittering">Bittering</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="aroma">Aroma</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="dry-hop">Dry-Hop</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" data-bs-toggle="tab" role="tab" data-filter="">Any</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="bittering">Bittering</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="aroma">Aroma</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="dry-hop">Dry-Hop</a></li>
                     </ul>
                 </nav>
             </div>
@@ -175,14 +175,14 @@
                 <nav class="d-none" data-chart-navigation="chart-{{ chart_type }}">
                     <label>Type:</label>
                     <ul class="nav" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="">Any</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="base">Base Malt</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="cara-crystal">Caramel/Crystal</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="toasted">Toasted</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="roasted">Roasted</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="other-grain">Other Grain</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="sugar">Sugar</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="fruit">Fruit</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" data-bs-toggle="tab" role="tab" data-filter="">Any</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="base">Base Malt</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="cara-crystal">Caramel/Crystal</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="toasted">Toasted</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="roasted">Roasted</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="other-grain">Other Grain</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="sugar">Sugar</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="fruit">Fruit</a></li>
                     </ul>
                 </nav>
             </div>
@@ -203,14 +203,14 @@
                 <nav class="d-none" data-chart-navigation="chart-{{ chart_type }}">
                     <label>Type:</label>
                     <ul class="nav" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" data-toggle="tab" role="tab" data-filter="">Any</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="base">Base Malt</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="cara-crystal">Caramel/Crystal</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="toasted">Toasted</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="roasted">Roasted</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="other-grain">Other Grain</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="sugar">Sugar</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" data-filter="fruit">Fruit</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" data-bs-toggle="tab" role="tab" data-filter="">Any</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="base">Base Malt</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="cara-crystal">Caramel/Crystal</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="toasted">Toasted</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="roasted">Roasted</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="other-grain">Other Grain</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="sugar">Sugar</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" role="tab" data-filter="fruit">Fruit</a></li>
                     </ul>
                 </nav>
             </div>
