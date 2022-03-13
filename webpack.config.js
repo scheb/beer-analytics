@@ -64,7 +64,7 @@ module.exports = {
                         options: {
                             sassOptions: {
                                 indentWidth: 4,
-                                includePaths :"node_modules/@syncfusion"
+                                includePaths: ["node_modules/@syncfusion"]
                             },
                         },
                     },
