@@ -6,15 +6,17 @@ authors = ["Christian Scheb <me@christianscheb.de>"]
 license = "THE BEER-WARE LICENSE"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "~3.8"
 Django = "^3.2"
 django-environ = "^0.8"
 django-meta = "^2.0"
 kaleido = "0.2.1"
 numpy = "^1.22.3"
 pandas = "^1.4.1"
+plotly = "^5.6.0"
 pybeerxml = "^2.1.2"
 requests = "^2.27.1"
+scipy = "1.8"
 translitcodec = "^0.7.0"
 
 [tool.poetry.dev-dependencies]
