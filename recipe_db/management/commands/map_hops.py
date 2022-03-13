@@ -7,10 +7,10 @@ class Command(BaseCommand):
     help = "Map hop values"
 
     def add_arguments(self, parser):
-        parser.add_argument('--all', action='store_true', help='Map all hops (again)')
+        parser.add_argument("--all", action="store_true", help="Map all hops (again)")
 
     def handle(self, *args, **options):
-        map_all = options['all']
+        map_all = options["all"]
         hops_mapper = HopsProcessor([HopMapper()])
 
         if map_all:

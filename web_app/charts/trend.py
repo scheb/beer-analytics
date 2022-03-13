@@ -41,7 +41,7 @@ class TrendingHopsChart(TrendChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'hop', None, '% of All Recipes')
+        figure = LinesChart(force_legend=True).plot(df, "month", "recipes_percent", "hop", None, "% of All Recipes")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -59,7 +59,9 @@ class PopularHopsChart(TrendChart):
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'hop', 'Month/Year', '% of All Recipes')
+        figure = LinesChart(force_legend=True).plot(
+            df, "month", "recipes_percent", "hop", "Month/Year", "% of All Recipes"
+        )
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -77,7 +79,7 @@ class TrendingYeastsChart(TrendChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'yeast', None, '% of All Recipes')
+        figure = LinesChart(force_legend=True).plot(df, "month", "recipes_percent", "yeast", None, "% of All Recipes")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -95,7 +97,9 @@ class PopularYeastsChart(TrendChart):
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'yeast', 'Month/Year', '% of All Recipes')
+        figure = LinesChart(force_legend=True).plot(
+            df, "month", "recipes_percent", "yeast", "Month/Year", "% of All Recipes"
+        )
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -109,7 +113,9 @@ class TrendingStylesChart(TrendChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'beer_style', None, '% of All Recipes')
+        figure = LinesChart(force_legend=True).plot(
+            df, "month", "recipes_percent", "beer_style", None, "% of All Recipes"
+        )
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -123,19 +129,21 @@ class PopularStylesChart(TrendChart):
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'beer_style', 'Month/Year', '% of All Recipes')
+        figure = LinesChart(force_legend=True).plot(
+            df, "month", "recipes_percent", "beer_style", "Month/Year", "% of All Recipes"
+        )
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
 class TrendPeriod(Enum):
-    SEASONAL = 'seasonal'
-    RECENT = 'recent'
+    SEASONAL = "seasonal"
+    RECENT = "recent"
 
     @classmethod
     def from_string(cls, period: str) -> TrendPeriod:
-        if period == 'recent':
+        if period == "recent":
             return cls.RECENT
-        elif period == 'seasonal':
+        elif period == "seasonal":
             return cls.SEASONAL
         raise ValueError('"%s" cannot be converted to TrendPeriod.' % period)
 
@@ -178,7 +186,7 @@ class TrendChartFactory:
 
     @classmethod
     def normalize_type(cls, chart_type: str) -> str:
-        return chart_type.replace('-', '_')
+        return chart_type.replace("-", "_")
 
     @classmethod
     def get_types(cls):

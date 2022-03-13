@@ -20,56 +20,56 @@ MIN_PRIORITY = 0.1
 DEFAULT_PRIORITY = 0.3
 
 
-@register.filter('float2percent')
+@register.filter("float2percent")
 def float2percent(value):
-    return value*100
+    return value * 100
 
 
-@register.filter('startswith')
+@register.filter("startswith")
 def startswith(text, starts):
     if isinstance(text, str):
         return text.startswith(starts)
     return False
 
 
-@register.filter('url')
+@register.filter("url")
 def url(item: object):
     return object_url(item)
 
 
-@register.filter('hop')
+@register.filter("hop")
 def hop(id: str):
     return Hop.objects.get(pk=id)
 
 
-@register.filter('fermentable')
+@register.filter("fermentable")
 def fermentable(id: str):
     return Fermentable.objects.get(pk=id)
 
 
-@register.filter('style')
+@register.filter("style")
 def style(id: str):
     return Style.objects.get(pk=id)
 
 
-@register.filter('chart_js')
+@register.filter("chart_js")
 def chart_js(item: object, chart_type):
-    return chart_url(item, chart_type, 'json')
+    return chart_url(item, chart_type, "json")
 
 
-@register.filter('chart_image', is_safe=True)
+@register.filter("chart_image", is_safe=True)
 def chart_image(item: object, chart_type):
-    url = chart_url(item, chart_type, 'svg')
+    url = chart_url(item, chart_type, "svg")
     alt_text = escape(chart_image_alt(item, chart_type))
     return '<img src="%s" alt="%s" class="chart-image"/>' % (url, alt_text)
 
 
-@register.filter('chart_image_url', is_safe=True)
+@register.filter("chart_image_url", is_safe=True)
 def chart_image_url(item: object, chart_type):
-    return chart_url(item, chart_type, 'svg')
+    return chart_url(item, chart_type, "svg")
 
 
-@register.filter('chart_image_alt')
+@register.filter("chart_image_alt")
 def chart_image_alt(item: object, chart_type):
     if isinstance(item, TrendPeriod):
         return TrendChartFactory.get_chart(chart_type, item).get_image_alt()
@@ -92,47 +92,62 @@ def chart_image_alt(item: object, chart_type):
 def chart_url(item: object, chart_type: str, format: str):
     if isinstance(item, Style):
         if item.is_category:
-            return reverse('style_category_chart', kwargs={
-                'category_slug': item.category.slug,
-                'chart_type': chart_type.replace('_', '-'),
-                'format': format
-            })
+            return reverse(
+                "style_category_chart",
+                kwargs={
+                    "category_slug": item.category.slug,
+                    "chart_type": chart_type.replace("_", "-"),
+                    "format": format,
+                },
+            )
         else:
-            return reverse('style_chart', kwargs={
-                'category_slug': item.category.slug,
-                'slug': item.slug,
-                'chart_type': chart_type.replace('_', '-'),
-                'format': format
-            })
+            return reverse(
+                "style_chart",
+                kwargs={
+                    "category_slug": item.category.slug,
+                    "slug": item.slug,
+                    "chart_type": chart_type.replace("_", "-"),
+                    "format": format,
+                },
+            )
 
     if isinstance(item, Hop):
-        return reverse('hop_chart', kwargs={
-            'category_id': item.use,
-            'slug': item.id,
-            'chart_type': chart_type.replace('_', '-'),
-            'format': format
-        })
+        return reverse(
+            "hop_chart",
+            kwargs={
+                "category_id": item.use,
+                "slug": item.id,
+                "chart_type": chart_type.replace("_", "-"),
+                "format": format,
+            },
+        )
 
     if isinstance(item, Fermentable):
-        return reverse('fermentable_chart', kwargs={
-            'category_id': item.category,
-            'slug': item.id,
-            'chart_type': chart_type.replace('_', '-'),
-            'format': format
-        })
+        return reverse(
+            "fermentable_chart",
+            kwargs={
+                "category_id": item.category,
+                "slug": item.id,
+                "chart_type": chart_type.replace("_", "-"),
+                "format": format,
+            },
+        )
 
     if isinstance(item, Yeast):
-        return reverse('yeast_chart', kwargs={
-            'type_id': item.type,
-            'slug': item.id,
-            'chart_type': chart_type.replace('_', '-'),
-            'format': format
-        })
+        return reverse(
+            "yeast_chart",
+            kwargs={
+                "type_id": item.type,
+                "slug": item.id,
+                "chart_type": chart_type.replace("_", "-"),
+                "format": format,
+            },
+        )
 
     return None
 
 
-@register.filter('recipes')
+@register.filter("recipes")
 def recipes(item: object):
     return recipes_url(item)
 
@@ -140,37 +155,52 @@ def recipes(item: object):
 def recipes_url(item: object):
     if isinstance(item, Style):
         if item.is_category:
-            return reverse('style_category_recipes', kwargs={
-                'category_slug': item.category.slug,
-            })
+            return reverse(
+                "style_category_recipes",
+                kwargs={
+                    "category_slug": item.category.slug,
+                },
+            )
         else:
-            return reverse('style_recipes', kwargs={
-                'category_slug': item.category.slug,
-                'slug': item.slug,
-            })
+            return reverse(
+                "style_recipes",
+                kwargs={
+                    "category_slug": item.category.slug,
+                    "slug": item.slug,
+                },
+            )
 
     if isinstance(item, Hop):
-        return reverse('hop_recipes', kwargs={
-            'category_id': item.use,
-            'slug': item.id,
-        })
+        return reverse(
+            "hop_recipes",
+            kwargs={
+                "category_id": item.use,
+                "slug": item.id,
+            },
+        )
 
     if isinstance(item, Fermentable):
-        return reverse('fermentable_recipes', kwargs={
-            'category_id': item.category,
-            'slug': item.id,
-        })
+        return reverse(
+            "fermentable_recipes",
+            kwargs={
+                "category_id": item.category,
+                "slug": item.id,
+            },
+        )
 
     if isinstance(item, Yeast):
-        return reverse('yeast_recipes', kwargs={
-            'type_id': item.type,
-            'slug': item.id,
-        })
+        return reverse(
+            "yeast_recipes",
+            kwargs={
+                "type_id": item.type,
+                "slug": item.id,
+            },
+        )
 
     return None
 
 
-@register.filter('priority')
+@register.filter("priority")
 def priority(item: object):
     if isinstance(item, Style):
         return get_priority(item.recipes_percentile)
@@ -194,7 +224,7 @@ def get_priority(percentile: Optional[float]) -> float:
     return DEFAULT_PRIORITY
 
 
-@register.filter('fahrenheit')
+@register.filter("fahrenheit")
 def fahrenheit(value):
     if value is None:
         return None

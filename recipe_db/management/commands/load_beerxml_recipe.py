@@ -8,14 +8,14 @@ class Command(BaseCommand):
     help = "Load a recipe into the database from BeerXML"
 
     def add_arguments(self, parser):
-        parser.add_argument('file_path', help='Data file path')
-        parser.add_argument('uid', help='Global uid for the recipe')
-        parser.add_argument('--replace', action='store_true', help='Replace existing data')
+        parser.add_argument("file_path", help="Data file path")
+        parser.add_argument("uid", help="Global uid for the recipe")
+        parser.add_argument("--replace", action="store_true", help="Replace existing data")
 
     def handle(self, *args, **options):
-        file_path = options['file_path']
-        uid = options['uid']
-        replace = options['replace']
+        file_path = options["file_path"]
+        uid = options["uid"]
+        replace = options["replace"]
 
         self.stdout.write("Load recipe {} from file {}".format(uid, file_path))
 

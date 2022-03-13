@@ -14,43 +14,47 @@ from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list
 
 
 def overview(request: HttpRequest) -> HttpResponse:
-    fermentables = Fermentable.objects.filter(recipes_count__gt=0).order_by('name')
+    fermentables = Fermentable.objects.filter(recipes_count__gt=0).order_by("name")
     fermentable_categories = group_by_category(fermentables)
     for fermentable_category in fermentable_categories:
-        if len(fermentable_category['fermentables']) > 5:
-            fermentable_category['most_popular'] = Fermentable.objects.filter(category=fermentable_category['id']).order_by('-recipes_count')[:5]
-        (fermentable_category['fermentables'], fermentable_category['types']) = group_by_type(fermentable_category['fermentables'])
+        if len(fermentable_category["fermentables"]) > 5:
+            fermentable_category["most_popular"] = Fermentable.objects.filter(
+                category=fermentable_category["id"]
+            ).order_by("-recipes_count")[:5]
+        (fermentable_category["fermentables"], fermentable_category["types"]) = group_by_type(
+            fermentable_category["fermentables"]
+        )
 
     meta = FermentableOverviewMeta().get_meta()
-    context = {'categories': fermentable_categories, 'meta': meta}
+    context = {"categories": fermentable_categories, "meta": meta}
 
-    return render(request, 'fermentable/overview.html', context)
+    return render(request, "fermentable/overview.html", context)
 
 
 def category(request: HttpRequest, category_id: str) -> HttpResponse:
     categories = Fermentable.get_categories()
     if category_id not in categories:
-        raise Http404('Unknown fermentable category %s.' % category_id)
+        raise Http404("Unknown fermentable category %s." % category_id)
 
     category_name = categories[category_id]
 
     fermentables_query = Fermentable.objects.filter(category=category_id, recipes_count__gt=0)
-    (fermentables, types) = group_by_type(fermentables_query.order_by('name'))
+    (fermentables, types) = group_by_type(fermentables_query.order_by("name"))
 
     most_popular = []
     if fermentables_query.count() > 5:
-        most_popular = fermentables_query.order_by('-recipes_count')[:5]
+        most_popular = fermentables_query.order_by("-recipes_count")[:5]
 
     meta = FermentableOverviewMeta((category_id, category_name)).get_meta()
     context = {
-        'category_name': category_name,
-        'fermentables': fermentables,
-        'types': types,
-        'most_popular': most_popular,
-        'meta': meta,
+        "category_name": category_name,
+        "fermentables": fermentables,
+        "types": types,
+        "most_popular": most_popular,
+        "meta": meta,
     }
 
-    return render(request, 'fermentable/category.html', context)
+    return render(request, "fermentable/category.html", context)
 
 
 def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
@@ -58,8 +62,8 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
         fermentable = get_object_or_404(Fermentable, pk=slug)
     except Http404 as err:
         # Gracefully redirect when the "-malt" suffix is missing
-        if not slug.endswith('-malt'):
-            fermentable = get_object_or_404(Fermentable, pk=slug+"-malt")
+        if not slug.endswith("-malt"):
+            fermentable = get_object_or_404(Fermentable, pk=slug + "-malt")
         else:
             raise err
 
@@ -67,21 +71,24 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
         raise Http404("Fermentable doesn't have any data.")
 
     if category_id != fermentable.category or slug != fermentable.id:
-        return redirect('fermentable_detail', category_id=fermentable.category, slug=fermentable.id)
+        return redirect("fermentable_detail", category_id=fermentable.category, slug=fermentable.id)
 
     meta_provider = FermentableMeta(fermentable)
     meta = meta_provider.get_meta()
     if fermentable.recipes_count > 100:
-        meta.image = reverse('fermentable_chart', kwargs=dict(
-            category_id=fermentable.category,
-            slug=fermentable.id,
-            chart_type='og',
-            format=FORMAT_PNG,
-        ))
+        meta.image = reverse(
+            "fermentable_chart",
+            kwargs=dict(
+                category_id=fermentable.category,
+                slug=fermentable.id,
+                chart_type="og",
+                format=FORMAT_PNG,
+            ),
+        )
 
-    context = {'fermentable': fermentable, 'description': meta_provider.get_description_html(), 'meta': meta}
+    context = {"fermentable": fermentable, "description": meta_provider.get_description_html(), "meta": meta}
 
-    return render(request, 'fermentable/detail.html', context)
+    return render(request, "fermentable/detail.html", context)
 
 
 def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, format: str) -> HttpResponse:
@@ -91,7 +98,13 @@ def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, fo
         raise Http404("Fermentable doesn't have any data.")
 
     if category_id != fermentable.category:
-        return redirect('fermentable_chart', category_id=fermentable.category, slug=fermentable.id, chart_type=chart_type, format=format)
+        return redirect(
+            "fermentable_chart",
+            category_id=fermentable.category,
+            slug=fermentable.id,
+            chart_type=chart_type,
+            format=format,
+        )
 
     if FermentableChartFactory.is_supported_chart(chart_type):
         try:
@@ -99,7 +112,7 @@ def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, fo
         except NoDataException:
             return HttpResponse(status=204)
     else:
-        raise Http404('Unknown chart type %s.' % chart_type)
+        raise Http404("Unknown chart type %s." % chart_type)
 
     return render_chart(chart, format)
 
@@ -112,7 +125,7 @@ def recipes(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
         raise Http404("Fermentable doesn't have any data.")
 
     if category_id != fermentable.category:
-        return redirect('fermentable_recipes', category_id=fermentable.category, slug=fermentable.id)
+        return redirect("fermentable_recipes", category_id=fermentable.category, slug=fermentable.id)
 
     recipes_list = FermentableAnalysis(fermentable).random_recipes(24)
     return render_recipes_list(recipes_list)
@@ -125,20 +138,20 @@ def group_by_category(fermentables: iter) -> list:
     # Create category object
     for category in categories:
         fermentable_categories[category] = {
-            'id': category,
-            'name': categories[category],
-            'fermentables': [],
-            'most_popular': []
+            "id": category,
+            "name": categories[category],
+            "fermentables": [],
+            "most_popular": [],
         }
 
     # Assign fermentables
     for fermentable in fermentables:
-        fermentable_categories[fermentable.category]['fermentables'].append(fermentable)
+        fermentable_categories[fermentable.category]["fermentables"].append(fermentable)
 
     # Filter categories with fermentables
     categories_filtered = []
     for fermentable_category in fermentable_categories.values():
-        if len(fermentable_category['fermentables']):
+        if len(fermentable_category["fermentables"]):
             categories_filtered.append(fermentable_category)
 
     return categories_filtered
@@ -152,22 +165,22 @@ def group_by_type(fermentables: iter) -> Tuple[list, list]:
     # Create type objects
     for t in types:
         fermentable_types[t] = {
-            'id': t,
-            'name': types[t],
-            'fermentables': [],
+            "id": t,
+            "name": types[t],
+            "fermentables": [],
         }
 
     # Assign fermentables (if possible)
     for fermentable in fermentables:
         if fermentable.type is not None:
-            fermentable_types[fermentable.type]['fermentables'].append(fermentable)
+            fermentable_types[fermentable.type]["fermentables"].append(fermentable)
         else:
             untyped_fermentables.append(fermentable)
 
     # Filter types with fermentables
     types_filtered = []
     for fermentable_type in fermentable_types.values():
-        if len(fermentable_type['fermentables']):
+        if len(fermentable_type["fermentables"]):
             types_filtered.append(fermentable_type)
 
     return untyped_fermentables, types_filtered

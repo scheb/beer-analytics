@@ -9,8 +9,8 @@ from web_app.plot import LinesChart, BarChart, PreAggregatedPairsBoxPlot, PreAgg
 
 
 class CustomChart(ChartDefinition, ABC):
-    CHART_TITLE = 'Custom data analysis'
-    IMAGE_ALT = 'Custom data analysis'
+    CHART_TITLE = "Custom data analysis"
+    IMAGE_ALT = "Custom data analysis"
 
     def __init__(self, scope: RecipeScope) -> None:
         self.recipe_scope = scope
@@ -29,7 +29,9 @@ class PopularStylesChart(CustomChart):
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'beer_style', 'Month/Year', '% of All Recipes')
+        figure = LinesChart(force_legend=True).plot(
+            df, "month", "recipes_percent", "beer_style", "Month/Year", "% of All Recipes"
+        )
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -40,7 +42,9 @@ class TrendingStylesChart(CustomChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'beer_style', None, '% of All Recipes')
+        figure = LinesChart(force_legend=True).plot(
+            df, "month", "recipes_percent", "beer_style", None, "% of All Recipes"
+        )
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -51,7 +55,7 @@ class StylesAbsoluteChart(CustomChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = BarChart().plot(df, 'beer_style', 'recipes', None, 'Total Number of Recipes')
+        figure = BarChart().plot(df, "beer_style", "recipes", None, "Total Number of Recipes")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -62,7 +66,7 @@ class StylesRelativeChart(CustomChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = BarChart().plot(df, 'beer_style', 'recipes_percent', None, '% of the Style\'s Recipes')
+        figure = BarChart().plot(df, "beer_style", "recipes_percent", None, "% of the Style's Recipes")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -73,7 +77,9 @@ class PopularHopsChart(CustomChart):
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'hop', 'Month/Year', '% of All Recipes')
+        figure = LinesChart(force_legend=True).plot(
+            df, "month", "recipes_percent", "hop", "Month/Year", "% of All Recipes"
+        )
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -84,7 +90,7 @@ class TrendingHopsChart(CustomChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'hop', None, '% of All Recipes')
+        figure = LinesChart(force_legend=True).plot(df, "month", "recipes_percent", "hop", None, "% of All Recipes")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -95,7 +101,7 @@ class PopularHopsAmountChart(CustomChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregatedBoxPlot().plot(df, 'hop', 'amount_percent', None, '% of Weight in Recipe')
+        figure = PreAggregatedBoxPlot().plot(df, "hop", "amount_percent", None, "% of Weight in Recipe")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -106,7 +112,7 @@ class HopPairingsChart(CustomChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregatedPairsBoxPlot().plot(df, 'pairing', 'hop', 'amount_percent', None, '% of Weight in Recipe')
+        figure = PreAggregatedPairsBoxPlot().plot(df, "pairing", "hop", "amount_percent", None, "% of Weight in Recipe")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -117,7 +123,9 @@ class PopularFermentablesChart(CustomChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'fermentable', None, '% of Style Recipes')
+        figure = LinesChart(force_legend=True).plot(
+            df, "month", "recipes_percent", "fermentable", None, "% of Style Recipes"
+        )
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -128,7 +136,7 @@ class PopularFermentablesAmountChart(CustomChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = PreAggregatedBoxPlot().plot(df, 'fermentable', 'amount_percent', None, '% of Weight in Recipe')
+        figure = PreAggregatedBoxPlot().plot(df, "fermentable", "amount_percent", None, "% of Weight in Recipe")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -139,7 +147,9 @@ class PopularYeastsChart(CustomChart):
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'yeast', 'Month/Year', '% of All Recipes')
+        figure = LinesChart(force_legend=True).plot(
+            df, "month", "recipes_percent", "yeast", "Month/Year", "% of All Recipes"
+        )
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -150,7 +160,7 @@ class TrendingYeastsChart(CustomChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'yeast', None, '% of All Recipes')
+        figure = LinesChart(force_legend=True).plot(df, "month", "recipes_percent", "yeast", None, "% of All Recipes")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -160,15 +170,12 @@ class AnalyzeChartFactory:
         trending_styles=TrendingStylesChart,
         typical_styles_relative=StylesRelativeChart,
         typical_styles_absolute=StylesAbsoluteChart,
-
         popular_fermentables=PopularFermentablesChart,
         popular_fermentables_amount=PopularFermentablesAmountChart,
-
         popular_hops=PopularHopsChart,
         trending_hops=TrendingHopsChart,
         popular_hops_amount=PopularHopsAmountChart,
         hop_pairings=HopPairingsChart,
-
         popular_yeasts=PopularYeastsChart,
         trending_yeasts=TrendingYeastsChart,
     )
@@ -190,7 +197,7 @@ class AnalyzeChartFactory:
 
     @classmethod
     def normalize_type(cls, chart_type: str) -> str:
-        return chart_type.replace('-', '_')
+        return chart_type.replace("-", "_")
 
     @classmethod
     def get_types(cls):

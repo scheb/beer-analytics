@@ -3,14 +3,18 @@ from typing import Iterable
 from pandas import DataFrame
 
 from recipe_db.analytics.hop import HopPairingAnalysis, HopAmountAnalysis, HopAmountRangeAnalysis, HopMetricHistogram
-from recipe_db.analytics.recipe import RecipesPopularityAnalysis, CommonStylesAnalysis, RecipesTrendAnalysis, \
-    RecipesListAnalysis
+from recipe_db.analytics.recipe import (
+    RecipesPopularityAnalysis,
+    CommonStylesAnalysis,
+    RecipesTrendAnalysis,
+    RecipesListAnalysis,
+)
 from recipe_db.analytics.scope import RecipeScope, HopProjection, HopScope
 from recipe_db.models import Hop, Recipe, RecipeHop
 
-USE_FILTER_BITTERING = 'bittering'
-USE_FILTER_AROMA = 'aroma'
-USE_FILTER_DRY_HOP = 'dry-hop'
+USE_FILTER_BITTERING = "bittering"
+USE_FILTER_AROMA = "aroma"
+USE_FILTER_DRY_HOP = "dry-hop"
 
 HOP_FILTER_TO_USES = {
     USE_FILTER_BITTERING: [RecipeHop.MASH, RecipeHop.FIRST_WORT, RecipeHop.BOIL],

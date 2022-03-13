@@ -83,7 +83,7 @@ def string_or_none(value):
 
     if isinstance(value, str):
         value = value.strip()
-        if value == '':
+        if value == "":
             return None
 
     try:

@@ -11,8 +11,8 @@ from django.db import transaction
 
 from recipe_db.models import RecipeHop, Hop, Fermentable, RecipeFermentable, Style, Recipe, RecipeYeast, Yeast
 
-TRANSLIT_SHORT = 'translit/short'
-TRANSLIT_LONG = 'translit/long'
+TRANSLIT_SHORT = "translit/short"
+TRANSLIT_LONG = "translit/long"
 
 
 def get_translit_names(name: str) -> iter:
@@ -28,17 +28,17 @@ def get_translit_names(name: str) -> iter:
 
 def normalize_name(value: str, translit: str) -> str:
     value = codecs.encode(value, translit)
-    value = re.sub('[\\s-]+', ' ', re.sub('[^\\w\\s-]', '', value))
+    value = re.sub("[\\s-]+", " ", re.sub("[^\\w\\s-]", "", value))
     value = value.strip().lower()
     return value
 
 
 def get_product_id_variants(name: str) -> iter:
-    name = re.sub('\\W+', ' ', name)  # Split non-word chars
-    name = re.sub('([A-Za-z])([0-9])', '\\1 \\2', name)  # Split number + letter
-    name = re.sub('([0-9])([A-Za-z])', '\\1 \\2', name)  # Split letter + number
-    name = re.sub('\\s+', ' ', name).strip()  # Make sure we have single spaces only
-    name_parts = name.split(' ')
+    name = re.sub("\\W+", " ", name)  # Split non-word chars
+    name = re.sub("([A-Za-z])([0-9])", "\\1 \\2", name)  # Split number + letter
+    name = re.sub("([0-9])([A-Za-z])", "\\1 \\2", name)  # Split letter + number
+    name = re.sub("\\s+", " ", name).strip()  # Make sure we have single spaces only
+    name_parts = name.split(" ")
 
     parts = []
     first = True
@@ -46,11 +46,11 @@ def get_product_id_variants(name: str) -> iter:
         if first:
             first = False
         else:
-            parts.append(['', ' '])
+            parts.append(["", " "])
         parts.append([name_part])
 
     for tuple in itertools.product(*parts):
-        yield ''.join(tuple)
+        yield "".join(tuple)
 
 
 class Candidate:
@@ -86,7 +86,11 @@ class NameObjectMap:
                     if self.ignore_ambiguous:
                         self.mapping[name_variant] = None
                     else:
-                        raise MappingException("Cannot map \"{}\" to \"{}\", as it's already mapped to \"{}\"".format(name_variant, mapped_object, self.mapping[name_variant]))
+                        raise MappingException(
+                            'Cannot map "{}" to "{}", as it\'s already mapped to "{}"'.format(
+                                name_variant, mapped_object, self.mapping[name_variant]
+                            )
+                        )
             else:
                 self.mapping[name_variant] = mapped_object
 
@@ -123,16 +127,16 @@ class GenericMapper(Mapper):
             self.mapping.add(item.name, item)
 
             # Add alternative names
-            if hasattr(item, 'alt_names') and item.alt_names is not None:
+            if hasattr(item, "alt_names") and item.alt_names is not None:
                 self.add_alt_names(item.alt_names, item)
-            if hasattr(item, 'alt_names_extra') and item.alt_names_extra is not None:
+            if hasattr(item, "alt_names_extra") and item.alt_names_extra is not None:
                 self.add_alt_names(item.alt_names_extra, item)
 
     def add_alt_names(self, alt_names: str, item: object):
         alt_names = alt_names.split(",")
         for alt_name in alt_names:
             alt_name = alt_name.strip()
-            if alt_name != '':
+            if alt_name != "":
                 self.mapping.add(alt_name, item)
 
     def map_item(self, item: object) -> Optional[object]:
@@ -179,12 +183,12 @@ class HopMapper(GenericMapper):
         self.create_mapping(Hop.objects.all())
 
     def get_clean_name(self, item: RecipeHop) -> str:
-        value = item.kind_raw or ''
+        value = item.kind_raw or ""
         value = value.lower()
         value = re.sub("northern\\s+brewer\\s+-\\s+", "", value)  # Producer prefix
         value = re.sub("^hall?ertau(er)?$", "hallertauer mittelfrüh", value)  # Just "Hallertau(er)"
-        value = re.sub('\\(?[0-9]+([.,][0-9]+)?\\s+aa\\)?', '', value)
-        value = re.sub('/?\\s*[0-9]+([.,][0-9]+)?\\s+(grams|ounces)', '', value)
+        value = re.sub("\\(?[0-9]+([.,][0-9]+)?\\s+aa\\)?", "", value)
+        value = re.sub("/?\\s*[0-9]+([.,][0-9]+)?\\s+(grams|ounces)", "", value)
         value = value.strip()
         return value
 
@@ -197,8 +201,8 @@ class HopMapper(GenericMapper):
             yield name
 
             # Append numeric parts to the previous/next word
-            if re.search('\\s[0-9]+\\b', name):
-                yield re.sub('\\s+([0-9]+)\\b', '\\1', name)
+            if re.search("\\s[0-9]+\\b", name):
+                yield re.sub("\\s+([0-9]+)\\b", "\\1", name)
 
 
 class FermentableMapper(GenericMapper):
@@ -207,7 +211,7 @@ class FermentableMapper(GenericMapper):
         self.create_mapping(Fermentable.objects.all())
 
     def get_clean_name(self, item: RecipeHop) -> str:
-        value = item.kind_raw or ''
+        value = item.kind_raw or ""
         value = value.lower()
         value = self.normalize(value)
 
@@ -269,31 +273,31 @@ class FermentableMapper(GenericMapper):
             yield name
 
             # "cara" appended to next word
-            if re.search('\\bcara\\s', name):
-                yield re.sub('\\bcara\\s+', 'cara', name)  # Append with succeeding word
+            if re.search("\\bcara\\s", name):
+                yield re.sub("\\bcara\\s+", "cara", name)  # Append with succeeding word
 
             # "cara" variations
-            if re.search('\\bcara\\b', name):
-                yield re.sub('\\bcara\\b', 'cara malt', name)
-                yield re.sub('\\bcara\\b', 'caramel', name)
-                yield re.sub('\\bcara\\b', 'caramel malt', name).replace("malt malt", "malt")
-                yield re.sub('\\bcara\\b', 'crystal', name)
-                yield re.sub('\\bcara\\b', 'crystal malt', name).replace("malt malt", "malt")
-                yield re.sub('\\bcara\\b', 'karamell', name)
-                yield re.sub('\\bcara\\b', 'karamell malt', name).replace("malt malt", "malt")
-                yield re.sub('\\bcara\\b', 'caracrystal', name)
-                yield re.sub('\\bcara\\b', 'cara crystal', name)
-                yield re.sub('\\bcara\\b', 'crystal cara', name)
+            if re.search("\\bcara\\b", name):
+                yield re.sub("\\bcara\\b", "cara malt", name)
+                yield re.sub("\\bcara\\b", "caramel", name)
+                yield re.sub("\\bcara\\b", "caramel malt", name).replace("malt malt", "malt")
+                yield re.sub("\\bcara\\b", "crystal", name)
+                yield re.sub("\\bcara\\b", "crystal malt", name).replace("malt malt", "malt")
+                yield re.sub("\\bcara\\b", "karamell", name)
+                yield re.sub("\\bcara\\b", "karamell malt", name).replace("malt malt", "malt")
+                yield re.sub("\\bcara\\b", "caracrystal", name)
+                yield re.sub("\\bcara\\b", "cara crystal", name)
+                yield re.sub("\\bcara\\b", "crystal cara", name)
 
     def get_number_variants(self, names) -> iter:
         for name in names:
             yield name
 
             # Replace roman numerals with arabic numbers
-            if re.search('\\si+\\b', name):
-                number_name = re.sub('\\siii\\b', ' 3', name)
-                number_name = re.sub('\\sii\\b', ' 2', number_name)
-                number_name = re.sub('\\si\\b', ' 1', number_name)
+            if re.search("\\si+\\b", name):
+                number_name = re.sub("\\siii\\b", " 3", name)
+                number_name = re.sub("\\sii\\b", " 2", number_name)
+                number_name = re.sub("\\si\\b", " 1", number_name)
                 yield number_name
 
 
@@ -318,7 +322,7 @@ class YeastBrandMapper(GenericMapper):
                     self.add_alt_names(yeast.alt_brand, yeast.brand)
 
     def get_clean_name(self, item: RecipeYeast) -> str:
-        value = item.kind_raw or ''
+        value = item.kind_raw or ""
 
         # Make sure there's meaningful lab name
         if item.lab is not None and len(item.lab) > 2 and item.lab not in value:
@@ -351,12 +355,12 @@ class YeastProductIdMapper(GenericMapper):
                 self.add_alt_names(yeast.alt_product_id, yeast)
 
     def get_clean_name(self, item: RecipeYeast) -> str:
-        value = item.product_id or item.kind_raw or ''
+        value = item.product_id or item.kind_raw or ""
         return self.normalize(value)
 
     def get_name_variants(self, name: str) -> iter:
         name = self.normalize(name)
-        if re.fullmatch('[\\w-]{2,10}', name):
+        if re.fullmatch("[\\w-]{2,10}", name):
             yield from get_product_id_variants(name)
         else:
             yield name
@@ -372,7 +376,7 @@ class YeastProductNameMapper(GenericMapper):
         self.create_mapping(yeasts)
 
     def get_clean_name(self, item: RecipeHop) -> str:
-        value = item.kind_raw or ''
+        value = item.kind_raw or ""
         value = value.lower()
         value = value.strip()
         return value
@@ -385,7 +389,7 @@ class YeastProductNameMapper(GenericMapper):
         for name in names:
             yield name
             if " yeast" in name:
-                yield name.replace(' yeast', '')
+                yield name.replace(" yeast", "")
 
 
 # Map yeast based on brand and product id
@@ -470,7 +474,7 @@ class GenericStyleMapper(GenericMapper, ABC):
 
     def clean_name(self, value: str) -> str:
         if value is None:
-            return ''
+            return ""
 
         value = value.lower()
         value = self.normalize(value)
@@ -497,14 +501,14 @@ class GenericStyleMapper(GenericMapper, ABC):
     def expand_ipa(self, names) -> iter:
         for name in names:
             yield name
-            if re.search('\\bipa\\b', name):
-                yield re.sub('\\bipa\\b', 'india pale ale', name)
+            if re.search("\\bipa\\b", name):
+                yield re.sub("\\bipa\\b", "india pale ale", name)
 
     def lager_variants(self, names) -> iter:
         for name in names:
             yield name
-            if re.search('\\blager\\b', name):
-                yield re.sub('\\blager\\b', 'pilsner', name)
+            if re.search("\\blager\\b", name):
+                yield re.sub("\\blager\\b", "pilsner", name)
 
 
 class AssignedStyleMapper(GenericStyleMapper):
@@ -513,7 +517,7 @@ class AssignedStyleMapper(GenericStyleMapper):
         super().__init__(Style.objects.filter().exclude(parent_style=None))
 
     def get_clean_name(self, item: Recipe) -> str:
-        return self.clean_name(item.style_raw or '')
+        return self.clean_name(item.style_raw or "")
 
 
 class StyleMapper(Mapper):
@@ -555,7 +559,7 @@ class RecipeNameStyleExactMatchMapper(GenericStyleMapper):
         return None
 
     def get_clean_name(self, item: Recipe) -> str:
-        return self.clean_name(item.name or '')
+        return self.clean_name(item.name or "")
 
 
 class RecipeNameStyleMapper(GenericStyleMapper):
@@ -564,7 +568,7 @@ class RecipeNameStyleMapper(GenericStyleMapper):
         super().__init__(Style.objects.filter().exclude(parent_style=None))
 
     def get_clean_name(self, item: Recipe) -> str:
-        return self.clean_name(item.name or '')
+        return self.clean_name(item.name or "")
 
 
 class RecipeNameSubStyleMapper(GenericStyleMapper):
@@ -572,7 +576,7 @@ class RecipeNameSubStyleMapper(GenericStyleMapper):
         super().__init__(sub_styles)
 
     def get_clean_name(self, item: Recipe) -> str:
-        return self.clean_name(item.name or '')
+        return self.clean_name(item.name or "")
 
 
 class TransactionalProcessor:
@@ -631,22 +635,22 @@ class StylesProcessor(TransactionalProcessor):
         self.map_list(recipes)
 
     def save_match(self, item: Recipe, style: Style):
-        if not self.is_within_limits('abv', item, style):
+        if not self.is_within_limits("abv", item, style):
             style = None
-        elif not self.is_within_limits('ibu', item, style):
+        elif not self.is_within_limits("ibu", item, style):
             style = None
-        elif not self.is_within_limits('srm', item, style):
+        elif not self.is_within_limits("srm", item, style):
             style = None
 
         item.style = style
         item.save()
 
     def is_within_limits(self, property: str, recipe: Recipe, style: Style):
-        min = getattr(style, property+"_min")
-        max = getattr(style, property+"_max")
+        min = getattr(style, property + "_min")
+        max = getattr(style, property + "_max")
         value = getattr(recipe, property)
 
-        if property == 'srm' and max is not None and max >= 40:
+        if property == "srm" and max is not None and max >= 40:
             max = None
 
         if value is None:

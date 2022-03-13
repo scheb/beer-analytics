@@ -9,7 +9,7 @@ from recipe_db.models import Style, Hop, Fermentable, Yeast, Tag
 
 def make_style_id(value):
     if isinstance(value, int):
-        return '%02d' % value
+        return "%02d" % value
     return value
 
 
@@ -17,19 +17,19 @@ class Command(BaseCommand):
     help = "Load initial date into the database"
 
     def handle(self, *args, **options):
-        self.stdout.write('Load styles')
+        self.stdout.write("Load styles")
         load_styles()
-        self.stdout.write('Load hops')
+        self.stdout.write("Load hops")
         load_hops()
-        self.stdout.write('Load fermentables')
+        self.stdout.write("Load fermentables")
         load_fermentables()
-        self.stdout.write('Load yeasts')
+        self.stdout.write("Load yeasts")
         load_yeasts()
-        self.stdout.write('Done')
+        self.stdout.write("Done")
 
 
 def load_styles():
-    csv_file = load_csv('styles.csv')
+    csv_file = load_csv("styles.csv")
     header = next(csv_file)
 
     styles = {}
@@ -40,18 +40,18 @@ def load_styles():
         row = map(cast_values, row)
         data = dict(zip(header, row))
 
-        style_id = make_style_id(data['id'])
-        parent_style_id = make_style_id(data['parent_style_id'])
+        style_id = make_style_id(data["id"])
+        parent_style_id = make_style_id(data["parent_style_id"])
         parent_style = None
 
-        if data['og_min'] is not None:
-            data['og_min'] /= 1000
-        if data['og_max'] is not None:
-            data['og_max'] /= 1000
-        if data['fg_min'] is not None:
-            data['fg_min'] /= 1000
-        if data['fg_max'] is not None:
-            data['fg_max'] /= 1000
+        if data["og_min"] is not None:
+            data["og_min"] /= 1000
+        if data["og_max"] is not None:
+            data["og_max"] /= 1000
+        if data["fg_min"] is not None:
+            data["fg_min"] /= 1000
+        if data["fg_max"] is not None:
+            data["fg_max"] /= 1000
 
         if parent_style_id is not None:
             if parent_style_id in styles:
@@ -74,7 +74,7 @@ def load_styles():
 
 
 def load_hops():
-    csv_file = load_csv('hops.csv')
+    csv_file = load_csv("hops.csv")
     header = next(csv_file)
 
     hops_by_name = {}
@@ -89,7 +89,7 @@ def load_hops():
 
     # Add/update hops
     for data in data_rows:
-        hop_id = Hop.create_id(data['name'])
+        hop_id = Hop.create_id(data["name"])
         try:
             hop = Hop.objects.get(pk=hop_id)
             hop.substitutes.remove()
@@ -107,12 +107,12 @@ def load_hops():
 
     # Update tags & substitutes
     for data in data_rows:
-        hop = hops_by_name[data['name']]
-        for tag_name in split_list(data['aromas']):
+        hop = hops_by_name[data["name"]]
+        for tag_name in split_list(data["aromas"]):
             tag = get_or_create_tag(tag_name)
             hop.aroma_tags.add(tag)
 
-        substitutes = split_list(data['substitutes'])
+        substitutes = split_list(data["substitutes"])
         for substitute_name in substitutes:
             if substitute_name in hops_by_name:
                 substitute = hops_by_name[substitute_name]
@@ -139,7 +139,7 @@ def split_list(data) -> list:
 
 
 def load_fermentables():
-    csv_file = load_csv('fermentables.csv')
+    csv_file = load_csv("fermentables.csv")
     header = next(csv_file)
 
     for row in csv_file:
@@ -162,7 +162,7 @@ def load_fermentables():
 
 
 def load_yeasts():
-    csv_file = load_csv('yeasts.csv')
+    csv_file = load_csv("yeasts.csv")
     header = next(csv_file)
 
     for row in csv_file:
@@ -171,7 +171,7 @@ def load_yeasts():
 
         row = map(cast_values, row)
         data = dict(zip(header, row))
-        yeast_id = Yeast.create_id(data['name'], data['lab'], data['brand'], data['product_id'])
+        yeast_id = Yeast.create_id(data["name"], data["lab"], data["brand"], data["product_id"])
 
         try:
             yeast = Yeast.objects.get(pk=yeast_id)
@@ -189,12 +189,12 @@ def cast_values(value):
     if isinstance(value, str):
         value = value.strip()
 
-    if value == '':
+    if value == "":
         return None
 
-    if value == 'true':
+    if value == "true":
         return True
-    if value == 'false':
+    if value == "false":
         return False
 
     try:
@@ -211,5 +211,5 @@ def cast_values(value):
 
 
 def load_csv(file_name: str):
-    file_path = path.join(settings.__getattr__('BASE_DIR'), 'recipe_db', 'data', file_name)
-    return csv.reader(open(file_path, encoding='utf-8'), delimiter=';')
+    file_path = path.join(settings.__getattr__("BASE_DIR"), "recipe_db", "data", file_name)
+    return csv.reader(open(file_path, encoding="utf-8"), delimiter=";")

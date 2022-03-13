@@ -10,9 +10,9 @@ from recipe_db.models import Fermentable
 
 
 class FermentableMetric(Enum):
-    AMOUNT_PERCENT = 'amount_percent'
-    COLOR_LOVIBOND = 'color_lovibond'
-    COLOR_EBC = 'color_ebc'
+    AMOUNT_PERCENT = "amount_percent"
+    COLOR_LOVIBOND = "color_lovibond"
+    COLOR_EBC = "color_ebc"
 
 
 class FermentableMetricCalculator:
@@ -27,20 +27,22 @@ class FermentableMetricCalculator:
 
     def _get_recipe_fermentables(self) -> DataFrame:
         if self.aggregated is None:
-            self.aggregated = pd.read_sql('SELECT * FROM recipe_db_recipefermentable WHERE kind_id IS NOT NULL', connection) \
-                .groupby(["recipe_id", "kind_id"]) \
-                .agg({"amount_percent": "sum", "color_lovibond": "mean", "color_ebc": "mean"}) \
+            self.aggregated = (
+                pd.read_sql("SELECT * FROM recipe_db_recipefermentable WHERE kind_id IS NOT NULL", connection)
+                .groupby(["recipe_id", "kind_id"])
+                .agg({"amount_percent": "sum", "color_lovibond": "mean", "color_ebc": "mean"})
                 .reset_index()
+            )
         return self.aggregated
 
     def _get_fermentable(self, fermentable: Fermentable) -> DataFrame:
         if fermentable.id not in self.aggregated_fermentable:
             recipes = self._get_recipe_fermentables()
-            self.aggregated_fermentable[fermentable.id] = recipes[recipes['kind_id'].eq(fermentable.id)]
+            self.aggregated_fermentable[fermentable.id] = recipes[recipes["kind_id"].eq(fermentable.id)]
         return self.aggregated_fermentable[fermentable.id]
 
     def calc_recipes_count(self, fermentable: Fermentable) -> int:
-        return len(self._get_fermentable(fermentable)['recipe_id'].unique())
+        return len(self._get_fermentable(fermentable)["recipe_id"].unique())
 
     def calc_metric(self, fermentable: Fermentable, metric: FermentableMetric):
         recipes = self._get_fermentable(fermentable)
@@ -48,6 +50,6 @@ class FermentableMetricCalculator:
         return lowerfence(recipes[field_name]), recipes[field_name].median(), upperfence(recipes[field_name])
 
     def calc_percentiles(self) -> dict:
-        df = pd.read_sql_query('SELECT id, recipes_count FROM recipe_db_fermentable', connection)
-        df['percentile'] = df['recipes_count'].rank(pct=True)
-        return df.set_index('id')['percentile'].to_dict()
+        df = pd.read_sql_query("SELECT id, recipes_count FROM recipe_db_fermentable", connection)
+        df["percentile"] = df["recipes_count"].rank(pct=True)
+        return df.set_index("id")["percentile"].to_dict()

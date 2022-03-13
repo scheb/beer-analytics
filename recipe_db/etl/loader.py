@@ -15,7 +15,6 @@ class ResultPostProcessor:
 
 
 class RecipeLoader:
-
     @transaction.atomic
     def import_recipe(self, uid: str, result: ParserResult) -> None:
         result.recipe.uid = uid
@@ -94,10 +93,10 @@ class RecipeLoader:
 class RecipeFileProcessor:
     def __init__(
         self,
-         importer: RecipeLoader,
+        importer: RecipeLoader,
         format_parsers: List[FormatParser],
         post_processors: List[ResultPostProcessor] = None,
-        replace_existing=False
+        replace_existing=False,
     ) -> None:
         self.importer = importer
         self.format_parsers = format_parsers

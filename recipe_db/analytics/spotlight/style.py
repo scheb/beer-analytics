@@ -4,8 +4,13 @@ from pandas import DataFrame
 
 from recipe_db.analytics.fermentable import FermentableAmountAnalysis
 from recipe_db.analytics.hop import HopPairingAnalysis, HopAmountAnalysis
-from recipe_db.analytics.recipe import RecipesCountAnalysis, RecipesPopularityAnalysis, RecipesMetricHistogram, \
-    RecipesTrendAnalysis, RecipesListAnalysis
+from recipe_db.analytics.recipe import (
+    RecipesCountAnalysis,
+    RecipesPopularityAnalysis,
+    RecipesMetricHistogram,
+    RecipesTrendAnalysis,
+    RecipesListAnalysis,
+)
 from recipe_db.analytics.scope import RecipeScope, StyleProjection, HopProjection, FermentableProjection
 from recipe_db.analytics.spotlight.fermentable import FERMENTABLE_FILTER_TO_TYPES
 from recipe_db.analytics.spotlight.hop import HOP_FILTER_TO_USES

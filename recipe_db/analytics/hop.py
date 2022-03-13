@@ -21,34 +21,38 @@ class HopAmountRangeAnalysis(HopLevelAnalysis):
     def amount_range(self) -> DataFrame:
         scope_filter = self.scope.get_filter()
 
-        query = '''
+        query = """
             SELECT rh.recipe_id, sum(rh.amount_percent) AS amount_percent
             FROM recipe_db_recipehop AS rh
             WHERE 1 {}
             GROUP BY rh.recipe_id, rh.kind_id
-        '''.format(scope_filter.where)
+        """.format(
+            scope_filter.where
+        )
 
         df = pd.read_sql(query, connection, params=scope_filter.parameters)
         if len(df) == 0:
             return df
 
         # Calculate ranges
-        agg = [lowerfence, q1, 'median', 'mean', q3, upperfence]
-        aggregated = df.agg({'amount_percent': agg})
+        agg = [lowerfence, q1, "median", "mean", q3, upperfence]
+        aggregated = df.agg({"amount_percent": agg})
 
         return aggregated
 
 
 class HopMetricHistogram(HopLevelAnalysis):
     def metric_histogram(self, metric: str) -> DataFrame:
-        precision = METRIC_PRECISION[metric] if metric in METRIC_PRECISION else METRIC_PRECISION['default']
+        precision = METRIC_PRECISION[metric] if metric in METRIC_PRECISION else METRIC_PRECISION["default"]
 
         scope_filter = self.scope.get_filter()
-        query = '''
+        query = """
                 SELECT round({}, {}) as {}
                 FROM recipe_db_recipehop AS rh
                 WHERE 1 {}
-            '''.format(metric, precision, metric, scope_filter.where)
+            """.format(
+            metric, precision, metric, scope_filter.where
+        )
 
         df = pd.read_sql(query, connection, params=scope_filter.parameters)
         if len(df) == 0:
@@ -58,7 +62,7 @@ class HopMetricHistogram(HopLevelAnalysis):
         if len(df) == 0:
             return df
 
-        histogram = df.groupby([pd.cut(df[metric], 16, precision=precision)])[metric].agg(['count'])
+        histogram = df.groupby([pd.cut(df[metric], 16, precision=precision)])[metric].agg(["count"])
         histogram = histogram.reset_index()
         histogram[metric] = histogram[metric].map(str)
 
@@ -76,7 +80,7 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
         scope_filter = self.scope.get_filter()
         projection_filter = projection.get_filter()
 
-        query = '''
+        query = """
             SELECT
                 rh.recipe_id,
                 rh.kind_id,
@@ -88,26 +92,28 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
                 {}
                 {}
             GROUP BY rh.recipe_id, rh.kind_id
-        '''.format(scope_filter.where, projection_filter.where)
+        """.format(
+            scope_filter.where, projection_filter.where
+        )
 
         df = pd.read_sql(query, connection, params=scope_filter.parameters + projection_filter.parameters)
         if len(df) == 0:
             return df
 
         # Calculate range
-        agg = [lowerfence, q1, 'median', 'mean', q3, upperfence]
-        per_style = df.groupby('kind_id').agg({'amount_percent': agg, 'recipe_id': 'nunique'})
+        agg = [lowerfence, q1, "median", "mean", q3, upperfence]
+        per_style = df.groupby("kind_id").agg({"amount_percent": agg, "recipe_id": "nunique"})
         per_style = per_style.reset_index()
 
         # Sort by number of recipes
-        per_style = per_style.sort_values(by=('recipe_id', 'nunique'), ascending=False)
+        per_style = per_style.sort_values(by=("recipe_id", "nunique"), ascending=False)
 
         # Show only top values
         if num_top is not None:
             per_style = per_style[:num_top]
 
         # Add style names
-        per_style['hop'] = per_style['kind_id'].map(get_hop_names_dict())
+        per_style["hop"] = per_style["kind_id"].map(get_hop_names_dict())
         return per_style
 
     def per_style(
@@ -120,7 +126,7 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
         scope_filter = self.scope.get_filter()
         projection_filter = projection.get_filter()
 
-        query = '''
+        query = """
             SELECT
                 rh.recipe_id,
                 ras.style_id,
@@ -135,26 +141,28 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
                 {}
                 {}
             GROUP BY rh.recipe_id, ras.style_id, rh.kind_id
-        '''.format(scope_filter.where, projection_filter.where)
+        """.format(
+            scope_filter.where, projection_filter.where
+        )
 
         df = pd.read_sql(query, connection, params=scope_filter.parameters + projection_filter.parameters)
         if len(df) == 0:
             return df
 
         # Calculate range
-        agg = [lowerfence, q1, 'median', 'mean', q3, upperfence]
-        per_style = df.groupby('style_id').agg({'amount_percent': agg, 'recipe_id': 'nunique'})
+        agg = [lowerfence, q1, "median", "mean", q3, upperfence]
+        per_style = df.groupby("style_id").agg({"amount_percent": agg, "recipe_id": "nunique"})
         per_style = per_style.reset_index()
 
         # Sort by number of recipes
-        per_style = per_style.sort_values(by=('recipe_id', 'nunique'), ascending=False)
+        per_style = per_style.sort_values(by=("recipe_id", "nunique"), ascending=False)
 
         # Show only top values
         if num_top is not None:
             per_style = per_style[:num_top]
 
         # Add style names
-        per_style['beer_style'] = per_style['style_id'].map(get_style_names_dict())
+        per_style["beer_style"] = per_style["style_id"].map(get_style_names_dict())
         return per_style
 
     def per_use(self, projection: Optional[HopProjection] = None) -> DataFrame:
@@ -162,7 +170,7 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
 
         scope_filter = self.scope.get_filter()
         projection_filter = projection.get_filter()
-        query = '''
+        query = """
             SELECT
                 rh.recipe_id,
                 rh.use AS use_id,
@@ -176,23 +184,27 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
                 {}
                 {}
             GROUP BY rh.recipe_id, rh.use, rh.kind_id
-        '''.format(scope_filter.where, projection_filter.where)
+        """.format(
+            scope_filter.where, projection_filter.where
+        )
 
         df = pd.read_sql(query, connection, params=scope_filter.parameters + projection_filter.parameters)
         if len(df) == 0:
             return df
 
         # Calculate range
-        agg = [lowerfence, q1, 'median', 'mean', q3, upperfence]
-        per_use = df.groupby('use_id').agg({'amount_percent': agg})
+        agg = [lowerfence, q1, "median", "mean", q3, upperfence]
+        per_use = df.groupby("use_id").agg({"amount_percent": agg})
         per_use = per_use.reset_index()
 
         # Sort by use (in brewing order)
-        per_use['use_id'] = pd.Categorical(per_use['use_id'], categories=list(RecipeHop.get_uses().keys()), ordered=True)
-        per_use = per_use.sort_values(by='use_id')
+        per_use["use_id"] = pd.Categorical(
+            per_use["use_id"], categories=list(RecipeHop.get_uses().keys()), ordered=True
+        )
+        per_use = per_use.sort_values(by="use_id")
 
         # Finally, add use names
-        per_use['use'] = per_use['use_id'].map(RecipeHop.get_uses())
+        per_use["use"] = per_use["use_id"].map(RecipeHop.get_uses())
         return per_use
 
 
@@ -202,7 +214,7 @@ class HopPairingAnalysis(RecipeLevelAnalysis):
 
         scope_filter = self.scope.get_filter()
         projection_filter = projection.get_filter()
-        query = '''
+        query = """
             SELECT
                 rh.recipe_id,
                 rh.kind_id,
@@ -212,7 +224,9 @@ class HopPairingAnalysis(RecipeLevelAnalysis):
             JOIN recipe_db_recipehop AS rh
                 ON r.uid = rh.recipe_id
             WHERE 1 {}
-        '''.format(projection_filter.where, scope_filter.where)
+        """.format(
+            projection_filter.where, scope_filter.where
+        )
 
         df = pd.read_sql(query, connection, params=projection_filter.parameters + scope_filter.parameters)
 
@@ -220,31 +234,31 @@ class HopPairingAnalysis(RecipeLevelAnalysis):
         df = df.groupby(["recipe_id", "kind_id"]).agg({"amount_percent": "sum", "in_projection": "any"}).reset_index()
 
         # Create unique pairs per recipe
-        pairs = pd.merge(df, df, on='recipe_id', suffixes=('_1', '_2'))
-        pairs = pairs[pairs['kind_id_1'] < pairs['kind_id_2']]
-        pairs['pairing'] = pairs['kind_id_1'] + " " + pairs['kind_id_2']
+        pairs = pd.merge(df, df, on="recipe_id", suffixes=("_1", "_2"))
+        pairs = pairs[pairs["kind_id_1"] < pairs["kind_id_2"]]
+        pairs["pairing"] = pairs["kind_id_1"] + " " + pairs["kind_id_2"]
 
         # Filter pairs for hops within projection
-        pairs = pairs[pairs['in_projection_1'] | pairs['in_projection_2']]
+        pairs = pairs[pairs["in_projection_1"] | pairs["in_projection_2"]]
 
         # Filter only the top pairs
         top_pairings = pairs["pairing"].value_counts()[:8].index.values
-        pairs = pairs[pairs['pairing'].isin(top_pairings)]
+        pairs = pairs[pairs["pairing"].isin(top_pairings)]
 
         # Merge left and right hop into one dataset
-        df1 = pairs[['pairing', 'kind_id_1', 'amount_percent_1']]
-        df1.columns = ['pairing', 'kind_id', 'amount_percent']
-        df2 = pairs[['pairing', 'kind_id_2', 'amount_percent_2']]
-        df2.columns = ['pairing', 'kind_id', 'amount_percent']
+        df1 = pairs[["pairing", "kind_id_1", "amount_percent_1"]]
+        df1.columns = ["pairing", "kind_id", "amount_percent"]
+        df2 = pairs[["pairing", "kind_id_2", "amount_percent_2"]]
+        df2.columns = ["pairing", "kind_id", "amount_percent"]
         top_pairings = pd.concat([df1, df2])
 
         # Calculate boxplot values
-        agg = [lowerfence, q1, 'median', 'mean', q3, upperfence, 'count']
-        aggregated = top_pairings.groupby(['pairing', 'kind_id']).agg({'amount_percent': agg})
+        agg = [lowerfence, q1, "median", "mean", q3, upperfence, "count"]
+        aggregated = top_pairings.groupby(["pairing", "kind_id"]).agg({"amount_percent": agg})
         aggregated = aggregated.reset_index()
-        aggregated = aggregated.sort_values(by=('amount_percent', 'count'), ascending=False)
+        aggregated = aggregated.sort_values(by=("amount_percent", "count"), ascending=False)
 
         # Finally, add hop names
-        aggregated['hop'] = aggregated['kind_id'].map(get_hop_names_dict())
+        aggregated["hop"] = aggregated["kind_id"].map(get_hop_names_dict())
 
         return aggregated

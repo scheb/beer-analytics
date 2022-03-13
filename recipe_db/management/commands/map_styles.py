@@ -7,10 +7,10 @@ class Command(BaseCommand):
     help = "Map style values"
 
     def add_arguments(self, parser):
-        parser.add_argument('--all', action='store_true', help='Map all style (again)')
+        parser.add_argument("--all", action="store_true", help="Map all style (again)")
 
     def handle(self, *args, **options):
-        map_all = options['all']
+        map_all = options["all"]
         style_mapper = StylesProcessor([RecipeNameStyleExactMatchMapper(), StyleMapper(), RecipeNameStyleMapper()])
 
         if map_all:

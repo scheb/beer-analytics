@@ -14,8 +14,10 @@ OPEN_GRAPH_IMAGE_WIDTH = 1200
 OPEN_GRAPH_IMAGE_HEIGHT = 630
 DETAIL_PAGE_TITLE = "{} ‹ {} | Beer-Analytics"
 NORMAL_TITLE = "{} | Beer-Analytics"
-META_DEFAULT_DESCRIPTION = 'Data analysis of brewing recipes for beer enthusiasts, who want to learn how certain ' \
-                           'beer types are composed and how ingredients are used.'
+META_DEFAULT_DESCRIPTION = (
+    "Data analysis of brewing recipes for beer enthusiasts, who want to learn how certain "
+    "beer types are composed and how ingredients are used."
+)
 
 
 class PageMeta:
@@ -41,18 +43,18 @@ class PageMeta:
 
 class HomeMeta(PageMeta):
     def get_meta(self) -> Meta:
-        meta = self.create('', url=reverse('home'))
-        meta.title = 'Beer Analytics – The analytical beer recipe database'
+        meta = self.create("", url=reverse("home"))
+        meta.title = "Beer Analytics – The analytical beer recipe database"
         return meta
 
 
 class StyleOverviewMeta(PageMeta):
     def get_meta(self) -> Meta:
         return Meta(
-            title=NORMAL_TITLE.format('Beer Styles'),
-            description='Overview of all beer styles to analyze on Beer Analytics.',
-            keywords=['styles'],
-            url=reverse('style_overview'),
+            title=NORMAL_TITLE.format("Beer Styles"),
+            description="Overview of all beer styles to analyze on Beer Analytics.",
+            keywords=["styles"],
+            url=reverse("style_overview"),
         )
 
 
@@ -61,7 +63,7 @@ class StyleMeta(PageMeta):
         self.style = style
 
     def get_title(self):
-        return DETAIL_PAGE_TITLE.format(self.style.name, 'Beer Styles')
+        return DETAIL_PAGE_TITLE.format(self.style.name, "Beer Styles")
 
     def get_description(self) -> str:
         return "Data analysis how {} beers are brewed. ".format(self.style.name)
@@ -70,7 +72,7 @@ class StyleMeta(PageMeta):
         return Meta(
             title=self.get_title(),
             description=self.get_description(),
-            keywords=[self.style.name.lower(), 'style'],
+            keywords=[self.style.name.lower(), "style"],
             url=object_url(self.style),
         )
 
@@ -78,29 +80,27 @@ class StyleMeta(PageMeta):
 class HopOverviewMeta(PageMeta):
     def __init__(self, category: Optional[Tuple[str, str]] = None) -> None:
         self.category_id = None
-        self.category_name = ''
+        self.category_name = ""
         if category is not None:
             (self.category_id, self.category_name) = category
             self.category_name += " "  # Add extra space for title/description
 
     def get_title(self):
-        return NORMAL_TITLE.format(self.category_name+"Hops Overview")
+        return NORMAL_TITLE.format(self.category_name + "Hops Overview")
 
     def get_description(self):
-        return 'Overview of {}hops to analyze on Beer Analytics.'.format(
-            self.category_name.lower()
-        )
+        return "Overview of {}hops to analyze on Beer Analytics.".format(self.category_name.lower())
 
     def get_keywords(self):
-        keywords = ['hops']
+        keywords = ["hops"]
         if self.category_id is not None:
             keywords.append(self.category_name.strip().lower())
         return keywords
 
     def get_url(self):
         if self.category_id is not None:
-            return reverse('hop_category', kwargs={'category_id': self.category_id})
-        return reverse('hop_overview')
+            return reverse("hop_category", kwargs={"category_id": self.category_id})
+        return reverse("hop_overview")
 
     def get_meta(self) -> Meta:
         return Meta(
@@ -116,11 +116,12 @@ class HopMeta(PageMeta):
         self.hop = hop
 
     def get_title(self):
-        return DETAIL_PAGE_TITLE.format(self.hop.name, self.hop.category_name+" Hops")
+        return DETAIL_PAGE_TITLE.format(self.hop.name, self.hop.category_name + " Hops")
 
     def get_description(self) -> str:
-        return "Data analysis how {} hops are used in beer brewing recipes. ".format(self.hop.name)\
-               + html2text(self.get_description_html(short=True))
+        return "Data analysis how {} hops are used in beer brewing recipes. ".format(self.hop.name) + html2text(
+            self.get_description_html(short=True)
+        )
 
     @lru_cache(maxsize=None)
     def get_description_html(self, short: bool = False) -> str:
@@ -161,7 +162,7 @@ class HopMeta(PageMeta):
         # Common range
         if self.hop.recipes_amount_percent_mean is not None:
             text += " When used in a recipe, it typically accounts for <strong>{}% of the hops</strong>.".format(
-                round(self.hop.recipes_amount_percent_mean*100)
+                round(self.hop.recipes_amount_percent_mean * 100)
             )
 
         return text
@@ -170,7 +171,7 @@ class HopMeta(PageMeta):
         return Meta(
             title=self.get_title(),
             description=html2text(self.get_description()),
-            keywords=[self.hop.name.lower(), 'hop', 'dry-hopping', 'bittering', 'aroma'],
+            keywords=[self.hop.name.lower(), "hop", "dry-hopping", "bittering", "aroma"],
             url=object_url(self.hop),
         )
 
@@ -178,29 +179,27 @@ class HopMeta(PageMeta):
 class FermentableOverviewMeta(PageMeta):
     def __init__(self, category: Optional[Tuple[str, str]] = None) -> None:
         self.category_id = None
-        self.category_name = ''
+        self.category_name = ""
         if category is not None:
             (self.category_id, self.category_name) = category
             self.category_name += " "  # Add extra space for title/description
 
     def get_title(self):
-        return NORMAL_TITLE.format(self.category_name+"Fermentables Overview")
+        return NORMAL_TITLE.format(self.category_name + "Fermentables Overview")
 
     def get_description(self):
-        return 'Overview of {}fermentables to analyze on Beer Analytics.'.format(
-            self.category_name.lower()
-        )
+        return "Overview of {}fermentables to analyze on Beer Analytics.".format(self.category_name.lower())
 
     def get_url(self):
         if self.category_id is not None:
-            return reverse('fermentable_category', kwargs={'category_id': self.category_id})
-        return reverse('fermentable_overview')
+            return reverse("fermentable_category", kwargs={"category_id": self.category_id})
+        return reverse("fermentable_overview")
 
     def get_meta(self) -> Meta:
         return Meta(
             title=self.get_title(),
             description=self.get_description(),
-            keywords=['malts', 'fermentables'],
+            keywords=["malts", "fermentables"],
             url=self.get_url(),
         )
 
@@ -210,11 +209,12 @@ class FermentableMeta(PageMeta):
         self.fermentable = fermentable
 
     def get_title(self) -> str:
-        return DETAIL_PAGE_TITLE.format(self.fermentable.name, self.fermentable.category_name+" Fermentables")
+        return DETAIL_PAGE_TITLE.format(self.fermentable.name, self.fermentable.category_name + " Fermentables")
 
     def get_description(self) -> str:
-        return "Data analysis how {} fermentables are used in beer brewing recipes. ".format(self.fermentable.name)\
-               + html2text(self.get_description_html(short=True))
+        return "Data analysis how {} fermentables are used in beer brewing recipes. ".format(
+            self.fermentable.name
+        ) + html2text(self.get_description_html(short=True))
 
     def get_description_html(self, short: bool = False) -> str:
         # Name + type
@@ -230,17 +230,17 @@ class FermentableMeta(PageMeta):
         )
         if self.fermentable.color_level is not None:
             color_name = self.fermentable.color_level
-            text += " with <strong>{} color</strong>".format(
-                escape(color_name)
-            )
+            text += " with <strong>{} color</strong>".format(escape(color_name))
         text += "."
         if short:
             return text
 
         # Common range
         if self.fermentable.recipes_amount_percent_mean is not None:
-            text += " When used in a recipe, it typically accounts for <strong>{}% of the fermentables</strong>.".format(
-                round(self.fermentable.recipes_amount_percent_mean*100)
+            text += (
+                " When used in a recipe, it typically accounts for <strong>{}% of the fermentables</strong>.".format(
+                    round(self.fermentable.recipes_amount_percent_mean * 100)
+                )
             )
 
         return text
@@ -249,7 +249,7 @@ class FermentableMeta(PageMeta):
         return Meta(
             title=self.get_title(),
             description=html2text(self.get_description()),
-            keywords=[self.fermentable.name.lower(), 'fermentable', 'malt', 'mashing'],
+            keywords=[self.fermentable.name.lower(), "fermentable", "malt", "mashing"],
             url=object_url(self.fermentable),
         )
 
@@ -257,7 +257,7 @@ class FermentableMeta(PageMeta):
 class YeastOverviewMeta(PageMeta):
     def __init__(self, y_type: Optional[Tuple[str, str]] = None) -> None:
         self.type_id = None
-        self.type_name = ''
+        self.type_name = ""
         if y_type is not None:
             (self.type_id, self.type_name) = y_type
             self.type_name += " "  # Add extra space for title/description
@@ -266,20 +266,18 @@ class YeastOverviewMeta(PageMeta):
         return NORMAL_TITLE.format(self.type_name + "Yeasts Overview")
 
     def get_description(self):
-        return 'Overview of {}yeasts to analyze on Beer Analytics.'.format(
-            self.type_name.lower()
-        )
+        return "Overview of {}yeasts to analyze on Beer Analytics.".format(self.type_name.lower())
 
     def get_url(self):
         if self.type_id is not None:
-            return reverse('yeast_type', kwargs={'type_id': self.type_id})
-        return reverse('yeast_overview')
+            return reverse("yeast_type", kwargs={"type_id": self.type_id})
+        return reverse("yeast_overview")
 
     def get_meta(self) -> Meta:
         return Meta(
             title=self.get_title(),
             description=self.get_description(),
-            keywords=['yeasts'],
+            keywords=["yeasts"],
             url=self.get_url(),
         )
 
@@ -291,18 +289,18 @@ class YeastMeta(PageMeta):
     def get_yeast_full_name(self):
         yeast_name = self.yeast.full_name
         if self.yeast.has_extra_product_id:
-            yeast_name += ' ({})'.format(self.yeast.product_id)
+            yeast_name += " ({})".format(self.yeast.product_id)
         return yeast_name
 
     def get_title(self) -> str:
         yeast_name = self.get_yeast_full_name()
-        return DETAIL_PAGE_TITLE.format(yeast_name, (self.yeast.type_name or '')+" Yeast")
+        return DETAIL_PAGE_TITLE.format(yeast_name, (self.yeast.type_name or "") + " Yeast")
 
     def get_description(self) -> str:
         return 'Data analysis how "{}" {} {} yeast is used in beer brewing recipes. '.format(
             self.get_yeast_full_name(),
-            (self.yeast.form_name or '').lower(),
-            (self.yeast.type_name or '').lower(),
+            (self.yeast.form_name or "").lower(),
+            (self.yeast.type_name or "").lower(),
         )
 
     def get_description_html(self) -> str:
@@ -312,32 +310,27 @@ class YeastMeta(PageMeta):
             name_incl_id += " ({})".format(self.yeast.product_id)
         product_name = em(escape(name_incl_id))
         lab_name = em(escape(self.yeast.lab))
-        form_name = escape((self.yeast.form_name or '').lower())
-        type_name = escape((self.yeast.type_name or '').lower())
+        form_name = escape((self.yeast.form_name or "").lower())
+        type_name = escape((self.yeast.type_name or "").lower())
         text = "{} is a <strong>{} {} yeast</strong> produced by {}".format(
-            product_name,
-            form_name,
-            type_name,
-            lab_name
+            product_name, form_name, type_name, lab_name
         )
         text += "."
 
         # Fermentation properties
         fermentation = []
         if self.yeast.attenuation is not None:
-            fermentation.append(" ferments with <strong>{} attenuation</strong>".format(
-                escape(self.yeast.attenuation_level.lower()))
+            fermentation.append(
+                " ferments with <strong>{} attenuation</strong>".format(escape(self.yeast.attenuation_level.lower()))
             )
         if self.yeast.flocculation is not None:
-            flocculation_text = " <strong>{} flocculation</strong>".format(
-                escape(self.yeast.flocculation_name.lower())
-            )
+            flocculation_text = " <strong>{} flocculation</strong>".format(escape(self.yeast.flocculation_name.lower()))
             if not len(fermentation):
                 flocculation_text = " ferments with" + flocculation_text
             fermentation.append(flocculation_text)
         if self.yeast.tolerance_name is not None:
-            fermentation.append(" has a <strong>{} alcohol tolerance</strong>".format(
-                self.yeast.tolerance_name.lower())
+            fermentation.append(
+                " has a <strong>{} alcohol tolerance</strong>".format(self.yeast.tolerance_name.lower())
             )
         if len(fermentation) > 0:
             text += " It " + (comma_and(fermentation)) + "."
@@ -348,17 +341,17 @@ class YeastMeta(PageMeta):
         return Meta(
             title=self.get_title(),
             description=html2text(self.get_description()),
-            keywords=[self.yeast.name.lower(), 'yeast', 'fermentation'],
+            keywords=[self.yeast.name.lower(), "yeast", "fermentation"],
             url=object_url(self.yeast),
         )
 
 
 def em(value: str) -> str:
-    return '<em>%s</em>' % value
+    return "<em>%s</em>" % value
 
 
 def strong(value: str) -> str:
-    return '<strong>%s</strong>' % value
+    return "<strong>%s</strong>" % value
 
 
 def country(country_tuple: tuple) -> str:
@@ -371,14 +364,14 @@ def escape(value: str) -> str:
 
 
 def html2text(value: str) -> str:
-    return html.unescape(re.sub('<[^<]+?>', '', value))
+    return html.unescape(re.sub("<[^<]+?>", "", value))
 
 
 def article(value: str) -> str:
-    if value[0] in ['a', 'e', 'i', 'o', 'u']:
-        return 'an'
+    if value[0] in ["a", "e", "i", "o", "u"]:
+        return "an"
     else:
-        return 'a'
+        return "a"
 
 
 def comma_and(values: Iterable[str]) -> str:
@@ -386,4 +379,4 @@ def comma_and(values: Iterable[str]) -> str:
     if len(values) <= 2:
         return " and ".join(values)
     else:
-        return "{} and {}".format(", ".join(values[:-1]),  values[-1])
+        return "{} and {}".format(", ".join(values[:-1]), values[-1])

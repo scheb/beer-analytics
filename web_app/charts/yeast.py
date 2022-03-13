@@ -30,7 +30,7 @@ class YeastPopularityChart(YeastChart):
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
-        figure = LinesChart().plot(df, 'month', 'recipes_percent', 'yeast', 'Month/Year', '% of All Recipes')
+        figure = LinesChart().plot(df, "month", "recipes_percent", "yeast", "Month/Year", "% of All Recipes")
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -43,7 +43,7 @@ class YeastCommonStylesAbsoluteChart(YeastChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = BarChart().plot(df, 'beer_style', 'recipes', None, 'Total Number of Recipes')
+        figure = BarChart().plot(df, "beer_style", "recipes", None, "Total Number of Recipes")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -56,7 +56,7 @@ class YeastCommonStylesRelativeChart(YeastChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = BarChart().plot(df, 'beer_style', 'recipes_percent', None, 'Used in % of the Style\'s Recipes')
+        figure = BarChart().plot(df, "beer_style", "recipes_percent", None, "Used in % of the Style's Recipes")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -69,7 +69,7 @@ class YeastTrendingHopsChart(YeastChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'hop', None, '% of Yeast Recipes')
+        figure = LinesChart(force_legend=True).plot(df, "month", "recipes_percent", "hop", None, "% of Yeast Recipes")
         return Chart(figure, title=self.get_chart_title())
 
 
@@ -82,7 +82,7 @@ class YeastPopularHopsChart(YeastChart):
         if len(df) == 0:
             raise NoDataException()
 
-        figure = LinesChart(force_legend=True).plot(df, 'month', 'recipes_percent', 'hop', None, '% of Yeast Recipes')
+        figure = LinesChart(force_legend=True).plot(df, "month", "recipes_percent", "hop", None, "% of Yeast Recipes")
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
@@ -100,7 +100,6 @@ class YeastChartFactory:
         popularity=YeastPopularityChart,
         typical_styles_absolute=YeastCommonStylesAbsoluteChart,
         typical_styles_relative=YeastCommonStylesRelativeChart,
-
         # Hops
         popular_hops=YeastPopularHopsChart,
         trending_hops=YeastTrendingHopsChart,
@@ -123,7 +122,7 @@ class YeastChartFactory:
 
     @classmethod
     def normalize_type(cls, chart_type: str) -> str:
-        return chart_type.replace('-', '_')
+        return chart_type.replace("-", "_")
 
     @classmethod
     def get_types(cls):
