@@ -8,7 +8,7 @@ license = "THE BEER-WARE LICENSE"
 [tool.poetry.dependencies]
 python = "~3.8"
 Django = "^3.2"
-django-environ = "^0.8"
+django-environ = "^0.9"
 django-meta = "^2.0"
 kaleido = "0.2.1"
 numpy = "^1.22.3"
