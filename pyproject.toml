@@ -16,7 +16,7 @@ pandas = "^1.4.1"
 plotly = "^5.6.0"
 pybeerxml = "^2.1.2"
 requests = "^2.27.1"
-scipy = "1.8"
+scipy = "1.9.1"
 translitcodec = "^0.7.0"
 
 [tool.poetry.dev-dependencies]
