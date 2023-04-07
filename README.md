@@ -26,18 +26,15 @@ Application Setup
 
 ### Requirements
 
-- Python 3.8
-- virtualenv (ideally)
-- [Poetry](https://python-poetry.org/) (Python package manager)
-- [yarn](https://yarnpkg.com/) (JavaScript package manager)
+- Docker installed locally
+- [yarn](https://yarnpkg.com/) (JavaScript package manager) installed locally
 
 ### Setup Steps
 
 - Install yarn dependencies: `yarn install`
-- Initialize `virtualenv` and enable it
-- Install Python dependencies: `poetry install`
 - Create a configuration file (see below)
-- Apply database migrations to creates tables: `python manage.py makemigrations` and `python manage.py migrate`
+- Build and start the Docker container `docker compose up`
+- Jump into Docker container `docker exec -it beer_analytics_local_django bash`
 - Load initial data (known styles and ingredients) via `python manage.py load_initial_data`
 
 ### Configuration
@@ -55,13 +52,17 @@ DJANGO_SETTINGS_MODULE=beer_analytics.settings_dev
 DJANGO_SETTINGS_MODULE=beer_analytics.settings_prod
 ```
 
+The Docker container uses dev settings.
+
 ### Development
 
-To start the application for development run
+To start the application for development run the Docker container
 
-`python manage.py runserver`
+`docker compose up`
 
-to start a webserver at `localhost:8000` and in a second terminal run
+which starts a webserver at `localhost:8000`.
+
+In a second terminal run
 
 `yarn start`
 
