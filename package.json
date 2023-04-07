@@ -11,7 +11,7 @@
         "@types/plotly.js": "^2.12.18",
         "bootstrap": "^5.2.3",
         "clean-webpack-plugin": "^4",
-        "css-loader": "^5.0.0",
+        "css-loader": "^6.7",
         "file-loader": "^6.2",
         "mini-css-extract-plugin": "^2.7",
         "plotly.js": "^2.20.0",

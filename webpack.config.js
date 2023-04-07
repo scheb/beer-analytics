@@ -29,23 +29,8 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
-                test: /\.(svg)$/,
-                use: {
-                    loader: "url-loader",
-                    options: {
-                        limit: 5120,
-                    },
-                },
-            },
-            {
-                test: /\.(woff|woff2)/,
-                use: {
-                    loader: "file-loader",
-                    options: {
-                        name: "[name].[ext]",
-                        outputPath: "fonts"
-                    }
-                }
+                test: /\.(png|jpe?g|gif|svg|woff|woff2)$/,
+                type: 'asset'
             },
             {
                 test: /\.scss$/,
