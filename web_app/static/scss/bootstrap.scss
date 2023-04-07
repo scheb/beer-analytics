@@ -1,3 +1,7 @@
+//@import "~bootstrap/scss/mixins/banner";
+//@include bsBanner("");
+
+// Configuration
 @import "~bootstrap/scss/functions";
 
 $black: #000;
@@ -30,8 +34,9 @@ $theme-colors: (
 
 $link-color: shade-color($primary, 16%);
 
-// Configuration
+
 @import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/maps";
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/utilities";
 
@@ -51,6 +56,7 @@ $link-color: shade-color($primary, 16%);
 @import "~bootstrap/scss/nav";
 @import "~bootstrap/scss/navbar";
 @import "~bootstrap/scss/card";
+@import "~bootstrap/scss/accordion";
 @import "~bootstrap/scss/breadcrumb";
 //@import "~bootstrap/scss/pagination";
 @import "~bootstrap/scss/badge";
@@ -64,6 +70,8 @@ $link-color: shade-color($primary, 16%);
 //@import "~bootstrap/scss/popover";
 //@import "~bootstrap/scss/carousel";
 //@import "~bootstrap/scss/spinners";
+//@import "~bootstrap/scss/offcanvas";
+//@import "~bootstrap/scss/placeholders";
 
 // Helpers
 @import "~bootstrap/scss/helpers";

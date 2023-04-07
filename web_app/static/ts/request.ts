@@ -77,7 +77,7 @@ export function request(
     xhr.open(method, withQuery(url, queryParams))
 
     if (headers) {
-        Object.keys(headers).forEach(key => xhr.setRequestHeader(key, headers[key]))
+        Object.keys(headers).forEach(key => xhr.setRequestHeader(key, headers[key as keyof typeof headers]))
     }
 
     if (ignoreCache) {
