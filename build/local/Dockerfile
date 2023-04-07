@@ -8,27 +8,18 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ARG POETRY_VERSION="1.4"
 ENV DJANGO_SETTINGS_MODULE=beer_analytics.settings_dev
 
-# Install apt packages
-RUN apt-get update && apt-get install --no-install-recommends -y \
-  # dependencies for building Python packages
-  build-essential \
-  curl \
-  # cleaning up unused files
-  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
-  && rm -rf /var/lib/apt/lists/*
-
 # Install poetry
 RUN pip install poetry==${POETRY_VERSION}
 
 # Add `poetry` to PATH
 ENV PATH="${PATH}:${POETRY_VENV}/bin"
 
-COPY ./build/local/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+WORKDIR ${APP_HOME}
 
 COPY poetry.lock pyproject.toml ./
+COPY ./build/local/entrypoint.sh /entrypoint.sh
 
-WORKDIR ${APP_HOME}
+RUN chmod +x /entrypoint.sh
 
 # Install Python dependencies
 RUN poetry config virtualenvs.create false \
