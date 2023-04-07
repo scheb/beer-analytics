@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+    django:
+        build:
+            context: .
+            dockerfile: ./build/local/Dockerfile
+        image: beer_analytics_local_django
+        container_name: beer_analytics_local_django
+        volumes:
+            - .:/app:z
+        ports:
+            - "8000:8000"
+        command: /start
