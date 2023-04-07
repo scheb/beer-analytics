@@ -13,7 +13,7 @@
         "clean-webpack-plugin": "^4",
         "css-loader": "^5.0.0",
         "file-loader": "^6.2",
-        "mini-css-extract-plugin": "^1.2.0",
+        "mini-css-extract-plugin": "^2.7",
         "plotly.js": "^2.20.0",
         "sass": "^1.61",
         "sass-loader": "^13",
