@@ -1,0 +1,10 @@
+.editorconfig
+.git
+.github
+.gitignore
+.idea
+bundles
+node_modules
+static
+var
+venv
