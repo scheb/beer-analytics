@@ -1,4 +1,4 @@
-FROM python:3.8-slim-bullseye
+FROM python:3.10-slim-bullseye
 
 ARG BUILD_ENVIRONMENT=local
 ARG APP_HOME=/app
