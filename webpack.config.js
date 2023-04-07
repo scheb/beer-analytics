@@ -79,6 +79,7 @@ module.exports = {
             "buffer": false,
             "fs": false,
             "path": false,
+            "stream": require.resolve("stream-browserify")
         }
     }
 };
