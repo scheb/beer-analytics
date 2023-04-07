@@ -1,4 +1,4 @@
-const path = require("path");1
+const path = require("path");
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -50,15 +50,8 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].css',
-                        }
-                    },
-                    'extract-loader',
+                    MiniCssExtractPlugin.loader,
                     "css-loader",
-                    "sass-loader",
                     {
                         loader: "sass-loader",
                         options: {
