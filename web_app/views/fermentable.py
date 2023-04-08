@@ -67,7 +67,7 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
         else:
             raise err
 
-    if fermentable.recipes_count <= 0:
+    if fermentable.recipes_count is None or fermentable.recipes_count <= 0:
         raise Http404("Fermentable doesn't have any data.")
 
     if category_id != fermentable.category or slug != fermentable.id:
@@ -75,7 +75,7 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
 
     meta_provider = FermentableMeta(fermentable)
     meta = meta_provider.get_meta()
-    if fermentable.recipes_count > 100:
+    if fermentable.recipes_count is not None and fermentable.recipes_count > 100:
         meta.image = reverse(
             "fermentable_chart",
             kwargs=dict(
@@ -94,7 +94,7 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
 def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, format: str) -> HttpResponse:
     fermentable = get_object_or_404(Fermentable, pk=slug)
 
-    if fermentable.recipes_count <= 0:
+    if fermentable.recipes_count is None or fermentable.recipes_count <= 0:
         raise Http404("Fermentable doesn't have any data.")
 
     if category_id != fermentable.category:
@@ -121,7 +121,7 @@ def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, fo
 def recipes(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
     fermentable = get_object_or_404(Fermentable, pk=slug)
 
-    if fermentable.recipes_count <= 0:
+    if fermentable.recipes_count is None or fermentable.recipes_count <= 0:
         raise Http404("Fermentable doesn't have any data.")
 
     if category_id != fermentable.category:
