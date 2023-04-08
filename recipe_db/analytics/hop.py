@@ -8,7 +8,7 @@ from pandas import DataFrame
 from recipe_db.analytics import METRIC_PRECISION, lowerfence, q1, q3, upperfence
 from recipe_db.analytics.recipe import RecipeLevelAnalysis
 from recipe_db.analytics.scope import StyleProjection, HopProjection, HopScope
-from recipe_db.analytics.utils import remove_outliers, get_style_names_dict, get_hop_names_dict
+from recipe_db.analytics.utils import remove_outliers, get_style_names_dict, get_hop_names_dict, dictfetchall
 from recipe_db.models import RecipeHop
 
 
@@ -262,3 +262,20 @@ class HopPairingAnalysis(RecipeLevelAnalysis):
         aggregated["hop"] = aggregated["kind_id"].map(get_hop_names_dict())
 
         return aggregated
+
+class UnmappedHopsAnalysis:
+    def get_unmapped(self) -> list:
+        query = """
+                SELECT
+                    COUNT(DISTINCT rh.recipe_id) AS num_recipes,
+                    LOWER(rh.kind_raw) As kind
+                FROM recipe_db_recipehop AS rh
+				WHERE rh.kind_id IS NULL
+                GROUP BY LOWER(rh.kind_raw)
+                ORDER BY num_recipes DESC
+                LIMIT 100
+            """
+
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+            return dictfetchall(cursor)
