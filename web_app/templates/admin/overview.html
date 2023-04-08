@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load web_app %}
+
+{% block content %}
+    <nav class="mt-3">
+        <ul>
+            <li><a href="#influx-source">Influx by Source</a></li>
+            <li><a href="#unmapped-hops">Unmapped Hops</a></li>
+            <li><a href="#unmapped-yeasts">Unmapped Yeasts</a></li>
+            <li><a href="#unmapped-fermentables">Unmapped Fermentables</a></li>
+        </ul>
+    </nav>
+
+    {% with chart_type="influx-source" anchor="influx-source" %}
+        <section class="card card-chart">
+            <div class="card-header">
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Influx by Source</h2>
+            </div>
+            <div class="card-body">
+                <div class="chart-m" data-chart="{% url "admin_chart" chart_type "json" %}">
+                    <noscript>
+                        <img src="{% url "admin_chart" chart_type "svg" %}" alt="{{ period|chart_image_alt:chart_type }}"/>
+                    </noscript>
+                </div>
+            </div>
+        </section>
+    {% endwith %}
+
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#unmapped-hops" id="unmapped-hops" class="anchor"><span></span></a>Unmapped Hops</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <colgroup>
+                    <col width="20%" />
+                    <col width="80%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">Number Recipes</th>
+                        <th scope="col">Hop Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for hop in unmapped_hops %}
+                    <tr>
+                        <td>{{ hop.num_recipes }}</td>
+                        <td>{{ hop.kind }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#unmapped-yeasts" id="unmapped-yeasts" class="anchor"><span></span></a>Unmapped Yeasts</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <colgroup>
+                    <col width="20%" />
+                    <col width="80%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">Number Recipes</th>
+                        <th scope="col">Yeast Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for yeast in unmapped_yeasts %}
+                    <tr>
+                        <td>{{ yeast.num_recipes }}</td>
+                        <td>{{ yeast.kind }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#unmapped-fermentables" id="unmapped-fermentables" class="anchor"><span></span></a>Unmapped Fermentables</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <colgroup>
+                    <col width="20%" />
+                    <col width="80%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">Number Recipes</th>
+                        <th scope="col">Fermentable Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fermentable in unmapped_fermentables %}
+                    <tr>
+                        <td>{{ fermentable.num_recipes }}</td>
+                        <td>{{ fermentable.kind }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}

@@ -8,7 +8,7 @@ from pandas import DataFrame
 from recipe_db.analytics import METRIC_PRECISION, lowerfence, q1, q3, upperfence
 from recipe_db.analytics.recipe import RecipeLevelAnalysis
 from recipe_db.analytics.scope import StyleProjection, FermentableProjection, FermentableScope
-from recipe_db.analytics.utils import remove_outliers, get_style_names_dict, get_fermentable_names_dict
+from recipe_db.analytics.utils import remove_outliers, get_style_names_dict, get_fermentable_names_dict, dictfetchall
 
 
 class FermentableLevelAnalysis(ABC):
@@ -163,3 +163,21 @@ class FermentableAmountAnalysis(RecipeLevelAnalysis):
         # Add style names
         per_style["beer_style"] = per_style["style_id"].map(get_style_names_dict())
         return per_style
+
+
+class UnmappedFermentablesAnalysis:
+    def get_unmapped(self) -> list:
+        query = """
+                SELECT
+                    COUNT(DISTINCT rf.recipe_id) AS num_recipes,
+                    LOWER(rf.kind_raw) As kind
+                FROM recipe_db_recipefermentable AS rf
+				WHERE rf.kind_id IS NULL
+                GROUP BY LOWER(rf.kind_raw)
+                ORDER BY num_recipes DESC
+                LIMIT 100
+            """
+
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+            return dictfetchall(cursor)
