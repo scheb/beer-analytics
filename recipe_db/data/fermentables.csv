@@ -24,7 +24,7 @@ Spelt Malt;grain;other_malt;;Dinkelmalz, Château Spelt
 Rye Malt;grain;other_malt;;Rye, Roggenmalz, Château Rye
 Emmer Malt;grain;other_malt;;Emmermalz
 Small Spelt Malt;grain;other_malt;;Einkornmalz
-Oat Malt;grain;other_malt;;Hafermalz, Château Oat, Oats malted, Oat malted
+Oat Malt;grain;other_malt;Malted Oats;Hafermalz, Château Oat, Oats malted, Oat malted
 Dark Oat Malt;grain;other_malt;;Schwarzhafermalz
 Triticale Malt;grain;other_malt;;Triticalemalz
 Millet Malt;grain;other_malt;;Hirsemalz
@@ -49,7 +49,7 @@ Roasted Barley Malt;grain;roasted;Black Pearl;Roasted Barley, Barley Roasted, R�
 Roasted Millet Malt;grain;roasted;;Roasted Millet, Millet Roasted, Roast Millet
 Brown Malt;grain;roasted;Aroma 150 MD;Brown
 Abbey Malt;grain;toasted;Belgian Malt, Aromatic MD;Château Abbey, Aromatic MD
-Biscuit Malt;grain;toasted;Victory Malt;Château Biscuit
+Biscuit Malt;grain;toasted;Victory Malt;Château Biscuit, Biscuit MD, Best Biscuit, American Victory
 Cookie Malt;grain;toasted;;Cookie
 Aromatic Malt;grain;toasted;;Aromatic, Château Arome, Aurora Malt
 Amber Malt;grain;toasted;Special Roast, Aroma 100 MD;Amber
@@ -72,7 +72,7 @@ Unmalted Triticale;grain;unmalted_adjunct;;Triticale Unmalted, Raw Triticale, Tr
 Unmalted Millet;grain;unmalted_adjunct;;Millet Unmalted, Raw Millet, Millet Raw
 Unmalted Buckwheat;grain;unmalted_adjunct;;Buckwheat Unmalted, Raw Buckwheat, Buckwheat Raw
 Flaked Barley;grain;unmalted_adjunct;;Gerstenflocken, Gersteflocken, Barley Flakes, Barley Flaked
-Flaked Oats;grain;unmalted_adjunct;Rolled Oats;Haferflocken, Oat Flakes, Oats Flaked, Oat Flaked
+Flaked Oats;grain;unmalted_adjunct;Rolled Oats;Haferflocken, Oat Flakes, Oats Flaked, Oat Flaked, Oats Rolled
 Flaked Rye;grain;unmalted_adjunct;;Roggenflocken, Rye Flakes, Rye Flaked
 Flaked Wheat;grain;unmalted_adjunct;;Weizenflocken, Wheat Flakes, Wheat Flaked
 Flaked Corn;grain;unmalted_adjunct;;Maisflocken, Corn Flakes, Corn Flaked
@@ -82,14 +82,15 @@ Flaked Quinoa;grain;unmalted_adjunct;;Quinoaflocken, Quinoa Flakes, Quinoa Flake
 Rice Hulls;grain;unmalted_adjunct;Rice Husks;
 Torrified Barley Malt;grain;unmalted_adjunct;;Torrified Barley, Barley Torrified
 Torrified Wheat Malt;grain;unmalted_adjunct;;Torrified Wheat, Wheat Torrified
+Torrified Oats;grain;unmalted_adjunct;;Flaked Torrified Oats
 Maize;grain;unmalted_adjunct;Corn;Mais
-Golden Naked Oats;grain;cara_crystal;;Naked Oats, Oats Golden Naked
+Golden Naked Oats;grain;cara_crystal;;Naked Oats, Oats Golden Naked, Golden Naked™ Oats
 CaraRye;grain;cara_crystal;;Cara Malt Rye, Rye Cara
 CaraRed;grain;cara_crystal;CaraRuby;Cara Malt Red, Cara Malt Ruby, Cara Malt Rot, Rotes Cara
 CaraHell;grain;cara_crystal;;Cara Malt Hell, Karamellmalz Hell, CaraMalt, Helles Cara
 CaraWheat;grain;cara_crystal;;Cara Malt Wheat, Wheat Cara, Weizen Cara, Cara Weizen
 CaraGold;grain;cara_crystal;;Cara Malt Gold
-CaraPils / CaraFoam;grain;cara_crystal;Cara Clair, Gladiator, Dextrine Malt;Cara Malt Pils, Cara Malt Foam, Dextrine, Dextrin, Cara Malt Extra Hell
+CaraPils / CaraFoam;grain;cara_crystal;Cara Clair, Gladiator, Dextrine Malt;Cara Malt Pils, Cara Malt Foam, Dextrine, Dextrin, Cara Malt Extra Hell, Dextrapils
 CaraMunich I;grain;cara_crystal;;Caramunich Malt, Cara Malt Munich I, Cara Malt Münch I, Cara Malt Münchner I, Cara Malt Dunkel I, Cara Malt Dunkel
 CaraMunich II;grain;cara_crystal;;Cara Malt Munich II, Cara Malt Münch II, Cara Malt Münchner II, Cara Malt Dunkel II, CaraMunich 45L, Munich 45L
 CaraMunich III;grain;cara_crystal;;Cara Malt Munich III, Cara Malt Münch III, Cara Malt Münchner III, Cara Malt Dunkel III, CaraMunich 60L, Munich 60L, Caramel Munich Dark 150
@@ -102,18 +103,18 @@ Caramel/Crystal Malt – 10L;grain;cara_crystal;Crystal Malt 10L, Caramel Malt 1
 Caramel/Crystal Malt – 15L;grain;cara_crystal;Crystal Malt 15L, Caramel Malt 15L, Carastan Light;Light Carastan
 Caramel/Crystal Malt – 20L;grain;cara_crystal;Crystal Malt 20L, Caramel Malt 20L;
 Caramel/Crystal Malt – 30L;grain;cara_crystal;Crystal Malt 30L, Caramel Malt 30L, Pale Caramel, Carastan;Pale Crystal, Cara Pale, Pale Cara
-Caramel/Crystal Malt – 40L;grain;cara_crystal;Crystal Malt 40L, Caramel Malt 40L, Light Caramel;Light Crystal, Cara Malt Munich 40L, Light Cara, Cara Light
+Caramel/Crystal Malt – 40L;grain;cara_crystal;Crystal Malt 40L, Caramel Malt 40L, Light Caramel;Light Crystal, Cara Malt Munich 40L, Light Cara, Cara Light, Crystal 40
 Caramel/Crystal Malt – 45L;grain;cara_crystal;Crystal Malt 45L, Caramel Malt 45L;
-Caramel/Crystal Malt – 50L;grain;cara_crystal;Crystal Malt 50L, Caramel Malt 50L;Château Cara Gold
+Caramel/Crystal Malt – 50L;grain;cara_crystal;Crystal Malt 50L, Caramel Malt 50L;Château Cara Gold, Crystal T50
 Caramel/Crystal Malt – 55L;grain;cara_crystal;Crystal Malt 55L, Caramel Malt 55L;
-Caramel/Crystal Malt – 60L;grain;cara_crystal;Crystal Malt 60L, Caramel Malt 60L, Medium Caramel, Crystal Medium;Château Crystal
+Caramel/Crystal Malt – 60L;grain;cara_crystal;Crystal Malt 60L, Caramel Malt 60L, Medium Caramel, Medium Crystal;Château Crystal, Crystal Medium, Crystal 60
 Caramel/Crystal Malt – 70L;grain;cara_crystal;Crystal Malt 70L, Caramel Malt 70L;
 Caramel/Crystal Malt – 75L;grain;cara_crystal;Crystal Malt 75L, Caramel Malt 75L;
 Caramel/Crystal Malt – 80L;grain;cara_crystal;Crystal Malt 80L, Caramel Malt 80L;
 Caramel/Crystal Malt – 90L;grain;cara_crystal;Crystal Malt 90L, Caramel Malt 90L;
-Caramel/Crystal Malt – 120L;grain;cara_crystal;Crystal Malt 120L, Caramel Malt 120L, Dark Caramel, Special B, Extra Special Malt, DRC Malt;Dark Cara, Dark Cara II, Cara Dark, Cara Munich 120L, Crystal Extra Dark 120L, DRC
+Caramel/Crystal Malt – 120L;grain;cara_crystal;Crystal Malt 120L, Caramel Malt 120L, Dark Caramel, Special B, Special W, Extra Special Malt, DRC Malt;Dark Cara, Dark Cara II, Cara Dark, Cara Munich 120L, Crystal Extra Dark 120L, DRC
 Caramel/Crystal Malt – 140L;grain;cara_crystal;Crystal Malt 140L, Caramel Malt 140L;
-Caramel/Crystal Malt – 150L;grain;cara_crystal;Crystal Malt 150L, Caramel Malt 150L, Special X, Crystal Extra Dark;
+Caramel/Crystal Malt – 150L;grain;cara_crystal;Crystal Malt 150L, Caramel Malt 150L, Special X, Crystal Extra Dark;Crystal 150
 Malt Extract;extract;;DME, LME;Extract
 Acerola;fruit;;;
 Apple;fruit;;;
