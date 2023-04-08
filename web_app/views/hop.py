@@ -74,7 +74,7 @@ def tag(request: HttpRequest, tag_obj: Tag) -> HttpResponse:
 def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
     hop = get_object_or_404(Hop, pk=slug)
 
-    if hop.recipes_count <= 0:
+    if hop.recipes_count is None or hop.recipes_count <= 0:
         raise Http404("Hop doesn't have any data.")
 
     if category_id != hop.category:
@@ -82,7 +82,7 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
 
     meta_provider = HopMeta(hop)
     meta = meta_provider.get_meta()
-    if hop.recipes_count > 100:
+    if hop.recipes_count is not None and hop.recipes_count > 100:
         meta.image = reverse(
             "hop_chart",
             kwargs=dict(
@@ -101,7 +101,7 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
 def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, format: str) -> HttpResponse:
     hop = get_object_or_404(Hop, pk=slug)
 
-    if hop.recipes_count <= 0:
+    if hop.recipes_count is None or hop.recipes_count <= 0:
         raise Http404("Hop doesn't have any data.")
 
     if category_id != hop.category:
@@ -122,7 +122,7 @@ def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, fo
 def recipes(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
     hop = get_object_or_404(Hop, pk=slug)
 
-    if hop.recipes_count <= 0:
+    if hop.recipes_count is None or hop.recipes_count <= 0:
         raise Http404("Hop doesn't have any data.")
 
     if category_id != hop.category:

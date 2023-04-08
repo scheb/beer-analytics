@@ -43,7 +43,7 @@ def detail(request: HttpRequest, slug: str, category_slug: str) -> HttpResponse:
 
 def display_style(request: HttpRequest, style: Style) -> HttpResponse:
     meta = StyleMeta(style).get_meta()
-    if style.recipes_count > 100:
+    if style.recipes_count is not None and style.recipes_count > 100:
         meta.image = reverse(
             "style_chart",
             kwargs=dict(

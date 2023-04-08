@@ -56,7 +56,7 @@ def type_overview(request: HttpRequest, type_id: str) -> HttpResponse:
 def detail(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
     yeast = get_object_or_404(Yeast, pk=slug)
 
-    if yeast.recipes_count <= 0:
+    if yeast.recipes_count is None or yeast.recipes_count <= 0:
         raise Http404("Yeast doesn't have any data.")
 
     if type_id != yeast.type or slug != yeast.id:
@@ -64,7 +64,7 @@ def detail(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
 
     meta_provider = YeastMeta(yeast)
     meta = meta_provider.get_meta()
-    if yeast.recipes_count > 100:
+    if yeast.recipes_count is not None and yeast.recipes_count > 100:
         meta.image = reverse(
             "yeast_chart",
             kwargs=dict(
@@ -83,7 +83,7 @@ def detail(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
 def chart(request: HttpRequest, slug: str, type_id: str, chart_type: str, format: str) -> HttpResponse:
     yeast = get_object_or_404(Yeast, pk=slug)
 
-    if yeast.recipes_count <= 0:
+    if yeast.recipes_count is None or yeast.recipes_count <= 0:
         raise Http404("Yeast doesn't have any data.")
 
     if type_id != yeast.type:
@@ -104,7 +104,7 @@ def chart(request: HttpRequest, slug: str, type_id: str, chart_type: str, format
 def recipes(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
     yeast = get_object_or_404(Yeast, pk=slug)
 
-    if yeast.recipes_count <= 0:
+    if yeast.recipes_count is None or yeast.recipes_count <= 0:
         raise Http404("Yeast doesn't have any data.")
 
     if type_id != yeast.type:
