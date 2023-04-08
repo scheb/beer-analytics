@@ -391,6 +391,7 @@ class Hop(models.Model):
 
     COUNTRIES = (
         ("AUS", "Australia"),
+        ("ARG", "Argentina"),
         ("BEL", "Belgium"),
         ("CAN", "Canada"),
         ("CZH", "Czech Republic"),
@@ -402,6 +403,7 @@ class Hop(models.Model):
         ("POL", "Poland"),
         ("SER", "Serbia"),
         ("SLO", "Slovenia"),
+        ("SWE", "Sweden"),
         ("USA", "United States"),
         ("ZAF", "South Africa"),
     )
