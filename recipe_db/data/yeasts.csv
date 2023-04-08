@@ -185,7 +185,7 @@ Safcider;;;Fermentis;;;;;;wine-cider;dry;high;;high;75;10;27
 SafSpirit HG-1;;;Fermentis;;SafSpirit;Saf Spirit;HG-1;;ale;dry;high;;low;80;25;35
 SafSpirit USW-6;;;Fermentis;;SafSpirit;Saf Spirit;USW-6;;ale;liquid;high;;medium;80;20;32
 SafAle HA-18;;;Fermentis;;Safale;Saf Ale;HA-18;;ale;dry;high;;medium;97;25;35
-American Ale;;;Fermentis;;Safale;Saf Ale;US-05;;ale;dry;low;;medium;81;12;25
+American Ale;;Safale American;Fermentis;;Safale;Saf Ale;US-05;;ale;dry;low;;medium;81;12;25
 American Ale;;;Fermentis;;Safale;Saf Ale;US-56;;ale;dry;medium;;medium;72;15;24
 Belgian Saison Ale;;;Fermentis;;Safale;Saf Ale;BE-134;;ale;dry;;;low;90;18;28
 English Ale;;;Fermentis;;Safale;Saf Ale;S-04;;ale;dry;;9.75;high;75;12;25
@@ -290,18 +290,18 @@ Session Lager;;;Inland Island Yeast;Inland Island;;;INIS 701;;lager;liquid;mediu
 Northern California Ale;;;Inland Island Yeast;Inland Island;;;INIS-001;;ale;liquid;high;;medium;75;16;22
 Saison Farmhouse;;;Inland Island Yeast;Inland Island;;;INIS-291;;ale;liquid;high;;medium;76.5;21;35
 West Coast;;;Lallemand;Danstar;LalBrew;;BRY-97;;ale;dry;high;;high;75;15;22
-Abbaye Belgian Ale;;Abbaye Ale;Lallemand;Danstar;LalBrew;;;;ale;dry;high;;medium;88;17;25
+Abbaye Belgian Ale;;Abbaye Ale, Abbaye Belgian;Lallemand;Danstar;LalBrew;;;;ale;dry;high;;medium;88;17;25
 Belle Saison;;;Lallemand;Danstar;LalBrew;;;;ale;dry;high;;low;90;15;35
 Diamond Lager;;;Lallemand;Danstar;LalBrew;;;;lager;dry;low;;high;80;10;15
 New England;;;Lallemand;Danstar;LalBrew;;;;ale;dry;medium;;medium;75;15;22
 Cask and Bottle Conditioning;;;Lallemand;Danstar;LalBrew;;CBC-1;;ale;dry;high;;high;65;15;25
-Köln Kölsch Style Ale;;;Lallemand;;LalBrew;;;;ale;dry;medium;;medium;75;15;22
+Köln Kölsch Style Ale;;Lalbrew Köln;Lallemand;;LalBrew;;;;ale;dry;medium;;medium;75;15;22
 London English-Style Ale;London ESB Yeast;;Lallemand;Danstar;LalBrew;;;;ale;dry;high;;low;65;18;22
 Munich Classic Wheat Beer;Munich Dry Wheat Yeast;;Lallemand;Danstar;LalBrew;;;;ale;dry;high;;low;78;18;22
-Nottingham Ale;Nottingham High Performance Ale Yeast;Nottingham;Lallemand;Danstar;LalBrew;;;;ale;dry;medium;;high;80;10;22
+Nottingham Ale;Nottingham High Performance Ale Yeast;Nottingham, Nottingham Yeast;Lallemand;Danstar;LalBrew;;;;ale;dry;medium;;high;80;10;22
 Voss Kveik Ale;;;Lallemand;;LalBrew;;;;ale;dry;high;;high;80;25;40
 Windsor Ale;Windsor British-Style Beer Yeast;Windsor;Lallemand;Danstar;LalBrew;;;;ale;dry;medium;;low;70;15;22
-Verdant IPA;;;Lallemand;;LalBrew;;;;ale;dry;high;;high;80;18;23
+Verdant IPA;;Verdant;Lallemand;;LalBrew;;;;ale;dry;high;;high;80;18;23
 Lalvin 71B ;;;Lallemand;;Lalvin;;71B;;wine-cider;dry;high;;high;100;15;30
 Lalvin EC-1118;;;Lallemand;;Lalvin;;EC-1118;;wine-cider;dry;high;;high;65;15;25
 Lalvin ICV D47;;;Lallemand;;Lalvin;;;;wine-cider;liquid;high;;medium;95;15;30
@@ -340,13 +340,14 @@ Cider;Craft Series Cider Yeast;;Mangrove Jack's;Mangrove;;;M02;;wine-cider;dry;;
 Empire Ale;;;Mangrove Jack's;Mangrove;;;M15;;ale;dry;;;medium-high;72.5;21;24
 French Saison Ale;;;Mangrove Jack's;Mangrove;;;M29;;ale;dry;;;medium;87.5;26;32
 Kveik;;;Mangrove Jack's;Mangrove;;;M12;;ale;dry;high;;high;80;20;40
-Liberty Bell Ale;;;Mangrove Jack's;Mangrove;;;M36;;ale;dry;;;medium-high;76;17;23
+Liberty Bell Ale;;Liberty Bell;Mangrove Jack's;Mangrove;;;M36;;ale;dry;;;medium-high;76;17;23
 Belgian Wit;;;Mangrove Jack's;Mangrove;;;M27;;ale;liquid;high;;medium;95;26;32
 Mead;;;Mangrove Jack's;Mangrove;;;M05;;wine-cider;dry;;;medium-high;97.5;15;30
 New World Strong Ale;;;Mangrove Jack's;Mangrove;;;M42;;ale;dry;;;high;79.5;16;22
 UK Dark Ale;Newcastle Dark Ale Yeast;;Mangrove Jack's;Mangrove;;;M03;;ale;dry;;;medium;73;18;22
 US West Coast;;;Mangrove Jack's;Mangrove;;;M44;;ale;dry;;;high;78;15;23
 Workhorse Beer;;;Mangrove Jack's;Mangrove;;;M10;;ale;dry;;;medium;78;15;20
+Hophead Ale;;;Mangrove Jack's;Mangrove;;;M66;;ale;dry;;10;high;78;18;22
 Gervin Ale ;;;Muntons;;;;GV-12;;ale;dry;low;;low;70;16;22
 Abbey Ale C;;;Omega Yeast Labs;Omega;;;OYL-018;;ale;liquid;;12;medium-low;76;20;26
 All the Bretts;;;Omega Yeast Labs;Omega;;;OYL-218;;brett-bacteria;liquid;;11;low;48;20;29
@@ -415,6 +416,7 @@ Pilsner I;;;Omega Yeast Labs;Omega;;;OYL-101;;lager;liquid;;9;medium-high;74;9;1
 Pilsner II;;;Omega Yeast Labs;Omega;;;OYL-108;;lager;liquid;;9;medium-high;72;10;14
 Saisonstein’s Monster;;;Omega Yeast Labs;Omega;;;OYL-500;;ale;liquid;high;;low;80;18;26
 Scottish Ale;;;Omega Yeast Labs;Omega;;;OYL-015;;ale;liquid;;10;medium;75;18;21
+Sundew Ale;;;Omega Yeast Labs;Omega;;;OYL-401;;ale;liquid;;12;high ;78;18;26
 Swiss Lager;;;Omega Yeast Labs;Omega;;;OYL-112;;lager;liquid;low;;medium;75;10;13
 Tropical IPA;;;Omega Yeast Labs;Omega;;;OYL-200;;ale;liquid;;10;low;92.5;24;29
 Voss Kveik;;;Omega Yeast Labs;Omega;;;OYL-061;;ale;liquid;;12;medium;79;20;37
