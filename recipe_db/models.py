@@ -390,17 +390,21 @@ class Hop(models.Model):
     DUAL_PURPOSE = "dual-purpose"
 
     COUNTRIES = (
-        ("AUS", "Australia"),
         ("ARG", "Argentina"),
+        ("AUS", "Australia"),
+        ("AUT", "Austria"),
         ("BEL", "Belgium"),
         ("CAN", "Canada"),
+        ("CHN", "China"),
         ("CZH", "Czech Republic"),
+        ("DNK", "Denmark"),
         ("FRA", "France"),
         ("GBR", "Great Britain"),
         ("GER", "Germany"),
         ("JPN", "Japan"),
         ("NZL", "New Zealand"),
         ("POL", "Poland"),
+        ("RUS", "Russia"),
         ("SER", "Serbia"),
         ("SLO", "Slovenia"),
         ("SWE", "Sweden"),
