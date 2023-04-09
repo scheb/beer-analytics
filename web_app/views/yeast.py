@@ -2,6 +2,7 @@ from typing import Tuple
 
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
+from django.template import loader, TemplateDoesNotExist
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
 
@@ -75,7 +76,13 @@ def detail(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
             ),
         )
 
-    context = {"yeast": yeast, "description": meta_provider.get_description_html(), "meta": meta}
+    long_description_template = "yeast/descriptions/%s.html" % yeast.id
+    try:
+        loader.get_template(long_description_template)
+    except TemplateDoesNotExist:
+        long_description_template = None
+
+    context = {"yeast": yeast, "description": meta_provider.get_description_html(), "long_description": long_description_template, "meta": meta}
 
     return render(request, "yeast/detail.html", context)
 

@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
+from django.template import loader, TemplateDoesNotExist
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
 
@@ -93,7 +94,13 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
             ),
         )
 
-    context = {"hop": hop, "description": meta_provider.get_description_html(), "meta": meta}
+    long_description_template = "hop/descriptions/%s.html" % hop.id
+    try:
+        loader.get_template(long_description_template)
+    except TemplateDoesNotExist:
+        long_description_template = None
+
+    context = {"hop": hop, "description": meta_provider.get_description_html(), "long_description": long_description_template, "meta": meta}
 
     return render(request, "hop/detail.html", context)
 

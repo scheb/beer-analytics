@@ -43,6 +43,12 @@
         </dl>
 
         {% if description %}<p>{{ description|safe }}</p>{% endif %}
+
+        {% if long_description %}
+            <div class="detail-long-description">
+                {% include long_description %}
+            </div>
+        {% endif %}
     </div>
 
     {% with chart_type="popularity" anchor="popularity" %}

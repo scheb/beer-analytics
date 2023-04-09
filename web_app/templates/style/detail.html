@@ -17,6 +17,12 @@
             {% endif %}
         </dl>
 
+        {% if long_description %}
+            <div class="detail-long-description">
+                {% include long_description %}
+            </div>
+        {% endif %}
+
         {% if style.is_category %}
             <p>This is a <strong>beer style category</strong>, containing the following beer styles:</p>
         {% elif style.has_sub_styles %}
