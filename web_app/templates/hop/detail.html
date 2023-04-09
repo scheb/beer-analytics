@@ -23,8 +23,6 @@
             {% endif %}
         </dl>
 
-        {% if description %}<p>{{ description|safe }}</p>{% endif %}
-
         {% if hop.accessible_substitutes.count %}{% spaceless %}
         <p class="badge-list"><label>Substitutes:</label>
             {% for substitute in hop.accessible_substitutes %}<a href="{{ substitute|url }}" class="badge">{{ substitute.name }}</a>{% endfor %}
@@ -41,6 +39,8 @@
             {% endfor %}
         </p>
         {% endspaceless %}{% endif %}
+
+        {% if description %}<p>{{ description|safe }}</p>{% endif %}
 
         {% if long_description %}
             <div class="detail-long-description">
