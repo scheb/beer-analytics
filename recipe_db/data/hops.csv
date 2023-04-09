@@ -99,7 +99,7 @@ Enigma;bittering;AUS;Hallertauer Blanc, Nelson Sauvin;Berry, Currant, Raspberry,
 Epic;aroma;GBR;;Berry, Fruity, Herbal;;
 Ernest;aroma;GBR;Fuggle;Grassy, Herbal, Stone Fruit, Apricot, Citrus, Spicy;;
 Eroica;bittering;USA;Brewer's Gold, Chinook, Cluster, Galena, Nugget;;;
-Eureka;dual-purpose;USA;Apollo, Columbus, Merkur, Simcoe, Summit;Citrus, Currant, Herbal, Mandarin, Mint, Peach, Pine, Stone Fruit;;
+Eureka;dual-purpose;USA;Apollo, Columbus, Merkur, Simcoe, Summit;Citrus, Currant, Herbal, Mandarin, Mint, Peach, Pine, Stone Fruit;Experimental Pine Fruit, EXP;
 Evergreen;aroma;USA;;Peach, Apricot, Lemon, Green Tea, Watermelon, Tangerine, Cannabis, Candy;;
 Falconer's Flight 7 C's;dual-purpose;USA;Cascade, Centennial, Chinook, Citra, Cluster, Columbus, Crystal;Citrus, Earthy, Fruity, Spicy;;Falconer's Flight, Falconer Flight, Falcon Flight, Falcones Flight, Seven C's, 7 C's, 7C's
 Fantasia;dual-purpose;GER;;Caramel, Cream, Fruity, Noble;;
@@ -152,7 +152,6 @@ Hersbrucker Red-Stem;aroma;GER;;;;
 Hersbrucker Spät;aroma;GER;Hallertauer Mittelfrüh, Strisselspalt;Noble, Vanilla;;
 Hokitika;aroma;NZL;;Honey, Floral, Spicy, Nectar ;;
 Horizon;dual-purpose;USA;Magnum, Nugget;Citrus, Floral, Spicy;;
-Hort 4337;dual-purpose;NZL;;Citrus, Grapefruit, Passion Fruit, Peach, Pineapple, Tropical Fruits;;
 HORT9909;dual-purpose;NZL;;Citrus, Crisp, Hay, Lemon, Lime, Noble, Spicy, Sweet;;Trial Hop 9909
 HPA-016;aroma;AUS;;Citrus, Fruity, Mandarin, Pine;;
 Hüll Melon;aroma;GER;Belma, Jarrylo;Fruity, Melon, Strawberry, Peach, Tea, Creamy, Yogurt, Herbal, Spicy, Floral, Lemon, Aniseed, Lavender, Geranium;;Hüll Mellon, Melon Hüll, Hüllmelon, Huel Melon
@@ -209,11 +208,11 @@ Mosaic;dual-purpose;USA;Citra, Simcoe;Blueberry, Bubblegum, Citrus, Earthy, Flor
 Motueka;aroma;NZL;Saaz, Sterling;Citrus, Floral, Lemon, Lime, Mojito, Tropical Fruits;;Mouteka
 Mount Hood;aroma;USA;Crystal, Hallertauer Mittelfrüh, Hersbrucker, Liberty;Herbal, Noble, Spicy, Floral, Pungent;;MT Hood
 Mount Rainier;aroma;USA;Fuggle, Hallertauer Mittelfrüh;Citrus, Floral, Licorice, Noble, Spicy;;MT Rainier, Mount Ranier
-Moutere;dual-purpose;NZL;;Earthy, Grapefruit, Hay, Passion Fruit, Pine, Tropical Fruits;Brooklyn;Mortere
+Moutere;dual-purpose;NZL;;Earthy, Grapefruit, Hay, Passion Fruit, Pine, Tropical Fruits;Brooklyn, HORT 0605;Mortere
 MultiHead;dual-purpose;USA;;;;
 Mystic;aroma;GBR;;;;Mystique
 Nadwislanska;aroma;POL;;;;
-Nectaron;dual-purpose;NZL;Citra, Mosaic, Waimea;Citrus, Grapefruit, Passion Fruit, Peach, Pineapple, Tropical Fruits;;Nectron
+Nectaron;dual-purpose;NZL;Citra, Mosaic, Waimea;Citrus, Grapefruit, Passion Fruit, Peach, Pineapple, Tropical Fruits;HORT 4337;Nectron
 Nelson Sauvin;dual-purpose;NZL;Enigma, Hallertauer Blanc, Motueka, Riwaka;Fruity, Gooseberry, Grape, Whitewine, Passionfruit;;Nelson, Nels, Nel, Neslson Sauvin
 Neo1;dual-purpose;USA;;;;Neo 1
 Neoplanta;dual-purpose;SLO;;;;
