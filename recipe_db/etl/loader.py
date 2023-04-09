@@ -18,6 +18,10 @@ class RecipeLoader:
     @transaction.atomic
     def import_recipe(self, uid: str, result: ParserResult) -> None:
         result.recipe.uid = uid
+        (source, source_id) = uid.split(":")
+        result.recipe.source = source
+        result.recipe.source_id = source_id
+
         self.set_amount_percent(result.fermentables)
         self.set_amount_percent(result.hops)
 

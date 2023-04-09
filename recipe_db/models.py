@@ -709,6 +709,8 @@ class Recipe(models.Model):
 
     # Identifiers
     uid = models.CharField(max_length=32, primary_key=True)
+    source = models.CharField(max_length=32)
+    source_id = models.CharField(max_length=32)
     name = models.CharField(max_length=255, default=None, blank=True, null=True)
     author = models.CharField(max_length=255, default=None, blank=True, null=True)
     created = models.DateField(
@@ -831,8 +833,9 @@ class RecipeFermentable(models.Model):
     )
 
     def set_extra(self, key: str, value: Optional[str]) -> None:
-        if value is not None:
-            self._extras.append((key, value))
+        # if value is not None:
+        #     self._extras.append((key, value))
+        pass
 
     def save(self, *args, **kwargs) -> None:
         self.derive_missing_values("color_lovibond", "color_ebc", lovibond_to_ebc)
@@ -955,8 +958,9 @@ class RecipeHop(models.Model):
     time = models.IntegerField(default=None, blank=True, null=True, validators=[MinValueValidator(0)])
 
     def set_extra(self, key: str, value: Optional[str]) -> None:
-        if value is not None:
-            self._extras.append((key, value))
+        # if value is not None:
+        #     self._extras.append((key, value))
+        pass
 
     def save(self, *args, **kwargs) -> None:
         super().save(*args, **kwargs)
