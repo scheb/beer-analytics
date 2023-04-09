@@ -60,10 +60,6 @@ dl.detail-info {
         background: $secondary;
         white-space: nowrap;
 
-        @include media-breakpoint-down('sm') {
-            width: 100%;
-        }
-
         @include media-breakpoint-down('md') {
             // More space to make links easier to click on mobile
             margin-bottom: 0.3rem;
