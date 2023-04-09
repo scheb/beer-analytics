@@ -1,5 +1,5 @@
 import json
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render
@@ -7,9 +7,9 @@ from django.urls import reverse
 from django.views.decorators.cache import cache_page
 
 from recipe_db.analytics.recipe import RecipesCountAnalysis
-from recipe_db.analytics.scope import RecipeScope
+from recipe_db.analytics.scope import RecipeScope, HopScope
 from recipe_db.etl.format.parser import int_or_none
-from recipe_db.models import Style
+from recipe_db.models import Style, Hop
 from web_app.charts.analyze import AnalyzeChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.meta import PageMeta
@@ -49,6 +49,8 @@ def get_scope(request: HttpRequest) -> RecipeScope:
     # Update values in data.ts when limits are changed
     if "styles" in request.GET:
         scope.styles = get_styles(str(request.GET["styles"]))
+    if "hops" in request.GET:
+        scope.hop_scope = get_hop_scope(str(request.GET["hops"]))
     if "ibu" in request.GET:
         (scope.ibu_min, scope.ibu_max) = get_min_max(str(request.GET["ibu"]), 0, 301)
     if "abv" in request.GET:
@@ -64,6 +66,18 @@ def get_scope(request: HttpRequest) -> RecipeScope:
 def get_styles(value: str) -> List[Style]:
     style_ids = list(map(str.strip, value.split(",")))
     return Style.objects.filter(id__in=style_ids)
+
+
+def get_hop_scope(value: str) -> Optional[HopScope]:
+    hops_ids = list(map(str.strip, value.split(",")))
+    hops = Hop.objects.filter(id__in=hops_ids)
+
+    if hops.count() > 0:
+        hop_scope = HopScope()
+        hop_scope.hops = hops
+        return hop_scope
+
+    return None
 
 
 def get_min_max(value: str, min_limit: int, max_limit: int, factor: float = 1) -> Tuple:

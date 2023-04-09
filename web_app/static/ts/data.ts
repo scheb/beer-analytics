@@ -4,6 +4,11 @@ interface Style {
     parent: string
 }
 
+interface Hop {
+    id: string
+    name: string
+}
+
 export const STYLES: Style[] = [
     {id: "01A", name: "American Light Lager", parent: "Standard American Beer"},
     {id: "01B", name: "American Lager", parent: "Standard American Beer"},
@@ -125,6 +130,14 @@ export const STYLES: Style[] = [
     {id: "34A", name: "Clone Beer", parent: "Specialty Beer"},
     {id: "34B", name: "Mixed-Style Beer", parent: "Specialty Beer"},
     {id: "34C", name: "Experimental Beer", parent: "Specialty Beer"},
+]
+
+export const HOPS: Hop[] = [
+    {id: "cascade", name: "Cascade"},
+    {id: "chinook", name: "Chinook"},
+    {id: "citra", name: "Citra"},
+    {id: "herkules", name: "Herkules"},
+    {id: "magnum", name: "Magnum"},
 ]
 
 // Update values in analyze.py when limits are changed
