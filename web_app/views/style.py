@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
+from django.template import loader, TemplateDoesNotExist
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
 
@@ -54,7 +55,13 @@ def display_style(request: HttpRequest, style: Style) -> HttpResponse:
             ),
         )
 
-    context = {"style": style, "meta": meta}
+    long_description_template = "style/descriptions/%s.html" % style.id
+    try:
+        loader.get_template(long_description_template)
+    except TemplateDoesNotExist:
+        long_description_template = None
+
+    context = {"style": style, "meta": meta, "long_description": long_description_template}
     return render(request, "style/detail.html", context)
 
 

@@ -32,7 +32,7 @@
         {% endspaceless %}{% endif %}
 
         {% if hop.aroma_tags.count %}{% spaceless %}
-        <p class="badge-list"><label>Aromas:</label>
+        <p class="badge-list"><label>Flavor:</label>
             {% for tag in hop.aroma_tags.all %}
                 <a href="{% url "hop_category" tag.id %}" class="badge bg-primary">
                     {{ tag.name }}
@@ -41,6 +41,12 @@
             {% endfor %}
         </p>
         {% endspaceless %}{% endif %}
+
+        {% if long_description %}
+            <div class="detail-long-description">
+                {% include long_description %}
+            </div>
+        {% endif %}
     </div>
 
     {% include './metrics.html' %}
