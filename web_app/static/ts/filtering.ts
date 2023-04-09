@@ -7,7 +7,7 @@ import {
 } from "@syncfusion/ej2-dropdowns";
 import {Query} from '@syncfusion/ej2-data';
 import {delay, groupBy, intersect, queryParamsToObject} from "./utils";
-import {ABV_RANGE, ChartDefinition, CHARTS, IBU_RANGE, OG_RANGE, SRM_RANGE, STYLES} from "./data";
+import {ABV_RANGE, ChartDefinition, CHARTS, HOPS, IBU_RANGE, OG_RANGE, SRM_RANGE, STYLES} from "./data";
 import {getRequest, RequestResult} from "./request";
 import {Chart, ChartConfig} from "./results";
 
@@ -139,6 +139,7 @@ class MultiSelectValue {
 
 class FilterState  {
     public readonly style: MultiSelectValue
+    public readonly hop: MultiSelectValue
     public readonly ibu: MinMaxValue
     public readonly abv: MinMaxValue
     public readonly srm: MinMaxValue
@@ -146,6 +147,7 @@ class FilterState  {
 
     constructor(onChange: Function) {
         this.style = new MultiSelectValue(STYLES.map((s) => s.id), onChange)
+        this.hop = new MultiSelectValue(HOPS.map((s) => s.id), onChange)
         this.ibu = new MinMaxValue(IBU_RANGE[0], IBU_RANGE[1], 1, onChange)
         this.abv = new MinMaxValue(ABV_RANGE[0], ABV_RANGE[1], 1, onChange)
         this.srm = new MinMaxValue(SRM_RANGE[0], SRM_RANGE[1], 1, onChange)
@@ -154,6 +156,7 @@ class FilterState  {
 
     public loadState(queryValues: URLSearchParams): void {
         this.style.setFromQueryValue(queryValues.get('styles'))
+        this.hop.setFromQueryValue(queryValues.get('hops'))
         this.ibu.setFromQueryValue(queryValues.get('ibu'))
         this.abv.setFromQueryValue(queryValues.get('abv'))
         this.srm.setFromQueryValue(queryValues.get('srm'))
@@ -162,6 +165,7 @@ class FilterState  {
 
     public toQuery(queryValues: URLSearchParams): void {
         queryValues.set('styles', this.style.toQueryValue())
+        queryValues.set('hops', this.hop.toQueryValue())
         queryValues.set('ibu', this.ibu.toQueryValue())
         queryValues.set('abv', this.abv.toQueryValue())
         queryValues.set('srm', this.srm.toQueryValue())
@@ -289,6 +293,7 @@ class AnalyzerFilterUi {
     private state: AnalyzerState
 
     private styleSelect: StyleSelectUi
+    private hopSelect: HopSelectUi
     private ibuSlider: SliderUi
     private abvSlider: SliderUi
     private srmSlider: SliderUi
@@ -297,6 +302,7 @@ class AnalyzerFilterUi {
     constructor(state: AnalyzerState) {
         this.state = state
         this.styleSelect = new StyleSelectUi('styles', this.state.filters.style)
+        this.hopSelect = new HopSelectUi('hops', this.state.filters.hop)
         this.ibuSlider = new SliderUi('ibu', this.state.filters.ibu)
         this.abvSlider = new SliderUi('abv', this.state.filters.abv)
         this.srmSlider = new SliderUi('srm', this.state.filters.srm)
@@ -380,6 +386,46 @@ class StyleSelectUi {
                 e.updateData(STYLES, query)
             },
         })
+        select.appendTo(container)
+        select.addEventListener('change', this.onChange.bind(this))
+    }
+
+    private onChange(evt: MultiSelectChangeEventArgs) {
+        if (evt.value instanceof Array) {
+            // @ts-ignore
+            this.state.setSelection(evt.value)
+        }
+    }
+}
+
+
+class HopSelectUi {
+    private state: MultiSelectValue
+
+    constructor(name: string, state: MultiSelectValue) {
+        this.state = state
+
+        const container: Element = document.querySelector('[data-select="'+name+'"]')
+        if (!(container instanceof HTMLElement)) {
+            return
+        }
+
+        const select: MultiSelect = new MultiSelect({
+            // @ts-ignore
+            dataSource: HOPS,
+            value: this.state.selected,
+            fields: { text: 'name', value: 'id' },
+            placeholder: 'Filter used hops',
+            allowFiltering: true,
+            filterBarPlaceholder: 'Search hops',
+            filtering: function (e: FilteringEventArgs): void {
+                let query = new Query()
+                query = (e.text != "") ? query.where("name", "contains", e.text, true) : query
+                //pass the filter data source, filter query to updateData method.
+                // @ts-ignore
+                e.updateData(HOPS, query)
+            },
+        });
         select.appendTo(container)
         select.addEventListener('change', this.onChange.bind(this))
     }
