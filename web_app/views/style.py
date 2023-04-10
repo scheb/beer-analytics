@@ -32,11 +32,11 @@ def category(request: HttpRequest, category_slug: str) -> HttpResponse:
 
 
 def detail(request: HttpRequest, slug: str, category_slug: str) -> HttpResponse:
-    style = get_object_or_404(Style, slug=slug)
+    style = get_object_or_404(Style, slug=slug.lower())
 
     if style.is_category:
         return redirect("style_category", category_slug=style.category.slug)
-    if category_slug != style.category.slug:
+    if category_slug != style.category.slug or slug != style.slug:
         return redirect("style_detail", category_slug=style.category.slug, slug=style.slug)
 
     return display_style(request, style)
@@ -66,7 +66,7 @@ def display_style(request: HttpRequest, style: Style) -> HttpResponse:
 
 
 def category_chart(request: HttpRequest, category_slug: str, chart_type: str, format: str) -> HttpResponse:
-    style = get_object_or_404(Style, slug=category_slug)
+    style = get_object_or_404(Style, slug=category_slug.lower())
 
     if not style.is_category:
         return redirect(
@@ -77,11 +77,11 @@ def category_chart(request: HttpRequest, category_slug: str, chart_type: str, fo
 
 
 def chart(request: HttpRequest, slug: str, category_slug: str, chart_type: str, format: str) -> HttpResponse:
-    style = get_object_or_404(Style, slug=slug)
+    style = get_object_or_404(Style, slug=slug.lower())
 
     if style.is_category:
         return redirect("style_category_chart", category_slug=style.category.slug, chart_type=chart_type, format=format)
-    if category_slug != style.category.slug:
+    if category_slug != style.category.slug or slug != style.slug:
         return redirect(
             "style_chart", category_slug=style.category.slug, slug=style.slug, chart_type=chart_type, format=format
         )
@@ -91,7 +91,7 @@ def chart(request: HttpRequest, slug: str, category_slug: str, chart_type: str, 
 
 @cache_page(0)
 def category_recipes(request: HttpRequest, category_slug: str) -> HttpResponse:
-    style = get_object_or_404(Style, slug=category_slug)
+    style = get_object_or_404(Style, slug=category_slug.lower())
 
     if not style.is_category:
         return redirect("style_category_recipes", category_slug=style.category.slug)
@@ -102,7 +102,7 @@ def category_recipes(request: HttpRequest, category_slug: str) -> HttpResponse:
 
 @cache_page(0)
 def recipes(request: HttpRequest, slug: str, category_slug: str) -> HttpResponse:
-    style = get_object_or_404(Style, slug=slug)
+    style = get_object_or_404(Style, slug=slug.lower())
 
     if style.is_category:
         return redirect("style_category_recipes", category_slug=style.category.slug)

@@ -55,13 +55,13 @@ def type_overview(request: HttpRequest, type_id: str) -> HttpResponse:
 
 
 def detail(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
-    yeast = get_object_or_404(Yeast, pk=slug)
+    yeast = get_object_or_404(Yeast, pk=slug.lower())
 
     if yeast.recipes_count is None or yeast.recipes_count <= 0:
         raise Http404("Yeast doesn't have any data.")
 
     if type_id != yeast.type or slug != yeast.id:
-        return redirect("yeast_detail", type=yeast.type, slug=yeast.id)
+        return redirect("yeast_detail", type_id=yeast.type, slug=yeast.id)
 
     meta_provider = YeastMeta(yeast)
     meta = meta_provider.get_meta()
@@ -88,12 +88,12 @@ def detail(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
 
 
 def chart(request: HttpRequest, slug: str, type_id: str, chart_type: str, format: str) -> HttpResponse:
-    yeast = get_object_or_404(Yeast, pk=slug)
+    yeast = get_object_or_404(Yeast, pk=slug.lower())
 
     if yeast.recipes_count is None or yeast.recipes_count <= 0:
         raise Http404("Yeast doesn't have any data.")
 
-    if type_id != yeast.type:
+    if type_id != yeast.type or slug != yeast.id:
         return redirect("yeast_chart", type_id=yeast.type, slug=yeast.id, chart_type=chart_type, format=format)
 
     if YeastChartFactory.is_supported_chart(chart_type):
@@ -109,12 +109,12 @@ def chart(request: HttpRequest, slug: str, type_id: str, chart_type: str, format
 
 @cache_page(0)
 def recipes(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
-    yeast = get_object_or_404(Yeast, pk=slug)
+    yeast = get_object_or_404(Yeast, pk=slug.lower())
 
     if yeast.recipes_count is None or yeast.recipes_count <= 0:
         raise Http404("Yeast doesn't have any data.")
 
-    if type_id != yeast.type:
+    if type_id != yeast.type or slug != yeast.id:
         return redirect("yeast_recipes", type_id=yeast.type, slug=yeast.id)
 
     recipes_list = YeastAnalysis(yeast).random_recipes(24)

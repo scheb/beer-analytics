@@ -59,7 +59,7 @@ def category(request: HttpRequest, category_id: str) -> HttpResponse:
 
 def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
     try:
-        fermentable = get_object_or_404(Fermentable, pk=slug)
+        fermentable = get_object_or_404(Fermentable, pk=slug.lower())
     except Http404 as err:
         # Gracefully redirect when the "-malt" suffix is missing
         if not slug.endswith("-malt"):
@@ -92,12 +92,12 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
 
 
 def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, format: str) -> HttpResponse:
-    fermentable = get_object_or_404(Fermentable, pk=slug)
+    fermentable = get_object_or_404(Fermentable, pk=slug.lower())
 
     if fermentable.recipes_count is None or fermentable.recipes_count <= 0:
         raise Http404("Fermentable doesn't have any data.")
 
-    if category_id != fermentable.category:
+    if category_id != fermentable.category or slug != fermentable.id:
         return redirect(
             "fermentable_chart",
             category_id=fermentable.category,
@@ -119,12 +119,12 @@ def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, fo
 
 @cache_page(0)
 def recipes(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
-    fermentable = get_object_or_404(Fermentable, pk=slug)
+    fermentable = get_object_or_404(Fermentable, pk=slug.lower())
 
     if fermentable.recipes_count is None or fermentable.recipes_count <= 0:
         raise Http404("Fermentable doesn't have any data.")
 
-    if category_id != fermentable.category:
+    if category_id != fermentable.category or slug != fermentable.id:
         return redirect("fermentable_recipes", category_id=fermentable.category, slug=fermentable.id)
 
     recipes_list = FermentableAnalysis(fermentable).random_recipes(24)

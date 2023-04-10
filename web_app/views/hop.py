@@ -73,12 +73,12 @@ def tag(request: HttpRequest, tag_obj: Tag) -> HttpResponse:
 
 
 def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
-    hop = get_object_or_404(Hop, pk=slug)
+    hop = get_object_or_404(Hop, pk=slug.lower())
 
     if hop.recipes_count is None or hop.recipes_count <= 0:
         raise Http404("Hop doesn't have any data.")
 
-    if category_id != hop.category:
+    if category_id != hop.category or slug != hop.id:
         return redirect("hop_detail", category_id=hop.category, slug=hop.id)
 
     meta_provider = HopMeta(hop)
@@ -106,12 +106,12 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
 
 
 def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, format: str) -> HttpResponse:
-    hop = get_object_or_404(Hop, pk=slug)
+    hop = get_object_or_404(Hop, pk=slug.lower())
 
     if hop.recipes_count is None or hop.recipes_count <= 0:
         raise Http404("Hop doesn't have any data.")
 
-    if category_id != hop.category:
+    if category_id != hop.category or slug != hop.id:
         return redirect("hop_chart", category_id=hop.category, slug=hop.id, chart_type=chart_type, format=format)
 
     if HopChartFactory.is_supported_chart(chart_type):
@@ -127,12 +127,12 @@ def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, fo
 
 @cache_page(0)
 def recipes(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
-    hop = get_object_or_404(Hop, pk=slug)
+    hop = get_object_or_404(Hop, pk=slug.lower())
 
     if hop.recipes_count is None or hop.recipes_count <= 0:
         raise Http404("Hop doesn't have any data.")
 
-    if category_id != hop.category:
+    if category_id != hop.category or slug != hop.id:
         return redirect("hop_recipes", category_id=hop.category, slug=hop.id)
 
     recipes_list = HopAnalysis(hop).random_recipes(24)
