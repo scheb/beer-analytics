@@ -52,7 +52,7 @@ class StyleOverviewMeta(PageMeta):
     def get_meta(self) -> Meta:
         return Meta(
             title=NORMAL_TITLE.format("Beer Styles"),
-            description="Overview of all beer styles to analyze on Beer Analytics.",
+            description="Overview of beer styles to analyze on Beer Analytics.",
             keywords=["styles"],
             url=reverse("style_overview"),
         )
@@ -63,7 +63,7 @@ class StyleMeta(PageMeta):
         self.style = style
 
     def get_title(self):
-        return DETAIL_PAGE_TITLE.format(self.style.name, "Beer Styles")
+        return NORMAL_TITLE.format("%s Beer Style" % self.style.name)
 
     def get_description(self) -> str:
         return "Data analysis how {} beers are brewed. ".format(self.style.name)
@@ -86,7 +86,7 @@ class HopOverviewMeta(PageMeta):
             self.category_name += " "  # Add extra space for title/description
 
     def get_title(self):
-        return NORMAL_TITLE.format(self.category_name + "Hops Overview")
+        return NORMAL_TITLE.format("%s Hops" % self.category_name)
 
     def get_description(self):
         return "Overview of {}hops to analyze on Beer Analytics.".format(self.category_name.lower())
@@ -116,10 +116,10 @@ class HopMeta(PageMeta):
         self.hop = hop
 
     def get_title(self):
-        return DETAIL_PAGE_TITLE.format(self.hop.name, self.hop.category_name + " Hops")
+        return NORMAL_TITLE.format(self.hop.name + " Hops – Pairings, Flavor, Beer Styles", self.hop.category_name + " Hops")
 
     def get_description(self) -> str:
-        return "Data analysis how {} hops are used in beer brewing recipes. ".format(self.hop.name) + html2text(
+        return "Data analysis on {} hops pairings, flavor, and common beer styles from brewing recipes. ".format(self.hop.name) + html2text(
             self.get_description_html(short=True)
         )
 
@@ -185,7 +185,7 @@ class FermentableOverviewMeta(PageMeta):
             self.category_name += " "  # Add extra space for title/description
 
     def get_title(self):
-        return NORMAL_TITLE.format(self.category_name + "Fermentables Overview")
+        return NORMAL_TITLE.format("%s Fermentables" % self.category_name)
 
     def get_description(self):
         return "Overview of {}fermentables to analyze on Beer Analytics.".format(self.category_name.lower())
@@ -209,10 +209,10 @@ class FermentableMeta(PageMeta):
         self.fermentable = fermentable
 
     def get_title(self) -> str:
-        return DETAIL_PAGE_TITLE.format(self.fermentable.name, self.fermentable.category_name + " Fermentables")
+        return NORMAL_TITLE.format("%s – Beer Styles, Amount, Color" % self.fermentable.name)
 
     def get_description(self) -> str:
-        return "Data analysis how {} fermentables are used in beer brewing recipes. ".format(
+        return "Data analysis on {} fermentables amount, color and common beer styles in brewing recipes. ".format(
             self.fermentable.name
         ) + html2text(self.get_description_html(short=True))
 
@@ -263,7 +263,7 @@ class YeastOverviewMeta(PageMeta):
             self.type_name += " "  # Add extra space for title/description
 
     def get_title(self):
-        return NORMAL_TITLE.format(self.type_name + "Yeasts Overview")
+        return NORMAL_TITLE.format("%sYeasts" % self.type_name)
 
     def get_description(self):
         return "Overview of {}yeasts to analyze on Beer Analytics.".format(self.type_name.lower())
@@ -294,10 +294,10 @@ class YeastMeta(PageMeta):
 
     def get_title(self) -> str:
         yeast_name = self.get_yeast_full_name()
-        return DETAIL_PAGE_TITLE.format(yeast_name, (self.yeast.type_name or "") + " Yeast")
+        return NORMAL_TITLE.format("%s Yeast – Beer Styles, Fermentation" % yeast_name)
 
     def get_description(self) -> str:
-        return 'Data analysis how "{}" {} {} yeast is used in beer brewing recipes. '.format(
+        return 'Data analysis on "{}" {} {} yeast is used in beer brewing recipes.'.format(
             self.get_yeast_full_name(),
             (self.yeast.form_name or "").lower(),
             (self.yeast.type_name or "").lower(),
