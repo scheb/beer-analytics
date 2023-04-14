@@ -11,12 +11,14 @@
 
     <h1>{{ category_name }} Hops</h1>
 
-    <p class="badge-list"><label>Most popular:</label>
+    <div class="badge-list">
+        <label>Most popular:</label>
+        <ol>
         {% for hop in most_popular %}
-            {% if forloop.counter0 > 0 %}<span class="d-none">, </span>{% endif %}
-            <a class="badge" href="{{ hop|url }}">{{ hop.name }}</a>
+            <li><a class="badge" href="{{ hop|url }}">{{ hop.name }}</a></li>
         {% endfor %}
-    </p>
+        </ol>
+    </div>
 
     <div class="hops-overview">
         <ul class="column-list">

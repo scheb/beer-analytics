@@ -12,15 +12,17 @@
     <h1>{{ type_name }} Yeasts</h1>
 
     {% if most_popular %}
-        <p class="badge-list"><label>Most popular:</label>
+        <div class="badge-list">
+            <label>Most popular:</label>
+            <ol>
             {% for yeast in most_popular %}
-                {% if forloop.counter0 > 0 %}<span class="d-none">, </span>{% endif %}
-                <a class="badge" href="
+                <li><a class="badge" href="
                     {{ yeast|url }}">{{ yeast.full_name }}
                     {% if yeast.has_extra_product_id %}({{ yeast.product_id }}){% endif %}
-                </a>
+                </a></li>
             {% endfor %}
-        </p>
+            </ol>
+        </div>
     {% endif %}
 
     <div class="yeasts-overview">
