@@ -30,8 +30,7 @@
                         <div class="badge-list search-hide"><label>Most popular:</label>
                             <ol>
                             {% for yeast in type.most_popular %}
-                                <li><a class="badge" href="
-                                    {{ yeast|url }}">{{ yeast.full_name }}
+                                <li><a class="badge" href="{{ yeast|url }}">{{ yeast.full_name }}
                                     {% if yeast.has_extra_product_id %}({{ yeast.product_id }}){% endif %}
                                 </a></li>
                             {% endfor %}
