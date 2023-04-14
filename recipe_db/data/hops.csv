@@ -1,5 +1,6 @@
 name;use;origin;substitutes;aromas;alt_names;alt_names_extra
 Admiral;bittering;GBR;Challenger, Northdown, Target;Citrus, Herbal, Orange, Resin, Tea;;
+Adeena;aroma;USA;Willamette, Hallertauer Mittelfrüh, Styrian Golding;Herbal, Spicy, Floral, Lemon, Pine;ADHA-1940 ;
 African Queen;dual-purpose;ZAF;Amarillo, Cascade, Citra, Mosaic, Simcoe;Blueberry, Bubblegum, Cassis, Chilies, Citrus, Currant, Gazpacho, Gooseberry, Lemongrass, Stone Fruit;South African Queen;Africa Queen, SA Queen, S.A. Queen, South Africa Queen
 Agnus;bittering;CZH;Columbus, Magnum, Nugget, Target;Citrus, Lavender, Leather, Spicy, Tobacco;;
 Ahil;aroma;SLO;;;;
@@ -140,6 +141,7 @@ Hartwick;aroma;USA;;Banana, Caramel, Green Tea, Apricot;;Harwick
 HBC 342;bittering;USA;;Citrus, Mild, Tropical Fruits;;
 HBC 431;bittering;USA;;Herbal, Floral, Fruity ;;
 HBC 472;dual-purpose;USA;;Citrus, Coconut, Earthy, Floral, Fruity, Grapefruit, Whisky, Woody;;
+HBC 522;dual-purpose;USA;Centennial, Citra, Columbus;Floral, Citrus, Orange, Grapefruit, Woody;;
 HBC 586;bittering;USA;;Citrus, Fruity, Guava, Herbal, Lychee, Mango, Sulfur, Tropical Fruits;;
 HBC-630;bittering;USA;;Raspberry, Cherry, Fruity, Candy, Peach, Banana, Stone Fruit;;
 Helga;aroma;AUS;Hallertauer Mittelfrüh;Noble;;
@@ -191,6 +193,7 @@ Magnum;bittering;USA;Columbus, Galena, Hallertauer Taurus, Horizon, Northdown, N
 Malling;dual-purpose;AUT;;Citrus, Apricot, Melon, Pear, Pepper;;
 Mandarina Bavaria;aroma;GER;Cascade, Hüll Melon;Citrus, Herbal, Lemon, Resin, Tangerine, Tropical Fruits;;Bavarian Mandarina, Bavaria Mandarina, Mandarin Bavaria, Mandrina Bavaria, Mandarina Barvaria, Mandarina
 Mapuche;aroma;ARG;;Blueberry, Red Fruits, Peach, Apricot;;
+McKenzie;aroma;USA;;Fruity, Grapefruit, Lemon, Nectarine, Melon, Pine, Resin, Woody, Thyme;;
 Marco Polo;dual-purpose;CHN;Columbus;Elderflower, Gooseberry, Oregano;;
 Marynka;dual-purpose;POL;Tettnanger;Anise, Citrus, Earthy, Grapefruit, Hay, Herbal, Lemon, Licorice;;
 Mathon;aroma;GBR;;;;
