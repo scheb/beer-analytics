@@ -5,9 +5,20 @@ import {
     MultiSelect,
     MultiSelectChangeEventArgs
 } from "@syncfusion/ej2-dropdowns";
-import {Query} from '@syncfusion/ej2-data';
+import {DataManager, UrlAdaptor, Query} from '@syncfusion/ej2-data';
 import {delay, groupBy, intersect, queryParamsToObject} from "./utils";
-import {ABV_RANGE, ChartDefinition, CHARTS, HOPS, IBU_RANGE, OG_RANGE, SRM_RANGE, STYLES} from "./data";
+import {
+    ABV_RANGE,
+    ChartDefinition,
+    Entities,
+    CHARTS,
+    IBU_RANGE,
+    OG_RANGE,
+    SRM_RANGE,
+    Style,
+    Hop,
+    Ingredients
+} from "./data";
 import {getRequest, RequestResult} from "./request";
 import {Chart, ChartConfig} from "./results";
 
@@ -140,14 +151,18 @@ class MultiSelectValue {
 class FilterState  {
     public readonly style: MultiSelectValue
     public readonly hop: MultiSelectValue
+    public readonly fermentable: MultiSelectValue
+    public readonly yeast: MultiSelectValue
     public readonly ibu: MinMaxValue
     public readonly abv: MinMaxValue
     public readonly srm: MinMaxValue
     public readonly og: MinMaxValue
 
-    constructor(onChange: Function) {
-        this.style = new MultiSelectValue(STYLES.map((s) => s.id), onChange)
-        this.hop = new MultiSelectValue(HOPS.map((s) => s.id), onChange)
+    constructor(onChange: Function, entities: Entities) {
+        this.style = new MultiSelectValue(entities.styles.map((s) => s.id), onChange)
+        this.hop = new MultiSelectValue(entities.hops.map((h) => h.id), onChange)
+        this.fermentable = new MultiSelectValue(entities.fermentables.map((f) => f.id), onChange)
+        this.yeast = new MultiSelectValue(entities.yeasts.map((y) => y.id), onChange)
         this.ibu = new MinMaxValue(IBU_RANGE[0], IBU_RANGE[1], 1, onChange)
         this.abv = new MinMaxValue(ABV_RANGE[0], ABV_RANGE[1], 1, onChange)
         this.srm = new MinMaxValue(SRM_RANGE[0], SRM_RANGE[1], 1, onChange)
@@ -157,6 +172,8 @@ class FilterState  {
     public loadState(queryValues: URLSearchParams): void {
         this.style.setFromQueryValue(queryValues.get('styles'))
         this.hop.setFromQueryValue(queryValues.get('hops'))
+        this.fermentable.setFromQueryValue(queryValues.get('fermentables'))
+        this.yeast.setFromQueryValue(queryValues.get('yeasts'))
         this.ibu.setFromQueryValue(queryValues.get('ibu'))
         this.abv.setFromQueryValue(queryValues.get('abv'))
         this.srm.setFromQueryValue(queryValues.get('srm'))
@@ -166,6 +183,8 @@ class FilterState  {
     public toQuery(queryValues: URLSearchParams): void {
         queryValues.set('styles', this.style.toQueryValue())
         queryValues.set('hops', this.hop.toQueryValue())
+        queryValues.set('fermentables', this.fermentable.toQueryValue())
+        queryValues.set('yeasts', this.yeast.toQueryValue())
         queryValues.set('ibu', this.ibu.toQueryValue())
         queryValues.set('abv', this.abv.toQueryValue())
         queryValues.set('srm', this.srm.toQueryValue())
@@ -181,8 +200,8 @@ class AnalyzerState {
     private filtersChangeCallback: Function = function() {}
     private chartsChangeCallback: Function = function() {}
 
-    constructor() {
-        this.filters = new FilterState(this.onFiltersChange.bind(this))
+    constructor(entities: Entities) {
+        this.filters = new FilterState(this.onFiltersChange.bind(this), entities)
         this.charts = new MultiSelectValue(CHARTS.map((chart) => chart.id), this.onChartsChange.bind(this))
     }
 
@@ -221,23 +240,32 @@ class AnalyzerState {
 
 export class Analyzer {
     private readonly analyzerQuery: AnalyzerQuery
-    private readonly analyzerState: AnalyzerState
-    private readonly analyzerFilterUi: AnalyzerFilterUi
+    private analyzerState: AnalyzerState
+    private analyzerFilterUi: AnalyzerFilterUi
     private readonly onInitialize: Function
     private resultUi?: ResultUi = null
+    private entities: Entities;
 
     constructor(onInitialize: Function) {
         this.onInitialize = onInitialize
-
         this.analyzerQuery = new AnalyzerQuery()
-        this.analyzerState = new AnalyzerState()
+        getRequest("/analyze/entities.json", {}, this.handleEntitiesResponse.bind(this))
+    }
+
+    private handleEntitiesResponse(response: RequestResult) {
+        if (response.status !== 200) {
+            return
+        }
+
+        this.entities = response.json<Entities>();
+        this.analyzerState = new AnalyzerState(this.entities)
 
         const loadState = this.analyzerQuery.isAnalyzerPage()
         if (loadState) {
             this.analyzerState.loadState(this.analyzerQuery.getQuery())
         }
 
-        this.analyzerFilterUi = new AnalyzerFilterUi(this.analyzerState)
+        this.analyzerFilterUi = new AnalyzerFilterUi(this.analyzerState, this.entities)
 
         // Load the current state
         if (loadState) {
@@ -293,16 +321,20 @@ class AnalyzerFilterUi {
     private state: AnalyzerState
 
     private styleSelect: StyleSelectUi
-    private hopSelect: HopSelectUi
+    private hopSelect: IngredientSelectUi
+    private fermentableSelect: IngredientSelectUi
+    private yeastSelect: IngredientSelectUi
     private ibuSlider: SliderUi
     private abvSlider: SliderUi
     private srmSlider: SliderUi
     private ogSlider: SliderUi
 
-    constructor(state: AnalyzerState) {
+    constructor(state: AnalyzerState, entities: Entities) {
         this.state = state
-        this.styleSelect = new StyleSelectUi('styles', this.state.filters.style)
-        this.hopSelect = new HopSelectUi('hops', this.state.filters.hop)
+        this.styleSelect = new StyleSelectUi('styles', this.state.filters.style, entities.styles)
+        this.hopSelect = new IngredientSelectUi('hops', this.state.filters.hop, 'hops', entities.hops)
+        this.fermentableSelect = new IngredientSelectUi('fermentables', this.state.filters.fermentable, 'fermentables', entities.fermentables)
+        this.yeastSelect = new IngredientSelectUi('yeasts', this.state.filters.yeast, 'yeasts', entities.yeasts)
         this.ibuSlider = new SliderUi('ibu', this.state.filters.ibu)
         this.abvSlider = new SliderUi('abv', this.state.filters.abv)
         this.srmSlider = new SliderUi('srm', this.state.filters.srm)
@@ -352,6 +384,8 @@ class SliderUi {
     private onChange(evt: SliderChangeEventArgs) {
         if (evt.value instanceof Array) {
             this.state.setMinMax(evt.value[0], evt.value[1])
+        } else {
+            console.log("ignored change event", evt)
         }
     }
 }
@@ -359,7 +393,7 @@ class SliderUi {
 class StyleSelectUi {
     private state: MultiSelectValue
 
-    constructor(name: string, state: MultiSelectValue) {
+    constructor(name: string, state: MultiSelectValue, styles: Style[]) {
         this.state = state
 
         const container: Element = document.querySelector('[data-select="'+name+'"]')
@@ -370,7 +404,7 @@ class StyleSelectUi {
         MultiSelect.Inject(CheckBoxSelection)
         const select: MultiSelect = new MultiSelect({
             // @ts-ignore
-            dataSource: STYLES,
+            dataSource: styles,
             value: this.state.selected,
             fields: { groupBy: 'parent', text: 'name', value: 'id' },
             mode: 'CheckBox',
@@ -383,7 +417,7 @@ class StyleSelectUi {
                 query = (e.text != "") ? query.where("name", "contains", e.text, true) : query
                 //pass the filter data source, filter query to updateData method.
                 // @ts-ignore
-                e.updateData(STYLES, query)
+                e.updateData(styles, query)
             },
         })
         select.appendTo(container)
@@ -399,10 +433,10 @@ class StyleSelectUi {
 }
 
 
-class HopSelectUi {
+class IngredientSelectUi {
     private state: MultiSelectValue
 
-    constructor(name: string, state: MultiSelectValue) {
+    constructor(name: string, state: MultiSelectValue, ingredientName: string, ingredients: Ingredients[]) {
         this.state = state
 
         const container: Element = document.querySelector('[data-select="'+name+'"]')
@@ -412,18 +446,18 @@ class HopSelectUi {
 
         const select: MultiSelect = new MultiSelect({
             // @ts-ignore
-            dataSource: HOPS,
+            dataSource: ingredients,
             value: this.state.selected,
             fields: { text: 'name', value: 'id' },
-            placeholder: 'Filter used hops',
+            placeholder: 'Filter ' + ingredientName,
             allowFiltering: true,
-            filterBarPlaceholder: 'Search hops',
+            filterBarPlaceholder: 'Search ' + ingredientName,
             filtering: function (e: FilteringEventArgs): void {
                 let query = new Query()
                 query = (e.text != "") ? query.where("name", "contains", e.text, true) : query
                 //pass the filter data source, filter query to updateData method.
                 // @ts-ignore
-                e.updateData(HOPS, query)
+                e.updateData(ingredients, query)
             },
         });
         select.appendTo(container)

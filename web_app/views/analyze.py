@@ -1,15 +1,15 @@
 import json
 from typing import List, Tuple, Optional
 
-from django.http import HttpResponse, HttpRequest, Http404
+from django.http import HttpResponse, HttpRequest, Http404, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
 
 from recipe_db.analytics.recipe import RecipesCountAnalysis
-from recipe_db.analytics.scope import RecipeScope, HopScope
+from recipe_db.analytics.scope import RecipeScope, HopScope, FermentableScope, YeastScope
 from recipe_db.etl.format.parser import int_or_none
-from recipe_db.models import Style, Hop
+from recipe_db.models import Style, Hop, Fermentable, Yeast
 from web_app.charts.analyze import AnalyzeChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.meta import PageMeta
@@ -46,11 +46,15 @@ def chart(request: HttpRequest, chart_type: str) -> HttpResponse:
 def get_scope(request: HttpRequest) -> RecipeScope:
     scope = RecipeScope()
 
-    # Update values in data.ts when limits are changed
     if "styles" in request.GET:
         scope.styles = get_styles(str(request.GET["styles"]))
     if "hops" in request.GET:
         scope.hop_scope = get_hop_scope(str(request.GET["hops"]))
+    if "fermentables" in request.GET:
+        scope.fermentable_scope = get_fermentable_scope(str(request.GET["fermentables"]))
+    if "yeasts" in request.GET:
+        scope.yeast_scope = get_yeast_scope(str(request.GET["yeasts"]))
+
     if "ibu" in request.GET:
         (scope.ibu_min, scope.ibu_max) = get_min_max(str(request.GET["ibu"]), 0, 301)
     if "abv" in request.GET:
@@ -80,6 +84,30 @@ def get_hop_scope(value: str) -> Optional[HopScope]:
     return None
 
 
+def get_fermentable_scope(value: str) -> Optional[FermentableScope]:
+    fermentable_ids = list(map(str.strip, value.split(",")))
+    fermentables = Fermentable.objects.filter(id__in=fermentable_ids)
+
+    if fermentables.count() > 0:
+        fermentable_scope = FermentableScope()
+        fermentable_scope.fermentables = fermentables
+        return fermentable_scope
+
+    return None
+
+
+def get_yeast_scope(value: str) -> Optional[YeastScope]:
+    yeasts_ids = list(map(str.strip, value.split(",")))
+    yeasts = Yeast.objects.filter(id__in=yeasts_ids)
+
+    if yeasts.count() > 0:
+        yeast_scope = YeastScope()
+        yeast_scope.yeasts = yeasts
+        return yeast_scope
+
+    return None
+
+
 def get_min_max(value: str, min_limit: int, max_limit: int, factor: float = 1) -> Tuple:
     values = list(map(str.strip, value.split(",")))
     if len(values) < 2:
@@ -94,3 +122,17 @@ def get_min_max(value: str, min_limit: int, max_limit: int, factor: float = 1) -
         max_value = None
 
     return min_value * factor if min_value is not None else None, max_value * factor if max_value is not None else None
+
+
+def get_entities(request: HttpRequest) -> HttpResponse:
+    styles = Style.objects.exclude(parent_style=None).order_by('id')
+    hops = Hop.objects.all().order_by('name')
+    fermentables = Fermentable.objects.all().order_by('name')
+    yeasts = Yeast.objects.all().order_by('name')
+
+    return JsonResponse({
+        "styles": list(map(lambda s: {"id": s.id, "name": s.name, "parent": s.parent_style_name}, styles)),
+        "hops": list(map(lambda h: {"id": h.id, "name": h.name}, hops)),
+        "fermentables": list(map(lambda f: {"id": f.id, "name": f.name}, fermentables)),
+        "yeasts": list(map(lambda y: {"id": y.id, "name": y.full_name}, yeasts)),
+    })

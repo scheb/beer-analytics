@@ -180,6 +180,12 @@ class Style(models.Model):
             s = s.parent_style
 
     @property
+    def parent_style_name(self):
+        if self.parent_style is not None:
+            return self.parent_style.name
+        return None
+
+    @property
     def sub_styles(self) -> iter:
         return self.style_set.order_by("id")
 
