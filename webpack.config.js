@@ -14,8 +14,9 @@ module.exports = {
         chunkFilename: "[id]-[chunkhash].js",
     },
     devServer: {
-        port: 8081,
-        writeToDisk: true,
+        devMiddleware: {
+            writeToDisk: true,
+        }
     },
     plugins: [
         new MiniCssExtractPlugin(),
