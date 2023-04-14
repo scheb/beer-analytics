@@ -25,6 +25,7 @@ urlpatterns = [
     path("sitemap.xml", misc.sitemap, name="sitemap"),
     path("analyze/", analyze.result, name="analyze"),
     path("analyze/count.json", analyze.count, name="analyze_count"),
+    path("analyze/entities.json", analyze.get_entities, name="analyze_entities"),
     path("analyze/charts/<str:chart_type>.json", analyze.chart, name="analyze_chart"),
     path("styles/", style.overview, name="style_overview"),
     path("styles/<str:category_slug>/", style.category, name="style_category"),
