@@ -106,11 +106,13 @@ class MultiSelectValue {
         this._selected = intersect<string>(values, this.allowedValues)
         this._selected = Array.from(new Set(this._selected))  // Unique list
 
+        console.log(oldSelected, this._selected)
+
         // Has it changed?
         if (oldSelected.length !== this._selected.length) {
             // Simple check, did the number of elements change?
             this.onChange()
-        } else if (intersect(oldSelected, this._selected).length === this._selected.length) {
+        } else if (intersect(oldSelected, this._selected).length !== this._selected.length) {
             // More complex check, did the elements change?
             this.onChange()
         }
@@ -384,8 +386,6 @@ class SliderUi {
     private onChange(evt: SliderChangeEventArgs) {
         if (evt.value instanceof Array) {
             this.state.setMinMax(evt.value[0], evt.value[1])
-        } else {
-            console.log("ignored change event", evt)
         }
     }
 }
