@@ -42,8 +42,14 @@ dl.detail-info {
 }
 
 .badge-list {
-    display: flex;
-    flex-wrap: wrap;
+    margin-bottom: 20px;
+
+    ol, ul, li {
+        display: inline;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
 
     label {
         white-space: nowrap;
@@ -53,6 +59,7 @@ dl.detail-info {
     }
 
     .badge {
+        display: inline-block;
         margin: 0.125rem;
         color: $white;
         font-size: inherit;

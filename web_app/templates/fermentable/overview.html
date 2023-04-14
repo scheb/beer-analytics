@@ -25,12 +25,14 @@
                 </h2>
                 <div class="mb-4">
                     {% if category.most_popular %}
-                        <p class="badge-list search-hide"><label>Most popular:</label>
+                        <div class="badge-list search-hide">
+                            <label>Most popular:</label>
+                            <ol>
                             {% for fermentable in category.most_popular %}
-                                {% if forloop.counter0 > 0 %}<span class="d-none">, </span>{% endif %}
-                                <a class="badge" href="{{ fermentable|url }}">{{ fermentable.name }}</a>
+                                <li><a class="badge" href="{{ fermentable|url }}">{{ fermentable.name }}</a></li>
                             {% endfor %}
-                        </p>
+                            </ol>
+                        </div>
                     {% endif %}
 
                     {% if category.fermentables %}
