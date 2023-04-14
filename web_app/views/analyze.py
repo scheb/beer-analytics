@@ -125,10 +125,10 @@ def get_min_max(value: str, min_limit: int, max_limit: int, factor: float = 1) -
 
 
 def get_entities(request: HttpRequest) -> HttpResponse:
-    styles = Style.objects.exclude(parent_style=None).order_by('id')
-    hops = Hop.objects.all().order_by('name')
-    fermentables = Fermentable.objects.all().order_by('name')
-    yeasts = Yeast.objects.all().order_by('name')
+    styles = Style.objects.exclude(parent_style=None).filter(recipes_count__gt=0).order_by('id')
+    hops = Hop.objects.all().filter(recipes_count__gt=0).order_by('name')
+    fermentables = Fermentable.objects.all().filter(recipes_count__gt=0).order_by('name')
+    yeasts = Yeast.objects.all().filter(recipes_count__gt=0).order_by('name')
 
     return JsonResponse({
         "styles": list(map(lambda s: {"id": s.id, "name": s.name, "parent": s.parent_style_name}, styles)),
