@@ -106,8 +106,6 @@ class MultiSelectValue {
         this._selected = intersect<string>(values, this.allowedValues)
         this._selected = Array.from(new Set(this._selected))  // Unique list
 
-        console.log(oldSelected, this._selected)
-
         // Has it changed?
         if (oldSelected.length !== this._selected.length) {
             // Simple check, did the number of elements change?
@@ -597,7 +595,6 @@ class ChartUi {
         const anchor = 'chart-'+this.chartType
         const chartUrl = '/analyze/charts/'+this.chartType+'.json'
         let subtitle = ''
-        console.log(this.chartDefinition.subtitle)
         if (null !== this.chartDefinition.subtitle && undefined !== this.chartDefinition.subtitle) {
             subtitle = `<small class="text-muted">${this.chartDefinition.subtitle}</small>`
         }
