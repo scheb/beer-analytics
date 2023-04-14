@@ -3,6 +3,8 @@
 
 {% block content %}
     {% include './breadcrumb.html' %}
+
+    <article>
     <div class="detail-head">
         <h1>{{ style.name }}{% if style.id|length <= 3 %} <small class="text-muted ms-2" title="BJCP ID">{{ style.id }}</small>{% endif %}</h1>
 
@@ -240,4 +242,5 @@
             </div>
         </section>
     {% endwith %}
+    </article>
 {% endblock %}

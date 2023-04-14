@@ -10,6 +10,7 @@
         </ol>
     </nav>
 
+    <article>
     <div class="detail-head">
         <h1>{{ yeast.full_name }}{% if yeast.has_extra_product_id %} <small class="text-muted">{{ yeast.product_id }}</small>{% endif %}</h1>
         <dl class="detail-info">
@@ -142,6 +143,7 @@
             </div>
         </section>
     {% endwith %}
+    </article>
 {% endblock %}
 
 {% block script %}
