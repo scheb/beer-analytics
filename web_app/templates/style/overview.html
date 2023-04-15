@@ -11,14 +11,16 @@
         and additions.
     </p>
 
-    <div class="badge-list mb-4">
-        <label>Most popular beer styles:</label>
-        <ol>
-        {% for style in most_popular %}
-            <li><a class="badge" href="{{ style|url }}">{{ style.name }}</a></li>
-        {% endfor %}
-        </ol>
-    </div>
+    {% if most_popular %}{% spaceless %}
+        <div class="badge-list mb-4">
+            <label>Most popular beer styles:</label>
+            <ol>
+            {% for style in most_popular %}
+                <li><a class="badge" href="{{ style|url }}">{{ style.name }}</a></li>
+            {% endfor %}
+            </ol>
+        </div>
+    {% endspaceless %}{% endif %}
 
     <form class="search" data-search-target="styles-overview">
         <p>
