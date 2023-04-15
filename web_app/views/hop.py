@@ -41,7 +41,7 @@ def category_or_tag(request: HttpRequest, category_id: str) -> HttpResponse:
 
     try:
         tag_obj = Tag.objects.get(pk=category_id)
-        return tag(request, tag_obj)
+        return flavor_detail(request, tag_obj)
     except Tag.DoesNotExist:
         pass
 
@@ -62,14 +62,20 @@ def category(request: HttpRequest, category_id: str) -> HttpResponse:
     return render(request, "hop/category.html", context)
 
 
-def tag(request: HttpRequest, tag_obj: Tag) -> HttpResponse:
+def flavor_detail(request: HttpRequest, tag_obj: Tag) -> HttpResponse:
     hops_query = Hop.objects.filter(aroma_tags=tag_obj, recipes_count__gt=0)
 
     hops = hops_query.order_by("name")
     meta = HopOverviewMeta((tag_obj.id, tag_obj.name + " Flavor")).get_meta()
-    context = {"tag_name": tag_obj.name, "hops": hops, "meta": meta}
 
-    return render(request, "hop/tag.html", context)
+    long_description_template = "hop/descriptions/flavors/%s.html" % tag_obj.id
+    try:
+        loader.get_template(long_description_template)
+    except TemplateDoesNotExist:
+        long_description_template = None
+
+    context = {"tag_name": tag_obj.name, "hops": hops, "meta": meta, "long_description": long_description_template}
+    return render(request, "hop/flavor.html", context)
 
 
 def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
@@ -94,7 +100,7 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
             ),
         )
 
-    long_description_template = "hop/descriptions/%s.html" % hop.id
+    long_description_template = "hop/descriptions/hops/%s.html" % hop.id
     try:
         loader.get_template(long_description_template)
     except TemplateDoesNotExist:
