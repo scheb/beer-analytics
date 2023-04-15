@@ -1,11 +1,8 @@
 import os
 import re
-import sys
 from typing import List
 
 from django.core.management.base import BaseCommand
-from django.db.models.functions import Length
-from django.urls import reverse
 
 from recipe_db.models import Style, Hop
 from web_app.views.utils import object_url
