@@ -43,6 +43,8 @@ urlpatterns = [
     ),
     path("styles/<str:category_slug>/<str:slug>/recipes/random.json", style.recipes, name="style_recipes"),
     path("hops/", views.hop.overview, name="hop_overview"),
+    path("hops/flavors/", views.hop.flavor_overview, name="hop_flavor_overview"),
+    path("hops/flavors/<str:flavor_id>/", views.hop.flavor_detail, name="hop_flavor_detail"),
     path("hops/<str:category_id>/", hop.category_or_tag, name="hop_category"),
     path("hops/<str:category_id>/<str:slug>/", hop.detail, name="hop_detail"),
     path("hops/<str:category_id>/<str:slug>/charts/<str:chart_type>.<cformat:format>", hop.chart, name="hop_chart"),

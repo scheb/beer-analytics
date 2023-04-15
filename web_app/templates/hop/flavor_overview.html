@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load web_app %}
+
+{% block content %}
+    <nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url "hop_overview" %}">Hops</a></li>
+            <li class="breadcrumb-item active">Hop Flavors</li>
+        </ol>
+    </nav>
+
+    <h1>Hop Flavors</h1>
+    <p>The importance of hops flavors in beer tasting within the modern craft brewing industry cannot be overstated. As the craft beer movement has evolved, so too has the demand for bold, unique, and complex flavor profiles that challenge and delight the palates of beer enthusiasts. Hops have emerged as a key ingredient in satisfying this demand, providing a vast array of flavors and aromas that range from fruity and floral to earthy and spicy. This has led to a surge in hop-forward beer styles, such as the American IPA, which places a heavy emphasis on the hop character, showcasing the ingredient's multifaceted nature and depth.</p>
+    <p>In addition to adding a new dimension to beer tasting, hops have also helped elevate the status of craft brewing as an art form. The judicious selection, combination, and application of different hop varieties can have a transformative effect on a beer's flavor and aroma, akin to how a skilled chef uses a blend of spices to create a culinary masterpiece. This has resulted in a renaissance within the brewing community, with brewers pushing the boundaries of creativity and innovation in their quest to develop new and exciting hop-driven beer styles. As a result, <strong>the exploration of hops flavors</strong> has become an integral part of the modern craft brewing, fostering a culture of experimentation and appreciation for the seemingly endless possibilities that hops can bring to the world of beer.</p>
+    <p>Explore hops our comprehensive list of flavors to enhance your own brewing experience.</p>
+
+    <table class="table">
+        <colgroup>
+            <col style="width:15%" />
+            <col style="width:15%" />
+            <col style="width:70%" />
+        </colgroup>
+        <thead class="table-light">
+            <tr>
+                <th>Flavor</th>
+                <th># Hops</th>
+                <th>Examples</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tag in tags %}{% if tag.accessible_hops_count > 1 %}
+            <tr>
+                <td class="badge-list"><a href="{% url "hop_flavor_detail" tag.id %}" class="badge bg-primary">{{ tag.name }}</a></td>
+                <td>{{ tag.accessible_hops_count }}</td>
+                <td>{% for hop in tag.most_popular_hops %}{% if not forloop.first %}, {% endif %}<a href="{{ hop|url }}">{{ hop.name }}</a>{% endfor %}</td>
+            </tr>
+            {% endif %}{% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

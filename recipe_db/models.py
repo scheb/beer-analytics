@@ -55,6 +55,10 @@ class Tag(models.Model):
     def accessible_hops_count(self) -> int:
         return self.hop_set.filter(recipes_count__gt=0).count()
 
+    @property
+    def most_popular_hops(self):
+        return self.hop_set.filter(recipes_count__gt=0).order_by("-recipes_count")[:3]
+
     @classmethod
     def create_id(cls, name: str) -> str:
         return create_human_readable_id(name)
