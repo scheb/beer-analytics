@@ -2,26 +2,43 @@
 {% load web_app %}
 
 {% block content %}
-    <h1>Hops</h1>
-    <p>
-        This is overview of the <strong>{{ num_hops }} hops</strong> identified by <em>Beer Analytics</em>.
-        Some hops have  been renamed or marketed under different names, these are listed under their most common name.
-        You'll see alternative names in the &quot;includes&quot; list on hop detail pages.
-    </p>
+    <h1>List of Brewing Hops</h1>
+    <section>
+        <p>
+            Dive into the world of homebrewing with this extensive guide to hops varieties, analyzed for their usage in
+            beer brewing. We have identified a total of <strong>{{ num_hops }} hops</strong> in brewing recipes. Certain hops have been
+            rebranded or marketed under different names; we have cataloged them using their most well-known name.
+        </p>
+        <p>
+            Discover hop <strong>pairing suggestions, flavor profiles, and common beer styles</strong> to enhance your
+            brewing experience.
+        </p>
+
+        <h2>What are beer hops?</h2>
+        <p>
+            Hops are the cone-shaped flowers of the <em>Humulus lupulus</em> plant, which are used primarily in the beer
+            brewing process to impart flavor, aroma, and stability to the final product. The addition of hops at different
+            stages of the brewing process affects the beer's taste profile, with early additions contributing more to
+            bitterness, while later additions emphasize aroma. Additionally, hops possess antimicrobial properties that help
+            protect the beer from spoilage, thereby improving its shelf life.
+        </p>
+    </section>
+
+    <hr />
 
     <form class="search" data-search-target="hops-overview">
         <p>
-            <label for="input-search" class="visually-hidden">Search hops</label>
-            <input type="search" class="search-term form-control" id="input-search" placeholder="Search hops">
+            <label for="input-search" class="visually-hidden">Filter hops</label>
+            <input type="search" class="search-term form-control" id="input-search" placeholder="Filter hops (alternative names supported)"><br/>
         </p>
     </form>
 
     <div id="hops-overview">
         {% for category in categories %}
-            <div class="search-group">
+            <section class="search-group">
                 <h2>
                     <a href="#{{ category.id }}" id="{{ category.id }}" class="anchor"><span></span></a>
-                    <a href="{% url "hop_category" category.id %}" class="text-body">{{ category.name }}</a>
+                    <a href="{% url "hop_category" category.id %}" class="text-body">{{ category.name }} Hops</a>
                 </h2>
                 <div class="mb-4">
                     {% if category.most_popular %}{% spaceless %}
@@ -44,7 +61,7 @@
                         {% endfor %}
                     </ul>
                 </div>
-            </div>
+            </section>
         {% endfor %}
     </div>
 {% endblock %}
