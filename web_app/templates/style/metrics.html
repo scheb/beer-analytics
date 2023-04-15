@@ -1,9 +1,7 @@
 {% load web_app %}
 {% if style.has_specified_metrics or style.has_recipes_metrics %}
-    <h2>
-        <a id="specifications" href="#specifications" class="anchor"><span></span></a>
-        Specifications
-    </h2>
+<section>
+    <h2><a id="specifications" href="#specifications" class="anchor"><span></span></a>Specifications</h2>
     <div class="row row-cols-1 row-cols-lg-5 g-1 mb-4">
         {% if style.recipes_abv_min or style.abv_min %}{% with chart_type="abv-histogram" %}
             <div class="col">
@@ -156,4 +154,5 @@
             </div>
         {% endwith %}{% endif %}
     </div>
+</section>
 {% endif %}
