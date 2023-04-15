@@ -11,7 +11,7 @@ from recipe_db.analytics.utils import dictfetchall
 from recipe_db.models import Hop, Tag
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.utils import NoDataException
-from web_app.meta import HopMeta, HopOverviewMeta
+from web_app.meta import HopMeta, HopOverviewMeta, HopFlavorOverviewMeta, HopFlavorMeta
 from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list
 
 
@@ -66,7 +66,7 @@ def category(request: HttpRequest, category_id: str) -> HttpResponse:
 
 
 def flavor_overview(request: HttpRequest) -> HttpResponse:
-    meta = meta = HopOverviewMeta(("flavor", "Flavor")).get_meta()
+    meta = HopFlavorOverviewMeta().get_meta()
     tags = Tag.objects.order_by("name")
     context = {"meta": meta, "tags": tags}
 
@@ -85,7 +85,7 @@ def flavor_detail(request: HttpRequest, flavor_id: str) -> HttpResponse:
         raise Http404("Flavor doesn't have any data.")
 
     hops = hops_query.order_by("name")
-    meta = HopOverviewMeta((tag_obj.id, tag_obj.name + " Flavor")).get_meta()
+    meta = HopFlavorMeta(tag_obj).get_meta()
 
     with connection.cursor() as cursor:
         cursor.execute("""
