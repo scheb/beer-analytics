@@ -9,7 +9,26 @@
         </ol>
     </nav>
 
-    <h1>{{ tag_name }} Flavor Hops</h1>
+    <h1>List of {{ tag_name }} Flavor Hops</h1>
+    {% if long_description %}
+        <div class="detail-long-description">
+            {% include long_description %}
+        </div>
+    {% endif %}
+
+    {% if hop.aroma_tags.count %}{% spaceless %}
+        <div class="badge-list">
+            <label>Flavor descriptors commonly mentioned with <em>{{ tag_name }}</em>:</label>
+            <ul>
+            {% for tag in hop.aroma_tags.all %}
+                <li><a href="{% url "hop_category" tag.id %}" class="badge bg-primary">
+                    {{ tag.name }}
+                    <small>({{ tag.accessible_hops_count }})</small>
+                </a></li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endspaceless %}{% endif %}
 
     <div class="hops-overview">
         <ul class="column-list">
