@@ -1,3 +1,5 @@
+from django.db import connection
+from django.db.models import Count, Q
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader, TemplateDoesNotExist
@@ -5,6 +7,7 @@ from django.urls import reverse
 from django.views.decorators.cache import cache_page
 
 from recipe_db.analytics.spotlight.hop import HopAnalysis
+from recipe_db.analytics.utils import dictfetchall
 from recipe_db.models import Hop, Tag
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.utils import NoDataException
@@ -41,7 +44,7 @@ def category_or_tag(request: HttpRequest, category_id: str) -> HttpResponse:
 
     try:
         tag_obj = Tag.objects.get(pk=category_id)
-        return flavor_detail(request, tag_obj)
+        return redirect("hop_flavor_detail", flavor_id=tag_obj.id)
     except Tag.DoesNotExist:
         pass
 
@@ -62,11 +65,45 @@ def category(request: HttpRequest, category_id: str) -> HttpResponse:
     return render(request, "hop/category.html", context)
 
 
-def flavor_detail(request: HttpRequest, tag_obj: Tag) -> HttpResponse:
+def flavor_overview(request: HttpRequest) -> HttpResponse:
+    meta = meta = HopOverviewMeta(("flavor", "Flavor")).get_meta()
+    tags = Tag.objects.order_by("name")
+    context = {"meta": meta, "tags": tags}
+
+    return render(request, "hop/flavor_overview.html", context)
+
+
+def flavor_detail(request: HttpRequest, flavor_id: str) -> HttpResponse:
+    tag_obj = get_object_or_404(Tag, pk=flavor_id.lower())
+
+    if flavor_id != tag_obj.id:
+        return redirect("hop_flavor_detail", flavor_id=tag_obj.id)
+
     hops_query = Hop.objects.filter(aroma_tags=tag_obj, recipes_count__gt=0)
+    num_hops = hops_query.count()
+    if num_hops <= 0:
+        raise Http404("Flavor doesn't have any data.")
 
     hops = hops_query.order_by("name")
     meta = HopOverviewMeta((tag_obj.id, tag_obj.name + " Flavor")).get_meta()
+
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT
+                tag.*, COUNT(tags2.id) AS combinations
+                FROM recipe_db_hop_aroma_tags AS tags1
+                LEFT JOIN recipe_db_hop AS hops
+                    ON tags1.hop_id = hops.id
+                LEFT JOIN recipe_db_hop_aroma_tags AS tags2
+                    ON hops.id = tags2.hop_id
+                JOIN recipe_db_tag AS tag
+                    ON tags2.tag_id = tag.id
+                WHERE tags1.tag_id = %s AND tags2.tag_id != %s
+                GROUP BY tags2."tag_id"
+                ORDER BY combinations DESC
+                LIMIT 10
+        """, [tag_obj.id, tag_obj.id])
+        associated_aroma_tags = dictfetchall(cursor)
 
     long_description_template = "hop/descriptions/flavors/%s.html" % tag_obj.id
     try:
@@ -74,7 +111,14 @@ def flavor_detail(request: HttpRequest, tag_obj: Tag) -> HttpResponse:
     except TemplateDoesNotExist:
         long_description_template = None
 
-    context = {"tag_name": tag_obj.name, "hops": hops, "meta": meta, "long_description": long_description_template}
+    context = {
+        "tag_name": tag_obj.name,
+        "num_hops": num_hops,
+        "hops": hops,
+        "meta": meta,
+        "associated_aroma_tags": associated_aroma_tags,
+        "long_description": long_description_template,
+    }
     return render(request, "hop/flavor.html", context)
 
 
