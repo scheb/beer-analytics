@@ -63,7 +63,7 @@ class StyleMeta(PageMeta):
         self.style = style
 
     def get_title(self):
-        return NORMAL_TITLE.format("%s Beer Style" % self.style.name)
+        return NORMAL_TITLE.format("%s Beer Style - Recipes, Popularity, Yeasts & Hops" % self.style.name)
 
     def get_description(self) -> str:
         return "Discover the secrets of brewing {} style beers with our in-depth data analysis! Explore typical hops, fermentables, and yeasts used to craft the perfect beer.".format(self.style.name)
