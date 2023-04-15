@@ -2,7 +2,7 @@
 {% load web_app %}
 
 {% block content %}
-    <h1>Fermentables</h1>
+    <h1>List of Fermentables</h1>
     <p>
         This the the <strong>overview of fermentables</strong> that are identified by <em>Beer Analytics</em>.
         Comparable malts from different producers may be grouped together as one single item. You'll see that from the
@@ -11,14 +11,14 @@
 
     <form class="search" data-search-target="fermentables-overview">
         <p>
-            <label for="input-search" class="visually-hidden">Search fermentables</label>
-            <input type="search" class="search-term form-control" id="input-search" placeholder="Search fermentables">
+            <label for="input-search" class="visually-hidden">Filter fermentables</label>
+            <input type="search" class="search-term form-control" id="input-search" placeholder="Filter fermentables">
         </p>
     </form>
 
     <div id="fermentables-overview">
         {% for category in categories %}
-            <div class="search-group">
+            <section class="search-group">
                 <h2>
                     <a href="#{{ category.id }}" id="{{ category.id }}" class="anchor"><span></span></a>
                     <a href="{% url "fermentable_category" category.id %}" class="text-body">{{ category.name }}</a>
@@ -67,7 +67,7 @@
                         {% endfor %}
                     {% endif %}
                 </div>
-            </div>
+            </section>
         {% endfor %}
     </div>
 {% endblock %}

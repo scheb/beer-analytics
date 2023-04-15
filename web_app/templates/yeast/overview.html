@@ -2,28 +2,30 @@
 {% load web_app %}
 
 {% block content %}
-    <h1>Yeasts</h1>
-    <p>
-        This is the <strong>overview of yeasts (including blends and bacteria)</strong> that are identified by
-        <em>Beer Analytics</em>.
-        As the yeast has significant impact on the taste of a beer, the variety of yeasts to choose from can be
-        overwhelming, especially with new ones being released all the time. However, there are clearly some favourites
-        among brewers, yeast that have proven to deliver solid results.
-    </p>
+    <h1>List of Yeasts and Bacteria</h1>
+    <section>
+        <p>
+            This is the <strong>overview of yeasts (including blends and bacteria)</strong> that are identified by
+            <em>Beer Analytics</em>.
+            As the yeast has significant impact on the taste of a beer, the variety of yeasts to choose from can be
+            overwhelming, especially with new ones being released all the time. However, there are clearly some favourites
+            among brewers, yeast that have proven to deliver solid results.
+        </p>
+    </section>
 
     <form class="search" data-search-target="yeasts-overview">
         <p>
-            <label for="input-search" class="visually-hidden">Search yeasts</label>
-            <input type="search" class="search-term form-control" id="input-search" placeholder="Search yeasts">
+            <label for="input-search" class="visually-hidden">Filter yeasts</label>
+            <input type="search" class="search-term form-control" id="input-search" placeholder="Filter yeasts">
         </p>
     </form>
 
     <div id="yeasts-overview">
         {% for type in types %}
-            <div class="search-group">
+            <section class="search-group">
                 <h2>
                     <a href="#{{ type.id }}" id="{{ type.id }}" class="anchor"><span></span></a>
-                    <a href="{% url "yeast_type" type.id %}" class="text-body">{{ type.name }}</a>
+                    <a href="{% url "yeast_type" type.id %}" class="text-body">{{ type.name }}{% if type.is_yeast %} Yeast{% endif %}</a>
                 </h2>
                 <div class="mb-4">
                     {% if type.most_popular %}{% spaceless %}
@@ -72,7 +74,7 @@
                         </div>
                     {% endif %}
                 </div>
-            </div>
+            </section>
         {% endfor %}
     </div>
 {% endblock %}

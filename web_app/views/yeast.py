@@ -45,6 +45,7 @@ def type_overview(request: HttpRequest, type_id: str) -> HttpResponse:
     meta = YeastOverviewMeta((type_id, type_name)).get_meta()
     context = {
         "type_name": type_name,
+        "type_is_yeast": Yeast.is_yeast_type(type_id),
         "yeasts": yeasts,
         "labs": labs,
         "most_popular": most_popular,
@@ -127,7 +128,7 @@ def group_by_type(yeasts: iter) -> list:
 
     # Create type object
     for type in types:
-        yeast_types[type] = {"id": type, "name": types[type], "yeasts": [], "most_popular": []}
+        yeast_types[type] = {"id": type, "name": types[type], "yeasts": [], "most_popular": [], "is_yeast": Yeast.is_yeast_type(type)}
 
     # Assign yeasts
     for yeast in yeasts:

@@ -648,6 +648,10 @@ class Yeast(models.Model):
     def get_types(cls) -> dict:
         return dict(cls.TYPE_CHOICES)
 
+    @classmethod
+    def is_yeast_type(cls, type: str):
+        return type != cls.BRETT_BACTERIA
+
     @property
     def has_extra_product_id(self):
         return self.product_id is not None and self.product_id not in self.name
@@ -667,6 +671,10 @@ class Yeast(models.Model):
         if self.type is None:
             return None
         return self.get_types()[self.type]
+
+    @property
+    def type_is_yeast(self) -> bool:
+        return self.is_yeast_type(self.type)
 
     @property
     def form_name(self):
