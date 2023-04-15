@@ -1,44 +1,43 @@
 {% load web_app %}
-<h2>
-    <a id="characteristics" href="#characteristics" class="anchor"><span></span></a>
-    Characteristics
-</h2>
-<div class="row row-cols-1 row-cols-lg-2 g-1 mb-4">
-    {% if fermentable.recipes_color_ebc_min %}{% with chart_type="color-histogram" %}
-        <div class="col">
-            <div class="card text-center h-100">
-                <div class="card-header"><h3 class="h5 mb-0">Color</h3></div>
-                <div class="card-body">
-                    {{ fermentable.recipes_color_ebc_min|floatformat:0 }} &lt; <strong>{{ fermentable.recipes_color_ebc_mean|floatformat:0 }}</strong> &lt; {{ fermentable.recipes_color_ebc_max|floatformat:0 }} <small class="text-muted" title="European Brewery Convention">EBC</small><br/>
-                    {{ fermentable.recipes_color_lovibond_min|floatformat:0 }} &lt; <strong>{{ fermentable.recipes_color_lovibond_mean|floatformat:0 }}</strong> &lt; {{ fermentable.recipes_color_lovibond_max|floatformat:0 }} <small class="text-muted" title="Degrees Lovibond">°L</small>
-                </div>
-                <div class="card-footer bg-transparent">
-                    <div class="chart-s" data-chart="{{ fermentable|chart_js:chart_type }}" data-chart-options='{"displayModeBar":false}'>
-                        <noscript>
-                            {{ fermentable|chart_image:chart_type|safe }}
-                        </noscript>
+<section>
+    <h2><a id="characteristics" href="#characteristics" class="anchor"><span></span></a>Characteristics</h2>
+    <div class="row row-cols-1 row-cols-lg-2 g-1 mb-4">
+        {% if fermentable.recipes_color_ebc_min %}{% with chart_type="color-histogram" %}
+            <div class="col">
+                <div class="card text-center h-100">
+                    <div class="card-header"><h3 class="h5 mb-0">Color</h3></div>
+                    <div class="card-body">
+                        {{ fermentable.recipes_color_ebc_min|floatformat:0 }} &lt; <strong>{{ fermentable.recipes_color_ebc_mean|floatformat:0 }}</strong> &lt; {{ fermentable.recipes_color_ebc_max|floatformat:0 }} <small class="text-muted" title="European Brewery Convention">EBC</small><br/>
+                        {{ fermentable.recipes_color_lovibond_min|floatformat:0 }} &lt; <strong>{{ fermentable.recipes_color_lovibond_mean|floatformat:0 }}</strong> &lt; {{ fermentable.recipes_color_lovibond_max|floatformat:0 }} <small class="text-muted" title="Degrees Lovibond">°L</small>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="chart-s" data-chart="{{ fermentable|chart_js:chart_type }}" data-chart-options='{"displayModeBar":false}'>
+                            <noscript>
+                                {{ fermentable|chart_image:chart_type|safe }}
+                            </noscript>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% endwith %}{% endif %}
-    {% if fermentable.recipes_amount_percent_min %}{% with chart_type="amount-percent-range" %}
-        <div class="col">
-            <div class="card text-center h-100">
-                <div class="card-header"><h3 class="h5 mb-0">Amount</h3></div>
-                <div class="card-body">
-                    {% if fermentable.recipes_amount_percent_min %}
-                        {{ fermentable.recipes_amount_percent_min|float2percent|floatformat:1 }} &lt; <strong>{{ fermentable.recipes_amount_percent_mean|float2percent|floatformat:1 }}</strong> &lt; {{ fermentable.recipes_amount_percent_max|float2percent|floatformat:1 }} <small class="text-muted">%</small>
-                    {% endif %}
-                </div>
-                <div class="card-footer bg-transparent">
-                    <div class="chart-s" data-chart="{{ fermentable|chart_js:chart_type }}" data-chart-options='{"displayModeBar":false}'>
-                        <noscript>
-                            {{ fermentable|chart_image:chart_type|safe }}
-                        </noscript>
+        {% endwith %}{% endif %}
+        {% if fermentable.recipes_amount_percent_min %}{% with chart_type="amount-percent-range" %}
+            <div class="col">
+                <div class="card text-center h-100">
+                    <div class="card-header"><h3 class="h5 mb-0">Amount</h3></div>
+                    <div class="card-body">
+                        {% if fermentable.recipes_amount_percent_min %}
+                            {{ fermentable.recipes_amount_percent_min|float2percent|floatformat:1 }} &lt; <strong>{{ fermentable.recipes_amount_percent_mean|float2percent|floatformat:1 }}</strong> &lt; {{ fermentable.recipes_amount_percent_max|float2percent|floatformat:1 }} <small class="text-muted">%</small>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="chart-s" data-chart="{{ fermentable|chart_js:chart_type }}" data-chart-options='{"displayModeBar":false}'>
+                            <noscript>
+                                {{ fermentable|chart_image:chart_type|safe }}
+                            </noscript>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% endwith %}{% endif %}
-</div>
+        {% endwith %}{% endif %}
+    </div>
+</section>

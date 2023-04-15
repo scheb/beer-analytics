@@ -1,86 +1,85 @@
 {% load web_app %}
-<h2>
-    <a id="characteristics" href="#characteristics" class="anchor"><span></span></a>
-    Characteristics
-</h2>
-<div class="row row-cols-1 row-cols-lg-4 g-1 mb-4">
-    {% if hop.recipes_alpha_min %}{% with chart_type="alpha-histogram" %}
-        <div class="col">
-            <div class="card text-center h-100">
-                <div class="card-header"><h3 class="h5 mb-0">Alpha Acid</h3></div>
-                <div class="card-body">
-                    {{ hop.recipes_alpha_min|floatformat:1 }}
-                    &lt; <strong>{{ hop.recipes_alpha_mean|floatformat:1 }}</strong>
-                    &lt; {{ hop.recipes_alpha_max|floatformat:1 }} <small class="text-muted">%</small>
-                </div>
-                <div class="card-footer bg-transparent">
-                    <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options='{"displayModeBar":false}'>
-                        <noscript>
-                            {{ hop|chart_image:chart_type|safe }}
-                        </noscript>
+<section>
+    <h2><a id="characteristics" href="#characteristics" class="anchor"><span></span></a>Characteristics</h2>
+    <div class="row row-cols-1 row-cols-lg-4 g-1 mb-4">
+        {% if hop.recipes_alpha_min %}{% with chart_type="alpha-histogram" %}
+            <div class="col">
+                <div class="card text-center h-100">
+                    <div class="card-header"><h3 class="h5 mb-0">Alpha Acid</h3></div>
+                    <div class="card-body">
+                        {{ hop.recipes_alpha_min|floatformat:1 }}
+                        &lt; <strong>{{ hop.recipes_alpha_mean|floatformat:1 }}</strong>
+                        &lt; {{ hop.recipes_alpha_max|floatformat:1 }} <small class="text-muted">%</small>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options='{"displayModeBar":false}'>
+                            <noscript>
+                                {{ hop|chart_image:chart_type|safe }}
+                            </noscript>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% endwith %}{% endif %}
+        {% endwith %}{% endif %}
 
-    {% if hop.recipes_beta_min %}{% with chart_type="beta-histogram" %}
-        <div class="col">
-            <div class="card text-center h-100">
-                <div class="card-header"><h3 class="h5 mb-0">Beta Acid</h3></div>
-                <div class="card-body">
-                    {{ hop.recipes_beta_min|floatformat:1 }}
-                    &lt; <strong>{{ hop.recipes_beta_mean|floatformat:1 }}</strong>
-                    &lt; {{ hop.recipes_beta_max|floatformat:1 }} <small class="text-muted">%</small>
-                </div>
-                <div class="card-footer bg-transparent">
-                    <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options='{"displayModeBar":false}'>
-                        <noscript>
-                            {{ hop|chart_image:chart_type|safe }}
-                        </noscript>
+        {% if hop.recipes_beta_min %}{% with chart_type="beta-histogram" %}
+            <div class="col">
+                <div class="card text-center h-100">
+                    <div class="card-header"><h3 class="h5 mb-0">Beta Acid</h3></div>
+                    <div class="card-body">
+                        {{ hop.recipes_beta_min|floatformat:1 }}
+                        &lt; <strong>{{ hop.recipes_beta_mean|floatformat:1 }}</strong>
+                        &lt; {{ hop.recipes_beta_max|floatformat:1 }} <small class="text-muted">%</small>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options='{"displayModeBar":false}'>
+                            <noscript>
+                                {{ hop|chart_image:chart_type|safe }}
+                            </noscript>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% endwith %}{% endif %}
+        {% endwith %}{% endif %}
 
-    {% if hop.recipes_amount_percent_min %}{% with chart_type="amount-percent-range" %}
-        <div class="col">
-            <div class="card text-center h-100">
-                <div class="card-header"><h3 class="h5 mb-0">Amount</h3></div>
-                <div class="card-body">
-                    {% if hop.recipes_amount_percent_min %}
-                        {{ hop.recipes_amount_percent_min|float2percent|floatformat:1 }}
-                        &lt; <strong>{{ hop.recipes_amount_percent_mean|float2percent|floatformat:1 }}</strong>
-                        &lt; {{ hop.recipes_amount_percent_max|float2percent|floatformat:1 }} <small class="text-muted">%</small>
-                    {% endif %}
-                </div>
-                <div class="card-footer bg-transparent">
-                    <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options='{"displayModeBar":false}'>
-                        <noscript>
-                            {{ hop|chart_image:chart_type|safe }}
-                        </noscript>
+        {% if hop.recipes_amount_percent_min %}{% with chart_type="amount-percent-range" %}
+            <div class="col">
+                <div class="card text-center h-100">
+                    <div class="card-header"><h3 class="h5 mb-0">Amount</h3></div>
+                    <div class="card-body">
+                        {% if hop.recipes_amount_percent_min %}
+                            {{ hop.recipes_amount_percent_min|float2percent|floatformat:1 }}
+                            &lt; <strong>{{ hop.recipes_amount_percent_mean|float2percent|floatformat:1 }}</strong>
+                            &lt; {{ hop.recipes_amount_percent_max|float2percent|floatformat:1 }} <small class="text-muted">%</small>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options='{"displayModeBar":false}'>
+                            <noscript>
+                                {{ hop|chart_image:chart_type|safe }}
+                            </noscript>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% endwith %}{% endif %}
+        {% endwith %}{% endif %}
 
-    {% if hop.use_count %}{% with chart_type="usage-types" %}
-        <div class="col">
-            <div class="card text-center h-100">
-                <div class="card-header"><h3 class="h5 mb-0">Usage</h3></div>
-                <div class="card-body">
-                    <strong>{{ hop.category_name }} Hop</strong>
-                </div>
-                <div class="card-footer bg-transparent">
-                    <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options='{"displayModeBar":false}'>
-                        <noscript>
-                            {{ hop|chart_image:chart_type|safe }}
-                        </noscript>
+        {% if hop.use_count %}{% with chart_type="usage-types" %}
+            <div class="col">
+                <div class="card text-center h-100">
+                    <div class="card-header"><h3 class="h5 mb-0">Usage</h3></div>
+                    <div class="card-body">
+                        <strong>{{ hop.category_name }} Hop</strong>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="chart-s" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options='{"displayModeBar":false}'>
+                            <noscript>
+                                {{ hop|chart_image:chart_type|safe }}
+                            </noscript>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% endwith %}{% endif %}
-</div>
+        {% endwith %}{% endif %}
+    </div>
+</section>
