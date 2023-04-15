@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils.html import escape
 
 from recipe_db.formulas import celsius_to_fahrenheit
-from recipe_db.models import Style, Hop, Fermentable, Yeast
+from recipe_db.models import Style, Hop, Fermentable, Yeast, Tag
 from web_app.charts.fermentable import FermentableChartFactory
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.style import StyleChartFactory

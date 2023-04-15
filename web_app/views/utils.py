@@ -5,7 +5,7 @@ from django.conf import settings
 from django.http import HttpResponse, Http404
 from django.urls import reverse
 
-from recipe_db.models import Style, Hop, Fermentable, Yeast, Recipe
+from recipe_db.models import Style, Hop, Fermentable, Yeast, Recipe, Tag
 from web_app.charts.utils import Chart
 
 FORMAT_PNG = "png"
@@ -64,5 +64,8 @@ def object_url(item: object):
 
     if isinstance(item, Yeast):
         return reverse("yeast_detail", kwargs={"type_id": item.type, "slug": item.id})
+
+    if isinstance(item, Tag):
+        return reverse("hop_flavor_detail", kwargs={"flavor_id": item.id})
 
     return None
