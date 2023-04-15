@@ -82,7 +82,7 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 20A;20;American Porter;Robust Porter;;4.8;6.5;25;50;22;40;1050;1070;1012;1018;standard;dark;top;;north_america;porter;false;craft;bitter;hoppy;;roasty
 20B;20;American Stout;;;5;7;35;75;30;40;1050;1075;1010;1022;high;dark;top;;north_america;stout;false;craft;bitter;hoppy;;roasty
 20C;20;Imperial Stout;;;8;12;50;90;30;40;1075;1115;1018;1030;very_high;dark;top;;north_america;stout;false;craft;malty;bitter;;roasty
-21;;IPA;;;;;;;;;;;;;;;;;;;false;;;;;
+21;;IPA;India Pale Ale;Indian Pale Ale;;;;;;;;;;;;;;;;;false;;;;;
 21A;21;American IPA;;Amerikanisches IPA;5.5;7.5;40;70;6;14;1056;1070;1008;1014;high;pale;top;;north_america;ipa;false;craft;bitter;hoppy;;
 21B;21;Specialty IPA;Session IPA;IPA Specialty;5.5;9.5;40;100;5;40;1050;1085;1008;1018;high;;top;;north_america;ipa;true;craft;bitter;hoppy;;
 21B1;21B;Belgian IPA;;IPA Belgian, Specialty IPA: Belgian IPA;6.2;9.5;50;100;5;15;1058;1080;1008;1016;high;pale;top;;north_america;ipa;true;craft;bitter;hoppy;;
