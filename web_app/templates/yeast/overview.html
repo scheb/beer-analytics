@@ -26,7 +26,7 @@
                     <a href="{% url "yeast_type" type.id %}" class="text-body">{{ type.name }}</a>
                 </h2>
                 <div class="mb-4">
-                    {% if type.most_popular %}
+                    {% if type.most_popular %}{% spaceless %}
                         <div class="badge-list search-hide"><label>Most popular:</label>
                             <ol>
                             {% for yeast in type.most_popular %}
@@ -36,7 +36,7 @@
                             {% endfor %}
                             </ol>
                         </div>
-                    {% endif %}
+                    {% endspaceless %}{% endif %}
 
                     {% for lab in type.labs %}
                         <div class="search-group">

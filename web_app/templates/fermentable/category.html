@@ -11,7 +11,7 @@
 
     <h1>{{ category_name }} Fermentables</h1>
 
-    {% if most_popular %}
+    {% if most_popular %}{% spaceless %}
         <div class="badge-list">
             <label>Most popular:</label>
             <ol>
@@ -20,7 +20,7 @@
             {% endfor %}
             </ol>
         </div>
-    {% endif %}
+    {% endspaceless %}{% endif %}
 
     <div class="fermentables-overview">
         {% if fermentables %}

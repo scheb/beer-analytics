@@ -24,16 +24,16 @@
                     <a href="{% url "fermentable_category" category.id %}" class="text-body">{{ category.name }}</a>
                 </h2>
                 <div class="mb-4">
-                    {% if category.most_popular %}
+                    {% if category.most_popular %}{% spaceless %}
                         <div class="badge-list search-hide">
                             <label>Most popular:</label>
                             <ol>
-                            {% for fermentable in category.most_popular %}
+                            {% for fermentable in category.most_popular %}{% spaceless %}
                                 <li><a class="badge" href="{{ fermentable|url }}">{{ fermentable.name }}</a></li>
-                            {% endfor %}
+                            {% endspaceless %}{% endfor %}
                             </ol>
                         </div>
-                    {% endif %}
+                    {% endspaceless %}{% endif %}
 
                     {% if category.fermentables %}
                         <ul class="column-list">
