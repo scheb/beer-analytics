@@ -12,8 +12,8 @@ from web_app.views.utils import object_url
 
 OPEN_GRAPH_IMAGE_WIDTH = 1200
 OPEN_GRAPH_IMAGE_HEIGHT = 630
-DETAIL_PAGE_TITLE = "{} ‹ {} | Beer-Analytics"
-NORMAL_TITLE = "{} | Beer-Analytics"
+DETAIL_PAGE_TITLE = "{} ‹ {} | Beer Analytics"
+NORMAL_TITLE = "{} | Beer Analytics"
 META_DEFAULT_DESCRIPTION = (
     "Data analysis of brewing recipes for beer enthusiasts, who want to learn how certain "
     "beer types are composed and how ingredients are used."
