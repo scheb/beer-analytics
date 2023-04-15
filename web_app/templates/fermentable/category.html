@@ -36,17 +36,19 @@
 
         {% if types %}
             {% for type in types %}
-                <h3>{{ type.name }}</h3>
-                {% if type.fermentables %}
-                    <ul class="column-list">
-                        {% for fermentable in type.fermentables %}
-                            <li>
-                                {% if fermentable.is_popular %}<strong>{% endif %}<a href="{{ fermentable|url }}">{{ fermentable.name }}</a>{% if fermentable.is_popular %}</strong>{% endif %}
-                                <small class="recipes-count" title="Recipes">{{ fermentable.recipes_count }}</small>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+                <section>
+                    <h3>{{ type.name }}</h3>
+                    {% if type.fermentables %}
+                        <ul class="column-list">
+                            {% for fermentable in type.fermentables %}
+                                <li>
+                                    {% if fermentable.is_popular %}<strong>{% endif %}<a href="{{ fermentable|url }}">{{ fermentable.name }}</a>{% if fermentable.is_popular %}</strong>{% endif %}
+                                    <small class="recipes-count" title="Recipes">{{ fermentable.recipes_count }}</small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </section>
             {% endfor %}
         {% endif %}
     </div>

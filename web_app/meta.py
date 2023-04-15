@@ -51,7 +51,7 @@ class HomeMeta(PageMeta):
 class StyleOverviewMeta(PageMeta):
     def get_meta(self) -> Meta:
         return Meta(
-            title=NORMAL_TITLE.format("Beer Styles"),
+            title=NORMAL_TITLE.format("List of Beer Styles"),
             description="Discover the diverse world of beer styles with our in-depth analysis. Uncover flavor profiles, brewing techniques, and trends to elevate your beer knowledge and appreciation.",
             keywords=["styles"],
             url=reverse("style_overview"),
@@ -86,7 +86,7 @@ class HopOverviewMeta(PageMeta):
             self.category_name += " "  # Add extra space for title/description
 
     def get_title(self):
-        return NORMAL_TITLE.format("%s Hops" % self.category_name)
+        return NORMAL_TITLE.format("List of %sHops" % self.category_name)
 
     def get_description(self):
         return "Discover the ultimate guide to {}hops analysis. Uncover key insights into hop varieties, flavors, and profiles to enhance your brewing experience.".format(self.category_name.lower())
@@ -183,7 +183,7 @@ class FermentableOverviewMeta(PageMeta):
             self.category_name += " "  # Add extra space for title/description
 
     def get_title(self):
-        return NORMAL_TITLE.format("%s Fermentables" % self.category_name)
+        return NORMAL_TITLE.format("List of %sFermentables" % self.category_name)
 
     def get_description(self):
         return "Discover an in-depth overview of {}fermentables used in beer brewing. Unveil insights, trends, and analysis to craft the perfect brew!".format(self.category_name.lower())
@@ -262,7 +262,7 @@ class YeastOverviewMeta(PageMeta):
             self.type_name += " "  # Add extra space for title/description
 
     def get_title(self):
-        return NORMAL_TITLE.format("%sYeasts" % self.type_name)
+        return NORMAL_TITLE.format("List of %sBeer Yeasts and Bacteria" % self.type_name)
 
     def get_description(self):
         return "Discover the best {}yeasts used in brewing with our comprehensive guide! Compare flavor profiles, fermentation characteristics and performance data to elevate your brewing experience.".format(self.type_name.lower())
@@ -293,7 +293,7 @@ class YeastMeta(PageMeta):
 
     def get_title(self) -> str:
         yeast_name = self.get_yeast_full_name()
-        return NORMAL_TITLE.format("%s Yeast – Beer Styles, Fermentation" % yeast_name)
+        return NORMAL_TITLE.format("%s Beer Yeast – Styles, Fermentation" % yeast_name)
 
     def get_description(self) -> str:
         return 'Unlock the secrets of {} in brewing recipes: Explore data analysis on fermentable amounts, color variations and common beer styles'.format(

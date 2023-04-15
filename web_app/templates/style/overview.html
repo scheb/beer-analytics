@@ -2,36 +2,38 @@
 {% load web_app %}
 
 {% block content %}
-    <h1>Beer Styles</h1>
-    <p>
-        These beer styles are used to <strong>categorize the beer recipes</strong> in the database. With so many
-        different and overlapping styles in the craft brewing scene it's not easy to find a categorization scheme.
-        <em>Beer Analytics</em> has chosen to follow <a href="https://www.bjcp.org/">BJCP</a>'s
-        <a href="https://www.bjcp.org/docs/2015_Guidelines_Beer.pdf">Beer Style Guide from 2015</a> with minor changes
-        and additions.
-    </p>
+    <h1>List of Beer Styles</h1>
+    <section>
+        <p>
+            These beer styles are used to <strong>categorize the beer recipes</strong> in the database. With so many
+            different and overlapping styles in the craft brewing scene it's not easy to find a categorization scheme.
+            <em>Beer Analytics</em> has chosen to follow <a href="https://www.bjcp.org/">BJCP</a>'s
+            <a href="https://www.bjcp.org/docs/2015_Guidelines_Beer.pdf">Beer Style Guide from 2015</a> with minor changes
+            and additions.
+        </p>
 
-    {% if most_popular %}{% spaceless %}
-        <div class="badge-list mb-4">
-            <label>Most popular beer styles:</label>
-            <ol>
-            {% for style in most_popular %}
-                <li><a class="badge" href="{{ style|url }}">{{ style.name }}</a></li>
-            {% endfor %}
-            </ol>
-        </div>
-    {% endspaceless %}{% endif %}
+        {% if most_popular %}{% spaceless %}
+            <div class="badge-list mb-4">
+                <label>Most popular beer styles:</label>
+                <ol>
+                {% for style in most_popular %}
+                    <li><a class="badge" href="{{ style|url }}">{{ style.name }}</a></li>
+                {% endfor %}
+                </ol>
+            </div>
+        {% endspaceless %}{% endif %}
+    </section>
 
     <form class="search" data-search-target="styles-overview">
         <p>
-            <label for="input-search" class="visually-hidden">Search styles</label>
-            <input type="search" class="search-term form-control" id="input-search" placeholder="Search styles">
+            <label for="input-search" class="visually-hidden">Filter styles</label>
+            <input type="search" class="search-term form-control" id="input-search" placeholder="Filter styles">
         </p>
     </form>
 
     <div id="styles-overview" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
         {% for category in categories %}
-            <div class="col search-group">
+            <section class="col search-group">
                 <div class="card" data-search-term="{{ category.name }}{% if category.alt_names %}, {{ category.alt_names }}{% endif %}">
                     <div class="card-header">
                         <h2 class="h5 p-0 m-0"><a href="{{ category|url }}" class="text-body">{{ category.name }}</a></h2>
@@ -56,7 +58,7 @@
                         {% endfor %}
                     </ul>
                 </div>
-            </div>
+            </section>
         {% endfor %}
     </div>
 {% endblock %}
