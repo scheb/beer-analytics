@@ -489,6 +489,11 @@ class Hop(models.Model):
         return []
 
     @property
+    def origin_countries(self):
+        names = dict(self.COUNTRIES)
+        return list(map(lambda o: names[o], self.origin_list))
+
+    @property
     # Returns tuple of country code and country name
     def origin_tuples(self) -> List[Tuple[str, str]]:
         names = dict(self.COUNTRIES)

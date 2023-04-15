@@ -16,6 +16,19 @@
         <dl class="detail-info">
             <dt>Recipes:</dt>
             <dd>{{ hop.recipes_count }}</dd>
+            <dt>Purpose:</dt>
+            <dd>{{ hop.category_name }}</dd>
+
+            {% if hop.recipes_alpha_mean %}
+            <dt>Alpha:</dt>
+            <dd>{{ hop.alpha_level|title }}</dd>
+            {% endif %}
+
+            {% if hop.origin %}
+            <dt>Origin:</dt>
+            <dd>{{ hop.origin_countries|join:", " }}</dd>
+            {% endif %}
+
             {% if hop.alt_names %}
             <dt>Includes:</dt>
             {% for alt_name in hop.alt_names_list %}
