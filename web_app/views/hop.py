@@ -44,7 +44,7 @@ def category_or_tag(request: HttpRequest, category_id: str) -> HttpResponse:
 
     try:
         tag_obj = Tag.objects.get(pk=category_id)
-        return redirect("hop_flavor_detail", flavor_id=tag_obj.id)
+        return redirect("hop_flavor_detail", flavor_id=tag_obj.id, permanent=True)
     except Tag.DoesNotExist:
         pass
 
@@ -77,7 +77,7 @@ def flavor_detail(request: HttpRequest, flavor_id: str) -> HttpResponse:
     tag_obj = get_object_or_404(Tag, pk=flavor_id.lower())
 
     if flavor_id != tag_obj.id:
-        return redirect("hop_flavor_detail", flavor_id=tag_obj.id)
+        return redirect("hop_flavor_detail", flavor_id=tag_obj.id, permanent=True)
 
     hops_query = Hop.objects.filter(aroma_tags=tag_obj, recipes_count__gt=0)
     num_hops = hops_query.count()
@@ -129,7 +129,7 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
         raise Http404("Hop doesn't have any data.")
 
     if category_id != hop.category or slug != hop.id:
-        return redirect("hop_detail", category_id=hop.category, slug=hop.id)
+        return redirect("hop_detail", category_id=hop.category, slug=hop.id, permanent=True)
 
     meta_provider = HopMeta(hop)
     meta = meta_provider.get_meta()
@@ -162,7 +162,7 @@ def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, fo
         raise Http404("Hop doesn't have any data.")
 
     if category_id != hop.category or slug != hop.id:
-        return redirect("hop_chart", category_id=hop.category, slug=hop.id, chart_type=chart_type, format=format)
+        return redirect("hop_chart", category_id=hop.category, slug=hop.id, chart_type=chart_type, format=format, permanent=True)
 
     if HopChartFactory.is_supported_chart(chart_type):
         try:
@@ -183,7 +183,7 @@ def recipes(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
         raise Http404("Hop doesn't have any data.")
 
     if category_id != hop.category or slug != hop.id:
-        return redirect("hop_recipes", category_id=hop.category, slug=hop.id)
+        return redirect("hop_recipes", category_id=hop.category, slug=hop.id, permanent=True)
 
     recipes_list = HopAnalysis(hop).random_recipes(24)
     return render_recipes_list(recipes_list)

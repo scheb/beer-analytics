@@ -62,7 +62,7 @@ def detail(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
         raise Http404("Yeast doesn't have any data.")
 
     if type_id != yeast.type or slug != yeast.id:
-        return redirect("yeast_detail", type_id=yeast.type, slug=yeast.id)
+        return redirect("yeast_detail", type_id=yeast.type, slug=yeast.id, permanent=True)
 
     meta_provider = YeastMeta(yeast)
     meta = meta_provider.get_meta()
@@ -95,7 +95,7 @@ def chart(request: HttpRequest, slug: str, type_id: str, chart_type: str, format
         raise Http404("Yeast doesn't have any data.")
 
     if type_id != yeast.type or slug != yeast.id:
-        return redirect("yeast_chart", type_id=yeast.type, slug=yeast.id, chart_type=chart_type, format=format)
+        return redirect("yeast_chart", type_id=yeast.type, slug=yeast.id, chart_type=chart_type, format=format, permanent=True)
 
     if YeastChartFactory.is_supported_chart(chart_type):
         try:
@@ -116,7 +116,7 @@ def recipes(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
         raise Http404("Yeast doesn't have any data.")
 
     if type_id != yeast.type or slug != yeast.id:
-        return redirect("yeast_recipes", type_id=yeast.type, slug=yeast.id)
+        return redirect("yeast_recipes", type_id=yeast.type, slug=yeast.id, permanent=True)
 
     recipes_list = YeastAnalysis(yeast).random_recipes(24)
     return render_recipes_list(recipes_list)
