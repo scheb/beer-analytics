@@ -71,7 +71,7 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
         raise Http404("Fermentable doesn't have any data.")
 
     if category_id != fermentable.category or slug != fermentable.id:
-        return redirect("fermentable_detail", category_id=fermentable.category, slug=fermentable.id)
+        return redirect("fermentable_detail", category_id=fermentable.category, slug=fermentable.id, permanent=True)
 
     meta_provider = FermentableMeta(fermentable)
     meta = meta_provider.get_meta()
@@ -104,6 +104,7 @@ def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, fo
             slug=fermentable.id,
             chart_type=chart_type,
             format=format,
+            permanent=True,
         )
 
     if FermentableChartFactory.is_supported_chart(chart_type):
@@ -125,7 +126,7 @@ def recipes(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
         raise Http404("Fermentable doesn't have any data.")
 
     if category_id != fermentable.category or slug != fermentable.id:
-        return redirect("fermentable_recipes", category_id=fermentable.category, slug=fermentable.id)
+        return redirect("fermentable_recipes", category_id=fermentable.category, slug=fermentable.id, permanent=True)
 
     recipes_list = FermentableAnalysis(fermentable).random_recipes(24)
     return render_recipes_list(recipes_list)

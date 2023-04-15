@@ -26,7 +26,7 @@ def category(request: HttpRequest, category_slug: str) -> HttpResponse:
     style = get_object_or_404(Style, slug=category_slug)
 
     if not style.is_category:
-        return redirect("style_detail", category_slug=style.category.slug, slug=style.slug)
+        return redirect("style_detail", category_slug=style.category.slug, slug=style.slug, permanent=True)
 
     return display_style(request, style)
 
@@ -35,9 +35,9 @@ def detail(request: HttpRequest, slug: str, category_slug: str) -> HttpResponse:
     style = get_object_or_404(Style, slug=slug.lower())
 
     if style.is_category:
-        return redirect("style_category", category_slug=style.category.slug)
+        return redirect("style_category", category_slug=style.category.slug, permanent=True)
     if category_slug != style.category.slug or slug != style.slug:
-        return redirect("style_detail", category_slug=style.category.slug, slug=style.slug)
+        return redirect("style_detail", category_slug=style.category.slug, slug=style.slug, permanent=True)
 
     return display_style(request, style)
 
@@ -70,7 +70,7 @@ def category_chart(request: HttpRequest, category_slug: str, chart_type: str, fo
 
     if not style.is_category:
         return redirect(
-            "style_chart", category_slug=style.category.slug, slug=style.slug, chart_type=chart_type, format=format
+            "style_chart", category_slug=style.category.slug, slug=style.slug, chart_type=chart_type, format=format, permanent=True
         )
 
     return display_chart(request, style, chart_type, format)
@@ -80,10 +80,10 @@ def chart(request: HttpRequest, slug: str, category_slug: str, chart_type: str, 
     style = get_object_or_404(Style, slug=slug.lower())
 
     if style.is_category:
-        return redirect("style_category_chart", category_slug=style.category.slug, chart_type=chart_type, format=format)
+        return redirect("style_category_chart", category_slug=style.category.slug, chart_type=chart_type, format=format, permanent=True)
     if category_slug != style.category.slug or slug != style.slug:
         return redirect(
-            "style_chart", category_slug=style.category.slug, slug=style.slug, chart_type=chart_type, format=format
+            "style_chart", category_slug=style.category.slug, slug=style.slug, chart_type=chart_type, format=format, permanent=True
         )
 
     return display_chart(request, style, chart_type, format)
@@ -94,7 +94,7 @@ def category_recipes(request: HttpRequest, category_slug: str) -> HttpResponse:
     style = get_object_or_404(Style, slug=category_slug.lower())
 
     if not style.is_category:
-        return redirect("style_category_recipes", category_slug=style.category.slug)
+        return redirect("style_category_recipes", category_slug=style.category.slug, permanent=True)
 
     recipes_list = StyleAnalysis(style).random_recipes(24)
     return render_recipes_list(recipes_list)
@@ -105,9 +105,9 @@ def recipes(request: HttpRequest, slug: str, category_slug: str) -> HttpResponse
     style = get_object_or_404(Style, slug=slug.lower())
 
     if style.is_category:
-        return redirect("style_category_recipes", category_slug=style.category.slug)
+        return redirect("style_category_recipes", category_slug=style.category.slug, permanent=True)
     if category_slug != style.category.slug:
-        return redirect("style_recipes", category_slug=style.category.slug, slug=style.slug)
+        return redirect("style_recipes", category_slug=style.category.slug, slug=style.slug, permanent=True)
 
     recipes_list = StyleAnalysis(style).random_recipes(24)
     return render_recipes_list(recipes_list)
