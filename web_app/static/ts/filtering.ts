@@ -312,8 +312,8 @@ class AnalyzerQuery {
         if (null !== (queryString = queryParams.toString())) {
             url += '?'+queryString
         }
-        history.pushState({}, 'Custom Analysis | Beer-Analytics', url)
-        document.querySelector('title').text = 'Custom Analysis | Beer-Analytics'
+        history.pushState({}, 'Custom Recipe Analysis | Beer Analytics', url)
+        document.querySelector('title').text = 'Custom Recipe Analysis | Beer Analytics'
     }
 }
 

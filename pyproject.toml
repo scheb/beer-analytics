@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "beer-analytics"
 version = "1.0"
-description = "Beer-Analytics website project"
+description = "Beer Analytics website project"
 authors = ["Christian Scheb <me@christianscheb.de>"]
 license = "THE BEER-WARE LICENSE"
 
