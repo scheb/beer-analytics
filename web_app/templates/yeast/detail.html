@@ -43,7 +43,7 @@
             {% endif %}
         </dl>
 
-        {% if description %}<p>{{ description|safe }}</p>{% endif %}
+        {% if not long_description and description %}<p>{{ description|safe }}</p>{% endif %}
 
         {% if long_description %}
             <div class="detail-long-description">
