@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render
 from django.urls import reverse
 
-from recipe_db.models import Recipe, Style, Hop, Fermentable, Yeast
+from recipe_db.models import Recipe, Style, Hop, Fermentable, Yeast, Tag
 from web_app.charts.fermentable import FermentableChartFactory
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.style import StyleChartFactory
@@ -33,6 +33,7 @@ def sitemap(request: HttpRequest) -> HttpResponse:
     hops = Hop.objects.filter(recipes_count__gt=0)
     fermentables = Fermentable.objects.filter(recipes_count__gt=0)
     yeasts = Yeast.objects.filter(recipes_count__gt=0)
+    tags = Tag.objects.all()
 
     return render(
         request,
@@ -42,6 +43,7 @@ def sitemap(request: HttpRequest) -> HttpResponse:
             "hops": hops,
             "fermentables": fermentables,
             "yeasts": yeasts,
+            "tags": tags,
             "style_chart_types": StyleChartFactory.get_types(),
             "hop_chart_types": HopChartFactory.get_types(),
             "fermentable_chart_types": FermentableChartFactory.get_types(),
