@@ -29,7 +29,7 @@ def overview(request: HttpRequest) -> HttpResponse:
         hop_categories[hop.use]["hops"].append(hop)
 
     meta = HopOverviewMeta().get_meta()
-    context = {"categories": hop_categories.values(), "meta": meta}
+    context = {"categories": hop_categories.values(), "meta": meta, "num_hops": hops.count()}
 
     return render(request, "hop/overview.html", context)
 
