@@ -7,7 +7,7 @@ from typing import List, Iterable, Optional, Tuple
 from django.urls import reverse
 from meta.views import Meta
 
-from recipe_db.models import Hop, Yeast, Fermentable, Style
+from recipe_db.models import Hop, Yeast, Fermentable, Style, Tag
 from web_app.views.utils import object_url
 
 OPEN_GRAPH_IMAGE_WIDTH = 1200
@@ -169,8 +169,52 @@ class HopMeta(PageMeta):
         return Meta(
             title=self.get_title(),
             description=html2text(self.get_description()),
-            keywords=[self.hop.name.lower(), "hop", "dry-hopping", "bittering", "aroma"],
+            keywords=[self.hop.name.lower(), "hop", "pairings", "dry-hopping", "bittering", "aroma"],
             url=object_url(self.hop),
+        )
+
+
+class HopFlavorOverviewMeta(PageMeta):
+    def __init__(self) -> None:
+        pass
+
+    def get_title(self):
+        return NORMAL_TITLE.format("Hop Flavors and Aromas")
+
+    def get_description(self):
+        return "Unlock the secrets of hop flavors with our ultimate guide. From classic to exotic varieties, explore flavor profiles and enhance your brewing game."
+
+    def get_keywords(self):
+        return ["hops", "flavors", "aromas"]
+
+    def get_url(self):
+        return reverse("hop_flavor_overview")
+
+    def get_meta(self) -> Meta:
+        return Meta(
+            title=self.get_title(),
+            description=self.get_description(),
+            keywords=self.get_keywords(),
+            url=self.get_url(),
+        )
+
+
+class HopFlavorMeta(PageMeta):
+    def __init__(self, tag: Tag) -> None:
+        self.tag = tag
+
+    def get_title(self):
+        return NORMAL_TITLE.format(self.tag.name + " Flavor Hops")
+
+    def get_description(self) -> str:
+        return "Unlock the secrets of the {} hop flavor with our ultimate guide. Explore available varieties, flavor profiles and enhance your brewing game.".format(self.tag.name)
+
+    def get_meta(self) -> Meta:
+        return Meta(
+            title=self.get_title(),
+            description=html2text(self.get_description()),
+            keywords=[self.tag.name.lower(), "hops", "flavors", "aromas"],
+            url=object_url(self.tag),
         )
 
 
