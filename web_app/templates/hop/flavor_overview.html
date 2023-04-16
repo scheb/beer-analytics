@@ -30,7 +30,7 @@
         <tbody>
             {% for tag in tags %}{% if tag.accessible_hops_count > 1 %}
             <tr>
-                <td class="badge-list"><a href="{% url "hop_flavor_detail" tag.id %}" class="badge bg-primary">{{ tag.name }}</a></td>
+                <td class="badge-list"><a href="{% url "hop_flavor_detail" tag.id %}" class="badge bg-{{ tag.category }}">{{ tag.name }}</a></td>
                 <td>{{ tag.accessible_hops_count }}</td>
                 <td>{% for hop in tag.most_popular_hops %}{% if not forloop.first %}, {% endif %}<a href="{{ hop|url }}">{{ hop.name }}</a>{% endfor %}</td>
             </tr>

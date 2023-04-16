@@ -22,7 +22,7 @@
             <label>Other descriptors going with <em>{{ tag_name }}</em>:</label>
             <ul>
             {% for tag in associated_aroma_tags %}
-                <li><a href="{% url "hop_flavor_detail" tag.id %}" class="badge bg-primary">
+                <li><a href="{% url "hop_flavor_detail" tag.id %}" class="badge bg-{{ tag.category }}">
                     {{ tag.name }}
                     <small>({{ tag.combinations }})</small>
                 </a></li>
