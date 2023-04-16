@@ -53,7 +53,7 @@
                 <label>Flavor:</label>
                 <ul>
                 {% for tag in hop.aroma_tags.all %}
-                    <li><a href="{% url "hop_flavor_detail" tag.id %}" class="badge bg-primary">
+                    <li><a href="{% url "hop_flavor_detail" tag.id %}" class="badge bg-{{ tag.category }}">
                         {{ tag.name }}
                         <small>({{ tag.accessible_hops_count }})</small>
                     </a></li>

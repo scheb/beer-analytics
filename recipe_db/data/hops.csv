@@ -64,7 +64,7 @@ Challenger;dual-purpose;GBR;Northdown, Northern Brewer, Perle, Target;Cedar, Fru
 Chelan;bittering;USA;Galena, Nugget;Citrus, Floral, Fruity, Mild;;
 Chinook;dual-purpose;USA;Columbus, Eroica, Galena, Northern Brewer, Nugget;Grapefruit, Pine, Resin, Spicy;;Kanook
 Cicero;dual-purpose;SLO;;;;
-Citiva;aroma;USA;;Tropical Fruits, Peach, Floral, Ripe Mango, Lime;Sitiva;
+Citiva;aroma;USA;;Tropical Fruits, Peach, Floral, Mango, Lime;Sitiva;
 Citra;dual-purpose;USA;Cascade, Centennial, Mosaic, Simcoe;Citrus, Floral, Gooseberry, Grapefruit, Lime, Lychee, Melon, Passion Fruit, Peach;HBC 394;
 Cluster;dual-purpose;USA;Chinook, Eroica, Galena, Nugget;Earthy, Floral, Fruity, Sweet;;
 Cluster Fugget;aroma;USA;;Floral, Pepper, Spicy, Woody;;Fugget
@@ -125,7 +125,7 @@ Golding;aroma;USA;East Kent Golding, Fuggle, Styrian Golding, Willamette;Fruity,
 Green Bullet;dual-purpose;NZL;Crystal, Hallertauer Mittelfrüh, Liberty, Mount Hood, Styrian Golding, Ultra;Floral, Fruity, Pepper, Pine, Plum, Resin;;
 Greensburg;dual-purpose;USA;;;;
 Groene Bel;aroma;BEL;;;;
-Grüngeist;aroma;USA;;Tropical Fruits, Peach, Passion Fruit, Lemon Zest, Floral, Kiwi, Lavender;;Grungeist
+Grüngeist;aroma;USA;;Tropical Fruits, Peach, Passion Fruit, Lemon, Floral, Kiwi, Lavender;;Grungeist
 Hallertauer Aroma;aroma;NZL;;Woody, Citrus;;
 Hallertauer Bitter;bittering;GER;Merkur;Spicy, Sweet;;Hallertau Bitter, H Bitter
 Hallertauer Blanc;aroma;GER;Enigma, Nelson Sauvin;Clean, Gooseberry, Grape, Lemongrass, Passion Fruit, Pineapple, Whitewine;;Hallertau Blanc, H Blanc
@@ -192,7 +192,7 @@ Magnat;dual-purpose;POL;Lubelska, Magnum;Chamomile, Citrus, Floral, Lemon, Lilac
 Magnum;bittering;USA;Columbus, Galena, Hallertauer Taurus, Horizon, Northdown, Northern Brewer, Nugget;Floral, Citrus, Spicy, Nutmeg, Pepper, Lemon, Spearmint, Apple;;Magnun, Magnung, Magnu
 Malling;dual-purpose;AUT;;Citrus, Apricot, Melon, Pear, Pepper;;
 Mandarina Bavaria;aroma;GER;Cascade, Hüll Melon;Citrus, Herbal, Lemon, Resin, Tangerine, Tropical Fruits;;Bavarian Mandarina, Bavaria Mandarina, Mandarin Bavaria, Mandrina Bavaria, Mandarina Barvaria, Mandarina
-Mapuche;aroma;ARG;;Blueberry, Red Fruits, Peach, Apricot;;
+Mapuche;aroma;ARG;;Blueberry, Fruity, Peach, Apricot;;
 McKenzie;aroma;USA;;Fruity, Grapefruit, Lemon, Nectarine, Melon, Pine, Resin, Woody, Thyme;;
 Marco Polo;dual-purpose;CHN;Columbus;Elderflower, Gooseberry, Oregano;;
 Marynka;dual-purpose;POL;Tettnanger;Anise, Citrus, Earthy, Grapefruit, Hay, Herbal, Lemon, Licorice;;

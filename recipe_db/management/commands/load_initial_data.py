@@ -25,6 +25,8 @@ class Command(BaseCommand):
         load_fermentables()
         self.stdout.write("Load yeasts")
         load_yeasts()
+        self.stdout.write("Load flavors")
+        load_flavors()
         self.stdout.write("Done")
 
 
@@ -109,7 +111,7 @@ def load_hops():
     for data in data_rows:
         hop = hops_by_name[data["name"]]
         for tag_name in split_list(data["aromas"]):
-            tag = get_or_create_tag(tag_name)
+            tag = get_or_create_tag(normalize_flavor_name(tag_name))
             hop.aroma_tags.add(tag)
 
         substitutes = split_list(data["substitutes"])
@@ -185,6 +187,31 @@ def load_yeasts():
         yeast.save()
 
 
+
+def load_flavors():
+    csv_file = load_csv("flavors.csv")
+    header = next(csv_file)
+
+    for row in csv_file:
+        if len(row) == 1:
+            continue  # Skip empty lines
+
+        row = map(cast_values, row)
+        data = dict(zip(header, row))
+        tag_id = Tag.create_id(data["name"])
+
+        try:
+            tag = Tag.objects.get(pk=tag_id)
+        except Tag.DoesNotExist:
+            tag = Tag()
+            pass
+
+        tag.id = tag_id
+        for field in data:
+            setattr(tag, field, data[field])
+        tag.save()
+
+
 def cast_values(value):
     if isinstance(value, str):
         value = value.strip()
@@ -213,3 +240,37 @@ def cast_values(value):
 def load_csv(file_name: str):
     file_path = path.join(settings.__getattr__("BASE_DIR"), "recipe_db", "data", file_name)
     return csv.reader(open(file_path, encoding="utf-8"), delimiter=";")
+
+
+# Normalize flavors, because it's hard to do it right XD
+def normalize_flavor_name(value: str):
+    value = value.lower()
+
+    if value == "fruit":
+        return "Fruity"
+
+    if value == "spice":
+        return "Spicy"
+
+    if value == "tropical":
+        return "Tropical Fruits"
+
+    if value == "tropical fruit":
+        return "Tropical Fruits"
+
+    if value == "grass":
+        return "Grassy"
+
+    if value == "green grass":
+        return "Grassy"
+
+    if value == "spice":
+        return "Spicy"
+
+    if value == "stonefruit":
+        return "Stone Fruit"
+
+    if value == "passion fruit":
+        return "Passion Fruit"
+
+    return value

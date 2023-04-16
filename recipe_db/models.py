@@ -50,6 +50,7 @@ def create_human_readable_id(value: str) -> str:
 class Tag(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     name = models.CharField(max_length=255, default=None, blank=True, null=True)
+    category = models.CharField(max_length=32, default=None, blank=True, null=True)
 
     @property
     def accessible_hops_count(self) -> int:
