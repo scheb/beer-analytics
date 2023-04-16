@@ -11,7 +11,12 @@ from web_app.views.utils import object_url
 class Command(BaseCommand):
     help = "Enrich descriptions with links to other entities"
 
+    def add_arguments(self, parser):
+        parser.add_argument("directory", help="Directory path")
+
     def handle(self, *args, **options):
+        directory = "web_app/templates/" + options["directory"]
+
         style_replacements: List[dict] = []
         for style in Style.objects.all():
             url = object_url(style)
@@ -27,7 +32,6 @@ class Command(BaseCommand):
                 hop_replacements.append(dict(id=hop.id, name=hop_name, url=url, length=len(hop_name)))
         hop_replacements.sort(key=lambda x: x['length'], reverse=True)  # Longest names first
 
-        directory = "web_app/templates/hop/descriptions/flavors"
         for file in os.listdir(directory):
             filename = os.fsdecode(file)
 
