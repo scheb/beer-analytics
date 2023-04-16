@@ -3,6 +3,7 @@ from typing import Optional, Iterable
 
 from django.conf import settings
 from django.http import HttpResponse, Http404
+from django.template import TemplateDoesNotExist, loader
 from django.urls import reverse
 
 from recipe_db.models import Style, Hop, Fermentable, Yeast, Recipe, Tag
@@ -69,3 +70,11 @@ def object_url(item: object):
         return reverse("hop_flavor_detail", kwargs={"flavor_id": item.id})
 
     return None
+
+
+def template_exists(template: str) -> bool:
+    try:
+        loader.get_template(template)
+        return True
+    except TemplateDoesNotExist:
+        return False
