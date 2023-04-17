@@ -159,10 +159,10 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.7.tgz#ccab5c8f7dc557a52ca3288c10075c9ccd37fff7"
   integrity sha512-Cr4OjIkipTtcXKjAsm8agyleBuDHvxzeBoa1v543lbv1YaIwQjESsVcmjiWiPEbC1FIeHOG/Op9kdCmAmiS3Kw==
 
-"@syncfusion/ej2-base@~21.1.37", "@syncfusion/ej2-base@~21.1.38":
-  version "21.1.38"
-  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-base/-/ej2-base-21.1.38.tgz#54959617cce7e6ce96989e7d6d28dbe4fc1361c1"
-  integrity sha512-EJn5gJS1Vy9GkbijcIOnb91u3dYLPJjxvHutEjeekEQHDdbX/xUjNmjDaR8Adnxa+0XaCX3RvDysorVJb0c7Uw==
+"@syncfusion/ej2-base@~21.1.37", "@syncfusion/ej2-base@~21.1.38", "@syncfusion/ej2-base@~21.1.39":
+  version "21.1.40"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-base/-/ej2-base-21.1.40.tgz#fc74676abd359175bdae3b216b8588f37c9f6979"
+  integrity sha512-hFAtGh6TqbEckDRPGBSp5jFiyRCiOSubFsM99qoiP6Ub6GROAfzG7NvHwuoVulWsOLPgpye37DQsM2K0ex5Jyg==
   dependencies:
     "@syncfusion/ej2-icons" "~21.1.37"
 
@@ -197,12 +197,12 @@
   resolved "https://registry.yarnpkg.com/@syncfusion/ej2-icons/-/ej2-icons-21.1.37.tgz#fa6dd24ce987e0a0c5b5ff1cf5e1c3854bd6a7bc"
   integrity sha512-oJWxxYNcvz4PSsAKsFqwR027c4p6GXsxqDVJGy8tr0L/XT8hpBE+3mHsmSfeOhKyCHg4HCBiT3POVUd9Jg1unw==
 
-"@syncfusion/ej2-inputs@^21.1.38", "@syncfusion/ej2-inputs@~21.1.38":
-  version "21.1.38"
-  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-inputs/-/ej2-inputs-21.1.38.tgz#86965ba2a81d80f7c98a307caee7840ac892bc46"
-  integrity sha512-IpnzL7WpDT30dNeVpS7kuiQJaa/XvpNAparTJQxAKvseezJQtphJ0MKzDcA9zHYQTJCcffkm5i2cUN3L2hSjwA==
+"@syncfusion/ej2-inputs@^21.1.39", "@syncfusion/ej2-inputs@~21.1.38":
+  version "21.1.39"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-inputs/-/ej2-inputs-21.1.39.tgz#b54fdd3eef10301b2d0ee4d4f643ab967fc65599"
+  integrity sha512-RAp1EmWB4wz+8kXo/T42wr66DztCCjI+gNxaBZ+33d5DVC5XgtIdhadpeLZqx4XeTqN3r/ZWpPyU1h8M/hQWKQ==
   dependencies:
-    "@syncfusion/ej2-base" "~21.1.38"
+    "@syncfusion/ej2-base" "~21.1.39"
     "@syncfusion/ej2-buttons" "~21.1.37"
     "@syncfusion/ej2-popups" "~21.1.37"
     "@syncfusion/ej2-splitbuttons" "~21.1.37"
