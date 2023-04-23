@@ -5,15 +5,9 @@ except ImportError:
 
 DEBUG = False
 
-MIDDLEWARE += [
-    "django.middleware.cache.UpdateCacheMiddleware",
-    "django.middleware.cache.FetchFromCacheMiddleware",
-    "django.middleware.common.CommonMiddleware",
-]
-
 CACHES = {
     "default": {"BACKEND": "django.core.cache.backends.filebased.FileBasedCache", "LOCATION": path.join(env.str("CACHE_DIR"), "default")},
-    "charts": {"BACKEND": "django.core.cache.backends.filebased.FileBasedCache", "LOCATION": path.join(env.str("CACHE_DIR"), "charts")},
+    "data": {"BACKEND": "django.core.cache.backends.filebased.FileBasedCache", "LOCATION": path.join(env.str("CACHE_DIR"), "data")},
     "images": {"BACKEND": "django.core.cache.backends.filebased.FileBasedCache", "LOCATION": path.join(env.str("CACHE_DIR"), "images")},
 }
 

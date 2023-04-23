@@ -8,10 +8,12 @@ from web_app.charts.utils import NoDataException
 from web_app.views.utils import render_chart
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def start(request: HttpRequest) -> HttpResponse:
     return redirect("trend_overview", period="recent")
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def overview(request: HttpRequest, period: str) -> HttpResponse:
     try:
         trend_period = TrendPeriod.from_string(period)
@@ -21,7 +23,16 @@ def overview(request: HttpRequest, period: str) -> HttpResponse:
     return render(request, "trend/overview.html", {"period": trend_period})
 
 
-@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="charts")
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="data")
+def chart_data(request: HttpRequest, period: str, chart_type: str) -> HttpResponse:
+    return chart(request, period, chart_type, "json")
+
+
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="images")
+def chart_image(request: HttpRequest, period: str, chart_type: str, format: str) -> HttpResponse:
+    return chart(request, period, chart_type, format)
+
+
 def chart(request: HttpRequest, period: str, chart_type: str, format: str) -> HttpResponse:
     try:
         trend_period = TrendPeriod.from_string(period)
