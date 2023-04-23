@@ -85,7 +85,7 @@ def category_chart(request: HttpRequest, category_slug: str, chart_type: str, fo
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="data")
-def chart_data(request: HttpRequest, slug: str, category_slug: str, chart_type: str, format: str) -> HttpResponse:
+def chart_data(request: HttpRequest, slug: str, category_slug: str, chart_type: str) -> HttpResponse:
     return chart(request, slug, category_slug, chart_type, "json")
 
 
