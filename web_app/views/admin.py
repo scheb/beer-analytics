@@ -11,6 +11,7 @@ from web_app.charts.utils import NoDataException
 from web_app.views.utils import render_chart
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def start(request: HttpRequest) -> HttpResponse:
     unmapped_hops = UnmappedHopsAnalysis().get_unmapped()
     unmapped_yeasts = UnmappedYeastsAnalysis().get_unmapped()
@@ -25,7 +26,7 @@ def start(request: HttpRequest) -> HttpResponse:
     return render(request, "admin/overview.html", context)
 
 
-@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="charts")
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="data")
 def chart(chart_type: str, format: str) -> HttpResponse:
     if AdminChartFactory.is_supported_chart(chart_type):
         try:

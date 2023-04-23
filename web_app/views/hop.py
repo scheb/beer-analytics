@@ -13,6 +13,7 @@ from web_app.meta import HopMeta, HopOverviewMeta, HopFlavorOverviewMeta, HopFla
 from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, get_template_if_exists
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def overview(request: HttpRequest) -> HttpResponse:
     hop_categories = {}
     categories = Hop.get_categories()
@@ -35,6 +36,7 @@ def overview(request: HttpRequest) -> HttpResponse:
     return render(request, "hop/overview.html", context)
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def category_or_tag(request: HttpRequest, category_id: str) -> HttpResponse:
     categories = Hop.get_categories()
     if category_id in categories:
@@ -70,6 +72,7 @@ def category(request: HttpRequest, category_id: str) -> HttpResponse:
     return render(request, "hop/category.html", context)
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def flavor_overview(request: HttpRequest) -> HttpResponse:
     meta = HopFlavorOverviewMeta().get_meta()
     context = {"meta": meta, "categories": get_hop_flavor_categories()}
@@ -106,6 +109,7 @@ def get_hop_flavor_categories():
     return categories
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def flavor_detail(request: HttpRequest, flavor_id: str) -> HttpResponse:
     tag_obj = get_object_or_404(Tag, pk=flavor_id.lower())
 
@@ -133,6 +137,7 @@ def flavor_detail(request: HttpRequest, flavor_id: str) -> HttpResponse:
     return render(request, "hop/flavor.html", context)
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
     hop = get_object_or_404(Hop, pk=slug.lower())
 
@@ -161,7 +166,16 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
     return render(request, "hop/detail.html", context)
 
 
-@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="charts")
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="data")
+def chart_data(request: HttpRequest, slug: str, category_id: str, chart_type: str) -> HttpResponse:
+    return chart(request, slug, category_id, chart_type, "json")
+
+
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="images")
+def chart_image(request: HttpRequest, slug: str, category_id: str, chart_type: str, format: str) -> HttpResponse:
+    return chart(request, slug, category_id, chart_type, format)
+
+
 def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, format: str) -> HttpResponse:
     hop = get_object_or_404(Hop, pk=slug.lower())
 

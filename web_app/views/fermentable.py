@@ -14,6 +14,7 @@ from web_app.meta import FermentableMeta, FermentableOverviewMeta
 from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def overview(request: HttpRequest) -> HttpResponse:
     fermentables = Fermentable.objects.filter(recipes_count__gt=0).order_by("name")
     fermentable_categories = group_by_category(fermentables)
@@ -32,6 +33,7 @@ def overview(request: HttpRequest) -> HttpResponse:
     return render(request, "fermentable/overview.html", context)
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def category(request: HttpRequest, category_id: str) -> HttpResponse:
     categories = Fermentable.get_categories()
     if category_id not in categories:
@@ -58,6 +60,7 @@ def category(request: HttpRequest, category_id: str) -> HttpResponse:
     return render(request, "fermentable/category.html", context)
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
     try:
         fermentable = get_object_or_404(Fermentable, pk=slug.lower())
@@ -92,7 +95,16 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
     return render(request, "fermentable/detail.html", context)
 
 
-@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="charts")
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="data")
+def chart_data(request: HttpRequest, slug: str, category_id: str, chart_type: str) -> HttpResponse:
+    return chart(request, slug, category_id, chart_type, "json")
+
+
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="images")
+def chart_image(request: HttpRequest, slug: str, category_id: str, chart_type: str, format: str) -> HttpResponse:
+    return chart(request, slug, category_id, chart_type, format)
+
+
 def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, format: str) -> HttpResponse:
     fermentable = get_object_or_404(Fermentable, pk=slug.lower())
 

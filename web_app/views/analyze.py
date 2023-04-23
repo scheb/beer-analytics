@@ -10,12 +10,14 @@ from recipe_db.analytics.recipe import RecipesCountAnalysis
 from recipe_db.analytics.scope import RecipeScope, HopScope, FermentableScope, YeastScope
 from recipe_db.etl.format.parser import int_or_none
 from recipe_db.models import Style, Hop, Fermentable, Yeast
+from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.analyze import AnalyzeChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.meta import PageMeta
 from web_app.views.utils import render_chart, FORMAT_JSON
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def result(request: HttpRequest) -> HttpResponse:
     meta = PageMeta.create("Custom Analysis", "", url=reverse("legal"))
     meta.extra_props = {"robots": "noindex"}
@@ -124,6 +126,7 @@ def get_min_max(value: str, min_limit: int, max_limit: int, factor: float = 1) -
     return min_value * factor if min_value is not None else None, max_value * factor if max_value is not None else None
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="data")
 def get_entities(request: HttpRequest) -> HttpResponse:
     styles = Style.objects.exclude(parent_style=None).filter(recipes_count__gt=0).order_by('id')
     hops = Hop.objects.all().filter(recipes_count__gt=0).order_by('name')

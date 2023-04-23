@@ -14,6 +14,7 @@ from web_app.meta import YeastMeta, YeastOverviewMeta
 from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, get_template_if_exists
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def overview(request: HttpRequest) -> HttpResponse:
     yeasts = Yeast.objects.filter(recipes_count__gt=0).order_by("name")
     yeast_types = group_by_type(yeasts)
@@ -28,6 +29,7 @@ def overview(request: HttpRequest) -> HttpResponse:
     return render(request, "yeast/overview.html", context)
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def type_overview(request: HttpRequest, type_id: str) -> HttpResponse:
     types = Yeast.get_types()
     if type_id not in types:
@@ -55,6 +57,7 @@ def type_overview(request: HttpRequest, type_id: str) -> HttpResponse:
     return render(request, "yeast/type.html", context)
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def detail(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
     yeast = get_object_or_404(Yeast, pk=slug.lower())
 
@@ -82,7 +85,16 @@ def detail(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
     return render(request, "yeast/detail.html", context)
 
 
-@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="charts")
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="data")
+def chart_data(request: HttpRequest, slug: str, type_id: str, chart_type: str) -> HttpResponse:
+    return chart(request, slug, type_id, chart_type, "json")
+
+
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="images")
+def chart_image(request: HttpRequest, slug: str, type_id: str, chart_type: str, format: str) -> HttpResponse:
+    return chart(request, slug, type_id, chart_type, format)
+
+
 def chart(request: HttpRequest, slug: str, type_id: str, chart_type: str, format: str) -> HttpResponse:
     yeast = get_object_or_404(Yeast, pk=slug.lower())
 

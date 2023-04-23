@@ -12,6 +12,7 @@ from web_app.meta import StyleOverviewMeta, StyleMeta
 from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, get_template_if_exists
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def overview(request: HttpRequest) -> HttpResponse:
     categories = Style.objects.filter(parent_style=None).order_by("-recipes_count")
     most_popular = Style.objects.exclude(parent_style=None).order_by("-recipes_count")[:5]
@@ -22,6 +23,7 @@ def overview(request: HttpRequest) -> HttpResponse:
     return render(request, "style/overview.html", context)
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def category(request: HttpRequest, category_slug: str) -> HttpResponse:
     style = get_object_or_404(Style, slug=category_slug)
 
@@ -31,6 +33,7 @@ def category(request: HttpRequest, category_slug: str) -> HttpResponse:
     return display_style(request, style)
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def detail(request: HttpRequest, slug: str, category_slug: str) -> HttpResponse:
     style = get_object_or_404(Style, slug=slug.lower())
 
@@ -60,7 +63,16 @@ def display_style(request: HttpRequest, style: Style) -> HttpResponse:
     return render(request, "style/detail.html", context)
 
 
-@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="charts")
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="data")
+def category_chart_data(request: HttpRequest, category_slug: str, chart_type: str) -> HttpResponse:
+    return category_chart(request, category_slug, chart_type, "json")
+
+
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="images")
+def category_chart_image(request: HttpRequest, category_slug: str, chart_type: str, format: str) -> HttpResponse:
+    return category_chart(request, category_slug, chart_type, format)
+
+
 def category_chart(request: HttpRequest, category_slug: str, chart_type: str, format: str) -> HttpResponse:
     style = get_object_or_404(Style, slug=category_slug.lower())
 
@@ -72,7 +84,16 @@ def category_chart(request: HttpRequest, category_slug: str, chart_type: str, fo
     return display_chart(request, style, chart_type, format)
 
 
-@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="charts")
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="data")
+def chart_data(request: HttpRequest, slug: str, category_slug: str, chart_type: str, format: str) -> HttpResponse:
+    return chart(request, slug, category_slug, chart_type, "json")
+
+
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="images")
+def chart_image(request: HttpRequest, slug: str, category_slug: str, chart_type: str, format: str) -> HttpResponse:
+    return chart(request, slug, category_slug, chart_type, format)
+
+
 def chart(request: HttpRequest, slug: str, category_slug: str, chart_type: str, format: str) -> HttpResponse:
     style = get_object_or_404(Style, slug=slug.lower())
 
