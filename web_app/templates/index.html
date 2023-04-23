@@ -2,29 +2,29 @@
 {% load web_app %}
 
 {% block content %}
-    <h1 class="home">Discover the World of Beer Analytics</h1>
-    <p><strong>Your Ultimate Brewing Recipe Resource</strong></p>
+    <h1 class="home">Discover Beer Analytics</h1>
+    <p><strong>The Ultimate Beer Brewing Recipe Database</strong></p>
 
     <p>
-        Welcome to Beer Analytics, the ultimate online destination for data-driven beer brewing recipes and insights.
+        Welcome to Beer Analytics, the ultimate online destination for beer recipes and data-driven insights.
         Our extensive database is perfect for beer lovers and homebrewers alike, offering a wealth of information on how
-        brewing recipes are crafted, even for those new to the world of data analysis. With a staggering
-        <strong>{{ recipes }} brewing recipes</strong> sourced primarily from the homebrewing community, we're here to
-        take your beer brewing knowledge to the next level.
+        beer brewing recipes are crafted, even for those new to the world of data analysis. With a staggering
+        <strong>{{ recipes }} recipes</strong> it is the largest beer brewing recipes database in the world, aggregated
+        from various sources in homebrewing community. We're here to take your beer brewing knowledge to the next level!
     </p>
 
     <p>
         Dive into the intricacies of various <a href="{% url "style_overview" %}">beer styles</a> and uncover their
         unique compositions. Browse our comprehensive index of <a href="{% url "fermentable_overview" %}">fermentables</a>,
         <a href="{% url "fermentable_category" "grain" %}">malts</a>, <a href="{% url "hop_overview" %}">hops</a> and
-        <a href="{% url "yeast_overview" %}">yeasts</a> to expand your understanding of the brewing ingredients that
+        <a href="{% url "yeast_overview" %}">yeasts</a> to expand your understanding of the ingredients that
         make each brew stand out.
     </p>
 
     <p>
-        Can't find exactly what you're looking for? Our user-friendly filter options
-        <span class="with-sidebar">in the sidebar</span> <span class="with-toogle">in the top menu</span> allow you to
-        tailor your search and receive <strong>customized data analysis</strong> that cater to your needs. Start your
-        beer analytics journey today and <strong>unlock the secrets to exceptional brewing recipes</strong>!
+        Can't find exactly what you're looking for? Filter options <span class="with-sidebar">in the sidebar</span>
+        <span class="with-toogle">in the top menu</span> allow you to tailor your search and receive <strong>customized
+        data analysis</strong> that cater to your needs. Start your beer analytics journey today and <strong>unlock the
+        secrets to exceptional beer brewing</strong>!
     </p>
 {% endblock %}
