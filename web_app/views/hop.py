@@ -1,6 +1,5 @@
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
-from django.template import loader, TemplateDoesNotExist
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
 
@@ -10,7 +9,7 @@ from recipe_db.models import Hop, Tag
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.meta import HopMeta, HopOverviewMeta, HopFlavorOverviewMeta, HopFlavorMeta
-from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, template_exists
+from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, get_template_if_exists
 
 
 def overview(request: HttpRequest) -> HttpResponse:
@@ -90,10 +89,7 @@ def get_hop_flavor_categories():
     categories = []
     for category_id, category in available_categories.items():
         if len(category["tags"]) > 0:
-
-            description_template = "hop/descriptions/flavor-category/%s.html" % category_id
-            if not template_exists(description_template):
-                description_template = None
+            description_template = get_template_if_exists("hop/descriptions/flavor-category/%s.html" % category_id)
 
             category["id"] = category_id
             category["description"] = description_template
@@ -116,12 +112,7 @@ def flavor_detail(request: HttpRequest, flavor_id: str) -> HttpResponse:
     hops = hops_query.order_by("name")
     meta = HopFlavorMeta(tag_obj).get_meta()
     associated_aroma_tags = HopFlavorAnalysis().get_associated_flavors(tag_obj)
-
-    long_description_template = "hop/descriptions/flavors/%s.html" % tag_obj.id
-    try:
-        loader.get_template(long_description_template)
-    except TemplateDoesNotExist:
-        long_description_template = None
+    long_description_template = get_template_if_exists("hop/descriptions/flavors/%s.html" % tag_obj.id)
 
     context = {
         "tag_name": tag_obj.name,
@@ -156,12 +147,7 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
             ),
         )
 
-    long_description_template = "hop/descriptions/hops/%s.html" % hop.id
-    try:
-        loader.get_template(long_description_template)
-    except TemplateDoesNotExist:
-        long_description_template = None
-
+    long_description_template = get_template_if_exists("hop/descriptions/hops/%s.html" % hop.id)
     context = {"hop": hop, "description": meta_provider.get_description_html(), "long_description": long_description_template, "meta": meta}
 
     return render(request, "hop/detail.html", context)
