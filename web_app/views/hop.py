@@ -6,6 +6,7 @@ from django.views.decorators.cache import cache_page
 from recipe_db.analytics.hop import HopFlavorAnalysis
 from recipe_db.analytics.spotlight.hop import HopAnalysis
 from recipe_db.models import Hop, Tag
+from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.meta import HopMeta, HopOverviewMeta, HopFlavorOverviewMeta, HopFlavorMeta
@@ -160,6 +161,7 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
     return render(request, "hop/detail.html", context)
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="charts")
 def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, format: str) -> HttpResponse:
     hop = get_object_or_404(Hop, pk=slug.lower())
 

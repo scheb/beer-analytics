@@ -7,6 +7,7 @@ from django.views.decorators.cache import cache_page
 
 from recipe_db.analytics.spotlight.yeast import YeastAnalysis
 from recipe_db.models import Yeast
+from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.utils import NoDataException
 from web_app.charts.yeast import YeastChartFactory
 from web_app.meta import YeastMeta, YeastOverviewMeta
@@ -81,6 +82,7 @@ def detail(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
     return render(request, "yeast/detail.html", context)
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="charts")
 def chart(request: HttpRequest, slug: str, type_id: str, chart_type: str, format: str) -> HttpResponse:
     yeast = get_object_or_404(Yeast, pk=slug.lower())
 

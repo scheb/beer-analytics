@@ -5,6 +5,7 @@ from django.views.decorators.cache import cache_page
 
 from recipe_db.analytics.spotlight.style import StyleAnalysis
 from recipe_db.models import Style
+from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.style import StyleChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.meta import StyleOverviewMeta, StyleMeta
@@ -59,6 +60,7 @@ def display_style(request: HttpRequest, style: Style) -> HttpResponse:
     return render(request, "style/detail.html", context)
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="charts")
 def category_chart(request: HttpRequest, category_slug: str, chart_type: str, format: str) -> HttpResponse:
     style = get_object_or_404(Style, slug=category_slug.lower())
 
@@ -70,6 +72,7 @@ def category_chart(request: HttpRequest, category_slug: str, chart_type: str, fo
     return display_chart(request, style, chart_type, format)
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="charts")
 def chart(request: HttpRequest, slug: str, category_slug: str, chart_type: str, format: str) -> HttpResponse:
     style = get_object_or_404(Style, slug=slug.lower())
 

@@ -1,10 +1,10 @@
 import json
-import platform
-from json import JSONDecodeError
 from os import path
 from pathlib import Path
 
 from environ import Env
+
+from web_app import DEFAULT_PAGE_CACHE_TIME
 
 env = Env()
 env.read_env()
@@ -91,7 +91,7 @@ LOGGING = {
 }
 
 CACHE_MIDDLEWARE_ALIAS = "default"
-CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 12
+CACHE_MIDDLEWARE_SECONDS = DEFAULT_PAGE_CACHE_TIME
 CACHE_MIDDLEWARE_KEY_PREFIX = ""
 
 LANGUAGE_CODE = "en-us"

@@ -7,6 +7,7 @@ from django.views.decorators.cache import cache_page
 
 from recipe_db.analytics.spotlight.fermentable import FermentableAnalysis
 from recipe_db.models import Fermentable
+from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.fermentable import FermentableChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.meta import FermentableMeta, FermentableOverviewMeta
@@ -91,6 +92,7 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
     return render(request, "fermentable/detail.html", context)
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="charts")
 def chart(request: HttpRequest, slug: str, category_id: str, chart_type: str, format: str) -> HttpResponse:
     fermentable = get_object_or_404(Fermentable, pk=slug.lower())
 
