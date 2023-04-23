@@ -1,6 +1,8 @@
 from django.http import HttpRequest, HttpResponse, Http404
 from django.shortcuts import render, redirect
+from django.views.decorators.cache import cache_page
 
+from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.trend import TrendChartFactory, TrendPeriod
 from web_app.charts.utils import NoDataException
 from web_app.views.utils import render_chart
@@ -19,6 +21,7 @@ def overview(request: HttpRequest, period: str) -> HttpResponse:
     return render(request, "trend/overview.html", {"period": trend_period})
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="charts")
 def chart(request: HttpRequest, period: str, chart_type: str, format: str) -> HttpResponse:
     try:
         trend_period = TrendPeriod.from_string(period)

@@ -1,9 +1,11 @@
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render
+from django.views.decorators.cache import cache_page
 
 from recipe_db.analytics.fermentable import UnmappedFermentablesAnalysis
 from recipe_db.analytics.hop import UnmappedHopsAnalysis
 from recipe_db.analytics.yeast import UnmappedYeastsAnalysis
+from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.admin import AdminChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.views.utils import render_chart
@@ -23,6 +25,7 @@ def start(request: HttpRequest) -> HttpResponse:
     return render(request, "admin/overview.html", context)
 
 
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="charts")
 def chart(chart_type: str, format: str) -> HttpResponse:
     if AdminChartFactory.is_supported_chart(chart_type):
         try:
