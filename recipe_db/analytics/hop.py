@@ -9,7 +9,7 @@ from recipe_db.analytics import METRIC_PRECISION, lowerfence, q1, q3, upperfence
 from recipe_db.analytics.recipe import RecipeLevelAnalysis
 from recipe_db.analytics.scope import StyleProjection, HopProjection, HopScope
 from recipe_db.analytics.utils import remove_outliers, get_style_names_dict, get_hop_names_dict, dictfetchall
-from recipe_db.models import RecipeHop
+from recipe_db.models import RecipeHop, Tag
 
 
 class HopLevelAnalysis(ABC):
@@ -278,4 +278,25 @@ class UnmappedHopsAnalysis:
 
         with connection.cursor() as cursor:
             cursor.execute(query)
+            return dictfetchall(cursor)
+
+
+class HopFlavorAnalysis:
+    def get_associated_flavors(self, tag: Tag) -> list:
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT
+                    tag.*, COUNT(tags2.id) AS combinations
+                    FROM recipe_db_hop_aroma_tags AS tags1
+                    LEFT JOIN recipe_db_hop AS hops
+                        ON tags1.hop_id = hops.id
+                    LEFT JOIN recipe_db_hop_aroma_tags AS tags2
+                        ON hops.id = tags2.hop_id
+                    JOIN recipe_db_tag AS tag
+                        ON tags2.tag_id = tag.id
+                    WHERE tags1.tag_id = %s AND tags2.tag_id != %s
+                    GROUP BY tags2."tag_id"
+                    ORDER BY combinations DESC
+                    LIMIT 10
+            """, [tag.id, tag.id])
             return dictfetchall(cursor)

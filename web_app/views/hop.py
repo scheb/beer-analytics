@@ -1,13 +1,11 @@
-from django.db import connection
-from django.db.models import Count, Q
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader, TemplateDoesNotExist
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
 
+from recipe_db.analytics.hop import HopFlavorAnalysis
 from recipe_db.analytics.spotlight.hop import HopAnalysis
-from recipe_db.analytics.utils import dictfetchall
 from recipe_db.models import Hop, Tag
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.utils import NoDataException
@@ -117,24 +115,7 @@ def flavor_detail(request: HttpRequest, flavor_id: str) -> HttpResponse:
 
     hops = hops_query.order_by("name")
     meta = HopFlavorMeta(tag_obj).get_meta()
-
-    with connection.cursor() as cursor:
-        cursor.execute("""
-            SELECT
-                tag.*, COUNT(tags2.id) AS combinations
-                FROM recipe_db_hop_aroma_tags AS tags1
-                LEFT JOIN recipe_db_hop AS hops
-                    ON tags1.hop_id = hops.id
-                LEFT JOIN recipe_db_hop_aroma_tags AS tags2
-                    ON hops.id = tags2.hop_id
-                JOIN recipe_db_tag AS tag
-                    ON tags2.tag_id = tag.id
-                WHERE tags1.tag_id = %s AND tags2.tag_id != %s
-                GROUP BY tags2."tag_id"
-                ORDER BY combinations DESC
-                LIMIT 10
-        """, [tag_obj.id, tag_obj.id])
-        associated_aroma_tags = dictfetchall(cursor)
+    associated_aroma_tags = HopFlavorAnalysis().get_associated_flavors(tag_obj)
 
     long_description_template = "hop/descriptions/flavors/%s.html" % tag_obj.id
     try:
