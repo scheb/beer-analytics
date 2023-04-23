@@ -379,59 +379,25 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
         smoothened["yeast"] = smoothened["kind_id"].map(get_yeast_names_dict())
         return smoothened
 
-    def popularity_per_source(
-        self,
-        top_months: Optional[int] = None,
-    ) -> DataFrame:
+    def popularity_per_source(self) -> DataFrame:
         scope_filter = self.scope.get_filter()
         query = """
                 SELECT
-                    date(r.created, 'start of month') AS month,
-                    ras.style_id,
-                    count(r.uid) AS recipes
+                    date(r.created) AS day,
+                    r.source,
+                    count(r.uid) AS recipes_number
                 FROM recipe_db_recipe AS r
                 WHERE
                     r.created >= %s  -- Cut-off date for popularity charts
                     {}
-                    {}
-                GROUP BY month, ras.
-            """.format(
-            scope_filter.where, projection_filter.where
-        )
+                GROUP BY day, r.source
+            """.format(scope_filter.where)
 
         per_month = pd.read_sql(
-            query, connection, params=[POPULARITY_CUT_OFF_DATE] + scope_filter.parameters + projection_filter.parameters
+            query, connection, params=[POPULARITY_CUT_OFF_DATE] + scope_filter.parameters
         )
-        if len(per_month) == 0:
-            return per_month
 
-        # Filter top values
-        top_ids = None
-        if num_top is not None:
-            top_scope = per_month
-            if top_months is not None:
-                top_scope = top_scope[top_scope["month"] >= months_ago(top_months).strftime("%Y-%m-%d")]
-            top_ids = top_scope.groupby("style_id")["recipes"].sum().sort_values(ascending=False).index.values[:num_top]
-            per_month = per_month[per_month["style_id"].isin(top_ids)]
-
-        recipes_per_month = RecipesCountAnalysis(self.scope).per_month()
-        per_month = per_month.merge(recipes_per_month, on="month")
-        per_month["recipes_percent"] = per_month["recipes"] / per_month["total_recipes"]
-
-        # Rolling average
-        smoothened = RollingAverage().rolling_multiple_series(per_month, "style_id", "month")
-        smoothened["recipes_percent"] = smoothened["recipes_percent"].apply(lambda x: max([x, 0]))
-
-        # Start date for popularity charts
-        smoothened = smoothened[smoothened["month"] >= POPULARITY_START_MONTH]
-
-        # Sort by top styles
-        if top_ids is not None:
-            smoothened["style_id"] = pd.Categorical(smoothened["style_id"], top_ids)
-            smoothened = smoothened.sort_values(["style_id", "month"])
-
-        smoothened["beer_style"] = smoothened["style_id"].map(get_style_names_dict())
-        return smoothened
+        return per_month
 
 
 class RecipesMetricHistogram(RecipeLevelAnalysis):

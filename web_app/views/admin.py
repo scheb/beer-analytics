@@ -27,7 +27,7 @@ def start(request: HttpRequest) -> HttpResponse:
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="data")
-def chart(chart_type: str, format: str) -> HttpResponse:
+def chart(request: HttpRequest, chart_type: str, format: str) -> HttpResponse:
     if AdminChartFactory.is_supported_chart(chart_type):
         try:
             chart = AdminChartFactory.plot_chart(chart_type)
