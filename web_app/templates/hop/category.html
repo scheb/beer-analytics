@@ -10,6 +10,11 @@
     </nav>
 
     <h1>{{ category_name }} Hops</h1>
+    {% if long_description %}
+        <div class="detail-long-description">
+            {% include long_description %}
+        </div>
+    {% endif %}
 
     {% if most_popular %}{% spaceless %}
         <div class="badge-list">
