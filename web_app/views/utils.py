@@ -78,3 +78,10 @@ def template_exists(template: str) -> bool:
         return True
     except TemplateDoesNotExist:
         return False
+
+
+def get_template_if_exists(template: str) -> Optional[str]:
+    if template_exists(template):
+        return template
+
+    return None

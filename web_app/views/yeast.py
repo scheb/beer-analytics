@@ -2,7 +2,6 @@ from typing import Tuple
 
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
-from django.template import loader, TemplateDoesNotExist
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
 
@@ -11,7 +10,7 @@ from recipe_db.models import Yeast
 from web_app.charts.utils import NoDataException
 from web_app.charts.yeast import YeastChartFactory
 from web_app.meta import YeastMeta, YeastOverviewMeta
-from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list
+from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, get_template_if_exists
 
 
 def overview(request: HttpRequest) -> HttpResponse:
@@ -77,14 +76,8 @@ def detail(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
             ),
         )
 
-    long_description_template = "yeast/descriptions/%s.html" % yeast.id
-    try:
-        loader.get_template(long_description_template)
-    except TemplateDoesNotExist:
-        long_description_template = None
-
+    long_description_template = get_template_if_exists("yeast/descriptions/%s.html" % yeast.id)
     context = {"yeast": yeast, "description": meta_provider.get_description_html(), "long_description": long_description_template, "meta": meta}
-
     return render(request, "yeast/detail.html", context)
 
 
