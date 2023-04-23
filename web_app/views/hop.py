@@ -55,9 +55,16 @@ def category(request: HttpRequest, category_id: str) -> HttpResponse:
     hops = hops_query.order_by("name")
     most_popular = hops_query.order_by("-recipes_count")[:5]
     category_name = categories[category_id]
+    long_description_template = get_template_if_exists("hop/descriptions/%s.html" % category_id)
 
     meta = HopOverviewMeta((category_id, category_name)).get_meta()
-    context = {"category_name": category_name, "hops": hops, "most_popular": most_popular, "meta": meta}
+    context = {
+        "category_name": category_name,
+        "hops": hops,
+        "most_popular": most_popular,
+        "long_description": long_description_template,
+        "meta": meta
+    }
 
     return render(request, "hop/category.html", context)
 
