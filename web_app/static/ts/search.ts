@@ -195,7 +195,7 @@ export class SearchBox {
         })
 
         // Do we have any results? => Hide/display "no results"
-        if (hasAnyMatch) {
+        if (hasAnyMatch || this.searchTerm.length === 0) {
             this.noResultElement.classList.add('d-none')
         } else {
             this.noResultElement.classList.remove('d-none')
