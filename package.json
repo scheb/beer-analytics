@@ -15,7 +15,7 @@
         "file-loader": "^6.2",
         "mini-css-extract-plugin": "^2.7",
         "plotly.js": "^2.20.0",
-        "sass": "^1.61",
+        "sass": "^1.62",
         "sass-loader": "^13",
         "stream-browserify": "^3.0.0",
         "ts-loader": "^9.4",
