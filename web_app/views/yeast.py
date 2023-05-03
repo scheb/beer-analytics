@@ -36,6 +36,7 @@ def type_overview(request: HttpRequest, type_id: str) -> HttpResponse:
         raise Http404("Unknown yeast type %s." % type_id)
 
     type_name = types[type_id]
+    type_is_yeast = Yeast.is_yeast_type(type_id)
 
     yeasts_query = Yeast.objects.filter(type=type_id, recipes_count__gt=0)
     (yeasts, labs) = group_by_lab(yeasts_query.order_by("name"))
@@ -44,7 +45,7 @@ def type_overview(request: HttpRequest, type_id: str) -> HttpResponse:
     if yeasts_query.count() > 5:
         most_popular = yeasts_query.order_by("-recipes_count")[:5]
 
-    meta = YeastOverviewMeta((type_id, type_name)).get_meta()
+    meta = YeastOverviewMeta((type_id, type_name, type_is_yeast)).get_meta()
     context = {
         "type_name": type_name,
         "type_is_yeast": Yeast.is_yeast_type(type_id),
