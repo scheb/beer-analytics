@@ -1,11 +1,14 @@
+import re
 from typing import Optional
 
 from django import template
+from django.template import Node
 from django.urls import reverse
+from django.utils.functional import keep_lazy_text
 from django.utils.html import escape
 
 from recipe_db.formulas import celsius_to_fahrenheit
-from recipe_db.models import Style, Hop, Fermentable, Yeast, Tag
+from recipe_db.models import Style, Hop, Fermentable, Yeast
 from web_app.charts.fermentable import FermentableChartFactory
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.style import StyleChartFactory
@@ -230,3 +233,24 @@ def fahrenheit(value):
         return None
     f = celsius_to_fahrenheit(value)
     return round(f * 2) / 2  # Round to .5
+
+
+@register.tag
+def htmllinebreaks(parser, token):
+    nodelist = parser.parse(("endhtmllinebreaks",))
+    parser.delete_first_token()
+    return HtmlLineBreaksNode(nodelist)
+
+
+class HtmlLineBreaksNode(Node):
+    def __init__(self, nodelist):
+        self.nodelist = nodelist
+
+    def render(self, context):
+        return newlines_between_tags(self.nodelist.render(context).strip())
+
+
+@keep_lazy_text
+def newlines_between_tags(value):
+    """Return the given HTML with spaces between tags removed."""
+    return re.sub(r">\s+<", ">\n<", str(value))
