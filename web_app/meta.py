@@ -310,7 +310,7 @@ class YeastOverviewMeta(PageMeta):
 
 
     def get_title(self):
-        if self.type_name is not None:
+        if len(self.type_name) > 0:
             return NORMAL_TITLE.format("List of %s for Beer Brewing" % self.type_name)
 
         return NORMAL_TITLE.format("List of Yeasts and Bacteria for Beer Brewing")
