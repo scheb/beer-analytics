@@ -1,8 +1,8 @@
 <!doctype html>{% with request.resolver_match.url_name as url_name %}{% load static %}{% load meta %}
 <html lang="en">
 <head {% meta_namespaces %}>
-    {% if meta.title %}{% autoescape off %}{% title_prop meta.title %}{% endautoescape %}
-    {% else %}<title>Beer Analytics &ndash; The analytical beer recipe database</title>{% endif %}
+    {% if meta.title %}{% autoescape off %}{% title_prop meta.title %}{% endautoescape %}{% else %}<title>Beer Analytics &ndash; The analytical beer recipe database</title>{% endif %}
+
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     {% include "meta.html" %}

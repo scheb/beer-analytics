@@ -1,8 +1,11 @@
-{% load meta %}{% autoescape off %}{% if meta %}
+{% load meta %}{% load web_app %}{% htmllinebreaks "    \n" %}{% autoescape off %}
+
+{% if meta %}
 	{% if meta.description %}{% meta 'description' meta.description %}{% endif %}
     {% if meta.keywords %}{% meta_list 'keywords' meta.keywords %}{% endif %}
     {% if meta.extra_props %}{% meta_extras meta.extra_props %}{% endif %}
-    {% if meta.extra_custom_props %}{% custom_meta_extras meta.extra_custom_props %}{% endif %}{% spaceless %}
+    {% if meta.extra_custom_props %}{% custom_meta_extras meta.extra_custom_props %}{% endif %}
+
     {% if meta.use_og %}
         {% if meta.og_title %}{% og_prop 'title' meta.og_title %}
         {% elif meta.title %}{% og_prop 'title' meta.title %}{% endif %}
@@ -27,8 +30,8 @@
         {% if meta.og_profile_id %}{% facebook_prop 'profile_id' meta.og_profile_id %}{% endif %}
         {% if meta.tag %}{% generic_prop 'article' 'tag' meta.tag %}{% endif %}
         {% if meta.locale %}{% og_prop 'locale' meta.locale %}{% endif %}
-
     {% endif %}
+
     {% if meta.use_twitter %}
         {% twitter_prop 'domain' meta.get_domain %}
         {% if meta.twitter_type %}{% twitter_prop 'card' meta.twitter_type %}
@@ -42,4 +45,6 @@
         {% if meta.twitter_creator %}{% twitter_prop 'creator' meta.twitter_creator %}{% endif %}
         {% if meta.twitter_site %}{% twitter_prop 'site' meta.twitter_site %}{% endif %}
     {% endif %}
-{% endspaceless %}{% endif %}{% endautoescape %}
+{% endif %}
+
+{% endautoescape %}{% endhtmllinebreaks %}
