@@ -44,7 +44,7 @@ class PageMeta:
 class HomeMeta(PageMeta):
     def get_meta(self) -> Meta:
         meta = self.create("", url=reverse("home"))
-        meta.title = "Beer Analytics: Discover, Analyze & Optimize Your Recipes - Brew Smarter!"
+        meta.title = "Beer Analytics: Discover, Analyze & Optimize Brewing Recipes"
         return meta
 
 
