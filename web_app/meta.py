@@ -298,18 +298,25 @@ class FermentableMeta(PageMeta):
 
 
 class YeastOverviewMeta(PageMeta):
-    def __init__(self, y_type: Optional[Tuple[str, str]] = None) -> None:
+    def __init__(self, y_type: Optional[Tuple[str, str, bool]] = None) -> None:
         self.type_id = None
         self.type_name = ""
+        self.is_yeast = True
         if y_type is not None:
-            (self.type_id, self.type_name) = y_type
+            (self.type_id, self.type_name, self.is_yeast) = y_type
+            if self.is_yeast:
+                self.type_name += " Yeast"
             self.type_name += " "  # Add extra space for title/description
 
+
     def get_title(self):
-        return NORMAL_TITLE.format("List of %sBeer Yeasts and Bacteria" % self.type_name)
+        if self.type_name is not None:
+            return NORMAL_TITLE.format("List of %s for Beer Brewing" % self.type_name)
+
+        return NORMAL_TITLE.format("List of Yeasts and Bacteria for Beer Brewing")
 
     def get_description(self):
-        return "Discover the best {}yeasts used in brewing with our comprehensive guide! Compare flavor profiles, fermentation characteristics and performance data to elevate your brewing experience.".format(self.type_name.lower())
+        return "Discover the best {} used in brewing with our comprehensive guide! Compare flavor profiles, fermentation characteristics and performance data to elevate your brewing experience.".format(self.type_name.lower())
 
     def get_url(self):
         if self.type_id is not None:
