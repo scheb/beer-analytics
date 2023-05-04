@@ -22,6 +22,7 @@ urlpatterns = [
     path("", views.misc.home, name="home"),
     path("legal/", misc.legal, name="legal"),
     path("about/", misc.about, name="about"),
+    path("updates/", misc.updates, name="updates"),
     path("sitemap.xml", misc.sitemap, name="sitemap"),
 
     path("analyze/", analyze.result, name="analyze"),

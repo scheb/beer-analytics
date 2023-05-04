@@ -68,6 +68,38 @@ header {
 }
 
 
+// Footer
+
+footer {
+    margin-top: auto;
+    background-color: $gray-50;
+
+    .logo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        background-image: url('../img/embed/logo-dark.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        opacity: 0.6;
+    }
+
+    a {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// Ensures together with margin-top:auto in footer, that the footer is always at the bottom of the page
+.main-body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
 // Icons
 
 .nav-icon {
