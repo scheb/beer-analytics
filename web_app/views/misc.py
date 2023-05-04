@@ -34,6 +34,13 @@ def about(request: HttpRequest) -> HttpResponse:
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
+def updates(request: HttpRequest) -> HttpResponse:
+    meta = PageMeta.create("Recent Updates", "Recent updates on Beer Analytics", url=reverse("updates"))
+    meta.extra_props = {"robots": "noindex"}
+    return render(request, "updates.html", {"meta": meta})
+
+
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def sitemap(request: HttpRequest) -> HttpResponse:
     styles = Style.objects.filter(recipes_count__gt=0)
     hops = Hop.objects.filter(recipes_count__gt=0)

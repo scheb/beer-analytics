@@ -19,7 +19,7 @@
     <meta name="theme-color" content="#ffffff"/>
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 </head>
-<body>
+<body class="main-body">
 
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap shadow">
     <nav class="container-fluid navbar-expand-md p-0">
@@ -41,14 +41,6 @@
                     <li class="nav-item"><a class="nav-link{% if url_name|startswith:'yeast' %} active{% endif %}" href="{% url "yeast_overview" %}"><span class="nav-icon icon-yeast"></span>Yeasts</a></li>
                     <li class="nav-item"><a class="nav-link{% if url_name|startswith:'trend' %} active{% endif %}" href="{% url "trend_overview" "recent" %}"><span class="nav-icon icon-trend"></span>Trends</a></li>
                 </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link{% if url_name == 'about' %} active{% endif %}" href="{% url "about" %}">About</a></li>
-                    <li class="nav-item"><a class="nav-link{% if url_name == 'legal' %} active{% endif %}" href="{% url "legal" %}" title="Legal Notice / Impressum (German)">Legal</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://github.com/scheb/beer-analytics">
-                        <span class="nav-icon icon-github" title="Fork me on GitHub"></span>
-                        <span class="d-md-none">Fork me on GitHub</span>
-                    </a></li>
-                </ul>
             </div>
         {% endwith %}
     </nav>
@@ -67,6 +59,50 @@
         </main>
     </div>
 </div>
+
+<footer class="bd-footer border-top px-md-4 pt-4 pb-1">
+    <div class="container-fluid">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 col-md-9 ms-sm-auto col-lg-10">
+            <div class="col mb-3">
+                <p class="mb-3"><a href="/" class="link-dark text-decoration-none" title="Back to Home"><span class="logo"></span></a></p>
+                <p class="text-muted">© {% now "Y" %} Beer Analytics</p>
+                <p class="small text-muted">Built with ❤️ and Open Source software for the homebrewing community.</p>
+            </div>
+
+            <div class="col mb-3"></div>
+
+            <div class="col mb-3">
+                <h5>Recipe Analysis</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2"><a href="{% url "style_overview" %}" class="nav-link p-0 text-muted">Beer Styles</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "trend_overview" "recent" %}" class="nav-link p-0 text-muted">Trends</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "analyze" %}" class="nav-link p-0 text-muted">Custom Analysis</a></li>
+                </ul>
+            </div>
+
+            <div class="col mb-3">
+                <h5>Ingredient Analysis</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2"><a href="{% url "fermentable_overview" %}" class="nav-link p-0 text-muted">Fermentables</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "hop_overview" %}" class="nav-link p-0 text-muted">Hops</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "hop_flavor_overview" %}" class="nav-link p-0 text-muted">Hop Flavors</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "yeast_overview" %}" class="nav-link p-0 text-muted">Yeasts</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "yeast_type" "brett-bacteria" %}" class="nav-link p-0 text-muted">Brett &amp; Bacteria</a></li>
+                </ul>
+            </div>
+
+            <div class="col mb-3">
+                <h5>Beer Analytics</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2"><a href="{% url "about" %}" class="nav-link p-0 text-muted">About</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "updates" %}" class="nav-link p-0 text-muted">Recent Updates</a></li>
+                    <li class="nav-item mb-2"><a href="https://github.com/scheb/beer-analytics" class="nav-link p-0 text-muted">Source Code on GitHub</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "legal" %}" class="nav-link p-0 text-muted">Legal Notice</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
 
 <script src="{% static 'app.js' %}"></script>
 

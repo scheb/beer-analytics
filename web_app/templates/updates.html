@@ -1,82 +1,91 @@
+{% extends 'base.html' %}
 {% load web_app %}
-<h2>Recent Updates</h2>
-<p><strong>2023-04-16</strong></p>
-<ul>
-    <li>Extended hop flavors with classification and visual highlighting</li>
-</ul>
-<p><strong>2023-04-15</strong></p>
-<ul>
-    <li>Hop flavor pages have been renewed and improved</li>
-</ul>
-<p><strong>2023-04-14</strong></p>
-<ul>
-    <li>Custom analysis supports filtering by <em>any</em> hops, yeasts and fermentables</li>
-</ul>
-<p><strong>2023-04-09</strong></p>
-<ul>
-    <li>Add ability to filter by used hops in the custom analysis</li>
-    <li>Added some long descriptions for hops, yeast, styles</li>
-</ul>
-<p><strong>2023-04-08</strong></p>
-<ul>
-    <li>Software upgrades</li>
-    <li>Added new hops
-        <a href="{{ "aurum"|hop|url }}">Aurum</a>,
-        <a href="{{ "citiva"|hop|url }}">Citiva</a>,
-        <a href="{{ "eclipse"|hop|url }}">Eclipse</a>,
-        <a href="{{ "ernest"|hop|url }}">Ernest</a>,
-        <a href="{{ "evergreen"|hop|url }}">Evergreen</a>,
-        <a href="{{ "gruengeist"|hop|url }}">Grüngeist</a>,
-        <a href="{{ "harlequin"|hop|url }}">Harlequin</a>,
-        <a href="{{ "hulla-norrgaard"|hop|url }}">Hulla Norrgård</a>,
-        <a href="{{ "lilly"|hop|url }}">Lilly</a>,
-        <a href="{{ "mapuche"|hop|url }}">Mapuche</a>,
-        <a href="{{ "nobility"|hop|url }}">Nobility</a>,
-        <a href="{{ "sequoia"|hop|url }}">Sequoia</a>,
-        <a href="{{ "tango"|hop|url }}">Tango</a>,
-        <a href="{{ "vista"|hop|url }}">Vista</a>
-        and <a href="{{ "zamba"|hop|url }}">Zamba</a>
-    </li>
-</ul>
-<p><strong>2021-01-06</strong></p>
-<ul>
-    <li>The recipe database now automatically updates with latest recipes once a day</li>
-</ul>
-<p><strong>2020-11-26</strong></p>
-<ul>
-    <li>Added custom filtering and data analysis</li>
-    <li>Trends on the homepage have been removed in favor to custom analysis and dedicated trends pages</li>
-</ul>
-<p>
-    This is the last big update for now. The project has reached a state in which everything that I've planned at the
-    beginning has been implemented. Minor improvements still may be added occasionally. I'm happy to hear feedback and
-    ideas, if you have any.
-</p>
-<p><strong>2020-11-17</strong></p>
-<ul>
-    <li>Added trends pages</li>
-</ul>
-<p><strong>2020-11-11</strong></p>
-<ul>
-    <li>Added a search on the styles and ingredients overviews</li>
-</ul>
-<p><strong>2020-10-25</strong></p>
-<ul>
-    <li>Better trend detection</li>
-    <li>Added a box to link random recipes of that category</li>
-    <li>Added 100k more recipes</li>
-    <li>No longer assign a style when a recipe's characteristics are too far from the style specification</li>
-</ul>
-<p><strong>2020-10-14</strong></p>
-<ul>
-    <li>New charts</li>
+
+{% block content %}
+    <h1>Recent Updates</h1>
+    <p><strong>2023-05-04</strong></p>
     <ul>
-        <li>Styles: Most used yeasts over time</li>
-        <li>Styles: Trending yeasts</li>
-        <li>Styles: Most used hops over time</li>
-        <li>Styles: Most used fermentables over time</li>
-        <li>Hops: Yeasts used in combination</li>
-        <li>Yeasts: Hops used in combination</li>
+        <li>Cleaner top navigation</li>
+        <li>Reworked page layout a bit</li>
     </ul>
-    <li>Smoother timeline charts</li>
-</ul>
+    <p><strong>2023-04-16</strong></p>
+    <ul>
+        <li>Extended hop flavors with classification and visual highlighting</li>
+    </ul>
+    <p><strong>2023-04-15</strong></p>
+    <ul>
+        <li>Hop flavor pages have been renewed and improved</li>
+    </ul>
+    <p><strong>2023-04-14</strong></p>
+    <ul>
+        <li>Custom analysis supports filtering by <em>any</em> hops, yeasts and fermentables</li>
+    </ul>
+    <p><strong>2023-04-09</strong></p>
+    <ul>
+        <li>Add ability to filter by used hops in the custom analysis</li>
+        <li>Added some long descriptions for hops, yeast, styles</li>
+    </ul>
+    <p><strong>2023-04-08</strong></p>
+    <ul>
+        <li>Software upgrades</li>
+        <li>Added new hops
+            <a href="{{ "aurum"|hop|url }}">Aurum</a>,
+            <a href="{{ "citiva"|hop|url }}">Citiva</a>,
+            <a href="{{ "eclipse"|hop|url }}">Eclipse</a>,
+            <a href="{{ "ernest"|hop|url }}">Ernest</a>,
+            <a href="{{ "evergreen"|hop|url }}">Evergreen</a>,
+            <a href="{{ "gruengeist"|hop|url }}">Grüngeist</a>,
+            <a href="{{ "harlequin"|hop|url }}">Harlequin</a>,
+            <a href="{{ "hulla-norrgaard"|hop|url }}">Hulla Norrgård</a>,
+            <a href="{{ "lilly"|hop|url }}">Lilly</a>,
+            <a href="{{ "mapuche"|hop|url }}">Mapuche</a>,
+            <a href="{{ "nobility"|hop|url }}">Nobility</a>,
+            <a href="{{ "sequoia"|hop|url }}">Sequoia</a>,
+            <a href="{{ "tango"|hop|url }}">Tango</a>,
+            <a href="{{ "vista"|hop|url }}">Vista</a>
+            and <a href="{{ "zamba"|hop|url }}">Zamba</a>
+        </li>
+    </ul>
+    <p><strong>2021-01-06</strong></p>
+    <ul>
+        <li>The recipe database now automatically updates with latest recipes once a day</li>
+    </ul>
+    <p><strong>2020-11-26</strong></p>
+    <ul>
+        <li>Added custom filtering and data analysis</li>
+        <li>Trends on the homepage have been removed in favor to custom analysis and dedicated trends pages</li>
+    </ul>
+    <p>
+        This is the last big update for now. The project has reached a state in which everything that I've planned at the
+        beginning has been implemented. Minor improvements still may be added occasionally. I'm happy to hear feedback and
+        ideas, if you have any.
+    </p>
+    <p><strong>2020-11-17</strong></p>
+    <ul>
+        <li>Added trends pages</li>
+    </ul>
+    <p><strong>2020-11-11</strong></p>
+    <ul>
+        <li>Added a search on the styles and ingredients overviews</li>
+    </ul>
+    <p><strong>2020-10-25</strong></p>
+    <ul>
+        <li>Better trend detection</li>
+        <li>Added a box to link random recipes of that category</li>
+        <li>Added 100k more recipes</li>
+        <li>No longer assign a style when a recipe's characteristics are too far from the style specification</li>
+    </ul>
+    <p><strong>2020-10-14</strong></p>
+    <ul>
+        <li>New charts</li>
+        <ul>
+            <li>Styles: Most used yeasts over time</li>
+            <li>Styles: Trending yeasts</li>
+            <li>Styles: Most used hops over time</li>
+            <li>Styles: Most used fermentables over time</li>
+            <li>Hops: Yeasts used in combination</li>
+            <li>Yeasts: Hops used in combination</li>
+        </ul>
+        <li>Smoother timeline charts</li>
+    </ul>
+{% endblock %}
