@@ -71,4 +71,5 @@ urlpatterns = [
 
     path("admin/", admin.start, name="admin_root"),
     path("admin/<str:chart_type>.<cformat:format>", admin.chart, name="admin_chart"),
+    path("admin/descriptions/", admin.descriptions, name="admin_descriptions"),
 ]
