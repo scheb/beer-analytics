@@ -6,9 +6,9 @@ import math
 import re
 from collections import OrderedDict
 from typing import Optional, List, Tuple
+from zlib import crc32
 
 import numpy as np
-
 # noinspection PyUnresolvedReferences
 import translitcodec
 from django.core.validators import MaxValueValidator, BaseValidator, MinValueValidator
@@ -470,6 +470,10 @@ class Hop(models.Model):
     @classmethod
     def get_categories(cls) -> dict:
         return dict(cls.USE_CHOICES)
+
+    @property
+    def image_id(self) -> str:
+        return str(crc32(str.encode(self.id)) % 15 + 1)
 
     @property
     def category(self) -> str:

@@ -2,7 +2,7 @@ import re
 from typing import Optional
 
 from django import template
-from django.template import Node
+from django.template import Node, loader, TemplateDoesNotExist
 from django.urls import reverse
 from django.utils.functional import keep_lazy_text
 from django.utils.html import escape
@@ -225,6 +225,18 @@ def get_priority(percentile: Optional[float]) -> float:
         return round(MIN_PRIORITY + (MAX_PRIORITY - MIN_PRIORITY) * percentile, 1)
 
     return DEFAULT_PRIORITY
+
+
+@register.filter("description")
+def chart_image_alt(item: object):
+    if isinstance(item, Hop):
+        template_file = "hop/descriptions/hops/%s.html" % item.id
+        try:
+            return loader.get_template(template_file).render({})
+        except TemplateDoesNotExist:
+            return ""
+
+    return ""
 
 
 @register.filter("fahrenheit")
