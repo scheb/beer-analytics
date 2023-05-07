@@ -11,10 +11,11 @@ from web_app.charts.style import StyleChartFactory
 from web_app.charts.yeast import YeastChartFactory
 from web_app.meta import PageMeta, HomeMeta
 
+FEATURED_HOPS = ['talus', 'nectaron', 'enigma', 'pacific-sunrise']
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def home(request: HttpRequest) -> HttpResponse:
-    discover_hops = Hop.objects.filter(id__in=['talus', 'nectaron'])
+    discover_hops = Hop.objects.filter(id__in=FEATURED_HOPS).order_by('-recipes_count')
 
     recipes = Recipe.objects.count()
     meta = HomeMeta().get_meta()

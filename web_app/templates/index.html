@@ -58,7 +58,7 @@
                             {% with "img/hops/hop-cones-drawing-"|add:hop.image_id|add:".png" as image_static %}
                                 <a href="{{ hop|url }}"><img src="{% static image_static %}" alt="Artistic drawing of hop cones" class="teaser-image float-end ms-3 mb-1 border rounded-2" /></a>
                             {% endwith %}
-                            {{ hop|description|truncatechars_html:400 }}
+                            {{ hop|description|truncatechars_html:360 }}
                             <p class="mb-0"><a href="{{ hop|url }}" class="btn btn-secondary">Learn more ›</a></p>
                         </div>
                     </article>
