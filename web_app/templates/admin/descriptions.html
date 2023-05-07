@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load web_app %}
+
+{% block content %}
+    <h1>Descriptions</h1>
+    <h2>Hops</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Hop</th>
+                <th>Recipes</th>
+                <th>Description?</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for hop in hops %}
+                <tr>
+                    <td>{{ hop.name }}</td>
+                    <td>{{ hop.recipes_count }}</td>
+                    <td>{% if hop.has_description %}✔{% else %}❌{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h2>Flavors</h2>
+        <table class="table">
+        <thead>
+            <tr>
+                <th>Flavor</th>
+                <th>Hops Count</th>
+                <th>Description?</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for flavor in flavors %}
+                <tr>
+                    <td>{{ flavor.name }}</td>
+                    <td>{{ flavor.hops_count }}</td>
+                    <td>{% if flavor.has_description %}✔{% else %}❌{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
