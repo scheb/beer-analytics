@@ -473,7 +473,7 @@ class Hop(models.Model):
 
     @property
     def image_id(self) -> str:
-        return str(crc32(str.encode(self.id)) % 15 + 1)
+        return str(crc32(str.encode(self.id)) % 31 + 1)
 
     @property
     def category(self) -> str:
