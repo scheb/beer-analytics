@@ -14,9 +14,17 @@ from web_app.meta import PageMeta, HomeMeta
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def home(request: HttpRequest) -> HttpResponse:
+    discover_hops = Hop.objects.filter(id__in=['talus', 'nectaron'])
+
     recipes = Recipe.objects.count()
     meta = HomeMeta().get_meta()
-    return render(request, "index.html", {"recipes": recipes, "meta": meta})
+    context = {
+        "recipes": recipes,
+        "meta": meta,
+        "discover_hops": discover_hops,
+    }
+
+    return render(request, "index.html", context)
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")

@@ -1,30 +1,70 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load web_app %}
 
 {% block content %}
     <h1 class="home">Discover Beer Analytics</h1>
-    <p><strong>The Ultimate Beer Brewing Recipe Database</strong></p>
+    <section class="mb-5">
+        <h2 class="h5 mb-3" style="border: none;">The Ultimate Beer Brewing Recipe Database</h2>
+        <p>
+            Welcome to Beer Analytics, the ultimate online destination for beer recipes and data-driven insights.
+            Our extensive database is perfect for beer lovers and homebrewers alike, offering a wealth of information on how
+            beer brewing recipes are crafted, even for those new to the world of data analysis. With a staggering
+            <strong>{{ recipes }} recipes</strong> it is the largest beer brewing recipes database in the world, aggregated
+            from various sources in homebrewing community. We're here to take your beer brewing knowledge to the next level!
+        </p>
+        <p>
+            Dive into the intricacies of various <a href="{% url "style_overview" %}">beer styles</a> and uncover their
+            unique compositions. Browse our comprehensive index of <a href="{% url "fermentable_overview" %}">fermentables</a>,
+            <a href="{% url "fermentable_category" "grain" %}">malts</a>, <a href="{% url "hop_overview" %}">hops</a> and
+            <a href="{% url "yeast_overview" %}">yeasts</a> to expand your understanding of the ingredients that
+            make each brew stand out.
+        </p>
+        <p>
+            Can't find exactly what you're looking for? Filter options <span class="with-sidebar">in the sidebar</span>
+            <span class="with-toogle">in the top menu</span> allow you to tailor your search and receive <strong>customized
+            data analysis</strong> that cater to your needs. Start your beer analytics journey today and <strong>unlock the
+            secrets to exceptional beer brewing</strong>!
+        </p>
+    </section>
 
-    <p>
-        Welcome to Beer Analytics, the ultimate online destination for beer recipes and data-driven insights.
-        Our extensive database is perfect for beer lovers and homebrewers alike, offering a wealth of information on how
-        beer brewing recipes are crafted, even for those new to the world of data analysis. With a staggering
-        <strong>{{ recipes }} recipes</strong> it is the largest beer brewing recipes database in the world, aggregated
-        from various sources in homebrewing community. We're here to take your beer brewing knowledge to the next level!
-    </p>
+    <section class="featured-hops">
+        <h2>Discover Hop Varieties</h2>
+        <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
+            {% for hop in discover_hops %}
+                <div class="col">
+                    <article class="card">
+                        <div class="card-header">
+                            <h3 class="p-0"><a href="{{ hop|url }}" class="text-body" style="text-decoration: none">{{ hop.name }} Hops</a></h3>
+                        </div>
+                        <div class="card-body">
+                            <dl class="detail-info mt-0 mb-3info">
+                                <dt>Recipes:</dt>
+                                <dd>{{ hop.recipes_count }}</dd>
+                                <dt>Purpose:</dt>
+                                <dd>{{ hop.category_name }}</dd>
 
-    <p>
-        Dive into the intricacies of various <a href="{% url "style_overview" %}">beer styles</a> and uncover their
-        unique compositions. Browse our comprehensive index of <a href="{% url "fermentable_overview" %}">fermentables</a>,
-        <a href="{% url "fermentable_category" "grain" %}">malts</a>, <a href="{% url "hop_overview" %}">hops</a> and
-        <a href="{% url "yeast_overview" %}">yeasts</a> to expand your understanding of the ingredients that
-        make each brew stand out.
-    </p>
+                                {% if hop.recipes_alpha_mean %}
+                                <dt>Alpha:</dt>
+                                <dd>{{ hop.alpha_level|title }}</dd>
+                                {% endif %}
 
-    <p>
-        Can't find exactly what you're looking for? Filter options <span class="with-sidebar">in the sidebar</span>
-        <span class="with-toogle">in the top menu</span> allow you to tailor your search and receive <strong>customized
-        data analysis</strong> that cater to your needs. Start your beer analytics journey today and <strong>unlock the
-        secrets to exceptional beer brewing</strong>!
-    </p>
+                                {% if hop.origin %}
+                                <dt>Origin:</dt>
+                                <dd>{{ hop.origin_countries|join:", " }}</dd>
+                                {% endif %}
+                            </dl>
+
+                            {% with "img/hops/hop-cones-drawing-"|add:hop.image_id|add:".png" as image_static %}
+                                <a href="{{ hop|url }}"><img src="{% static image_static %}" alt="Artistic drawing of hop cones" class="teaser-image float-end ms-3 mb-1 border rounded-2" /></a>
+                            {% endwith %}
+                            {{ hop|description|truncatechars_html:400 }}
+                            <p class="mb-0"><a href="{{ hop|url }}" class="btn btn-secondary">Learn more ›</a></p>
+                        </div>
+                    </article>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
 {% endblock %}
