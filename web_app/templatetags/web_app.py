@@ -228,7 +228,7 @@ def get_priority(percentile: Optional[float]) -> float:
 
 
 @register.filter("description")
-def chart_image_alt(item: object):
+def get_item_description(item: object):
     if isinstance(item, Hop):
         template_file = "hop/descriptions/hops/%s.html" % item.id
         try:
