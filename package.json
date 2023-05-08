@@ -6,7 +6,7 @@
     },
     "dependencies": {
         "@syncfusion/ej2-dropdowns": "^21.1.38",
-        "@syncfusion/ej2-inputs": "^21.1.38",
+        "@syncfusion/ej2-inputs": "^21.2.3",
         "@types/bootstrap": "^5.2.3",
         "@types/plotly.js": "^2.12.18",
         "bootstrap": "^5.2.3",
