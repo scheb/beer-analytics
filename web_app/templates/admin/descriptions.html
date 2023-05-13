@@ -3,6 +3,7 @@
 
 {% block content %}
     <h1>Descriptions</h1>
+
     <h2>Hops</h2>
     <table class="table">
         <thead>
@@ -22,6 +23,7 @@
             {% endfor %}
         </tbody>
     </table>
+
     <h2>Flavors</h2>
         <table class="table">
         <thead>
@@ -37,6 +39,26 @@
                     <td>{{ flavor.name }}</td>
                     <td>{{ flavor.hops_count }}</td>
                     <td>{% if flavor.has_description %}✔{% else %}❌{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Yeasts</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Yeast</th>
+                <th>Recipes</th>
+                <th>Description?</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for yeast in yeasts %}
+                <tr>
+                    <td>{{ yeast.name }}</td>
+                    <td>{{ yeast.recipes_count }}</td>
+                    <td>{% if yeast.has_description %}✔{% else %}❌{% endif %}</td>
                 </tr>
             {% endfor %}
         </tbody>
