@@ -196,20 +196,26 @@ h2, h3 {
 }
 
 
-// Column lists
+// Simple lists
 .column-list,
-.column-list-wide {
+.column-list-wide,
+.simple-list {
     @include list-unstyled();
     margin-left: 2rem;
     margin-right: 2rem;
 
+    li {
+        break-inside: avoid;
+    }
+}
+
+
+// Column lists
+.column-list,
+.column-list-wide {
     @include media-breakpoint-down('md') {
         // More space to make links easier to click on mobile
         line-height: 1.8;
-    }
-
-    li {
-        break-inside: avoid;
     }
 }
 

@@ -31,14 +31,33 @@
         </div>
     {% endspaceless %}{% endif %}
 
-    <div class="hops-overview">
-        <ul class="column-list">
-            {% for hop in hops %}
-                <li>
-                    {% if hop.is_popular %}<strong>{% endif %}<a href="{{ hop|url }}">{{ hop.name }}</a>{% if hop.is_popular %}</strong>{% endif %}
-                    <small class="recipes-count" title="Recipes">{{ hop.recipes_count }}</small>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+    {% if hops_count > 4 %}
+        <section class="hops-overview">
+            <ul class="{% if hops_count > 10 %}column-list-wide{% else %}simple-list{% endif %}">
+                {% for hop in hops %}
+                    <li>
+                        {% if hop.is_popular %}<strong>{% endif %}<a href="{{ hop|url }}">{{ hop.name }}</a>{% if hop.is_popular %}</strong>{% endif %}
+                        <small class="recipes-count" title="Recipes">{{ hop.recipes_count }}</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section class="featured-hops">
+            <h2>Discover {{ tag_name }} Flavor Hops</h2>
+            <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
+                {% for hop in most_popular %}
+                    <div class="col">{% include "hop/featured.html" with hop=hop %}</div>
+                {% endfor %}
+            </div>
+        </section>
+    {% else %}
+        <section class="hops-overview">
+            <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
+                {% for hop in hops %}
+                    <div class="col">{% include "hop/featured.html" with hop=hop %}</div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
 {% endblock %}
