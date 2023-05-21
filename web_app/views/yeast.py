@@ -45,6 +45,7 @@ def type_overview(request: HttpRequest, type_id: str) -> HttpResponse:
     if yeasts_query.count() > 5:
         most_popular = yeasts_query.order_by("-recipes_count")[:5]
 
+    long_description_template = get_template_if_exists("yeast/descriptions/%s.html" % type_id)
     meta = YeastOverviewMeta((type_id, type_name, type_is_yeast)).get_meta()
     context = {
         "type_name": type_name,
@@ -52,6 +53,7 @@ def type_overview(request: HttpRequest, type_id: str) -> HttpResponse:
         "yeasts": yeasts,
         "labs": labs,
         "most_popular": most_popular,
+        "long_description": long_description_template,
         "meta": meta,
     }
 
