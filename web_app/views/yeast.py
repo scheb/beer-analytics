@@ -81,7 +81,7 @@ def detail(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
             ),
         )
 
-    long_description_template = get_template_if_exists("yeast/descriptions/%s.html" % yeast.id)
+    long_description_template = get_template_if_exists("yeast/descriptions/yeasts/%s.html" % yeast.id)
     context = {"yeast": yeast, "description": meta_provider.get_description_html(), "long_description": long_description_template, "meta": meta}
     return render(request, "yeast/detail.html", context)
 
