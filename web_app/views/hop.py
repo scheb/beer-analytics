@@ -122,6 +122,7 @@ def flavor_detail(request: HttpRequest, flavor_id: str) -> HttpResponse:
         raise Http404("Flavor doesn't have any data.")
 
     hops = hops_query.order_by("name")
+    most_popular = hops_query.order_by("-recipes_count")[:2]
     meta = HopFlavorMeta(tag_obj).get_meta()
     associated_aroma_tags = HopFlavorAnalysis().get_associated_flavors(tag_obj)
     long_description_template = get_template_if_exists("hop/descriptions/flavors/%s.html" % tag_obj.id)
@@ -130,6 +131,8 @@ def flavor_detail(request: HttpRequest, flavor_id: str) -> HttpResponse:
         "tag_name": tag_obj.name,
         "num_hops": num_hops,
         "hops": hops,
+        "hops_count": hops.count(),
+        "most_popular": most_popular,
         "meta": meta,
         "associated_aroma_tags": associated_aroma_tags,
         "long_description": long_description_template,
