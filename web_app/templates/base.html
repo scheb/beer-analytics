@@ -64,16 +64,18 @@
     <div class="container-fluid">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 col-md-9 ms-sm-auto col-lg-10">
             <div class="col mb-3">
-                <p class="mb-3"><a href="/" class="link-dark text-decoration-none" title="Back to Home"><span class="logo"></span></a></p>
-                <p class="text-muted">© {% now "Y" %} Beer Analytics</p>
-                <p class="small text-muted">Built with ❤️ and Open Source software for the homebrewing community.</p>
+                <p class="mb-2 d-flex">
+                    <a href="/" class="me-1 link-dark text-decoration-none align-middle" title="Back to Home"><span class="logo"></span></a>
+                    <span class="align-self-center h5 mb-0">Beer Analytics</span>
+                </p>
+                <p class="small text-muted mb-0">Built with ❤️ and open source software for the homebrewing community.</p>
             </div>
 
             <div class="col mb-3"></div>
 
             <div class="col mb-3">
                 <h5>Recipe Analysis</h5>
-                <ul class="nav flex-column">
+                <ul class="nav flex-column ps-2">
                     <li class="nav-item mb-2"><a href="{% url "style_overview" %}" class="nav-link p-0 text-muted">Beer Styles</a></li>
                     <li class="nav-item mb-2"><a href="{% url "trend_overview" "recent" %}" class="nav-link p-0 text-muted">Trends</a></li>
                     <li class="nav-item mb-2"><a href="{% url "analyze" %}" class="nav-link p-0 text-muted">Custom Analysis</a></li>
@@ -81,19 +83,19 @@
             </div>
 
             <div class="col mb-3">
-                <h5>Ingredient Analysis</h5>
-                <ul class="nav flex-column">
+                <h5>Brewing Ingredients</h5>
+                <ul class="nav flex-column ps-2">
                     <li class="nav-item mb-2"><a href="{% url "fermentable_overview" %}" class="nav-link p-0 text-muted">Fermentables</a></li>
                     <li class="nav-item mb-2"><a href="{% url "hop_overview" %}" class="nav-link p-0 text-muted">Hops</a></li>
                     <li class="nav-item mb-2"><a href="{% url "hop_flavor_overview" %}" class="nav-link p-0 text-muted">Hop Flavors</a></li>
                     <li class="nav-item mb-2"><a href="{% url "yeast_overview" %}" class="nav-link p-0 text-muted">Yeasts</a></li>
-                    <li class="nav-item mb-2"><a href="{% url "yeast_type" "brett-bacteria" %}" class="nav-link p-0 text-muted">Brett &amp; Bacteria</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "yeast_type" "brett-bacteria" %}" class="nav-link p-0 text-muted">Brettanomyces &amp; Bacteria</a></li>
                 </ul>
             </div>
 
             <div class="col mb-3">
                 <h5>Beer Analytics</h5>
-                <ul class="nav flex-column">
+                <ul class="nav flex-column ps-2">
                     <li class="nav-item mb-2"><a href="{% url "about" %}" class="nav-link p-0 text-muted">About</a></li>
                     <li class="nav-item mb-2"><a href="{% url "updates" %}" class="nav-link p-0 text-muted">Recent Updates</a></li>
                     <li class="nav-item mb-2"><a href="https://github.com/scheb/beer-analytics" class="nav-link p-0 text-muted">Source Code on GitHub</a></li>
