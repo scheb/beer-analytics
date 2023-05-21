@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 {% load web_app %}
 
 {% block content %}
@@ -32,39 +31,8 @@
         <h2>Discover Hop Varieties</h2>
         <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
             {% for hop in discover_hops %}
-                <div class="col">
-                    <article class="card">
-                        <div class="card-header">
-                            <h3 class="p-0"><a href="{{ hop|url }}" class="text-body" style="text-decoration: none">{{ hop.name }} Hops</a></h3>
-                        </div>
-                        <div class="card-body">
-                            <dl class="detail-info mt-0 mb-3info">
-                                <dt>Recipes:</dt>
-                                <dd>{{ hop.recipes_count }}</dd>
-                                <dt>Purpose:</dt>
-                                <dd>{{ hop.category_name }}</dd>
-
-                                {% if hop.recipes_alpha_mean %}
-                                <dt>Alpha:</dt>
-                                <dd>{{ hop.alpha_level|title }}</dd>
-                                {% endif %}
-
-                                {% if hop.origin %}
-                                <dt>Origin:</dt>
-                                <dd>{{ hop.origin_countries|join:", " }}</dd>
-                                {% endif %}
-                            </dl>
-
-                            {% with "img/hops/hop-cones-drawing-"|add:hop.image_id|add:".png" as image_static %}
-                                <a href="{{ hop|url }}"><img src="{% static image_static %}" alt="Artistic drawing of hop cones" class="teaser-image float-end ms-3 mb-1 border rounded-2" /></a>
-                            {% endwith %}
-                            {{ hop|description|truncatechars_html:360 }}
-                            <p class="mb-0"><a href="{{ hop|url }}" class="btn btn-secondary">Learn more ›</a></p>
-                        </div>
-                    </article>
-                </div>
+                <div class="col">{% include "hop/featured.html" with hop=hop %}</div>
             {% endfor %}
         </div>
     </section>
-
 {% endblock %}
