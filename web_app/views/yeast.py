@@ -24,7 +24,7 @@ def overview(request: HttpRequest) -> HttpResponse:
         (yeast_type["yeasts"], yeast_type["labs"]) = group_by_lab(yeast_type["yeasts"])
 
     meta = YeastOverviewMeta().get_meta()
-    context = {"types": yeast_types, "meta": meta}
+    context = {"types": yeast_types, "meta": meta, "num_yeasts": yeasts.count()}
 
     return render(request, "yeast/overview.html", context)
 
