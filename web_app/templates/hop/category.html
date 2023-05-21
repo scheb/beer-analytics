@@ -37,4 +37,13 @@
             {% endfor %}
         </ul>
     </div>
+
+    <section class="featured-hops">
+        <h2>Discover {{ category_name }} Hops</h2>
+        <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
+            {% for hop in most_popular|slice:":4" %}
+                <div class="col">{% include "hop/featured.html" with hop=hop %}</div>
+            {% endfor %}
+        </div>
+    </section>
 {% endblock %}
