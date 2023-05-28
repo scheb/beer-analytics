@@ -185,6 +185,7 @@ class HopMapper(GenericMapper):
     def get_clean_name(self, item: RecipeHop) -> str:
         value = item.kind_raw or ""
         value = value.lower()
+        value = re.sub("&#039;", "'", value)  # Uptick
         value = re.sub("northern\\s+brewer\\s+-\\s+", "", value)  # Producer prefix
         value = re.sub("^hall?ertau(er)?$", "hallertauer mittelfrüh", value)  # Just "Hallertau(er)"
         value = re.sub("\\(?[0-9]+([.,][0-9]+)?\\s+aa\\)?", "", value)
