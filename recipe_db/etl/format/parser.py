@@ -55,6 +55,12 @@ class JsonParser:
             return JsonParser(self.json_data.get(field_name))
         return JsonParser({})
 
+    def get_dict_iterator(self, field_name):
+        dict_field = self.json_data.get(field_name)
+        keys = dict_field.keys()
+        for key in keys:
+            yield JsonParser(dict_field[key])
+
     def get_list(self, field_name) -> iter:
         data = self.json_data.get(field_name)
         if isinstance(data, list):
