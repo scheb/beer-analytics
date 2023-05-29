@@ -242,7 +242,7 @@ class HopPairingAnalysis(RecipeLevelAnalysis):
         pairs = pairs[pairs["in_projection_1"] | pairs["in_projection_2"]]
 
         # Filter only the top pairs
-        top_pairings = pairs["pairing"].value_counts()[:8].index.values
+        top_pairings = pairs["pairing"].value_counts()[:12].index.values
         pairs = pairs[pairs["pairing"].isin(top_pairings)]
 
         # Merge left and right hop into one dataset
