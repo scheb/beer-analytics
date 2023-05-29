@@ -58,7 +58,7 @@ Canterbury Whitebine;aroma;GBR;;;;
 Cascade;dual-purpose;USA;Ahtanum, Amarillo, Centennial, Summit, Cashmere;Citrus, Floral, Grapefruit, Pine, Spicy;;Casade, Cascada, Casacade, Cacade, Casc, Cas, Casca, Cacsade
 Cashmere;dual-purpose;USA;Cascade;Candy, Coconut, Fruity, Herbal, Lemon, Lemongrass, Lime, Melon, Peach;;Cashmire, Casshmere, Cashmerre, Cashemere
 Cekin;aroma;SLO;;;;
-Centennial;dual-purpose;USA;Amarillo, Bullion, Cascade, Chinook, Columbus, Eroica, Galena, Nugget;Citrus, Floral, Grapefruit, Pine, Tangerine;;Centenial, Centennials, Centenniel, Cent
+Centennial;dual-purpose;USA;Amarillo, Bullion, Cascade, Chinook, Columbus, Eroica, Galena, Nugget;Citrus, Floral, Grapefruit, Pine, Tangerine;;Centenial, Centennials, Centenniel, Cent, Cen
 Cerera;dual-purpose;SLO;;;;
 Challenger;dual-purpose;GBR;Northdown, Northern Brewer, Perle, Target;Cedar, Fruity, Green Tea;;Wye Challenger
 Chelan;bittering;USA;Galena, Nugget;Citrus, Floral, Fruity, Mild;;
@@ -85,7 +85,7 @@ Early Bird;aroma;GBR;;;;
 Early Green;aroma;GBR;;;;
 Early Prolific;aroma;GBR;;;;
 Early Promise;aroma;GBR;;;;
-East Kent Golding;aroma;GBR;Fuggle, Golding, Progress, Target, Whitbread Golding, Willamette;Floral, Grapefruit, Honey, Lavender, Lemon, Orange, Thyme;EKG;EGK, Goldings East Kent, Golding East Kent, East Ken Golding, East Kent Godings, East Kent Golding, Est Kent Goldings,  Kent East Golding, Kent East Goldings, Kent Golding, Kent Goldings, East Kent
+East Kent Golding;aroma;GBR;Fuggle, Golding, Progress, Target, Whitbread Golding, Willamette;Floral, Grapefruit, Honey, Lavender, Lemon, Orange, Thyme;EKG;EGK, Goldings East Kent, Golding East Kent, East Ken Golding, East Kent Godings, East Kent Golding, Est Kent Goldings,  Kent East Golding, Kent East Goldings, Kent Golding, Kent Goldings, East Kent, East
 Eastern Gold;bittering;JPN;;;;
 Eastern Green;aroma;JPN;;;;
 Eastwell Golding;aroma;GBR;;;;
@@ -128,7 +128,7 @@ Green Bullet;dual-purpose;NZL;Crystal, Hallertauer Mittelfrüh, Liberty, Mount H
 Greensburg;dual-purpose;USA;;;;
 Groene Bel;aroma;BEL;;;;
 Grüngeist;aroma;USA;;Tropical Fruits, Peach, Passion Fruit, Lemon, Floral, Kiwi, Lavender;;Grungeist
-Hallertauer Aroma;aroma;NZL;;Woody, Citrus;;
+Hallertauer Aroma;aroma;NZL;;Woody, Citrus;;Hallertau Aroma, H Aroma
 Hallertauer Bitter;bittering;GER;Merkur;Spicy, Sweet;;Hallertau Bitter, H Bitter
 Hallertauer Blanc;aroma;GER;Enigma, Nelson Sauvin;Clean, Gooseberry, Grape, Lemongrass, Passion Fruit, Pineapple, Whitewine;;Hallertau Blanc, H Blanc, Blanc
 Hallertauer Diamant;dual-purpose;GER;;;;Hallertau Diamant, H Diamant, Diamant
@@ -178,6 +178,7 @@ Kirin II;dual-purpose;JPN;;;;Kirin, Kirin 2
 Kitamidori;bittering;JPN;;;;
 Kohatu;aroma;NZL;Motueka, Wai-iti;Tropical Fruits;;Kuhatu
 Korsta;dual-purpose;SWE;;;;
+Lambic;aroma;USA;;Woody, Green, Grassy, Spicy, Floral, Fruity;;
 Legacy;dual-purpose;USA;Cluster, Galena, Northern Brewer;Blackberry, Currant, Floral, Grapefruit, Grassy, Orange, Spicy;;
 Lemondrop;aroma;USA;Cascade, Centennial, Liberty, Mandarina Bavaria, Motueka;Citrus, Floral, Green Tea, Lemon, Melon, Mint;;Lemon Drop
 Liberty;aroma;USA;Crystal, Hallertauer Mittelfrüh, Mount Hood;Citrus, Floral, Herbal, Lemon, Noble, Spicy;;
