@@ -158,6 +158,9 @@ class BeerXMLParser(FormatParser):
 
     def get_mash_water(self, beerxml: BeerXMLRecipe):
         mash = beerxml.mash
+        if mash is None:
+            return (None, None)
+
         mash_water = 0
         sparge_water = 0
         sparge_temp = 78 if mash.sparge_temp is None else mash.sparge_temp
