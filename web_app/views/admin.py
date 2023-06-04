@@ -64,7 +64,7 @@ def descriptions(request: HttpRequest) -> HttpResponse:
         yeast_descriptions.append({
             'name': yeast.product_name,
             'recipes_count': yeast.recipes_count,
-            'has_description': template_exists("yeast/descriptions/%s.html" % yeast.id),
+            'has_description': template_exists("yeast/descriptions/yeasts/%s.html" % yeast.id),
         })
 
     context = {
