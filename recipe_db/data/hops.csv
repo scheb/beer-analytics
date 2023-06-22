@@ -131,7 +131,6 @@ Greensburg;dual-purpose;USA;;;;
 Groene Bel;aroma;BEL;;;;
 Grüngeist;aroma;USA;;Tropical Fruits, Peach, Passion Fruit, Lemon, Floral, Kiwi, Lavender;;Grungeist
 Hallertau (US);aroma;USA;Liberty, Mount Hood, Hallertauer Mittelfrüh, Crystal, Hallertauer Tradition;Spicy, Floral, Herbal;;US Hallertau
-Hallertauer Aroma;aroma;NZL;;Woody, Citrus;;Hallertau Aroma, H Aroma
 Hallertauer Bitter;bittering;GER;Merkur;Spicy, Sweet;;Hallertau Bitter, H Bitter
 Hallertauer Blanc;aroma;GER;Enigma, Nelson Sauvin;Clean, Gooseberry, Grape, Lemongrass, Passion Fruit, Pineapple, Whitewine;;Hallertau Blanc, H Blanc, Blanc
 Hallertauer Diamant;dual-purpose;GER;;;;Hallertau Diamant, H Diamant, Diamant
@@ -362,7 +361,7 @@ Vital;dual-purpose;CZH;;;;
 Vojvodina;aroma;;;;;
 Wai-iti;aroma;NZL;Riwaka;Apricot, Citrus, Lime, Mandarin, Peach, Spicy, Stone Fruit;;Wai-ti
 Waimea;dual-purpose;NZL;Pacific Jade;Citrus, Grapefruit, Herbal, Mandarin, Pine;;
-Wakatu;dual-purpose;NZL;Hallertauer Mittelfrüh, Liberty, Nelson Sauvin;Floral, Lime, Tropical Fruits;;Whakatu, Wakutu
+Wakatu;dual-purpose;NZL;Hallertauer Mittelfrüh, Liberty, Nelson Sauvin;Woody, Citrus, Floral, Lime, Tropical Fruits;Hallertauer Aroma;Whakatu, Wakutu, NZ Hallertau Aroma, Hallertau Aroma, H Aroma
 Warrior;bittering;USA;Columbus, Magnum, Nugget, Summit;Mild, Pine, Resin, Citrus, Spicy;;Warior, Warr, Warroir
 Whitbread Golding;aroma;GBR;;;Whitbread Golding Variety, WGV;Whitbread
 Willamette;aroma;USA;East Kent Golding, Fuggle, Glacier, Styrian Golding;Caramel, Citrus, Curry, Elderberry, Floral, Incense;;Willamett, Willamatte, Williamette
