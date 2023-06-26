@@ -19,7 +19,7 @@ Aquila;aroma;USA;Cluster, Galena;;;
 Aramis;aroma;FRA;Ahtanum, Centennial, Challenger, Strisselspalt, Willamette;Citrus, Floral, Grassy, Herbal, Pepper, Spicy;;Armis
 Archer;aroma;GBR;;Apricot, Citrus, Floral, Lime, Peach;;
 Ariana;dual-purpose;GER;Hallertauer Blanc, Hüll Melon, Mandarina Bavaria;Citrus, Fruity, Gooseberry, Herbal, Jasmine, Passion Fruit, Pineapple, Tangerine;;Arriana
-Astra;dual-purpose;AUS;;Grapefruit, Grassy, Honey, Melon, Peach, Sweet, Tropical Fruits, Whitewine;;
+Astra;dual-purpose;AUS;;Grapefruit, Grassy, Honey, Melon, Peach, Sweet, Tropical Fruits, White Wine;;
 Atlas;aroma;SLO;;Floral, Lime, Pine;;
 Aurora;dual-purpose;SLO;Northern Brewer, Perle, Styrian Golding;Floral, Lemongrass, Noble, Spicy;Super Styrians;Arora, Super Styrian, Styrian Aurora, Styrian Arora
 Aurum;aroma;GER;;Spicy, Fruity, Floral, Herbal, Earthy, Citrus, Noble;;
@@ -98,7 +98,7 @@ Elixir;aroma;FRA;;Citrus, Cognac, Floral, Leather, Orange, Tangerine, Tobacco, T
 Ella;aroma;AUS;Galaxy, Palisade, Perle;Anise, Floral, Grapefruit, Noble, Spicy, Tropical Fruits;Stella;
 Elsaesser;aroma;FRA;;;;
 Endeavor;dual-purpose;GBR;;Citrus, Currant, Spicy;;Endeavour, Endevour
-Enigma;bittering;AUS;Hallertauer Blanc, Nelson Sauvin;Berry, Currant, Raspberry, Stone Fruit, Tropical Fruits, Whitewine;;
+Enigma;bittering;AUS;Hallertauer Blanc, Nelson Sauvin;Berry, Currant, Raspberry, Stone Fruit, Tropical Fruits, White Wine;;
 Epic;aroma;GBR;;Berry, Fruity, Herbal;;
 Ernest;aroma;GBR;Fuggle;Grassy, Herbal, Stone Fruit, Apricot, Citrus, Spicy;;
 Eroica;bittering;USA;Brewer's Gold, Chinook, Cluster, Galena, Nugget;;;
@@ -132,7 +132,7 @@ Groene Bel;aroma;BEL;;;;
 Grüngeist;aroma;USA;;Tropical Fruits, Peach, Passion Fruit, Lemon, Floral, Kiwi, Lavender;;Grungeist
 Hallertau (US);aroma;USA;Liberty, Mount Hood, Hallertauer Mittelfrüh, Crystal, Hallertauer Tradition;Spicy, Floral, Herbal;;US Hallertau
 Hallertauer Bitter;bittering;GER;Merkur;Spicy, Sweet;;Hallertau Bitter, H Bitter
-Hallertauer Blanc;aroma;GER;Enigma, Nelson Sauvin;Clean, Gooseberry, Grape, Lemongrass, Passion Fruit, Pineapple, Whitewine;;Hallertau Blanc, H Blanc, Blanc
+Hallertauer Blanc;aroma;GER;Enigma, Nelson Sauvin;Clean, Gooseberry, Grape, Lemongrass, Passion Fruit, Pineapple, White Wine;;Hallertau Blanc, H Blanc, Blanc
 Hallertauer Diamant;dual-purpose;GER;;;;Hallertau Diamant, H Diamant, Diamant
 Hallertauer Gold;aroma;GER;;;;Hallertau Gold, H Gold
 Hallertauer Mittelfrüh;aroma;GER;Crystal, Hallertauer Mittelfrüh, Hallertauer Tradition, Hersbrucker, Liberty, Ultra, Vanguard;Citrus, Floral, Grassy, Spicy, Tea;;Hallertau Mittelfrüh, Hallertau Mittlefrüh, Mittelfrüh, Mittelfrüher, H Mittelfrüh, Hallertauer MF, German Hallertau, Domestic Hallertau, Hallertauer Hallertauer, Hallertau Hallertauer, Mttelfrueh, Mittlefrüh, Hallertau Mittel, Hallertau (DE)
@@ -221,10 +221,10 @@ MultiHead;dual-purpose;USA;;;;
 Mystic;aroma;GBR;;;;Mystique
 Nadwislanska;aroma;POL;;;;
 Nectaron;dual-purpose;NZL;Citra, Mosaic, Waimea;Citrus, Grapefruit, Passion Fruit, Peach, Pineapple, Tropical Fruits;HORT 4337;Nectron
-Nelson Sauvin;dual-purpose;NZL;Enigma, Hallertauer Blanc, Motueka, Riwaka;Fruity, Gooseberry, Grape, Whitewine, Passion Fruit;;Nelson, Nels, Nel, Neslson Sauvin
+Nelson Sauvin;dual-purpose;NZL;Enigma, Hallertauer Blanc, Motueka, Riwaka;Fruity, Gooseberry, Grape, White Wine, Passion Fruit;;Nelson, Nels, Nel, Neslson Sauvin
 Neo1;dual-purpose;USA;;;;Neo 1
 Neoplanta;dual-purpose;SLO;;;;
-Newport;bittering;USA;Brewer's Gold, Fuggle, Galena, Magnum, Nugget;Balsamic, Citrus, Earthy, Whitewine;;
+Newport;bittering;USA;Brewer's Gold, Fuggle, Galena, Magnum, Nugget;Balsamic, Citrus, Earthy, White Wine;;
 Nobility;dual-purpose;USA;;Lemon, Orange, Lemongrass, Green Tea, Floral, Spicy;;
 Nordgaard;aroma;BEL,DNK;;;;
 Northdown;dual-purpose;USA;Northern Brewer;Fresh, Flowery, Pine, Berry, Spicy, Cedar;;
