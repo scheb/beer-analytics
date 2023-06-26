@@ -7,15 +7,18 @@ Anise;spicy
 Aniseed;spicy
 Apple;fruity
 Apricot;fruity
+Artichoke;vegetal
 Balsamic;spicy
 Banana;fruity
 Bergamot;citrus
-Berry;fruity
+Berries;fruity
 Black Currant;fruity
+Black Pepper;spicy
 Black Tea;fruity
 Blackberry;fruity
 Blueberry;fruity
 Bubblegum;fruity
+Calendula;floral
 Candy;cream-caramel
 Cannabis;herbal
 Caramel;cream-caramel
@@ -42,6 +45,7 @@ Currant;fruity
 Curry;spicy
 Dank;earthy-woody
 Dill;herbal
+Dried Fruit;fruity
 Earthy;earthy-woody
 Elderberry;fruity
 Elderflower;floral
@@ -66,6 +70,7 @@ Guava;tropical
 Hay;earthy-woody
 Herbal;herbal
 Honey;cream-caramel
+Honeydew;tropical
 Incense;earthy-woody
 Jasmine;floral
 Juniper;herbal
@@ -85,6 +90,7 @@ Mandarin;citrus
 Mango;tropical
 Marjoram;herbal
 Marmalade;citrus
+Mate Tea;herbal
 Melon;tropical
 Menthol;herbal
 Mild;other
@@ -113,7 +119,8 @@ Pungent;other
 Quince;fruity
 Raspberry;fruity
 Red Currant;fruity
-Resin;earthy-woody
+Red Fruit;fruity
+Resinous;earthy-woody
 Rose;floral
 Sage;herbal
 Smooth;other
@@ -128,13 +135,15 @@ Tangerine;citrus
 Tea;herbal
 Thyme;herbal
 Tobacco;earthy-woody
+Toffee;cream-caramel
 Tomato;vegetal
 Tropical Fruits;tropical
 Vanilla;cream-caramel
 Vegetal;vegetal
 Watermelon;fruity
 Whisky;earthy-woody
+White Wine;fruity
 Whitegrape;fruity
-Whitewine;fruity
 Woody;earthy-woody
 Yogurt;cream-caramel
+Zesty;citrus
