@@ -273,4 +273,19 @@ def normalize_flavor_name(value: str):
     if value == "passion fruit":
         return "Passion Fruit"
 
+    if value == "whitewine":
+        return "White Wine"
+
+    if value == "resin":
+        return "Resinous"
+
+    if value == "liquorice":
+        return "Licorice"
+
+    if value == "berry":
+        return "Berries"
+
+    if value == "zest":
+        return "Zesty"
+
     return value
