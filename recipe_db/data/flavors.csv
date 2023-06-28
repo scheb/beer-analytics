@@ -7,6 +7,7 @@ Anise;spicy
 Aniseed;spicy
 Apple;fruity
 Apricot;fruity
+Aromatic;other
 Artichoke;vegetal
 Balsamic;spicy
 Banana;fruity
@@ -50,6 +51,7 @@ Earthy;earthy-woody
 Elderberry;fruity
 Elderflower;floral
 Eucalyptus;herbal
+Evergreen;vegetal
 Fig;fruity
 Floral;floral
 Flowery;floral
@@ -72,6 +74,7 @@ Herbal;herbal
 Honey;cream-caramel
 Honeydew;tropical
 Incense;earthy-woody
+Intense;other
 Jasmine;floral
 Juniper;herbal
 Kiwi;citrus
@@ -113,6 +116,7 @@ Pear;fruity
 Pepper;spicy
 Pine;earthy-woody
 Pineapple;tropical
+Pleasant;other
 Plum;fruity
 Pomegranate;fruity
 Pungent;other
@@ -122,6 +126,7 @@ Red Currant;fruity
 Red Fruit;fruity
 Resinous;earthy-woody
 Rose;floral
+Rustic;other
 Sage;herbal
 Smooth;other
 Spearmint;herbal
@@ -132,6 +137,7 @@ Strawberry;fruity
 Sulfur;vegetal
 Sweet;cream-caramel
 Tangerine;citrus
+Tarragon;herbal
 Tea;herbal
 Thyme;herbal
 Tobacco;earthy-woody
