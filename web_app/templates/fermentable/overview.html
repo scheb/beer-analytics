@@ -25,14 +25,14 @@
                 </h2>
                 <div class="mb-4">
                     {% if category.most_popular %}{% spaceless %}
-                        <div class="badge-list search-hide">
-                            <label>Most popular:</label>
+                        <figure class="badge-list search-hide">
+                            <figcaption>Most popular:</figcaption>
                             <ol>
                             {% for fermentable in category.most_popular %}{% spaceless %}
                                 <li><a class="badge" href="{{ fermentable|url }}">{{ fermentable.name }}</a></li>
                             {% endspaceless %}{% endfor %}
                             </ol>
-                        </div>
+                        </figure>
                     {% endspaceless %}{% endif %}
 
                     {% if category.fermentables %}

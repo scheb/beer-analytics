@@ -13,14 +13,14 @@
         </p>
 
         {% if most_popular %}{% spaceless %}
-            <div class="badge-list mb-4">
-                <label>Most popular beer styles:</label>
+            <figure class="badge-list mb-4">
+                <figcaption>Most popular beer styles:</figcaption>
                 <ol>
                 {% for style in most_popular %}
                     <li><a class="badge" href="{{ style|url }}">{{ style.name }}</a></li>
                 {% endfor %}
                 </ol>
-            </div>
+            </figure>
         {% endspaceless %}{% endif %}
     </section>
 
