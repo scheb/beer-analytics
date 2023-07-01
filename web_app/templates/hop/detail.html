@@ -38,19 +38,19 @@
         </dl>
 
         {% if hop.accessible_substitutes.count %}{% spaceless %}
-            <div class="badge-list">
-                <label>Substitutes:</label>
+            <figure class="badge-list">
+                <figcaption>Substitutes:</figcaption>
                 <ul>
                 {% for substitute in hop.accessible_substitutes %}
                     <li><a href="{{ substitute|url }}" class="badge">{{ substitute.name }}</a></li>
                 {% endfor %}
                 </ul>
-            </div>
+            </figure>
         {% endspaceless %}{% endif %}
 
         {% if hop.aroma_tags.count %}{% spaceless %}
-            <div class="badge-list">
-                <label>Flavor:</label>
+            <figure class="badge-list">
+                <figcaption>Flavor:</figcaption>
                 <ul>
                 {% for tag in hop.aroma_tags.all %}
                     <li><a href="{% url "hop_flavor_detail" tag.id %}" class="badge bg-{{ tag.category }}">
@@ -59,7 +59,7 @@
                     </a></li>
                 {% endfor %}
                 </ul>
-            </div>
+            </figure>
         {% endspaceless %}{% endif %}
 
         {% if not long_description and description %}<p>{{ description|safe }}</p>{% endif %}

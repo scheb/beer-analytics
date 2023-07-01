@@ -12,14 +12,14 @@
     <h1>{{ category_name }} Fermentables</h1>
 
     {% if most_popular %}{% spaceless %}
-        <div class="badge-list">
-            <label>Most popular:</label>
+        <figure class="badge-list">
+            <figcaption>Most popular:</figcaption>
             <ol>
             {% for fermentable in most_popular %}
                 <li><a class="badge" href="{{ fermentable|url }}">{{ fermentable.name }}</a></li>
             {% endfor %}
             </ol>
-        </div>
+        </figure>
     {% endspaceless %}{% endif %}
 
     <div class="fermentables-overview">
