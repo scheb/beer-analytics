@@ -18,8 +18,8 @@
     {% endif %}
 
     {% if associated_aroma_tags %}{% spaceless %}
-        <div class="badge-list">
-            <label>Other descriptors going with <em>{{ tag_name }}</em>:</label>
+        <figure class="badge-list">
+            <figcaption>Other descriptors going with <em>{{ tag_name }}</em>:</figcaption>
             <ul>
             {% for tag in associated_aroma_tags %}
                 <li><a href="{% url "hop_flavor_detail" tag.id %}" class="badge bg-{{ tag.category }}">
@@ -28,7 +28,7 @@
                 </a></li>
             {% endfor %}
             </ul>
-        </div>
+        </figure>
     {% endspaceless %}{% endif %}
 
     {% if hops_count > 4 %}

@@ -51,7 +51,8 @@ dl.detail-info {
         padding: 0;
     }
 
-    label {
+    figcaption {
+        display: inline-block;
         white-space: nowrap;
         line-height: 1em;
         margin: 0.125rem 0;
