@@ -18,8 +18,8 @@
 
 
     {% if most_popular %}{% spaceless %}
-        <div class="badge-list">
-            <label>Most popular:</label>
+        <figure class="badge-list">
+            <figcaption>Most popular:</figcaption>
             <ol>
             {% for yeast in most_popular %}
                 <li><a class="badge" href="{{ yeast|url }}">{{ yeast.full_name }}
@@ -27,7 +27,7 @@
                 </a></li>
             {% endfor %}
             </ol>
-        </div>
+        </figure>
     {% endspaceless %}{% endif %}
 
     <div class="yeasts-overview">

@@ -25,7 +25,8 @@
                 </h2>
                 <div class="mb-4">
                     {% if type.most_popular %}{% spaceless %}
-                        <div class="badge-list search-hide"><label>Most popular:</label>
+                        <figure class="badge-list search-hide">
+                            <figcaption>Most popular:</figcaption>
                             <ol>
                             {% for yeast in type.most_popular %}
                                 <li><a class="badge" href="{{ yeast|url }}">{{ yeast.full_name }}
@@ -33,7 +34,7 @@
                                 </a></li>
                             {% endfor %}
                             </ol>
-                        </div>
+                        </figure>
                     {% endspaceless %}{% endif %}
 
                     {% for lab in type.labs %}

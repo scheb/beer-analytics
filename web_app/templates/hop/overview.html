@@ -34,14 +34,14 @@
                 </h2>
                 <div class="mb-4">
                     {% if category.most_popular %}{% spaceless %}
-                        <div class="badge-list search-hide">
-                            <label>Most popular:</label>
+                        <figure class="badge-list search-hide">
+                            <figcaption>Most popular:</figcaption>
                             <ol>
                             {% for hop in category.most_popular %}
                                 <li><a class="badge" href="{{ hop|url }}">{{ hop.name }}</a></li>
                             {% endfor %}
                             </ol>
-                        </div>
+                        </figure>
                     {% endspaceless %}{% endif %}
 
                     <ul class="column-list">
