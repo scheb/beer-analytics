@@ -11,7 +11,7 @@
     </nav>
 
     <article>
-    <div class="detail-head">
+    <div class="detail-head clearfix">
         <h1>{{ hop.name }} Hops</h1>
         <dl class="detail-info">
             <dt>Recipes:</dt>
@@ -37,30 +37,48 @@
             {% endif %}
         </dl>
 
-        {% if hop.accessible_substitutes.count %}{% spaceless %}
-            <figure class="badge-list">
-                <figcaption>Substitutes:</figcaption>
-                <ul>
-                {% for substitute in hop.accessible_substitutes %}
-                    <li><a href="{{ substitute|url }}" class="badge">{{ substitute.name }}</a></li>
-                {% endfor %}
-                </ul>
-            </figure>
-        {% endspaceless %}{% endif %}
+        <div class="d-flex flex-column d-lg-block">
+            <nav class="toc toc-align order-last">
+                <h5>Table of Contents</h5>
+                <ol>
+                    <li><a href="#characteristics">Characteristics</a>
+                    <li><a href="#popularity">Popularity Over Time</a>
+                    <li><a href="#styles-percent-recipes">Typical Styles <small class="text-muted">by Percent of Recipes</small></a>
+                    <li><a href="#styles-number-recipes">Typical Styles <small class="text-muted">by Number of Recipes</small></a>
+                    <li><a href="#style-amount">Dosing per Style</a>
+                    <li><a href="#usage-amount">Dosing per Use</a>
+                    <li><a href="#hop-pairings">Hop Pairings</a>
+                    <li><a href="#most-used-yeasts">Most Used Yeasts</a>
+                    <li><a href="#trending-yeasts">Trending Yeasts</a>
+                    <li><a href="#recipes">Random Recipes</a>
+                </ol>
+            </nav>
 
-        {% if hop.aroma_tags.count %}{% spaceless %}
-            <figure class="badge-list">
-                <figcaption>Flavor:</figcaption>
-                <ul>
-                {% for tag in hop.aroma_tags.all %}
-                    <li><a href="{% url "hop_flavor_detail" tag.id %}" class="badge bg-{{ tag.category }}">
-                        {{ tag.name }}
-                        <small>({{ tag.accessible_hops_count }})</small>
-                    </a></li>
-                {% endfor %}
-                </ul>
-            </figure>
-        {% endspaceless %}{% endif %}
+            {% if hop.accessible_substitutes.count %}{% spaceless %}
+                <figure class="badge-list">
+                    <figcaption>Substitutes:</figcaption>
+                    <ul>
+                    {% for substitute in hop.accessible_substitutes %}
+                        <li><a href="{{ substitute|url }}" class="badge">{{ substitute.name }}</a></li>
+                    {% endfor %}
+                    </ul>
+                </figure>
+            {% endspaceless %}{% endif %}
+
+            {% if hop.aroma_tags.count %}{% spaceless %}
+                <figure class="badge-list">
+                    <figcaption>Flavor:</figcaption>
+                    <ul>
+                    {% for tag in hop.aroma_tags.all %}
+                        <li><a href="{% url "hop_flavor_detail" tag.id %}" class="badge bg-{{ tag.category }}">
+                            {{ tag.name }}
+                            <small>({{ tag.accessible_hops_count }})</small>
+                        </a></li>
+                    {% endfor %}
+                    </ul>
+                </figure>
+            {% endspaceless %}{% endif %}
+        </div>
 
         {% if not long_description and description %}<p>{{ description|safe }}</p>{% endif %}
 
@@ -127,7 +145,7 @@
     {% with chart_type="amount-used-per-style" anchor="style-amount" %}
          <section class="card card-chart">
             <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Amount per Style</h2>
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Dosing per Style</h2>
             </div>
             <div class="card-body">
                 <div class="chart-l" data-chart="{{ hop|chart_js:chart_type }}">
@@ -142,7 +160,7 @@
     {% with chart_type="amount-used-per-use" anchor="usage-amount" %}
         <section class="card card-chart">
             <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Amount per Use</h2>
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Dosing per Use</h2>
             </div>
             <div class="card-body">
                 <div class="chart-l" data-chart="{{ hop|chart_js:chart_type }}">
@@ -157,7 +175,7 @@
     {% with chart_type="hop-pairings" anchor="hop-pairings" %}
         <section class="card card-chart">
             <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Common Hop Pairings</h2>
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Hop Pairings</h2>
             </div>
             <div class="card-body">
                 <div class="chart-l" data-chart="{{ hop|chart_js:chart_type }}">

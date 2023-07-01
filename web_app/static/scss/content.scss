@@ -41,6 +41,22 @@ dl.detail-info {
     }
 }
 
+.toc-align {
+    @include media-breakpoint-up('lg') {
+        float: right;
+        margin-left: 2rem;
+        margin-bottom: 2rem;
+        background: $gray-25;
+        border: $card-border-width solid $card-border-color;
+        border-radius: $card-border-radius;
+        padding: $card-spacer-x $card-spacer-y;
+
+        ul, ol {
+            margin-bottom: 0;
+        }
+    }
+}
+
 .badge-list {
     margin-bottom: 20px;
 

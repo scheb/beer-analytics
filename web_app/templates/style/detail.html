@@ -5,7 +5,7 @@
     {% include './breadcrumb.html' %}
 
     <article>
-    <div class="detail-head">
+    <div class="detail-head clearfix">
         <h1>{{ style.name }}{% if style.id|length <= 3 %} <small class="text-muted ms-2" title="BJCP ID">{{ style.id }}</small>{% endif %}</h1>
 
         <dl class="detail-info">
@@ -18,6 +18,23 @@
             {% endfor %}
             {% endif %}
         </dl>
+
+        <nav class="toc toc-align order-last">
+            <h5>Table of Contents</h5>
+            <ol>
+                <li><a href="#specifications">Specifications</a></li>
+                <li><a href="#popularity">Popularity Over Time</a></li>
+                <li><a href="#most-used-yeasts">Most Used Yeasts</a></li>
+                <li><a href="#trending-yeasts">Trending Yeasts</a></li>
+                <li><a href="#most-used-hops">Most Used Hops</a></li>
+                <li><a href="#most-used-hops-amount">Dosing of Hops</a></li>
+                <li><a href="#trending-hops">Trending Hops</a></li>
+                <li><a href="#hop-pairings">Hop Pairings</a></li>
+                <li><a href="#most-used-fermentables">Most Used Fermentables</a></li>
+                <li><a href="#most-used-fermentables-amount">Amount of Fermentables</a></li>
+                <li><a href="#recipes">Random Recipes</a></li>
+            </ol>
+        </nav>
 
         {% if long_description %}
             <div class="detail-long-description">
@@ -125,7 +142,7 @@
     {% with chart_type="popular-hops-amount" anchor="most-used-hops-amount" %}
         <section class="card card-chart">
             <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Typical Amount of Hops</h2>
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Dosing of Hops</h2>
                 <nav class="d-none" data-chart-navigation="chart-{{ chart_type }}">
                     <label>Used for:</label>
                     <ul class="nav" role="tablist">
@@ -164,7 +181,7 @@
     {% with chart_type="hop-pairings" anchor="hop-pairings" %}
         <section class="card card-chart">
             <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Common Hop Pairings</h2>
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Hop Pairings</h2>
             </div>
             <div class="card-body">
                 <div class="chart-l" data-chart="{{ style|chart_js:chart_type }}">
@@ -207,7 +224,7 @@
     {% with chart_type="popular-fermentables-amount" anchor="most-used-fermentables-amount" %}
         <section class="card card-chart">
             <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Typical Amount of Fermentables</h2>
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Amount of Fermentables</h2>
                 <nav class="d-none" data-chart-navigation="chart-{{ chart_type }}">
                     <label>Type:</label>
                     <ul class="nav" role="tablist">

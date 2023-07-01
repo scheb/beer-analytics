@@ -11,7 +11,7 @@
     </nav>
 
     <article>
-    <div class="detail-head">
+    <div class="detail-head clearfix">
         <h1>{{ fermentable.name }}</h1>
         <dl class="detail-info">
             <dt>Type:</dt>
@@ -25,6 +25,18 @@
             {% endfor %}
             {% endif %}
         </dl>
+
+        <nav class="toc toc-align order-last">
+            <h5>Table of Contents</h5>
+            <ol>
+                <li><a href="#characteristics">Characteristics</a></li>
+                <li><a href="#popularity">Popularity Over Time</a></li>
+                <li><a href="#styles-percent-recipes">Typical Styles <small class="text-muted">by Percent of Recipes</small></a></li>
+                <li><a href="#styles-number-recipes">Typical Styles <small class="text-muted">by Number of Recipes</small></a></li>
+                <li><a href="#style-amount">Amount per Style</a></li>
+                <li><a href="#recipes">Random Recipes</a></li>
+            </ol>
+        </nav>
 
         {% if description %}<p>{{ description|safe }}</p>{% endif %}
     </div>

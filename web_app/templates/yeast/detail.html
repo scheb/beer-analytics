@@ -11,7 +11,7 @@
     </nav>
 
     <article>
-    <div class="detail-head">
+    <div class="detail-head clearfix">
         <h1>{{ yeast.full_name }}{% if yeast.has_extra_product_id %} <small class="text-muted">{{ yeast.product_id }}</small>{% endif %}</h1>
         <dl class="detail-info">
             <dt>Recipes:</dt>
@@ -42,6 +42,18 @@
             </dd>
             {% endif %}
         </dl>
+
+        <nav class="toc toc-align">
+            <h5>Table of Contents</h5>
+            <ol>
+                <li><a href="#popularity">Popularity Over Time</a></li>
+                <li><a href="#styles-percent-recipes">Typical Styles <small class="text-muted">by Percent of Recipes</small></a></li>
+                <li><a href="#styles-number-recipes">Typical Styles <small class="text-muted">by Number of Recipes</small></a></li>
+                <li><a href="#most-used-hops">Most Used Hops</a></li>
+                <li><a href="#trending-hops">Trending Hops</a></li>
+                <li><a href="#recipes">Random Recipes</a></li>
+            </ol>
+        </nav>
 
         {% if not long_description and description %}<p>{{ description|safe }}</p>{% endif %}
 
