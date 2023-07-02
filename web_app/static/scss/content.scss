@@ -41,19 +41,32 @@ dl.detail-info {
     }
 }
 
+.toc {
+    background: $gray-10;
+    border: $card-border-width solid $card-border-color;
+    border-radius: $card-border-radius;
+    padding: $card-spacer-x $card-spacer-y;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+    &-headline {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        border-bottom: 0;
+        font-size: $h5-font-size;
+    }
+
+    ul, ol {
+        margin-bottom: 0;
+    }
+}
+
 .toc-align {
     @include media-breakpoint-up('lg') {
         float: right;
+        margin-top: 0;
         margin-left: 2rem;
         margin-bottom: 2rem;
-        background: $gray-25;
-        border: $card-border-width solid $card-border-color;
-        border-radius: $card-border-radius;
-        padding: $card-spacer-x $card-spacer-y;
-
-        ul, ol {
-            margin-bottom: 0;
-        }
     }
 }
 

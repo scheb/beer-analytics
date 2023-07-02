@@ -39,8 +39,9 @@
 
         <div class="d-flex flex-column d-lg-block">
             <nav class="toc toc-align order-last">
-                <h5>Table of Contents</h5>
+                <h2 class="toc-headline">Table of Contents</h2>
                 <ol>
+                    <li class="d-lg-none"><a href="#introduction">Introduction</a></li>
                     <li><a href="#characteristics">Characteristics</a>
                     <li><a href="#popularity">Popularity Over Time</a>
                     <li><a href="#styles-percent-recipes">Typical Styles <small class="text-muted">by Percent of Recipes</small></a>
@@ -80,6 +81,10 @@
             {% endspaceless %}{% endif %}
         </div>
 
+        <h2 class="d-lg-none">
+            <a href="#introduction" id="introduction" class="anchor"><span></span></a>
+            Introduction
+        </h2>
         {% if not long_description and description %}<p>{{ description|safe }}</p>{% endif %}
 
         {% if long_description %}
