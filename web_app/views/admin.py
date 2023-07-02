@@ -5,7 +5,7 @@ from django.views.decorators.cache import cache_page
 from recipe_db.analytics.fermentable import UnmappedFermentablesAnalysis
 from recipe_db.analytics.hop import UnmappedHopsAnalysis
 from recipe_db.analytics.yeast import UnmappedYeastsAnalysis
-from recipe_db.models import Hop, Tag, Yeast
+from recipe_db.models import Hop, Tag, Yeast, Fermentable
 from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.admin import AdminChartFactory
 from web_app.charts.utils import NoDataException
@@ -45,10 +45,11 @@ def descriptions(request: HttpRequest) -> HttpResponse:
     hop_descriptions = []
     flavor_descriptions = []
     yeast_descriptions = []
+    fermentable_descriptions = []
 
     for hop in Hop.objects.all().filter(recipes_count__gt=0).order_by('-recipes_count'):
         hop_descriptions.append({
-            'name': hop.name,
+            'hop': hop,
             'recipes_count': hop.recipes_count,
             'has_description': template_exists("hop/descriptions/hops/%s.html" % hop.id),
         })
@@ -62,15 +63,23 @@ def descriptions(request: HttpRequest) -> HttpResponse:
 
     for yeast in Yeast.objects.all().order_by('-recipes_count'):
         yeast_descriptions.append({
-            'name': yeast.product_name,
+            'yeast': yeast,
             'recipes_count': yeast.recipes_count,
             'has_description': template_exists("yeast/descriptions/yeasts/%s.html" % yeast.id),
+        })
+
+    for fermentable in Fermentable.objects.all().order_by('-recipes_count'):
+        fermentable_descriptions.append({
+            'fermentable': fermentable,
+            'recipes_count': fermentable.recipes_count,
+            'has_description': template_exists("fermentable/descriptions/fermentables/%s.html" % fermentable.id),
         })
 
     context = {
         'hops': hop_descriptions,
         'flavors': sorted(flavor_descriptions, key=lambda f: f['hops_count'], reverse=True),
         'yeasts': yeast_descriptions,
+        'fermentables': fermentable_descriptions,
     }
 
     return render(request, "admin/descriptions.html", context)
