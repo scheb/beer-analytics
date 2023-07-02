@@ -144,7 +144,7 @@ export class SearchBox {
         }, this)
 
         this.appendNoResult();
-        input.addEventListener('keyup', delay(this.onKeyUp.bind(this), 500))
+        input.addEventListener('input', delay(this.onKeyUp.bind(this), 500))
         if (input.value.length > 0) {
             this.search(input.value)
         }
