@@ -45,7 +45,13 @@
             <a href="#introduction" id="introduction" class="anchor"><span></span></a>
             Introduction
         </h2>
-        {% if description %}<p>{{ description|safe }}</p>{% endif %}
+        {% if not long_description and description %}<p>{{ description|safe }}</p>{% endif %}
+
+        {% if long_description %}
+            <div class="detail-long-description">
+                {% include long_description %}
+            </div>
+        {% endif %}
     </div>
 
     {% include './metrics.html' %}
