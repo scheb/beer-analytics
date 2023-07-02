@@ -129,6 +129,7 @@ def flavor_detail(request: HttpRequest, flavor_id: str) -> HttpResponse:
 
     context = {
         "tag_name": tag_obj.name,
+        "tag_category": tag_obj.category,
         "num_hops": num_hops,
         "hops": hops,
         "hops_count": hops.count(),

@@ -6,11 +6,11 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url "hop_overview" %}">Hops</a></li>
             <li class="breadcrumb-item"><a href="{% url "hop_flavor_overview" %}">Hop Flavors and Aromas</a></li>
-            <li class="breadcrumb-item active">{{ tag_name }} Flavor Hops</li>
+            <li class="breadcrumb-item active">{{ tag_name }}{% if tag_category != 'other' %} Flavor{% endif %} Hops</li>
         </ol>
     </nav>
 
-    <h1>Hops with {{ tag_name }} Flavor</h1>
+    <h1>Hops with {% if tag_category != 'other' %}{{ tag_name }} Flavor{% else %}the {{ tag_name }} Descriptor{% endif %}</h1>
     {% if long_description %}
         <div class="detail-long-description">
             {% include long_description %}
@@ -32,7 +32,7 @@
     {% endspaceless %}{% endif %}
 
     {% if hops_count > 4 %}
-        <section class="hops-overview">
+        <section class="hops-overview mb-5">
             <ul class="{% if hops_count > 10 %}column-list-wide{% else %}simple-list{% endif %}">
                 {% for hop in hops %}
                     <li>
@@ -44,7 +44,7 @@
         </section>
 
         <section class="featured-hops">
-            <h2>Discover {{ tag_name }} Flavor Hops</h2>
+            <h2>Discover {{ tag_name }} {% if tag_category != 'other' %} Flavor{% endif %}Hops</h2>
             <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
                 {% for hop in most_popular %}
                     <div class="col">{% include "hop/featured.html" with hop=hop %}</div>

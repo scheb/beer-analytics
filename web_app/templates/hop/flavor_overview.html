@@ -14,7 +14,7 @@
 
     {% for category in categories %}
         <section class="flavor-category">
-            <h2><a id="category-{{ category.id }}"></a>{{ category.name }} Flavors</h2>
+            <h2><a id="category-{{ category.id }}"></a>{{ category.name }}{% if category.id != 'other' %} Flavors{% endif %}</h2>
             {% if category.description %}
                 <div class="flavor-category-description">
                     {% include category.description %}
