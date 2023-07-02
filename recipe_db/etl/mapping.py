@@ -255,6 +255,7 @@ class FermentableMapper(GenericMapper):
 
         # Normalize "caramel"
         value = re.sub("\\bcaramell\\b", "caramel", value)
+        value = re.sub("\\bcaramelo\\b", "caramel", value)
 
         return value
 
