@@ -9,12 +9,32 @@
         </ol>
     </nav>
 
-    <h1>Hop Flavors and Aromas</h1>
-    {% include "./descriptions/flavors.html" %}
+    <section class="detail-head clearfix">
+        <h1>Hop Flavors and Aromas</h1>
+
+        <nav class="toc toc-align">
+            <h2 class="toc-headline">Table of Contents</h2>
+            <ol>
+                <li class="d-lg-none"><a href="#introduction">Introduction</a></li>
+                {% for category in categories %}
+                    <li><a href="#flavor-{{ category.id }}">{{ category.name }}{% if category.id != 'other' %} Flavors{% endif %}</a>
+                {% endfor %}
+            </ol>
+        </nav>
+
+        <h2 class="d-lg-none">
+            <a href="#introduction" id="introduction" class="anchor"><span></span></a>
+            Introduction
+        </h2>
+        {% include "./descriptions/flavors.html" %}
+    </section>
 
     {% for category in categories %}
         <section class="flavor-category">
-            <h2><a id="category-{{ category.id }}"></a>{{ category.name }}{% if category.id != 'other' %} Flavors{% endif %}</h2>
+            <h2>
+                <a href="#flavor-{{ category.id }}" id="flavor-{{ category.id }}" class="anchor"><span></span></a>
+                {{ category.name }}{% if category.id != 'other' %} Flavors{% endif %}
+            </h2>
             {% if category.description %}
                 <div class="flavor-category-description">
                     {% include category.description %}

@@ -10,6 +10,7 @@ $primary: #d07330;
 $secondary: #e29b1f;
 
 $gray: #877c74;
+$gray-10: tint-color($gray, 95%);
 $gray-25: tint-color($gray, 88%);
 $gray-50: tint-color($gray, 84%);
 $gray-100: tint-color($gray, 64%);
