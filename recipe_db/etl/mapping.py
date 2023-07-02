@@ -253,6 +253,9 @@ class FermentableMapper(GenericMapper):
         value = re.sub("\\bpilsener\\b", "pilsner", value)
         value = re.sub("\\bpilsen\\b", "pilsner", value)
 
+        # Normalize "caramel"
+        value = re.sub("\\bcaramell\\b", "caramel", value)
+
         return value
 
     def get_name_variants(self, name: str) -> iter:
