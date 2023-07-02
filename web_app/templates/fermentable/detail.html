@@ -14,8 +14,10 @@
     <div class="detail-head clearfix">
         <h1>{{ fermentable.name }}</h1>
         <dl class="detail-info">
+            {% if fermentable.type %}
             <dt>Type:</dt>
             <dd>{{ fermentable.type_name }}</dd>
+            {% endif %}
             <dt>Recipes:</dt>
             <dd>{{ fermentable.recipes_count }}</dd>
             {% if fermentable.alt_names %}
