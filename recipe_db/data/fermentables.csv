@@ -53,7 +53,7 @@ Biscuit Malt;grain;toasted;Victory Malt;Château Biscuit, Biscuit MD, Best Biscu
 Cookie Malt;grain;toasted;;Cookie
 Aromatic Malt;grain;toasted;;Aromatic, Château Arome, Aurora Malt
 Amber Malt;grain;toasted;Special Roast, Aroma 100 MD;Amber
-Melanoidin Malt;grain;toasted;Melano, Red X, Toasted Malt;Melanoidin
+Melanoidin Malt;grain;toasted;Melano, Red X, Toasted Malt;Melanoidin, Melanoidina
 Honey Malt;grain;toasted;;
 Toffee Malt;grain;toasted;;
 Acidulated Malt;grain;adjunct;Acid Malt, Sour Malt;Sauermalz, Acidulated, Château Acid, Sour Grapes Malt
@@ -103,8 +103,8 @@ Caramel/Crystal Malt – 10L;grain;cara_crystal;Crystal Malt 10L, Caramel Malt 1
 Caramel/Crystal Malt – 15L;grain;cara_crystal;Crystal Malt 15L, Caramel Malt 15L, Carastan Light;Caramel 15, Crystal 15, Light Carastan
 Caramel/Crystal Malt – 20L;grain;cara_crystal;Crystal Malt 20L, Caramel Malt 20L;Caramel 20, Crystal 20
 Caramel/Crystal Malt – 30L;grain;cara_crystal;Crystal Malt 30L, Caramel Malt 30L, Pale Caramel, Carastan;Caramel 30, Crystal 30, Pale Crystal, Cara Pale, Pale Cara
-Caramel/Crystal Malt – 40L;grain;cara_crystal;Crystal Malt 40L, Caramel Malt 40L, Light Caramel, Best Caramel Munich I;Caramel 40, Crystal 40, Munich 40, Light Crystal, Cara Malt Munich 40L, Light Cara, Cara Light, Crystal 40, Best Caramel Munich, Belges French Caramel Munich
-Caramel/Crystal Malt – 45L;grain;cara_crystal;Crystal Malt 45L, Caramel Malt 45L;Caramel 45, Crystal 45, Munich 45
+Caramel/Crystal Malt – 40L;grain;cara_crystal;Crystal Malt 40L, Caramel Malt 40L, Light Caramel, Best Caramel Munich I;Caramel 40, Crystal 40, Munich 40, Cara Malt Munich 40L, Light Cara, Cara Light, Crystal 40, Best Caramel Munich, Belges French Caramel Munich, Breiss Caramel
+Caramel/Crystal Malt – 45L;grain;cara_crystal;Crystal Malt 45L, Caramel Malt 45L;Caramel 45, Crystal 45, Caramelo 45, Munich 45
 Caramel/Crystal Malt – 50L;grain;cara_crystal;Crystal Malt 50L, Caramel Malt 50L, Best Caramel Munich II;Caramel 50, Crystal 50, Munich 50, Château Cara Gold, Crystal T50
 Caramel/Crystal Malt – 55L;grain;cara_crystal;Crystal Malt 55L, Caramel Malt 55L;Caramel 55, Crystal 55, Munich 55
 Caramel/Crystal Malt – 60L;grain;cara_crystal;Crystal Malt 60L, Caramel Malt 60L, Medium Caramel, Medium Crystal;Caramel 60, Crystal 60, Munich 60, Château Crystal, Crystal Medium, Crystal 60
@@ -115,6 +115,7 @@ Caramel/Crystal Malt – 90L;grain;cara_crystal;Crystal Malt 90L, Caramel Malt 9
 Caramel/Crystal Malt – 120L;grain;cara_crystal;Crystal Malt 120L, Caramel Malt 120L, Dark Caramel, Special B, Special W, Extra Special Malt, DRC Malt;Caramel 120, Crystal 120, Munich 120, Dark Cara, Dark Cara II, Cara Dark, Cara Munich 120L, Crystal Extra Dark 120L, DRC
 Caramel/Crystal Malt – 140L;grain;cara_crystal;Crystal Malt 140L, Caramel Malt 140L;Caramel 140, Crystal 140, Munich 140
 Caramel/Crystal Malt – 150L;grain;cara_crystal;Crystal Malt 150L, Caramel Malt 150L, Special X, Crystal Extra Dark;Caramel 150, Crystal 150, Munich 150, Caramel Munich Dark 150
+Salty Caramel Malt;grain;cara_crystal;cara_crystal;Salty Caramel
 Malt Extract;extract;;DME, LME;Extract
 Acerola;fruit;;;
 Apple;fruit;;;
