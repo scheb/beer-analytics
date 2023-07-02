@@ -15,7 +15,7 @@
         <tbody>
             {% for hop in hops %}{% if not hop.has_description %}
                 <tr>
-                    <td>{{ hop.name }}</td>
+                    <td><a href="{{ hop.hop|url }}">{{ hop.hop.name }}</a></td>
                     <td>{{ hop.recipes_count }}</td>
                 </tr>
             {% endif %}{% endfor %}
@@ -51,8 +51,26 @@
         <tbody>
             {% for yeast in yeasts %}{% if not yeast.has_description %}
                 <tr>
-                    <td>{{ yeast.name }}</td>
+                    <td><a href="{{ yeast.yeast|url }}">{{ yeast.yeast.full_name }}</a></td>
                     <td>{{ yeast.recipes_count }}</td>
+                </tr>
+            {% endif %}{% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Fermentables missing Description</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Fermentable</th>
+                <th>Recipes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fermentable in fermentables %}{% if not fermentable.has_description %}
+                <tr>
+                    <td><a href="{{ fermentable.fermentable|url }}">{{ fermentable.fermentable.name }}</a></td>
+                    <td>{{ fermentable.recipes_count }}</td>
                 </tr>
             {% endif %}{% endfor %}
         </tbody>
