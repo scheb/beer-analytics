@@ -28,7 +28,7 @@ def overview(request: HttpRequest) -> HttpResponse:
         )
 
     meta = FermentableOverviewMeta().get_meta()
-    context = {"categories": fermentable_categories, "meta": meta}
+    context = {"categories": fermentable_categories, "num_fermentables": fermentables.count(), "meta": meta}
 
     return render(request, "fermentable/overview.html", context)
 
