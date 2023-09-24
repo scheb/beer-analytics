@@ -290,4 +290,7 @@ def normalize_flavor_name(value: str):
     if value == "zest":
         return "Zesty"
 
+    if value == "flowery":
+        return "floral"
+
     return value
