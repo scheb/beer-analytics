@@ -63,6 +63,13 @@ class LinesChart:
             plot_bgcolor="#f1efee",
             title=None,
             showlegend=self.force_legend or len(fig.data) > 1,
+            legend=dict(
+                orientation="h",
+                x=0,
+                xanchor="left",
+                y=1.02,
+                yanchor = "bottom",
+            ),
             margin=dict(l=10, r=0, t=20, b=10),
             xaxis=dict(
                 fixedrange=True,
