@@ -46,8 +46,8 @@
                     <li><a href="#popularity">Popularity Over Time</a>
                     <li><a href="#styles-percent-recipes">Typical Styles <small class="text-muted">by Percent of Recipes</small></a>
                     <li><a href="#styles-number-recipes">Typical Styles <small class="text-muted">by Number of Recipes</small></a>
-                    <li><a href="#style-amount">Dosing per Style</a>
-                    <li><a href="#usage-amount">Dosing per Use</a>
+                    <li><a href="#style-amount">Dosage per Style</a>
+                    <li><a href="#usage-amount">Dosage per Use</a>
                     <li><a href="#hop-pairings">Hop Pairings</a>
                     <li><a href="#most-used-yeasts">Most Used Yeasts</a>
                     <li><a href="#trending-yeasts">Trending Yeasts</a>
@@ -150,7 +150,7 @@
     {% with chart_type="amount-used-per-style" anchor="style-amount" %}
          <section class="card card-chart">
             <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Dosing per Style</h2>
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Dosage per Style</h2>
             </div>
             <div class="card-body">
                 <div class="chart-l" data-chart="{{ hop|chart_js:chart_type }}">
@@ -165,7 +165,7 @@
     {% with chart_type="amount-used-per-use" anchor="usage-amount" %}
         <section class="card card-chart">
             <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Dosing per Use</h2>
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Dosage per Use</h2>
             </div>
             <div class="card-body">
                 <div class="chart-l" data-chart="{{ hop|chart_js:chart_type }}">
