@@ -5,6 +5,7 @@ from django.views.decorators.cache import cache_page
 from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.trend import TrendChartFactory, TrendPeriod
 from web_app.charts.utils import NoDataException
+from web_app.meta import TrendMeta
 from web_app.views.utils import render_chart
 
 
@@ -20,7 +21,13 @@ def overview(request: HttpRequest, period: str) -> HttpResponse:
     except ValueError:
         raise Http404("Unknown period %s." % period)
 
-    return render(request, "trend/overview.html", {"period": trend_period})
+    meta = TrendMeta(period).get_meta()
+    context = {
+        "meta": meta,
+        "period": trend_period,
+    }
+
+    return render(request, "trend/overview.html", context)
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="data")

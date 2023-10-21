@@ -12,12 +12,15 @@ from web_app.views.utils import object_url
 
 OPEN_GRAPH_IMAGE_WIDTH = 1200
 OPEN_GRAPH_IMAGE_HEIGHT = 630
-DETAIL_PAGE_TITLE = "{} ‹ {} | Beer Analytics"
-NORMAL_TITLE = "{} | Beer Analytics"
+SUFFIXED_TITLE = "{} | Beer Analytics"
 META_DEFAULT_DESCRIPTION = (
     "Data analysis of brewing recipes for beer enthusiasts, who want to learn how certain "
     "beer types are composed and how ingredients are used."
 )
+
+
+def suffix_title(title: str) -> str:
+    return SUFFIXED_TITLE.format(title)
 
 
 class PageMeta:
@@ -34,7 +37,7 @@ class PageMeta:
         url: Optional[str] = None,
     ):
         return Meta(
-            title=NORMAL_TITLE.format(title),
+            title=suffix_title(title),
             description=description or META_DEFAULT_DESCRIPTION,
             keywords=[] if keywords is None else keywords,
             url=url,
@@ -51,7 +54,7 @@ class HomeMeta(PageMeta):
 class StyleOverviewMeta(PageMeta):
     def get_meta(self) -> Meta:
         return Meta(
-            title=NORMAL_TITLE.format("List of Beer Styles"),
+            title=suffix_title("List of Beer Styles"),
             description="Discover the diverse world of beer styles with our in-depth analysis. Uncover flavor profiles, brewing techniques, and trends to elevate your beer knowledge and appreciation.",
             keywords=["styles"],
             url=reverse("style_overview"),
@@ -63,10 +66,10 @@ class StyleMeta(PageMeta):
         self.style = style
 
     def get_title(self):
-        return NORMAL_TITLE.format("%s Beer Style - Recipes, Popularity, Yeasts & Hops" % self.style.name)
+        return "%s Beer Style: Recipes, Popularity, Yeasts & Hops" % self.style.name
 
     def get_description(self) -> str:
-        return "Discover the secrets of brewing {} style beers with our in-depth data analysis! Explore typical hops, fermentables, and yeasts used to craft the perfect beer.".format(self.style.name)
+        return "Discover the secrets of brewing %s style beers with our in-depth data analysis! Explore typical hops, fermentables, and yeasts used to craft the perfect beer." % self.style.name
 
     def get_meta(self) -> Meta:
         return Meta(
@@ -86,10 +89,10 @@ class HopOverviewMeta(PageMeta):
             self.category_name += " "  # Add extra space for title/description
 
     def get_title(self):
-        return NORMAL_TITLE.format("List of %sHops" % self.category_name)
+        return suffix_title("List of %sHops" % self.category_name)
 
     def get_description(self):
-        return "Discover the ultimate guide to {}hops analysis. Uncover key insights into hop varieties, flavors, and profiles to enhance your brewing experience.".format(self.category_name.lower())
+        return "Discover the ultimate guide to %shops analysis. Uncover key insights into hop varieties, flavors, and profiles to enhance your brewing experience." % self.category_name.lower()
 
     def get_keywords(self):
         keywords = ["hops"]
@@ -116,10 +119,10 @@ class HopMeta(PageMeta):
         self.hop = hop
 
     def get_title(self):
-        return NORMAL_TITLE.format(self.hop.name + " Hops – Pairings, Flavor, Beer Styles", self.hop.category_name + " Hops")
+        return "%s Hops: Flavor, Pairings, Dosage & Recipes" % self.hop.name
 
     def get_description(self) -> str:
-        return "Discover the secrets of {} hops pairings, flavors, and popular beer styles through our in-depth data analysis. Uncover perfect hop combinations for a distinct taste and brew your best beer yet.".format(self.hop.name)
+        return "Discover the secrets of %s hops pairings, flavors, and popular beer styles through our in-depth data analysis. Uncover perfect hop combinations for a distinct taste and brew your best beer yet." % self.hop.name
 
     @lru_cache(maxsize=None)
     def get_description_html(self, short: bool = False) -> str:
@@ -179,7 +182,7 @@ class HopFlavorOverviewMeta(PageMeta):
         pass
 
     def get_title(self):
-        return NORMAL_TITLE.format("Hop Flavors and Aromas")
+        return suffix_title("Hop Flavors and Aromas")
 
     def get_description(self):
         return "Unlock the secrets of hop flavors with our ultimate guide. From classic to exotic varieties, explore flavor profiles and enhance your brewing game."
@@ -205,13 +208,12 @@ class HopFlavorMeta(PageMeta):
 
     def get_title(self):
         if self.tag.category == 'other':
-            title = self.tag.name + " Hops"
+            return self.tag.name + " Hops"
         else:
-            title = self.tag.name + " Flavor Hops"
-        return NORMAL_TITLE.format(title)
+            return self.tag.name + " Flavor Hops"
 
     def get_description(self) -> str:
-        return "Unlock the secrets of the {} hop flavor with our ultimate guide. Explore available varieties, flavor profiles and enhance your brewing game.".format(self.tag.name)
+        return "Unlock the secrets of the %s hop flavor with our ultimate guide. Explore available varieties, flavor profiles and enhance your brewing game." % self.tag.name
 
     def get_meta(self) -> Meta:
         return Meta(
@@ -231,10 +233,10 @@ class FermentableOverviewMeta(PageMeta):
             self.category_name += " "  # Add extra space for title/description
 
     def get_title(self):
-        return NORMAL_TITLE.format("List of %sFermentables" % self.category_name)
+        return suffix_title("List of %sFermentables" % self.category_name)
 
     def get_description(self):
-        return "Discover an in-depth overview of {}fermentables used in beer brewing. Unveil insights, trends, and analysis to craft the perfect brew!".format(self.category_name.lower())
+        return "Discover an in-depth overview of %sfermentables used in beer brewing. Unveil insights, trends, and analysis to craft the perfect brew!" % self.category_name.lower()
 
     def get_url(self):
         if self.category_id is not None:
@@ -255,12 +257,10 @@ class FermentableMeta(PageMeta):
         self.fermentable = fermentable
 
     def get_title(self) -> str:
-        return NORMAL_TITLE.format("%s – Beer Styles, Amount, Color" % self.fermentable.name)
+        return "%s: Beer Styles, Amount & Recipes" % self.fermentable.name
 
     def get_description(self) -> str:
-        return "Unlock the secrets of {} in beer brewing: Explore data analysis on common beer styles, amounts and color variations.".format(
-            self.fermentable.name
-        )
+        return "Unlock the secrets of %s in beer brewing: Explore data analysis on common beer styles, amounts and color variations." % self.fermentable.name
 
     def get_description_html(self, short: bool = False) -> str:
         # Name + type
@@ -312,15 +312,14 @@ class YeastOverviewMeta(PageMeta):
                 self.type_name += " Yeast"
             self.type_name += " "  # Add extra space for title/description
 
-
     def get_title(self):
         if len(self.type_name) > 0:
-            return NORMAL_TITLE.format("List of %s for Beer Brewing" % self.type_name)
+            return suffix_title("List of %s for Beer Brewing" % self.type_name)
 
-        return NORMAL_TITLE.format("List of Yeasts and Bacteria for Beer Brewing")
+        return suffix_title("List of Yeasts and Bacteria for Beer Brewing")
 
     def get_description(self):
-        return "Discover the best {} used in brewing with our comprehensive guide! Compare flavor profiles, fermentation characteristics and performance data to elevate your brewing experience.".format(self.type_name.lower())
+        return "Discover the best %s used in brewing with our comprehensive guide! Compare flavor profiles, fermentation characteristics and performance data to elevate your brewing experience." % self.type_name.lower()
 
     def get_url(self):
         if self.type_id is not None:
@@ -348,7 +347,10 @@ class YeastMeta(PageMeta):
 
     def get_title(self) -> str:
         yeast_name = self.get_yeast_full_name()
-        return NORMAL_TITLE.format("%s Beer Yeast – Styles, Fermentation" % yeast_name)
+        if self.yeast.type_is_yeast:
+            yeast_name = yeast_name + " Yeast"
+
+        return "%s: Beer Styles, Fermentation, Recipes" % yeast_name
 
     def get_description(self) -> str:
         return 'Unlock the secrets of {} in brewing recipes: Explore data analysis on fermentable amounts, color variations and common beer styles'.format(
@@ -400,6 +402,26 @@ class YeastMeta(PageMeta):
             description=html2text(self.get_description()),
             keywords=[self.yeast.name.lower(), "yeast", "fermentation"],
             url=object_url(self.yeast),
+        )
+
+
+class TrendMeta(PageMeta):
+    def __init__(self, period: str):
+        self.period = period
+
+    def get_meta(self) -> Meta:
+        if self.period == "seasonal":
+            title = "Seasonal Trends in Homebrewing"
+        else:
+            title = "Recent Trends in Homebrewing"
+
+        description = "Explore the latest trends in homebrewing. Dive deep into popular ingredients, and emerging styles to elevate your homemade brews. Stay ahead of the curve and craft beers that impress."
+
+        return Meta(
+            title=suffix_title(title),
+            description=description,
+            keywords=["homebrewing", "trends", "hops", "yeasts", "styles"],
+            url=reverse("trend_overview", kwargs={"period": self.period}),
         )
 
 
