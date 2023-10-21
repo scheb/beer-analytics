@@ -437,7 +437,8 @@ class Hop(models.Model):
     origin = models.CharField(max_length=32, default=None, blank=True, null=True)
     used_for = models.CharField(max_length=255, default=None, blank=True, null=True)
     description = models.CharField(max_length=255, default=None, blank=True, null=True)
-    substitutes = models.ManyToManyField("self", symmetrical=False)
+    substitutes = models.ManyToManyField("self", symmetrical=False, related_name="substitute_for_list")
+    pairings = models.ManyToManyField("self", symmetrical=False, related_name="paired_with_list")
     aroma_tags = models.ManyToManyField(Tag)
 
     # Calculated metrics from recipes
@@ -542,6 +543,10 @@ class Hop(models.Model):
     @property
     def accessible_substitutes(self):
         return self.substitutes.filter(recipes_count__gt=0).order_by("name")
+
+    @property
+    def accessible_pairings(self):
+        return self.pairings.filter(recipes_count__gt=0).order_by("name")
 
     @property
     def is_popular(self) -> bool:

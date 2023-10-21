@@ -50,15 +50,13 @@ class HopMetricCalculator:
         return lowerfence(recipes[field_name]), recipes[field_name].median(), upperfence(recipes[field_name])
 
     def calc_hop_use_counts(self, hop: Hop) -> dict:
-        results = connection.cursor().execute(
-            """
+        query = """
             SELECT use, count(DISTINCT recipe_id) AS num_recipes
             FROM recipe_db_recipehop
             WHERE kind_id = %s AND use IS NOT NULL
             GROUP BY use
-        """,
-            params=[hop.id],
-        )
+        """
+        results = connection.cursor().execute(query, params=[hop.id])
 
         count_per_use = {}
         for result in results:
@@ -71,3 +69,27 @@ class HopMetricCalculator:
         df = pd.read_sql_query("SELECT id, recipes_count FROM recipe_db_hop", connection)
         df["percentile"] = df["recipes_count"].rank(pct=True)
         return df.set_index("id")["percentile"].to_dict()
+
+    def clac_pairings(self, hop: Hop) -> dict:
+        query = """
+            SELECT
+                rh2.kind_id,
+                COUNT(DISTINCT rh2.recipe_id) AS num_recipes
+            FROM recipe_db_hop AS h
+            JOIN recipe_db_recipehop AS rh1
+                ON h.id = rh1.kind_id
+            JOIN recipe_db_recipehop AS rh2
+                ON rh1.recipe_id = rh2.recipe_id AND rh1.kind_id != rh2.kind_id
+            WHERE rh1.kind_id = %s
+            GROUP BY rh1.kind_id, rh2.kind_id
+            ORDER BY num_recipes DESC
+            LIMIT 10
+        """
+        results = connection.cursor().execute(query, params=[hop.id])
+
+        count_per_use = {}
+        for result in results:
+            (kind_id, count) = result
+            count_per_use[kind_id] = count
+
+        return count_per_use
