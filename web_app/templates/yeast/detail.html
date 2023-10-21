@@ -52,7 +52,7 @@
                 <li><a href="#styles-number-recipes">Typical Styles <small class="text-muted">by Number of Recipes</small></a></li>
                 <li><a href="#most-used-hops">Most Used Hops</a></li>
                 <li><a href="#trending-hops">Trending Hops</a></li>
-                <li><a href="#recipes">Random Recipes</a></li>
+                <li><a href="#recipes">Example Recipes</a></li>
             </ol>
         </nav>
 
@@ -153,7 +153,7 @@
     {% with anchor="recipes" %}
         <section class="card card-chart">
             <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Random Recipes</h2>
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Example Recipes</h2>
             </div>
             <div class="card-body">
                 <div class="chart-s" data-recipes="{{ yeast|recipes }}"></div>
