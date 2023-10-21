@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     "recipe_db.apps.RecipeDbConfig",
     "web_app.apps.WebAppConfig",
     "django.contrib.humanize",
+    "django.contrib.sites",
     "web_app.apps.WebAppStaticFilesConfig",
     "meta",
 ]
@@ -29,6 +30,8 @@ try:
     INSTALLED_APPS.append("data_import.apps.DataImportConfig")
 except ModuleNotFoundError:
     pass
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
