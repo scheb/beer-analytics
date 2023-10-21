@@ -95,8 +95,8 @@ class Command(BaseCommand):
             hop_id = Hop.create_id(data["name"])
             try:
                 hop = Hop.objects.get(pk=hop_id)
-                hop.substitutes.remove()
-                hop.aroma_tags.remove()
+                hop.substitutes.clear()
+                hop.aroma_tags.clear()
             except Hop.DoesNotExist:
                 hop = Hop()
                 pass
