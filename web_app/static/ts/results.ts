@@ -5,11 +5,13 @@ import * as Plotly from 'plotly.js/lib/index-cartesian'
 export class ChartConfig {
     responsive: boolean
     displayModeBar: boolean
+    modeBarButtonsToRemove: string[]
     noDataText: string
 
     constructor() {
         this.responsive = true
         this.displayModeBar = true
+        this.modeBarButtonsToRemove = ['lasso2d', 'select2d']
         this.noDataText = 'Not enough data'
     }
 }
