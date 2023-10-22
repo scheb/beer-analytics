@@ -20,7 +20,7 @@ class Command(BaseCommand):
             pairings = calculator.clac_pairings(hop)
 
             for kind_id, count in pairings.items():
-                if count < (hop.recipes_count / 20):  # At least 5% of recipes
+                if count < (hop.recipes_count / 10):  # Must be used in at least 10% of all recipes to be taken into account
                     break  # Sorted by count, so we can stop here
 
                 self.stdout.write("- Pairing: {} -> {} recipes".format(kind_id, count))
