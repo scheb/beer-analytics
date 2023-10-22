@@ -210,7 +210,7 @@ class HopFlavorMeta(PageMeta):
         if self.tag.category == 'other':
             return self.tag.name + " Hops"
         else:
-            return self.tag.name + " Flavor Hops"
+            return suffix_title(self.tag.name + " Flavor Hops")
 
     def get_description(self) -> str:
         return "Unlock the secrets of the %s hop flavor with our ultimate guide. Explore available varieties, flavor profiles and enhance your brewing game." % self.tag.name
