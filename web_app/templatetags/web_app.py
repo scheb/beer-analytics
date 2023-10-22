@@ -2,6 +2,7 @@ import re
 from typing import Optional
 
 from django import template
+from django.conf import settings
 from django.template import Node, loader, TemplateDoesNotExist
 from django.urls import reverse
 from django.utils.functional import keep_lazy_text
@@ -266,3 +267,13 @@ class HtmlLineBreaksNode(Node):
 def newlines_between_tags(value):
     """Return the given HTML with spaces between tags removed."""
     return re.sub(r">\s+<", ">\n<", str(value))
+
+
+@register.inclusion_tag("web_analytics/tracker.html")
+def web_analytics():
+    return {
+        "root_url": settings.__getattr__("WEB_ANALYTICS_ROOT_URL"),
+        "site_id": settings.__getattr__("WEB_ANALYTICS_SITE_ID"),
+        "script_name": settings.__getattr__("WEB_ANALYTICS_SCRIPT_NAME"),
+        "tracker_name": settings.__getattr__("WEB_ANALYTICS_TRACKER_NAME"),
+    }

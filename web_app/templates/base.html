@@ -1,4 +1,4 @@
-<!doctype html>{% with request.resolver_match.url_name as url_name %}{% load static %}{% load meta %}
+<!doctype html>{% with request.resolver_match.url_name as url_name %}{% load static %}{% load meta %}{% load web_app %}
 <html lang="en">
 <head {% meta_namespaces %}>
     {% if meta.title %}{% autoescape off %}{% title_prop meta.title %}{% endautoescape %}{% else %}<title>Beer Analytics &ndash; The analytical beer recipe database</title>{% endif %}
@@ -106,6 +106,6 @@
         </div>
     </div>
 </footer>
-
+{% web_analytics %}
 </body>
 </html>
