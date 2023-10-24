@@ -11,6 +11,7 @@ Aromatic;other
 Artichoke;vegetal
 Balsamic;spicy
 Banana;fruity
+Basil;herbal
 Bergamot;citrus
 Berries;fruity
 Black Currant;fruity
@@ -34,6 +35,7 @@ Cinnamon;spicy
 Citrus;citrus
 Clean;other
 Clove;spicy
+Clover;herbal
 Coconut;tropical
 Coffee;cream-caramel
 Cognac;earthy-woody
@@ -45,6 +47,7 @@ Cucumber;vegetal
 Currant;fruity
 Curry;spicy
 Dank;earthy-woody
+Delicate;other
 Dill;herbal
 Dried Fruit;fruity
 Earthy;earthy-woody
@@ -69,6 +72,7 @@ Green;vegetal
 Green Tea;herbal
 Guava;tropical
 Hay;earthy-woody
+Hazelnut;earthy-woody
 Herbal;herbal
 Honey;cream-caramel
 Honeydew;tropical
@@ -103,6 +107,7 @@ Musty;earthy-woody
 Nectar;fruity
 Nectarine;fruity
 Noble;other
+Nougat;cream-caramel
 Nutmeg;spicy
 Oak;earthy-woody
 Onion;vegetal
