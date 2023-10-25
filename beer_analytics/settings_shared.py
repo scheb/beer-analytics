@@ -1,4 +1,5 @@
 import json
+import structlog
 from os import path
 from pathlib import Path
 
@@ -22,6 +23,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "web_app.apps.WebAppStaticFilesConfig",
     "meta",
+    "django_structlog",
 ]
 
 try:
@@ -38,6 +40,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_structlog.middlewares.RequestMiddleware",
 ]
 
 ROOT_URLCONF = "beer_analytics.urls"
@@ -74,10 +77,26 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
+    "formatters": {
+        "json_formatter": {
+            "()": structlog.stdlib.ProcessorFormatter,
+            "processor": structlog.processors.JSONRenderer(),
+            "foreign_pre_chain": [
+                structlog.contextvars.merge_contextvars,
+                structlog.processors.TimeStamper(fmt="iso"),
+                structlog.stdlib.add_logger_name,
+                structlog.stdlib.add_log_level,
+                structlog.stdlib.PositionalArgumentsFormatter(),
+                structlog.processors.format_exc_info,
+                structlog.processors.StackInfoRenderer(),
+            ],
+        },
+    },
     "handlers": {
         "file": {
             "class": "logging.FileHandler",
             "filename": env.str("LOG_FILE"),
+            "formatter": "json_formatter",
         },
     },
     "root": {
@@ -92,6 +111,23 @@ LOGGING = {
         },
     },
 }
+
+structlog.configure(
+    processors=[
+        structlog.contextvars.merge_contextvars,
+        structlog.stdlib.filter_by_level,
+        structlog.processors.TimeStamper(fmt="iso"),
+        structlog.stdlib.add_logger_name,
+        structlog.stdlib.add_log_level,
+        structlog.stdlib.PositionalArgumentsFormatter(),
+        structlog.processors.StackInfoRenderer(),
+        structlog.processors.format_exc_info,
+        structlog.processors.UnicodeDecoder(),
+        structlog.stdlib.ProcessorFormatter.wrap_for_formatter,
+    ],
+    logger_factory=structlog.stdlib.LoggerFactory(),
+    cache_logger_on_first_use=True,
+)
 
 CACHE_MIDDLEWARE_ALIAS = "default"
 CACHE_MIDDLEWARE_SECONDS = DEFAULT_PAGE_CACHE_TIME
