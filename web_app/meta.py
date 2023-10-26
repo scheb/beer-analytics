@@ -4,10 +4,11 @@ import re
 from functools import lru_cache
 from typing import List, Iterable, Optional, Tuple
 
+from django.contrib.humanize.templatetags.humanize import intcomma
 from django.urls import reverse
 from meta.views import Meta
 
-from recipe_db.models import Hop, Yeast, Fermentable, Style, Tag
+from recipe_db.models import Hop, Yeast, Fermentable, Style, Tag, Recipe
 from web_app.views.utils import object_url
 
 OPEN_GRAPH_IMAGE_WIDTH = 1200
@@ -46,8 +47,9 @@ class PageMeta:
 
 class HomeMeta(PageMeta):
     def get_meta(self) -> Meta:
+        recipes = Recipe.objects.count()
         meta = self.create("", url=reverse("home"))
-        meta.title = "Beer Analytics: Discover, Analyze & Optimize Brewing Recipes"
+        meta.title = "Beer Analytics: Discover & Analyze %s Brewing Recipes" % intcomma(recipes)
         return meta
 
 
