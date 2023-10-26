@@ -91,7 +91,11 @@ class HopOverviewMeta(PageMeta):
             self.category_name += " "  # Add extra space for title/description
 
     def get_title(self):
-        return suffix_title("List of %sHops" % self.category_name)
+        if self.category_name:
+            return suffix_title("List of %sHops" % self.category_name)
+        else:
+            num_hops = Hop.objects.filter(recipes_count__gt=0).count()
+            return suffix_title("List of %s Brewing Hops" % num_hops)
 
     def get_description(self):
         return "Discover the ultimate guide to %shops analysis. Uncover key insights into hop varieties, flavors, and profiles to enhance your brewing experience." % self.category_name.lower()
@@ -316,9 +320,10 @@ class YeastOverviewMeta(PageMeta):
 
     def get_title(self):
         if len(self.type_name) > 0:
-            return suffix_title("List of %s for Beer Brewing" % self.type_name)
+            return suffix_title("List of %s for Brewing" % self.type_name)
 
-        return suffix_title("List of Yeasts and Bacteria for Beer Brewing")
+        num_yeasts = Yeast.objects.filter(recipes_count__gt=0).count()
+        return suffix_title("List of %s Yeasts and Bacteria for Brewing" % num_yeasts)
 
     def get_description(self):
         return "Discover the best %s used in brewing with our comprehensive guide! Compare flavor profiles, fermentation characteristics and performance data to elevate your brewing experience." % self.type_name.lower()
