@@ -193,7 +193,8 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
 
         # Sort by top styles
         if top_ids is not None:
-            smoothened["style_id"] = pd.Categorical(smoothened["style_id"], top_ids)
+            remaining_top_ids = set(smoothened["style_id"].unique()) & set(top_ids)
+            smoothened["style_id"] = pd.Categorical(smoothened["style_id"], remaining_top_ids)
             smoothened = smoothened.sort_values(["style_id", "month"])
 
         smoothened["beer_style"] = smoothened["style_id"].map(get_style_names_dict())
@@ -254,7 +255,8 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
 
         # Sort by top kinds
         if top_ids is not None:
-            smoothened["kind_id"] = pd.Categorical(smoothened["kind_id"], top_ids)
+            remaining_top_ids = set(smoothened["kind_id"].unique()) & set(top_ids)
+            smoothened["kind_id"] = pd.Categorical(smoothened["kind_id"], remaining_top_ids)
             smoothened = smoothened.sort_values(["kind_id", "month"])
 
         smoothened["hop"] = smoothened["kind_id"].map(get_hop_names_dict())
@@ -312,7 +314,8 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
 
         # Sort by top kinds
         if top_ids is not None:
-            smoothened["kind_id"] = pd.Categorical(smoothened["kind_id"], top_ids)
+            remaining_top_ids = set(smoothened["kind_id"].unique()) & set(top_ids)
+            smoothened["kind_id"] = pd.Categorical(smoothened["kind_id"], remaining_top_ids)
             smoothened = smoothened.sort_values(["kind_id", "month"])
 
         smoothened["fermentable"] = smoothened["kind_id"].map(get_fermentable_names_dict())
@@ -373,7 +376,8 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
 
         # Sort by top kinds
         if top_ids is not None:
-            smoothened["kind_id"] = pd.Categorical(smoothened["kind_id"], top_ids)
+            remaining_top_ids = set(smoothened["kind_id"].unique()) & set(top_ids)
+            smoothened["kind_id"] = pd.Categorical(smoothened["kind_id"], remaining_top_ids)
             smoothened = smoothened.sort_values(["kind_id", "month"])
 
         smoothened["yeast"] = smoothened["kind_id"].map(get_yeast_names_dict())
@@ -492,7 +496,8 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
         smoothened = smoothened[smoothened["month"] >= POPULARITY_START_MONTH]
 
         # Order by relevance
-        smoothened["style_id"] = pd.Categorical(smoothened["style_id"], trending_ids)
+        remaining_trending_ids = set(smoothened["style_id"].unique()) & set(trending_ids)
+        smoothened["style_id"] = pd.Categorical(smoothened["style_id"], remaining_trending_ids)
         smoothened = smoothened.sort_values(["style_id", "month"])
 
         smoothened["beer_style"] = smoothened["style_id"].map(get_style_names_dict())
@@ -548,7 +553,8 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
         smoothened = smoothened[smoothened["month"] >= POPULARITY_START_MONTH]
 
         # Order by relevance
-        smoothened["kind_id"] = pd.Categorical(smoothened["kind_id"], trending_ids)
+        remaining_trending_ids = set(smoothened["kind_id"].unique()) & set(trending_ids)
+        smoothened["kind_id"] = pd.Categorical(smoothened["kind_id"], remaining_trending_ids)
         smoothened = smoothened.sort_values(["kind_id", "month"])
 
         smoothened["hop"] = smoothened["kind_id"].map(get_hop_names_dict())
@@ -604,7 +610,8 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
         smoothened = smoothened[smoothened["month"] >= POPULARITY_START_MONTH]
 
         # Order by relevance
-        smoothened["kind_id"] = pd.Categorical(smoothened["kind_id"], trending_ids)
+        remaining_trending_ids = set(smoothened["kind_id"].unique()) & set(trending_ids)
+        smoothened["kind_id"] = pd.Categorical(smoothened["kind_id"], remaining_trending_ids)
         smoothened = smoothened.sort_values(["kind_id", "month"])
 
         smoothened["yeast"] = smoothened["kind_id"].map(get_yeast_names_dict())
