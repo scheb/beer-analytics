@@ -280,6 +280,7 @@ class UnmappedHopsAnalysis:
 				    AND LOWER(rh.kind_raw) NOT IN ({})
                 GROUP BY LOWER(rh.kind_raw)
                 ORDER BY num_recipes DESC
+                HAVING num_recipes >= 5
                 LIMIT 100
             """.format(placeholders)
 
