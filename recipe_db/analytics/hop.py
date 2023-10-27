@@ -279,8 +279,8 @@ class UnmappedHopsAnalysis:
 				    rh.kind_id IS NULL
 				    AND LOWER(rh.kind_raw) NOT IN ({})
                 GROUP BY LOWER(rh.kind_raw)
-                ORDER BY num_recipes DESC
                 HAVING num_recipes >= 5
+                ORDER BY num_recipes DESC
                 LIMIT 100
             """.format(placeholders)
 
