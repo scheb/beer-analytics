@@ -1,0 +1,34 @@
+{% extends 'base_admin.html' %}
+{% load web_app %}
+
+{% block content %}
+    <h1>Fermentables Admin</h1>
+
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#unmapped-fermentables" id="unmapped-fermentables" class="anchor"><span></span></a>Unmapped Fermentables</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <colgroup>
+                    <col width="20%" />
+                    <col width="80%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">Number Recipes</th>
+                        <th scope="col">Fermentable Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fermentable in unmapped_fermentables %}
+                    <tr>
+                        <td>{{ fermentable.num_recipes }}</td>
+                        <td>{{ fermentable.kind }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}

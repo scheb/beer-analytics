@@ -1,11 +1,12 @@
 from django.http import HttpResponse, HttpRequest, Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.decorators.cache import cache_page
 
 from recipe_db.analytics.fermentable import UnmappedFermentablesAnalysis
 from recipe_db.analytics.hop import UnmappedHopsAnalysis
 from recipe_db.analytics.yeast import UnmappedYeastsAnalysis
-from recipe_db.models import Hop, Tag, Yeast, Fermentable
+from recipe_db.models import Hop, Tag, Yeast, Fermentable, IgnoredHop
 from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.admin import AdminChartFactory
 from web_app.charts.utils import NoDataException
@@ -13,18 +14,8 @@ from web_app.views.utils import render_chart, template_exists
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
-def start(request: HttpRequest) -> HttpResponse:
-    unmapped_hops = UnmappedHopsAnalysis().get_unmapped()
-    unmapped_yeasts = UnmappedYeastsAnalysis().get_unmapped()
-    unmapped_fermentables = UnmappedFermentablesAnalysis().get_unmapped()
-
-    context = {
-        "unmapped_hops": unmapped_hops,
-        "unmapped_yeasts": unmapped_yeasts,
-        "unmapped_fermentables": unmapped_fermentables,
-    }
-
-    return render(request, "admin/overview.html", context)
+def overview(request: HttpRequest) -> HttpResponse:
+    return render(request, "admin/overview.html", {})
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="data")
@@ -38,6 +29,39 @@ def chart(request: HttpRequest, chart_type: str, format: str) -> HttpResponse:
         raise Http404("Unknown chart type %s." % chart_type)
 
     return render_chart(chart, format)
+
+
+def hops(request: HttpRequest) -> HttpResponse:
+    if "ignore" in request.GET:
+        ignored = IgnoredHop()
+        ignored.name = str(request.GET["ignore"]).lower()
+        ignored.save()
+        return redirect(reverse("admin_hops"))
+
+    unmapped_hops = UnmappedHopsAnalysis().get_unmapped()
+    context = {
+        "unmapped_hops": unmapped_hops,
+    }
+
+    return render(request, "admin/hops.html", context)
+
+
+def yeasts(request: HttpRequest) -> HttpResponse:
+    unmapped_yeasts = UnmappedYeastsAnalysis().get_unmapped()
+    context = {
+        "unmapped_yeasts": unmapped_yeasts,
+    }
+
+    return render(request, "admin/yeasts.html", context)
+
+
+def fermentables(request: HttpRequest) -> HttpResponse:
+    unmapped_fermentables = UnmappedFermentablesAnalysis().get_unmapped()
+    context = {
+        "unmapped_fermentables": unmapped_fermentables,
+    }
+
+    return render(request, "admin/fermentables.html", context)
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="data")

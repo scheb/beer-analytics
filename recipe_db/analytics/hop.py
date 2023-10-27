@@ -9,7 +9,7 @@ from recipe_db.analytics import METRIC_PRECISION, lowerfence, q1, q3, upperfence
 from recipe_db.analytics.recipe import RecipeLevelAnalysis
 from recipe_db.analytics.scope import StyleProjection, HopProjection, HopScope
 from recipe_db.analytics.utils import remove_outliers, get_style_names_dict, get_hop_names_dict, dictfetchall
-from recipe_db.models import RecipeHop, Tag
+from recipe_db.models import RecipeHop, Tag, IgnoredHop
 
 
 class HopLevelAnalysis(ABC):
@@ -265,19 +265,29 @@ class HopPairingAnalysis(RecipeLevelAnalysis):
 
 class UnmappedHopsAnalysis:
     def get_unmapped(self) -> list:
+        ignored = IgnoredHop.get_ignore_list()
+        if len(ignored) == 0:
+            ignored.append("-")  # Work around empty array
+        placeholders = ', '.join(['%s'] * len(ignored))
+
         query = """
                 SELECT
                     COUNT(DISTINCT rh.recipe_id) AS num_recipes,
                     LOWER(rh.kind_raw) As kind
                 FROM recipe_db_recipehop AS rh
-				WHERE rh.kind_id IS NULL
+				WHERE
+				    rh.kind_id IS NULL
+				    AND LOWER(rh.kind_raw) NOT IN ({})
                 GROUP BY LOWER(rh.kind_raw)
                 ORDER BY num_recipes DESC
                 LIMIT 100
-            """
+            """.format(placeholders)
+
+        print(query)
+        print(tuple(ignored))
 
         with connection.cursor() as cursor:
-            cursor.execute(query)
+            cursor.execute(query, tuple(ignored))
             return dictfetchall(cursor)
 
 

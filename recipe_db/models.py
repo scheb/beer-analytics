@@ -553,6 +553,14 @@ class Hop(models.Model):
         return self.recipes_percentile is not None and self.recipes_percentile > 0.9
 
 
+class IgnoredHop(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    @classmethod
+    def get_ignore_list(cls):
+        return list(map(lambda ignored: ignored.name, cls.objects.all()))
+
+
 class Yeast(models.Model):
     ALE = "ale"
     LAGER = "lager"

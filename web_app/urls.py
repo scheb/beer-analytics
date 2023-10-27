@@ -18,6 +18,10 @@ class ChartFormat:
 register_converter(ChartFormat, "cformat")
 
 
+
+
+
+
 urlpatterns = [
     path("", views.misc.home, name="home"),
     path("legal/", misc.legal, name="legal"),
@@ -69,7 +73,10 @@ urlpatterns = [
     path("trends/<str:period>/<str:chart_type>.json", trend.chart_data, name="trend_chart_data"),
     path("trends/<str:period>/<str:chart_type>.<cformat:format>", trend.chart_image, name="trend_chart"),
 
-    path("admin/", admin.start, name="admin_root"),
+    path("admin/", admin.overview, name="admin_root"),
     path("admin/<str:chart_type>.<cformat:format>", admin.chart, name="admin_chart"),
+    path("admin/hops/", admin.hops, name="admin_hops"),
+    path("admin/yeasts/", admin.yeasts, name="admin_yeasts"),
+    path("admin/fermentables/", admin.fermentables, name="admin_fermentables"),
     path("admin/descriptions/", admin.descriptions, name="admin_descriptions"),
 ]

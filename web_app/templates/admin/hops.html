@@ -1,0 +1,37 @@
+{% extends 'base_admin.html' %}
+{% load web_app %}
+
+{% block content %}
+    <h1>Hops Admin</h1>
+
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#unmapped-hops" id="unmapped-hops" class="anchor"><span></span></a>Unmapped Hops</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <colgroup>
+                    <col width="20%" />
+                    <col width="70%" />
+                    <col width="10%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">Number Recipes</th>
+                        <th scope="col">Hop Name</th>
+                        <th scope="col">Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for hop in unmapped_hops %}
+                    <tr>
+                        <td>{{ hop.num_recipes }}</td>
+                        <td>{{ hop.kind }}</td>
+                        <td><a href="?ignore={{ hop.kind|urlencode }}">Ignore</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}

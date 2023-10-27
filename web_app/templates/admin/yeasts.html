@@ -1,0 +1,34 @@
+{% extends 'base_admin.html' %}
+{% load web_app %}
+
+{% block content %}
+    <h1>Yeasts Admin</h1>
+
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#unmapped-yeasts" id="unmapped-yeasts" class="anchor"><span></span></a>Unmapped Yeasts</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <colgroup>
+                    <col width="20%" />
+                    <col width="80%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">Number Recipes</th>
+                        <th scope="col">Yeast Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for yeast in unmapped_yeasts %}
+                    <tr>
+                        <td>{{ yeast.num_recipes }}</td>
+                        <td>{{ yeast.kind }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}
