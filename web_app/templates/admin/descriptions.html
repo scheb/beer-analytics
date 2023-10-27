@@ -4,7 +4,7 @@
 {% block content %}
     <h1>Descriptions</h1>
 
-    <h2>Hops missing Description</h2>
+    <h2>Hops missing Description ({{ hops|length }})</h2>
     <table class="table">
         <thead>
             <tr>
@@ -13,16 +13,16 @@
             </tr>
         </thead>
         <tbody>
-            {% for hop in hops %}{% if not hop.has_description %}
+            {% for hop in hops %}
                 <tr>
                     <td><a href="{{ hop.hop|url }}">{{ hop.hop.name }}</a></td>
                     <td>{{ hop.recipes_count }}</td>
                 </tr>
-            {% endif %}{% endfor %}
+            {% endfor %}
         </tbody>
     </table>
 
-    <h2>Flavors missing Description</h2>
+    <h2>Flavors missing Description ({{ flavors|length }})</h2>
         <table class="table">
         <thead>
             <tr>
@@ -31,16 +31,16 @@
             </tr>
         </thead>
         <tbody>
-            {% for flavor in flavors %}{% if not flavor.has_description %}
+            {% for flavor in flavors %}
                 <tr>
                     <td>{{ flavor.name }}</td>
                     <td>{{ flavor.hops_count }}</td>
                 </tr>
-            {% endif %}{% endfor %}
+            {% endfor %}
         </tbody>
     </table>
 
-    <h2>Yeasts missing Description</h2>
+    <h2>Yeasts missing Description ({{ yeasts|length }})</h2>
     <table class="table">
         <thead>
             <tr>
@@ -49,16 +49,16 @@
             </tr>
         </thead>
         <tbody>
-            {% for yeast in yeasts %}{% if not yeast.has_description %}
+            {% for yeast in yeasts %}
                 <tr>
                     <td><a href="{{ yeast.yeast|url }}">{{ yeast.yeast.full_name }}</a></td>
                     <td>{{ yeast.recipes_count }}</td>
                 </tr>
-            {% endif %}{% endfor %}
+            {% endfor %}
         </tbody>
     </table>
 
-    <h2>Fermentables missing Description</h2>
+    <h2>Fermentables missing Description ({{ fermentables|length }})</h2>
     <table class="table">
         <thead>
             <tr>
@@ -67,12 +67,12 @@
             </tr>
         </thead>
         <tbody>
-            {% for fermentable in fermentables %}{% if not fermentable.has_description %}
+            {% for fermentable in fermentables %}
                 <tr>
                     <td><a href="{{ fermentable.fermentable|url }}">{{ fermentable.fermentable.name }}</a></td>
                     <td>{{ fermentable.recipes_count }}</td>
                 </tr>
-            {% endif %}{% endfor %}
+            {% endfor %}
         </tbody>
     </table>
 {% endblock %}

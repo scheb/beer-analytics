@@ -48,32 +48,32 @@ def descriptions(request: HttpRequest) -> HttpResponse:
     fermentable_descriptions = []
 
     for hop in Hop.objects.all().filter(recipes_count__gt=0).order_by('-recipes_count'):
-        hop_descriptions.append({
-            'hop': hop,
-            'recipes_count': hop.recipes_count,
-            'has_description': template_exists("hop/descriptions/hops/%s.html" % hop.id),
-        })
+        if not template_exists("hop/descriptions/hops/%s.html" % hop.id):
+            hop_descriptions.append({
+                'hop': hop,
+                'recipes_count': hop.recipes_count,
+            })
 
     for flavor in Tag.objects.all().order_by('name'):
-        flavor_descriptions.append({
-            'name': flavor.name,
-            'hops_count': flavor.accessible_hops_count,
-            'has_description': template_exists("hop/descriptions/flavors/%s.html" % flavor.id),
-        })
+        if not template_exists("hop/descriptions/flavors/%s.html" % flavor.id):
+            flavor_descriptions.append({
+                'name': flavor.name,
+                'hops_count': flavor.accessible_hops_count,
+            })
 
-    for yeast in Yeast.objects.all().order_by('-recipes_count'):
-        yeast_descriptions.append({
-            'yeast': yeast,
-            'recipes_count': yeast.recipes_count,
-            'has_description': template_exists("yeast/descriptions/yeasts/%s.html" % yeast.id),
-        })
+    for yeast in Yeast.objects.all().filter(recipes_count__gt=0).order_by('-recipes_count'):
+        if not template_exists("yeast/descriptions/yeasts/%s.html" % yeast.id):
+            yeast_descriptions.append({
+                'yeast': yeast,
+                'recipes_count': yeast.recipes_count,
+            })
 
-    for fermentable in Fermentable.objects.all().order_by('-recipes_count'):
-        fermentable_descriptions.append({
-            'fermentable': fermentable,
-            'recipes_count': fermentable.recipes_count,
-            'has_description': template_exists("fermentable/descriptions/fermentables/%s.html" % fermentable.id),
-        })
+    for fermentable in Fermentable.objects.all().filter(recipes_count__gt=0).order_by('-recipes_count'):
+        if not template_exists("fermentable/descriptions/fermentables/%s.html" % fermentable.id):
+            fermentable_descriptions.append({
+                'fermentable': fermentable,
+                'recipes_count': fermentable.recipes_count,
+            })
 
     context = {
         'hops': hop_descriptions,
