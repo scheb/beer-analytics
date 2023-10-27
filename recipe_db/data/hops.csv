@@ -3,14 +3,14 @@ Adeena;aroma;USA;Willamette, Hallertauer Mittelfrüh, Styrian Golding;Herbal, Sp
 Admiral;bittering;GBR;Challenger, Northdown, Target;Citrus, Herbal, Orange, Resin, Tea;;
 ADHA-527;dual-purpose;USA;Azacca;Anise, Nectarine, Stone Fruit, Spicy, Lime, Floral;;
 ADHA-529;dual-purpose;USA;;Sweet, Coconut, Lemon, Hay, Mint, Tea, Green Tea, Aromatic, Smooth;;
-African Queen;dual-purpose;ZAF;Amarillo, Cascade, Citra, Mosaic, Simcoe;Blueberry, Bubblegum, Cassis, Chilies, Citrus, Currant, Gazpacho, Gooseberry, Lemongrass, Stone Fruit;J17/63;Africa Queen, SA Queen, S.A. Queen, South Africa Queen, South African Queen
+African Queen;dual-purpose;ZAF;Amarillo, Cascade, Citra, Mosaic, Simcoe;Blueberry, Bubblegum, Cassis, Chilies, Citrus, Currant, Gazpacho, Gooseberry, Lemongrass, Stone Fruit;J17/63, Southern Queen;Africa Queen, SA Queen, S.A. Queen, South Africa Queen, South African Queen
 Agnus;bittering;CZH;Columbus, Magnum, Nugget, Target;Citrus, Lavender, Leather, Spicy, Tobacco;;
 Ahil;aroma;SLO;;;;
 Ahtanum;aroma;USA;Amarillo, Cascade, Centennial, Willamette;Cedar, Citrus, Earthy, Floral, Geranium, Grapefruit, Lemon, Pine;;Ahtanium, Athanum, Athnanum
 Akoya;aroma;GER;Aurora, Hallertauer Tradition, Northern Brewer, Perle;Fruity, Pepper, Spicy, Tea;;
 Alliance;dual-purpose;GBR;;;;
 Aloha;dual-purpose;USA;;Berry, Citrus, Floral, Fruity, Sweet;;
-Amallia;dual-purpose;USA;;Earthy;;
+Amallia;dual-purpose;USA;;Earthy;;Amalia
 Amarillo;aroma;USA;Cascade, Centennial, Chinook, Simcoe, Summer, Yellow Sub;Apricot, Citrus, Floral, Grapefruit, Lemon, Melon, Orange, Peach, Spicy, Tropical Fruits;;Amarillo, Armarillo, Amar, Amaerillo
 Amethyst;aroma;CZH;;Citrus, Earthy, Spicy;;
 Amira;bittering;GER;;;;
@@ -24,7 +24,7 @@ Astra;dual-purpose;AUS;;Grapefruit, Grassy, Honey, Melon, Peach, Sweet, Tropical
 Atlas;aroma;SLO;;Floral, Lime, Pine;;
 Aurora;dual-purpose;SLO;Northern Brewer, Perle, Styrian Golding;Floral, Lemongrass, Noble, Spicy;Super Styrians;Arora, Super Styrian, Styrian Aurora, Styrian Arora
 Aurum;aroma;GER;;Spicy, Fruity, Floral, Herbal, Earthy, Citrus, Noble;;
-Azacca;dual-purpose;USA;Amarillo, Citra, Delta, Pekko;Citrus, Grapefruit, Grassy, Lemon, Mango, Orange, Papaya, Pineapple, Spicy, Tropical Fruits;;Aza, Azzaca, Azzacca
+Azacca;dual-purpose;USA;Amarillo, Citra, Delta, Pekko;Citrus, Grapefruit, Grassy, Lemon, Mango, Orange, Papaya, Pineapple, Spicy, Tropical Fruits;;Aza, Azzaca, Azzacca, Azecca
 Backa;aroma;SER;;;;
 Banner;bittering;USA;Aquila, Cluster, Galena;;;
 Barbe Rouge;aroma;FRA;;Berry, Citrus, Currant, Floral, Kumquat, Lime, Orange, Raspberry, Strawberry;;Barbe Rogue
@@ -38,7 +38,7 @@ Bitter Gold;bittering;USA;Galena, Nugget;Floral, Grapefruit, Grassy, Pear, Stone
 Blato;aroma;CZH;Saaz;Earthy, Floral, Herbal, Mild, Noble;;
 Blisk;aroma;SLO;;;;
 Blue Northern Brewer;dual-purpose;BEL;Chinook;;;
-Boadicea;aroma;GBR;Cascade, Chinook, Green Bullet;Resinous, Spicy, Floral, Earthy, Grassy, Clover, Mild, Herbal;;
+Boadicea;aroma;GBR;Cascade, Chinook, Green Bullet;Resinous, Spicy, Floral, Earthy, Grassy, Clover, Mild, Herbal;;Boadica
 Bobek;dual-purpose;SLO;Fuggle, Northern Brewer, Styrian Golding, Willamette;Floral, Pine, Lemon, Grapefruit, Sage, Aniseed, Sweet, Artichoke, Hay;Styrian Bobek;
 BOR;aroma;CZH;;Pine, Spicy;;
 Bouclier;dual-purpose;FRA;;Grassy, Herbal, Spicy;;
@@ -76,13 +76,13 @@ Coigneau;dual-purpose;BEL;;;;
 Columbia;aroma;USA;Centennial, Chinook;Pineapple, Lemon, Citrus, Noble, Pungent, Earthy, Fruity, Resinous, Woody, Herbal;;
 Columbus;dual-purpose;USA;Centennial, Chinook, Columbus, Galena, Millennium, Northern Brewer, Nugget, Target;Citrus, Curry, Earthy, Floral, Licorice, Pepper, Spicy;Tomahawk, Zeus, CTZ;Colombus
 Comet;bittering;USA;Galena;Grapefruit, Grassy, Resin, Grapefruit, Tangerine, Herbal, Mandarin, Lemongrass, Black Currant, Apricot, Pineapple;;
-Contessa;aroma;USA;Willamette, Delta;Noble, Floral, Pear, Green Tea, Lemongrass;;
+Contessa;aroma;USA;Willamette, Delta;Noble, Floral, Pear, Green Tea, Lemongrass;X04190;
 Crystal;aroma;USA;Hallertauer Mittelfrüh, Hersbrucker, Liberty, Mount Hood, Strisselspalt, Ultra;Cinnamon, Floral, Fruity, Nutmeg, Pepper, Spicy, Woody;;Crysta
 Dana;aroma;SLO;;Floral, Citrus, Intense;;
 Defender;aroma;GBR;;;;
 Delta;dual-purpose;USA;Fuggle, Willamette;Mild, Spicy, Melon, Citrus, Pleasant;;
 Density;aroma;GBR;;;;
-Dr. Rudi;dual-purpose;NZL;Green Bullet, Perle;Pine, Lemon, Grassy, Citrus, Resin, Tropical Fruits, Melon, Stone Fruit, Dried Fruit, Lemongrass;SuperAlpha;Super Alpha
+Dr. Rudi;dual-purpose;NZL;Green Bullet, Perle;Pine, Lemon, Grassy, Citrus, Resin, Tropical Fruits, Melon, Stone Fruit, Dried Fruit, Lemongrass;SuperAlpha;Super Alpha, New Zealand Super High Alpha
 Dunav;aroma;SER;;;;
 Early Bird;aroma;GBR;;;;
 Early Green;aroma;GBR;;;;
@@ -105,7 +105,7 @@ Ernest;aroma;GBR;Fuggle;Grassy, Herbal, Stone Fruit, Apricot, Citrus, Spicy;;
 Eroica;bittering;USA;Brewer's Gold, Chinook, Cluster, Galena, Nugget;;;
 Eureka;dual-purpose;USA;Apollo, Columbus, Merkur, Simcoe, Summit;Citrus, Currant, Herbal, Mandarin, Mint, Peach, Pine, Stone Fruit;Experimental Pine Fruit, EXP;
 Evergreen;aroma;USA;;Peach, Apricot, Lemon, Green Tea, Watermelon, Tangerine, Cannabis, Candy;;
-Falconer's Flight 7 C's;dual-purpose;USA;Cascade, Centennial, Chinook, Citra, Cluster, Columbus, Crystal;Citrus, Earthy, Fruity, Spicy;;Falconer's Flight, Falconer Flight, Falcon Flight, Falcones Flight, Seven C's, 7 C's, 7C's, Falconer's Seven Seas
+Falconer's Flight 7 C's;dual-purpose;USA;Cascade, Centennial, Chinook, Citra, Cluster, Columbus, Crystal;Citrus, Earthy, Fruity, Spicy;;Falconer's Flight, Falconer Flight, Falcon Flight, Falcones Flight, Seven C's, 7 C's, 7C's, Falconer's Seven Seas, Falconner's Flight, C-hop Blend
 Fantasia;dual-purpose;GER;;Caramel, Cream, Fruity, Noble;;
 Feux-Coeur Francais;bittering;AUS;;;;Feux-Coeur
 First Choice;aroma;NZL;;;;1st Choice
@@ -165,13 +165,13 @@ Hüll Melon;aroma;GER;Belma, Jarrylo;Fruity, Melon, Strawberry, Peach, Tea, Crea
 Hulla Norrgård;dual-purpose;SWE;;Spicy, Herbal, Citrus, Clove;;
 Hüller Bitter;dual-purpose;GER;;Fruity, Mild, Resin, Spicy;;Hüll Bitter, Hüller Bitterer
 Hybrid-2;aroma;ZAF;;;;
-Idaho 7;dual-purpose;USA;Amarillo, Azacca, Cashmere, Chinook, Citra, Columbus, El Dorado, Idaho Gem;Apricot, Black Tea, Citrus, Currant, Earthy, Floral, Grapefruit, Orange, Papaya, Pine, Resin, Tropical Fruits;007 Golden Hop;Idaho hop 7, 007 The Golden Hop, Golden Hop
+Idaho 7;dual-purpose;USA;Amarillo, Azacca, Cashmere, Chinook, Citra, Columbus, El Dorado, Idaho Gem;Apricot, Black Tea, Citrus, Currant, Earthy, Floral, Grapefruit, Orange, Papaya, Pine, Resin, Tropical Fruits;007 Golden Hop;Idaho hop 7, 007 The Golden Hop, Golden Hop, Idaho 007
 Idaho Gem;aroma;USA;Azacca, El Dorado, Cashmere, Citra, Idaho 7, Cascade;Berry, Bubblegum, Citrus, Floral, Mint, Stone fruit, Mojito, Sweet, Candy;;Idaho Gme
 Independence;aroma;USA;;Citrus, Earthy, Floral, Herbal, Pine, Stone Fruit, Tobacco;;independece
 Iunga;dual-purpose;POL;Galena, Nugget, Target;Currant, Earthy, Fruity, Peach, Pineapple, Grapefruit, Spicy, Citrus, Honey, Mild, Sweet, Intense, Aromatic;;Junga
 Ivanhoe;aroma;USA;;;;
 Janus;aroma;GBR;;;;
-Jarrylo;dual-purpose;USA;Motueka, Nelson Sauvin, Mosaic ;Banana, Pear, Spicy, Grassy, Orange, Fruity, Lemon, Lime, White Wine, Melon, Grassy, Herbal;;Jarryllo, Jaryllo
+Jarrylo;dual-purpose;USA;Motueka, Nelson Sauvin, Mosaic ;Banana, Pear, Spicy, Grassy, Orange, Fruity, Lemon, Lime, White Wine, Melon, Grassy, Herbal;;Jarryllo, Jaryllo, Jarrlyo
 Jester;aroma;GBR;Cascade;Banana, Pear, Spicy, Tropical fruits, Grapefruit, Black Currant, Lychee, Resinous, Herbal, Mild;;
 Julius;aroma;USA;;Orange, Peach, Sweet;Mighty Axe Julius;Julious, Mighty Axe Julious
 Kazbek;aroma;CZH;Saaz, Sterling;Citrus, Berries, Noble, Spicy, Grapefruit, Lemon, Lime, Pineapple, Passion Fruit, Peach;;Kazbeck
@@ -188,7 +188,7 @@ Liberty;aroma;USA;Crystal, Hallertauer Mittelfrüh, Mount Hood;Citrus, Floral, H
 Lilly;dual-purpose;GER;;Citrus, Grapefruit, Tangerine, Passion Fruit, Gooseberry, Red Currant;Sissi;
 Lomik;dual-purpose;POL;Northern Brewer;Herbal, Spicy;;
 Loral;dual-purpose;USA;Glacier, Nugget, Strisselspalt, Tardif de Bourgogne;Citrus, Floral, Fruity, Pepper;HBC 291;Loral Nobel, Loral Noble
-Lotus;aroma;USA;;Berry, Cream, Orange, Tropical Fruits, Vanilla;;
+Lotus;aroma;USA;;Berry, Cream, Orange, Tropical Fruits, Vanilla;X06297;
 Lubelska;aroma;POL;Saaz, Sterling, Tettnanger, Spalter;Floral, Lavender, Magnolia, Spicy, Noble, Earthy, Spicy, Herbal, Cinnamon, Bergamot, Citrus;Lublin, Lubelski;Lubelski, Luboloski, Lubliner
 Lubelska-Pulawy;aroma;POL;;;;
 Lucan;aroma;CZH;;;;
@@ -197,7 +197,7 @@ Mackinac;aroma;USA;;Citrus, Floral, Melon, Papaya, Pepper, Spicy, Tropical Fruit
 Magnat;dual-purpose;POL;Lubelska, Magnum;Chamomile, Citrus, Floral, Lemon, Lilac, Woody;;
 Magnum;bittering;USA;Columbus, Galena, Hallertauer Taurus, Horizon, Northdown, Northern Brewer, Nugget;Floral, Citrus, Spicy, Nutmeg, Pepper, Lemon, Spearmint, Apple;;Magnun, Magnung, Magnu, Mag
 Malling;dual-purpose;AUT;;Citrus, Apricot, Melon, Pear, Pepper;;
-Mandarina Bavaria;aroma;GER;Cascade, Hüll Melon;Citrus, Herbal, Lemon, Resin, Tangerine, Tropical Fruits;;Bavarian Mandarina, Bavaria Mandarina, Mandarin Bavaria, Mandrina Bavaria, Mandarina Barvaria, Mandarina
+Mandarina Bavaria;aroma;GER;Cascade, Hüll Melon;Citrus, Herbal, Lemon, Resin, Tangerine, Tropical Fruits;;Bavarian Mandarina, Bavaria Mandarina, Mandarin Bavaria, Mandrina Bavaria, Mandarina Barvaria, Mandarina, Manderina Bavaria
 Mapuche;aroma;ARG;;Blueberry, Fruity, Peach, Apricot;;
 Marco Polo;dual-purpose;CHN;Columbus;Elderflower, Gooseberry, Oregano;;
 Marynka;dual-purpose;POL;Tettnanger;Anise, Aniseed, Citrus, Earthy, Grapefruit, Hay, Herbal, Lemon, Licorice, Chocolate, Tobacco;;
@@ -213,14 +213,14 @@ Mimosa;aroma;CZH;;;;
 Minstrel;aroma;GBR;;;;
 Mistral;dual-purpose;FRA;;;;
 Monroe;aroma;GER;;Cherry, Mild, Orange, Passion Fruit, Plum, Raspberry, Smooth, Strawberry;;
-Mosaic;dual-purpose;USA;Citra, Simcoe;Blueberry, Bubblegum, Citrus, Earthy, Floral, Grapefruit, Grassy, Papaya, Pine, Rose, Spicy, Tangerine, Tropical Fruits;HBC 369;Moesaic, Mosacic, Mosai, Mossic, Mozaic, Mscc, Mosiac, Mosiac, Moasic
+Mosaic;dual-purpose;USA;Citra, Simcoe;Blueberry, Bubblegum, Citrus, Earthy, Floral, Grapefruit, Grassy, Papaya, Pine, Rose, Spicy, Tangerine, Tropical Fruits;HBC 369;Moesaic, Mosacic, Mosai, Mossic, Mozaic, Mscc, Mosiac, Mosiac, Moasic, Mosa, Mosiaic
 Motueka;aroma;NZL;Saaz, Sterling;Citrus, Floral, Lemon, Lime, Mojito, Tropical Fruits;;Mouteka
 Mount Hood;aroma;USA;Crystal, Hallertauer Mittelfrüh, Hersbrucker, Liberty;Herbal, Noble, Spicy, Floral, Pungent;;MT Hood
 Mount Rainier;aroma;USA;Fuggle, Hallertauer Mittelfrüh;Citrus, Floral, Licorice, Noble, Spicy, Noble, Grassy, Cedar, Lemon, Tea, Earthy;;MT Rainier, Mount Ranier
 Moutere;dual-purpose;NZL;;Earthy, Grapefruit, Hay, Passion Fruit, Pine, Tropical Fruits;Brooklyn, HORT 0605;Mortere
 Mystic;aroma;GBR;;;;Mystique
 Nadwislanska;aroma;POL;;;;
-Nectaron;dual-purpose;NZL;Citra, Mosaic, Waimea;Citrus, Grapefruit, Passion Fruit, Peach, Pineapple, Tropical Fruits;HORT 4337;Nectron
+Nectaron;dual-purpose;NZL;Citra, Mosaic, Waimea;Citrus, Grapefruit, Passion Fruit, Peach, Pineapple, Tropical Fruits;HORT 4337;Nectron, Trial Hop 4337, 4337
 Nelson Sauvin;dual-purpose;NZL;Enigma, Hallertauer Blanc, Motueka, Riwaka;Fruity, Gooseberry, Grape, White Wine, Passion Fruit;;Nelson, Nels, Nel, Neslson Sauvin
 Neo1;dual-purpose;USA;;;;Neo 1
 Neoplanta;dual-purpose;SLO;;;;
@@ -236,7 +236,7 @@ Olicana;dual-purpose;GBR;;Tropical Fruits, Mango, Grapefruit, Passion Fruit, Cit
 Olympic;aroma;USA;Brewer's Gold, Chinook, Galena;Citrus, Spicy;;
 Omega;aroma;GBR;;;;
 Opal;dual-purpose;GER;East Kent Golding, Styrian Golding, Tettnanger ;Spicy, Pepper, Citrus, Fruity, Floral, Herbal, Liquorice, Aniseed, Apricot, Jasmine ;;
-Opus;aroma;GBR;;;;
+Opus;aroma;GBR;;;CF182;
 Orbit;dual-purpose;NZL;;Sweet, Tropical Fruits;;
 Orion;dual-purpose;GER;;;;
 Otto Supreme;bittering;USA;;Stone Fruit, Tropical Fruits, Guava, Pineapple, Berry;;
@@ -276,7 +276,7 @@ Riwaka;aroma;NZL;Calypso, Centennial, Citra, Saaz;Citrus, Grapefruit, Passion Fr
 Rubin;bittering;CZH;;;;
 Saaz;aroma;CZH,USA;Lubelska, Sorachi Ace, Sterling, Tettnanger;Earthy, Floral, Herbal, Mild, Noble, Spicy;;Saazer, Saab, Saa, Sazz, Zatec, Zatecky, ŽPČ
 Sabro;aroma;USA;;Cedar, Citrus, Coconut, Cream, Herbal, Mint, Stone Fruit, Tangerine, Tropical Fruits;HBC 438;Sabco, Sobro
-Santiam;aroma;USA;Spalter, Spalter Select, Tettnanger, Citra;Floral, Spicy, Black Pepper, Herbal, Fruity, Resin, Citrus, Woody, Fresh, Green;;
+Santiam;aroma;USA;Spalter, Spalter Select, Tettnanger, Citra;Floral, Spicy, Black Pepper, Herbal, Fruity, Resin, Citrus, Woody, Fresh, Green;;Santium
 Saphir;aroma;GER;Hallertauer Mittelfrüh, Spalter Select;Floral, Fruity, Spicy, Tangerine, Juniper, Lemongrass, Bergamot, Strawberry, Black Tea;;Safir, Saphier, Saphire
 Sasquatch;dual-purpose;CAN;;Floral, Lemon, Tangerine;;
 Satus;bittering;USA;;;;
@@ -285,27 +285,27 @@ Sequoia;aroma;USA;;Tropical Fruits, Mango, Pineapple, Citrus, Pine;HS-1228 ;
 Serebrianka;aroma;RUS;;;;
 Shinshuwase;aroma;JPN;;;;
 Simcoe;dual-purpose;USA;Amarillo, Cascade, Centennial, Citra, Columbus, Magnum, Mosaic, Summit, XJA2/436;Apricot, Berry, Bubblegum, Citrus, Earthy, Fruity, Grapefruit, Passion Fruit, Pine;;Semcoe, Simceo, Simco, Sim
-Sládek;aroma;CZH;Northern Brewer, Saaz;Fruity, Grapefruit, Noble, Passion Fruit, Peach, Citrus, Green, Cassis, Strawberry, Dill, Coffee;;
-Smaragd;dual-purpose;GER;Hallertauer Mittelfrüh, Opal;Floral, Fruity, Spicy, Herbal, Liquorice, Thyme, Tarragon, Vegetal, Woody;;Smarged
+Sládek;aroma;CZH;Northern Brewer, Saaz;Fruity, Grapefruit, Noble, Passion Fruit, Peach, Citrus, Green, Cassis, Strawberry, Dill, Coffee;;Zladek
+Smaragd;dual-purpose;GER;Hallertauer Mittelfrüh, Opal;Floral, Fruity, Spicy, Herbal, Liquorice, Thyme, Tarragon, Vegetal, Woody;;Smarged, Smargd
 Smooth Cone;dual-purpose;NZL;;;;Smoothcone
 Solero;aroma;GER;;Mango, Passion Fruit, Tropical Fruits;;
 Sonnet;aroma;USA;;;;
-Sorachi Ace;bittering;JPN;Admiral, Cascade, Southern Cross;Citrus, Dill, Herbal, Lemon, Tobacco, Woody;;Sorachie Ace, Soriachi Ace
-Southern Aroma;aroma;ZAF;;Floral, Fruity, Spicy, Woody;;
-Southern Brewer;bittering;ZAF;Fuggle, Southern Promise;Earthy, Woody;;
-Southern Cross;dual-purpose;NZL;Sorachi Ace, Pacific Jade, Pacifica, Summit, Cascade, Chinook;Citrus, Lemon, Lime, Pine, Spicy, Tropical Fruits, Resin, Herbal, Earthy;;
-Southern Dawn;dual-purpose;ZAF;;Clean, Chamomile, Citrus, Fruity, Ginger, Herbal, Lemongrass, Quince, Plum, Spicy, Strawberry, Aromatic;;
-Southern Passion;aroma;ZAF;;Blackberry, Coconut, Floral, Guava, Melon, Passion Fruit, Berries, Black Currant, Tangerine, Grapefruit, Calendula, Woody;US4/78;
-Southern Promise;dual-purpose;ZAF;Southern Brewer;Berry, Citrus, Floral, Fruity, Herbal, Woody, Vegetal, Spicy, Earthy;;SA Promise
-Southern Star;bittering;ZAF;Ekuanot, El Dorado, Mandarina Bavaria, Mosaic, Southern Cross, Warrior;Berry, Cassis, Citrus, Coffee, Floral, Orange, Passion Fruit, Pear, Pineapple, Rose, Tangerine, Tropical Fruits;;
-Southern Sublime;bittering;ZAF;;Pungent, Pineapple, Citrus, Mango, Plum, Grassy, Spicy, Woody, Resin;N1/69;
-Southern Tropic;aroma;ZAF;;Mango, Lychee, Passion Fruit, Guava, Pineapple, Bubblegum, Citrus, Lemongrass, Stone Fruit, Coconut, Pungent;95U1/108;U1/108, Southern Tropical
+Sorachi Ace;bittering;JPN;Admiral, Cascade, Southern Cross;Citrus, Dill, Herbal, Lemon, Tobacco, Woody;;Sorachie Ace, Soriachi Ace, Sorachi
+Southern Aroma;aroma;ZAF;;Floral, Fruity, Spicy, Woody;;SA Aroma, S. Aroma
+Southern Brewer;bittering;ZAF;Fuggle, Southern Promise;Earthy, Woody;;SA Brewer, S. Brewer
+Southern Cross;dual-purpose;NZL;Sorachi Ace, Pacific Jade, Pacifica, Summit, Cascade, Chinook;Citrus, Lemon, Lime, Pine, Spicy, Tropical Fruits, Resin, Herbal, Earthy;;SA Cross, S. Cross
+Southern Dawn;dual-purpose;ZAF;;Clean, Chamomile, Citrus, Fruity, Ginger, Herbal, Lemongrass, Quince, Plum, Spicy, Strawberry, Aromatic;;SA Dawn, S. Dawn
+Southern Passion;aroma;ZAF;;Blackberry, Coconut, Floral, Guava, Melon, Passion Fruit, Berries, Black Currant, Tangerine, Grapefruit, Calendula, Woody;US4/78;SA Passion, S. Passion
+Southern Promise;dual-purpose;ZAF;Southern Brewer;Berry, Citrus, Floral, Fruity, Herbal, Woody, Vegetal, Spicy, Earthy;;SA Promise, S. Promise
+Southern Star;bittering;ZAF;Ekuanot, El Dorado, Mandarina Bavaria, Mosaic, Southern Cross, Warrior;Berry, Cassis, Citrus, Coffee, Floral, Orange, Passion Fruit, Pear, Pineapple, Rose, Tangerine, Tropical Fruits;;SA Star, S. Star
+Southern Sublime;bittering;ZAF;;Pungent, Pineapple, Citrus, Mango, Plum, Grassy, Spicy, Woody, Resin;N1/69;SA Sublime, S. Sublime
+Southern Tropic;aroma;ZAF;;Mango, Lychee, Passion Fruit, Guava, Pineapple, Bubblegum, Citrus, Lemongrass, Stone Fruit, Coconut, Pungent;95U1/108;SA Tropic, S. Tropic
 Sovereign;bittering;GBR;;Earthy, Floral, Grassy, Herbal, Mint, Sweet, Fruity, Green Tea, Vanilla;;
 Spalter;aroma;GER;Crystal, Hallertauer Mittelfrüh, Hersbrucker, Liberty, Mount Hood, Saaz, Santiam, Tettnanger, Ultra;Earthy, Floral, Herbal, Noble, Woody, Banana, Black Tea;;Spalt, Spal, Spaltz
 Spalter Select;aroma;GER;Saaz, Spalter, Tettnanger;Thyme, Apple, Spicy, Herbal, Citrus, Peach, Cognac, Woody, Floral, Orange;;Select Spalt, Spalt Select, Select
 Sterling;dual-purpose;USA;Lubelska, Saaz;Spicy, Citrus, Herbal, Floral, Noble;;
 Sticklebract;dual-purpose;NZL;Hallertauer Mittelfrüh, Hersbrucker, Northern Brewer, Simcoe, Sorachi Ace;Citrus, Pine, Resinous, Fruity, Woody, Noble, Spicy, Pepper, Herbal, Fresh;;
-Strata;aroma;USA;Galaxy, Mosaic;Cannabis, Grapefruit, Musty, Passion Fruit, Strawberry;;Strada
+Strata;aroma;USA;Galaxy, Mosaic;Cannabis, Grapefruit, Musty, Passion Fruit, Strawberry;X-331;Strada
 Strisselspalt;aroma;FRA;;;;Strisselspalter
 Styrian Cardinal;dual-purpose;SLO;;Anise, Apple, Citrus, Fruity, Gooseberry, Pineapple, Strawberry, Tropical Fruits;;Cardinal
 Styrian Dragon;aroma;SLO;;Citrus, Grapefruit, Lime, Orange;;Dragon
@@ -313,7 +313,7 @@ Styrian Fox;dual-purpose;SLO;;Blackberry, Currant, Floral, Fruity, Honey, Lemong
 Styrian Golding;aroma;SLO;Bobek, Fuggle, Saaz, Styrian Golding, Willamette;Citrus, Earthy, Floral, Noble, Pine, Resin, Spicy, Sweet;Celeja, Celeia;Styrian Golding, Styrian Gold, Styrian Goldings, Celia
 Styrian Kolibri;aroma;SLO;;Ananas, Blueberry, Currant, Ginger, Grassy, Lemon, Mandarin, Marjoram, Pepper, Spicy, Tangerine, Tea, Tomato;;Kolibri
 Styrian Wolf;dual-purpose;SLO;;Mango, Melon, Tropical Fruits, Passion Fruit, Citrus, Strawberry, Raspberry, Blueberry, Fruity, Lemongrass;;Wolf
-Sultana;dual-purpose;USA;Columbus, Nugget;Citrus, Lemon, Pine, Pineapple, Spicy, Tropical Fruits;Denali, Nuggetzilla, EXP 06277;
+Sultana;dual-purpose;USA;Columbus, Nugget;Citrus, Lemon, Pine, Pineapple, Spicy, Tropical Fruits;Denali, Nuggetzilla, X06277;EXP 06277
 Summer;aroma;AUS;Palisade, Saaz;Apricot, Citrus, Grassy, Melon, Passion Fruit, Peach, Stone Fruit, Fruity;;
 Summit;bittering;USA;Amarillo, Cascade, Columbus, Millennium, Simcoe, Warrior;Anise, Citrus, Earthy, Grapefruit, Incense, Orange, Pepper, Tangerine;;
 Sun;aroma;USA;Columbus, Galena, Magnum;Herbal;;
@@ -328,7 +328,7 @@ Tahoma;aroma;USA;Glacier, Cascade;Citrus, Spicy, Woody, Lemon, Fresh, Zesty, Ear
 Taiheke;dual-purpose;NZL;Citra, Amarillo ;Citrus, Floral, Grapefruit, Lemon, Lime, Spicy, Tropical Fruits, Resin, Stone Fruit;;
 Talisman;dual-purpose;USA;;;;
 Talus;dual-purpose;USA;;Cream, Floral, Grapefruit, Pine, Stone Fruit, Woody;HBC 692;
-Tangerine;aroma;USA;;Berry, Grapefruit, Herbal, Tropical Fruits;Experimental #09326;
+Tangerine;aroma;USA;;Berry, Grapefruit, Herbal, Tropical Fruits;X09326;Experimental #09326
 Tango;dual-purpose;GER;;Passion Fruit, Pineapple, Spicy, Citrus, Pineapple, Cassis, Earthy, Grapefruit, Lemon, Apple, Resin;;
 Tardif de Bourgogne;aroma;FRA;;;;
 Target;dual-purpose;GBR;East Kent Golding, Fuggle, Willamette;Citrus, Marmalade, Pepper, Sage, Spicy;;
@@ -358,15 +358,15 @@ Viking;aroma;GBR;;;;
 Vista;aroma;USA;;Melon, Tropical Fruits, Stone Fruit, Papaya, Tangerine, Pear, Green Tea;;
 Vital;dual-purpose;CZH;;;;
 Vojvodina;aroma;;;;;
-Wai-iti;aroma;NZL;Riwaka;Apricot, Citrus, Lime, Mandarin, Peach, Spicy, Stone Fruit;;Wai-ti
+Wai-iti;aroma;NZL;Riwaka;Apricot, Citrus, Lime, Mandarin, Peach, Spicy, Stone Fruit;;Wai-ti, Waiti
 Waimea;dual-purpose;NZL;Pacific Jade;Citrus, Grapefruit, Herbal, Mandarin, Pine;;
 Wakatu;dual-purpose;NZL;Hallertauer Mittelfrüh, Liberty, Nelson Sauvin;Woody, Citrus, Floral, Lime, Tropical Fruits;Hallertauer Aroma;Whakatu, Wakutu, NZ Hallertau Aroma, Hallertau Aroma, H Aroma
 Warrior;bittering;USA;Columbus, Magnum, Nugget, Summit;Mild, Pine, Resin, Citrus, Spicy;;Warior, Warr, Warroir
 Whitbread Golding;aroma;GBR;Fuggle;Liquorice, Guava, Apricot, Earthy, Mate Tea, Creamy, Caramel, Almond, Tea, Woody, Bergamot, Honeydew, Melon;WGV;Whitbread, Whitbread Golding Variety
-Willamette;aroma;USA;East Kent Golding, Fuggle, Glacier, Styrian Golding;Caramel, Citrus, Curry, Elderberry, Floral, Incense;;Willamett, Willamatte, Williamette
+Willamette;aroma;USA;East Kent Golding, Fuggle, Glacier, Styrian Golding;Caramel, Citrus, Curry, Elderberry, Floral, Incense;;Willamett, Willamatte, Williamette, Wilamette, Will
 Willow Creek;dual-purpose;USA;;;;
 Wuerttemberger;aroma;GER;;;;
-XJA2/436;bittering;ZAF;;Bergamot, Citrus, Lemon, Candy, Papaya, Melon, Gooseberry, Resin, Zesty, Herbal;;Ja2/436, XJA/436
+XJA2/436;bittering;ZAF;;Bergamot, Citrus, Lemon, Candy, Papaya, Melon, Gooseberry, Resin, Zesty, Herbal;;Ja2/436, XJA/436, XJA
 Yakima Cluster;bittering;USA;Chinook, Cluster;Earthy, Floral, Sweet, Fruity, Resinous, Citrus, Woody, Noble, Spicy, Pepper;;
 Yakima Gold;dual-purpose;USA;Cluster;Grapefruit, Lemon;;
 Yellow Sub;dual-purpose;GER;Amarillo;Apricot, Blackberry, Fruity, Orange, Sweet;Yellow Submarine;
