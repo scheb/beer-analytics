@@ -419,6 +419,7 @@ class Hop(models.Model):
         ("SER", "Serbia"),
         ("SLO", "Slovenia"),
         ("SWE", "Sweden"),
+        ("UKR", "Ukraine"),
         ("USA", "United States"),
         ("ZAF", "South Africa"),
     )
