@@ -71,7 +71,7 @@ def descriptions(request: HttpRequest) -> HttpResponse:
     yeast_descriptions = []
     fermentable_descriptions = []
 
-    for hop in Hop.objects.all().filter(recipes_count__gt=0).order_by('-recipes_count'):
+    for hop in Hop.objects.all().order_by('-recipes_count'):
         if not template_exists("hop/descriptions/hops/%s.html" % hop.id):
             hop_descriptions.append({
                 'hop': hop,
@@ -85,14 +85,14 @@ def descriptions(request: HttpRequest) -> HttpResponse:
                 'hops_count': flavor.accessible_hops_count,
             })
 
-    for yeast in Yeast.objects.all().filter(recipes_count__gt=0).order_by('-recipes_count'):
+    for yeast in Yeast.objects.all().order_by('-recipes_count'):
         if not template_exists("yeast/descriptions/yeasts/%s.html" % yeast.id):
             yeast_descriptions.append({
                 'yeast': yeast,
                 'recipes_count': yeast.recipes_count,
             })
 
-    for fermentable in Fermentable.objects.all().filter(recipes_count__gt=0).order_by('-recipes_count'):
+    for fermentable in Fermentable.objects.all().order_by('-recipes_count'):
         if not template_exists("fermentable/descriptions/fermentables/%s.html" % fermentable.id):
             fermentable_descriptions.append({
                 'fermentable': fermentable,
