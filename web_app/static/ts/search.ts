@@ -1,5 +1,9 @@
 import {delay} from "./utils";
 
+declare global {
+    interface Window { _paq: any; }
+}
+
 abstract class SearchResultElement {
     public readonly element: HTMLElement
 
@@ -77,20 +81,27 @@ class SearchableItem extends SearchResultElement {
         return this.parentsIsTermMatching()
     }
 
-    private childrenIsTermMatching() {
+    private childrenIsTermMatching(): boolean {
         return [...this.children].reduce((result, searchItem: SearchableItem) => result || searchItem.isSearchTermMatching(), false);
     }
 
-    private parentsIsTermMatching() {
+    private parentsIsTermMatching(): boolean {
         return [...this.parents].reduce((result, searchItem: SearchableItem) => result || searchItem.isSearchTermMatching(), false);
+    }
+
+    public getNumberOfMatches(): number {
+        let result = this.searchTermIsMatching ? 1 : 0
+        return [...this.children].reduce((result, searchItem: SearchableItem) => result + searchItem.getNumberOfMatches(), result);
     }
 }
 
 export class SearchBox {
+    private readonly searchType: string
     private readonly searchItems: Map<string, SearchableItem>
     private readonly searchGroups: SearchableGroup[]
     private readonly searchItemsContainer: HTMLElement
     private noResultElement: HTMLParagraphElement
+    private rawSearchTerm: string
     private searchTerms: string[]
 
     constructor(searchForm: Element) {
@@ -100,6 +111,8 @@ export class SearchBox {
         if (undefined === searchForm.dataset['searchTarget']) {
             return
         }
+
+        this.searchType = searchForm.dataset['searchType']
         const input = searchForm.querySelector('input[type="search"]')
         if (!(input instanceof HTMLInputElement)) {
             return
@@ -148,13 +161,13 @@ export class SearchBox {
         }, this)
 
         this.appendNoResult();
-        input.addEventListener('input', delay(this.onKeyUp.bind(this), 500))
+        input.addEventListener('input', delay(this.onInput.bind(this), 800))
         if (input.value.length > 0) {
             this.search(input.value)
         }
     }
 
-    private onKeyUp(evt: KeyboardEvent): void {
+    private onInput(evt: KeyboardEvent): void {
         if (evt.target instanceof HTMLInputElement) {
             this.search(evt.target.value)
         }
@@ -162,6 +175,7 @@ export class SearchBox {
 
     private search(searchTerm: string): void {
         const splitter = /[\s_\-.,;:]+/g
+        this.rawSearchTerm = searchTerm
         this.searchTerms = searchTerm.replace(splitter, " ").trim().toLowerCase().split(" ")
         this.refreshView()
     }
@@ -189,9 +203,11 @@ export class SearchBox {
 
         // refresh search items view
         let hasAnyMatch = false
+        let numMatches = 0
         this.searchItems.forEach(function (searchItem: SearchableItem) {
             searchItem.refreshView()
             hasAnyMatch = hasAnyMatch || searchItem.isShown()
+            numMatches += searchItem.getNumberOfMatches()
         }, this)
 
         // Refresh view of search groups
@@ -204,6 +220,18 @@ export class SearchBox {
             this.noResultElement.classList.add('d-none')
         } else {
             this.noResultElement.classList.remove('d-none')
+        }
+
+        // Tracking
+        if (this.searchTerms.length > 0) {
+            this.trackSearch(this.rawSearchTerm, numMatches)
+        }
+    }
+
+    private trackSearch(searchTerm: string, numResults: number) {
+        // console.log(['trackSiteSearch', searchTerm, this.searchType, numResults])
+        if (typeof window._paq === "object") {
+            window._paq.push(['trackSiteSearch', searchTerm, this.searchType, numResults]);
         }
     }
 }
