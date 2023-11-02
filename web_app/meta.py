@@ -263,7 +263,7 @@ class FermentableMeta(PageMeta):
         self.fermentable = fermentable
 
     def get_title(self) -> str:
-        return "%s: Beer Styles, Amount & Recipes" % self.fermentable.name
+        return "%s in Beer Brewing: Styles, Amount & Recipes" % self.fermentable.name
 
     def get_description(self) -> str:
         return "Unlock the secrets of %s in beer brewing: Explore data analysis on common beer styles, amounts and color variations." % self.fermentable.name
@@ -356,8 +356,9 @@ class YeastMeta(PageMeta):
         yeast_name = self.get_yeast_full_name()
         if self.yeast.type_is_yeast:
             yeast_name = yeast_name + " Yeast"
+        yeast_name = yeast_name + " for Beer Brewing"
 
-        return "%s: Beer Styles, Fermentation, Recipes" % yeast_name
+        return "%s: Styles, Fermentation, Recipes" % yeast_name
 
     def get_description(self) -> str:
         return 'Unlock the secrets of {} in brewing recipes: Explore data analysis on fermentable amounts, color variations and common beer styles'.format(
