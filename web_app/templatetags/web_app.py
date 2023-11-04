@@ -7,6 +7,7 @@ from django.template import Node, loader, TemplateDoesNotExist
 from django.urls import reverse
 from django.utils.functional import keep_lazy_text
 from django.utils.html import escape
+from django.utils.safestring import mark_safe
 
 from recipe_db.formulas import celsius_to_fahrenheit
 from recipe_db.models import Style, Hop, Fermentable, Yeast
@@ -277,3 +278,15 @@ def web_analytics():
         "script_name": settings.__getattr__("WEB_ANALYTICS_SCRIPT_NAME"),
         "tracker_name": settings.__getattr__("WEB_ANALYTICS_TRACKER_NAME"),
     }
+
+
+@register.filter()
+def highlight(text, value):
+    if text is not None:
+        text = str(text)
+        src_str = re.compile(value, re.IGNORECASE)
+        str_replaced = src_str.sub("<span style=\"background:yellow\">\g<0></span>", text)
+    else:
+        str_replaced = ''
+
+    return mark_safe(str_replaced)

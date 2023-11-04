@@ -1,3 +1,5 @@
+from django.db.models import Count
+from django.db.models.functions import Lower, Coalesce
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -6,7 +8,7 @@ from django.views.decorators.cache import cache_page
 from recipe_db.analytics.fermentable import UnmappedFermentablesAnalysis
 from recipe_db.analytics.hop import UnmappedHopsAnalysis
 from recipe_db.analytics.yeast import UnmappedYeastsAnalysis
-from recipe_db.models import Hop, Tag, Yeast, Fermentable, IgnoredHop
+from recipe_db.models import Hop, Tag, Yeast, Fermentable, IgnoredHop, RecipeHop
 from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.admin import AdminChartFactory
 from web_app.charts.utils import NoDataException
@@ -44,6 +46,24 @@ def hops(request: HttpRequest) -> HttpResponse:
     }
 
     return render(request, "admin/hops.html", context)
+
+
+def hops_qa(request: HttpRequest) -> HttpResponse:
+    hops = []
+    for hop in Hop.objects.all().order_by('-recipes_count'):
+        linked_names = (
+            RecipeHop.objects.filter(kind=hop)
+                .values(name=Lower('kind_raw'))
+                .annotate(count=Count('name'))
+                .order_by("-count")
+            )
+        hops.append({
+            "name": hop.name,
+            "linked_count": linked_names.count(),
+            "linked": linked_names,
+        })
+
+    return render(request, "admin/hops_qa.html", {"hops": hops})
 
 
 def yeasts(request: HttpRequest) -> HttpResponse:
