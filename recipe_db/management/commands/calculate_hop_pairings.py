@@ -13,7 +13,7 @@ class Command(BaseCommand):
 
         for hop in Hop.objects.all():
             hop.pairings.clear()  # Clear existing pairings
-            if hop.recipes_count < HOP_MIN_RECIPES:
+            if hop.recipes_count is None or hop.recipes_count < HOP_MIN_RECIPES:
                 continue
 
             self.stdout.write("Calculate pairings for hop {}".format(hop.name))
