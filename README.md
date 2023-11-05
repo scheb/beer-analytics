@@ -34,7 +34,7 @@ Application Setup
 - Install yarn dependencies: `yarn install`
 - Create a configuration file (see below)
 - Build and start the Docker container `docker compose up`
-- Jump into Docker container `docker exec -it beer_analytics_local_django bash`
+- Jump into Docker container `docker exec -it beer_analytics_django bash`
 - Load initial data (known styles and ingredients) via `python manage.py load_initial_data`
 
 ### Configuration
@@ -120,6 +120,7 @@ The application is pre-calculating and persisting some metrics for style and ing
 
 ```
 python manage.py calculate_metrics
+python manage.py calculate_hop_pairings
 ```
 
 Security
