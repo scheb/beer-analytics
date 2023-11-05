@@ -1099,8 +1099,9 @@ class RecipeYeast(models.Model):
     max_attenuation = models.FloatField(default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)])
 
     def set_extra(self, key: str, value: Optional[str]) -> None:
-        if value is not None:
-            self._extras.append((key, str(value)))
+        # if value is not None:
+        #     self._extras.append((key, str(value)))
+        pass
 
     def save(self, *args, **kwargs) -> None:
         super().save(*args, **kwargs)
