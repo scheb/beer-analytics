@@ -14,15 +14,15 @@ def months_ago(top_months: int) -> pd.Timestamp:
 
 
 def get_style_names_dict() -> dict:
-    return dict(connection.cursor().execute("SELECT id, name FROM recipe_db_style"))
+    return dict(db_query_fetch_tuples("SELECT id, name FROM recipe_db_style"))
 
 
 def get_fermentable_names_dict() -> dict:
-    return dict(connection.cursor().execute("SELECT id, name FROM recipe_db_fermentable"))
+    return dict(db_query_fetch_tuples("SELECT id, name FROM recipe_db_fermentable"))
 
 
 def get_hop_names_dict() -> dict:
-    return dict(connection.cursor().execute("SELECT id, name FROM recipe_db_hop"))
+    return dict(db_query_fetch_tuples("SELECT id, name FROM recipe_db_hop"))
 
 
 def get_yeast_names_dict() -> dict:
@@ -163,6 +163,30 @@ class Trending:
 
         trending_ids = trending.reset_index()[series_column].values.tolist()[:10]
         return trending_ids
+
+
+def db_query_fetch_tuples(query: str, params: list=None):
+    if params is None:
+        params = []
+    with connection.cursor() as cursor:
+        cursor.execute(query, params)
+        return cursor.fetchall()
+
+
+def db_query_fetch_dictlist(query: str, params: list=None):
+    if params is None:
+        params = []
+    with connection.cursor() as cursor:
+        cursor.execute(query, params)
+        return dictfetchall(cursor)
+
+
+def db_query_fetch_single(query: str, params: list=None):
+    if params is None:
+        params = []
+    with connection.cursor() as cursor:
+        cursor.execute(query, params)
+        return cursor.fetchone()[0]
 
 
 def dictfetchall(cursor):

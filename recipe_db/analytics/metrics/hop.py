@@ -6,6 +6,7 @@ from django.db import connection
 from pandas import DataFrame
 
 from recipe_db.analytics import lowerfence, upperfence
+from recipe_db.analytics.utils import db_query_fetch_tuples
 from recipe_db.models import Hop
 
 
@@ -51,19 +52,12 @@ class HopMetricCalculator:
 
     def calc_hop_use_counts(self, hop: Hop) -> dict:
         query = """
-            SELECT use, COUNT(DISTINCT recipe_id) AS num_recipes
+            SELECT `use`, COUNT(DISTINCT recipe_id) AS num_recipes
             FROM recipe_db_recipehop
-            WHERE kind_id = %s AND use IS NOT NULL
-            GROUP BY use
+            WHERE kind_id = %s AND `use` IS NOT NULL
+            GROUP BY `use`
         """
-        results = connection.cursor().execute(query, params=[hop.id])
-
-        count_per_use = {}
-        for result in results:
-            (use, count) = result
-            count_per_use[use] = count
-
-        return count_per_use
+        return dict(db_query_fetch_tuples(query, [hop.id]))
 
     def calc_percentiles(self) -> dict:
         df = pd.read_sql_query("SELECT id, recipes_count FROM recipe_db_hop", connection)
@@ -85,11 +79,5 @@ class HopMetricCalculator:
             ORDER BY num_recipes DESC
             LIMIT 10
         """
-        results = connection.cursor().execute(query, params=[hop.id])
 
-        count_per_use = {}
-        for result in results:
-            (kind_id, count) = result
-            count_per_use[kind_id] = count
-
-        return count_per_use
+        return dict(db_query_fetch_tuples(query, [hop.id]))

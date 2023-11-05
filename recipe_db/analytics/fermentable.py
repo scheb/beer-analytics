@@ -8,7 +8,7 @@ from pandas import DataFrame
 from recipe_db.analytics import METRIC_PRECISION, lowerfence, q1, q3, upperfence
 from recipe_db.analytics.recipe import RecipeLevelAnalysis
 from recipe_db.analytics.scope import StyleProjection, FermentableProjection, FermentableScope
-from recipe_db.analytics.utils import remove_outliers, get_style_names_dict, get_fermentable_names_dict, dictfetchall
+from recipe_db.analytics.utils import remove_outliers, get_style_names_dict, get_fermentable_names_dict, db_query_fetch_dictlist
 
 
 class FermentableLevelAnalysis(ABC):
@@ -178,6 +178,4 @@ class UnmappedFermentablesAnalysis:
                 LIMIT 100
             """
 
-        with connection.cursor() as cursor:
-            cursor.execute(query)
-            return dictfetchall(cursor)
+        return db_query_fetch_dictlist(query)

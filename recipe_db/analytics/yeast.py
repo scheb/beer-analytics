@@ -1,6 +1,6 @@
 from django.db import connection
 
-from recipe_db.analytics.utils import dictfetchall
+from recipe_db.analytics.utils import db_query_fetch_dictlist
 
 
 class UnmappedYeastsAnalysis:
@@ -16,6 +16,4 @@ class UnmappedYeastsAnalysis:
                 LIMIT 100
             """
 
-        with connection.cursor() as cursor:
-            cursor.execute(query)
-            return dictfetchall(cursor)
+        return db_query_fetch_dictlist(query)
