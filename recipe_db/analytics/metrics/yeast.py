@@ -10,7 +10,7 @@ class YeastMetricCalculator:
 
     def get_recipes_count(self, yeast: Yeast) -> int:
         query = """
-            SELECT count(DISTINCT recipe_id)
+            SELECT COUNT(DISTINCT recipe_id)
             FROM recipe_db_recipeyeast
             WHERE kind_id = %s
         """

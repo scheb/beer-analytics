@@ -51,7 +51,7 @@ class HopMetricCalculator:
 
     def calc_hop_use_counts(self, hop: Hop) -> dict:
         query = """
-            SELECT use, count(DISTINCT recipe_id) AS num_recipes
+            SELECT use, COUNT(DISTINCT recipe_id) AS num_recipes
             FROM recipe_db_recipehop
             WHERE kind_id = %s AND use IS NOT NULL
             GROUP BY use

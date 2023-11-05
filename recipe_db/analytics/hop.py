@@ -22,7 +22,7 @@ class HopAmountRangeAnalysis(HopLevelAnalysis):
         scope_filter = self.scope.get_filter()
 
         query = """
-            SELECT rh.recipe_id, sum(rh.amount_percent) AS amount_percent
+            SELECT rh.recipe_id, SUM(rh.amount_percent) AS amount_percent
             FROM recipe_db_recipehop AS rh
             WHERE 1 {}
             GROUP BY rh.recipe_id, rh.kind_id
@@ -47,7 +47,7 @@ class HopMetricHistogram(HopLevelAnalysis):
 
         scope_filter = self.scope.get_filter()
         query = """
-                SELECT round({}, {}) as {}
+                SELECT ROUND({}, {}) as {}
                 FROM recipe_db_recipehop AS rh
                 WHERE 1 {}
             """.format(
@@ -84,7 +84,7 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
             SELECT
                 rh.recipe_id,
                 rh.kind_id,
-                sum(rh.amount_percent) AS amount_percent
+                SUM(rh.amount_percent) AS amount_percent
             FROM recipe_db_recipe AS r
             JOIN recipe_db_recipehop AS rh
                 ON r.uid = rh.recipe_id
@@ -131,7 +131,7 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
                 rh.recipe_id,
                 ras.style_id,
                 rh.kind_id,
-                sum(rh.amount_percent) AS amount_percent
+                SUM(rh.amount_percent) AS amount_percent
             FROM recipe_db_recipe AS r
             JOIN recipe_db_recipehop AS rh
                 ON r.uid = rh.recipe_id
@@ -175,7 +175,7 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
                 rh.recipe_id,
                 rh.use AS use_id,
                 rh.kind_id,
-                sum(rh.amount_percent) AS amount_percent
+                SUM(rh.amount_percent) AS amount_percent
             FROM recipe_db_recipe AS r
             JOIN recipe_db_recipehop AS rh
                 ON r.uid = rh.recipe_id
@@ -306,7 +306,7 @@ class HopFlavorAnalysis:
                     JOIN recipe_db_tag AS tag
                         ON tags2.tag_id = tag.id
                     WHERE tags1.tag_id = %s AND tags2.tag_id != %s
-                    GROUP BY tags2."tag_id"
+                    GROUP BY tags2.tag_id
                     ORDER BY combinations DESC
                     LIMIT 10
             """, [tag.id, tag.id])

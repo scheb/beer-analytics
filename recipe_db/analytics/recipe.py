@@ -39,7 +39,7 @@ class RecipesListAnalysis(RecipeLevelAnalysis):
                 SELECT r.uid AS recipe_id
                 FROM recipe_db_recipe AS r
                 WHERE r.name IS NOT NULL {}
-                ORDER BY random()
+                ORDER BY RAND()
                 LIMIT %s
             """.format(
             scope_filter.where
@@ -58,7 +58,7 @@ class RecipesCountAnalysis(RecipeLevelAnalysis):
         scope_filter = self.scope.get_filter()
         query = """
                 SELECT
-                    count(r.uid) AS total_recipes
+                    COUNT(r.uid) AS total_recipes
                 FROM recipe_db_recipe AS r
                 WHERE
                     created IS NOT NULL
@@ -77,8 +77,8 @@ class RecipesCountAnalysis(RecipeLevelAnalysis):
         scope_filter = self.scope.get_filter()
         query = """
                 SELECT
-                    date(r.created) AS day,
-                    count(r.uid) AS total_recipes
+                    DATE(r.created) AS day,
+                    COUNT(r.uid) AS total_recipes
                 FROM recipe_db_recipe AS r
                 WHERE
                     created IS NOT NULL
@@ -97,13 +97,13 @@ class RecipesCountAnalysis(RecipeLevelAnalysis):
         scope_filter = self.scope.get_filter()
         query = """
                 SELECT
-                    date(r.created, 'start of month') AS month,
-                    count(r.uid) AS total_recipes
+                    DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
+                    COUNT(r.uid) AS total_recipes
                 FROM recipe_db_recipe AS r
                 WHERE
                     created IS NOT NULL
                     {}
-                GROUP BY date(r.created, 'start of month')
+                GROUP BY month
                 ORDER BY month ASC
             """.format(
             scope_filter.where
@@ -119,7 +119,7 @@ class RecipesCountAnalysis(RecipeLevelAnalysis):
         query = """
                 SELECT
                     ras.style_id,
-                    count(DISTINCT r.uid) AS total_recipes
+                    COUNT(DISTINCT r.uid) AS total_recipes
                 FROM recipe_db_recipe AS r
                 JOIN recipe_db_recipe_associated_styles ras
                     ON r.uid = ras.recipe_id
@@ -150,9 +150,9 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
         projection_filter = projection.get_filter()
         query = """
                 SELECT
-                    date(r.created, 'start of month') AS month,
+                    DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     ras.style_id,
-                    count(r.uid) AS recipes
+                    COUNT(r.uid) AS recipes
                 FROM recipe_db_recipe AS r
                 JOIN recipe_db_recipe_associated_styles AS ras
                     ON r.uid = ras.recipe_id
@@ -212,9 +212,9 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
         projection_filter = projection.get_filter()
         query = """
                 SELECT
-                    date(r.created, 'start of month') AS month,
+                    DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     rh.kind_id,
-                    count(DISTINCT r.uid) AS recipes
+                    COUNT(DISTINCT r.uid) AS recipes
                 FROM recipe_db_recipe AS r
                 JOIN recipe_db_recipehop AS rh
                     ON r.uid = rh.recipe_id
@@ -222,7 +222,7 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
                     r.created >= %s  -- Cut-off date for popularity charts
                     {}
                     {}
-                GROUP BY date(r.created, 'start of month'), rh.kind_id
+                GROUP BY month, rh.kind_id
             """.format(
             scope_filter.where, projection_filter.where
         )
@@ -273,9 +273,9 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
         projection_filter = projection.get_filter()
         query = """
                 SELECT
-                    date(r.created, 'start of month') AS month,
+                    DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     rf.kind_id,
-                    count(DISTINCT r.uid) AS recipes
+                    COUNT(DISTINCT r.uid) AS recipes
                 FROM recipe_db_recipe AS r
                 JOIN recipe_db_recipefermentable AS rf
                     ON r.uid = rf.recipe_id
@@ -283,7 +283,7 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
                     r.created >= %s  -- Cut-off date for popularity charts
                     {}
                     {}
-                GROUP BY date(r.created, 'start of month'), rf.kind_id
+                GROUP BY month, rf.kind_id
             """.format(
             scope_filter.where, projection_filter.where
         )
@@ -333,9 +333,9 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
         projection_filter = projection.get_filter()
         query = """
                 SELECT
-                    date(r.created, 'start of month') AS month,
+                    DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     ry.kind_id,
-                    count(DISTINCT r.uid) AS recipes
+                    COUNT(DISTINCT r.uid) AS recipes
                 FROM recipe_db_recipe AS r
                 JOIN recipe_db_recipeyeast AS ry
                     ON r.uid = ry.recipe_id
@@ -343,7 +343,7 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
                     r.created >= %s  -- Cut-off date for popularity charts
                     {}
                     {}
-                GROUP BY date(r.created, 'start of month'), ry.kind_id
+                GROUP BY month, ry.kind_id
             """.format(
             scope_filter.where, projection_filter.where
         )
@@ -387,9 +387,9 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
         scope_filter = self.scope.get_filter()
         query = """
                 SELECT
-                    date(r.created) AS day,
+                    DATE(r.created) AS day,
                     r.source,
-                    count(r.uid) AS recipes_number
+                    COUNT(r.uid) AS recipes_number
                 FROM recipe_db_recipe AS r
                 WHERE
                     r.created >= %s  -- Cut-off date for popularity charts
@@ -410,7 +410,7 @@ class RecipesMetricHistogram(RecipeLevelAnalysis):
         scope_filter = self.scope.get_filter()
 
         query = """
-                SELECT round({}, {}) as {}
+                SELECT ROUND({}, {}) as {}
                 FROM recipe_db_recipe AS r
                 WHERE
                     {} IS NOT NULL
@@ -458,9 +458,9 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
         scope_filter = self.scope.get_filter()
         query = """
                 SELECT
-                    date(r.created, 'start of month') AS month,
+                    DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     ras.style_id,
-                    count(r.uid) AS recipes
+                    COUNT(r.uid) AS recipes
                 FROM recipe_db_recipe AS r
                 JOIN recipe_db_recipe_associated_styles AS ras
                     ON r.uid = ras.recipe_id
@@ -511,9 +511,9 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
         projection_filter = projection.get_filter()
         query = """
                 SELECT
-                    date(r.created, 'start of month') AS month,
+                    DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     rh.kind_id,
-                    count(DISTINCT r.uid) AS recipes
+                    COUNT(DISTINCT r.uid) AS recipes
                 FROM recipe_db_recipe AS r
                 JOIN recipe_db_recipehop AS rh
                     ON r.uid = rh.recipe_id
@@ -522,7 +522,7 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
                     AND rh.kind_id IS NOT NULL
                     {}
                     {}
-                GROUP BY date(r.created, 'start of month'), rh.kind_id
+                GROUP BY month, rh.kind_id
             """.format(
             scope_filter.where, projection_filter.where
         )
@@ -568,9 +568,9 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
         projection_filter = projection.get_filter()
         query = """
                 SELECT
-                    date(r.created, 'start of month') AS month,
+                    DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     ry.kind_id,
-                    count(DISTINCT r.uid) AS recipes
+                    COUNT(DISTINCT r.uid) AS recipes
                 FROM recipe_db_recipe AS r
                 JOIN recipe_db_recipeyeast AS ry
                     ON r.uid = ry.recipe_id
@@ -579,7 +579,7 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
                     AND ry.kind_id IS NOT NULL
                     {}
                     {}
-                GROUP BY date(r.created, 'start of month'), ry.kind_id
+                GROUP BY month, ry.kind_id
             """.format(
             scope_filter.where, projection_filter.where
         )
@@ -645,7 +645,7 @@ class CommonStylesAnalysis(RecipeLevelAnalysis):
         query = """
             SELECT
                 ras.style_id,
-                count(DISTINCT r.uid) AS recipes
+                COUNT(DISTINCT r.uid) AS recipes
             FROM recipe_db_recipe AS r
             JOIN recipe_db_recipe_associated_styles AS ras
                 ON r.uid = ras.recipe_id

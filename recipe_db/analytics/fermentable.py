@@ -21,7 +21,7 @@ class FermentableAmountRangeAnalysis(FermentableLevelAnalysis):
         scope_filter = self.scope.get_filter()
 
         query = """
-            SELECT rf.recipe_id, sum(rf.amount_percent) AS amount_percent
+            SELECT rf.recipe_id, SUM(rf.amount_percent) AS amount_percent
             FROM recipe_db_recipefermentable AS rf
             WHERE 1 {}
             GROUP BY rf.recipe_id, rf.kind_id
@@ -46,7 +46,7 @@ class FermentableMetricHistogram(FermentableLevelAnalysis):
 
         scope_filter = self.scope.get_filter()
         query = """
-                SELECT round({}, {}) as {}
+                SELECT ROUND({}, {}) as {}
                 FROM recipe_db_recipefermentable AS rf
                 WHERE 1 {}
             """.format(
@@ -83,7 +83,7 @@ class FermentableAmountAnalysis(RecipeLevelAnalysis):
             SELECT
                 rf.recipe_id,
                 rf.kind_id,
-                sum(rf.amount_percent) AS amount_percent
+                SUM(rf.amount_percent) AS amount_percent
             FROM recipe_db_recipe AS r
             JOIN recipe_db_recipefermentable AS rf
                 ON r.uid = rf.recipe_id
@@ -130,7 +130,7 @@ class FermentableAmountAnalysis(RecipeLevelAnalysis):
                 rf.recipe_id,
                 ras.style_id,
                 rf.kind_id,
-                sum(rf.amount_percent) AS amount_percent
+                SUM(rf.amount_percent) AS amount_percent
             FROM recipe_db_recipe AS r
             JOIN recipe_db_recipefermentable AS rf
                 ON r.uid = rf.recipe_id
