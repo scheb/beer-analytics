@@ -64,10 +64,10 @@ WSGI_APPLICATION = "beer_analytics.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'beer_analytics',
-        'USER': 'beer_analytics',
-        'PASSWORD': 'beer_analytics',
-        'HOST': 'beer_analytics_db',
+        'NAME': env.str("DATABASE_NAME"),
+        'USER': env.str("DATABASE_USER"),
+        'PASSWORD': env.str("DATABASE_PASSWORD"),
+        'HOST': env.str("DATABASE_HOST"),
         'PORT': '3306',
     },
 }

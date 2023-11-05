@@ -17,12 +17,14 @@ services:
             - db
 
     db:
+        env_file:
+            - beer_analytics/.env
         image: mysql:8.0
         container_name: beer_analytics_db
         environment:
-            MYSQL_DATABASE: 'beer_analytics'
-            MYSQL_USER: 'beer_analytics'
-            MYSQL_PASSWORD: 'beer_analytics'
+            MYSQL_DATABASE: ${DATABASE_NAME}
+            MYSQL_USER: ${DATABASE_USER}
+            MYSQL_PASSWORD: ${DATABASE_PASSWORD}
             MYSQL_ROOT_PASSWORD: 'root'
         ports:
             - "3308:3306"
