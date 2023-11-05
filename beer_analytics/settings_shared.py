@@ -62,16 +62,15 @@ TEMPLATES = [
 WSGI_APPLICATION = "beer_analytics.wsgi.application"
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "var/beer_analytics.sqlite3",
-    },
-    "data_import": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "var/data_import.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'beer_analytics',
+        'USER': 'beer_analytics',
+        'PASSWORD': 'beer_analytics',
+        'HOST': 'beer_analytics_db',
+        'PORT': '3306',
     },
 }
-DATABASE_ROUTERS = ["beer_analytics.DataImportRouter"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGGING = {

@@ -1,13 +1,31 @@
-version: '3'
+version: '3.8'
 
 services:
+
     django:
         build:
             context: .
             dockerfile: ./build/local/Dockerfile
-        image: beer_analytics_local_django
-        container_name: beer_analytics_local_django
+        image: beer_analytics_local
+        container_name: beer_analytics_django
+        restart: on-failure
         volumes:
             - .:/app:z
         ports:
             - "8000:8000"
+        depends_on:
+            - db
+
+    db:
+        image: mysql:8.0
+        container_name: beer_analytics_db
+        environment:
+            MYSQL_DATABASE: 'beer_analytics'
+            MYSQL_USER: 'beer_analytics'
+            MYSQL_PASSWORD: 'beer_analytics'
+            MYSQL_ROOT_PASSWORD: 'root'
+        volumes:
+            - 'beer_analytics_db:/var/lib/mysql'
+
+volumes:
+    beer_analytics_db:

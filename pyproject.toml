@@ -20,6 +20,7 @@ scipy = "^1.10.1"
 translitcodec = "^0.7.0"
 lxml = "^4.9.2"
 django-structlog = "^6.0.0"
+mysqlclient = "^2.2.0"
 
 [tool.poetry.dev-dependencies]
 black = "^23.3.0"

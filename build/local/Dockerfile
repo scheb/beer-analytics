@@ -8,6 +8,9 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ARG POETRY_VERSION="1.4"
 ENV DJANGO_SETTINGS_MODULE=beer_analytics.settings_dev
 
+RUN apt-get update && \
+    apt-get -y install default-libmysqlclient-dev pkg-config build-essential
+
 # Install poetry
 RUN pip install poetry==${POETRY_VERSION}
 
