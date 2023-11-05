@@ -81,7 +81,7 @@ class Style(models.Model):
     name = models.CharField(max_length=255)
     parent_style = models.ForeignKey("self", on_delete=models.SET_NULL, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
-    alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
+    alt_names_extra = models.CharField(max_length=1024, default=None, blank=True, null=True)
 
     # Metrics
     abv_min = models.FloatField(default=None, blank=True, null=True)
@@ -322,7 +322,7 @@ class Fermentable(models.Model):
     category = models.CharField(max_length=32, choices=CATEGORY_CHOICES, default=None, blank=True, null=True)
     type = models.CharField(max_length=32, choices=TYPE_CHOICES, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
-    alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
+    alt_names_extra = models.CharField(max_length=1024, default=None, blank=True, null=True)
     description = models.CharField(max_length=255, default=None, blank=True, null=True)
 
     # Calculated metrics from recipes
@@ -434,7 +434,7 @@ class Hop(models.Model):
     name = models.CharField(max_length=255)
     use = models.CharField(max_length=16, choices=USE_CHOICES, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
-    alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
+    alt_names_extra = models.CharField(max_length=1024, default=None, blank=True, null=True)
     origin = models.CharField(max_length=32, default=None, blank=True, null=True)
     used_for = models.CharField(max_length=255, default=None, blank=True, null=True)
     description = models.CharField(max_length=255, default=None, blank=True, null=True)
@@ -617,7 +617,7 @@ class Yeast(models.Model):
     alt_product_id = models.CharField(max_length=255, default=None, blank=True, null=True)
     name = models.CharField(max_length=255)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
-    alt_names_extra = models.CharField(max_length=255, default=None, blank=True, null=True)
+    alt_names_extra = models.CharField(max_length=1024, default=None, blank=True, null=True)
     lab = models.CharField(max_length=255)
     alt_lab = models.CharField(max_length=255, default=None, blank=True, null=True)
     brand = models.CharField(max_length=255, default=None, blank=True, null=True)
