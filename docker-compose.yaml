@@ -24,6 +24,8 @@ services:
             MYSQL_USER: 'beer_analytics'
             MYSQL_PASSWORD: 'beer_analytics'
             MYSQL_ROOT_PASSWORD: 'root'
+        ports:
+            - "3308:3306"
         volumes:
             - 'beer_analytics_db:/var/lib/mysql'
 
