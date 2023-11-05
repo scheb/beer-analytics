@@ -95,7 +95,7 @@ Early Bird;aroma;GBR;;;;
 Early Green;aroma;GBR;;;;
 Early Prolific;aroma;GBR;;;;
 Early Promise;aroma;GBR;;;;
-East Kent Golding;aroma;GBR;Fuggle, Golding, Progress, Target, Whitbread Golding, Willamette;Floral, Grapefruit, Honey, Lavender, Lemon, Orange, Thyme;EKG;EGK, Goldings East Kent, Golding East Kent, East Ken Golding, East Kent Godings, East Kent Golding, Est Kent Goldings,  Kent East Golding, Kent East Goldings, Kent Golding, Kent Goldings, East Kent, East, E.K. Golding
+East Kent Golding;aroma;GBR;Fuggle, Golding, Progress, Target, Whitbread Golding, Willamette;Floral, Grapefruit, Honey, Lavender, Lemon, Orange, Thyme;EKG;EGK, Kent East Golding, E K Golding, E K Goldings, E. K. Golding, E. K.Goldings, E.K Goldings, E.K. Golding, E.K. Golding , E.K. Goldings, E.K. Goldings Pellet Hops, East, East Ken Golding, East Kent, East Kent Godings, East Kent Golding, EK Golding, EK Golding UK, EK Goldings, Est Kent Goldings, Golding East Kent, Golding East Keny, Golding UK E Kent, Goldings (EKG), Goldings (Kent), Goldings E.K., Goldings East Kent, Goldings EK, Goldings UK Kent, Kent East Goldings, Kent Golding, Kent Goldings, Ket Golding, UK East Golding
 Eastern Gold;bittering;JPN;;;;
 Eastern Green;aroma;JPN;;;;
 Eastwell Golding;aroma;GBR;;;;
@@ -165,8 +165,7 @@ Helga;aroma;AUS;Hallertauer Mittelfrüh;Floral, Spicy, Herbal, Earthy, Noble, Mi
 Helios;dual-purpose;USA;;Resinous, Spicy, Floral, Clean, Soft;HS15619;
 Herald;dual-purpose;GBR;;;;
 Herkules;dual-purpose;GER;Hallertauer Taurus, Warrior;Citrus, Melon, Pepper, Pine, Fruity, Spicy, Woody, Menthol;;Hercules, Herkels
-Hersbrucker;aroma;GER;Hallertauer Mittelfrüh, Liberty, Mount Hood, Spalter, Strisselspalt;Hay, Noble, Orange, Tobacco;Hallertauer Hersbrucker;Hallertau Hersbrucker, German Hersbrucker, German Hallertau Hersbrucker, Hallertau Hersbruck, Hallertau Herbrucker, Hersbruck, Hallertauer Hersbruker
-Hersbrucker E;aroma;GBR;;;;
+Hersbrucker;aroma;GER;Hallertauer Mittelfrüh, Liberty, Mount Hood, Spalter, Strisselspalt;Hay, Noble, Orange, Tobacco;Hallertauer Hersbrucker;Hallertau Hersbrucker, German Hersbrucker, German Hallertau Hersbrucker, Hallertau Hersbruck, Hallertau Herbrucker, Hersbruck, Hallertauer Hersbruker, Herbruker, German Hersbruckr, German Hersbruker, Hallertau Hersbruc, Hallertau Hersbrucher, Hallertau Hersbrück, Hallertau Hersbrucke, Hallertau Hersbruker, Hallertau Herschbrucker, Hallertau Hersebrücker, Hallertau Hersherbrucker, Hallertau Herstbrücker, Hallertau Herzbrucker, Hallertau Herzbrücker, Hallertauer Herabrucker, Hallertauer Herbrucker, Hallertauer Herbrukers, Hallertauer Hersbrucke, Hallertauer Hersbrucken, Hallertauer Hersbruecker, Hallertauer Herzbrucker, Hallertauer Hursbrucker, Heisbrucker, Hellertau Hersbrucken, Herbrucker, Herbsbrucker, Hersbrucher, Hersbruker, Hershbrucker, Herzbrücker
 Hersbrucker Pure;aroma;GER;Hallertauer Mittelfrüh, Hersbrucker;Noble;;
 Hersbrucker Red-Stem;aroma;GER;;;;
 Hersbrucker Spät;aroma;GER;Hallertauer Mittelfrüh, Strisselspalt;Noble, Vanilla;;
@@ -315,7 +314,7 @@ Slavyanka;aroma;UKR ;Saaz, Tettnanger;Herbal, Floral, Nectar, Balanced;;Slaviank
 Smaragd;dual-purpose;GER;Hallertauer Mittelfrüh, Opal;Floral, Fruity, Spicy, Herbal, Liquorice, Thyme, Tarragon, Vegetal, Woody;;Smarged, Smargd, Smagrd
 Smooth Cone;dual-purpose;NZL;;;;Smoothcone
 Solero;aroma;GER;;Mango, Passion Fruit, Tropical Fruits;;
-Sonnet;aroma;USA;;;;Sonnet Golding, Sonnet Goldings, Sonnett Golding, Sonnett Goldings
+Sonnet;aroma;USA;;;Sonnet Golding;Sonnett Goldings, Sonnet Goldings, Sonnett Golding, Sonnett Goldings
 Sorachi Ace;bittering;JPN;Admiral, Cascade, Southern Cross;Citrus, Dill, Herbal, Lemon, Tobacco, Woody;;Sorachie Ace, Soriachi Ace, Sorachi
 Southern Aroma;aroma;ZAF;;Floral, Fruity, Spicy, Woody;;SA Aroma, S. Aroma
 Southern Brewer;bittering;ZAF;Fuggle, Southern Promise;Earthy, Woody;;SA Brewer, S. Brewer
@@ -336,7 +335,7 @@ Strisselspalt;aroma;FRA;Liberty, Hallertauer Mittelfrüh, Mount Hood, Crystal, H
 Styrian Cardinal;dual-purpose;SLO;;Anise, Apple, Citrus, Fruity, Gooseberry, Pineapple, Strawberry, Tropical Fruits;;Cardinal
 Styrian Dragon;aroma;SLO;;Citrus, Grapefruit, Lime, Orange;105/220;Dragon
 Styrian Fox;dual-purpose;SLO;;Blackberry, Currant, Floral, Fruity, Honey, Lemongrass, Marjoram, Peach, Raspberry, Strawberry;;Fox, Sty Fox, Stryian Fox, Sytrian Fox
-Styrian Golding;aroma;SLO;Bobek, Fuggle, Saaz, Styrian Golding, Willamette;Citrus, Earthy, Floral, Noble, Pine, Resin, Spicy, Sweet;Celeja, Celeia;Styrian Golding, Styrian Gold, Styrian Goldings, Celia, Stirian Goldings, Stirian Golding
+Styrian Golding;aroma;SLO;Bobek, Fuggle, Saaz, Styrian Golding, Willamette;Citrus, Earthy, Floral, Noble, Pine, Resin, Spicy, Sweet;Savinjski Golding, Celeja, Celeia;Celeia Golding, Celia, Celia (Golding), Golding Styrain, Goldings (Styrian), Goldings Savenskji, Goldings Styrian, Saint Celia Goldings , Sav Golding, Savinjski Golding, Savinjsky Golding, Savinsjski Golding, Savinski Golding, Savinsky Golding, Slovenia Savinjski Golding, Slovenian Golding, St Celeia (Golding), St Golding, St Golding (Celeia), St. Cecelia (Golding), St. Celeia (Golding), Steiermarks Goldings, Sterian Golding, Sterian Golding (Celia), Stirian Golding, Stryian Golding, Stygian Golding, Styian Golding, Styrain Golding, Styran Golding Celeia, Styrian Celeia (Golding), Styrian Celeia Golding, Styrian Gold, Styrian Golding, Styrian Savinjski Golding, Styrian Savinjski Golding  , Styrian Savinjsky Golding, Styrian Savinjsli Golding, Styrian Savinski Golding, Styring Golding, Styrium Goldin, Stytian Golding, Syrian Golding, Sytrian Golding
 Styrian Kolibri;aroma;SLO;;Ananas, Blueberry, Currant, Ginger, Grassy, Lemon, Mandarin, Marjoram, Pepper, Spicy, Tangerine, Tea, Tomato;;Kolibri
 Styrian Wolf;dual-purpose;SLO;;Mango, Melon, Tropical Fruits, Passion Fruit, Citrus, Strawberry, Raspberry, Blueberry, Fruity, Lemongrass;;Wolf
 Super Galena;bittering;USA;;;;Supergalena
