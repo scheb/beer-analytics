@@ -21,6 +21,7 @@ import {
 } from "./data";
 import {getRequest, RequestResult} from "./request";
 import {Chart, ChartConfig} from "./results";
+import {trackInteraction} from "./interaction";
 
 class MinMaxValue {
     public readonly minLimit: number
@@ -480,6 +481,7 @@ class ResultUi {
         this.analyzerState = analyzerState
         this.initializeUi()
         this.analyzerState.listenFiltersChange(this.onFiltersChange.bind(this))
+        trackInteraction('Analyzer', 'Start Analyzing')
     }
 
     private initializeUi(): void {
@@ -535,6 +537,7 @@ class ResultUi {
         })
         this.chartUis.push(chartUi)
         this.analyzerState.charts.add(chartType)
+        trackInteraction('Analyzer', 'Add Chart', chartType)
     }
 
     private updateChartListState(): void {
@@ -548,6 +551,7 @@ class ResultUi {
         // When a chart is remove, remove it from the state and refresh button
         this.analyzerState.charts.remove(chartType)
         this.updateChartListState()
+        trackInteraction('Analyzer', 'Remove Chart', chartType)
 
         // Remove ChartUi
         for (let index = 0; index < this.chartUis.length; index++) {
@@ -563,6 +567,7 @@ class ResultUi {
         // Refresh recipe count and charts
         this.recipeCountUi.refresh()
         this.chartUis.forEach((chartUi: ChartUi) => chartUi.refresh())
+        trackInteraction('Analyzer', 'Change Filters')
     }
 
     private onClickAddButton(evt: Event): void {
