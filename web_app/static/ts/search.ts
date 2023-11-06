@@ -1,8 +1,5 @@
 import {delay} from "./utils";
-
-declare global {
-    interface Window { _paq: any; }
-}
+import {trackSearch} from "./interaction";
 
 abstract class SearchResultElement {
     public readonly element: HTMLElement
@@ -229,9 +226,6 @@ export class SearchBox {
     }
 
     private trackSearch(searchTerm: string, numResults: number) {
-        // console.log(['trackSiteSearch', searchTerm, this.searchType, numResults])
-        if (typeof window._paq === "object") {
-            window._paq.push(['trackSiteSearch', searchTerm, this.searchType, numResults]);
-        }
+        trackSearch(searchTerm, this.searchType, numResults)
     }
 }
