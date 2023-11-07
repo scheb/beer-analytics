@@ -176,7 +176,7 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
         if num_top is not None:
             top_scope = per_month
             if top_months is not None:
-                top_scope = top_scope[top_scope["month"] >= months_ago(top_months).strftime("%Y-%m-%d")]
+                top_scope = top_scope[top_scope["month"] >= months_ago(top_months)]
             top_ids = top_scope.groupby("style_id")["recipes"].sum().sort_values(ascending=False).index.values[:num_top]
             per_month = per_month[per_month["style_id"].isin(top_ids)]
 
@@ -238,7 +238,7 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
         if num_top is not None:
             top_scope = per_month
             if top_months is not None:
-                top_scope = top_scope[top_scope["month"] >= months_ago(top_months).strftime("%Y-%m-%d")]
+                top_scope = top_scope[top_scope["month"] >= months_ago(top_months)]
             top_ids = top_scope.groupby("kind_id")["recipes"].sum().sort_values(ascending=False).index.values[:num_top]
             per_month = per_month[per_month["kind_id"].isin(top_ids)]
 
@@ -359,7 +359,7 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
         if num_top is not None:
             top_scope = per_month
             if top_months is not None:
-                top_scope = top_scope[top_scope["month"] >= months_ago(top_months).strftime("%Y-%m-%d")]
+                top_scope = top_scope[top_scope["month"] >= months_ago(top_months)]
             top_ids = top_scope.groupby("kind_id")["recipes"].sum().sort_values(ascending=False).index.values[:num_top]
             per_month = per_month[per_month["kind_id"].isin(top_ids)]
 
