@@ -51,7 +51,7 @@
                     <li><a href="#hop-pairings" data-interaction="Hops:Click TOC:$label">Hop Pairings</a>
                     <li><a href="#most-used-yeasts" data-interaction="Hops:Click TOC:$label">Most Used Yeasts</a>
                     <li><a href="#trending-yeasts" data-interaction="Hops:Click TOC:$label">Trending Yeasts</a>
-                    <li><a href="#recipes" data-interaction="Hops:Click TOC:$label">Example Recipes</a>
+                    <li><a href="#recipes" data-interaction="Hops:Click TOC:$label">Brewing Recipes</a>
                 </ol>
             </nav>
 
@@ -235,7 +235,7 @@
     {% with anchor="recipes" %}
         <section class="card card-chart">
             <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Example Recipes</h2>
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Brewing Recipes</h2>
             </div>
             <div class="card-body">
                 <div class="chart-s" data-recipes="{{ hop|recipes }}"></div>

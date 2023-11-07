@@ -37,7 +37,7 @@
                 <li><a href="#styles-percent-recipes" data-interaction="Fermentables:Click TOC:$label">Popularity within Beer Styles</a></li>
                 <li><a href="#styles-number-recipes" data-interaction="Fermentables:Click TOC:$label">Common Beer Styles</a></li>
                 <li><a href="#style-amount" data-interaction="Fermentables:Click TOC:$label">Amount per Style</a></li>
-                <li><a href="#recipes" data-interaction="Fermentables:Click TOC:$label">Example Recipes</a></li>
+                <li><a href="#recipes" data-interaction="Fermentables:Click TOC:$label">Brewing Recipes</a></li>
             </ol>
         </nav>
 
@@ -125,7 +125,7 @@
     {% with anchor="recipes" %}
         <section class="card card-chart">
             <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Example Recipes</h2>
+                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Brewing Recipes</h2>
             </div>
             <div class="card-body">
                 <div class="chart-s" data-recipes="{{ fermentable|recipes }}"></div>
