@@ -131,7 +131,7 @@
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Trending Styles</h2>
             </div>
             <div class="card-body">
-                <div class="chart-m" data-chart="{% url "trend_chart" period chart_type "json" %}">
+                <div class="chart-m" data-chart="{% url "trend_chart" period chart_type "json" %}" data-chart-options='{"noDataText":"No trends detected"}'>
                     <noscript>
                         <img src="{% url "trend_chart" period chart_type "svg" %}" alt="{{ period|chart_image_alt:chart_type }}"/>
                     </noscript>
@@ -146,7 +146,7 @@
                 <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Popular Styles</h2>
             </div>
             <div class="card-body">
-                <div class="chart-m" data-chart="{% url "trend_chart" period chart_type "json" %}" data-chart-options='{"noDataText":"No trends detected"}'>
+                <div class="chart-m" data-chart="{% url "trend_chart" period chart_type "json" %}">
                     <noscript>
                         <img src="{% url "trend_chart" period chart_type "svg" %}" alt="{{ period|chart_image_alt:chart_type }}"/>
                     </noscript>
