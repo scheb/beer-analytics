@@ -14,7 +14,6 @@ FORMAT_PNG = "png"
 FORMAT_SVG = "svg"
 FORMAT_JSON = "json"
 FORMATS = [FORMAT_PNG, FORMAT_SVG, FORMAT_JSON]
-SOURCE_URL_PATTERNS = settings.__getattr__("SOURCE_URL_PATTERNS")
 
 
 def render_chart(chart: Chart, data_format: str) -> HttpResponse:
