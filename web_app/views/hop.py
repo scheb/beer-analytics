@@ -211,4 +211,4 @@ def recipes(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
         return redirect("hop_recipes", category_id=hop.category, slug=hop.id, permanent=True)
 
     recipes_list = HopAnalysis(hop).random_recipes(24)
-    return render_recipes_list(recipes_list)
+    return render_recipes_list(request, recipes_list, "Hops")

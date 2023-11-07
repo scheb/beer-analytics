@@ -2,11 +2,12 @@ import json
 from typing import Optional, Iterable
 
 from django.conf import settings
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpRequest
+from django.shortcuts import render
 from django.template import TemplateDoesNotExist, loader
 from django.urls import reverse
 
-from recipe_db.models import Style, Hop, Fermentable, Yeast, Recipe, Tag
+from recipe_db.models import Style, Hop, Fermentable, Yeast, Recipe, Tag, SourceInfo
 from web_app.charts.utils import Chart
 
 FORMAT_PNG = "png"
@@ -27,27 +28,24 @@ def render_chart(chart: Chart, data_format: str) -> HttpResponse:
         raise Http404("Unknown plotting format %s." % data_format)
 
 
-def render_recipes_list(recipes: Iterable[Recipe]) -> HttpResponse:
-    json_data = []
+def render_recipes_list(request: HttpRequest, recipes: Iterable[Recipe], section_name: str) -> HttpResponse:
+    sources = {}
+    for source in SourceInfo.objects.all():
+        sources[source.source_id] = source
+
+    recipes_list = []
     for recipe in recipes:
-        url = get_recipe_url(recipe.uid)
-        if url is not None:
-            json_data.append(
-                {
-                    "name": recipe.name,
-                    "author": recipe.author,
-                    "url": url,
-                }
-            )
+        recipes_list.append({
+            "name": recipe.name,
+            "author": recipe.author,
+            "source": sources[recipe.source] if recipe.source in sources else None,
+        })
 
-    return HttpResponse(json.dumps(json_data), content_type="application/json")
-
-
-def get_recipe_url(uid: str) -> Optional[str]:
-    (source, source_id) = uid.split(":")
-    if source in SOURCE_URL_PATTERNS:
-        return SOURCE_URL_PATTERNS[source] % source_id
-    return None
+    context = {
+        "recipes": recipes_list,
+        "section_name": section_name,
+    }
+    return render(request, "random_recipes.html", context)
 
 
 def object_url(item: object):

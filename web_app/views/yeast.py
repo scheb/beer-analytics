@@ -129,7 +129,7 @@ def recipes(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
         return redirect("yeast_recipes", type_id=yeast.type, slug=yeast.id, permanent=True)
 
     recipes_list = YeastAnalysis(yeast).random_recipes(24)
-    return render_recipes_list(recipes_list)
+    return render_recipes_list(request, recipes_list, "Yeasts")
 
 
 def group_by_type(yeasts: iter) -> list:

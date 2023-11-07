@@ -151,7 +151,7 @@ def recipes(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
         return redirect("fermentable_recipes", category_id=fermentable.category, slug=fermentable.id, permanent=True)
 
     recipes_list = FermentableAnalysis(fermentable).random_recipes(24)
-    return render_recipes_list(recipes_list)
+    return render_recipes_list(request, recipes_list, "Fermentables")
 
 
 def group_by_category(fermentables: iter) -> list:

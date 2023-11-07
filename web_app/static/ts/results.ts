@@ -1,6 +1,7 @@
 import {getRequest, RequestResult} from "./request"
 // @ts-ignore
 import * as Plotly from 'plotly.js/lib/index-cartesian'
+import {InteractionElement} from "./interaction";
 
 export class ChartConfig {
     responsive: boolean
@@ -177,6 +178,7 @@ class ChartNavigation {
 
 export class Recipes {
     private readonly container: HTMLElement
+    private recipesUrl: string;
 
     constructor(container: Element) {
         if (!(container instanceof HTMLElement)) {
@@ -187,8 +189,18 @@ export class Recipes {
         }
 
         this.container = container
-        const recipesUrl = this.container.dataset['recipes']
-        getRequest(recipesUrl, {}, this.handleResponse.bind(this))
+        this.recipesUrl = this.container.dataset['recipes']
+        this.loadData()
+    }
+
+    private loadData() {
+        this.displayLoading()
+        getRequest(this.recipesUrl, {}, this.handleResponse.bind(this))
+    }
+
+    private displayLoading() {
+        this.container.classList.add('chart-loading')
+        this.container.innerHTML = `<span></span>`
     }
 
     private handleResponse(response: RequestResult) {
@@ -203,26 +215,10 @@ export class Recipes {
     }
 
     private handleRenderChart(response: RequestResult) {
-        this.container.innerHTML = ''
-        const data = response.json<Array<RecipeData>>()
-        let lis: HTMLElement[] = []
-        data.forEach(function (item: RecipeData) {
-            const title = document.createTextNode(null !== item.name ? item.name : 'Unknown')
-            const li = document.createElement('li')
-            const a = document.createElement('a')
-            a.appendChild(title)
-            a.href = item.url
-            li.appendChild(a)
-            if (null !== item.author) {
-                li.append(document.createTextNode(' by '+item.author))
-            }
-            lis.push(li)
-        });
-
-        const ul = document.createElement('ul')
-        ul.classList.add('column-list-wide')
-        ul.append(...lis)
-        this.container.append(ul)
+        this.container.innerHTML = response.data
+        const reloadButton = this.container.querySelector("[data-reload]")
+        new InteractionElement(reloadButton)
+        reloadButton.addEventListener("click", this.loadData.bind(this))
     }
 
     private handleNoData() {

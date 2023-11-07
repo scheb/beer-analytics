@@ -1,0 +1,12 @@
+<ul class="column-list-wide">
+    {% for recipe in recipes %}
+        <li>
+            {% if recipe.source %}
+                <a href="{{ recipe.url }}" target="_blank"><img src="{{ recipe.source.icon }}" title="{{ recipe.source.name }}" alt="{{ recipe.source.name }} Icon" width="16" height="16" class="align-middle"/></a>
+            {% endif %}
+            <a href="{{ recipe.url }}" target="_blank">{{ recipe.name }}</a>
+            {% if recipe.author %}<small><span class="text-muted"> by</span> {{ recipe.author }}</small>{% endif %}
+        </li>
+    {% endfor %}
+</ul>
+<p class="mt-3 mb-0 text-center"><button class="btn bg-light" data-reload="true" data-interaction="{{ section_name }}:Reload Recipes">🤔 Need more inspiration? 🍺</button></p>

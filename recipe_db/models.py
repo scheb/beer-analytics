@@ -1127,3 +1127,11 @@ class RecipeYeastExtra(models.Model):
     yeast = models.ForeignKey(RecipeYeast, on_delete=models.CASCADE)
     key = models.CharField(max_length=255, default=None, blank=True, null=True)
     value = models.TextField(default=None, blank=True, null=True)
+
+
+class SourceInfo(models.Model):
+    source_id = models.CharField(max_length=32)
+    name = models.CharField(max_length=128)
+    icon = models.CharField(max_length=10240, default=None, blank=True, null=True)
+    page_url = models.CharField(max_length=1024, default=None, blank=True, null=True)
+    recipe_url = models.CharField(max_length=1024, default=None, blank=True, null=True)

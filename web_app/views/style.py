@@ -115,7 +115,7 @@ def category_recipes(request: HttpRequest, category_slug: str) -> HttpResponse:
         return redirect("style_category_recipes", category_slug=style.category.slug, permanent=True)
 
     recipes_list = StyleAnalysis(style).random_recipes(24)
-    return render_recipes_list(recipes_list)
+    return render_recipes_list(request, recipes_list, "Styles")
 
 
 @cache_page(0)
@@ -128,7 +128,7 @@ def recipes(request: HttpRequest, slug: str, category_slug: str) -> HttpResponse
         return redirect("style_recipes", category_slug=style.category.slug, slug=style.slug, permanent=True)
 
     recipes_list = StyleAnalysis(style).random_recipes(24)
-    return render_recipes_list(recipes_list)
+    return render_recipes_list(request, recipes_list, "Styles")
 
 
 def display_chart(request: HttpRequest, style: Style, chart_type: str, format: str) -> HttpResponse:
