@@ -35,10 +35,18 @@ def render_recipes_list(request: HttpRequest, recipes: Iterable[Recipe], section
 
     recipes_list = []
     for recipe in recipes:
+        url = "#"
+        source = None
+        if recipe.source in sources:
+            source = sources[recipe.source]
+            if source.recipe_url is not None:
+                url = source.recipe_url.format(recipe.source_id)
+
         recipes_list.append({
             "name": recipe.name,
             "author": recipe.author,
-            "source": sources[recipe.source] if recipe.source in sources else None,
+            "source": source,
+            "url": url,
         })
 
     context = {
