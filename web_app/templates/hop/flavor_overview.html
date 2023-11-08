@@ -15,7 +15,7 @@
         <nav class="toc toc-align">
             <h2 class="toc-headline">Table of Contents</h2>
             <ol>
-                <li class="d-lg-none"><a href="#introduction" data-interaction="Hop Flavors:Click TOC:$label">Introduction</a></li>
+                <li class="d-lg-none"><a href="#profile" data-interaction="Hop Flavors:Click TOC:$label">Profile</a></li>
                 {% for category in categories %}
                     <li><a href="#flavor-{{ category.id }}" data-interaction="Hop Flavors:Click TOC:$label">{{ category.name }}{% if category.id != 'other' %} Flavors{% endif %}</a>
                 {% endfor %}
@@ -23,8 +23,8 @@
         </nav>
 
         <h2 class="d-lg-none">
-            <a href="#introduction" id="introduction" class="anchor"><span></span></a>
-            Introduction
+            <a href="#profile" id="introduction" class="anchor"><span></span></a>
+            Profile
         </h2>
         {% include "./descriptions/flavors.html" %}
     </section>
