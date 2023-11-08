@@ -42,7 +42,6 @@ export class InteractionElement {
         }
 
         element.addEventListener("click", () => {
-            console.log("clicked")
             trackInteraction(this.category, this.action, this.name)
         })
     }
