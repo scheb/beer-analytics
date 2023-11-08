@@ -222,10 +222,16 @@ export class Recipes {
     }
 
     private handleRenderChart(response: RequestResult) {
+        this.container.style.height = null
         this.container.innerHTML = response.data
         const reloadButton = this.container.querySelector("[data-reload]")
         new InteractionElement(reloadButton)
-        reloadButton.addEventListener("click", this.loadData.bind(this))
+        reloadButton.addEventListener("click", this.onReloadClicked.bind(this))
+    }
+
+    private onReloadClicked() {
+        this.container.style.height = this.container.clientHeight+'px'
+        this.loadData()
     }
 
     private handleNoData() {
