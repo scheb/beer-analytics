@@ -1,5 +1,5 @@
 import {DetailList} from "./lists"
-import {ChartContainer, Recipes} from "./results"
+import {ChartContainer, RecipesContainer} from "./results"
 import {SearchBox} from "./search"
 import {Collapse, Tab} from "bootstrap"
 import {Analyzer} from "./filtering";
@@ -30,7 +30,7 @@ document.querySelectorAll("[data-chart]")
 
 // Init recipes lists
 document.querySelectorAll("[data-recipes]")
-    .forEach(recipesNode => new Recipes(recipesNode))
+    .forEach(recipesNode => new RecipesContainer(recipesNode))
 
 // Init search boxes
 document.querySelectorAll("form[data-search-target]")

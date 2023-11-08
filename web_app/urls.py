@@ -28,6 +28,7 @@ urlpatterns = [
     path("analyze/count.json", analyze.count, name="analyze_count"),
     path("analyze/entities.json", analyze.get_entities, name="analyze_entities"),
     path("analyze/charts/<str:chart_type>.json", analyze.chart, name="analyze_chart"),
+    path("analyze/recipes/random.inc", analyze.recipes, name="analyze_recipes"),
 
     path("styles/", style.overview, name="style_overview"),
     path("styles/<str:category_slug>/", style.category, name="style_category"),

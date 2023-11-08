@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
 
-from recipe_db.analytics.recipe import RecipesCountAnalysis
+from recipe_db.analytics.recipe import RecipesCountAnalysis, RecipesListAnalysis
 from recipe_db.analytics.scope import RecipeScope, HopScope, FermentableScope, YeastScope
 from recipe_db.etl.format.parser import int_or_none
 from recipe_db.models import Style, Hop, Fermentable, Yeast
@@ -14,7 +14,7 @@ from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.analyze import AnalyzeChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.meta import PageMeta
-from web_app.views.utils import render_chart, FORMAT_JSON
+from web_app.views.utils import render_chart, FORMAT_JSON, render_recipes_list
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
@@ -43,6 +43,14 @@ def chart(request: HttpRequest, chart_type: str) -> HttpResponse:
         raise Http404("Unknown chart type %s." % chart_type)
 
     return render_chart(chart, FORMAT_JSON)
+
+
+@cache_page(0)
+def recipes(request: HttpRequest) -> HttpResponse:
+    recipes_scope = get_scope(request)
+    analysis = RecipesListAnalysis(recipes_scope)
+    recipes_list = analysis.random(24)
+    return render_recipes_list(request, recipes_list, "Analyze")
 
 
 def get_scope(request: HttpRequest) -> RecipeScope:

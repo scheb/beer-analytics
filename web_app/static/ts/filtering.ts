@@ -20,7 +20,7 @@ import {
     Ingredients
 } from "./data";
 import {getRequest, RequestResult} from "./request";
-import {Chart, ChartConfig} from "./results";
+import {Chart, ChartConfig, Recipes} from "./results";
 import {trackInteraction} from "./interaction";
 
 class MinMaxValue {
@@ -474,7 +474,7 @@ class IngredientSelectUi {
 class ResultUi {
     private analyzerState: AnalyzerState
     private recipeCountUi: RecipeCountUi
-    private chartUis: Array<ChartUi> = new Array<ChartUi>()
+    private chartUis: Array<WidgetUi> = new Array<WidgetUi>()
     private resultsContainer: HTMLElement
 
     constructor(analyzerState: AnalyzerState) {
@@ -532,9 +532,17 @@ class ResultUi {
     }
 
     private createChart(chartType: string) {
-        const chartUi = new ChartUi(this.resultsContainer, this.analyzerState, chartType, () => {
-            this.onChartRemoved(chartType)
-        })
+        let chartUi
+        if (chartType == 'recipes') {
+            chartUi = new RecipesUi(this.resultsContainer, this.analyzerState, chartType, () => {
+                this.onChartRemoved(chartType)
+            })
+        } else {
+            chartUi = new ChartUi(this.resultsContainer, this.analyzerState, chartType, () => {
+                this.onChartRemoved(chartType)
+            })
+        }
+
         this.chartUis.push(chartUi)
         this.analyzerState.charts.add(chartType)
         trackInteraction('Analyzer', 'Add Chart', chartType)
@@ -581,13 +589,13 @@ class ResultUi {
     }
 }
 
-class ChartUi {
-    private readonly element: HTMLElement
-    private readonly analyzerState: AnalyzerState
+abstract class WidgetUi {
+    private readonly widgetContainer: HTMLElement
+    protected readonly contentContainer: HTMLElement;
+    protected readonly analyzerState: AnalyzerState
     public readonly chartType: string
     public readonly chartDefinition: ChartDefinition
     private readonly onRemove: Function
-    private readonly chart: Chart
 
     constructor(container: HTMLElement, analyzerState: AnalyzerState, chartType: string, onRemove: Function) {
         this.chartType = chartType
@@ -595,15 +603,28 @@ class ChartUi {
         this.analyzerState = analyzerState
         this.onRemove = onRemove
 
-        this.element = document.createElement('div')
-        this.element.id = 'chart-element-'+this.chartType
-        const anchor = 'chart-'+this.chartType
-        const chartUrl = '/analyze/charts/'+this.chartType+'.json'
+        this.widgetContainer = document.createElement('div')
+        this.createWidgetUi()
+        this.contentContainer = this.widgetContainer.querySelector('.chart-container')
+        this.widgetContainer.querySelector('button.btn-close').addEventListener('click', this.onClickCloseButton.bind(this))
+
+        // Infer to subclass to initialize the actual content
+        this.createContent()
+
+        // Add to results container
+        container.appendChild(this.widgetContainer)
+    }
+
+    private createWidgetUi(): void {
+        this.widgetContainer.id = 'chart-element-' + this.chartType
+
+        const anchor = this.getAnchorName()
         let subtitle = ''
         if (null !== this.chartDefinition.subtitle && undefined !== this.chartDefinition.subtitle) {
             subtitle = `<small class="text-muted">${this.chartDefinition.subtitle}</small>`
         }
-        this.element.innerHTML = `
+
+        this.widgetContainer.innerHTML = `
             <section class="card card-chart">
                 <div class="card-header">
                     <button type="button" class="btn-close mt-2 float-end" aria-label="Close"></button>
@@ -614,29 +635,11 @@ class ChartUi {
                 </div>
             </section>
         `
-        this.element.querySelector('button.btn-close').addEventListener('click', this.onClickCloseButton.bind(this))
-
-        // Add to results container
-        container.appendChild(this.element)
-
-        // Init Plotly
-        const plotlyContainer = this.element.querySelector('.chart-container')
-        this.chart = new Chart(plotlyContainer, chartUrl, new ChartConfig())
-
-        // Display recipes count based on current filter state
-        this.refresh()
     }
 
-    public refresh(): void {
-        const queryParams = new URLSearchParams()
-        this.analyzerState.filters.toQuery(queryParams)
-        this.chart.load(queryParamsToObject(queryParams.entries()))
-    }
+    protected abstract createContent(): void
 
-    public onClickCloseButton(): void {
-        this.element.remove()
-        this.onRemove()
-    }
+    protected abstract getAnchorName(): string
 
     private getChartDefinition(chartType: string): ChartDefinition {
         for (let chart of CHARTS) {
@@ -644,6 +647,52 @@ class ChartUi {
                 return chart
             }
         }
+    }
+
+    public onClickCloseButton(): void {
+        this.widgetContainer.remove()
+        this.onRemove()
+    }
+}
+
+class ChartUi extends WidgetUi {
+    private chart: Chart
+
+    protected createContent(): void {
+        // Init Plotly
+        const chartUrl = '/analyze/charts/'+this.chartType+'.json'
+        this.chart = new Chart(this.contentContainer, chartUrl, new ChartConfig())
+
+        // Loads the chart based on current filter state
+        this.refresh()
+    }
+
+    protected getAnchorName(): string {
+        return 'chart-'+this.chartType
+    }
+
+    public refresh(): void {
+        const queryParams = new URLSearchParams()
+        this.analyzerState.filters.toQuery(queryParams)
+        this.chart.load(queryParamsToObject(queryParams.entries()))
+    }
+}
+
+class RecipesUi extends WidgetUi {
+    private recipesList: Recipes
+
+    protected createContent(): void {
+        this.recipesList = new Recipes(this.contentContainer, this.getRecipesUrl())
+    }
+
+    protected getAnchorName(): string {
+        return 'recipes'
+    }
+
+    public getRecipesUrl(): string {
+        const queryParams = new URLSearchParams()
+        this.analyzerState.filters.toQuery(queryParams)
+        return '/analyze/recipes/random.inc?'+queryParams.toString()
     }
 }
 

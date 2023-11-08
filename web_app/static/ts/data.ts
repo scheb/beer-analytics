@@ -36,22 +36,25 @@ export interface ChartDefinition {
 
 export const CHARTS: ChartDefinition[] = [
     // Styles
-    {id: 'typical-styles-absolute', title: 'Styles Breakdown', subtitle: 'by Number of Recipes', category: 'Beer Styles', size: 'l'},
-    {id: 'typical-styles-relative', title: 'Styles Breakdown', subtitle: 'by Percent of Recipes', category: 'Beer Styles', size: 'l'},
+    {id: 'typical-styles-relative', title: 'Popularity within Beer Styles', category: 'Beer Styles', size: 'l'},
+    {id: 'typical-styles-absolute', title: 'Common Beer Styles', category: 'Beer Styles', size: 'l'},
     {id: 'popular-styles', title: 'Popular Styles', category: 'Beer Styles', size: 'm'},
     {id: 'trending-styles', title: 'Trending Styles', category: 'Beer Styles', size: 'm'},
 
-    // Fermentables
-    {id: 'popular-fermentables', title: 'Most Used Fermentables', category: 'Fermentables', size: 'm'},
-    {id: 'popular-fermentables-amount', title: 'Typical Amount of Fermentables', category: 'Fermentables', size: 'l'},
-
     // Hops
     {id: 'popular-hops', title: 'Most Used Hops', category: 'Hops', size: 'm'},
+    {id: 'popular-hops-amount', title: 'Hop Dosage', category: 'Hops', size: 'l'},
+    {id: 'hop-pairings', title: 'Hop Pairings', category: 'Hops', size: 'l'},
     {id: 'trending-hops', title: 'Trending Hops', category: 'Hops', size: 'm'},
-    {id: 'popular-hops-amount', title: 'Typical Amount of Hops', category: 'Hops', size: 'l'},
-    {id: 'hop-pairings', title: 'Common Hop Pairings', category: 'Hops', size: 'l'},
+
+    // Fermentables
+    {id: 'popular-fermentables', title: 'Most Used Fermentables', category: 'Fermentables', size: 'm'},
+    {id: 'popular-fermentables-amount', title: 'Amount of Fermentables', category: 'Fermentables', size: 'l'},
 
     // Yeasts
     {id: 'popular-yeasts', title: 'Most Used Yeasts', category: 'Yeasts', size: 'm'},
     {id: 'trending-yeasts', title: 'Trending Yeasts', category: 'Yeasts', size: 'm'},
+
+    // Recipes
+    {id: 'recipes', title: 'Brewing Recipes', category: 'Recipes', size: 's'},
 ]

@@ -176,10 +176,7 @@ class ChartNavigation {
     }
 }
 
-export class Recipes {
-    private readonly container: HTMLElement
-    private recipesUrl: string;
-
+export class RecipesContainer {
     constructor(container: Element) {
         if (!(container instanceof HTMLElement)) {
             return
@@ -188,8 +185,18 @@ export class Recipes {
             return
         }
 
+        const recipesUrl = container.dataset['recipes']
+        new Recipes(container, recipesUrl)
+    }
+}
+
+export class Recipes {
+    private readonly container: HTMLElement
+    private readonly recipesUrl: string;
+
+    constructor(container: HTMLElement, recipesUrl: string) {
         this.container = container
-        this.recipesUrl = this.container.dataset['recipes']
+        this.recipesUrl = recipesUrl
         this.loadData()
     }
 
