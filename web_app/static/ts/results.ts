@@ -22,12 +22,6 @@ interface PlotlyData {
     layout: Partial<Plotly.Layout>
 }
 
-interface RecipeData {
-    name?: string
-    author?: string
-    url: string
-}
-
 export class ChartContainer {
     constructor(container: Element) {
         if (!(container instanceof HTMLElement)) {
