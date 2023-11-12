@@ -765,6 +765,9 @@ class Recipe(models.Model):
     # Characteristics
     style = models.ForeignKey(Style, on_delete=models.SET_NULL, default=None, blank=True, null=True)
     associated_styles = models.ManyToManyField(Style, related_name="all_recipes")
+    associated_hops = models.ManyToManyField(Hop, related_name="all_recipes")
+    associated_fermentables = models.ManyToManyField(Fermentable, related_name="all_recipes")
+    associated_yeasts = models.ManyToManyField(Yeast, related_name="all_recipes")
     style_raw = models.CharField(max_length=255, default=None, blank=True, null=True)
     extract_efficiency = models.FloatField(
         default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0), MaxValueValidator(100)]
