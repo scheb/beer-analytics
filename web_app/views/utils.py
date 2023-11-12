@@ -42,7 +42,7 @@ def render_recipes_list(request: HttpRequest, recipes: Iterable[Recipe], section
                 url = source.recipe_url.format(recipe.source_id)
 
         recipes_list.append({
-            "name": recipe.name,
+            "name": recipe.name if not None else "Unnamed recipe",
             "author": recipe.author,
             "source": source,
             "url": url,

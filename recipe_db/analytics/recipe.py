@@ -38,7 +38,7 @@ class RecipesListAnalysis(RecipeLevelAnalysis):
         query = """
                 SELECT r.uid AS recipe_id
                 FROM recipe_db_recipe AS r
-                WHERE r.name IS NOT NULL {}
+                WHERE 1 {}
                 ORDER BY RAND()
                 LIMIT %s
             """.format(
