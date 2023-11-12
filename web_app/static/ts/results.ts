@@ -4,6 +4,7 @@ import * as Plotly from 'plotly.js/lib/index-cartesian'
 import {InteractionElement} from "./interaction"
 
 const NOT_ENOUGH_DATA_TEXT = "Not enough data"
+const MAX_RETRIES = 2
 
 export class ChartConfig {
     responsive: boolean
@@ -74,6 +75,7 @@ export class Chart {
     private readonly chartConfig: ChartConfig
     private currentRequest: any
     private query: object;
+    private retries: number = 0
 
     constructor(container: Element, chartUrl: string, chartConfig: ChartConfig) {
         if (!(container instanceof HTMLElement)) {
@@ -98,6 +100,11 @@ export class Chart {
 
     private reload() {
         this.load(this.query)
+    }
+
+    private retry() {
+        ++this.retries
+        this.reload()
     }
 
     private displayLoading() {
@@ -128,7 +135,7 @@ export class Chart {
     }
 
     private handleFailedLoadingData() {
-        renderFailedLoadingData(this.container, this.reload.bind(this))
+        renderFailedLoadingData(this.container, this.retries < MAX_RETRIES ? this.retry.bind(this) : null)
     }
 }
 
@@ -193,6 +200,7 @@ export class RecipesContainer {
 export class Recipes {
     private readonly container: HTMLElement
     private readonly recipesUrl: string;
+    private retries: number = 0
 
     constructor(container: HTMLElement, recipesUrl: string) {
         this.container = container
@@ -203,6 +211,11 @@ export class Recipes {
     private loadData() {
         this.displayLoading()
         getRequest(this.recipesUrl, {}, this.handleResponse.bind(this))
+    }
+
+    private retry() {
+        ++this.retries
+        this.loadData()
     }
 
     private displayLoading() {
@@ -239,7 +252,7 @@ export class Recipes {
     }
 
     private handleFailedLoadingData() {
-        renderFailedLoadingData(this.container, this.loadData.bind(this))
+        renderFailedLoadingData(this.container, this.retries < MAX_RETRIES ? this.retry.bind(this) : null)
     }
 }
 
@@ -250,9 +263,13 @@ function renderNoData(container: HTMLElement, label: string) {
 }
 
 
-function renderFailedLoadingData(container: HTMLElement, retryCallback: Function) {
+function renderFailedLoadingData(container: HTMLElement, retryCallback: Function|null) {
     container.classList.add('chart-no-data')
-    container.innerHTML = `<p>Failed loading data. Sorry for inconvenience!</p><p class="mt-2"><button class="btn btn-sm bg-light" data-retry="true">Try again?</button></p>`
+    let html = `<p>Failed loading data. Sorry for inconvenience!</p>`
+    if (retryCallback != null) {
+        html += `<p class="mt-2"><button class="btn btn-sm bg-light" data-retry="true">Try again?</button></p>`
+    }
+    container.innerHTML = html
     container.querySelector("[data-retry]").addEventListener("click", () => {
         retryCallback()
     })
