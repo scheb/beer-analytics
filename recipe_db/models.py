@@ -838,6 +838,14 @@ class Recipe(models.Model):
     def __str__(self):
         return self.uid
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['ibu']),
+            models.Index(fields=['abv']),
+            models.Index(fields=['og']),
+            models.Index(fields=['srm']),
+        ]
+
 
 class RecipeFermentable(models.Model):
     BOIL = "boil"
