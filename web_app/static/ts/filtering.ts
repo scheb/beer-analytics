@@ -369,7 +369,7 @@ class SliderUi {
             }.bind(this),
         })
         rangeSlider.appendTo(container)
-        rangeSlider.addEventListener('change', delay(this.onChange.bind(this), 500))
+        rangeSlider.addEventListener('changed', delay(this.onChange.bind(this), 1000))
     }
 
     private formatNumber(value: number, factor: number): string {
