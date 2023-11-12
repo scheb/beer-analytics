@@ -844,6 +844,7 @@ class Recipe(models.Model):
             models.Index(fields=['abv']),
             models.Index(fields=['og']),
             models.Index(fields=['srm']),
+            models.Index(fields=['created']),
         ]
 
 
