@@ -145,5 +145,5 @@ def get_entities(request: HttpRequest) -> HttpResponse:
         "styles": list(map(lambda s: {"id": s.id, "name": s.name, "parent": s.parent_style_name}, styles)),
         "hops": list(map(lambda h: {"id": h.id, "name": h.name}, hops)),
         "fermentables": list(map(lambda f: {"id": f.id, "name": f.name}, fermentables)),
-        "yeasts": list(sorted(map(lambda y: {"id": y.id, "name": y.full_name}, yeasts), key=lambda x: x['name'])),
+        "yeasts": list(sorted(map(lambda y: {"id": y.id, "name": y.full_name_incl_product_id}, yeasts), key=lambda x: x['name'])),
     })

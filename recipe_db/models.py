@@ -690,6 +690,13 @@ class Yeast(models.Model):
         return "{} · {}".format(self.lab, self.product_name)
 
     @property
+    def full_name_incl_product_id(self):
+        if self.has_extra_product_id:
+            return "{} · {} {}".format(self.lab, self.product_id, self.product_name)
+        else:
+            return self.full_name
+
+    @property
     def type_name(self) -> Optional[str]:
         if self.type is None:
             return None
