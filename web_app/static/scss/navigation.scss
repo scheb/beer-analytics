@@ -28,19 +28,19 @@ header {
 
         .logo {
             @include navbar-icon;
-            margin-right: 0.3rem;
             vertical-align: bottom;
             background-image: url('../img/embed/logo.svg');
             opacity: 0.9;
         }
     }
 
-    .navbar-expand-md .navbar-nav {
+    .navbar-expand .navbar-nav {
         .nav-link {
             box-sizing: content-box;
             height: 32px;
             padding-left: 0.5rem;
             padding-right: 0.5rem;
+            border-bottom: 3px solid transparent;
 
             @include media-breakpoint-up('md') {
                 padding-left: 0.75rem;
@@ -49,6 +49,7 @@ header {
 
             &.active {
                 background-color: $gray-700;
+                border-bottom: 3px solid $primary;
             }
         }
 
@@ -57,11 +58,6 @@ header {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                border-bottom: 3px solid transparent;
-
-                &.active {
-                    border-bottom: 3px solid $primary;
-                }
             }
         }
     }
@@ -108,7 +104,6 @@ footer {
 
 .nav-icon {
     @include navbar-icon;
-    margin-right: 0.5rem;
     vertical-align: middle;
     opacity: 0.8;
     transition: opacity 0.15s ease-in-out;
