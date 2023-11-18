@@ -24,29 +24,23 @@
 
 <header class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap shadow">
     <nav class="container-fluid navbar-expand p-0">
-        <a class="navbar-brand col-md-3 col-lg-2" href="/"><span class="logo"></span><span class="d-none d-sm-inline ms-1">Beer Analytics</span></a>
-        <button class="navbar-toggler d-md-none ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar"
-                aria-controls="sidebar" aria-expanded="false" aria-label="Toggle filters" title="Toggle filters">
-            <span class="navbar-filter-icon"></span>
-        </button>
-        <!--
-        <button class="navbar-toggler d-md-none ms-1 me-3" type="button" data-bs-toggle="collapse" data-bs-target="#top-navigation"
-                aria-controls="top-navigation" aria-expanded="false" aria-label="Toggle navigation" title="Toggle navigation">
-            <span class="navbar-burger-icon"></span>
-        </button>
-        -->
+        <a class="navbar-brand col-md-3 col-lg-2 d-none d-md-block" href="/"><span class="logo"></span><span class="d-none d-sm-inline ms-1">Beer Analytics</span></a>
         {% load web_app %}
         {% with request.resolver_match.url_name as url_name %}
         <div id="top-navigation" class="navbar-collapse">
             <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link{% if url_name|startswith:'style' %} active{% endif %}" href="{% url "style_overview" %}"><span class="nav-icon icon-beer"></span><span class="d-none d-md-inline ms-2">Beer Styles</span></a></li>
-                <li class="nav-item"><a class="nav-link{% if url_name|startswith:'fermentable' %} active{% endif %}" href="{% url "fermentable_overview" %}"><span class="nav-icon icon-fermentable"></span><span class="d-none d-md-inline ms-2">Fermentables</span></a></li>
-                <li class="nav-item"><a class="nav-link{% if url_name|startswith:'hop' %} active{% endif %}" href="{% url "hop_overview" %}"><span class="nav-icon icon-hop"></span><span class="d-none d-md-inline ms-2">Hops</span></a></li>
-                <li class="nav-item"><a class="nav-link{% if url_name|startswith:'yeast' %} active{% endif %}" href="{% url "yeast_overview" %}"><span class="nav-icon icon-yeast"></span><span class="d-none d-md-inline ms-2">Yeasts</span></a></li>
-                <li class="nav-item"><a class="nav-link{% if url_name|startswith:'trend' %} active{% endif %}" href="{% url "trend_overview" "recent" %}"><span class="nav-icon icon-trend"></span><span class="d-none d-md-inline ms-2">Trends</span></a></li>
+                <li class="nav-item"><a class="nav-link{% if url_name|startswith:'style' %} active{% endif %}" href="{% url "style_overview" %}"><span class="nav-icon icon-beer"></span><span class="d-none d-sm-inline ms-2">Beer Styles</span></a></li>
+                <li class="nav-item"><a class="nav-link{% if url_name|startswith:'fermentable' %} active{% endif %}" href="{% url "fermentable_overview" %}"><span class="nav-icon icon-fermentable"></span><span class="d-none d-sm-inline ms-2">Fermentables</span></a></li>
+                <li class="nav-item"><a class="nav-link{% if url_name|startswith:'hop' %} active{% endif %}" href="{% url "hop_overview" %}"><span class="nav-icon icon-hop"></span><span class="d-none d-sm-inline ms-2">Hops</span></a></li>
+                <li class="nav-item"><a class="nav-link{% if url_name|startswith:'yeast' %} active{% endif %}" href="{% url "yeast_overview" %}"><span class="nav-icon icon-yeast"></span><span class="d-none d-sm-inline ms-2">Yeasts</span></a></li>
+                <li class="nav-item"><a class="nav-link{% if url_name|startswith:'trend' %} active{% endif %}" href="{% url "trend_overview" "recent" %}"><span class="nav-icon icon-trend"></span><span class="d-none d-sm-inline ms-2">Trends</span></a></li>
             </ul>
         </div>
         {% endwith %}
+        <button class="navbar-toggler d-block d-md-none ms-auto px-2 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar"
+                aria-controls="sidebar" aria-expanded="false" aria-label="Toggle filters" title="Toggle filters">
+            <span class="navbar-filter-icon"></span>
+        </button>
     </nav>
 </header>
 
