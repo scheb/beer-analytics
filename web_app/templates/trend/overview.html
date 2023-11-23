@@ -25,6 +25,9 @@
         <li class="nav-item">
             <a class="nav-link{% if period.value == 'seasonal' %} active" aria-current="page{% endif %}" href="{% url "trend_overview" "seasonal" %}">Seasonal Trends</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "trend_popular_hops" %}">Most Popular Hops</a>
+        </li>
     </ul>
 
     {% with chart_type="trending-hops" anchor="trending-hops" %}

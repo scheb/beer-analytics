@@ -4,12 +4,13 @@ from abc import ABC
 from enum import Enum
 from typing import Optional
 
+from recipe_db.analytics.hop import HopSearchAnalysis
 from recipe_db.analytics.recipe import RecipesPopularityAnalysis, RecipesTrendAnalysis
 from recipe_db.analytics.scope import RecipeScope, HopProjection, YeastProjection
 from recipe_db.analytics.spotlight.hop import HOP_FILTER_TO_USES
 from recipe_db.analytics.spotlight.yeast import YEAST_FILTER_TO_TYPES
 from web_app.charts.utils import Chart, ChartDefinition, NoDataException
-from web_app.plot import LinesChart
+from web_app.plot import LinesChart, BarChart
 
 
 class TrendChart(ChartDefinition, ABC):
@@ -63,6 +64,28 @@ class PopularHopsChart(TrendChart):
             df, "month", "recipes_percent", "hop", "Month/Year", "% of All Recipes"
         )
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
+
+
+class MostSearchedHopsChart(ChartDefinition, ABC):
+    def __init__(self, period: TrendPeriod, filter_param: Optional[str]) -> None:
+        pass
+
+    CHART_TITLE = "<b>Most searched hops</b>"
+    IMAGE_ALT = "Most searched hops"
+
+    def plot(self) -> Chart:
+        df = HopSearchAnalysis().get_most_searched_hops()
+        if len(df) == 0:
+            raise NoDataException()
+
+        figure = BarChart().plot(df, "hop", "volume", None, "Search Volume")
+        return Chart(figure, title=self.get_chart_title())
+
+    def get_chart_title(self) -> str:
+        return self.CHART_TITLE
+
+    def get_image_alt(self) -> str:
+        return self.IMAGE_ALT
 
 
 class TrendingYeastsChart(TrendChart):
@@ -167,6 +190,7 @@ class TrendChartFactory:
         popular_hops=PopularHopsChart,
         popular_yeasts=PopularYeastsChart,
         popular_styles=PopularStylesChart,
+        searched_hops=MostSearchedHopsChart,
     )
 
     @classmethod

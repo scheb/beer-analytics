@@ -8,7 +8,7 @@ from pandas import DataFrame
 from recipe_db.analytics import METRIC_PRECISION, lowerfence, q1, q3, upperfence
 from recipe_db.analytics.recipe import RecipeLevelAnalysis
 from recipe_db.analytics.scope import StyleProjection, HopProjection, HopScope
-from recipe_db.analytics.utils import remove_outliers, get_style_names_dict, get_hop_names_dict, db_query_fetch_dictlist
+from recipe_db.analytics.utils import remove_outliers, get_style_names_dict, get_hop_names_dict, db_query_fetch_dictlist, db_query_fetch_single
 from recipe_db.models import RecipeHop, Tag, IgnoredHop
 
 
@@ -307,3 +307,23 @@ class HopFlavorAnalysis:
         """
 
         return db_query_fetch_dictlist(query, [tag.id, tag.id])
+
+
+class HopSearchAnalysis:
+    def get_most_searched_hops(self) -> DataFrame:
+        max_volume = db_query_fetch_single("SELECT MAX(search_popularity) FROM recipe_db_hop")
+
+        query = """
+            SELECT
+                hops.name AS hop, hops.search_popularity AS volume
+            FROM recipe_db_hop AS hops
+            WHERE hops.search_popularity > 0
+            ORDER BY hops.search_popularity DESC
+            LIMIT 10
+        """
+
+        df = pd.read_sql(query, connection)
+        df['volume'] = (df['volume'] / max_volume * 100).round()
+
+        return df
+

@@ -1,11 +1,14 @@
+from datetime import datetime
+
 from django.http import HttpRequest, HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.views.decorators.cache import cache_page
 
+from recipe_db.models import Hop
 from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.trend import TrendChartFactory, TrendPeriod
 from web_app.charts.utils import NoDataException
-from web_app.meta import TrendMeta
+from web_app.meta import TrendMeta, PopularHopsMeta
 from web_app.views.utils import render_chart
 
 
@@ -57,3 +60,16 @@ def chart(request: HttpRequest, period: str, chart_type: str, format: str) -> Ht
         raise Http404("Unknown chart type %s." % chart_type)
 
     return render_chart(chart, format)
+
+
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
+def popular_hops(request: HttpRequest) -> HttpResponse:
+    meta = PopularHopsMeta().get_meta()
+    context = {
+        "meta": meta,
+        "month": datetime.now().strftime("%B %Y"),
+        "most_searched_hops": Hop.objects.filter(search_popularity__gt=0).order_by('-search_popularity')[:6],
+        "most_used_hops": Hop.objects.filter(recipes_count__gt=0).order_by('-recipes_count')[:6],
+    }
+
+    return render(request, "trend/popular-hops.html", context)

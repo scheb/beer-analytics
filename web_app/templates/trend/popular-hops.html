@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load web_app %}
+
+{% block content %}
+    <header class="clearfix">
+        <h1>Most Popular Hops <small class="text-muted text-nowrap">by {{ month }}</small></h1>
+
+        <div class="d-flex flex-column d-lg-block">
+            <nav class="toc toc-align order-last">
+                <h2 class="toc-headline">Table of Contents</h2>
+                <ol>
+                    <li><a href="#most-searched-hops" class="">Most Searched Hops</a></li>
+                    <li><a href="#most-used-hops" class="">Most Used Hops</a></li>
+                </ol>
+            </nav>
+
+            <p>
+                Hops are the soul of beer, imparting unique flavors, aromas, and bitterness that define many of your favorite brews. In this list, we dive into the <strong>varieties that have captured the hearts of brewers and beer enthusiasts</strong> alike. Whether you're a seasoned brewer or a curious beer lover, our guide will help you to explore the nuances of these beloved hops, revealing why they're the top choices in breweries around the globe.
+            </p>
+        </div>
+    </header>
+
+    <section>
+        {% with chart_type="searched-hops" anchor="most-searched-hops" %}
+            <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Searched Hops</h2>
+            <p>
+                Google search volume can be a powerful tool for identifying trends and preferences in various fields,
+                including beer brewing. By analyzing the volume of searches related to different types of hops, we can gauge
+                which hops are currently the most popular among brewers and beer enthusiasts.
+            </p>
+            <div class="card card-chart">
+                <div class="card-body">
+                    <div id="chart-{{ chart_type }}" class="chart-m" data-chart="{% url "trend_chart" "seasonal" chart_type "json" %}">
+                        <noscript>
+                            <img src="{% url "trend_chart" "seasonal" chart_type "svg" %}" alt="{{ period|chart_image_alt:chart_type }}"/>
+                        </noscript>
+                    </div>
+                </div>
+            </div>
+        {% endwith %}
+
+        <div class="featured-hops">
+            <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
+                {% for hop in most_searched_hops %}
+                    <div class="col">{% include "hop/featured.html" with hop=hop %}</div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </section>
+
+    <section>
+        {% with chart_type="popular-hops" anchor="most-used-hops" %}
+            <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Used Hops</h2>
+            <p>
+                Another way of finding the most popular hops would be by analyzing the number of recipes published using
+                different hop varieties. By examining a large number of beer recipes, one can identify the most popular
+                hops among homebrewers.
+            </p>
+            <div class="card card-chart">
+                <div class="card-body">
+                    <div id="chart-{{ chart_type }}" class="chart-m" data-chart="{% url "trend_chart" "seasonal" chart_type "json" %}">
+                        <noscript>
+                            <img src="{% url "trend_chart" "seasonal" chart_type "svg" %}" alt="{{ period|chart_image_alt:chart_type }}"/>
+                        </noscript>
+                    </div>
+                </div>
+            </div>
+        {% endwith %}
+
+        <div class="featured-hops">
+            <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
+                {% for hop in most_used_hops %}
+                    <div class="col">{% include "hop/featured.html" with hop=hop %}</div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}

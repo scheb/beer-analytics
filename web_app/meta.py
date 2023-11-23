@@ -1,6 +1,7 @@
 import abc
 import html
 import re
+from datetime import datetime
 from functools import lru_cache
 from typing import List, Iterable, Optional, Tuple
 
@@ -430,6 +431,20 @@ class TrendMeta(PageMeta):
             description=description,
             keywords=["homebrewing", "trends", "hops", "yeasts", "styles"],
             url=reverse("trend_overview", kwargs={"period": self.period}),
+        )
+
+
+class PopularHopsMeta(PageMeta):
+    def get_meta(self) -> Meta:
+        month = datetime.now().strftime("%B %Y")
+        title = "Most Popular Hops by %s" % month
+        description = "Discover the most popular hops for homebrewing in %s. Stay at the forefront of brewing trends and create exceptional beers that stand out." % month
+
+        return Meta(
+            title=suffix_title(title),
+            description=description,
+            keywords=["homebrewing", "trends", "hops", "yeasts", "styles"],
+            url=reverse("trend_popular_hops"),
         )
 
 
