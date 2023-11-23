@@ -2,54 +2,40 @@
 {% load web_app %}
 
 {% block content %}
-    <h1>List of Hops</h1>
+    <h1>Hops for Brewing</h1>
     <section>
         <p>
-            Dive into the world of homebrewing with this extensive <strong>guide to hops varieties</strong>, analyzed for their usage in beer brewing. We have identified a total of <strong>{{ num_hops }} hops</strong> in brewing recipes. Certain hops have been rebranded or marketed under different names; we have cataloged them using their most well-known name.
+            Dive into the world of homebrewing with this extensive guide to hops varieties. Discover hop <strong>pairing suggestions, flavor profiles, and common beer styles</strong> to enhance your brewing experience.
         </p>
         <p>
-            Discover hop <strong>pairing suggestions, flavor profiles, and common beer styles</strong> to enhance your
-            brewing experience.
+            Hops are commonly classified into three main categories: <a href="{% url "hop_category" "aroma" %}">aroma hops</a> for adding distinctive fragrances, <a href="{% url "hop_category" "bittering" %}">bittering hops</a> for imparting robust bitterness, and <a href="{% url "hop_category" "dual-purpose" %}">dual-purpose hops</a> that offer both aroma and bittering qualities.
         </p>
+        <p>🌶️🍇🍌 <a href="{% url "hop_flavor_overview" %}">Discover hops by their flavor</a> 🍍🍓🍋</p>
     </section>
 
-    <form class="search" data-search-target="hops-overview" data-search-type="hops">
-        <p>
-            <label for="input-search" class="visually-hidden">Search hops</label>
-            <input type="search" class="search-term form-control" id="input-search" placeholder="Search hops (alternative names supported)"><br/>
-            🌶️🍇🍌 <a href="{% url "hop_flavor_overview" %}">Discover hops by their flavor</a> 🍍🍓🍋
-        </p>
-    </form>
+    {% include "./search_box.html" %}
 
-    <div id="hops-overview">
-        {% for category in categories %}
-            <section class="search-group">
-                <h2>
-                    <a href="#{{ category.id }}" id="{{ category.id }}" class="anchor"><span></span></a>
-                    <a href="{% url "hop_category" category.id %}" class="text-body">{{ category.name }} Hops</a>
-                </h2>
-                <div class="mb-4">
-                    {% if category.most_popular %}{% spaceless %}
-                        <figure class="badge-list search-hide">
-                            <figcaption>Most popular:</figcaption>
-                            <ol>
-                            {% for hop in category.most_popular %}
-                                <li><a class="badge" href="{{ hop|url }}">{{ hop.name }}</a></li>
-                            {% endfor %}
-                            </ol>
-                        </figure>
-                    {% endspaceless %}{% endif %}
+    <section id="hops-overview">
+        <h2>List of Hops</h2>
 
-                    <ul class="column-list">
-                        {% for hop in category.hops %}
-                            <li data-search-term="{{ hop.name }}{% if hop.alt_names %}, {{ hop.alt_names }}{% endif %}">
-                                {% if hop.is_popular %}<strong>{% endif %}<a href="{{ hop|url }}">{{ hop.name }}</a>{% if hop.is_popular %}</strong>{% endif %}
-                                <small class="recipes-count" title="Recipes">{{ hop.recipes_count }}</small>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </section>
-        {% endfor %}
-    </div>
+        {% if most_popular %}{% spaceless %}
+            <figure class="badge-list">
+                <figcaption>Most popular:</figcaption>
+                <ol>
+                {% for hop in most_popular %}
+                    <li><a class="badge" href="{{ hop|url }}">{{ hop.name }}</a></li>
+                {% endfor %}
+                </ol>
+            </figure>
+        {% endspaceless %}{% endif %}
+
+        <ul class="column-list">
+            {% for hop in hops %}
+                <li data-search-term="{{ hop.name }}{% if hop.alt_names %}, {{ hop.alt_names }}{% endif %}">
+                    {% if hop.is_popular %}<strong>{% endif %}<a href="{{ hop|url }}">{{ hop.name }}</a>{% if hop.is_popular %}</strong>{% endif %}
+                    <small class="recipes-count" title="Recipes">{{ hop.recipes_count }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
 {% endblock %}

@@ -9,34 +9,39 @@
         </ol>
     </nav>
 
-    <h1>{{ category_name }} Hops</h1>
+    <h1>{{ category_name }} Hops for Brewing</h1>
     {% if long_description %}
         <div class="detail-long-description">
             {% include long_description %}
         </div>
     {% endif %}
+    <p>🌶️🍇🍌 <a href="{% url "hop_flavor_overview" %}">Discover hops by their flavor</a> 🍍🍓🍋</p>
 
-    {% if most_popular %}{% spaceless %}
-        <figure class="badge-list">
-            <figcaption>Most popular:</figcaption>
-            <ol>
-            {% for hop in most_popular %}
-                <li><a class="badge" href="{{ hop|url }}">{{ hop.name }}</a></li>
-            {% endfor %}
-            </ol>
-        </figure>
-    {% endspaceless %}{% endif %}
+    {% include "./search_box.html" %}
 
-    <div class="hops-overview">
+    <section id="hops-overview">
+        <h2>List of {{ category_name }} Hops</h2>
+
+        {% if most_popular %}{% spaceless %}
+            <figure class="badge-list">
+                <figcaption>Most popular:</figcaption>
+                <ol>
+                {% for hop in most_popular %}
+                    <li><a class="badge" href="{{ hop|url }}">{{ hop.name }}</a></li>
+                {% endfor %}
+                </ol>
+            </figure>
+        {% endspaceless %}{% endif %}
+
         <ul class="column-list">
             {% for hop in hops %}
-                <li>
+                <li data-search-term="{{ hop.name }}{% if hop.alt_names %}, {{ hop.alt_names }}{% endif %}">
                     {% if hop.is_popular %}<strong>{% endif %}<a href="{{ hop|url }}">{{ hop.name }}</a>{% if hop.is_popular %}</strong>{% endif %}
                     <small class="recipes-count" title="Recipes">{{ hop.recipes_count }}</small>
                 </li>
             {% endfor %}
         </ul>
-    </div>
+    </section>
 
     <section class="featured-hops">
         <h2>Discover {{ category_name }} Hops</h2>

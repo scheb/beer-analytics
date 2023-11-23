@@ -15,23 +15,16 @@ from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, g
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def overview(request: HttpRequest) -> HttpResponse:
-    hop_categories = {}
-    categories = Hop.get_categories()
-    for category in categories:
-        most_popular = Hop.objects.filter(use=category).order_by("-search_popularity")[:5]
-        hop_categories[category] = {
-            "id": category,
-            "name": categories[category],
-            "hops": [],
-            "most_popular": most_popular,
-        }
-
+    most_popular = Hop.objects.order_by("-search_popularity")[:5]
     hops = Hop.objects.filter(recipes_count__gt=0).order_by("name")
-    for hop in hops:
-        hop_categories[hop.use]["hops"].append(hop)
 
     meta = HopOverviewMeta().get_meta()
-    context = {"categories": hop_categories.values(), "meta": meta, "num_hops": hops.count()}
+    context = {
+        "hops": hops,
+        "most_popular": most_popular,
+        "meta": meta,
+        "num_hops": hops.count()
+    }
 
     return render(request, "hop/overview.html", context)
 
