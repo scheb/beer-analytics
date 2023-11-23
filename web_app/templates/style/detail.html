@@ -6,16 +6,22 @@
 
     <article>
     <div class="detail-head clearfix">
-        <h1>{{ style.name }}{% if style.id|length <= 3 %} <small class="text-muted ms-2" title="BJCP ID">{{ style.id }}</small>{% endif %}</h1>
+        <header></header>
+            <h1>{{ style.name }}</h1>
+            {% if style.alt_names %}{% spaceless %}
+                <p class="detail-alias">
+                    Also known as:
+                    {% for alt_name in style.alt_names_list %}{% if forloop.counter0 %}, {% endif %}<em>{{ alt_name }}</em>{% endfor %}
+                </p>
+            {% endspaceless %}{% endif %}
+        </header>
 
         <dl class="detail-info">
             <dt>Recipes:</dt>
             <dd>{{ style.recipes_count }}</dd>
-            {% if style.alt_names %}
-            <dt>Includes:</dt>
-            {% for alt_name in style.alt_names_list %}
-            <dd class="badge">{{ alt_name }}</dd>
-            {% endfor %}
+            {% if style.id|length <= 3 %}
+            <dt>BJCP ID (2015):</dt>
+            <dd>{{ style.id }}</dd>
             {% endif %}
         </dl>
 

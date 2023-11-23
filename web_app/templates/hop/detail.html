@@ -12,7 +12,16 @@
 
     <article>
     <div class="detail-head clearfix">
-        <h1>{{ hop.name }} Hops</h1>
+        <header>
+            <h1>{{ hop.name }} Hops</h1>
+            {% if hop.alt_names %}{% spaceless %}
+                <p class="detail-alias">
+                    Also known as:
+                    {% for alt_name in hop.alt_names_list %}{% if forloop.counter0 %}, {% endif %}<em>{{ alt_name }}</em>{% endfor %}
+                </p>
+            {% endspaceless %}{% endif %}
+        </header>
+
         <dl class="detail-info">
             <dt>Recipes:</dt>
             <dd>{{ hop.recipes_count }}</dd>
@@ -27,13 +36,6 @@
             {% if hop.origin_countries|length > 0 %}
             <dt>Origin:</dt>
             <dd>{% for origin in hop.origin_countries %}{% if forloop.counter0 %}, {% endif %}{{ origin.flag }} {{ origin.name }}{% endfor %}</dd>
-            {% endif %}
-
-            {% if hop.alt_names %}
-            <dt>Includes:</dt>
-            {% for alt_name in hop.alt_names_list %}
-            <dd class="badge">{{ alt_name }}</dd>
-            {% endfor %}
             {% endif %}
         </dl>
 
@@ -74,7 +76,7 @@
                         <li><a href="{{ paired_hop|url }}" class="badge bg-secondary">{{ paired_hop.name }}</a></li>
                     {% endfor %}
                     </ul>
-                    <small class="ms-1">☞ <a href="#hop-pairings" data-interaction="Hops:Click See Dosage">See Dosage</a></small>
+                    <small class="ms-1 text-nowrap">☞ <a href="#hop-pairings" data-interaction="Hops:Click See Dosage">See Dosage</a></small>
                 </figure>
             {% endspaceless %}{% endif %}
 
