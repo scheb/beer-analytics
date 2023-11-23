@@ -16,9 +16,9 @@
             <dd>{{ hop.alpha_level|title }}</dd>
             {% endif %}
 
-            {% if hop.origin %}
+            {% if hop.origin_countries|length > 0 %}
             <dt>Origin:</dt>
-            <dd>{{ hop.origin_countries|join:", " }}</dd>
+            <dd>{% for origin in hop.origin_countries %}{% if forloop.counter0 %}, {% endif %}{{ origin.flag }} {{ origin.name }}{% endfor %}</dd>
             {% endif %}
         </dl>
 

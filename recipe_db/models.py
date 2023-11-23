@@ -47,6 +47,16 @@ def create_human_readable_id(value: str) -> str:
     return re.sub("[\\s\\/-]+", "-", re.sub("[^\\w\\s\\/-]", "", value)).lower()
 
 
+class OriginCountry:
+    def __init__(self, country_code: str, name: str, flag: str):
+        self.country_code = country_code
+        self.name = name
+        self.flag = flag
+
+    def __str__(self):
+        return self.name
+
+
 class Tag(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     name = models.CharField(max_length=255, default=None, blank=True, null=True)
@@ -403,29 +413,29 @@ class Hop(models.Model):
     BITTERING = "bittering"
     DUAL_PURPOSE = "dual-purpose"
 
-    COUNTRIES = (
-        ("ARG", "Argentina"),
-        ("AUS", "Australia"),
-        ("AUT", "Austria"),
-        ("BEL", "Belgium"),
-        ("CAN", "Canada"),
-        ("CHN", "China"),
-        ("CZH", "Czech Republic"),
-        ("DNK", "Denmark"),
-        ("FRA", "France"),
-        ("GBR", "Great Britain"),
-        ("GER", "Germany"),
-        ("JPN", "Japan"),
-        ("NZL", "New Zealand"),
-        ("POL", "Poland"),
-        ("RUS", "Russia"),
-        ("SER", "Serbia"),
-        ("SLO", "Slovenia"),
-        ("SWE", "Sweden"),
-        ("UKR", "Ukraine"),
-        ("USA", "United States"),
-        ("ZAF", "South Africa"),
-    )
+    COUNTRIES = {
+        "ARG": OriginCountry("ARG", "Argentina", "🇦🇷"),
+        "AUS": OriginCountry("AUS", "Australia", "🇦🇺"),
+        "AUT": OriginCountry("AUT", "Austria", "🇦🇹"),
+        "BEL": OriginCountry("BEL", "Belgium", "🇧🇪"),
+        "CAN": OriginCountry("CAN", "Canada", "🇨🇦"),
+        "CHN": OriginCountry("CHN", "China", "🇨🇳"),
+        "CZH": OriginCountry("CZH", "Czech Republic", "🇨🇿"),
+        "DNK": OriginCountry("DNK", "Denmark", "🇩🇰"),
+        "FRA": OriginCountry("FRA", "France", "🇫🇷"),
+        "GBR": OriginCountry("GBR", "Great Britain", "🇬🇧"),
+        "GER": OriginCountry("GER", "Germany", "🇩🇪"),
+        "JPN": OriginCountry("JPN", "Japan", "🇯🇵"),
+        "NZL": OriginCountry("NZL", "New Zealand", "🇳🇿"),
+        "POL": OriginCountry("POL", "Poland", "🇵🇱"),
+        "RUS": OriginCountry("RUS", "Russia", "🇷🇺"),
+        "SER": OriginCountry("SER", "Serbia", "🇷🇸"),
+        "SLO": OriginCountry("SLO", "Slovenia", "🇸🇮"),
+        "SWE": OriginCountry("SWE", "Sweden", "🇸🇪"),
+        "UKR": OriginCountry("UKR", "Ukraine", "🇺🇦"),
+        "USA": OriginCountry("USA", "United States", "🇺🇸"),
+        "ZAF": OriginCountry("ZAF", "South Africa", "🇿🇦"),
+    }
 
     USE_CHOICES = (
         (AROMA, "Aroma"),
@@ -497,22 +507,15 @@ class Hop(models.Model):
         return []
 
     @property
-    def origin_list(self):
+    def origin_codes(self):
         if self.origin is not None:
             items = self.origin.split(",")
             return list(map(lambda x: x.strip(), items))
         return []
 
     @property
-    def origin_countries(self):
-        names = dict(self.COUNTRIES)
-        return list(map(lambda o: names[o], self.origin_list))
-
-    @property
-    # Returns tuple of country code and country name
-    def origin_tuples(self) -> List[Tuple[str, str]]:
-        names = dict(self.COUNTRIES)
-        return list(map(lambda o: (o, names[o]), self.origin_list))
+    def origin_countries(self) -> List[OriginCountry]:
+        return list(map(lambda o: self.COUNTRIES[o], self.origin_codes))
 
     @property
     def alpha_level(self) -> Optional[str]:

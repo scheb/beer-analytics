@@ -8,7 +8,7 @@ from django.contrib.humanize.templatetags.humanize import intcomma
 from django.urls import reverse
 from meta.views import Meta
 
-from recipe_db.models import Hop, Yeast, Fermentable, Style, Tag, Recipe
+from recipe_db.models import Hop, Yeast, Fermentable, Style, Tag, Recipe, OriginCountry
 from web_app.views.utils import object_url
 
 OPEN_GRAPH_IMAGE_WIDTH = 1200
@@ -142,10 +142,10 @@ class HopMeta(PageMeta):
         )
 
         # Origin
-        origin = self.hop.origin_tuples
-        if len(origin) > 0:
-            countries_verb = " grown in " if len(self.hop.origin_tuples) > 1 else "from"
-            countries = comma_and(map(lambda c: country(c), self.hop.origin_tuples))
+        origins = self.hop.origin_countries
+        if len(origins) > 0:
+            countries_verb = " grown in " if len(origins) > 1 else "from"
+            countries = comma_and(map(lambda c: country(c), origins))
             text += " {} {}".format(
                 countries_verb,
                 countries,
@@ -441,9 +441,8 @@ def strong(value: str) -> str:
     return "<strong>%s</strong>" % value
 
 
-def country(country_tuple: tuple) -> str:
-    (code, name) = country_tuple
-    return '<strong class="country-{}">{}</strong>'.format(code.lower(), escape(name))
+def country(origin: OriginCountry) -> str:
+    return '<strong class="country-{}">{}</strong>'.format(origin.country_code.lower(), escape(origin.name))
 
 
 def escape(value: str) -> str:
