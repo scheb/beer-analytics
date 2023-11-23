@@ -15,7 +15,7 @@ FEATURED_HOPS = ['talus', 'nectaron', 'hbc-586', 'vic-secret']
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def home(request: HttpRequest) -> HttpResponse:
-    discover_hops = Hop.objects.filter(id__in=FEATURED_HOPS).order_by('-recipes_count')
+    discover_hops = Hop.objects.filter(id__in=FEATURED_HOPS).order_by('-search_popularity')
 
     recipes = Recipe.objects.count()
     meta = HomeMeta().get_meta()

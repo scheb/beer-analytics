@@ -15,7 +15,7 @@ from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, g
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def overview(request: HttpRequest) -> HttpResponse:
     categories = Style.objects.filter(parent_style=None).order_by("-recipes_count")
-    most_popular = Style.objects.exclude(parent_style=None).order_by("-recipes_count")[:5]
+    most_popular = Style.objects.exclude(parent_style=None).order_by("-search_popularity")[:5]
 
     meta = StyleOverviewMeta().get_meta()
     context = {"categories": categories, "most_popular": most_popular, "meta": meta}

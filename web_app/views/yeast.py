@@ -20,7 +20,7 @@ def overview(request: HttpRequest) -> HttpResponse:
     yeast_types = group_by_type(yeasts)
     for yeast_type in yeast_types:
         if len(yeast_type["yeasts"]) > 5:
-            yeast_type["most_popular"] = Yeast.objects.filter(type=yeast_type["id"]).order_by("-recipes_count")[:5]
+            yeast_type["most_popular"] = Yeast.objects.filter(type=yeast_type["id"]).order_by("-search_popularity")[:5]
         (yeast_type["yeasts"], yeast_type["labs"]) = group_by_lab(yeast_type["yeasts"])
 
     meta = YeastOverviewMeta().get_meta()
@@ -43,7 +43,7 @@ def type_overview(request: HttpRequest, type_id: str) -> HttpResponse:
 
     most_popular = []
     if yeasts_query.count() > 5:
-        most_popular = yeasts_query.order_by("-recipes_count")[:5]
+        most_popular = yeasts_query.order_by("-search_popularity")[:5]
 
     long_description_template = get_template_if_exists("yeast/descriptions/%s.html" % type_id)
     meta = YeastOverviewMeta((type_id, type_name, type_is_yeast)).get_meta()

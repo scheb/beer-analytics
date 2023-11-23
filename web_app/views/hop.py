@@ -18,7 +18,7 @@ def overview(request: HttpRequest) -> HttpResponse:
     hop_categories = {}
     categories = Hop.get_categories()
     for category in categories:
-        most_popular = Hop.objects.filter(use=category).order_by("-recipes_count")[:5]
+        most_popular = Hop.objects.filter(use=category).order_by("-search_popularity")[:5]
         hop_categories[category] = {
             "id": category,
             "name": categories[category],
@@ -56,7 +56,7 @@ def category(request: HttpRequest, category_id: str) -> HttpResponse:
     hops_query = Hop.objects.filter(use=category_id, recipes_count__gt=0)
 
     hops = hops_query.order_by("name")
-    most_popular = hops_query.order_by("-recipes_count")[:5]
+    most_popular = hops_query.order_by("-search_popularity")[:5]
     category_name = categories[category_id]
     long_description_template = get_template_if_exists("hop/descriptions/%s.html" % category_id)
 
@@ -122,7 +122,7 @@ def flavor_detail(request: HttpRequest, flavor_id: str) -> HttpResponse:
         raise Http404("Flavor doesn't have any data.")
 
     hops = hops_query.order_by("name")
-    most_popular = hops_query.order_by("-recipes_count")[:2]
+    most_popular = hops_query.order_by("-search_popularity")[:2]
     meta = HopFlavorMeta(tag_obj).get_meta()
     associated_aroma_tags = HopFlavorAnalysis().get_associated_flavors(tag_obj)
     long_description_template = get_template_if_exists("hop/descriptions/flavors/%s.html" % tag_obj.id)

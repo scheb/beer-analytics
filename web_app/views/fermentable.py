@@ -22,7 +22,7 @@ def overview(request: HttpRequest) -> HttpResponse:
         if len(fermentable_category["fermentables"]) > 5:
             fermentable_category["most_popular"] = Fermentable.objects.filter(
                 category=fermentable_category["id"]
-            ).order_by("-recipes_count")[:5]
+            ).order_by("-search_popularity")[:5]
         (fermentable_category["fermentables"], fermentable_category["types"]) = group_by_type(
             fermentable_category["fermentables"]
         )
@@ -46,7 +46,7 @@ def category(request: HttpRequest, category_id: str) -> HttpResponse:
 
     most_popular = []
     if fermentables_query.count() > 5:
-        most_popular = fermentables_query.order_by("-recipes_count")[:5]
+        most_popular = fermentables_query.order_by("-search_popularity")[:5]
 
     meta = FermentableOverviewMeta((category_id, category_name)).get_meta()
     long_description_template = get_template_if_exists("fermentable/descriptions/%s.html" % category_id)
