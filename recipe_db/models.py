@@ -51,6 +51,7 @@ class Tag(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     name = models.CharField(max_length=255, default=None, blank=True, null=True)
     category = models.CharField(max_length=32, default=None, blank=True, null=True)
+    search_popularity = models.IntegerField(default=None, blank=True, null=True)
 
     @property
     def accessible_hops_count(self) -> int:
@@ -82,6 +83,7 @@ class Style(models.Model):
     parent_style = models.ForeignKey("self", on_delete=models.SET_NULL, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
     alt_names_extra = models.CharField(max_length=1024, default=None, blank=True, null=True)
+    search_popularity = models.IntegerField(default=None, blank=True, null=True)
 
     # Metrics
     abv_min = models.FloatField(default=None, blank=True, null=True)
@@ -324,6 +326,7 @@ class Fermentable(models.Model):
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
     alt_names_extra = models.CharField(max_length=1024, default=None, blank=True, null=True)
     description = models.CharField(max_length=255, default=None, blank=True, null=True)
+    search_popularity = models.IntegerField(default=None, blank=True, null=True)
 
     # Calculated metrics from recipes
     recipes_count = models.IntegerField(default=None, blank=True, null=True)
@@ -441,6 +444,7 @@ class Hop(models.Model):
     substitutes = models.ManyToManyField("self", symmetrical=False, related_name="substitute_for_list")
     pairings = models.ManyToManyField("self", symmetrical=False, related_name="paired_with_list")
     aroma_tags = models.ManyToManyField(Tag)
+    search_popularity = models.IntegerField(default=None, blank=True, null=True)
 
     # Calculated metrics from recipes
     recipes_count = models.IntegerField(default=None, blank=True, null=True)
@@ -633,6 +637,7 @@ class Yeast(models.Model):
         default=None, blank=True, null=True, validators=[GreaterThanValueValidator(0)]
     )
     description = models.CharField(max_length=255, default=None, blank=True, null=True)
+    search_popularity = models.IntegerField(default=None, blank=True, null=True)
 
     # Calculated metrics from recipes
     recipes_count = models.IntegerField(default=None, blank=True, null=True)
