@@ -73,30 +73,34 @@
 
             <div class="col mb-3"></div>
 
-            <div class="col mb-3">
-                <h5>Recipe Analysis</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="{% url "style_overview" %}" class="nav-link p-0 text-muted">Beer Styles</a></li>
-                    <li class="nav-item mb-2"><a href="{% url "trend_overview" "recent" %}" class="nav-link p-0 text-muted">Trends</a></li>
-                    <li class="nav-item mb-2"><a href="{% url "analyze" %}" class="nav-link p-0 text-muted">Custom Analysis</a></li>
-                </ul>
-            </div>
+
 
             <div class="col mb-3">
-                <h5>Brewing Ingredients</h5>
+                <h5>Beer Brewing</h5>
                 <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="{% url "fermentable_overview" %}" class="nav-link p-0 text-muted">Fermentables</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "style_overview" %}" class="nav-link p-0 text-muted">Beer Styles</a></li>
                     <li class="nav-item mb-2"><a href="{% url "hop_overview" %}" class="nav-link p-0 text-muted">Hops</a></li>
                     <li class="nav-item mb-2"><a href="{% url "hop_flavor_overview" %}" class="nav-link p-0 text-muted">Hop Flavors</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "fermentable_overview" %}" class="nav-link p-0 text-muted">Fermentables</a></li>
                     <li class="nav-item mb-2"><a href="{% url "yeast_overview" %}" class="nav-link p-0 text-muted">Yeasts</a></li>
                     <li class="nav-item mb-2"><a href="{% url "yeast_type" "brett-bacteria" %}" class="nav-link p-0 text-muted">Brettanomyces &amp; Bacteria</a></li>
                 </ul>
             </div>
 
             <div class="col mb-3">
-                <h5>Beer Analytics</h5>
+                <h5>Data Analysis</h5>
                 <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="{% url "about" %}" class="nav-link p-0 text-muted">About</a></li>
+
+                    <li class="nav-item mb-2"><a href="{% url "trend_overview" "recent" %}" class="nav-link p-0 text-muted">Most Popular Hops</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "trend_overview" "recent" %}" class="nav-link p-0 text-muted">Trends in Homebrewing</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "analyze" %}" class="nav-link p-0 text-muted">Beer Recipe Analyzer</a></li>
+                </ul>
+            </div>
+
+            <div class="col mb-3">
+                <h5>About</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2"><a href="{% url "about" %}" class="nav-link p-0 text-muted">About Beer Analytics</a></li>
                     <li class="nav-item mb-2"><a href="{% url "updates" %}" class="nav-link p-0 text-muted">Recent Updates</a></li>
                     <li class="nav-item mb-2"><a href="https://github.com/scheb/beer-analytics" class="nav-link p-0 text-muted">Source Code on GitHub</a></li>
                     <li class="nav-item mb-2"><a href="{% url "legal" %}" class="nav-link p-0 text-muted">Legal Notice</a></li>
