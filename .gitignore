@@ -9,3 +9,4 @@
 *.pot
 *.pyc
 __pycache__/
+/google_api_client.json
