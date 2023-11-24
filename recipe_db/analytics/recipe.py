@@ -63,7 +63,7 @@ class RecipesCountAnalysis(RecipeLevelAnalysis):
         recipe_scope_filter = self.scope.get_filter()
         query = """
                 SELECT
-                    COUNT(r.uid) AS total_recipes
+                    COUNT(*) AS total_recipes
                 FROM recipe_db_recipe AS r
                 {join}
                 WHERE created IS NOT NULL {where}
@@ -85,7 +85,7 @@ class RecipesCountAnalysis(RecipeLevelAnalysis):
         query = """
                 SELECT
                     DATE(r.created) AS day,
-                    COUNT(r.uid) AS total_recipes
+                    COUNT(*) AS total_recipes
                 FROM recipe_db_recipe AS r
                 {join}
                 WHERE created IS NOT NULL {where}
@@ -107,7 +107,7 @@ class RecipesCountAnalysis(RecipeLevelAnalysis):
         query = """
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
-                    COUNT(r.uid) AS total_recipes
+                    COUNT(*) AS total_recipes
                 FROM recipe_db_recipe AS r
                 {join}
                 WHERE created IS NOT NULL {where}
@@ -166,7 +166,7 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     ras.style_id,
-                    COUNT(r.uid) AS recipes
+                    COUNT(*) AS recipes
                 FROM recipe_db_recipe AS r
                 {join}
                 JOIN recipe_db_recipe_associated_styles AS ras
@@ -419,7 +419,7 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
                 SELECT
                     DATE(r.created) AS day,
                     r.source,
-                    COUNT(r.uid) AS recipes_number
+                    COUNT(*) AS recipes_number
                 FROM recipe_db_recipe AS r
                 {join}
                 WHERE
@@ -499,7 +499,7 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     ras.style_id,
-                    COUNT(r.uid) AS recipes
+                    COUNT(*) AS recipes
                 FROM recipe_db_recipe AS r
                 {join}
                 JOIN recipe_db_recipe_associated_styles AS ras
