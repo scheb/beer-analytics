@@ -24,7 +24,7 @@ from recipe_db.analytics.utils import (
     Trending,
     months_ago, db_query_fetch_single,
 )
-from recipe_db.models import Recipe
+from recipe_db.models import Recipe, Style
 
 
 class RecipeLevelAnalysis(ABC):
@@ -123,6 +123,11 @@ class RecipesCountAnalysis(RecipeLevelAnalysis):
 
     def per_style(self) -> DataFrame:
         recipe_scope_filter = self.scope.get_filter()
+
+        # Optimization: No filter criteria given => use pre-calculated values from the styles
+        if not recipe_scope_filter.has_filter():
+            return self._per_style_total()
+
         query = """
                 SELECT
                     ras.style_id,
@@ -143,7 +148,18 @@ class RecipesCountAnalysis(RecipeLevelAnalysis):
                             + recipe_scope_filter.where_parameters)
         df = pd.read_sql(query, connection, params=query_parameters)
         df = df.set_index("style_id")
+        return df
 
+    def _per_style_total(self) -> DataFrame:
+        query = """
+                SELECT
+                    s.id AS style_id,
+                    s.recipes_count AS total_recipes
+                FROM recipe_db_style AS s
+            """
+
+        df = pd.read_sql(query, connection)
+        df = df.set_index("style_id")
         return df
 
 
