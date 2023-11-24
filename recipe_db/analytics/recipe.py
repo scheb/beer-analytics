@@ -22,7 +22,7 @@ from recipe_db.analytics.utils import (
     get_fermentable_names_dict,
     RollingAverage,
     Trending,
-    months_ago,
+    months_ago, db_query_fetch_single,
 )
 from recipe_db.models import Recipe
 
@@ -74,11 +74,7 @@ class RecipesCountAnalysis(RecipeLevelAnalysis):
 
         query_parameters = (recipe_scope_filter.join_parameters
                             + recipe_scope_filter.where_parameters)
-        df = pd.read_sql(query, connection, params=query_parameters)
-        if len(df) == 0:
-            return 0
-
-        return df["total_recipes"].values.tolist()[0]
+        return db_query_fetch_single(query, query_parameters)
 
     def per_day(self) -> DataFrame:
         recipe_scope_filter = self.scope.get_filter()
