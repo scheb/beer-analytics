@@ -11,7 +11,7 @@ from recipe_db.analytics.recipe import (
     RecipesTrendAnalysis,
     RecipesListAnalysis,
 )
-from recipe_db.analytics.scope import RecipeScope, StyleProjection, HopProjection, FermentableProjection
+from recipe_db.analytics.scope import RecipeScope, StyleSelection, HopSelection, FermentableSelection
 from recipe_db.analytics.spotlight.fermentable import FERMENTABLE_FILTER_TO_TYPES
 from recipe_db.analytics.spotlight.hop import HOP_FILTER_TO_USES
 from recipe_db.models import Style, Recipe
@@ -30,9 +30,9 @@ class StyleAnalysis:
 
     def popularity(self) -> DataFrame:
         analysis = RecipesPopularityAnalysis(RecipeScope())
-        projection = StyleProjection()
-        projection.styles = list(self.style.get_style_including_sub_styles())
-        return analysis.popularity_per_style(projection)
+        style_selection = StyleSelection()
+        style_selection.styles = list(self.style.get_style_including_sub_styles())
+        return analysis.popularity_per_style(style_selection)
 
     def metric_histogram(self, metric: str) -> DataFrame:
         analysis = RecipesMetricHistogram(self.recipe_scope)
@@ -43,18 +43,18 @@ class StyleAnalysis:
         return analysis.trending_hops()
 
     def popular_hops(self, use_filter: Optional[str] = None) -> DataFrame:
-        projection = HopProjection()
+        hop_selection = HopSelection()
         if use_filter in HOP_FILTER_TO_USES:
-            projection.uses = HOP_FILTER_TO_USES[use_filter]
+            hop_selection.uses = HOP_FILTER_TO_USES[use_filter]
         analysis = RecipesPopularityAnalysis(self.recipe_scope)
-        return analysis.popularity_per_hop(projection, num_top=8)
+        return analysis.popularity_per_hop(hop_selection, num_top=8)
 
     def popular_hops_amount(self, use_filter: Optional[str] = None) -> DataFrame:
-        projection = HopProjection()
+        hop_selection = HopSelection()
         if use_filter in HOP_FILTER_TO_USES:
-            projection.uses = HOP_FILTER_TO_USES[use_filter]
+            hop_selection.uses = HOP_FILTER_TO_USES[use_filter]
         analysis = HopAmountAnalysis(self.recipe_scope)
-        return analysis.per_hop(projection, num_top=8)
+        return analysis.per_hop(hop_selection, num_top=8)
 
     def hop_pairings(self) -> DataFrame:
         analysis = HopPairingAnalysis(self.recipe_scope)
@@ -69,18 +69,18 @@ class StyleAnalysis:
         return analysis.trending_yeasts()
 
     def popular_fermentables(self, type_filter: Optional[str] = None) -> DataFrame:
-        projection = FermentableProjection()
+        fermentable_selection = FermentableSelection()
         if type_filter in FERMENTABLE_FILTER_TO_TYPES:
-            (projection.categories, projection.types) = FERMENTABLE_FILTER_TO_TYPES[type_filter]
+            (fermentable_selection.categories, fermentable_selection.types) = FERMENTABLE_FILTER_TO_TYPES[type_filter]
         analysis = RecipesPopularityAnalysis(self.recipe_scope)
-        return analysis.popularity_per_fermentable(projection, num_top=8)
+        return analysis.popularity_per_fermentable(fermentable_selection, num_top=8)
 
     def popular_fermentables_amount(self, type_filter: Optional[str] = None) -> DataFrame:
-        projection = FermentableProjection()
+        fermentable_selection = FermentableSelection()
         if type_filter in FERMENTABLE_FILTER_TO_TYPES:
-            (projection.categories, projection.types) = FERMENTABLE_FILTER_TO_TYPES[type_filter]
+            (fermentable_selection.categories, fermentable_selection.types) = FERMENTABLE_FILTER_TO_TYPES[type_filter]
         analysis = FermentableAmountAnalysis(self.recipe_scope)
-        return analysis.per_fermentable(projection, num_top=8)
+        return analysis.per_fermentable(fermentable_selection, num_top=8)
 
     def random_recipes(self, num_recipes: int) -> Iterable[Recipe]:
         analysis = RecipesListAnalysis(self.recipe_scope)

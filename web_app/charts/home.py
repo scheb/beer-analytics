@@ -1,7 +1,7 @@
 from abc import ABC
 
 from recipe_db.analytics.recipe import RecipesPopularityAnalysis
-from recipe_db.analytics.scope import RecipeScope, HopProjection, StyleProjection
+from recipe_db.analytics.scope import RecipeScope, HopSelection, StyleSelection
 from recipe_db.models import Hop, Style
 from web_app.charts.utils import NoDataException, Chart, ChartDefinition
 from web_app.plot import LinesChart
@@ -14,10 +14,10 @@ class StylesPopularityChart(ChartDefinition, ABC):
         self.styles = Style.objects.filter(pk__in=self.IDS)
 
     def plot(self) -> Chart:
-        projection = StyleProjection()
-        projection.styles = self.styles
+        style_selection = StyleSelection()
+        style_selection.styles = self.styles
         analysis = RecipesPopularityAnalysis(RecipeScope())
-        df = analysis.popularity_per_style(projection)
+        df = analysis.popularity_per_style(style_selection)
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
@@ -55,9 +55,9 @@ class HopsPopularityChart(ChartDefinition, ABC):
 
     def plot(self) -> Chart:
         analysis = RecipesPopularityAnalysis(RecipeScope())
-        projection = HopProjection()
-        projection.hops = self.hops
-        df = analysis.popularity_per_hop(projection)
+        hop_selection = HopSelection()
+        hop_selection.hops = self.hops
+        df = analysis.popularity_per_hop(hop_selection)
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 

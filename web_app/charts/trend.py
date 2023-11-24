@@ -6,7 +6,7 @@ from typing import Optional
 
 from recipe_db.analytics.hop import HopSearchAnalysis
 from recipe_db.analytics.recipe import RecipesPopularityAnalysis, RecipesTrendAnalysis
-from recipe_db.analytics.scope import RecipeScope, HopProjection, YeastProjection
+from recipe_db.analytics.scope import RecipeScope, HopSelection, YeastSelection
 from recipe_db.analytics.spotlight.hop import HOP_FILTER_TO_USES
 from recipe_db.analytics.spotlight.yeast import YEAST_FILTER_TO_TYPES
 from web_app.charts.utils import Chart, ChartDefinition, NoDataException
@@ -33,12 +33,12 @@ class TrendingHopsChart(TrendChart):
     IMAGE_ALT = "Trending hops of the last %s months"
 
     def plot(self) -> Chart:
-        projection = HopProjection()
+        hop_selection = HopSelection()
         if self.filter_param in HOP_FILTER_TO_USES:
-            projection.uses = HOP_FILTER_TO_USES[self.filter_param]
+            hop_selection.uses = HOP_FILTER_TO_USES[self.filter_param]
 
         analysis = RecipesTrendAnalysis(RecipeScope())
-        df = analysis.trending_hops(projection, trend_window_months=self.period_months)
+        df = analysis.trending_hops(hop_selection, trend_window_months=self.period_months)
         if len(df) == 0:
             raise NoDataException()
 
@@ -51,12 +51,12 @@ class PopularHopsChart(TrendChart):
     IMAGE_ALT = "Popular hops of the last %s months"
 
     def plot(self) -> Chart:
-        projection = HopProjection()
+        hop_selection = HopSelection()
         if self.filter_param in HOP_FILTER_TO_USES:
-            projection.uses = HOP_FILTER_TO_USES[self.filter_param]
+            hop_selection.uses = HOP_FILTER_TO_USES[self.filter_param]
 
         analysis = RecipesPopularityAnalysis(RecipeScope())
-        df = analysis.popularity_per_hop(projection, num_top=8, top_months=self.period_months)
+        df = analysis.popularity_per_hop(hop_selection, num_top=8, top_months=self.period_months)
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 
@@ -93,12 +93,12 @@ class TrendingYeastsChart(TrendChart):
     IMAGE_ALT = "Trending yeasts of the last %s months"
 
     def plot(self) -> Chart:
-        projection = YeastProjection()
+        yeast_selection = YeastSelection()
         if self.filter_param in YEAST_FILTER_TO_TYPES:
-            projection.types = YEAST_FILTER_TO_TYPES[self.filter_param]
+            yeast_selection.types = YEAST_FILTER_TO_TYPES[self.filter_param]
 
         analysis = RecipesTrendAnalysis(RecipeScope())
-        df = analysis.trending_yeasts(projection, trend_window_months=self.period_months)
+        df = analysis.trending_yeasts(yeast_selection, trend_window_months=self.period_months)
         if len(df) == 0:
             raise NoDataException()
 
@@ -111,12 +111,12 @@ class PopularYeastsChart(TrendChart):
     IMAGE_ALT = "Popular yeasts of the last %s months"
 
     def plot(self) -> Chart:
-        projection = YeastProjection()
+        yeast_selection = YeastSelection()
         if self.filter_param in YEAST_FILTER_TO_TYPES:
-            projection.types = YEAST_FILTER_TO_TYPES[self.filter_param]
+            yeast_selection.types = YEAST_FILTER_TO_TYPES[self.filter_param]
 
         analysis = RecipesPopularityAnalysis(RecipeScope())
-        df = analysis.popularity_per_yeast(projection, num_top=8, top_months=self.period_months)
+        df = analysis.popularity_per_yeast(yeast_selection, num_top=8, top_months=self.period_months)
         if len(df) <= 1:  # 1, because a single data point is also meaningless
             raise NoDataException()
 

@@ -7,7 +7,7 @@ from pandas import DataFrame
 
 from recipe_db.analytics import METRIC_PRECISION, lowerfence, q1, q3, upperfence
 from recipe_db.analytics.recipe import RecipeLevelAnalysis
-from recipe_db.analytics.scope import StyleProjection, HopProjection, HopScope
+from recipe_db.analytics.scope import StyleSelection, HopSelection, HopScope
 from recipe_db.analytics.utils import remove_outliers, get_style_names_dict, get_hop_names_dict, db_query_fetch_dictlist, db_query_fetch_single
 from recipe_db.models import RecipeHop, Tag, IgnoredHop
 
@@ -76,13 +76,13 @@ class HopMetricHistogram(HopLevelAnalysis):
 class HopAmountAnalysis(RecipeLevelAnalysis):
     def per_hop(
         self,
-        projection: Optional[HopProjection] = None,
+        hop_selection: Optional[HopSelection] = None,
         num_top: Optional[int] = None,
     ) -> DataFrame:
-        projection = projection or HopProjection()
+        hop_selection = hop_selection or HopSelection()
 
         recipe_scope_filter = self.scope.get_filter()
-        hop_projection_filter = projection.get_filter()
+        hop_selection_filter = hop_selection.get_filter()
 
         query = """
             SELECT
@@ -98,12 +98,12 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
         """.format(
             join=recipe_scope_filter.join_statement,
             where1=recipe_scope_filter.where_statement,
-            where2=hop_projection_filter.where_statement,
+            where2=hop_selection_filter.where_statement,
         )
 
         query_parameters = (recipe_scope_filter.join_parameters
                             + recipe_scope_filter.where_parameters
-                            + hop_projection_filter.where_parameters)
+                            + hop_selection_filter.where_parameters)
         df = pd.read_sql(query, connection, params=query_parameters)
         if len(df) == 0:
             return df
@@ -126,13 +126,13 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
 
     def per_style(
         self,
-        projection: Optional[StyleProjection] = None,
+        style_selection: Optional[StyleSelection] = None,
         num_top: Optional[int] = None,
     ) -> DataFrame:
-        projection = projection or StyleProjection()
+        style_selection = style_selection or StyleSelection()
 
         recipe_scope_filter = self.scope.get_filter()
-        hop_projection_filter = projection.get_filter()
+        style_selection_filter = style_selection.get_filter()
 
         query = """
             SELECT
@@ -151,12 +151,12 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
         """.format(
             join=recipe_scope_filter.join_statement,
             where1=recipe_scope_filter.where_statement,
-            where2=hop_projection_filter.where_statement,
+            where2=style_selection_filter.where_statement,
         )
 
         query_parameters = (recipe_scope_filter.join_parameters
                             + recipe_scope_filter.where_parameters
-                            + hop_projection_filter.where_parameters)
+                            + style_selection_filter.where_parameters)
         df = pd.read_sql(query, connection, params=query_parameters)
         if len(df) == 0:
             return df
@@ -177,11 +177,11 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
         per_style["beer_style"] = per_style["style_id"].map(get_style_names_dict())
         return per_style
 
-    def per_use(self, projection: Optional[HopProjection] = None) -> DataFrame:
-        projection = projection or HopProjection()
+    def per_use(self, hop_selection: Optional[HopSelection] = None) -> DataFrame:
+        hop_selection = hop_selection or HopSelection()
 
         recipe_scope_filter = self.scope.get_filter()
-        hop_projection_filter = projection.get_filter()
+        hop_selection_filter = hop_selection.get_filter()
         query = """
             SELECT
                 rh.recipe_id,
@@ -197,12 +197,12 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
         """.format(
             join=recipe_scope_filter.join_statement,
             where1=recipe_scope_filter.where_statement,
-            where2=hop_projection_filter.where_statement,
+            where2=hop_selection_filter.where_statement,
         )
 
         query_parameters = (recipe_scope_filter.join_parameters
                             + recipe_scope_filter.where_parameters
-                            + hop_projection_filter.where_parameters)
+                            + hop_selection_filter.where_parameters)
         df = pd.read_sql(query, connection, params=query_parameters)
         if len(df) == 0:
             return df
@@ -224,43 +224,43 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
 
 
 class HopPairingAnalysis(RecipeLevelAnalysis):
-    def pairings(self, projection: Optional[HopProjection] = None) -> DataFrame:
-        projection = projection or HopProjection()
+    def pairings(self, hop_selection: Optional[HopSelection] = None) -> DataFrame:
+        hop_selection = hop_selection or HopSelection()
 
         recipe_scope_filter = self.scope.get_filter()
-        hop_projection_filter = projection.get_filter()
+        hop_selection_filter = hop_selection.get_filter()
         query = """
             SELECT
                 rh.recipe_id,
                 rh.kind_id,
                 rh.amount_percent,
-                (1 {in_projection}) AS in_projection
+                (1 {in_selection}) AS in_selection
             FROM recipe_db_recipe AS r
             {join}
             JOIN recipe_db_recipehop AS rh
                 ON r.uid = rh.recipe_id
             WHERE 1 {where}
         """.format(
-            in_projection=hop_projection_filter.where_statement,
+            in_selection=hop_selection_filter.where_statement,
             join=recipe_scope_filter.join_statement,
             where=recipe_scope_filter.where_statement,
         )
 
-        query_parameters = (hop_projection_filter.where_parameters
+        query_parameters = (hop_selection_filter.where_parameters
                             + recipe_scope_filter.join_parameters
                             + recipe_scope_filter.where_parameters)
         df = pd.read_sql(query, connection, params=query_parameters)
 
         # Aggregate amount per recipe
-        df = df.groupby(["recipe_id", "kind_id"]).agg({"amount_percent": "sum", "in_projection": "any"}).reset_index()
+        df = df.groupby(["recipe_id", "kind_id"]).agg({"amount_percent": "sum", "in_selection": "any"}).reset_index()
 
         # Create unique pairs per recipe
         pairs = pd.merge(df, df, on="recipe_id", suffixes=("_1", "_2"))
         pairs = pairs[pairs["kind_id_1"] < pairs["kind_id_2"]]
         pairs["pairing"] = pairs["kind_id_1"] + " " + pairs["kind_id_2"]
 
-        # Filter pairs for hops within projection
-        pairs = pairs[pairs["in_projection_1"] | pairs["in_projection_2"]]
+        # Filter pairs for hops within selection
+        pairs = pairs[pairs["in_selection_1"] | pairs["in_selection_2"]]
 
         # Filter only the top pairs
         top_pairings = pairs["pairing"].value_counts()[:12].index.values

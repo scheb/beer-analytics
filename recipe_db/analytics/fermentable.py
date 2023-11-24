@@ -7,7 +7,7 @@ from pandas import DataFrame
 
 from recipe_db.analytics import METRIC_PRECISION, lowerfence, q1, q3, upperfence
 from recipe_db.analytics.recipe import RecipeLevelAnalysis
-from recipe_db.analytics.scope import StyleProjection, FermentableProjection, FermentableScope
+from recipe_db.analytics.scope import StyleSelection, FermentableSelection, FermentableScope
 from recipe_db.analytics.utils import remove_outliers, get_style_names_dict, get_fermentable_names_dict, db_query_fetch_dictlist
 
 
@@ -75,13 +75,13 @@ class FermentableMetricHistogram(FermentableLevelAnalysis):
 class FermentableAmountAnalysis(RecipeLevelAnalysis):
     def per_fermentable(
         self,
-        projection: Optional[FermentableProjection] = None,
+        fermentable_selection: Optional[FermentableSelection] = None,
         num_top: Optional[int] = None,
     ) -> DataFrame:
-        projection = projection or FermentableProjection()
+        fermentable_selection = fermentable_selection or FermentableSelection()
 
         recipe_scope_filter = self.scope.get_filter()
-        fermentable_projection_filter = projection.get_filter()
+        fermentable_selection_filter = fermentable_selection.get_filter()
 
         query = """
                 SELECT
@@ -97,12 +97,12 @@ class FermentableAmountAnalysis(RecipeLevelAnalysis):
             """.format(
                 join=recipe_scope_filter.join_statement,
                 where1=recipe_scope_filter.where_statement,
-                where2=fermentable_projection_filter.where_statement
+                where2=fermentable_selection_filter.where_statement
             )
 
         query_params = (recipe_scope_filter.join_parameters
                         + recipe_scope_filter.where_parameters
-                        + fermentable_projection_filter.where_parameters)
+                        + fermentable_selection_filter.where_parameters)
         df = pd.read_sql(query, connection, params=query_params)
         if len(df) == 0:
             return df
@@ -125,13 +125,13 @@ class FermentableAmountAnalysis(RecipeLevelAnalysis):
 
     def per_style(
         self,
-        projection: Optional[StyleProjection] = None,
+        style_selection: Optional[StyleSelection] = None,
         num_top: Optional[int] = None,
     ) -> DataFrame:
-        projection = projection or StyleProjection()
+        style_selection = style_selection or StyleSelection()
 
         recipe_scope_filter = self.scope.get_filter()
-        style_projection_filter = projection.get_filter()
+        style_selection_filter = style_selection.get_filter()
 
         query = """
                 SELECT
@@ -150,12 +150,12 @@ class FermentableAmountAnalysis(RecipeLevelAnalysis):
             """.format(
                 join=recipe_scope_filter.join_statement,
                 where1=recipe_scope_filter.where_statement,
-                where2=style_projection_filter.where_statement
+                where2=style_selection_filter.where_statement
             )
 
         query_parameters = (recipe_scope_filter.join_parameters
                             + recipe_scope_filter.where_parameters
-                            + style_projection_filter.where_parameters)
+                            + style_selection_filter.where_parameters)
         df = pd.read_sql(query, connection, params=query_parameters)
         if len(df) == 0:
             return df

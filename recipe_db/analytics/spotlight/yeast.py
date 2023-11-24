@@ -8,7 +8,7 @@ from recipe_db.analytics.recipe import (
     RecipesTrendAnalysis,
     RecipesListAnalysis,
 )
-from recipe_db.analytics.scope import RecipeScope, YeastProjection, RecipeYeastCriteria
+from recipe_db.analytics.scope import RecipeScope, YeastSelection, RecipeYeastScope
 from recipe_db.models import Yeast, Recipe
 
 USE_FILTER_ALE = "ale"
@@ -29,15 +29,15 @@ class YeastAnalysis:
         self.yeast = yeast
 
         self.recipe_scope = RecipeScope()
-        self.recipe_scope.yeast_criteria = RecipeYeastCriteria()
-        self.recipe_scope.yeast_criteria.yeasts = [yeast]
+        self.recipe_scope.yeast_scope = RecipeYeastScope()
+        self.recipe_scope.yeast_scope.yeasts = [yeast]
 
-        self.yeast_projection = YeastProjection()
-        self.yeast_projection.yeasts = [yeast]
+        self.yeast_selection = YeastSelection()
+        self.yeast_selection.yeasts = [yeast]
 
     def popularity(self) -> DataFrame:
         analysis = RecipesPopularityAnalysis(RecipeScope())
-        return analysis.popularity_per_yeast(self.yeast_projection)
+        return analysis.popularity_per_yeast(self.yeast_selection)
 
     def common_styles_absolute(self) -> DataFrame:
         analysis = CommonStylesAnalysis(self.recipe_scope)

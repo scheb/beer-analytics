@@ -8,7 +8,7 @@ from recipe_db.analytics.fermentable import (
     FermentableMetricHistogram,
 )
 from recipe_db.analytics.recipe import RecipesPopularityAnalysis, CommonStylesAnalysis, RecipesListAnalysis
-from recipe_db.analytics.scope import RecipeScope, FermentableProjection, RecipeFermentableCriteria
+from recipe_db.analytics.scope import RecipeScope, FermentableSelection, RecipeFermentableScope
 from recipe_db.models import Fermentable, Recipe
 
 TYPE_FILTER_BASE = "base"
@@ -34,26 +34,26 @@ class FermentableAnalysis:
     def __init__(self, fermentable: Fermentable) -> None:
         self.fermentable = fermentable
 
-        self.fermentable_criteria = RecipeFermentableCriteria()
-        self.fermentable_criteria.fermentables = [fermentable]
+        self.fermentable_scope = RecipeFermentableScope()
+        self.fermentable_scope.fermentables = [fermentable]
 
         self.recipe_scope = RecipeScope()
-        self.recipe_scope.fermentable_criteria = self.fermentable_criteria
+        self.recipe_scope.fermentable_scope = self.fermentable_scope
 
-        self.fermentable_projection = FermentableProjection()
-        self.fermentable_projection.fermentables = [fermentable]
+        self.fermentable_selection = FermentableSelection()
+        self.fermentable_selection.fermentables = [fermentable]
 
     def metric_histogram(self, metric: str) -> DataFrame:
-        analysis = FermentableMetricHistogram(self.fermentable_criteria)
+        analysis = FermentableMetricHistogram(self.fermentable_scope)
         return analysis.metric_histogram(metric)
 
     def amount_range(self) -> DataFrame:
-        analysis = FermentableAmountRangeAnalysis(self.fermentable_criteria)
+        analysis = FermentableAmountRangeAnalysis(self.fermentable_scope)
         return analysis.amount_range()
 
     def popularity(self) -> DataFrame:
         analysis = RecipesPopularityAnalysis(RecipeScope())
-        return analysis.popularity_per_fermentable(self.fermentable_projection)
+        return analysis.popularity_per_fermentable(self.fermentable_selection)
 
     def amount_per_style(self) -> DataFrame:
         analysis = FermentableAmountAnalysis(self.recipe_scope)

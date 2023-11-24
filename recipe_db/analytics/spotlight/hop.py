@@ -9,7 +9,7 @@ from recipe_db.analytics.recipe import (
     RecipesTrendAnalysis,
     RecipesListAnalysis,
 )
-from recipe_db.analytics.scope import RecipeScope, HopProjection, RecipeHopCriteria
+from recipe_db.analytics.scope import RecipeScope, HopSelection, RecipeHopScope
 from recipe_db.models import Hop, Recipe, RecipeHop
 
 USE_FILTER_BITTERING = "bittering"
@@ -27,21 +27,21 @@ class HopAnalysis:
     def __init__(self, hop: Hop) -> None:
         self.hop = hop
 
-        self.hop_citeria = RecipeHopCriteria()
-        self.hop_citeria.hops = [hop]
+        self.hop_scope = RecipeHopScope()
+        self.hop_scope.hops = [hop]
 
         self.recipe_scope = RecipeScope()
-        self.recipe_scope.hop_criteria = self.hop_citeria
+        self.recipe_scope.hop_scope = self.hop_scope
 
-        self.hop_projection = HopProjection()
-        self.hop_projection.hops = [hop]
+        self.hop_selection = HopSelection()
+        self.hop_selection.hops = [hop]
 
     def metric_histogram(self, metric: str) -> DataFrame:
-        analysis = HopMetricHistogram(self.hop_citeria)
+        analysis = HopMetricHistogram(self.hop_scope)
         return analysis.metric_histogram(metric)
 
     def amount_range(self) -> DataFrame:
-        analysis = HopAmountRangeAnalysis(self.hop_citeria)
+        analysis = HopAmountRangeAnalysis(self.hop_scope)
         return analysis.amount_range()
 
     def usages(self) -> DataFrame:
@@ -49,11 +49,11 @@ class HopAnalysis:
 
     def popularity(self) -> DataFrame:
         analysis = RecipesPopularityAnalysis(RecipeScope())
-        return analysis.popularity_per_hop(self.hop_projection)
+        return analysis.popularity_per_hop(self.hop_selection)
 
     def amount_per_use(self) -> DataFrame:
         analysis = HopAmountAnalysis(RecipeScope())
-        return analysis.per_use(self.hop_projection)
+        return analysis.per_use(self.hop_selection)
 
     def amount_per_style(self) -> DataFrame:
         analysis = HopAmountAnalysis(self.recipe_scope)
@@ -69,7 +69,7 @@ class HopAnalysis:
 
     def pairings(self) -> DataFrame:
         analysis = HopPairingAnalysis(RecipeScope())
-        return analysis.pairings(self.hop_projection)
+        return analysis.pairings(self.hop_selection)
 
     def popular_yeasts(self) -> DataFrame:
         analysis = RecipesPopularityAnalysis(self.recipe_scope)

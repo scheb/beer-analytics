@@ -9,10 +9,10 @@ from pandas import DataFrame
 from recipe_db.analytics import METRIC_PRECISION, POPULARITY_START_MONTH, POPULARITY_CUT_OFF_DATE
 from recipe_db.analytics.scope import (
     RecipeScope,
-    StyleProjection,
-    YeastProjection,
-    HopProjection,
-    FermentableProjection,
+    StyleSelection,
+    YeastSelection,
+    HopSelection,
+    FermentableSelection,
 )
 from recipe_db.analytics.utils import (
     remove_outliers,
@@ -166,14 +166,14 @@ class RecipesCountAnalysis(RecipeLevelAnalysis):
 class RecipesPopularityAnalysis(RecipeLevelAnalysis):
     def popularity_per_style(
         self,
-        projection: Optional[StyleProjection] = None,
+        style_selection: Optional[StyleSelection] = None,
         num_top: Optional[int] = None,
         top_months: Optional[int] = None,
     ) -> DataFrame:
-        projection = projection or StyleProjection()
+        style_selection = style_selection or StyleSelection()
 
         recipe_scope_filter = self.scope.get_filter()
-        style_projection_filter = projection.get_filter()
+        style_selection_filter = style_selection.get_filter()
         query = """
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
@@ -190,13 +190,13 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
             """.format(
                 join=recipe_scope_filter.join_statement,
                 where1=recipe_scope_filter.where_statement,
-                where2=style_projection_filter.where_statement,
+                where2=style_selection_filter.where_statement,
             )
 
         query_parameters = (recipe_scope_filter.join_parameters
                             + [POPULARITY_CUT_OFF_DATE]
                             + recipe_scope_filter.where_parameters
-                            + style_projection_filter.where_parameters)
+                            + style_selection_filter.where_parameters)
         per_month = pd.read_sql(query, connection, params=query_parameters)
         if len(per_month) == 0:
             return per_month
@@ -232,14 +232,14 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
 
     def popularity_per_hop(
         self,
-        projection: Optional[HopProjection] = None,
+        hop_selection: Optional[HopSelection] = None,
         num_top: Optional[int] = None,
         top_months: Optional[int] = None,
     ) -> DataFrame:
-        projection = projection or HopProjection()
+        hop_selection = hop_selection or HopSelection()
 
         recipe_scope_filter = self.scope.get_filter()
-        hop_projection_filter = projection.get_filter()
+        hop_selection_filter = hop_selection.get_filter()
         query = """
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
@@ -256,13 +256,13 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
             """.format(
                 join=recipe_scope_filter.join_statement,
                 where1=recipe_scope_filter.where_statement,
-                where2=hop_projection_filter.where_statement,
+                where2=hop_selection_filter.where_statement,
             )
 
         query_parameters = (recipe_scope_filter.join_parameters
                             + [POPULARITY_CUT_OFF_DATE]
                             + recipe_scope_filter.where_parameters
-                            + hop_projection_filter.where_parameters)
+                            + hop_selection_filter.where_parameters)
         per_month = pd.read_sql(query, connection, params=query_parameters)
         if len(per_month) == 0:
             return per_month
@@ -298,13 +298,13 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
 
     def popularity_per_fermentable(
         self,
-        projection: Optional[FermentableProjection] = None,
+        fermentable_selection: Optional[FermentableSelection] = None,
         num_top: Optional[int] = None,
     ) -> DataFrame:
-        projection = projection or FermentableProjection()
+        fermentable_selection = fermentable_selection or FermentableSelection()
 
         recipe_scope_filter = self.scope.get_filter()
-        fermentable_projection_filter = projection.get_filter()
+        fermentable_selection_filter = fermentable_selection.get_filter()
         query = """
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
@@ -321,13 +321,13 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
             """.format(
                 join=recipe_scope_filter.join_statement,
                 where1=recipe_scope_filter.where_statement,
-                where2=fermentable_projection_filter.where_statement,
+                where2=fermentable_selection_filter.where_statement,
             )
 
         query_parameters = (recipe_scope_filter.join_parameters
                             + [POPULARITY_CUT_OFF_DATE]
                             + recipe_scope_filter.where_parameters
-                            + fermentable_projection_filter.where_parameters)
+                            + fermentable_selection_filter.where_parameters)
         per_month = pd.read_sql(query, connection, params=query_parameters)
         if len(per_month) == 0:
             return per_month
@@ -361,14 +361,14 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
 
     def popularity_per_yeast(
         self,
-        projection: Optional[YeastProjection] = None,
+        yeast_selection: Optional[YeastSelection] = None,
         num_top: Optional[int] = None,
         top_months: Optional[int] = None,
     ) -> DataFrame:
-        projection = projection or YeastProjection()
+        yeast_selection = yeast_selection or YeastSelection()
 
         recipe_scope_filter = self.scope.get_filter()
-        yeast_projection_filter = projection.get_filter()
+        yeast_selection_filter = yeast_selection.get_filter()
         query = """
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
@@ -385,13 +385,13 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
             """.format(
                 join=recipe_scope_filter.join_statement,
                 where1=recipe_scope_filter.where_statement,
-                where2=yeast_projection_filter.where_statement,
+                where2=yeast_selection_filter.where_statement,
             )
 
         query_parameters = (recipe_scope_filter.join_parameters
                             + [POPULARITY_CUT_OFF_DATE]
                             + recipe_scope_filter.where_parameters
-                            + yeast_projection_filter.where_parameters)
+                            + yeast_selection_filter.where_parameters)
         per_month = pd.read_sql(query, connection, params=query_parameters)
         if len(per_month) == 0:
             return per_month
@@ -559,12 +559,12 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
         smoothened["beer_style"] = smoothened["style_id"].map(get_style_names_dict())
         return smoothened
 
-    def trending_hops(self, projection: Optional[HopProjection] = None, trend_window_months: int = 24) -> DataFrame:
-        projection = projection or HopProjection()
+    def trending_hops(self, hop_selection: Optional[HopSelection] = None, trend_window_months: int = 24) -> DataFrame:
+        hop_selection = hop_selection or HopSelection()
         recipes_per_month = self._recipes_per_month_in_scope()
 
         recipe_scope_filter = self.scope.get_filter()
-        hop_projection_filter = projection.get_filter()
+        hop_selection_filter = hop_selection.get_filter()
         query = """
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
@@ -582,13 +582,13 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
             """.format(
                 join=recipe_scope_filter.join_statement,
                 where1=recipe_scope_filter.where_statement,
-                where2=hop_projection_filter.where_statement
+                where2=hop_selection_filter.where_statement
             )
 
         query_parameters = (recipe_scope_filter.join_parameters
                             + [POPULARITY_CUT_OFF_DATE]
                             + recipe_scope_filter.where_parameters
-                            + hop_projection_filter.where_parameters)
+                            + hop_selection_filter.where_parameters)
         per_month = pd.read_sql(query, connection, params=query_parameters)
         if len(per_month) == 0:
             return per_month
@@ -620,12 +620,12 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
         smoothened["hop"] = smoothened["kind_id"].map(get_hop_names_dict())
         return smoothened
 
-    def trending_yeasts(self, projection: Optional[YeastProjection] = None, trend_window_months: int = 24) -> DataFrame:
-        projection = projection or YeastProjection()
+    def trending_yeasts(self, yeast_selection: Optional[YeastSelection] = None, trend_window_months: int = 24) -> DataFrame:
+        yeast_selection = yeast_selection or YeastSelection()
         recipes_per_month = self._recipes_per_month_in_scope()
 
         recipe_scope_filter = self.scope.get_filter()
-        yeast_projection_filter = projection.get_filter()
+        yeast_selection_filter = yeast_selection.get_filter()
         query = """
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
@@ -643,13 +643,13 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
             """.format(
                 join=recipe_scope_filter.join_statement,
                 where1=recipe_scope_filter.where_statement,
-                where2=yeast_projection_filter.where_statement,
+                where2=yeast_selection_filter.where_statement,
             )
 
         query_parameters = (recipe_scope_filter.join_parameters
                             + [POPULARITY_CUT_OFF_DATE]
                             + recipe_scope_filter.where_parameters
-                            + yeast_projection_filter.where_parameters)
+                            + yeast_selection_filter.where_parameters)
         per_month = pd.read_sql(query, connection, params=query_parameters)
         if len(per_month) == 0:
             return per_month
