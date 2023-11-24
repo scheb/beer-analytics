@@ -1,11 +1,12 @@
 import {Slider, SliderChangeEventArgs, SliderTooltipEventArgs} from "@syncfusion/ej2-inputs";
 import {
+    ChangeEventArgs,
     CheckBoxSelection, DropDownList,
     FilteringEventArgs,
     MultiSelect,
     MultiSelectChangeEventArgs
 } from "@syncfusion/ej2-dropdowns";
-import {DataManager, UrlAdaptor, Query} from '@syncfusion/ej2-data';
+import {Query} from '@syncfusion/ej2-data';
 import {delay, groupBy, intersect, queryParamsToObject} from "./utils";
 import {
     ABV_RANGE,
@@ -16,7 +17,6 @@ import {
     OG_RANGE,
     SRM_RANGE,
     Style,
-    Hop,
     Ingredients
 } from "./data";
 import {getRequest, RequestResult} from "./request";
@@ -450,6 +450,7 @@ class IngredientSelectUi {
             fields: { text: 'name', value: 'id' },
             placeholder: 'Filter ' + ingredientName,
             allowFiltering: true,
+            showClearButton: true,
             filterBarPlaceholder: 'Search ' + ingredientName,
             filtering: function (e: FilteringEventArgs): void {
                 let query = new Query()
@@ -463,10 +464,12 @@ class IngredientSelectUi {
         select.addEventListener('change', this.onChange.bind(this))
     }
 
-    private onChange(evt: MultiSelectChangeEventArgs) {
-        if (evt.value instanceof Array) {
+    private onChange(evt: ChangeEventArgs) {
+        if (null == evt.value) {
+            this.state.setSelection([])
+        } else {
             // @ts-ignore
-            this.state.setSelection(evt.value)
+            this.state.setSelection([evt.value])
         }
     }
 }
