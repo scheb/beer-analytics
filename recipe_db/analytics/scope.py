@@ -2,8 +2,7 @@ from __future__ import annotations
 
 import abc
 import itertools
-from abc import ABC
-from typing import List, Optional, Tuple
+from typing import List, Optional
 
 from recipe_db.models import Style, Yeast, Hop, Fermentable
 
