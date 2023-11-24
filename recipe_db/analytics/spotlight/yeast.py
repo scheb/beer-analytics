@@ -8,7 +8,7 @@ from recipe_db.analytics.recipe import (
     RecipesTrendAnalysis,
     RecipesListAnalysis,
 )
-from recipe_db.analytics.scope import RecipeScope, YeastSelection, RecipeYeastScope
+from recipe_db.analytics.scope import RecipeScope, YeastSelection, YeastScope
 from recipe_db.models import Yeast, Recipe
 
 USE_FILTER_ALE = "ale"
@@ -28,10 +28,16 @@ class YeastAnalysis:
     def __init__(self, yeast: Yeast) -> None:
         self.yeast = yeast
 
-        self.recipe_scope = RecipeScope()
-        self.recipe_scope.yeast_scope = RecipeYeastScope()
-        self.recipe_scope.yeast_scope.yeasts = [yeast]
+        # For analysis on the yeast itself
+        self.yeast_scope = YeastScope()
+        self.yeast_scope.yeasts = [yeast]
 
+        # For analysis on recipes using the yeast
+        self.recipe_scope = RecipeScope()
+        self.recipe_scope.yeast_criteria = RecipeScope.YeastCriteria()
+        self.recipe_scope.yeast_criteria.yeasts = [yeast]
+
+        # For limiting an analysis result to the yeast
         self.yeast_selection = YeastSelection()
         self.yeast_selection.yeasts = [yeast]
 

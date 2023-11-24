@@ -58,6 +58,10 @@ class AbstractFilter(FilterInterface):
         return self._join_parameters
 
 
+class NoFilterCriteria(AbstractFilter):
+    pass
+
+
 class WhereFilterCriteria(AbstractFilter):
     def __init__(self, where_statement: str, where_parameters: list) -> None:
         super().__init__()
@@ -82,7 +86,7 @@ class WhereFilterCriteria(AbstractFilter):
         return WhereFilterCriteria("{} IN ({})".format(field, ",".join("%s" for _ in values)), values)
 
 
-class JoinFilterCriteria(FilterInterface):
+class JoinFilterCriteria(AbstractFilter):
     def __init__(self, join_statement: str, join_parameters: list) -> None:
         super().__init__()
         self._join_statement = join_statement
@@ -98,7 +102,8 @@ class CombinedFilter(FilterInterface):
         self.filters: List[FilterInterface] = []
 
     def append(self, filter: FilterInterface):
-        self.filters.append(filter)
+        if filter.has_filter():  # Do not add empty filters
+            self.filters.append(filter)
 
     def has_filter(self):
         return len(self.filters) > 0
@@ -108,7 +113,7 @@ class CombinedFilter(FilterInterface):
         if len(self.filters) == 0:
             return ""  # No filters at all
 
-        statements = list(map(lambda f: f.where_statement, filter(lambda f: f.where_statement != "", self.filters)))
+        statements = list(map(lambda f: f.where_statement, filter(lambda f: f.where_statement != '', self.filters)))
         if len(statements) == 0:
             return ""  # No where filters
 
@@ -125,7 +130,7 @@ class CombinedFilter(FilterInterface):
         if len(self.filters) == 0:
             return ""  # No filters at all
 
-        statements = list(map(lambda f: f.join_statement, filter(lambda f: f.join_statement != "", self.filters)))
+        statements = list(map(lambda f: f.join_statement, filter(lambda f: f.join_statement != '', self.filters)))
         if len(statements) == 0:
             return ""  # No join filters
 
@@ -204,11 +209,90 @@ class YeastCriteriaMixin:
         return WhereFilterCriteria.in_filter("ry.kind_id", yeast_ids)
 
 
-# The scope defines which recipes should be analyzed. The set of these recipes equals 100%.
-class RecipeScope(StyleCriteriaMixin):
-    def __init__(self) -> None:
-        self._styles = []
+################### ANALYSIS SCOPES
+################### The scope defines which recipes should be analyzed. The set of these recipes equals 100%.
 
+# Analyze recipes
+class RecipeScope:
+    class StyleCriteria:
+        def __init__(self):
+            self.styles: List[Style] = []
+
+        def get_filter(self) -> FilterInterface:
+            if len(self.styles) <= 0:
+                return NoFilterCriteria()
+
+            style_ids = list(map(lambda y: y.id, self.styles))
+            if len(style_ids) > 1:
+                # This approach avoids duplicating recipes through the join
+                style_filter = WhereFilterCriteria.in_filter("style_id", style_ids)
+                return JoinFilterCriteria(
+                    "(SELECT DISTINCT recipe_id FROM recipe_db_recipe_associated_styles WHERE %s) AS ras ON ras.recipe_id = r.uid" % style_filter.where_statement,
+                    style_filter.where_parameters
+                )
+            else:
+                style_filter = WhereFilterCriteria.in_filter("rah.style_id", style_ids)
+                return JoinFilterCriteria(
+                    "recipe_db_recipe_associated_styles AS rah ON rah.recipe_id = r.uid AND %s" % style_filter.where_statement,
+                    style_filter.where_parameters
+                )
+
+
+    class HopCriteria:
+        def __init__(self):
+            self.hops: List[Hop] = []
+
+        def get_filter(self) -> FilterInterface:
+            if len(self.hops) <= 0:
+                return NoFilterCriteria()
+
+            if len(self.hops) > 1:
+                raise Exception("Filtering recipes by multiple hops is currently not supported")
+
+            hop_ids = list(map(lambda y: y.id, self.hops))
+            hop_filter = WhereFilterCriteria.in_filter("rah.hop_id", hop_ids)
+            return JoinFilterCriteria(
+                "recipe_db_recipe_associated_hops AS rah ON rah.recipe_id = r.uid AND %s" % hop_filter.where_statement,
+                hop_filter.where_parameters
+            )
+
+    class FermentableCriteria:
+        def __init__(self):
+            self.fermentables: List[Fermentable] = []
+
+        def get_filter(self) -> FilterInterface:
+            if len(self.fermentables) <= 0:
+                return NoFilterCriteria()
+
+            if len(self.fermentables) > 1:
+                raise Exception("Filtering recipes by multiple fermentables is currently not supported")
+
+            fermentable_ids = list(map(lambda y: y.id, self.fermentables))
+            fermentable_filter = WhereFilterCriteria.in_filter("raf.fermentable_id", fermentable_ids)
+            return JoinFilterCriteria(
+                "recipe_db_recipe_associated_fermentables AS raf ON raf.recipe_id = r.uid AND %s" % fermentable_filter.where_statement,
+                fermentable_filter.where_parameters
+            )
+
+    class YeastCriteria:
+        def __init__(self):
+            self.yeasts: List[Yeast] = []
+
+        def get_filter(self) -> FilterInterface:
+            if len(self.yeasts) <= 0:
+                return NoFilterCriteria()
+
+            if len(self.yeasts) > 1:
+                raise Exception("Filtering recipes by multiple yeasts is currently not supported")
+
+            yeast_ids = list(map(lambda y: y.id, self.yeasts))
+            yeast_filter = WhereFilterCriteria.in_filter("raf.yeast_id", yeast_ids)
+            return JoinFilterCriteria(
+                "recipe_db_recipe_associated_yeasts AS ray ON ray.recipe_id = r.uid AND %s" % yeast_filter.where_statement,
+                yeast_filter.where_parameters
+            )
+
+    def __init__(self) -> None:
         self.creation_date_min = None
         self.creation_date_max = None
 
@@ -227,21 +311,15 @@ class RecipeScope(StyleCriteriaMixin):
         self.fg_min: Optional[float] = None
         self.fg_max: Optional[float] = None
 
-        self.hop_scope: Optional[RecipeHopScope] = None
-        self.fermentable_scope: Optional[RecipeFermentableScope] = None
-        self.yeast_scope: Optional[RecipeYeastScope] = None
+        # Criteria based on related entities
+        self.style_criteria = RecipeScope.StyleCriteria()
+        self.hop_criteria = RecipeScope.HopCriteria()
+        self.fermentable_criteria = RecipeScope.FermentableCriteria()
+        self.yeast_criteria = RecipeScope.YeastCriteria()
+
 
     def get_filter(self) -> FilterInterface:
         filters = CombinedFilter()
-
-        if len(self.styles) > 0:
-            style_filter = self.get_style_filter()
-            where_statement = (
-                "r.uid IN (SELECT ras.recipe_id FROM recipe_db_recipe_associated_styles AS ras WHERE {})".format(
-                    style_filter.where_statement
-                )
-            )
-            filters.append(WhereFilterCriteria(where_statement, style_filter.where_parameters))
 
         if self.creation_date_min is not None or self.creation_date_max is not None:
             filters.append(WhereFilterCriteria.min_max_filter("r.created", self.creation_date_min, self.creation_date_max))
@@ -261,39 +339,20 @@ class RecipeScope(StyleCriteriaMixin):
         if self.fg_min is not None or self.fg_max is not None:
             filters.append(WhereFilterCriteria.min_max_filter("r.fg", self.fg_min, self.fg_max))
 
-        if self.hop_scope is not None:
-            hop_filter = self.hop_scope.get_filter()
-            if hop_filter.has_filter():
-                where_statement = (
-                    "r.uid IN (SELECT DISTINCT rh.recipe_id FROM recipe_db_recipehop AS rh WHERE 1{})".format(
-                        hop_filter.where_statement
-                    )
-                )
-                filters.append(WhereFilterCriteria(where_statement, hop_filter.where_parameters))
-
-        if self.fermentable_scope is not None:
-            fermentable_filter = self.fermentable_scope.get_filter()
-            if fermentable_filter.has_filter():
-                where_statement = (
-                    "r.uid IN (SELECT DISTINCT rf.recipe_id FROM recipe_db_recipefermentable AS rf WHERE 1{})".format(
-                        fermentable_filter.where_statement
-                    )
-                )
-                filters.append(WhereFilterCriteria(where_statement, fermentable_filter.where_parameters))
-
-        if self.yeast_scope is not None:
-            yeast_filter = self.yeast_scope.get_filter()
-            if yeast_filter.has_filter():
-                query_string = (
-                    "r.uid IN (SELECT DISTINCT ry.recipe_id FROM recipe_db_recipeyeast AS ry WHERE 1{})".format(
-                        yeast_filter.where_statement
-                    )
-                )
-                filters.append(WhereFilterCriteria(query_string, yeast_filter.where_parameters))
+        # Add filters on related entities
+        if self.style_criteria is not None:
+            filters.append(self.style_criteria.get_filter())
+        if self.fermentable_criteria is not None:
+            filters.append(self.fermentable_criteria.get_filter())
+        if self.hop_criteria is not None:
+            filters.append(self.hop_criteria.get_filter())
+        if self.yeast_criteria is not None:
+            filters.append(self.yeast_criteria.get_filter())
 
         return filters
 
 
+# Analyze hops only
 class HopScope(HopCriteriaMixin):
     def __init__(self) -> None:
         self._hops = []
@@ -307,6 +366,7 @@ class HopScope(HopCriteriaMixin):
         return filters
 
 
+# Analyze fermentables only
 class FermentableScope(FermentableCriteriaMixin):
     def __init__(self) -> None:
         self._fermentables = []
@@ -320,6 +380,7 @@ class FermentableScope(FermentableCriteriaMixin):
         return filters
 
 
+# Analyze yeasts only
 class YeastScope(YeastCriteriaMixin):
     def __init__(self) -> None:
         self._yeasts = []
@@ -333,6 +394,10 @@ class YeastScope(YeastCriteriaMixin):
         return filters
 
 
+################### SELECTION FILTERS
+################### Limit the analysis to specific items
+
+# Narrow down the analysis to specific styles
 class StyleSelection(StyleCriteriaMixin):
     def __init__(self) -> None:
         self._styles = []
@@ -346,6 +411,7 @@ class StyleSelection(StyleCriteriaMixin):
         return filters
 
 
+# Narrow down the analysis to specific hops
 class HopSelection(HopCriteriaMixin):
     def __init__(self) -> None:
         self._hops = []
@@ -363,6 +429,7 @@ class HopSelection(HopCriteriaMixin):
         return filters
 
 
+# Narrow down the analysis to specific fermentables
 class FermentableSelection(FermentableCriteriaMixin):
     def __init__(self) -> None:
         self._fermentables = []
@@ -388,6 +455,7 @@ class FermentableSelection(FermentableCriteriaMixin):
         return filters
 
 
+# Narrow down the analysis to specific yeasts
 class YeastSelection(YeastCriteriaMixin):
     def __init__(self) -> None:
         self._yeasts = []
@@ -405,24 +473,3 @@ class YeastSelection(YeastCriteriaMixin):
             filters.append(WhereFilterCriteria(where_statement, in_filter.where_parameters))
 
         return filters
-
-
-class RecipeHopScope(HopCriteriaMixin):
-    def __init__(self) -> None:
-        self._hops = []
-
-    def get_filter(self) -> CombinedFilter:
-        filters = CombinedFilter()
-
-        if len(self.hops) > 0:
-            filters.append(self.get_hop_filter())
-
-        return filters
-
-
-class RecipeFermentableScope(FermentableScope):
-    pass
-
-
-class RecipeYeastScope(YeastScope):
-    pass

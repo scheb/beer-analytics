@@ -7,8 +7,7 @@ from django.urls import reverse
 from django.views.decorators.cache import cache_page
 
 from recipe_db.analytics.recipe import RecipesCountAnalysis, RecipesListAnalysis
-from recipe_db.analytics.scope import RecipeScope, RecipeHopScope, \
-    RecipeFermentableScope, RecipeYeastScope
+from recipe_db.analytics.scope import RecipeScope
 from recipe_db.etl.format.parser import int_or_none
 from recipe_db.models import Style, Hop, Fermentable, Yeast
 from web_app import DEFAULT_PAGE_CACHE_TIME
@@ -58,13 +57,13 @@ def get_scope(request: HttpRequest) -> RecipeScope:
     recipe_scope = RecipeScope()
 
     if "styles" in request.GET:
-        recipe_scope.styles = get_styles(str(request.GET["styles"]))
+        recipe_scope.style_criteria = get_style_criteria(str(request.GET["styles"]))
     if "hops" in request.GET:
-        recipe_scope.hop_scope = get_hop_scope(str(request.GET["hops"]))
+        recipe_scope.hop_criteria = get_hop_criteria(str(request.GET["hops"]))
     if "fermentables" in request.GET:
-        recipe_scope.fermentable_scope = get_fermentable_scope(str(request.GET["fermentables"]))
+        recipe_scope.fermentable_criteria = get_fermentable_criteria(str(request.GET["fermentables"]))
     if "yeasts" in request.GET:
-        recipe_scope.yeast_scope = get_yeast_scope(str(request.GET["yeasts"]))
+        recipe_scope.yeast_criteria = get_yeast_criteria(str(request.GET["yeasts"]))
 
     if "ibu" in request.GET:
         (recipe_scope.ibu_min, recipe_scope.ibu_max) = get_min_max(str(request.GET["ibu"]), 0, 301)
@@ -78,43 +77,50 @@ def get_scope(request: HttpRequest) -> RecipeScope:
     return recipe_scope
 
 
-def get_styles(value: str) -> List[Style]:
+def get_style_criteria(value: str) -> Optional[RecipeScope.StyleCriteria]:
     style_ids = list(map(str.strip, value.split(",")))
-    return Style.objects.filter(id__in=style_ids)
+    styles = Style.objects.filter(id__in=style_ids)
+
+    if styles.count() > 0:
+        style_criteria = RecipeScope.StyleCriteria()
+        style_criteria.styles = styles
+        return style_criteria
+
+    return None
 
 
-def get_hop_scope(value: str) -> Optional[RecipeHopScope]:
+def get_hop_criteria(value: str) -> Optional[RecipeScope.HopCriteria]:
     hops_ids = list(map(str.strip, value.split(",")))
     hops = Hop.objects.filter(id__in=hops_ids)
 
     if hops.count() > 0:
-        hop_scope = RecipeHopScope()
-        hop_scope.hops = hops
-        return hop_scope
+        hop_criteria = RecipeScope.HopCriteria()
+        hop_criteria.hops = hops
+        return hop_criteria
 
     return None
 
 
-def get_fermentable_scope(value: str) -> Optional[RecipeFermentableScope]:
+def get_fermentable_criteria(value: str) -> Optional[RecipeScope.FermentableCriteria]:
     fermentable_ids = list(map(str.strip, value.split(",")))
     fermentables = Fermentable.objects.filter(id__in=fermentable_ids)
 
     if fermentables.count() > 0:
-        fermentable_scope = RecipeFermentableScope()
-        fermentable_scope.fermentables = fermentables
-        return fermentable_scope
+        fermentable_criteria = RecipeScope.FermentableCriteria()
+        fermentable_criteria.fermentables = fermentables
+        return fermentable_criteria
 
     return None
 
 
-def get_yeast_scope(value: str) -> Optional[RecipeYeastScope]:
+def get_yeast_criteria(value: str) -> Optional[RecipeScope.YeastCriteria]:
     yeasts_ids = list(map(str.strip, value.split(",")))
     yeasts = Yeast.objects.filter(id__in=yeasts_ids)
 
     if yeasts.count() > 0:
-        yeast_scope = RecipeYeastScope()
-        yeast_scope.yeasts = yeasts
-        return yeast_scope
+        yeast_criteria = RecipeScope.YeastCriteria()
+        yeast_criteria.yeasts = yeasts
+        return yeast_criteria
 
     return None
 

@@ -9,7 +9,7 @@ from recipe_db.analytics.recipe import (
     RecipesTrendAnalysis,
     RecipesListAnalysis,
 )
-from recipe_db.analytics.scope import RecipeScope, HopSelection, RecipeHopScope
+from recipe_db.analytics.scope import RecipeScope, HopSelection, HopScope
 from recipe_db.models import Hop, Recipe, RecipeHop
 
 USE_FILTER_BITTERING = "bittering"
@@ -27,12 +27,16 @@ class HopAnalysis:
     def __init__(self, hop: Hop) -> None:
         self.hop = hop
 
-        self.hop_scope = RecipeHopScope()
+        # For analysis on the hop itself
+        self.hop_scope = HopScope()
         self.hop_scope.hops = [hop]
 
+        # For analysis on recipes using the hop
         self.recipe_scope = RecipeScope()
-        self.recipe_scope.hop_scope = self.hop_scope
+        self.recipe_scope.hop_criteria = RecipeScope.HopCriteria()
+        self.recipe_scope.hop_criteria.hops = [hop]
 
+        # For limiting an analysis result to the hop
         self.hop_selection = HopSelection()
         self.hop_selection.hops = [hop]
 

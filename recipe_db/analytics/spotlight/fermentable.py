@@ -8,7 +8,7 @@ from recipe_db.analytics.fermentable import (
     FermentableMetricHistogram,
 )
 from recipe_db.analytics.recipe import RecipesPopularityAnalysis, CommonStylesAnalysis, RecipesListAnalysis
-from recipe_db.analytics.scope import RecipeScope, FermentableSelection, RecipeFermentableScope
+from recipe_db.analytics.scope import RecipeScope, FermentableSelection, FermentableScope
 from recipe_db.models import Fermentable, Recipe
 
 TYPE_FILTER_BASE = "base"
@@ -34,21 +34,26 @@ class FermentableAnalysis:
     def __init__(self, fermentable: Fermentable) -> None:
         self.fermentable = fermentable
 
-        self.fermentable_scope = RecipeFermentableScope()
-        self.fermentable_scope.fermentables = [fermentable]
+        # For analysis on the fermentable itself
+        self.hop_scope = FermentableScope()
+        self.hop_scope.fermentables = [fermentable]
 
+        # For analysis on recipes using the fermentable
+        self.fermentable_criteria = RecipeScope.FermentableCriteria()
+        self.fermentable_criteria.fermentables = [fermentable]
         self.recipe_scope = RecipeScope()
-        self.recipe_scope.fermentable_scope = self.fermentable_scope
+        self.recipe_scope.fermentable_criteria = self.fermentable_criteria
 
+        # For limiting an analysis result to the fermentable
         self.fermentable_selection = FermentableSelection()
         self.fermentable_selection.fermentables = [fermentable]
 
     def metric_histogram(self, metric: str) -> DataFrame:
-        analysis = FermentableMetricHistogram(self.fermentable_scope)
+        analysis = FermentableMetricHistogram(self.hop_scope)
         return analysis.metric_histogram(metric)
 
     def amount_range(self) -> DataFrame:
-        analysis = FermentableAmountRangeAnalysis(self.fermentable_scope)
+        analysis = FermentableAmountRangeAnalysis(self.hop_scope)
         return analysis.amount_range()
 
     def popularity(self) -> DataFrame:
