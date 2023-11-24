@@ -18,18 +18,19 @@ class FermentableLevelAnalysis(ABC):
 
 class FermentableAmountRangeAnalysis(FermentableLevelAnalysis):
     def amount_range(self) -> DataFrame:
-        scope_filter = self.scope.get_filter()
+        fermentable_scope_filter = self.scope.get_filter()
 
         query = """
-            SELECT rf.recipe_id, SUM(rf.amount_percent) AS amount_percent
-            FROM recipe_db_recipefermentable AS rf
-            WHERE 1 {}
-            GROUP BY rf.recipe_id, rf.kind_id
-        """.format(
-            scope_filter.where
-        )
+                SELECT rf.recipe_id, SUM(rf.amount_percent) AS amount_percent
+                FROM recipe_db_recipefermentable AS rf
+                WHERE 1 {where}
+                GROUP BY rf.recipe_id, rf.kind_id
+            """.format(
+                where=fermentable_scope_filter.where_statement
+            )
 
-        df = pd.read_sql(query, connection, params=scope_filter.parameters)
+        query_parameters = fermentable_scope_filter.where_parameters
+        df = pd.read_sql(query, connection, params=query_parameters)
         if len(df) == 0:
             return df
 
@@ -44,16 +45,19 @@ class FermentableMetricHistogram(FermentableLevelAnalysis):
     def metric_histogram(self, metric: str) -> DataFrame:
         precision = METRIC_PRECISION[metric] if metric in METRIC_PRECISION else METRIC_PRECISION["default"]
 
-        scope_filter = self.scope.get_filter()
+        fermentable_scope_filter = self.scope.get_filter()
         query = """
-                SELECT ROUND({}, {}) as {}
+                SELECT ROUND({metric}, {precision}) as {metric}
                 FROM recipe_db_recipefermentable AS rf
-                WHERE 1 {}
+                WHERE 1 {where}
             """.format(
-            metric, precision, metric, scope_filter.where
-        )
+                metric=metric,
+                precision=precision,
+                where=fermentable_scope_filter.where_statement,
+            )
 
-        df = pd.read_sql(query, connection, params=scope_filter.parameters)
+        query_parameters = fermentable_scope_filter.where_parameters
+        df = pd.read_sql(query, connection, params=query_parameters)
         if len(df) == 0:
             return df
 
@@ -76,26 +80,30 @@ class FermentableAmountAnalysis(RecipeLevelAnalysis):
     ) -> DataFrame:
         projection = projection or FermentableProjection()
 
-        scope_filter = self.scope.get_filter()
-        projection_filter = projection.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
+        fermentable_projection_filter = projection.get_filter()
 
         query = """
-            SELECT
-                rf.recipe_id,
-                rf.kind_id,
-                SUM(rf.amount_percent) AS amount_percent
-            FROM recipe_db_recipe AS r
-            JOIN recipe_db_recipefermentable AS rf
-                ON r.uid = rf.recipe_id
-            WHERE 1
-                {}
-                {}
-            GROUP BY rf.recipe_id, rf.kind_id
-        """.format(
-            scope_filter.where, projection_filter.where
-        )
+                SELECT
+                    rf.recipe_id,
+                    rf.kind_id,
+                    SUM(rf.amount_percent) AS amount_percent
+                FROM recipe_db_recipe AS r
+                {join}
+                JOIN recipe_db_recipefermentable AS rf
+                    ON r.uid = rf.recipe_id
+                WHERE 1 {where1} {where2}
+                GROUP BY rf.recipe_id, rf.kind_id
+            """.format(
+                join=recipe_scope_filter.join_statement,
+                where1=recipe_scope_filter.where_statement,
+                where2=fermentable_projection_filter.where_statement
+            )
 
-        df = pd.read_sql(query, connection, params=scope_filter.parameters + projection_filter.parameters)
+        query_params = (recipe_scope_filter.join_parameters
+                        + recipe_scope_filter.where_parameters
+                        + fermentable_projection_filter.where_parameters)
+        df = pd.read_sql(query, connection, params=query_params)
         if len(df) == 0:
             return df
 
@@ -122,29 +130,33 @@ class FermentableAmountAnalysis(RecipeLevelAnalysis):
     ) -> DataFrame:
         projection = projection or StyleProjection()
 
-        scope_filter = self.scope.get_filter()
-        projection_filter = projection.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
+        style_projection_filter = projection.get_filter()
 
         query = """
-            SELECT
-                rf.recipe_id,
-                ras.style_id,
-                rf.kind_id,
-                SUM(rf.amount_percent) AS amount_percent
-            FROM recipe_db_recipe AS r
-            JOIN recipe_db_recipefermentable AS rf
-                ON r.uid = rf.recipe_id
-            JOIN recipe_db_recipe_associated_styles ras
-                ON r.uid = ras.recipe_id
-            WHERE 1
-                {}
-                {}
-            GROUP BY rf.recipe_id, ras.style_id, rf.kind_id
-        """.format(
-            scope_filter.where, projection_filter.where
-        )
+                SELECT
+                    rf.recipe_id,
+                    ras.style_id,
+                    rf.kind_id,
+                    SUM(rf.amount_percent) AS amount_percent
+                FROM recipe_db_recipe AS r
+                {join}
+                JOIN recipe_db_recipefermentable AS rf
+                    ON r.uid = rf.recipe_id
+                JOIN recipe_db_recipe_associated_styles ras
+                    ON r.uid = ras.recipe_id
+                WHERE 1 {where1} {where2}
+                GROUP BY rf.recipe_id, ras.style_id, rf.kind_id
+            """.format(
+                join=recipe_scope_filter.join_statement,
+                where1=recipe_scope_filter.where_statement,
+                where2=style_projection_filter.where_statement
+            )
 
-        df = pd.read_sql(query, connection, params=scope_filter.parameters + projection_filter.parameters)
+        query_parameters = (recipe_scope_filter.join_parameters
+                            + recipe_scope_filter.where_parameters
+                            + style_projection_filter.where_parameters)
+        df = pd.read_sql(query, connection, params=query_parameters)
         if len(df) == 0:
             return df
 

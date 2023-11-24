@@ -34,18 +34,23 @@ class RecipeLevelAnalysis(ABC):
 
 class RecipesListAnalysis(RecipeLevelAnalysis):
     def random(self, num_recipes: int) -> Iterable[Recipe]:
-        scope_filter = self.scope.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
         query = """
                 SELECT r.uid AS recipe_id
                 FROM recipe_db_recipe AS r
-                WHERE 1 {}
+                {join}
+                WHERE 1 {where}
                 ORDER BY RAND()
                 LIMIT %s
             """.format(
-            scope_filter.where
-        )
+                join=recipe_scope_filter.join_statement,
+                where=recipe_scope_filter.where_statement
+            )
 
-        df = pd.read_sql(query, connection, params=scope_filter.parameters + [num_recipes])
+        query_parameters = (recipe_scope_filter.join_parameters
+                            + recipe_scope_filter.where_parameters
+                            + [num_recipes])
+        df = pd.read_sql(query, connection, params=query_parameters)
         recipe_ids = df["recipe_id"].values.tolist()
         if len(recipe_ids) == 0:
             return []
@@ -55,83 +60,92 @@ class RecipesListAnalysis(RecipeLevelAnalysis):
 
 class RecipesCountAnalysis(RecipeLevelAnalysis):
     def total(self) -> int:
-        scope_filter = self.scope.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
         query = """
                 SELECT
                     COUNT(r.uid) AS total_recipes
                 FROM recipe_db_recipe AS r
-                WHERE
-                    created IS NOT NULL
-                    {}
+                {join}
+                WHERE created IS NOT NULL {where}
             """.format(
-            scope_filter.where
-        )
+                join=recipe_scope_filter.join_statement,
+                where=recipe_scope_filter.where_statement,
+            )
 
-        df = pd.read_sql(query, connection, params=scope_filter.parameters)
+        query_parameters = (recipe_scope_filter.join_parameters
+                            + recipe_scope_filter.where_parameters)
+        df = pd.read_sql(query, connection, params=query_parameters)
         if len(df) == 0:
             return 0
 
         return df["total_recipes"].values.tolist()[0]
 
     def per_day(self) -> DataFrame:
-        scope_filter = self.scope.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
         query = """
                 SELECT
                     DATE(r.created) AS day,
                     COUNT(r.uid) AS total_recipes
                 FROM recipe_db_recipe AS r
-                WHERE
-                    created IS NOT NULL
-                    {}
+                {join}
+                WHERE created IS NOT NULL {where}
                 GROUP BY date(r.created)
             """.format(
-            scope_filter.where
-        )
+                join=recipe_scope_filter.join_statement,
+                where=recipe_scope_filter.where_statement,
+            )
 
-        df = pd.read_sql(query, connection, params=scope_filter.parameters)
+        query_parameters = (recipe_scope_filter.join_parameters
+                            + recipe_scope_filter.where_parameters)
+        df = pd.read_sql(query, connection, params=query_parameters)
         df = df.set_index("day")
 
         return df
 
     def per_month(self) -> DataFrame:
-        scope_filter = self.scope.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
         query = """
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     COUNT(r.uid) AS total_recipes
                 FROM recipe_db_recipe AS r
-                WHERE
-                    created IS NOT NULL
-                    {}
+                {join}
+                WHERE created IS NOT NULL {where}
                 GROUP BY month
                 ORDER BY month ASC
             """.format(
-            scope_filter.where
-        )
+                join=recipe_scope_filter.join_statement,
+                where=recipe_scope_filter.where_statement,
+            )
 
-        df = pd.read_sql(query, connection, params=scope_filter.parameters)
+        query_parameters = (recipe_scope_filter.join_parameters
+                            + recipe_scope_filter.where_parameters)
+        df = pd.read_sql(query, connection, params=query_parameters)
         df = df.set_index("month")
 
         return df
 
     def per_style(self) -> DataFrame:
-        scope_filter = self.scope.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
         query = """
                 SELECT
                     ras.style_id,
                     COUNT(DISTINCT r.uid) AS total_recipes
                 FROM recipe_db_recipe AS r
+                {join}
                 JOIN recipe_db_recipe_associated_styles ras
                     ON r.uid = ras.recipe_id
-                WHERE
-                    1 {}
+                WHERE 1 {where}
                 GROUP BY ras.style_id
                 ORDER BY ras.style_id ASC
             """.format(
-            scope_filter.where
-        )
+                join=recipe_scope_filter.join_statement,
+                where=recipe_scope_filter.where_statement,
+            )
 
-        df = pd.read_sql(query, connection, params=scope_filter.parameters)
+        query_parameters = (recipe_scope_filter.join_parameters
+                            + recipe_scope_filter.where_parameters)
+        df = pd.read_sql(query, connection, params=query_parameters)
         df = df.set_index("style_id")
 
         return df
@@ -146,28 +160,32 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
     ) -> DataFrame:
         projection = projection or StyleProjection()
 
-        scope_filter = self.scope.get_filter()
-        projection_filter = projection.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
+        style_projection_filter = projection.get_filter()
         query = """
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     ras.style_id,
                     COUNT(r.uid) AS recipes
                 FROM recipe_db_recipe AS r
+                {join}
                 JOIN recipe_db_recipe_associated_styles AS ras
                     ON r.uid = ras.recipe_id
                 WHERE
                     r.created >= %s  -- Cut-off date for popularity charts
-                    {}
-                    {}
+                    {where1} {where2}
                 GROUP BY month, ras.style_id
             """.format(
-            scope_filter.where, projection_filter.where
-        )
+                join=recipe_scope_filter.join_statement,
+                where1=recipe_scope_filter.where_statement,
+                where2=style_projection_filter.where_statement,
+            )
 
-        per_month = pd.read_sql(
-            query, connection, params=[POPULARITY_CUT_OFF_DATE] + scope_filter.parameters + projection_filter.parameters
-        )
+        query_parameters = (recipe_scope_filter.join_parameters
+                            + [POPULARITY_CUT_OFF_DATE]
+                            + recipe_scope_filter.where_parameters
+                            + style_projection_filter.where_parameters)
+        per_month = pd.read_sql(query, connection, params=query_parameters)
         if len(per_month) == 0:
             return per_month
 
@@ -208,28 +226,32 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
     ) -> DataFrame:
         projection = projection or HopProjection()
 
-        scope_filter = self.scope.get_filter()
-        projection_filter = projection.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
+        hop_projection_filter = projection.get_filter()
         query = """
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     rh.kind_id,
                     COUNT(DISTINCT r.uid) AS recipes
                 FROM recipe_db_recipe AS r
+                {join}
                 JOIN recipe_db_recipehop AS rh
                     ON r.uid = rh.recipe_id
                 WHERE
                     r.created >= %s  -- Cut-off date for popularity charts
-                    {}
-                    {}
+                    {where1} {where2}
                 GROUP BY month, rh.kind_id
             """.format(
-            scope_filter.where, projection_filter.where
-        )
+                join=recipe_scope_filter.join_statement,
+                where1=recipe_scope_filter.where_statement,
+                where2=hop_projection_filter.where_statement,
+            )
 
-        per_month = pd.read_sql(
-            query, connection, params=[POPULARITY_CUT_OFF_DATE] + scope_filter.parameters + projection_filter.parameters
-        )
+        query_parameters = (recipe_scope_filter.join_parameters
+                            + [POPULARITY_CUT_OFF_DATE]
+                            + recipe_scope_filter.where_parameters
+                            + hop_projection_filter.where_parameters)
+        per_month = pd.read_sql(query, connection, params=query_parameters)
         if len(per_month) == 0:
             return per_month
 
@@ -269,28 +291,32 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
     ) -> DataFrame:
         projection = projection or FermentableProjection()
 
-        scope_filter = self.scope.get_filter()
-        projection_filter = projection.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
+        fermentable_projection_filter = projection.get_filter()
         query = """
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     rf.kind_id,
                     COUNT(DISTINCT r.uid) AS recipes
                 FROM recipe_db_recipe AS r
+                {join}
                 JOIN recipe_db_recipefermentable AS rf
                     ON r.uid = rf.recipe_id
                 WHERE
                     r.created >= %s  -- Cut-off date for popularity charts
-                    {}
-                    {}
+                    {where1} {where2}
                 GROUP BY month, rf.kind_id
             """.format(
-            scope_filter.where, projection_filter.where
-        )
+                join=recipe_scope_filter.join_statement,
+                where1=recipe_scope_filter.where_statement,
+                where2=fermentable_projection_filter.where_statement,
+            )
 
-        per_month = pd.read_sql(
-            query, connection, params=[POPULARITY_CUT_OFF_DATE] + scope_filter.parameters + projection_filter.parameters
-        )
+        query_parameters = (recipe_scope_filter.join_parameters
+                            + [POPULARITY_CUT_OFF_DATE]
+                            + recipe_scope_filter.where_parameters
+                            + fermentable_projection_filter.where_parameters)
+        per_month = pd.read_sql(query, connection, params=query_parameters)
         if len(per_month) == 0:
             return per_month
 
@@ -329,28 +355,32 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
     ) -> DataFrame:
         projection = projection or YeastProjection()
 
-        scope_filter = self.scope.get_filter()
-        projection_filter = projection.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
+        yeast_projection_filter = projection.get_filter()
         query = """
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     ry.kind_id,
                     COUNT(DISTINCT r.uid) AS recipes
                 FROM recipe_db_recipe AS r
+                {join}
                 JOIN recipe_db_recipeyeast AS ry
                     ON r.uid = ry.recipe_id
                 WHERE
                     r.created >= %s  -- Cut-off date for popularity charts
-                    {}
-                    {}
+                    {where1} {where2}
                 GROUP BY month, ry.kind_id
             """.format(
-            scope_filter.where, projection_filter.where
-        )
+                join=recipe_scope_filter.join_statement,
+                where1=recipe_scope_filter.where_statement,
+                where2=yeast_projection_filter.where_statement,
+            )
 
-        per_month = pd.read_sql(
-            query, connection, params=[POPULARITY_CUT_OFF_DATE] + scope_filter.parameters + projection_filter.parameters
-        )
+        query_parameters = (recipe_scope_filter.join_parameters
+                            + [POPULARITY_CUT_OFF_DATE]
+                            + recipe_scope_filter.where_parameters
+                            + yeast_projection_filter.where_parameters)
+        per_month = pd.read_sql(query, connection, params=query_parameters)
         if len(per_month) == 0:
             return per_month
 
@@ -384,42 +414,51 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
         return smoothened
 
     def popularity_per_source(self) -> DataFrame:
-        scope_filter = self.scope.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
         query = """
                 SELECT
                     DATE(r.created) AS day,
                     r.source,
                     COUNT(r.uid) AS recipes_number
                 FROM recipe_db_recipe AS r
+                {join}
                 WHERE
                     r.created >= %s  -- Cut-off date for popularity charts
-                    {}
+                    {where}
                 GROUP BY day, r.source
-            """.format(scope_filter.where)
+            """.format(
+                join=recipe_scope_filter.join_statement,
+                where=recipe_scope_filter.where_statement,
+            )
 
-        per_month = pd.read_sql(
-            query, connection, params=[POPULARITY_CUT_OFF_DATE] + scope_filter.parameters
-        )
-
+        query_parameters = (recipe_scope_filter.join_parameters
+                            + [POPULARITY_CUT_OFF_DATE]
+                            + recipe_scope_filter.where_parameters)
+        per_month = pd.read_sql(query, connection, params=query_parameters)
         return per_month
 
 
 class RecipesMetricHistogram(RecipeLevelAnalysis):
     def metric_histogram(self, metric: str) -> DataFrame:
         precision = METRIC_PRECISION[metric] if metric in METRIC_PRECISION else METRIC_PRECISION["default"]
-        scope_filter = self.scope.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
 
         query = """
-                SELECT ROUND({}, {}) as {}
+                SELECT ROUND({metric}, {precision}) as {metric}
                 FROM recipe_db_recipe AS r
+                {join}
                 WHERE
-                    {} IS NOT NULL
-                    {}
+                    {metric} IS NOT NULL {where}
             """.format(
-            metric, precision, metric, metric, scope_filter.where
-        )
+                metric=metric,
+                precision=precision,
+                join=recipe_scope_filter.join_statement,
+                where=recipe_scope_filter.where_statement,
+            )
 
-        df = pd.read_sql(query, connection, params=scope_filter.parameters)
+        query_parameters = (recipe_scope_filter.join_parameters
+                            + recipe_scope_filter.where_parameters)
+        df = pd.read_sql(query, connection, params=query_parameters)
         df = remove_outliers(df, metric, 0.02)
         if len(df) == 0:
             return df
@@ -455,24 +494,29 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
     def trending_styles(self, trend_window_months: int = 24) -> DataFrame:
         recipes_per_month = self._recipes_per_month_in_scope()
 
-        scope_filter = self.scope.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
         query = """
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     ras.style_id,
                     COUNT(r.uid) AS recipes
                 FROM recipe_db_recipe AS r
+                {join}
                 JOIN recipe_db_recipe_associated_styles AS ras
                     ON r.uid = ras.recipe_id
                 WHERE
                     r.created >= %s  -- Cut-off date for popularity charts
-                    {}
+                    {where}
                 GROUP BY month, ras.style_id
             """.format(
-            scope_filter.where
-        )
+                join=recipe_scope_filter.join_statement,
+                where=recipe_scope_filter.where_statement
+            )
 
-        per_month = pd.read_sql(query, connection, params=[POPULARITY_CUT_OFF_DATE] + scope_filter.parameters)
+        query_parameters = (recipe_scope_filter.join_parameters
+                            + [POPULARITY_CUT_OFF_DATE]
+                            + recipe_scope_filter.where_parameters)
+        per_month = pd.read_sql(query, connection, params=query_parameters)
         if len(per_month) == 0:
             return per_month
 
@@ -507,29 +551,33 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
         projection = projection or HopProjection()
         recipes_per_month = self._recipes_per_month_in_scope()
 
-        scope_filter = self.scope.get_filter()
-        projection_filter = projection.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
+        hop_projection_filter = projection.get_filter()
         query = """
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     rh.kind_id,
                     COUNT(DISTINCT r.uid) AS recipes
                 FROM recipe_db_recipe AS r
+                {join}
                 JOIN recipe_db_recipehop AS rh
                     ON r.uid = rh.recipe_id
                 WHERE
                     r.created >= %s  -- Cut-off date for popularity charts
                     AND rh.kind_id IS NOT NULL
-                    {}
-                    {}
+                    {where1} {where2}
                 GROUP BY month, rh.kind_id
             """.format(
-            scope_filter.where, projection_filter.where
-        )
+                join=recipe_scope_filter.join_statement,
+                where1=recipe_scope_filter.where_statement,
+                where2=hop_projection_filter.where_statement
+            )
 
-        per_month = pd.read_sql(
-            query, connection, params=[POPULARITY_CUT_OFF_DATE] + scope_filter.parameters + projection_filter.parameters
-        )
+        query_parameters = (recipe_scope_filter.join_parameters
+                            + [POPULARITY_CUT_OFF_DATE]
+                            + recipe_scope_filter.where_parameters
+                            + hop_projection_filter.where_parameters)
+        per_month = pd.read_sql(query, connection, params=query_parameters)
         if len(per_month) == 0:
             return per_month
 
@@ -564,29 +612,33 @@ class RecipesTrendAnalysis(RecipeLevelAnalysis):
         projection = projection or YeastProjection()
         recipes_per_month = self._recipes_per_month_in_scope()
 
-        scope_filter = self.scope.get_filter()
-        projection_filter = projection.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
+        yeast_projection_filter = projection.get_filter()
         query = """
                 SELECT
                     DATE_ADD(DATE(r.created), INTERVAL -DAY(r.created)+1 DAY) AS month,
                     ry.kind_id,
                     COUNT(DISTINCT r.uid) AS recipes
                 FROM recipe_db_recipe AS r
+                {join}
                 JOIN recipe_db_recipeyeast AS ry
                     ON r.uid = ry.recipe_id
                 WHERE
                     r.created >= %s  -- Cut-off date for popularity charts
                     AND ry.kind_id IS NOT NULL
-                    {}
-                    {}
+                    {where1} {where2}
                 GROUP BY month, ry.kind_id
             """.format(
-            scope_filter.where, projection_filter.where
-        )
+                join=recipe_scope_filter.join_statement,
+                where1=recipe_scope_filter.where_statement,
+                where2=yeast_projection_filter.where_statement,
+            )
 
-        per_month = pd.read_sql(
-            query, connection, params=[POPULARITY_CUT_OFF_DATE] + scope_filter.parameters + projection_filter.parameters
-        )
+        query_parameters = (recipe_scope_filter.join_parameters
+                            + [POPULARITY_CUT_OFF_DATE]
+                            + recipe_scope_filter.where_parameters
+                            + yeast_projection_filter.where_parameters)
+        per_month = pd.read_sql(query, connection, params=query_parameters)
         if len(per_month) == 0:
             return per_month
 
@@ -641,22 +693,25 @@ class CommonStylesAnalysis(RecipeLevelAnalysis):
         return self._return(df, num_top)
 
     def _common_styles_data(self) -> DataFrame:
-        scope_filter = self.scope.get_filter()
+        recipe_scope_filter = self.scope.get_filter()
         query = """
             SELECT
                 ras.style_id,
                 COUNT(DISTINCT r.uid) AS recipes
             FROM recipe_db_recipe AS r
+            {join}
             JOIN recipe_db_recipe_associated_styles AS ras
                 ON r.uid = ras.recipe_id
-            WHERE
-                1 {}
+            WHERE 1 {where}
             GROUP BY ras.style_id
         """.format(
-            scope_filter.where
+            join=recipe_scope_filter.join_statement,
+            where=recipe_scope_filter.where_statement,
         )
 
-        return pd.read_sql(query, connection, params=scope_filter.parameters)
+        query_parameters = (recipe_scope_filter.join_parameters
+                            + recipe_scope_filter.where_parameters)
+        return pd.read_sql(query, connection, params=query_parameters)
 
     def _return(self, df: DataFrame, num_top: Optional[int]) -> DataFrame:
         df["beer_style"] = df["style_id"].map(get_style_names_dict())

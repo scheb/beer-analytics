@@ -9,7 +9,7 @@ from recipe_db.analytics.recipe import (
     RecipesTrendAnalysis,
     RecipesListAnalysis,
 )
-from recipe_db.analytics.scope import RecipeScope, HopProjection, HopScope
+from recipe_db.analytics.scope import RecipeScope, HopProjection, RecipeHopCriteria
 from recipe_db.models import Hop, Recipe, RecipeHop
 
 USE_FILTER_BITTERING = "bittering"
@@ -27,21 +27,21 @@ class HopAnalysis:
     def __init__(self, hop: Hop) -> None:
         self.hop = hop
 
-        self.hop_scope = HopScope()
-        self.hop_scope.hops = [hop]
+        self.hop_citeria = RecipeHopCriteria()
+        self.hop_citeria.hops = [hop]
 
         self.recipe_scope = RecipeScope()
-        self.recipe_scope.hop_scope = self.hop_scope
+        self.recipe_scope.hop_criteria = self.hop_citeria
 
         self.hop_projection = HopProjection()
         self.hop_projection.hops = [hop]
 
     def metric_histogram(self, metric: str) -> DataFrame:
-        analysis = HopMetricHistogram(self.hop_scope)
+        analysis = HopMetricHistogram(self.hop_citeria)
         return analysis.metric_histogram(metric)
 
     def amount_range(self) -> DataFrame:
-        analysis = HopAmountRangeAnalysis(self.hop_scope)
+        analysis = HopAmountRangeAnalysis(self.hop_citeria)
         return analysis.amount_range()
 
     def usages(self) -> DataFrame:
