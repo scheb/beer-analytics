@@ -3,9 +3,9 @@ from __future__ import annotations
 import abc
 import json
 import re
-from typing import Optional
+from typing import Optional, List
 
-from recipe_db.models import Recipe
+from recipe_db.models import Recipe, RecipeFermentable, RecipeHop, RecipeYeast
 
 
 class MalformedDataError(Exception):
@@ -15,9 +15,9 @@ class MalformedDataError(Exception):
 class ParserResult:
     def __init__(self) -> None:
         self.recipe = Recipe()
-        self.fermentables = []
-        self.hops = []
-        self.yeasts = []
+        self.fermentables: List[RecipeFermentable] = []
+        self.hops: List[RecipeHop] = []
+        self.yeasts: List[RecipeYeast] = []
 
 
 class FormatParser:
