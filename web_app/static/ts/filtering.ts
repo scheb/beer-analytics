@@ -1,6 +1,6 @@
 import {Slider, SliderChangeEventArgs, SliderTooltipEventArgs} from "@syncfusion/ej2-inputs";
 import {
-    CheckBoxSelection,
+    CheckBoxSelection, DropDownList,
     FilteringEventArgs,
     MultiSelect,
     MultiSelectChangeEventArgs
@@ -443,10 +443,10 @@ class IngredientSelectUi {
             return
         }
 
-        const select: MultiSelect = new MultiSelect({
+        const select: DropDownList = new DropDownList({
             // @ts-ignore
             dataSource: ingredients,
-            value: this.state.selected,
+            value: this.state.selected[0] ?? null,
             fields: { text: 'name', value: 'id' },
             placeholder: 'Filter ' + ingredientName,
             allowFiltering: true,
