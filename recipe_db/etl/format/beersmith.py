@@ -362,14 +362,15 @@ class BeerSmithParser(FormatParser):
             # Add an extra attribute to pass the value around
             hop.ibu_contrib = bs_hop.float_or_none("ibu_contrib") or 0.0
 
-            if hop.use != RecipeHop.DRY_HOP:
-                hop.time = bs_hop.float_or_none("boil_time")
+            # Dry hop time
+            if hop.use == RecipeHop.DRY_HOP:
+                dry_hop_time = bs_hop.float_or_none("dry_hop_time")
+                if dry_hop_time is not None and dry_hop_time > 0:
+                    hop.time = dry_hop_time * 24 * 60  # Days to minutes
 
-            # Force dry hop use when dry hop time is set
-            dry_hop_time = bs_hop.float_or_none("dry_hop_time")
-            if dry_hop_time is not None and dry_hop_time > 0:
-                hop.use = RecipeHop.DRY_HOP
-                hop.time = dry_hop_time * 24 * 60  # Days to minutes
+            # Use boil time for everything else
+            else:
+                hop.time = bs_hop.float_or_none("boil_time")
 
             # Force Aroma use when boil time is low
             if hop.use == RecipeHop.BOIL and hop.time is not None and hop.time <= 5:
