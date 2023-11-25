@@ -23,7 +23,7 @@ class StyleAnalysis:
 
         self.recipe_scope = RecipeScope()
         self.recipe_scope.style_criteria = RecipeScope.StyleCriteria()
-        self.recipe_scope.style_criteria = [style]
+        self.recipe_scope.style_criteria.styles = [style]
 
     def recipes_per_month(self) -> DataFrame:
         analysis = RecipesCountAnalysis(self.recipe_scope)
