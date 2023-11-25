@@ -231,9 +231,9 @@ class RecipeScope:
                     style_filter.where_parameters
                 )
             else:
-                style_filter = WhereFilterCriteria.in_filter("rah.style_id", style_ids)
+                style_filter = WhereFilterCriteria.in_filter("ras.style_id", style_ids)
                 return JoinFilterCriteria(
-                    "recipe_db_recipe_associated_styles AS rah ON rah.recipe_id = r.uid AND %s" % style_filter.where_statement,
+                    "recipe_db_recipe_associated_styles AS ras ON ras.recipe_id = r.uid AND %s" % style_filter.where_statement,
                     style_filter.where_parameters
                 )
 
@@ -286,7 +286,7 @@ class RecipeScope:
                 raise Exception("Filtering recipes by multiple yeasts is currently not supported")
 
             yeast_ids = list(map(lambda y: y.id, self.yeasts))
-            yeast_filter = WhereFilterCriteria.in_filter("raf.yeast_id", yeast_ids)
+            yeast_filter = WhereFilterCriteria.in_filter("ray.yeast_id", yeast_ids)
             return JoinFilterCriteria(
                 "recipe_db_recipe_associated_yeasts AS ray ON ray.recipe_id = r.uid AND %s" % yeast_filter.where_statement,
                 yeast_filter.where_parameters
