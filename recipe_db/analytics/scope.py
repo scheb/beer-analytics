@@ -164,7 +164,7 @@ class StyleCriteriaMixin:
         return list(ids)
 
     def get_style_filter(self) -> WhereFilterCriteria:
-        return WhereFilterCriteria.in_filter("ras.style_id", self.get_style_ids())
+        return WhereFilterCriteria.in_filter("f_ras.style_id", self.get_style_ids())
 
 
 class HopCriteriaMixin:
@@ -227,13 +227,13 @@ class RecipeScope:
                 # This approach avoids duplicating recipes through the join
                 style_filter = WhereFilterCriteria.in_filter("style_id", style_ids)
                 return JoinFilterCriteria(
-                    "(SELECT DISTINCT recipe_id FROM recipe_db_recipe_associated_styles WHERE %s) AS ras ON ras.recipe_id = r.uid" % style_filter.where_statement,
+                    "(SELECT DISTINCT recipe_id FROM recipe_db_recipe_associated_styles WHERE %s) AS f_ras ON f_ras.recipe_id = r.uid" % style_filter.where_statement,
                     style_filter.where_parameters
                 )
             else:
-                style_filter = WhereFilterCriteria.in_filter("ras.style_id", style_ids)
+                style_filter = WhereFilterCriteria.in_filter("f_ras.style_id", style_ids)
                 return JoinFilterCriteria(
-                    "recipe_db_recipe_associated_styles AS ras ON ras.recipe_id = r.uid AND %s" % style_filter.where_statement,
+                    "recipe_db_recipe_associated_styles AS f_ras ON f_ras.recipe_id = r.uid AND %s" % style_filter.where_statement,
                     style_filter.where_parameters
                 )
 
@@ -250,9 +250,9 @@ class RecipeScope:
                 raise Exception("Filtering recipes by multiple hops is currently not supported")
 
             hop_ids = list(map(lambda y: y.id, self.hops))
-            hop_filter = WhereFilterCriteria.in_filter("rah.hop_id", hop_ids)
+            hop_filter = WhereFilterCriteria.in_filter("f_rah.hop_id", hop_ids)
             return JoinFilterCriteria(
-                "recipe_db_recipe_associated_hops AS rah ON rah.recipe_id = r.uid AND %s" % hop_filter.where_statement,
+                "recipe_db_recipe_associated_hops AS f_rah ON f_rah.recipe_id = r.uid AND %s" % hop_filter.where_statement,
                 hop_filter.where_parameters
             )
 
@@ -268,9 +268,9 @@ class RecipeScope:
                 raise Exception("Filtering recipes by multiple fermentables is currently not supported")
 
             fermentable_ids = list(map(lambda y: y.id, self.fermentables))
-            fermentable_filter = WhereFilterCriteria.in_filter("raf.fermentable_id", fermentable_ids)
+            fermentable_filter = WhereFilterCriteria.in_filter("f_raf.fermentable_id", fermentable_ids)
             return JoinFilterCriteria(
-                "recipe_db_recipe_associated_fermentables AS raf ON raf.recipe_id = r.uid AND %s" % fermentable_filter.where_statement,
+                "recipe_db_recipe_associated_fermentables AS f_raf ON f_raf.recipe_id = r.uid AND %s" % fermentable_filter.where_statement,
                 fermentable_filter.where_parameters
             )
 
@@ -286,9 +286,9 @@ class RecipeScope:
                 raise Exception("Filtering recipes by multiple yeasts is currently not supported")
 
             yeast_ids = list(map(lambda y: y.id, self.yeasts))
-            yeast_filter = WhereFilterCriteria.in_filter("ray.yeast_id", yeast_ids)
+            yeast_filter = WhereFilterCriteria.in_filter("f_ray.yeast_id", yeast_ids)
             return JoinFilterCriteria(
-                "recipe_db_recipe_associated_yeasts AS ray ON ray.recipe_id = r.uid AND %s" % yeast_filter.where_statement,
+                "recipe_db_recipe_associated_yeasts AS f_ray ON f_ray.recipe_id = r.uid AND %s" % yeast_filter.where_statement,
                 yeast_filter.where_parameters
             )
 
