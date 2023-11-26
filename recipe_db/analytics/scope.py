@@ -164,7 +164,7 @@ class StyleCriteriaMixin:
         return list(ids)
 
     def get_style_filter(self) -> WhereFilterCriteria:
-        return WhereFilterCriteria.in_filter("f_ras.style_id", self.get_style_ids())
+        return WhereFilterCriteria.in_filter("ras.style_id", self.get_style_ids())
 
 
 class HopCriteriaMixin:
