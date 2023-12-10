@@ -479,6 +479,14 @@ class Hop(models.Model):
         super().save(*args, **kwargs)
 
     @classmethod
+    def get_most_searched(cls, limit: int = 10):
+        return cls.objects.filter(search_popularity__gt=0).order_by('-search_popularity')[:limit]
+
+    @classmethod
+    def get_most_popular(cls, limit: int = 10):
+        return cls.objects.filter(recipes_count__gt=0).order_by('-recipes_count')[:limit]
+
+    @classmethod
     def create_id(cls, name: str) -> str:
         return create_human_readable_id(name)
 
