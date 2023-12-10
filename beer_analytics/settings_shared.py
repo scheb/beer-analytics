@@ -1,4 +1,3 @@
-import json
 import structlog
 from os import path
 from pathlib import Path
