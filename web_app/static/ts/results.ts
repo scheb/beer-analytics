@@ -23,6 +23,9 @@ export class ChartConfig {
 interface PlotlyData {
     data: Plotly.Data[]
     layout: Partial<Plotly.Layout>
+}
+
+interface NoData {
     no_data: null|boolean
 }
 
@@ -31,8 +34,12 @@ function hasResponseNoData(response: RequestResult): boolean {
         return true
     }
 
-    const data = response.json<PlotlyData>()
-    return !!data.no_data
+    if (response.xhr.getResponseHeader("Content-Type") === "application/json") {
+        const data = response.json<NoData>()
+        return !!data.no_data
+    }
+
+    return false
 }
 
 export class ChartContainer {

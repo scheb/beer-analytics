@@ -25,7 +25,7 @@ export interface RequestResult {
     statusText: string
     data: string
     json: <T>() => T
-    headers: string
+    xhr: XMLHttpRequest
 }
 
 export function queryParams(params: any = {}) {
@@ -44,7 +44,7 @@ function parseXHRResult(xhr: XMLHttpRequest): RequestResult {
         ok: xhr.status >= 200 && xhr.status < 300,
         status: xhr.status,
         statusText: xhr.statusText,
-        headers: xhr.getAllResponseHeaders(),
+        xhr: xhr,
         data: xhr.responseText,
         json: <T>() => JSON.parse(xhr.responseText) as T,
     }
@@ -55,7 +55,7 @@ function errorResponse(xhr: XMLHttpRequest, message: string | null = null): Requ
         ok: false,
         status: xhr.status,
         statusText: xhr.statusText,
-        headers: xhr.getAllResponseHeaders(),
+        xhr: xhr,
         data: message || xhr.statusText,
         json: <T>() => JSON.parse(message || xhr.statusText) as T,
     }
