@@ -16,7 +16,7 @@ export const DEFAULT_REQUEST_OPTIONS = {
         Accept: 'application/json, text/javascript, text/plain',
     },
     // default max duration for a request
-    timeout: 30000,
+    timeout: 60000,
 }
 
 export interface RequestResult {
