@@ -53,7 +53,7 @@ class Command(BaseCommand):
                         "style_category_chart_data",
                         kwargs=dict(
                             category_slug=style.category_slug,
-                            chart_type=chart_type,
+                            chart_type=StyleChartFactory.urlize_type(chart_type),
                         ),
                     )
                 else:
@@ -62,7 +62,7 @@ class Command(BaseCommand):
                         kwargs=dict(
                             category_slug=style.category_slug,
                             slug=style.slug,
-                            chart_type=chart_type,
+                            chart_type=StyleChartFactory.urlize_type(chart_type),
                         ),
                     )
 
@@ -84,7 +84,7 @@ class Command(BaseCommand):
                     kwargs=dict(
                         category_id=hop.category,
                         slug=hop.id,
-                        chart_type=chart_type,
+                        chart_type=HopChartFactory.urlize_type(chart_type),
                     ),
                 )
 
@@ -106,7 +106,7 @@ class Command(BaseCommand):
                     kwargs=dict(
                         category_id=fermentable.category,
                         slug=fermentable.id,
-                        chart_type=chart_type,
+                        chart_type=FermentableChartFactory.urlize_type(chart_type),
                     ),
                 )
 
@@ -128,7 +128,7 @@ class Command(BaseCommand):
                     kwargs=dict(
                         type_id=yeast.type,
                         slug=yeast.id,
-                        chart_type=chart_type,
+                        chart_type=YeastChartFactory.urlize_type(chart_type),
                     ),
                 )
 
@@ -140,7 +140,7 @@ class Command(BaseCommand):
                     "trend_chart_data",
                     kwargs=dict(
                         period=period.value,
-                        chart_type=chart_type,
+                        chart_type=TrendChartFactory.urlize_type(chart_type),
                     ),
                 )
 

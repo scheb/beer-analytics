@@ -125,5 +125,9 @@ class YeastChartFactory:
         return chart_type.replace("-", "_")
 
     @classmethod
+    def urlize_type(cls, chart_type: str) -> str:
+        return chart_type.replace("_", "-")
+
+    @classmethod
     def get_types(cls):
         return list(cls.CHARTS.keys())
