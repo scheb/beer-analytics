@@ -189,6 +189,10 @@ class Style(models.Model):
     def get_ids_including_sub_styles(self) -> list:
         return list(map(lambda x: x.id, self.get_style_including_sub_styles()))
 
+    @classmethod
+    def get_most_searched(cls, limit: int = 10):
+        return cls.objects.filter(search_popularity__gt=0).order_by('-search_popularity')[:limit]
+
     @property
     def parent_styles(self) -> iter:
         s = self
@@ -355,6 +359,10 @@ class Fermentable(models.Model):
         if self.id == "":
             self.id = self.create_id(self.name)
         super().save(*args, **kwargs)
+
+    @classmethod
+    def get_most_searched(cls, limit: int = 10):
+        return cls.objects.filter(search_popularity__gt=0).order_by('-search_popularity')[:limit]
 
     @classmethod
     def create_id(cls, name: str) -> str:
@@ -670,6 +678,10 @@ class Yeast(models.Model):
         if self.id == "":
             self.id = self.create_id(self.name, self.lab, self.brand, self.product_id)
         super().save(*args, **kwargs)
+
+    @classmethod
+    def get_most_searched(cls, limit: int = 10):
+        return cls.objects.filter(search_popularity__gt=0).order_by('-search_popularity')[:limit]
 
     @classmethod
     def create_id(cls, name: str, lab: str, brand: str, product_id: Optional[str]) -> str:
