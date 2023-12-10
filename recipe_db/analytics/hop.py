@@ -9,7 +9,7 @@ from recipe_db.analytics import METRIC_PRECISION, lowerfence, q1, q3, upperfence
 from recipe_db.analytics.recipe import RecipeLevelAnalysis
 from recipe_db.analytics.scope import StyleSelection, HopSelection, HopScope
 from recipe_db.analytics.utils import remove_outliers, get_style_names_dict, get_hop_names_dict, db_query_fetch_dictlist, db_query_fetch_single
-from recipe_db.models import RecipeHop, Tag, IgnoredHop
+from recipe_db.models import RecipeHop, Tag, IgnoredHop, Hop
 
 
 class HopLevelAnalysis(ABC):
@@ -224,35 +224,28 @@ class HopAmountAnalysis(RecipeLevelAnalysis):
 
 
 class HopPairingAnalysis(RecipeLevelAnalysis):
-    def pairings(self, hop_selection: Optional[HopSelection] = None) -> DataFrame:
-        hop_selection = hop_selection or HopSelection()
-
+    def pairings(self, hop_selection: Optional[Hop] = None) -> DataFrame:
         recipe_scope_filter = self.scope.get_filter()
-        hop_selection_filter = hop_selection.get_filter()
         query = """
             SELECT
                 rh.recipe_id,
                 rh.kind_id,
-                rh.amount_percent,
-                (1 {in_selection}) AS in_selection
+                SUM(rh.amount_percent) AS amount_percent
             FROM recipe_db_recipe AS r
             {join}
             JOIN recipe_db_recipehop AS rh
                 ON r.uid = rh.recipe_id
-            WHERE 1 {where}
+            WHERE rh.amount_percent > 0 {where}
+            GROUP BY rh.recipe_id, rh.kind_id
+            ORDER BY rh.kind_id ASC
         """.format(
-            in_selection=hop_selection_filter.where_statement,
             join=recipe_scope_filter.join_statement,
             where=recipe_scope_filter.where_statement,
         )
 
-        query_parameters = (hop_selection_filter.where_parameters
-                            + recipe_scope_filter.join_parameters
+        query_parameters = (recipe_scope_filter.join_parameters
                             + recipe_scope_filter.where_parameters)
         df = pd.read_sql(query, connection, params=query_parameters)
-
-        # Aggregate amount per recipe
-        df = df.groupby(["recipe_id", "kind_id"]).agg({"amount_percent": "sum", "in_selection": "any"}).reset_index()
 
         # Create unique pairs per recipe
         pairs = pd.merge(df, df, on="recipe_id", suffixes=("_1", "_2"))
@@ -260,7 +253,8 @@ class HopPairingAnalysis(RecipeLevelAnalysis):
         pairs["pairing"] = pairs["kind_id_1"] + " " + pairs["kind_id_2"]
 
         # Filter pairs for hops within selection
-        pairs = pairs[pairs["in_selection_1"] | pairs["in_selection_2"]]
+        if hop_selection is not None:
+            pairs = pairs[(pairs["kind_id_1"] == hop_selection.id) | (pairs["kind_id_2"] == hop_selection.id)]
 
         # Filter only the top pairs
         top_pairings = pairs["pairing"].value_counts()[:12].index.values
@@ -277,7 +271,7 @@ class HopPairingAnalysis(RecipeLevelAnalysis):
         agg = [lowerfence, q1, "median", "mean", q3, upperfence, "count"]
         aggregated = top_pairings.groupby(["pairing", "kind_id"]).agg({"amount_percent": agg})
         aggregated = aggregated.reset_index()
-        aggregated = aggregated.sort_values(by=("amount_percent", "count"), ascending=False)
+        aggregated = aggregated.sort_values(by=[("amount_percent", "count"), "pairing", "kind_id"], ascending=[False, True, True])
 
         # Finally, add hop names
         aggregated["hop"] = aggregated["kind_id"].map(get_hop_names_dict())

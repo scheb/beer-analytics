@@ -56,7 +56,7 @@ class HopAnalysis:
         return analysis.popularity_per_hop(self.hop_selection)
 
     def amount_per_use(self) -> DataFrame:
-        analysis = HopAmountAnalysis(RecipeScope())
+        analysis = HopAmountAnalysis(self.recipe_scope)
         return analysis.per_use(self.hop_selection)
 
     def amount_per_style(self) -> DataFrame:
@@ -72,8 +72,8 @@ class HopAnalysis:
         return analysis.common_styles_relative(num_top=16)
 
     def pairings(self) -> DataFrame:
-        analysis = HopPairingAnalysis(RecipeScope())
-        return analysis.pairings(self.hop_selection)
+        analysis = HopPairingAnalysis(self.recipe_scope)
+        return analysis.pairings(self.hop)
 
     def popular_yeasts(self) -> DataFrame:
         analysis = RecipesPopularityAnalysis(self.recipe_scope)
