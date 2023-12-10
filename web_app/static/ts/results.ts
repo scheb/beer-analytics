@@ -23,6 +23,16 @@ export class ChartConfig {
 interface PlotlyData {
     data: Plotly.Data[]
     layout: Partial<Plotly.Layout>
+    no_data: null|boolean
+}
+
+function hasResponseNoData(response: RequestResult): boolean {
+    if (response.status === 204) {
+        return true
+    }
+
+    const data = response.json<PlotlyData>()
+    return !!data.no_data
 }
 
 export class ChartContainer {
@@ -115,7 +125,7 @@ export class Chart {
     private handleResponse(response: RequestResult) {
         this.currentRequest = null
         this.container.classList.remove('chart-loading')
-        if (response.status === 204) {
+        if (hasResponseNoData(response)) {
             this.handleNoData()
         } else if (response.status === 200) {
             this.handleRenderChart(response)
@@ -225,7 +235,7 @@ export class Recipes {
 
     private handleResponse(response: RequestResult) {
         this.container.classList.remove('chart-loading')
-        if (response.status === 204) {
+        if (hasResponseNoData(response)) {
             this.handleNoData()
         } else if (response.status === 200) {
             this.handleRenderChart(response)

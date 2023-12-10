@@ -2,7 +2,7 @@ import json
 from typing import Optional, Iterable
 
 from django.conf import settings
-from django.http import HttpResponse, Http404, HttpRequest
+from django.http import HttpResponse, Http404, HttpRequest, JsonResponse
 from django.shortcuts import render
 from django.template import TemplateDoesNotExist, loader
 from django.urls import reverse
@@ -90,3 +90,7 @@ def get_template_if_exists(template: str) -> Optional[str]:
         return template
 
     return None
+
+
+def no_data_response() -> HttpResponse:
+    return JsonResponse({"no_data": True})

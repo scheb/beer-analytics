@@ -9,7 +9,7 @@ from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.trend import TrendChartFactory, TrendPeriod
 from web_app.charts.utils import NoDataException
 from web_app.meta import TrendMeta, PopularHopsMeta
-from web_app.views.utils import render_chart
+from web_app.views.utils import render_chart, no_data_response
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
@@ -55,7 +55,7 @@ def chart(request: HttpRequest, period: str, chart_type: str, format: str) -> Ht
         try:
             chart = TrendChartFactory.plot_chart(chart_type, trend_period, filter_param)
         except NoDataException:
-            return HttpResponse(status=204)
+            return no_data_response()
     else:
         raise Http404("Unknown chart type %s." % chart_type)
 

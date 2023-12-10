@@ -11,7 +11,7 @@ from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.utils import NoDataException
 from web_app.charts.yeast import YeastChartFactory
 from web_app.meta import YeastMeta, YeastOverviewMeta
-from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, get_template_if_exists
+from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, get_template_if_exists, no_data_response
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
@@ -111,7 +111,7 @@ def chart(request: HttpRequest, slug: str, type_id: str, chart_type: str, format
         try:
             chart = YeastChartFactory.plot_chart(yeast, chart_type)
         except NoDataException:
-            return HttpResponse(status=204)
+            return no_data_response()
     else:
         raise Http404("Unknown chart type %s." % chart_type)
 
