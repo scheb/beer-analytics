@@ -68,14 +68,14 @@
                 </figure>
             {% endspaceless %}{% endif %}
 
-            {% if hop.accessible_pairings.count %}{% spaceless %}
+            {% if hop.significant_pairings.count %}{% spaceless %}
                 <figure class="badge-list">
                     <figcaption>Pairings:</figcaption>
-                    <ul>
-                    {% for paired_hop in hop.accessible_pairings %}
-                        <li><a href="{{ paired_hop|url }}" class="badge bg-secondary">{{ paired_hop.name }}</a></li>
+                    <ol>
+                    {% for pairing in hop.significant_pairings %}
+                        <li><a href="{{ pairing.paired_hop|url }}" class="badge bg-secondary">{{ pairing.paired_hop.name }}</a></li>
                     {% endfor %}
-                    </ul>
+                    </ol>
                     <small class="ms-1 text-nowrap">☞ <a href="#hop-pairings" data-interaction="Hops:Click See Dosage">See Dosage</a></small>
                 </figure>
             {% endspaceless %}{% endif %}

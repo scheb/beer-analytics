@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 
 from recipe_db.analytics.metrics.hop import HopMetricCalculator
-from recipe_db.models import Hop
+from recipe_db.models import Hop, HopPairing
 
 HOP_MIN_RECIPES = 20
 
@@ -12,7 +12,7 @@ class Command(BaseCommand):
         calculator = HopMetricCalculator()
 
         for hop in Hop.objects.all():
-            hop.pairings.clear()  # Clear existing pairings
+            hop.pairings.delete()  # Remove existing pairings
             if hop.recipes_count is None or hop.recipes_count < HOP_MIN_RECIPES:
                 continue
 
@@ -20,8 +20,7 @@ class Command(BaseCommand):
             pairings = calculator.clac_pairings(hop)
 
             for kind_id, count in pairings.items():
-                if count < (hop.recipes_count / 10):  # Must be used in at least 10% of all recipes to be taken into account
-                    break  # Sorted by count, so we can stop here
-
                 self.stdout.write("- Pairing: {} -> {} recipes".format(kind_id, count))
-                hop.pairings.add(kind_id)
+                paired_hop = Hop.objects.get(pk=kind_id)
+                pairing = HopPairing(hop=hop, paired_hop=paired_hop, rank=count)
+                pairing.save()

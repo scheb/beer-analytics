@@ -77,7 +77,6 @@ class HopMetricCalculator:
             WHERE rh1.kind_id = %s
             GROUP BY rh1.kind_id, rh2.kind_id
             ORDER BY num_recipes DESC
-            LIMIT 10
         """
 
         return dict(db_query_fetch_tuples(query, [hop.id]))

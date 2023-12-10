@@ -452,7 +452,6 @@ class Hop(models.Model):
     used_for = models.CharField(max_length=255, default=None, blank=True, null=True)
     description = models.CharField(max_length=255, default=None, blank=True, null=True)
     substitutes = models.ManyToManyField("self", symmetrical=False, related_name="substitute_for_list")
-    pairings = models.ManyToManyField("self", symmetrical=False, related_name="paired_with_list")
     aroma_tags = models.ManyToManyField(Tag)
     search_popularity = models.IntegerField(default=None, blank=True, null=True)
 
@@ -553,12 +552,22 @@ class Hop(models.Model):
         return self.substitutes.filter(recipes_count__gt=0).order_by("name")
 
     @property
-    def accessible_pairings(self):
-        return self.pairings.filter(recipes_count__gt=0).order_by("name")
+    def pairings(self):
+        return self.hoppairing_set.order_by('-rank')
+
+    @property
+    def significant_pairings(self):
+        return self.hoppairing_set.filter(rank__gte=(self.recipes_count / 10)).order_by('-rank')
 
     @property
     def is_popular(self) -> bool:
         return self.recipes_percentile is not None and self.recipes_percentile > 0.9
+
+
+class HopPairing(models.Model):
+    hop = models.ForeignKey(Hop, on_delete=models.CASCADE)
+    paired_hop = models.ForeignKey(Hop, on_delete=models.CASCADE, related_name='pairedhop_set')
+    rank = models.IntegerField()
 
 
 class IgnoredHop(models.Model):
