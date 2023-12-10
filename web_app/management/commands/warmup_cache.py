@@ -48,14 +48,23 @@ class Command(BaseCommand):
         for style in styles:
             chart_types = StyleChartFactory.get_types()
             for chart_type in chart_types:
-                yield BASE_URL + reverse(
-                    "style_chart_data",
-                    kwargs=dict(
-                        category_slug=style.category_slug,
-                        slug=style.slug,
-                        chart_type=chart_type,
-                    ),
-                )
+                if style.is_category:
+                    yield BASE_URL + reverse(
+                        "style_category_chart_data",
+                        kwargs=dict(
+                            category_slug=style.category_slug,
+                            chart_type=chart_type,
+                        ),
+                    )
+                else:
+                    yield BASE_URL + reverse(
+                        "style_chart_data",
+                        kwargs=dict(
+                            category_slug=style.category_slug,
+                            slug=style.slug,
+                            chart_type=chart_type,
+                        ),
+                    )
 
     def get_warmup_urls_for_hop(self) -> Iterable[str]:
         # Most popular hops by search
