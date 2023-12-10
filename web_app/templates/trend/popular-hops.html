@@ -28,6 +28,11 @@
                 including beer brewing. By analyzing the volume of searches related to different types of hops, we can gauge
                 which hops are currently the most popular among brewers and beer enthusiasts.
             </p>
+            <ol>
+                {% for hop in most_searched_hops %}
+                    <li><a href="{{ hop|url }}">{{ hop.name }}</a></li>
+                {% endfor %}
+            </ol>
             <div class="card card-chart">
                 <div class="card-body">
                     <div id="chart-{{ chart_type }}" class="chart-m" data-chart="{% url "trend_chart" "seasonal" chart_type "json" %}">
@@ -41,7 +46,7 @@
 
         <div class="featured-hops">
             <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
-                {% for hop in most_searched_hops %}
+                {% for hop in most_searched_hops|slice:":4" %}
                     <div class="col">{% include "hop/featured.html" with hop=hop %}</div>
                 {% endfor %}
             </div>
@@ -57,6 +62,11 @@
                 different hop varieties. By examining a large number of beer recipes, one can identify the most popular
                 hops among homebrewers.
             </p>
+            <ol>
+                {% for hop in most_used_hops %}
+                    <li><a href="{{ hop|url }}">{{ hop.name }}</a></li>
+                {% endfor %}
+            </ol>
             <div class="card card-chart">
                 <div class="card-body">
                     <div id="chart-{{ chart_type }}" class="chart-m" data-chart="{% url "trend_chart" "seasonal" chart_type "json" %}">
@@ -70,7 +80,7 @@
 
         <div class="featured-hops">
             <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
-                {% for hop in most_used_hops %}
+                {% for hop in most_used_hops|slice:":4" %}
                     <div class="col">{% include "hop/featured.html" with hop=hop %}</div>
                 {% endfor %}
             </div>

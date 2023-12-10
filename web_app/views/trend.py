@@ -68,8 +68,8 @@ def popular_hops(request: HttpRequest) -> HttpResponse:
     context = {
         "meta": meta,
         "month": datetime.now().strftime("%B %Y"),
-        "most_searched_hops": Hop.objects.filter(search_popularity__gt=0).order_by('-search_popularity')[:6],
-        "most_used_hops": Hop.objects.filter(recipes_count__gt=0).order_by('-recipes_count')[:6],
+        "most_searched_hops": Hop.objects.filter(search_popularity__gt=0).order_by('-search_popularity')[:10],
+        "most_used_hops": Hop.objects.filter(recipes_count__gt=0).order_by('-recipes_count')[:10],
     }
 
     return render(request, "trend/popular-hops.html", context)
