@@ -52,7 +52,7 @@ class Command(BaseCommand):
                     "style_chart_data",
                     kwargs=dict(
                         category_slug=style.category_slug,
-                        slug=style.id,
+                        slug=style.slug,
                         chart_type=chart_type,
                     ),
                 )
@@ -139,4 +139,4 @@ class Command(BaseCommand):
         for url in urls:
             self.stdout.write(url)
             response = requests.get(url)
-            self.stdout.write("%s sec." % response.elapsed.total_seconds())
+            self.stdout.write("%s - %s sec." % (response.status_code, response.elapsed.total_seconds()))
