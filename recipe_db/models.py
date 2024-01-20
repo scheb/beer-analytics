@@ -864,15 +864,6 @@ class Recipe(models.Model):
 
         super().save(*args, **kwargs)
 
-        # Update linked styles (style including parents)
-        if self.__original_style != self.style:
-            self.associated_styles.remove()
-            if self.style is not None:
-                self.associated_styles.add(self.style)
-                for style in self.style.parent_styles:
-                    if not style.is_category:
-                        self.associated_styles.add(style)
-
     def derive_missing_values(self, from_field_name: str, to_field_name: str, calc_function: callable) -> None:
         if getattr(self, to_field_name) is None:
             from_field_value = getattr(self, from_field_name)
