@@ -9,7 +9,8 @@ from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.style import StyleChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.meta import StyleOverviewMeta, StyleMeta
-from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, get_template_if_exists, no_data_response
+from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, get_template_if_exists, no_data_response, \
+    get_style_description
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
@@ -58,7 +59,7 @@ def display_style(request: HttpRequest, style: Style) -> HttpResponse:
             ),
         )
 
-    long_description_template = get_template_if_exists("style/descriptions/%s.html" % style.id)
+    long_description_template = get_style_description(style.id)
     context = {"style": style, "meta": meta, "long_description": long_description_template}
     return render(request, "style/detail.html", context)
 

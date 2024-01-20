@@ -1,7 +1,5 @@
-import json
 from typing import Optional, Iterable
 
-from django.conf import settings
 from django.http import HttpResponse, Http404, HttpRequest, JsonResponse
 from django.shortcuts import render
 from django.template import TemplateDoesNotExist, loader
@@ -90,6 +88,18 @@ def get_template_if_exists(template: str) -> Optional[str]:
         return template
 
     return None
+
+
+try:
+    import content
+except ImportError:
+    def get_style_description() -> Optional[str]:
+        return None
+else:
+    from content.loader import fetch_style_description
+
+    def get_style_description(style_id: str) -> Optional[str]:
+        return fetch_style_description(style_id)
 
 
 def no_data_response() -> HttpResponse:
