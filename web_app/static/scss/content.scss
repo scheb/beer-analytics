@@ -218,6 +218,16 @@ h2, h3 {
     .recipes-count {
         float: right;
     }
+
+    .style-alias {
+        font-size: 0.75rem;
+        --bs-text-opacity: 1;
+        color: var(--bs-secondary-color) !important;
+
+        @include media-breakpoint-up('md') {
+            font-size: 0.875rem;
+        }
+    }
 }
 
 .search {

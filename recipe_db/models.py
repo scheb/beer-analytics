@@ -87,12 +87,13 @@ class Tag(models.Model):
 # https://www.brewersassociation.org/edu/brewers-association-beer-style-guidelines/
 # https://www.dummies.com/food-drink/drinks/beer/beer-style-guidelines-hierarchy/
 class Style(models.Model):
-    id = models.CharField(max_length=4, primary_key=True)
+    id = models.CharField(max_length=5, primary_key=True)
     slug = models.SlugField()
     name = models.CharField(max_length=255)
     parent_style = models.ForeignKey("self", on_delete=models.SET_NULL, default=None, blank=True, null=True)
     alt_names = models.CharField(max_length=255, default=None, blank=True, null=True)
     alt_names_extra = models.CharField(max_length=1024, default=None, blank=True, null=True)
+    bjcp_url = models.CharField(max_length=255, default=None, blank=True, null=True)
     search_popularity = models.IntegerField(default=None, blank=True, null=True)
 
     # Metrics
@@ -140,20 +141,6 @@ class Style(models.Model):
     recipes_final_plato_min = models.FloatField(default=None, blank=True, null=True)
     recipes_final_plato_mean = models.FloatField(default=None, blank=True, null=True)
     recipes_final_plato_max = models.FloatField(default=None, blank=True, null=True)
-
-    # Classifications
-    strength = models.CharField(max_length=255, default=None, blank=True, null=True)
-    color = models.CharField(max_length=255, default=None, blank=True, null=True)
-    fermentation = models.CharField(max_length=255, default=None, blank=True, null=True)
-    conditioning = models.CharField(max_length=255, default=None, blank=True, null=True)
-    region_of_origin = models.CharField(max_length=255, default=None, blank=True, null=True)
-    family = models.CharField(max_length=255, default=None, blank=True, null=True)
-    specialty_beer = models.BooleanField(default=False)
-    era = models.CharField(max_length=255, default=None, blank=True, null=True)
-    bitter_balances = models.CharField(max_length=255, default=None, blank=True, null=True)
-    sour_hoppy_sweet = models.CharField(max_length=255, default=None, blank=True, null=True)
-    spice = models.CharField(max_length=255, default=None, blank=True, null=True)
-    smoke_roast = models.CharField(max_length=255, default=None, blank=True, null=True)
 
     def save(self, *args, **kwargs) -> None:
         if self.slug == "":
@@ -292,6 +279,11 @@ class Style(models.Model):
             if getattr(self, field) is not None:
                 return True
         return False
+
+    @property
+    def bjcp_id(self):
+        # Remove extra suffix that was added to make ids unique
+        return re.sub("\.[0-9]+$", "", self.id)
 
     @property
     def is_popular(self) -> bool:

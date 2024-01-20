@@ -10,7 +10,7 @@
             <h1>{{ style.name }}</h1>
             {% if style.alt_names %}{% spaceless %}
                 <p class="detail-alias">
-                    Also known as:
+                    Includes styles:
                     {% for alt_name in style.alt_names_list %}{% if forloop.counter0 %}, {% endif %}<em>{{ alt_name }}</em>{% endfor %}
                 </p>
             {% endspaceless %}{% endif %}
@@ -19,9 +19,9 @@
         <dl class="detail-info">
             <dt>Recipes:</dt>
             <dd>{{ style.recipes_count }}</dd>
-            {% if style.id|length <= 3 %}
-            <dt>BJCP ID (2015):</dt>
-            <dd>{{ style.id }}</dd>
+            {% if style.bjcp_id %}
+            <dt>BJCP 2021:</dt>
+            <dd>{% if style.bjcp_url %}<a href="{{ style.bjcp_url }}" target="_blank">{{ style.bjcp_id }}</a>{% else %}{{ style.bjcp_id }}{% endif %}</dd>
             {% endif %}
         </dl>
 

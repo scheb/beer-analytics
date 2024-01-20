@@ -5,16 +5,16 @@
     <h1>List of Beer Styles</h1>
     <section>
         <p>
-            These beer styles are used to <strong>categorize the beer recipes</strong> in the database. With so many
-            different and overlapping styles in the craft brewing scene it's not easy to find a categorization scheme.
-            <em>Beer Analytics</em> has chosen to follow <a href="https://www.bjcp.org/">BJCP</a>'s
-            <a href="https://www.bjcp.org/docs/2015_Guidelines_Beer.pdf">Beer Style Guide from 2015</a> with minor changes
-            and additions.
+            The database categorizes beer recipes using specific beer styles. Given the complexity and overlapping
+            nature of styles in the craft brewing industry, finding an effective categorization scheme is challenging.
+            Beer Analytics has opted to use the <a href="https://www.bjcp.org/">BJCP</a> (Beer Judge Certification Program)
+            <a href="https://www.bjcp.org/style/2021/beer/">2021 Beer Style Guide</a> as a basis, with some minor
+            modifications and additions.
         </p>
 
         {% if most_popular %}{% spaceless %}
             <figure class="badge-list mb-4">
-                <figcaption>Most popular beer styles:</figcaption>
+                <figcaption>Most searched beer styles:</figcaption>
                 <ol>
                 {% for style in most_popular %}
                     <li><a class="badge" href="{{ style|url }}">{{ style.name }}</a></li>
@@ -43,13 +43,24 @@
                             <li class="list-group-item" data-search-term="{{ style1.name }}{% if style1.alt_names %}, {{ style1.alt_names }}{% endif %}">
                                 {% if style1.recipes_count %}<span class="recipes-count" title="Recipes">{{ style1.recipes_count }}</span>{% endif %}
                                 {% if style1.is_popular %}<strong>{% endif %}<a href="{{ style1|url }}">{{ style1.name }}</a>{% if style1.is_popular %}</strong>{% endif %}
+                                {% if style1.alt_names %}
+                                    <div class="style-alias">
+                                        {% for alt_name in style1.alt_names_list %}{% if forloop.counter0 %}, {% endif %}<em>{{ alt_name }}</em>{% endfor %}
+                                    </div>
+                                {% endif %}
 
+                                {# 3rd level beer styles #}
                                 {% if style1.has_sub_styles %}
                                     <ul class="search-group list-unstyled mt-1 ms-2">
                                         {% for style2 in style1.sub_styles %}
                                             <li data-search-term="{{ style2.name }}{% if style2.alt_names %}, {{ style2.alt_names }}{% endif %}">
                                                 {% if style2.recipes_count %}<span class="recipes-count" title="Recipes">{{ style2.recipes_count }}</span>{% endif %}
                                                 {% if style2.is_popular %}<strong>{% endif %}<a href="{{ style2|url }}">{{ style2.name }}</a>{% if style2.is_popular %}</strong>{% endif %}
+                                                {% if style1.alt_names %}
+                                                    <div class="style-alias">
+                                                        {% for alt_name in style2.alt_names_list %}{% if forloop.counter0 %}, {% endif %}<em>{{ alt_name }}</em>{% endfor %}
+                                                    </div>
+                                                {% endif %}
                                             </li>
                                         {% endfor %}
                                     </ul>
