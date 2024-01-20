@@ -27,8 +27,13 @@ INSTALLED_APPS = [
 
 try:
     import data_import
-
     INSTALLED_APPS.append("data_import.apps.DataImportConfig")
+except ModuleNotFoundError:
+    pass
+
+try:
+    import content
+    INSTALLED_APPS.append("content.apps.ContentConfig")
 except ModuleNotFoundError:
     pass
 
