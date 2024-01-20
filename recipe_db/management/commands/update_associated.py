@@ -3,7 +3,7 @@ from django.db import connection, transaction
 
 
 class Command(BaseCommand):
-    help = "Update the associated_* tables for ingredients"
+    help = "Update the associated_* tables"
 
     def add_arguments(self, parser):
         parser.add_argument("--entities", "-e", nargs="+", type=str, help="Entities to recalculate")
@@ -16,6 +16,8 @@ class Command(BaseCommand):
             self.calculate_for_fermentable()
         if "yeast" in entities:
             self.calculate_for_yeast()
+        if "style" in entities:
+            self.calculate_for_style()
 
     def calculate_for_hop(self):
         self.stdout.write("Calculate associated hops")
@@ -82,3 +84,39 @@ class Command(BaseCommand):
                     recipe_db_recipe_associated_yeasts_new TO recipe_db_recipe_associated_yeasts
             """)
             cursor.execute("DROP TABLE IF EXISTS recipe_db_recipe_associated_yeasts_old")
+
+    def calculate_for_style(self):
+        self.stdout.write("Calculate associated styles")
+        with connection.cursor() as cursor:
+            # Cleanup
+            cursor.execute("DROP TABLE IF EXISTS recipe_db_recipe_associated_styles_old")
+            cursor.execute("DROP TABLE IF EXISTS recipe_db_recipe_associated_styles_new")
+
+            # Recreate
+            cursor.execute("CREATE TABLE recipe_db_recipe_associated_styles_new LIKE recipe_db_recipe_associated_styles")
+            cursor.execute("""
+                INSERT INTO recipe_db_recipe_associated_styles_new (recipe_id, style_id)
+                SELECT uid, style_id
+                FROM recipe_db_recipe
+                WHERE style_id IS NOT NULL
+            """)
+
+            # Insert associations with parent styles
+            for i in range(4):
+                cursor.execute("""
+                    INSERT IGNORE INTO recipe_db_recipe_associated_styles_new (recipe_id, style_id)
+                    SELECT ras.recipe_id, s.parent_style_id
+                    FROM recipe_db_recipe_associated_styles_new AS ras
+                    JOIN recipe_db_style AS s ON ras.style_id = s.id
+                    WHERE s.parent_style_id IS NOT NULL
+                """)
+                # No additional rows inserted, we can stop
+                if cursor.rowcount == 0:
+                    break
+
+            cursor.execute("""
+                RENAME TABLE
+                    recipe_db_recipe_associated_styles TO recipe_db_recipe_associated_styles_old,
+                    recipe_db_recipe_associated_styles_new TO recipe_db_recipe_associated_styles
+            """)
+            cursor.execute("DROP TABLE IF EXISTS recipe_db_recipe_associated_styles_old")
