@@ -9,6 +9,8 @@ services:
         image: beer_analytics_local
         container_name: beer_analytics_django
         restart: on-failure
+        environment:
+            OPENAI_API_KEY: ${OPENAI_API_KEY}
         volumes:
             - .:/app:z
         ports:
