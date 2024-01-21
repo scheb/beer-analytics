@@ -1,7 +1,7 @@
 id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_max;srm_min;srm_max;og_min;og_max;fg_min;fg_max;bjcp_url
 1;;Standard American Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/1/standard-american-beer/
 1A;1;American Light Lager;;American Lite Lager;2.8;4.2;8;12;2;3;1028;1040;998;1008;https://www.bjcp.org/style/2021/1/1A/american-light-lager/
-1C;1;American Lager;;Amerikanisches Pilsner;4.2;5.3;8;18;2;3.5;1040;1050;1004;1010;https://www.bjcp.org/style/2021/1/1B/american-lager/
+1B;1;American Lager;;Amerikanisches Pilsner;4.2;5.3;8;18;2;3.5;1040;1050;1004;1010;https://www.bjcp.org/style/2021/1/1B/american-lager/
 1C;1;Cream Ale;;;4.2;5.6;8;20;2;5;1042;1055;1006;1012;https://www.bjcp.org/style/2021/1/1C/cream-ale/
 1D;1;American Wheat Beer;;American Wheat;4;5.5;15;30;3;6;1040;1055;1008;1013;https://www.bjcp.org/style/2021/1/1D/american-wheat-beer/
 2;;International Lager;;;;;;;;;;;;;https://www.bjcp.org/style/2021/2/international-lager/

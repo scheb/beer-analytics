@@ -1,4 +1,5 @@
 import csv
+import re
 from os import path
 from typing import Optional
 
@@ -9,8 +10,9 @@ from recipe_db.models import Style, Hop, Fermentable, Yeast, Tag
 
 
 def make_style_id(value):
-    if isinstance(value, int):
-        return "%02d" % value
+    # Leading 0 for single-digit categories
+    if re.match(r"^[0-9]([^0-9]|$)", value):
+        return "0"+value
     return value
 
 
