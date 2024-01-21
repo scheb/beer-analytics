@@ -11,8 +11,9 @@ from recipe_db.models import Style, Hop, Fermentable, Yeast, Tag
 
 def make_style_id(value):
     # Leading 0 for single-digit categories
-    if re.match(r"^[0-9]([^0-9]|$)", value):
-        return "0"+value
+    # It is important to have this prefixed, so we can do selections based on the numeric category id
+    if value is not None and re.match(r"^[0-9]([^0-9]|$)", str(value)):
+        return "0"+str(value)
     return value
 
 
