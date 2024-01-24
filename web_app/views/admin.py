@@ -12,7 +12,8 @@ from recipe_db.models import Hop, Tag, Yeast, Fermentable, IgnoredHop, RecipeHop
 from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.admin import AdminChartFactory
 from web_app.charts.utils import NoDataException
-from web_app.views.utils import render_chart, template_exists, no_data_response
+from web_app.views.utils import render_chart, no_data_response, get_hop_description, \
+    get_flavor_description, get_yeast_description, get_fermentable_description
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
@@ -92,28 +93,28 @@ def descriptions(request: HttpRequest) -> HttpResponse:
     fermentable_descriptions = []
 
     for hop in Hop.objects.all().order_by('-recipes_count'):
-        if not template_exists("hop/descriptions/hops/%s.html" % hop.id):
+        if get_hop_description(hop.id) is None:
             hop_descriptions.append({
                 'hop': hop,
                 'recipes_count': hop.recipes_count,
             })
 
     for flavor in Tag.objects.all().order_by('name'):
-        if not template_exists("hop/descriptions/flavors/%s.html" % flavor.id):
+        if get_flavor_description(flavor.id) is None:
             flavor_descriptions.append({
                 'name': flavor.name,
                 'hops_count': flavor.accessible_hops_count,
             })
 
     for yeast in Yeast.objects.all().order_by('-recipes_count'):
-        if not template_exists("yeast/descriptions/yeasts/%s.html" % yeast.id):
+        if get_yeast_description(yeast.id) is None:
             yeast_descriptions.append({
                 'yeast': yeast,
                 'recipes_count': yeast.recipes_count,
             })
 
     for fermentable in Fermentable.objects.all().order_by('-recipes_count'):
-        if not template_exists("fermentable/descriptions/fermentables/%s.html" % fermentable.id):
+        if get_fermentable_description(fermentable.id) is None:
             fermentable_descriptions.append({
                 'fermentable': fermentable,
                 'recipes_count': fermentable.recipes_count,

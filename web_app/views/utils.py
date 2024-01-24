@@ -75,31 +75,58 @@ def object_url(item: object):
     return None
 
 
-def template_exists(template: str) -> bool:
-    try:
-        loader.get_template(template)
-        return True
-    except TemplateDoesNotExist:
-        return False
-
-
-def get_template_if_exists(template: str) -> Optional[str]:
-    if template_exists(template):
-        return template
-
-    return None
-
-
 try:
     import content
 except ImportError:
     def get_style_description() -> Optional[str]:
         return None
+    def get_hop_description() -> Optional[str]:
+        return None
+    def fetch_hop_type_description() -> Optional[str]:
+        return None
+    def fetch_flavor_description() -> Optional[str]:
+        return None
+    def fetch_flavor_category_description() -> Optional[str]:
+        return None
+    def fetch_fermentable_description() -> Optional[str]:
+        return None
+    def fetch_fermentable_type_description() -> Optional[str]:
+        return None
+    def fetch_yeast_description() -> Optional[str]:
+        return None
+    def fetch_yeast_type_description() -> Optional[str]:
+        return None
 else:
-    from content.loader import fetch_style_description
+    from content.loader import (fetch_style_description, fetch_hop_description, fetch_hop_type_description,
+                                fetch_flavor_description, fetch_flavor_category_description, fetch_fermentable_description,
+                                fetch_fermentable_type_description, fetch_yeast_description, fetch_yeast_type_description)
 
     def get_style_description(style_id: str) -> Optional[str]:
         return fetch_style_description(style_id)
+
+    def get_hop_description(hop_id: str) -> Optional[str]:
+        return fetch_hop_description(hop_id)
+
+    def get_hop_type_description(hop_type_id: str) -> Optional[str]:
+        return fetch_hop_type_description(hop_type_id)
+
+    def get_flavor_description(flavor_id: str) -> Optional[str]:
+        return fetch_flavor_description(flavor_id)
+
+    def get_flavor_category_description(flavor_category_id: str) -> Optional[str]:
+        return fetch_flavor_category_description(flavor_category_id)
+
+    def get_fermentable_description(fermentable_id: str) -> Optional[str]:
+        return fetch_fermentable_description(fermentable_id)
+
+    def get_fermentable_type_description(fermentable_type_id: str) -> Optional[str]:
+        return fetch_fermentable_type_description(fermentable_type_id)
+
+    def get_yeast_description(yeast_id: str) -> Optional[str]:
+        return fetch_yeast_description(yeast_id)
+
+    def get_yeast_type_description(yeast_type_id: str) -> Optional[str]:
+        return fetch_yeast_type_description(yeast_type_id)
 
 
 def no_data_response() -> HttpResponse:

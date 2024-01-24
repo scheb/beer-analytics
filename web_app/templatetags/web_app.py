@@ -16,7 +16,7 @@ from web_app.charts.hop import HopChartFactory
 from web_app.charts.style import StyleChartFactory
 from web_app.charts.trend import TrendChartFactory, TrendPeriod
 from web_app.charts.yeast import YeastChartFactory
-from web_app.views.utils import object_url
+from web_app.views.utils import object_url, get_hop_description
 
 register = template.Library()
 
@@ -232,9 +232,8 @@ def get_priority(percentile: Optional[float]) -> float:
 @register.filter("description")
 def get_item_description(item: object):
     if isinstance(item, Hop):
-        template_file = "hop/descriptions/hops/%s.html" % item.id
         try:
-            return loader.get_template(template_file).render({})
+            return loader.get_template(get_hop_description(item.id)).render({})
         except TemplateDoesNotExist:
             return ""
 

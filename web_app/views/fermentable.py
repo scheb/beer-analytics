@@ -11,7 +11,8 @@ from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.fermentable import FermentableChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.meta import FermentableMeta, FermentableOverviewMeta
-from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, get_template_if_exists, no_data_response
+from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, no_data_response, \
+    get_fermentable_description, get_fermentable_type_description
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
@@ -49,7 +50,7 @@ def category(request: HttpRequest, category_id: str) -> HttpResponse:
         most_popular = fermentables_query.order_by("-search_popularity")[:5]
 
     meta = FermentableOverviewMeta((category_id, category_name)).get_meta()
-    long_description_template = get_template_if_exists("fermentable/descriptions/%s.html" % category_id)
+    long_description_template = get_fermentable_type_description(category_id)
     context = {
         "category_name": category_name,
         "fermentables": fermentables,
@@ -92,7 +93,7 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
             ),
         )
 
-    long_description_template = get_template_if_exists("fermentable/descriptions/fermentables/%s.html" % fermentable.id)
+    long_description_template = get_fermentable_description(fermentable.id)
     context = {
         "fermentable": fermentable,
         "description": meta_provider.get_description_html(),

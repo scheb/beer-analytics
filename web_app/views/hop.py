@@ -10,7 +10,8 @@ from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.meta import HopMeta, HopOverviewMeta, HopFlavorOverviewMeta, HopFlavorMeta
-from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, get_template_if_exists, no_data_response
+from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, no_data_response, \
+    get_hop_type_description, get_flavor_description, get_hop_description, get_flavor_category_description
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
@@ -51,7 +52,7 @@ def category(request: HttpRequest, category_id: str) -> HttpResponse:
     hops = hops_query.order_by("name")
     most_popular = hops_query.order_by("-search_popularity")[:5]
     category_name = categories[category_id]
-    long_description_template = get_template_if_exists("hop/descriptions/%s.html" % category_id)
+    long_description_template = get_hop_type_description(category_id)
 
     meta = HopOverviewMeta((category_id, category_name)).get_meta()
     context = {
@@ -93,7 +94,7 @@ def get_hop_flavor_categories():
     categories = []
     for category_id, category in available_categories.items():
         if len(category["tags"]) > 0:
-            description_template = get_template_if_exists("hop/descriptions/flavor-category/%s.html" % category_id)
+            description_template = get_flavor_category_description(category_id)
 
             category["id"] = category_id
             category["description"] = description_template
@@ -118,7 +119,7 @@ def flavor_detail(request: HttpRequest, flavor_id: str) -> HttpResponse:
     most_popular = hops_query.order_by("-search_popularity")[:2]
     meta = HopFlavorMeta(tag_obj).get_meta()
     associated_aroma_tags = HopFlavorAnalysis().get_associated_flavors(tag_obj)
-    long_description_template = get_template_if_exists("hop/descriptions/flavors/%s.html" % tag_obj.id)
+    long_description_template = get_flavor_description(tag_obj.id)
 
     context = {
         "tag_name": tag_obj.name,
@@ -157,7 +158,7 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
             ),
         )
 
-    long_description_template = get_template_if_exists("hop/descriptions/hops/%s.html" % hop.id)
+    long_description_template = get_hop_description(hop.id)
     context = {"hop": hop, "description": meta_provider.get_description_html(), "long_description": long_description_template, "meta": meta}
 
     return render(request, "hop/detail.html", context)

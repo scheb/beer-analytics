@@ -11,7 +11,8 @@ from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.utils import NoDataException
 from web_app.charts.yeast import YeastChartFactory
 from web_app.meta import YeastMeta, YeastOverviewMeta
-from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, get_template_if_exists, no_data_response
+from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, no_data_response, \
+    get_yeast_type_description, get_yeast_description
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
@@ -45,7 +46,7 @@ def type_overview(request: HttpRequest, type_id: str) -> HttpResponse:
     if yeasts_query.count() > 5:
         most_popular = yeasts_query.order_by("-search_popularity")[:5]
 
-    long_description_template = get_template_if_exists("yeast/descriptions/%s.html" % type_id)
+    long_description_template = get_yeast_type_description(type_id)
     meta = YeastOverviewMeta((type_id, type_name, type_is_yeast)).get_meta()
     context = {
         "type_name": type_name,
@@ -83,7 +84,7 @@ def detail(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
             ),
         )
 
-    long_description_template = get_template_if_exists("yeast/descriptions/yeasts/%s.html" % yeast.id)
+    long_description_template = get_yeast_description(yeast.id)
     context = {"yeast": yeast, "description": meta_provider.get_description_html(), "long_description": long_description_template, "meta": meta}
     return render(request, "yeast/detail.html", context)
 
