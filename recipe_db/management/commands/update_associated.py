@@ -9,7 +9,7 @@ class Command(BaseCommand):
         parser.add_argument("--entities", "-e", nargs="+", type=str, help="Entities to recalculate")
 
     def handle(self, *args, **options) -> None:
-        entities = options["entities"] or ["hop", "fermentable", "yeast"]
+        entities = options["entities"] or ["hop", "fermentable", "yeast", "style"]
         if "hop" in entities:
             self.calculate_for_hop()
         if "fermentable" in entities:
