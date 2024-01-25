@@ -39,6 +39,13 @@
             {% endif %}
         </dl>
 
+        {% if hop.recipes_count <= 0 %}
+        <p class="alert alert-primary" role="alert">We're sorry, there are no recipes with this hop variety in our database.</p>
+        <p>👉 <a href="{% url "hop_overview" %}">Browse available hops</a></p>
+        {% endif %}
+
+{# Start: has recipes #}
+{% if hop.recipes_count > 0 %}
         <div class="d-flex flex-column d-lg-block">
             <nav class="toc toc-align order-last">
                 <h2 class="toc-headline">Table of Contents</h2>
@@ -244,5 +251,8 @@
             </div>
         </section>
     {% endwith %}
+
+{% endif %}
+{# End: has recipes #}
     </article>
 {% endblock %}

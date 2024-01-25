@@ -139,9 +139,6 @@ def flavor_detail(request: HttpRequest, flavor_id: str) -> HttpResponse:
 def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
     hop = get_object_or_404(Hop, pk=slug.lower())
 
-    if hop.recipes_count is None or hop.recipes_count <= 0:
-        raise Http404("Hop doesn't have any data.")
-
     if category_id != hop.category or slug != hop.id:
         return redirect("hop_detail", category_id=hop.category, slug=hop.id, permanent=True)
 
@@ -159,7 +156,12 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
         )
 
     long_description_template = get_hop_description(hop.id)
-    context = {"hop": hop, "description": meta_provider.get_description_html(), "long_description": long_description_template, "meta": meta}
+    context = {
+        "hop": hop,
+        "description": meta_provider.get_description_html(),
+        "long_description": long_description_template,
+        "meta": meta
+    }
 
     return render(request, "hop/detail.html", context)
 
