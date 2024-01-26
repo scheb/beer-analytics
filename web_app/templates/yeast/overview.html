@@ -43,7 +43,7 @@
                             {% if lab.yeasts %}
                                 <ul class="column-list-wide">
                                     {% for yeast in lab.yeasts %}
-                                        <li data-search-term="{{ yeast.full_name }}{% if yeast.alt_names %}, {{ yeast.alt_names }}{% endif %}{% if yeast.has_extra_product_id %}, {{ yeast.product_id }}{% endif %}">
+                                        <li data-search-term="{{ yeast.search_terms }}">
                                             {% if yeast.is_popular %}<strong>{% endif %}<a href="{{ yeast|url }}">{{ yeast.product_name }}</a>{% if yeast.is_popular %}</strong>{% endif %}
                                             {% if yeast.has_extra_product_id %}<small class="text-muted">({{ yeast.product_id }})</small>{% endif %}
                                             <small class="recipes-count" title="Recipes">{{ yeast.recipes_count }}</small>
@@ -61,7 +61,7 @@
                             {% endif %}
                             <ul class="column-list-wide">
                                 {% for yeast in type.yeasts %}
-                                    <li data-search-term="{{ yeast.full_name }}{% if yeast.alt_names %}, {{ yeast.alt_names }}{% endif %}{% if yeast.has_extra_product_id %}, {{ yeast.product_id }}{% endif %}">
+                                    <li data-search-term="{{ yeast.search_terms }}">
                                         {% if yeast.is_popular %}<strong>{% endif %}<a href="{{ yeast|url }}">{{ yeast.full_name }}</a>{% if yeast.is_popular %}</strong>{% endif %}
                                         {% if yeast.has_extra_product_id %}<small class="text-muted">({{ yeast.product_id }})</small>{% endif %}
                                         <small class="recipes-count" title="Recipes">{{ yeast.recipes_count }}</small>

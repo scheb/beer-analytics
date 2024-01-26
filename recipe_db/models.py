@@ -5,12 +5,10 @@ import datetime
 import math
 import re
 from collections import OrderedDict
-from typing import Optional, List, Tuple
+from typing import Optional, List, Tuple, Iterable
 from zlib import crc32
 
 import numpy as np
-# noinspection PyUnresolvedReferences
-import translitcodec
 from django.core.validators import MaxValueValidator, BaseValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -28,6 +26,7 @@ from recipe_db.formulas import (
     yield_to_ppg,
     liters_to_gallons,
 )
+from recipe_db.utils import normalize_name, TRANSLIT_LONG, get_translit_names
 
 
 class GreaterThanValueValidator(BaseValidator):
@@ -186,6 +185,21 @@ class Style(models.Model):
         while s.parent_style is not None:
             yield s.parent_style
             s = s.parent_style
+
+    @property
+    def translit_name(self) -> Iterable[str]:
+        for translit_name in get_translit_names(self.name):
+            if translit_name != self.name:
+                yield translit_name
+
+    @property
+    def search_terms(self) -> str:
+        search_terms = self.name
+        if self.alt_names is not None:
+            search_terms = search_terms + ", " + self.alt_names
+        for translit_name in get_translit_names(self.name):
+            search_terms = search_terms + ", " + translit_name
+        return search_terms
 
     @property
     def parent_style_name(self):
@@ -365,6 +379,21 @@ class Fermentable(models.Model):
         return dict(cls.CATEGORY_CHOICES)
 
     @property
+    def translit_name(self) -> Iterable[str]:
+        for translit_name in get_translit_names(self.name):
+            if translit_name != self.name:
+                yield translit_name
+
+    @property
+    def search_terms(self) -> str:
+        search_terms = self.name
+        if self.alt_names is not None:
+            search_terms = search_terms + ", " + self.alt_names
+        for translit_name in get_translit_names(self.name):
+            search_terms = search_terms + ", " + translit_name
+        return search_terms
+
+    @property
     def category_name(self) -> Optional[str]:
         if self.category is None:
             return None
@@ -493,6 +522,21 @@ class Hop(models.Model):
     @classmethod
     def get_categories(cls) -> dict:
         return dict(cls.USE_CHOICES)
+
+    @property
+    def translit_name(self) -> Iterable[str]:
+        for translit_name in get_translit_names(self.name):
+            if translit_name != self.name:
+                yield translit_name
+
+    @property
+    def search_terms(self) -> str:
+        search_terms = self.name
+        if self.alt_names is not None:
+            search_terms = search_terms + ", " + self.alt_names
+        for translit_name in get_translit_names(self.name):
+            search_terms = search_terms + ", " + translit_name
+        return search_terms
 
     @property
     def image_id(self) -> str:
@@ -703,6 +747,23 @@ class Yeast(models.Model):
     @classmethod
     def is_yeast_type(cls, type: str):
         return type != cls.BRETT_BACTERIA
+
+    @property
+    def translit_name(self) -> Iterable[str]:
+        for translit_name in get_translit_names(self.name):
+            if translit_name != self.name:
+                yield translit_name
+
+    @property
+    def search_terms(self) -> str:
+        search_terms = self.name
+        if self.alt_names is not None:
+            search_terms = search_terms + ", " + self.alt_names
+        for translit_name in get_translit_names(self.name):
+            search_terms = search_terms + ", " + translit_name
+        if self.has_extra_product_id:
+            search_terms = search_terms + ", " + self.product_id
+        return search_terms
 
     @property
     def has_extra_product_id(self):

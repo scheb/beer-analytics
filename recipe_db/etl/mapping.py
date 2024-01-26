@@ -1,36 +1,14 @@
 import abc
-import codecs
+
 import itertools
 import re
 from abc import ABC
 from typing import Optional, Iterable
 
-# noinspection PyUnresolvedReferences
-import translitcodec
 from django.db import transaction
 
 from recipe_db.models import RecipeHop, Hop, Fermentable, RecipeFermentable, Style, Recipe, RecipeYeast, Yeast
-
-TRANSLIT_SHORT = "translit/short"
-TRANSLIT_LONG = "translit/long"
-
-
-def get_translit_names(name: str) -> iter:
-    # Long translit name
-    normalized_name_long = normalize_name(name, TRANSLIT_LONG)
-    yield normalized_name_long
-
-    # Short translit name
-    normalized_name_short = normalize_name(name, TRANSLIT_SHORT)
-    if normalized_name_short != normalized_name_long:
-        yield normalized_name_short
-
-
-def normalize_name(value: str, translit: str) -> str:
-    value = codecs.encode(value, translit)
-    value = re.sub("[\\s-]+", " ", re.sub("[^\\w\\s-]", "", value))
-    value = value.strip().lower()
-    return value
+from recipe_db.utils import get_translit_names, normalize_name, TRANSLIT_SHORT
 
 
 def get_product_id_variants(name: str) -> iter:

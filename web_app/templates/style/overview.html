@@ -34,13 +34,13 @@
     <div id="styles-overview" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
         {% for category in categories %}
             <section class="col search-group">
-                <div class="card" data-search-term="{{ category.name }}{% if category.alt_names %}, {{ category.alt_names }}{% endif %}">
+                <div class="card" data-search-term="{{ category.search_terms }}">
                     <div class="card-header">
                         <h2 class="h5 p-0 m-0"><a href="{{ category|url }}" class="text-body">{{ category.name }}</a></h2>
                     </div>
                     <ul class="search-group list-group list-group-flush">
                         {% for style1 in category.sub_styles %}
-                            <li class="list-group-item" data-search-term="{{ style1.name }}{% if style1.alt_names %}, {{ style1.alt_names }}{% endif %}">
+                            <li class="list-group-item" data-search-term="{{ style1.search_terms }}">
                                 {% if style1.recipes_count %}<span class="recipes-count" title="Recipes">{{ style1.recipes_count }}</span>{% endif %}
                                 {% if style1.is_popular %}<strong>{% endif %}<a href="{{ style1|url }}">{{ style1.name }}</a>{% if style1.is_popular %}</strong>{% endif %}
                                 {% if style1.alt_names %}
@@ -53,7 +53,7 @@
                                 {% if style1.has_sub_styles %}
                                     <ul class="search-group list-unstyled mt-1 ms-2">
                                         {% for style2 in style1.sub_styles %}
-                                            <li data-search-term="{{ style2.name }}{% if style2.alt_names %}, {{ style2.alt_names }}{% endif %}">
+                                            <li data-search-term="{{ style2.search_terms }}">
                                                 {% if style2.recipes_count %}<span class="recipes-count" title="Recipes">{{ style2.recipes_count }}</span>{% endif %}
                                                 {% if style2.is_popular %}<strong>{% endif %}<a href="{{ style2|url }}">{{ style2.name }}</a>{% if style2.is_popular %}</strong>{% endif %}
                                                 {% if style1.alt_names %}

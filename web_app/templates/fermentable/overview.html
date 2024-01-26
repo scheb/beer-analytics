@@ -36,7 +36,7 @@
                     {% if category.fermentables %}
                         <ul class="column-list">
                             {% for fermentable in category.fermentables %}
-                                <li data-search-term="{{ fermentable.name }}{% if fermentable.alt_names %}, {{ fermentable.alt_names }}{% endif %}">
+                                <li data-search-term="{{ fermentable.search_terms }}">
                                     {% if fermentable.is_popular %}<strong>{% endif %}<a href="{{ fermentable|url }}">{{ fermentable.name }}</a>{% if fermentable.is_popular %}</strong>{% endif %}
                                     <small class="recipes-count" title="Recipes">{{ fermentable.recipes_count }}</small>
                                 </li>
@@ -54,7 +54,7 @@
                                 {% if type.fermentables %}
                                     <ul class="column-list">
                                         {% for fermentable in type.fermentables %}
-                                            <li data-search-term="{{ fermentable.name }}{% if fermentable.alt_names %}, {{ fermentable.alt_names }}{% endif %}">
+                                            <li data-search-term="{{ fermentable.search_terms }}">
                                                 {% if fermentable.is_popular %}<strong>{% endif %}<a href="{{ fermentable|url }}">{{ fermentable.name }}</a>{% if fermentable.is_popular %}</strong>{% endif %}
                                                 <small class="recipes-count" title="Recipes">{{ fermentable.recipes_count }}</small>
                                             </li>

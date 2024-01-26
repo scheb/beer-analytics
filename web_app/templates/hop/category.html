@@ -35,7 +35,7 @@
 
         <ul class="column-list">
             {% for hop in hops %}
-                <li data-search-term="{{ hop.name }}{% if hop.alt_names %}, {{ hop.alt_names }}{% endif %}">
+                <li data-search-term="{{ hop.search_terms }}">
                     {% if hop.is_popular %}<strong>{% endif %}<a href="{{ hop|url }}">{{ hop.name }}</a>{% if hop.is_popular %}</strong>{% endif %}
                     <small class="recipes-count" title="Recipes">{{ hop.recipes_count }}</small>
                 </li>
