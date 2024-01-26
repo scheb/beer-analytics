@@ -129,7 +129,7 @@ For information about the security policy and know security issues, see [SECURIT
 
 License
 -------
-This software is available under the [Beerware License](LICENSE).
+This software is available under the [GPLv3](LICENSE) license.
 
 Contributing
 ------------
