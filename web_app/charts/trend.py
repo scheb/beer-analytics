@@ -9,6 +9,8 @@ from recipe_db.analytics.recipe import RecipesPopularityAnalysis, RecipesTrendAn
 from recipe_db.analytics.scope import RecipeScope, HopSelection, YeastSelection
 from recipe_db.analytics.spotlight.hop import HOP_FILTER_TO_USES
 from recipe_db.analytics.spotlight.yeast import YEAST_FILTER_TO_TYPES
+from recipe_db.analytics.style import StyleSearchAnalysis
+from recipe_db.analytics.yeast import YeastSearchAnalysis
 from web_app.charts.utils import Chart, ChartDefinition, NoDataException
 from web_app.plot import LinesChart, BarChart
 
@@ -126,6 +128,28 @@ class PopularYeastsChart(TrendChart):
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
 
 
+class MostSearchedYeastsChart(ChartDefinition, ABC):
+    def __init__(self, period: TrendPeriod, filter_param: Optional[str]) -> None:
+        pass
+
+    CHART_TITLE = "<b>Most searched beer yeasts and bacteria</b>"
+    IMAGE_ALT = "Most searched beer yeasts and bacteria"
+
+    def plot(self) -> Chart:
+        df = YeastSearchAnalysis().get_most_searched_yeasts()
+        if len(df) == 0:
+            raise NoDataException()
+
+        figure = BarChart().plot(df, "yeast", "volume", None, "Search Volume")
+        return Chart(figure, title=self.get_chart_title())
+
+    def get_chart_title(self) -> str:
+        return self.CHART_TITLE
+
+    def get_image_alt(self) -> str:
+        return self.IMAGE_ALT
+
+
 class TrendingStylesChart(TrendChart):
     CHART_TITLE = "<b>Trending beer styles</b> of the last %s months"
     IMAGE_ALT = "Trending beer styles of the last %s months"
@@ -156,6 +180,28 @@ class PopularStylesChart(TrendChart):
             df, "month", "recipes_percent", "beer_style", "Month/Year", "% of All Recipes"
         )
         return Chart(figure, height=Chart.DEFAULT_HEIGHT * 0.66, title=self.get_chart_title())
+
+
+class MostSearchedStylesChart(ChartDefinition, ABC):
+    def __init__(self, period: TrendPeriod, filter_param: Optional[str]) -> None:
+        pass
+
+    CHART_TITLE = "<b>Most searched beer styles</b>"
+    IMAGE_ALT = "Most searched beer styles"
+
+    def plot(self) -> Chart:
+        df = StyleSearchAnalysis().get_most_searched_styles()
+        if len(df) == 0:
+            raise NoDataException()
+
+        figure = BarChart().plot(df, "beer_style", "volume", None, "Search Volume")
+        return Chart(figure, title=self.get_chart_title())
+
+    def get_chart_title(self) -> str:
+        return self.CHART_TITLE
+
+    def get_image_alt(self) -> str:
+        return self.IMAGE_ALT
 
 
 class TrendPeriod(Enum):
@@ -191,6 +237,8 @@ class TrendChartFactory:
         popular_yeasts=PopularYeastsChart,
         popular_styles=PopularStylesChart,
         searched_hops=MostSearchedHopsChart,
+        searched_yeasts=MostSearchedYeastsChart,
+        searched_styles=MostSearchedStylesChart,
     )
 
     @classmethod

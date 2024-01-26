@@ -44,6 +44,16 @@
         <priority>0.3</priority>
     </url>
     <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "trend_popular_yeasts" %}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "trend_popular_styles" %}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    <url>
         <loc>{{ request.scheme }}://{{ request.get_host }}{% url "trend_overview" "recent" %}</loc>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>

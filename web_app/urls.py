@@ -66,6 +66,8 @@ urlpatterns = [
 
     path("trends/", trend.start, name="trend_root"),
     path("trends/popular-hops/", trend.popular_hops, name="trend_popular_hops"),
+    path("trends/popular-yeasts/", trend.popular_yeasts, name="trend_popular_yeasts"),
+    path("trends/popular-beer-styles/", trend.popular_styles, name="trend_popular_styles"),
     path("trends/<str:period>/", trend.overview, name="trend_overview"),
     path("trends/<str:period>/<str:chart_type>.json", trend.chart_data, name="trend_chart_data"),
     path("trends/<str:period>/<str:chart_type>.<cformat:format>", trend.chart_image, name="trend_chart"),

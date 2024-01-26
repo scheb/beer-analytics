@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load web_app %}
+
+{% block content %}
+    <header class="clearfix">
+        <h1>Most Popular Beer Styles <small class="text-muted text-nowrap">by {{ month }}</small></h1>
+
+        <div class="d-flex flex-column d-lg-block">
+            <nav class="toc toc-align order-last">
+                <h2 class="toc-headline">Table of Contents</h2>
+                <ol>
+                    <li><a href="#most-searched-styles" class="">Most Searched Beer Styles</a></li>
+                    <li><a href="#most-brewed-styles" class="">Most Brewed Beer Styles</a></li>
+                </ol>
+            </nav>
+
+            <p>Beer styles each have their own distinct personality, taste, and history that resonates with enthusiasts and casual drinkers alike. In this comprehensive exploration, we <strong>discover the most popular beer styles of today</strong>. Whether you're a homebrewer or a newcomer thirsty for knowledge, this analysis will quench your curiosity, shedding light what makes beer lovers around the world excited about these brews.</p>
+        </div>
+    </header>
+
+    <section>
+        {% with chart_type="searched-styles" anchor="most-searched-styles" %}
+            <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Searched Beer Styles</h2>
+            <p>Leveraging Google search volume to uncover trends in the beer world offers a fascinating glimpse into the styles that capture the imagination and taste buds of beer enthusiasts globally. This analysis delves into the digital footprint of beer styles, from the ever-popular IPAs to the subtle complexities of sour ales, revealing what drinkers are curious about and craving today.</p>
+            <ol>
+                {% for style in most_searched_styles %}
+                    <li><a href="{{ style|url }}">{{ style.name }}</a></li>
+                {% endfor %}
+            </ol>
+            <div class="card card-chart">
+                <div class="card-body">
+                    <div id="chart-{{ chart_type }}" class="chart-m" data-chart="{% url "trend_chart" "seasonal" chart_type "json" %}">
+                        <noscript>
+                            <img src="{% url "trend_chart" "seasonal" chart_type "svg" %}" alt="{{ period|chart_image_alt:chart_type }}"/>
+                        </noscript>
+                    </div>
+                </div>
+            </div>
+        {% endwith %}
+
+        <div class="featured-styles">
+            <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
+                {% for style in most_searched_styles|slice:":4" %}
+                    <div class="col">{% include "style/featured.html" with style=style %}</div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </section>
+
+    <section>
+        {% with chart_type="popular-styles" anchor="most-brewed-styles" %}
+            <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Brewed Beer Styles</h2>
+            <p>Discovering the most beloved beer styles through the number of published recipes offers a unique peek into the preferences and trends among homebrewers. By sifting through a vast collection of beer recipes, we can uncover which styles are favored, so you can dive deeper into their distinct flavors, brewing techniques, and cultural significance.</p>
+            <ol>
+                {% for style in most_brewed_styles %}
+                    <li><a href="{{ style|url }}">{{ style.name }}</a></li>
+                {% endfor %}
+            </ol>
+            <div class="card card-chart">
+                <div class="card-body">
+                    <div id="chart-{{ chart_type }}" class="chart-m" data-chart="{% url "trend_chart" "seasonal" chart_type "json" %}">
+                        <noscript>
+                            <img src="{% url "trend_chart" "seasonal" chart_type "svg" %}" alt="{{ period|chart_image_alt:chart_type }}"/>
+                        </noscript>
+                    </div>
+                </div>
+            </div>
+        {% endwith %}
+
+        <div class="featured-styles">
+            <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
+                {% for style in most_brewed_styles|slice:":4" %}
+                    <div class="col">{% include "style/featured.html" with style=style %}</div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}

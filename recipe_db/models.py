@@ -177,7 +177,11 @@ class Style(models.Model):
 
     @classmethod
     def get_most_searched(cls, limit: int = 10):
-        return cls.objects.filter(search_popularity__gt=0).order_by('-search_popularity')[:limit]
+        return cls.objects.filter(search_popularity__gt=0, parent_style__isnull=False).order_by('-search_popularity')[:limit]
+
+    @classmethod
+    def get_most_popular(cls, limit: int = 10):
+        return cls.objects.filter(recipes_count__gt=0, parent_style__isnull=False).order_by('-recipes_count')[:limit]
 
     @property
     def parent_styles(self) -> iter:
@@ -718,6 +722,10 @@ class Yeast(models.Model):
     @classmethod
     def get_most_searched(cls, limit: int = 10):
         return cls.objects.filter(search_popularity__gt=0).order_by('-search_popularity')[:limit]
+
+    @classmethod
+    def get_most_popular(cls, limit: int = 10):
+        return cls.objects.filter(recipes_count__gt=0).order_by('-recipes_count')[:limit]
 
     @classmethod
     def create_id(cls, name: str, lab: str, brand: str, product_id: Optional[str]) -> str:

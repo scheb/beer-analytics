@@ -1,0 +1,25 @@
+{% load static %}
+{% load web_app %}
+<article class="card featured-card featured-style">
+    <div class="card-header">
+        <h3 class="p-0"><a href="{{ style|url }}" class="text-body" style="text-decoration: none">{{ style.name }}</a></h3>
+    </div>
+    <div class="card-body">
+        <dl class="detail-info mt-0 mb-3info">
+            <dt>Recipes:</dt>
+            <dd>{{ style.recipes_count }}</dd>
+            {% if style.bjcp_id %}
+            <dt>BJCP 2021:</dt>
+            <dd>{% if style.bjcp_url %}<a href="{{ style.bjcp_url }}" target="_blank">{{ style.bjcp_id }}</a>{% else %}{{ style.bjcp_id }}{% endif %}</dd>
+            {% endif %}
+        </dl>
+        {{ style|description|truncatewords_html:60 }}
+        <p class="mb-0">
+            <a href="{{ style|url }}#most-used-hops" class="btn btn-sm btn-secondary">Hops</a>
+            <a href="{{ style|url }}#most-used-hops-amount" class="btn btn-sm btn-secondary">Hop Dosage</a>
+            <a href="{{ style|url }}#hop-pairings" class="btn btn-sm btn-secondary">Hop Pairings</a>
+            <a href="{{ style|url }}#most-used-yeasts" class="btn btn-sm btn-secondary">Yeasts</a>
+            <a href="{{ style|url }}" class="btn btn-sm btn-light">More ›</a>
+        </p>
+    </div>
+</article>

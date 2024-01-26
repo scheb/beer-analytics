@@ -4,11 +4,11 @@ from django.http import HttpRequest, HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.views.decorators.cache import cache_page
 
-from recipe_db.models import Hop
+from recipe_db.models import Hop, Style, Yeast
 from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.trend import TrendChartFactory, TrendPeriod
 from web_app.charts.utils import NoDataException
-from web_app.meta import TrendMeta, PopularHopsMeta
+from web_app.meta import TrendMeta, PopularHopsMeta, PopularYeastsMeta, PopularStylesMeta
 from web_app.views.utils import render_chart, no_data_response
 
 
@@ -73,3 +73,29 @@ def popular_hops(request: HttpRequest) -> HttpResponse:
     }
 
     return render(request, "trend/popular-hops.html", context)
+
+
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
+def popular_yeasts(request: HttpRequest) -> HttpResponse:
+    meta = PopularYeastsMeta().get_meta()
+    context = {
+        "meta": meta,
+        "month": datetime.now().strftime("%B %Y"),
+        "most_searched_yeasts": Yeast.get_most_searched(10),
+        "most_used_yeasts": Yeast.get_most_popular(10),
+    }
+
+    return render(request, "trend/popular-yeasts.html", context)
+
+
+@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
+def popular_styles(request: HttpRequest) -> HttpResponse:
+    meta = PopularStylesMeta().get_meta()
+    context = {
+        "meta": meta,
+        "month": datetime.now().strftime("%B %Y"),
+        "most_searched_styles": Style.get_most_searched(10),
+        "most_brewed_styles": Style.get_most_popular(10),
+    }
+
+    return render(request, "trend/popular-styles.html", context)

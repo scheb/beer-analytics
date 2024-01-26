@@ -28,6 +28,12 @@
         <li class="nav-item">
             <a class="nav-link" href="{% url "trend_popular_hops" %}">Most Popular Hops</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "trend_popular_yeasts" %}">Most Popular Yeasts</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "trend_popular_styles" %}">Most Popular Beer Styles</a>
+        </li>
     </ul>
 
     {% with chart_type="trending-hops" anchor="trending-hops" %}

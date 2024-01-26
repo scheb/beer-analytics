@@ -443,7 +443,35 @@ class PopularHopsMeta(PageMeta):
         return Meta(
             title=suffix_title(title),
             description=description,
-            keywords=["homebrewing", "trends", "hops", "yeasts", "styles"],
+            keywords=["homebrewing", "trends", "most popular", "most used", "most searched", "hops"],
+            url=reverse("trend_popular_hops"),
+        )
+
+
+class PopularYeastsMeta(PageMeta):
+    def get_meta(self) -> Meta:
+        month = datetime.now().strftime("%B %Y")
+        title = "Most Popular Beer Yeasts by %s" % month
+        description = "Discover the most popular yeasts and bacteria for homebrewing in %s. Stay at the forefront of brewing trends and create exceptional beers that stand out." % month
+
+        return Meta(
+            title=suffix_title(title),
+            description=description,
+            keywords=["homebrewing", "trends", "most popular", "most used", "most searched", "yeasts"],
+            url=reverse("trend_popular_hops"),
+        )
+
+
+class PopularStylesMeta(PageMeta):
+    def get_meta(self) -> Meta:
+        month = datetime.now().strftime("%B %Y")
+        title = "Most Popular Beer Styles by %s" % month
+        description = "Discover the most popular beer styles for homebrewing in %s. Stay at the forefront of brewing trends and create exceptional beers that stand out." % month
+
+        return Meta(
+            title=suffix_title(title),
+            description=description,
+            keywords=["homebrewing", "trends", "most popular", "most brewed", "most searched", "beer styles"],
             url=reverse("trend_popular_hops"),
         )
 

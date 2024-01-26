@@ -1,0 +1,33 @@
+{% load static %}
+{% load web_app %}
+<article class="card featured-card featured-yeast">
+    <div class="card-header">
+        <h3 class="p-0"><a href="{{ yeast|url }}" class="text-body" style="text-decoration: none">{{ yeast.full_name }}{% if yeast.has_extra_product_id %} <small class="text-muted">{{ yeast.product_id }}</small>{% endif %}</a></h3>
+    </div>
+    <div class="card-body">
+        <dl class="detail-info mt-0 mb-3info">
+            <dt>Recipes:</dt>
+            <dd>{{ yeast.recipes_count }}</dd>
+            {% if yeast.form %}
+            <dt>Form:</dt>
+            <dd>{{ yeast.form_name }}</dd>
+            {% endif %}
+            {% if yeast.attenuation %}
+            <dt>Attenuation:</dt>
+            <dd>{{ yeast.attenuation }}%</dd>
+            {% endif %}
+            {% if yeast.flocculation %}
+            <dt>Flocculation:</dt>
+            <dd>{{ yeast.flocculation_name }}</dd>
+            {% endif %}
+        </dl>
+
+        {{ yeast|description|truncatewords_html:60 }}
+        <p class="mb-0">
+            <a href="{{ yeast|url }}#styles-number-recipes" class="btn btn-sm btn-secondary">Beer Styles</a>
+            <a href="{{ yeast|url }}#most-used-hops" class="btn btn-sm btn-secondary">Hops</a>
+            <a href="{{ yeast|url }}#recipes" class="btn btn-sm btn-secondary">Recipes</a>
+            <a href="{{ yeast|url }}" class="btn btn-sm btn-light">More ›</a>
+        </p>
+    </div>
+</article>
