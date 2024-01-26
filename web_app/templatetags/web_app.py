@@ -232,21 +232,21 @@ def get_priority(percentile: Optional[float]) -> float:
 
 @register.filter("description")
 def get_item_description(item: object):
-    try:
-        if isinstance(item, Hop):
-            return loader.get_template(get_hop_description(item.id)).render({})
-        if isinstance(item, Yeast):
-            return loader.get_template(get_yeast_description(item.id)).render({})
-        if isinstance(item, Fermentable):
-            return loader.get_template(get_fermentable_description(item.id)).render({})
-        if isinstance(item, Style):
-            return loader.get_template(get_style_description(item.id)).render({})
-    except TemplateDoesNotExist:
+    if isinstance(item, Hop):
+        description_template = get_hop_description(item.id)
+    elif isinstance(item, Yeast):
+        description_template = get_yeast_description(item.id)
+    elif isinstance(item, Fermentable):
+        description_template = get_fermentable_description(item.id)
+    elif isinstance(item, Style):
+        description_template = get_style_description(item.id)
+    else:
         return ""
 
-
-
-    return ""
+    try:
+        return loader.get_template(description_template).render({})
+    except TemplateDoesNotExist:
+        return ""
 
 
 @register.filter("fahrenheit")
