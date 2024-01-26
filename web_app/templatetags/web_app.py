@@ -243,10 +243,13 @@ def get_item_description(item: object):
     else:
         return ""
 
-    try:
-        return loader.get_template(description_template).render({})
-    except TemplateDoesNotExist:
-        return ""
+    if description_template is not None:
+        try:
+            return loader.get_template(description_template).render({})
+        except TemplateDoesNotExist:
+            return ""
+
+    return ""
 
 
 @register.filter("fahrenheit")
