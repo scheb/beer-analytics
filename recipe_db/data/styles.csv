@@ -71,8 +71,8 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 17C;17;Wee Heavy;Scotch Ale, Scottish Ale;;6.5;10;17;35;14;25;1070;1130;1018;1040;https://www.bjcp.org/style/2021/17/17C/wee-heavy/
 17D;17;English Barley Wine;;;8;12;35;70;8;22;1080;1120;1018;1030;https://www.bjcp.org/style/2021/17/17D/english-barleywine/
 18;;Pale American Ale;;;;;;;;;;;;;https://www.bjcp.org/style/2021/18/pale-american-ale/
-18A;18;Blonde Ale;;;3.8;5.5;15;28;3;6;1038;1054;1008;1013;https://www.bjcp.org/style/2021/18/18A/blonde-ale/
-18B;18;American Pale Ale;;Amerikanisches Pale Ale, Pale Ale, APA;4.5;6.2;30;50;5;10;1045;1060;1010;1015;https://www.bjcp.org/style/2021/18/18B/american-pale-ale/
+18A;18;Blonde Ale;Golden Ale;Blond Ale;3.8;5.5;15;28;3;6;1038;1054;1008;1013;https://www.bjcp.org/style/2021/18/18A/blonde-ale/
+18B;18;American Pale Ale;APA;Amerikanisches Pale Ale, Pale Ale;4.5;6.2;30;50;5;10;1045;1060;1010;1015;https://www.bjcp.org/style/2021/18/18B/american-pale-ale/
 19;;Amber and Brown American Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/19/amber-and-brown-american-beer/
 19A;19;American Amber Ale;;Amerikanisches Amber Ale, Amber Ale;4.5;6.2;25;40;10;17;1045;1060;1010;1015;https://www.bjcp.org/style/2021/19/19A/american-amber-ale/
 19B;19;California Common ;;Cali Common;4.5;5.5;30;45;9;14;1048;1054;1011;1014;https://www.bjcp.org/style/2021/19/19B/california-common/
