@@ -114,12 +114,12 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 25B;25;Saison;;;;;20;35;5;22;1048;1065;1002;1008;https://www.bjcp.org/style/2021/25/25B/saison/
 25C;25;Belgian Golden Strong Ale;;;7.5;10.5;22;35;3;6;1070;1095;1005;1016;https://www.bjcp.org/style/2021/25/25C/belgian-golden-strong-ale/
 26;;Monastic Ale;;;;;;;;;;;;;https://www.bjcp.org/style/2021/26/monastic-ale/
-26A;26;Belgian Single;;;4.8;6;25;45;3;5;1044;1054;1004;1010;https://www.bjcp.org/style/2021/26/26A/belgian-single/
+26A;26;Belgian Single;Patersbier;;4.8;6;25;45;3;5;1044;1054;1004;1010;https://www.bjcp.org/style/2021/26/26A/belgian-single/
 26B;26;Belgian Dubbel;;Belgisches Dubbel, Dubbel, Dubble;6;7.6;15;25;10;17;1062;1075;1008;1018;https://www.bjcp.org/style/2021/26/26B/belgian-dubbel/
 26C;26;Belgian Tripel;;Belgisches Tripel, Triple, Tripel, Tipel;7.5;9.5;20;40;4.5;7;1075;1085;1008;1014;https://www.bjcp.org/style/2021/26/26C/belgian-tripel/
-26D;26;Belgian Dark Strong Ale;;Belgisches Dunkles Starkbier, Belgisches Dunkel;8;12;20;35;12;22;1075;1110;1010;1024;https://www.bjcp.org/style/2021/26/26D/belgian-dark-strong-ale/
+26D;26;Belgian Dark Strong Ale;Belgian Quad, Quadruple;Belgisches Dunkles Starkbier, Belgisches Dunkel;8;12;20;35;12;22;1075;1110;1010;1024;https://www.bjcp.org/style/2021/26/26D/belgian-dark-strong-ale/
 27;;Historical Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/27/historical-beer/
-27A.1;27;Kellerbier;;;;;;;;;;;;;https://www.bjcp.org/style/2021/27/27A/historical-beer-kellerbier/
+27A.1;27;Kellerbier;Cellar Beer;;;;;;;;;;;;https://www.bjcp.org/style/2021/27/27A/historical-beer-kellerbier/
 27A.2;27;Kentucky Common;;;4;5.5;15;30;11;20;1044;1055;1010;1018;https://www.bjcp.org/style/2021/27/27A/historical-beer-kentucky-common/
 27A.3;27;Lichtenhainer;;;3.5;4.7;5;12;3;6;1032;1040;1004;1008;https://www.bjcp.org/style/2021/27/27A/historical-beer-lichtenhainer/
 27A.4;27;London Brown Ale;;;2.8;3.6;15;20;22;35;1033;1038;1012;1015;https://www.bjcp.org/style/2021/27/27A/historical-beer-london-brown-ale/
