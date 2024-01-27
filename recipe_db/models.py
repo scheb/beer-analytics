@@ -869,6 +869,7 @@ class Recipe(models.Model):
 
     # Characteristics
     style = models.ForeignKey(Style, on_delete=models.SET_NULL, default=None, blank=True, null=True)
+    style_oor = models.CharField(max_length=255, default=None, blank=True, null=True)
     associated_styles = models.ManyToManyField(Style, related_name="all_recipes")
     associated_hops = models.ManyToManyField(Hop, related_name="all_recipes")
     associated_fermentables = models.ManyToManyField(Fermentable, related_name="all_recipes")

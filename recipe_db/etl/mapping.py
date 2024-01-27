@@ -610,7 +610,8 @@ class FermentablesProcessor(TransactionalProcessor):
 
 class StylesProcessor(TransactionalProcessor):
     def map_unmapped(self) -> None:
-        recipes = Recipe.objects.filter(style_id=None)
+        # recipes = Recipe.objects.filter(style_id=None)
+        recipes = Recipe.objects.filter(style_id=None, style_oor__isnull=True)
         self.map_list(recipes)
 
     def map_all(self) -> None:
@@ -618,33 +619,50 @@ class StylesProcessor(TransactionalProcessor):
         self.map_list(recipes)
 
     def save_match(self, item: Recipe, style: Style):
-        if not self.is_within_limits("abv", item, style):
+        if not self.is_within_abv_limits(item, style):
+            item.style_oor = "abv"
             style = None
-        elif not self.is_within_limits("ibu", item, style):
+        elif not self.is_within_ibu_limits(item, style):
+            item.style_oor = ("," if item.style_oor is not None else "") + "ibu"
             style = None
-        elif not self.is_within_limits("srm", item, style):
+        elif not self.is_within_srm_limits(item, style):
+            item.style_oor = ("," if item.style_oor is not None else "") + "srm"
             style = None
 
         item.style = style
         item.save()
 
-    def is_within_limits(self, property: str, recipe: Recipe, style: Style):
-        min = getattr(style, property + "_min")
-        max = getattr(style, property + "_max")
-        value = getattr(recipe, property)
+    def is_within_abv_limits(self, recipe: Recipe, style: Style) -> bool:
+        return self.is_in_range(recipe.abv, style.abv_min, style.abv_max, 0.333)
 
-        if property == "srm" and max is not None and max >= 40:
+    def is_within_ibu_limits(self, recipe: Recipe, style: Style) -> bool:
+        return self.is_in_range(recipe.ibu, style.ibu_min, style.ibu_max, 0.5)
+
+    def is_within_srm_limits(self, recipe: Recipe, style: Style) -> bool:
+        max = style.srm_max
+        # Dark beers can become as dark as they want
+        if max is not None and max >= 40:
             max = None
+        return self.is_in_range(recipe.srm, style.srm_min, max, 0.333)
 
+    def is_in_range(self, value: Optional[float], min: Optional[float], max: Optional[float], delta_fraction: float):
         if value is None:
-            return True
+            return True # No value given
 
-        if min is not None and value < (min * 0.9):
-            return False
+        # Min and max given
+        if min is not None and max is not None:
+            delta = (max - min) * delta_fraction
+            lower_limit = min - delta
+            upper_limit = max + delta
+            return lower_limit <= value <= upper_limit
 
-        if max is not None and value > (max * 1.1):
-            return False
+        if min is not None:
+            return value >= (min * (1 - delta_fraction))
 
+        if max is not None:
+            return value <= (max * (1 - delta_fraction))
+
+        # Neither min, nor max given
         return True
 
 
@@ -660,3 +678,4 @@ class YeastsProcessor(TransactionalProcessor):
     def save_match(self, item: RecipeYeast, match: Yeast):
         item.kind = match
         item.save()
+
