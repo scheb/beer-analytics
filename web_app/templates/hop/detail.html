@@ -39,14 +39,8 @@
             {% endif %}
         </dl>
 
-        {% if hop.recipes_count <= 0 %}
-        <p class="alert alert-primary" role="alert">We're sorry, there are no recipes with this hop variety in our database.</p>
-        <p>👉 <a href="{% url "hop_overview" %}">Browse available hops</a></p>
-        {% endif %}
-
-{# Start: has recipes #}
-{% if hop.recipes_count > 0 %}
         <div class="d-flex flex-column d-lg-block">
+            {% if hop.recipes_count %}
             <nav class="toc toc-align order-last">
                 <h2 class="toc-headline">Table of Contents</h2>
                 <ol>
@@ -63,6 +57,7 @@
                     <li><a href="#recipes" data-interaction="Hops:Click TOC:$label">Brewing Recipes</a>
                 </ol>
             </nav>
+            {% endif %}
 
             {% if hop.accessible_substitutes.count %}{% spaceless %}
                 <figure class="badge-list">
@@ -110,8 +105,15 @@
                 {% include long_description %}
             </div>
         {% endif %}
+
+        {% if not hop.recipes_count %}
+        <p class="alert alert-primary" role="alert">We're sorry, there are no recipes with this hop variety in our database.</p>
+        <p>👉 <a href="{% url "hop_overview" %}">Browse available hops</a></p>
+        {% endif %}
     </div>
 
+{# Start: has recipes #}
+{% if hop.recipes_count > 0 %}
     {% include './metrics.html' %}
 
     {% with chart_type="popularity" anchor="popularity" %}

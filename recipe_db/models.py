@@ -613,6 +613,8 @@ class Hop(models.Model):
 
     @property
     def significant_pairings(self):
+        if self.recipes_count is None:
+            return []
         return self.hoppairing_set.filter(rank__gte=(self.recipes_count / 10)).order_by('-rank')
 
     @property
