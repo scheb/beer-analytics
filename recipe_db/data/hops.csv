@@ -12,6 +12,7 @@ Ahtanum;aroma;USA;Amarillo, Cascade, Centennial, Willamette;Cedar, Citrus, Earth
 Akoya;aroma;GER;Aurora, Hallertauer Tradition, Northern Brewer, Perle;Fruity, Pepper, Spicy, Tea;;
 Alliance;dual-purpose;GBR;;;;
 Aloha;dual-purpose;USA;;Berry, Citrus, Floral, Fruity, Sweet;;
+Alora;aroma;USA;;;X17701;Exp 17701, Experimental 17701, Experimental Hop 17701, HS17701
 Altus;dual-purpose;USA;Apollo, Target;Spicy, Dank, Resinous, Tangerine, Herbal, Grassy, Soft;X07270, Experimental Grapefruit;Exp Grapefruit, Experimental 07270, Exp 7270
 Amallia;dual-purpose;USA;;Earthy;;Amalia
 Amarillo;aroma;USA;Cascade, Centennial, Chinook, Simcoe, Summer, Yellow Sub;Apricot, Citrus, Floral, Grapefruit, Lemon, Melon, Orange, Peach, Spicy, Tropical Fruits;;Amarillo, Armarillo, Amar, Amaerillo, Armadillo, Amerillo
@@ -86,7 +87,7 @@ Columbus;dual-purpose;USA;Centennial, Chinook, Columbus, Galena, Millennium, Nor
 Comet;bittering;USA;Galena;Grapefruit, Grassy, Resin, Grapefruit, Tangerine, Herbal, Mandarin, Lemongrass, Black Currant, Apricot, Pineapple;;
 Contessa;aroma;USA;Willamette, Delta;Noble, Floral, Pear, Green Tea, Lemongrass;X04190;Exp 4190
 Crystal;aroma;USA;Hallertauer Mittelfrüh, Hersbrucker, Liberty, Mount Hood, Strisselspalt, Ultra;Cinnamon, Floral, Fruity, Nutmeg, Pepper, Spicy, Woody;;Crysta
-Dana;aroma;SLO;;Floral, Citrus, Intense;;
+Dana;aroma;SLO;;Floral, Citrus, Intense;Extra Styrian Dana;
 Defender;aroma;GBR;;;;
 Delta;dual-purpose;USA;Fuggle, Willamette;Mild, Spicy, Melon, Citrus, Pleasant;;
 Density;aroma;GBR;;;;
@@ -114,7 +115,7 @@ Enigma;bittering;AUS;Hallertauer Blanc, Nelson Sauvin;Berry, Currant, Raspberry,
 Epic;aroma;GBR;;Berry, Fruity, Herbal;;
 Ernest;aroma;GBR;Fuggle;Grassy, Herbal, Stone Fruit, Apricot, Citrus, Spicy;;
 Eroica;bittering;USA;Brewer's Gold, Chinook, Cluster, Galena, Nugget;;;
-Eureka;dual-purpose;USA;Apollo, Columbus, Merkur, Simcoe, Summit;Citrus, Currant, Herbal, Mandarin, Mint, Peach, Pine, Stone Fruit;Experimental Pine Fruit;Exp Pinefruit
+Eureka;dual-purpose;USA;Apollo, Columbus, Merkur, Simcoe, Summit;Citrus, Currant, Herbal, Mandarin, Mint, Peach, Pine, Stone Fruit;Experimental Pine Fruit, X05256;Exp Pinefruit, Exp Pine Fruit, Experimental Pinefruit, Experimental Hop 05256, Exp 05256
 Evergreen;aroma;USA;;Peach, Apricot, Lemon, Green Tea, Watermelon, Tangerine, Cannabis, Candy;;
 Excelsior;dual-purpose;USA;;Mango, Lychee, Floral, Sweet, Tropical Fruits, Complex, Exotic;;
 Falconer's Flight 7 C's;dual-purpose;USA;Cascade, Centennial, Chinook, Citra, Cluster, Columbus, Crystal;Citrus, Earthy, Fruity, Spicy;;Falconer's Flight, Falconer Flight, Falcon Flight, Falcones Flight, Seven C's, 7 C's, 7C's, Falconer's Seven Seas, Falconner's Flight, C-hop Blend, Falcon
