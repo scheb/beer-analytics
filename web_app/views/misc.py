@@ -52,7 +52,7 @@ def updates(request: HttpRequest) -> HttpResponse:
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def sitemap(request: HttpRequest) -> HttpResponse:
     styles = Style.objects.filter(recipes_count__gt=0)
-    hops = Hop.objects.filter(recipes_count__gt=0)
+    hops = Hop.objects.all()
     fermentables = Fermentable.objects.filter(recipes_count__gt=0)
     yeasts = Yeast.objects.filter(recipes_count__gt=0)
     tags = Tag.objects.all()
