@@ -5,7 +5,7 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 1C;1;Cream Ale;;;4.2;5.6;8;20;2;5;1042;1055;1006;1012;https://www.bjcp.org/style/2021/1/1C/cream-ale/
 1D;1;American Wheat Beer;;American Wheat;4;5.5;15;30;3;6;1040;1055;1008;1013;https://www.bjcp.org/style/2021/1/1D/american-wheat-beer/
 2;;International Lager;;;;;;;;;;;;;https://www.bjcp.org/style/2021/2/international-lager/
-2A;2;International Pale Lager;;Pale Lager;4.5;6;18;25;2;6;1042;1050;1008;1012;https://www.bjcp.org/style/2021/2/2A/international-pale-lager/
+2A;2;International Pale Lager;Mexican Lager, Dutch Lager;Pale Lager;4.5;6;18;25;2;6;1042;1050;1008;1012;https://www.bjcp.org/style/2021/2/2A/international-pale-lager/
 2B;2;International Amber Lager;;Amber Lager;4.5;6;8;25;6;14;1042;1055;1008;1014;https://www.bjcp.org/style/2021/2/2B/international-amber-lager/
 2C;2;International Dark Lager;;Dunkles Lager;4.2;6;8;20;14;30;1044;1056;1008;1012;https://www.bjcp.org/style/2021/2/2C/international-dark-lager/
 3;;Czech Lager;;;;;;;;;;;;;https://www.bjcp.org/style/2021/3/czech-lager/
@@ -35,7 +35,7 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 9;;Strong European Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/9/strong-european-beer/
 9A;9;Doppelbock;;;7;10;16;26;6;25;1072;1112;1016;1024;https://www.bjcp.org/style/2021/9/9A/doppelbock/
 9B;9;Eisbock;;;9;14;25;35;17;30;1078;1120;1020;1035;https://www.bjcp.org/style/2021/9/9B/eisbock/
-9C;9;Baltic Porter;;;6.5;9.5;20;40;17;30;1060;1090;1016;1024;https://www.bjcp.org/style/2021/9/9C/baltic-porter/
+9C;9;Baltic Porter;Imperial Porter;;6.5;9.5;20;40;17;30;1060;1090;1016;1024;https://www.bjcp.org/style/2021/9/9C/baltic-porter/
 10;;German Wheat Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/10/german-wheat-beer/
 10A;10;Weissbier;;Weizenbier, Hefeweizen;4.3;5.6;8;15;2;6;1044;1053;1008;1014;https://www.bjcp.org/style/2021/10/10A/weissbier/
 10B;10;Dunkles Weissbier;;Dunkles Weizenbier, Dunkles Hefeweizen, Dunkelweizen;4.3;5.6;10;18;14;23;1044;1057;1008;1014;https://www.bjcp.org/style/2021/10/10B/dunkles-weissbier/
