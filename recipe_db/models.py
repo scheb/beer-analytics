@@ -191,6 +191,11 @@ class Style(models.Model):
             s = s.parent_style
 
     @property
+    def all_names(self) -> Iterable[str]:
+        yield self.name
+        yield from self.alt_names_list
+
+    @property
     def translit_name(self) -> Iterable[str]:
         for translit_name in get_translit_names(self.name):
             if translit_name != self.name:
