@@ -108,7 +108,7 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 24;;Belgian Ale;;;;;;;;;;;;;https://www.bjcp.org/style/2021/24/belgian-ale/;;;;;;;
 24A;24;Witbier;Belgian White Ale;;4.5;5.5;8;20;2;4;1044;1052;1008;1012;https://www.bjcp.org/style/2021/24/24A/witbier/;normal;pale;top;;BEL;traditional;
 24B;24;Belgian Pale Ale;;;4.8;5.5;20;30;8;14;1048;1054;1010;1014;https://www.bjcp.org/style/2021/24/24B/belgian-pale-ale/;normal;amber;top;;BEL;traditional;balanced
-24C;24;Bière de Garde;;;6;8.5;18;28;6;19;1060;1080;1008;1016;https://www.bjcp.org/style/2021/24/24C/biere-de-garde/;high;amber;any;lagered;BEL;traditional;malty
+24C;24;Bière de Garde;;;6;8.5;18;28;6;19;1060;1080;1008;1016;https://www.bjcp.org/style/2021/24/24C/biere-de-garde/;high;amber;any;lagered;FRA;traditional;malty
 25;;Strong Belgian Ale;;;;;;;;;;;;;https://www.bjcp.org/style/2021/25/strong-belgian-ale/;;;;;;;
 25A;25;Belgian Blond Ale;;Belgisches Blond, Blond, Blonde;6;7.5;15;30;4;6;1062;1075;1008;1018;https://www.bjcp.org/style/2021/25/25A/belgian-blond-ale/;high;pale;top;;BEL;traditional;balanced
 25B;25;Saison;;;;;20;35;5;22;1048;1065;1002;1008;https://www.bjcp.org/style/2021/25/25B/saison/;normal;pale;top;;BEL;traditional;bitter
