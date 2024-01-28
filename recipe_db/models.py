@@ -56,6 +56,31 @@ class OriginCountry:
         return self.name
 
 
+COUNTRIES_LIST = {
+    "ARG": OriginCountry("ARG", "Argentina", "🇦🇷"),
+    "AUS": OriginCountry("AUS", "Australia", "🇦🇺"),
+    "AUT": OriginCountry("AUT", "Austria", "🇦🇹"),
+    "BEL": OriginCountry("BEL", "Belgium", "🇧🇪"),
+    "CAN": OriginCountry("CAN", "Canada", "🇨🇦"),
+    "CHN": OriginCountry("CHN", "China", "🇨🇳"),
+    "CZH": OriginCountry("CZH", "Czech Republic", "🇨🇿"),
+    "DNK": OriginCountry("DNK", "Denmark", "🇩🇰"),
+    "FRA": OriginCountry("FRA", "France", "🇫🇷"),
+    "GBR": OriginCountry("GBR", "Great Britain", "🇬🇧"),
+    "GER": OriginCountry("GER", "Germany", "🇩🇪"),
+    "JPN": OriginCountry("JPN", "Japan", "🇯🇵"),
+    "NZL": OriginCountry("NZL", "New Zealand", "🇳🇿"),
+    "POL": OriginCountry("POL", "Poland", "🇵🇱"),
+    "RUS": OriginCountry("RUS", "Russia", "🇷🇺"),
+    "SER": OriginCountry("SER", "Serbia", "🇷🇸"),
+    "SLO": OriginCountry("SLO", "Slovenia", "🇸🇮"),
+    "SWE": OriginCountry("SWE", "Sweden", "🇸🇪"),
+    "UKR": OriginCountry("UKR", "Ukraine", "🇺🇦"),
+    "USA": OriginCountry("USA", "United States", "🇺🇸"),
+    "ZAF": OriginCountry("ZAF", "South Africa", "🇿🇦"),
+}
+
+
 class Tag(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     name = models.CharField(max_length=255, default=None, blank=True, null=True)
@@ -80,12 +105,16 @@ class Tag(models.Model):
         super().save(*args, **kwargs)
 
 
-# https://www.bjcp.org/docs/2015_Guidelines_Beer.pdf
-# -> https://www.bjcp.org/docs/2015_Guidelines.xlsx
-# -> https://www.bjcp.org/docs/2015_Styles.xlsx
-# https://www.brewersassociation.org/edu/brewers-association-beer-style-guidelines/
-# https://www.dummies.com/food-drink/drinks/beer/beer-style-guidelines-hierarchy/
 class Style(models.Model):
+
+    ORIGINS = COUNTRIES_LIST | {
+        "na": OriginCountry("na", "North America", ""),
+        "weu": OriginCountry("gb", "Western Europe", "🇪🇺"),
+        "ceu": OriginCountry("ceu", "Central Europe", "🇪🇺"),
+        "eeu": OriginCountry("na", "Eastern Europe", "🇪🇺"),
+        "pac": OriginCountry("gb", "Pacific", ""),
+    }
+
     id = models.CharField(max_length=5, primary_key=True)
     slug = models.SlugField()
     name = models.CharField(max_length=255)
@@ -140,6 +169,14 @@ class Style(models.Model):
     recipes_final_plato_min = models.FloatField(default=None, blank=True, null=True)
     recipes_final_plato_mean = models.FloatField(default=None, blank=True, null=True)
     recipes_final_plato_max = models.FloatField(default=None, blank=True, null=True)
+
+    strength = models.CharField(max_length=16, default=None, blank=True, null=True)
+    color = models.CharField(max_length=16, default=None, blank=True, null=True)
+    fermentation = models.CharField(max_length=16, default=None, blank=True, null=True)
+    conditioning = models.CharField(max_length=16, default=None, blank=True, null=True)
+    origin = models.CharField(max_length=16, default=None, blank=True, null=True)
+    era = models.CharField(max_length=16, default=None, blank=True, null=True)
+    flavor = models.CharField(max_length=16, default=None, blank=True, null=True)
 
     def save(self, *args, **kwargs) -> None:
         if self.slug == "":
@@ -309,6 +346,18 @@ class Style(models.Model):
         return re.sub("\.[0-9]+$", "", self.id)
 
     @property
+    def origin_codes(self):
+        if self.origin is not None:
+            items = self.origin.split(",")
+            return list(map(lambda x: x.strip(), items))
+        return []
+
+    @property
+    def origin_regions(self) -> List[OriginCountry]:
+        print(self.origin_codes)
+        return list(map(lambda o: self.ORIGINS[o], self.origin_codes))
+
+    @property
     def is_popular(self) -> bool:
         return self.recipes_percentile is not None and self.recipes_percentile > 0.8
 
@@ -451,29 +500,7 @@ class Hop(models.Model):
     BITTERING = "bittering"
     DUAL_PURPOSE = "dual-purpose"
 
-    COUNTRIES = {
-        "ARG": OriginCountry("ARG", "Argentina", "🇦🇷"),
-        "AUS": OriginCountry("AUS", "Australia", "🇦🇺"),
-        "AUT": OriginCountry("AUT", "Austria", "🇦🇹"),
-        "BEL": OriginCountry("BEL", "Belgium", "🇧🇪"),
-        "CAN": OriginCountry("CAN", "Canada", "🇨🇦"),
-        "CHN": OriginCountry("CHN", "China", "🇨🇳"),
-        "CZH": OriginCountry("CZH", "Czech Republic", "🇨🇿"),
-        "DNK": OriginCountry("DNK", "Denmark", "🇩🇰"),
-        "FRA": OriginCountry("FRA", "France", "🇫🇷"),
-        "GBR": OriginCountry("GBR", "Great Britain", "🇬🇧"),
-        "GER": OriginCountry("GER", "Germany", "🇩🇪"),
-        "JPN": OriginCountry("JPN", "Japan", "🇯🇵"),
-        "NZL": OriginCountry("NZL", "New Zealand", "🇳🇿"),
-        "POL": OriginCountry("POL", "Poland", "🇵🇱"),
-        "RUS": OriginCountry("RUS", "Russia", "🇷🇺"),
-        "SER": OriginCountry("SER", "Serbia", "🇷🇸"),
-        "SLO": OriginCountry("SLO", "Slovenia", "🇸🇮"),
-        "SWE": OriginCountry("SWE", "Sweden", "🇸🇪"),
-        "UKR": OriginCountry("UKR", "Ukraine", "🇺🇦"),
-        "USA": OriginCountry("USA", "United States", "🇺🇸"),
-        "ZAF": OriginCountry("ZAF", "South Africa", "🇿🇦"),
-    }
+    COUNTRIES = COUNTRIES_LIST
 
     USE_CHOICES = (
         (AROMA, "Aroma"),

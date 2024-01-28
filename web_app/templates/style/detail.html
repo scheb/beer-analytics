@@ -23,6 +23,34 @@
             <dt>BJCP 2021:</dt>
             <dd>{% if style.bjcp_url %}<a href="{{ style.bjcp_url }}" target="_blank">{{ style.bjcp_id }}</a>{% else %}{{ style.bjcp_id }}{% endif %}</dd>
             {% endif %}
+            {% if style.era %}
+            <dt>Era:</dt>
+            <dd>{{ style.era|title }}</dd>
+            {% endif %}
+            {% if style.origin %}
+            <dt>Origin:</dt>
+            <dd>{% for origin in style.origin_regions %}{% if forloop.counter0 %}, {% endif %}{% if origin.flag %}{{ origin.flag }} {% endif %}{{ origin.name }}{% endfor %}</dd>
+            {% endif %}
+            {% if style.fermentation %}
+            <dt>Fermentation:</dt>
+            <dd>{{ style.fermentation|title }}</dd>
+            {% endif %}
+            {% if style.conditioning %}
+            <dt>Conditioning:</dt>
+            <dd>{{ style.conditioning|title }}</dd>
+            {% endif %}
+            {% if style.color %}
+            <dt>Color:</dt>
+            <dd>{{ style.color|title }}</dd>
+            {% endif %}
+            {% if style.strength %}
+            <dt>Strength:</dt>
+            <dd>{{ style.strength|title }}</dd>
+            {% endif %}
+            {% if style.flavor %}
+            <dt>Taste:</dt>
+            <dd>{{ style.flavor|title }}</dd>
+            {% endif %}
         </dl>
 
         <nav class="toc toc-align order-last">
