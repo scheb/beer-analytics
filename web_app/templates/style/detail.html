@@ -65,11 +65,15 @@
                 {% for style1 in style.sub_styles %}
                     <li>
                         <a href="{% url "style_detail" style1.category.slug style1.slug %}">{{ style1.name }}</a>
+                        {% if style1.alt_names_list %}
+                        <small class="style-alias">({% for alt_name in style1.alt_names_list %}{% if forloop.counter0 %}, {% endif %}<em>{{ alt_name }}</em>{% endfor %})</small>{% endif %}
                         {% if style1.has_sub_styles %}
                             <ul class="list-unstyled mt-1 mb-2 ms-2">
                                 {% for style2 in style1.sub_styles %}
                                     <li>
                                         <a href="{% url "style_detail" style2.category.slug style2.slug %}">{{ style2.name }}</a>
+                                        {% if style2.alt_names_list %}
+                                        <small class="style-alias">({% for alt_name in style2.alt_names_list %}{% if forloop.counter0 %}, {% endif %}<em>{{ alt_name }}</em>{% endfor %})</small>{% endif %}
                                     </li>
                                 {% endfor %}
                             </ul>
