@@ -9,10 +9,10 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 2B;2;International Amber Lager;;Amber Lager;4.5;6;8;25;6;14;1042;1055;1008;1014;https://www.bjcp.org/style/2021/2/2B/international-amber-lager/;normal;amber;bottom;lagered;;traditional;malty
 2C;2;International Dark Lager;;Dunkles Lager;4.2;6;8;20;14;30;1044;1056;1008;1012;https://www.bjcp.org/style/2021/2/2C/international-dark-lager/;normal;dark;bottom;lagered;;traditional;malty
 3;;Czech Lager;;;;;;;;;;;;;https://www.bjcp.org/style/2021/3/czech-lager/;;;;;;;
-3A;3;Czech Pale Lager;;;3;4.1;20;35;3;6;1028;1044;1008;1014;https://www.bjcp.org/style/2021/3/3A/czech-pale-lager/;low;pale;bottom;lagered;CZE;traditional;bitter
-3B;3;Czech Premium Pale Lager;Bohemian Pilsner, Czech Pilsner;Böhmisches Lager, Bohemian-style Pilsener;4.2;5.8;30;45;3.5;6;1044;1060;1013;1017;https://www.bjcp.org/style/2021/3/3B/czech-premium-pale-lager/;normal;pale;bottom;lagered;CZE;traditional;balanced
-3C;3;Czech Amber Lager;;;4.4;5.8;20;35;10;16;1044;1060;1013;1017;https://www.bjcp.org/style/2021/3/3C/czech-amber-lager/;normal;amber;bottom;lagered;CZE;traditional;balanced
-3D;3;Czech Dark Lager;;Böhmisches Dunkel;4.4;5.8;18;34;17;35;1044;1060;1013;1017;https://www.bjcp.org/style/2021/3/3D/czech-dark-lager/;normal;dark;bottom;lagered;CZE;traditional;balanced
+3A;3;Czech Pale Lager;;;3;4.1;20;35;3;6;1028;1044;1008;1014;https://www.bjcp.org/style/2021/3/3A/czech-pale-lager/;low;pale;bottom;lagered;CZH;traditional;bitter
+3B;3;Czech Premium Pale Lager;Bohemian Pilsner, Czech Pilsner;Böhmisches Lager, Bohemian-style Pilsener;4.2;5.8;30;45;3.5;6;1044;1060;1013;1017;https://www.bjcp.org/style/2021/3/3B/czech-premium-pale-lager/;normal;pale;bottom;lagered;CZH;traditional;balanced
+3C;3;Czech Amber Lager;;;4.4;5.8;20;35;10;16;1044;1060;1013;1017;https://www.bjcp.org/style/2021/3/3C/czech-amber-lager/;normal;amber;bottom;lagered;CZH;traditional;balanced
+3D;3;Czech Dark Lager;;Böhmisches Dunkel;4.4;5.8;18;34;17;35;1044;1060;1013;1017;https://www.bjcp.org/style/2021/3/3D/czech-dark-lager/;normal;dark;bottom;lagered;CZH;traditional;balanced
 4;;Pale Malty European Lager;;;;;;;;;;;;;https://www.bjcp.org/style/2021/4/pale-malty-european-lager/;;;;;;;
 4A;4;Munich Helles;;Münchner Helles, Münchner Hell, Munich-style Helles, Mnchener Helles;4.7;5.4;16;22;3;5;1044;1048;1006;1012;https://www.bjcp.org/style/2021/4/4A/munich-helles/;normal;pale;bottom;lagered;GER;traditional;malty
 4B;4;Festbier;Oktoberfest Bier;Oktoberfest, Octoberfestbier, Helles Festbier;5.8;6.3;18;25;4;6;1054;1057;1010;1012;https://www.bjcp.org/style/2021/4/4B/festbier/;normal;pale;bottom;lagered;GER;traditional;malty
