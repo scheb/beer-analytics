@@ -51,7 +51,7 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 13;;Brown British Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/13/brown-british-beer/;;;;;;;
 13A;13;Dark Mild;;Mild;3;3.8;10;25;14;25;1030;1038;1008;1013;https://www.bjcp.org/style/2021/13/13A/dark-mild/;low;dark;top;;GBR;traditional;malty
 13B;13;British Brown Ale;English Brown, Brown Ale;;4.2;5.9;20;30;12;22;1040;1052;1008;1013;https://www.bjcp.org/style/2021/13/13B/british-brown-ale/;normal;amber;top;;GBR;traditional;malty
-13C;13;English Porter;;Brown Porter;4;5.4;18;35;20;30;1040;1052;1008;1014;https://www.bjcp.org/style/2021/13/13C/english-porter/;normal;dark;top;;GBR;traditional;malty
+13C;13;English Porter;;Brown Porter, British Porter;4;5.4;18;35;20;30;1040;1052;1008;1014;https://www.bjcp.org/style/2021/13/13C/english-porter/;normal;dark;top;;GBR;traditional;malty
 14;;Scottish Ale;Scottish-style Ale;;;;;;;;;;;;https://www.bjcp.org/style/2021/14/scottish-ale/;;;;;;;
 14A;14;Scottish Light;Scottish-style Light;;2.5;3.3;10;20;17;25;1030;1035;1010;1013;https://www.bjcp.org/style/2021/14/14A/scottish-light/;low;amber;top;;GBR;traditional;malty
 14B;14;Scottish Heavy;Scottish-style Heavy Ale;;3.3;3.9;10;20;12;20;1035;1040;1010;1015;https://www.bjcp.org/style/2021/14/14B/scottish-heavy/;low;amber;top;;GBR;traditional;malty
