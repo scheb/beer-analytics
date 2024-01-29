@@ -1,44 +1,44 @@
 id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_max;srm_min;srm_max;og_min;og_max;fg_min;fg_max;bjcp_url;strength;color;fermentation;conditioning;origin;era;flavor
 1;;Standard American Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/1/standard-american-beer/;;;;;;;
-1A;1;American Light Lager;;American Lite Lager;2.8;4.2;8;12;2;3;1028;1040;998;1008;https://www.bjcp.org/style/2021/1/1A/american-light-lager/;low;pale;bottom;lagered;USA;traditional;balanced
-1B;1;American Lager;;Amerikanisches Pilsner;4.2;5.3;8;18;2;3.5;1040;1050;1004;1010;https://www.bjcp.org/style/2021/1/1B/american-lager/;normal;pale;bottom;lagered;USA;traditional;balanced
+1A;1;American Light Lager;;American Lite Lager, American-style Light Lager;2.8;4.2;8;12;2;3;1028;1040;998;1008;https://www.bjcp.org/style/2021/1/1A/american-light-lager/;low;pale;bottom;lagered;USA;traditional;balanced
+1B;1;American Lager;;Amerikanisches Pilsner, American-style Lager, American-style Pilsener;4.2;5.3;8;18;2;3.5;1040;1050;1004;1010;https://www.bjcp.org/style/2021/1/1B/american-lager/;normal;pale;bottom;lagered;USA;traditional;balanced
 1C;1;Cream Ale;;;4.2;5.6;8;20;2;5;1042;1055;1006;1012;https://www.bjcp.org/style/2021/1/1C/cream-ale/;normal;pale;any;;USA;traditional;balanced
 1D;1;American Wheat Beer;;American Wheat;4;5.5;15;30;3;6;1040;1055;1008;1013;https://www.bjcp.org/style/2021/1/1D/american-wheat-beer/;normal;pale;any;;USA;craft;balanced
-2;;International Lager;;;;;;;;;;;;;https://www.bjcp.org/style/2021/2/international-lager/;;;;;;;
-2A;2;International Pale Lager;Mexican Lager, Dutch Lager;Pale Lager;4.5;6;18;25;2;6;1042;1050;1008;1012;https://www.bjcp.org/style/2021/2/2A/international-pale-lager/;normal;pale;bottom;lagered;;traditional;balanced
+2;;International Lager;;Australian Lager;;;;;;;;;;;https://www.bjcp.org/style/2021/2/international-lager/;;;;;;;
+2A;2;International Pale Lager;Mexican Lager, Dutch Lager;Pale Lager, International-style Pilsener;4.5;6;18;25;2;6;1042;1050;1008;1012;https://www.bjcp.org/style/2021/2/2A/international-pale-lager/;normal;pale;bottom;lagered;;traditional;balanced
 2B;2;International Amber Lager;;Amber Lager;4.5;6;8;25;6;14;1042;1055;1008;1014;https://www.bjcp.org/style/2021/2/2B/international-amber-lager/;normal;amber;bottom;lagered;;traditional;malty
 2C;2;International Dark Lager;;Dunkles Lager;4.2;6;8;20;14;30;1044;1056;1008;1012;https://www.bjcp.org/style/2021/2/2C/international-dark-lager/;normal;dark;bottom;lagered;;traditional;malty
 3;;Czech Lager;;;;;;;;;;;;;https://www.bjcp.org/style/2021/3/czech-lager/;;;;;;;
 3A;3;Czech Pale Lager;;;3;4.1;20;35;3;6;1028;1044;1008;1014;https://www.bjcp.org/style/2021/3/3A/czech-pale-lager/;low;pale;bottom;lagered;CZE;traditional;bitter
-3B;3;Czech Premium Pale Lager;Bohemian Pilsner, Czech Pilsner;Böhmisches Lager;4.2;5.8;30;45;3.5;6;1044;1060;1013;1017;https://www.bjcp.org/style/2021/3/3B/czech-premium-pale-lager/;normal;pale;bottom;lagered;CZE;traditional;balanced
+3B;3;Czech Premium Pale Lager;Bohemian Pilsner, Czech Pilsner;Böhmisches Lager, Bohemian-style Pilsener;4.2;5.8;30;45;3.5;6;1044;1060;1013;1017;https://www.bjcp.org/style/2021/3/3B/czech-premium-pale-lager/;normal;pale;bottom;lagered;CZE;traditional;balanced
 3C;3;Czech Amber Lager;;;4.4;5.8;20;35;10;16;1044;1060;1013;1017;https://www.bjcp.org/style/2021/3/3C/czech-amber-lager/;normal;amber;bottom;lagered;CZE;traditional;balanced
 3D;3;Czech Dark Lager;;Böhmisches Dunkel;4.4;5.8;18;34;17;35;1044;1060;1013;1017;https://www.bjcp.org/style/2021/3/3D/czech-dark-lager/;normal;dark;bottom;lagered;CZE;traditional;balanced
 4;;Pale Malty European Lager;;;;;;;;;;;;;https://www.bjcp.org/style/2021/4/pale-malty-european-lager/;;;;;;;
-4A;4;Munich Helles;;Münchner Helles, Münchner Hell;4.7;5.4;16;22;3;5;1044;1048;1006;1012;https://www.bjcp.org/style/2021/4/4A/munich-helles/;normal;pale;bottom;lagered;GER;traditional;malty
+4A;4;Munich Helles;;Münchner Helles, Münchner Hell, Munich-style Helles, Mnchener Helles;4.7;5.4;16;22;3;5;1044;1048;1006;1012;https://www.bjcp.org/style/2021/4/4A/munich-helles/;normal;pale;bottom;lagered;GER;traditional;malty
 4B;4;Festbier;Oktoberfest Bier;Oktoberfest, Octoberfestbier, Helles Festbier;5.8;6.3;18;25;4;6;1054;1057;1010;1012;https://www.bjcp.org/style/2021/4/4B/festbier/;normal;pale;bottom;lagered;GER;traditional;malty
-4C;4;Helles Bock;Traditional Bock, Maibock;Traditioneller Bock;6.3;7.4;23;35;6;9;1064;1072;1011;1018;https://www.bjcp.org/style/2021/4/4C/helles-bock/;high;pale;bottom;lagered;GER;traditional;malty
+4C;4;Helles Bock;Traditional Bock, Maibock;Traditioneller Bock, German-style Bock;6.3;7.4;23;35;6;9;1064;1072;1011;1018;https://www.bjcp.org/style/2021/4/4C/helles-bock/;high;pale;bottom;lagered;GER;traditional;malty
 5;;Pale Bitter European Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/5/pale-bitter-european-beer/;;;;;;;
 5A;5;German Leichtbier;;;2.4;3.6;15;28;1.5;4;1026;1034;1006;1010;https://www.bjcp.org/style/2021/5/5A/german-leichtbier/;low;pale;bottom;lagered;GER;traditional;bitter
 5B;5;Kölsch;;Klsch;4.4;5.2;18;30;3.5;5;1044;1050;1007;1011;https://www.bjcp.org/style/2021/5/5B/kolsch/;normal;pale;top;lagered;GER;traditional;balanced
 5C;5;German Helles Exportbier;Dortmunder Export;Export;5;6;20;30;4;6;1050;1058;1008;1015;https://www.bjcp.org/style/2021/5/5C/german-helles-exportbier/;normal;pale;bottom;lagered;GER;traditional;balanced
-5D;5;German Pils;;Deutsches Pilsner;4.4;5.2;22;40;2;4;1044;1050;1008;1013;https://www.bjcp.org/style/2021/5/5D/german-pils/;normal;pale;bottom;lagered;GER;traditional;bitter
+5D;5;German Pils;;Deutsches Pilsner, German-style Pilsener;4.4;5.2;22;40;2;4;1044;1050;1008;1013;https://www.bjcp.org/style/2021/5/5D/german-pils/;normal;pale;bottom;lagered;GER;traditional;bitter
 6;;Amber Malty European Lager;;;;;;;;;;;;;https://www.bjcp.org/style/2021/6/amber-malty-european-lager/;;;;;;;
 6A;6;Märzen;;Mrzen;5.6;6.3;18;24;8;17;1054;1060;1010;1014;https://www.bjcp.org/style/2021/6/6A/marzen/;normal;amber;bottom;lagered;GER;traditional;malty
 6B;6;Rauchbier;;Smoked Beer;4.8;6;20;30;12;22;1050;1057;1012;1016;https://www.bjcp.org/style/2021/6/6B/rauchbier/;normal;amber;bottom;lagered;GER;traditional;malty
 6C;6;Dunkles Bock;;;6.3;7.2;20;27;14;22;1064;1072;1013;1019;https://www.bjcp.org/style/2021/6/6C/dunkles-bock/;high;amber;bottom;lagered;GER;traditional;malty
 7;;Amber Bitter European Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/7/amber-bitter-european-beer/;;;;;;;
-7A;7;Vienna Lager;;Wiener Lager;4.7;5.5;18;30;9;15;1048;1055;1010;1014;https://www.bjcp.org/style/2021/7/7A/vienna-lager/;normal;amber;bottom;lagered;AUT;traditional;balanced
+7A;7;Vienna Lager;;Wiener Lager, Vienna, Vienna-style Lager;4.7;5.5;18;30;9;15;1048;1055;1010;1014;https://www.bjcp.org/style/2021/7/7A/vienna-lager/;normal;amber;bottom;lagered;AUT;traditional;balanced
 7B;7;Altbier;;;4.3;5.5;25;50;9;17;1044;1052;1008;1014;https://www.bjcp.org/style/2021/7/7B/altbier/;normal;amber;top;lagered;GER;traditional;bitter
 8;;Dark European Lager;;;;;;;;;;;;;https://www.bjcp.org/style/2021/8/dark-european-lager/;;;;;;;
-8A;8;Munich Dunkel;;Münchner Dunkel;4.5;5.6;18;28;17;28;1048;1056;1010;1016;https://www.bjcp.org/style/2021/8/8A/munich-dunkel/;normal;dark;bottom;lagered;GER;traditional;malty
+8A;8;Munich Dunkel;;Münchner Dunkel, Munich-style Dunkel, Mnchener Dunkel;4.5;5.6;18;28;17;28;1048;1056;1010;1016;https://www.bjcp.org/style/2021/8/8A/munich-dunkel/;normal;dark;bottom;lagered;GER;traditional;malty
 8B;8;Schwarzbier;;;4.4;5.4;20;35;19;30;1046;1052;1010;1016;https://www.bjcp.org/style/2021/8/8B/schwarzbier/;normal;dark;bottom;lagered;ceu;traditional;balanced
 9;;Strong European Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/9/strong-european-beer/;;;;;;;
 9A;9;Doppelbock;;;7;10;16;26;6;25;1072;1112;1016;1024;https://www.bjcp.org/style/2021/9/9A/doppelbock/;high;amber;bottom;lagered;ceu;traditional;malty
 9B;9;Eisbock;;;9;14;25;35;17;30;1078;1120;1020;1035;https://www.bjcp.org/style/2021/9/9B/eisbock/;very_high;amber;bottom;lagered;ceu;traditional;malty
-9C;9;Baltic Porter;Imperial Porter;;6.5;9.5;20;40;17;30;1060;1090;1016;1024;https://www.bjcp.org/style/2021/9/9C/baltic-porter/;high;dark;any;lagered;eeu;traditional;malty
+9C;9;Baltic Porter;Imperial Porter;Baltic-style Porter;6.5;9.5;20;40;17;30;1060;1090;1016;1024;https://www.bjcp.org/style/2021/9/9C/baltic-porter/;high;dark;any;lagered;eeu;traditional;malty
 10;;German Wheat Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/10/german-wheat-beer/;;;;;;;
 10A;10;Weissbier;Weizenbier, Hefeweizen;;4.3;5.6;8;15;2;6;1044;1053;1008;1014;https://www.bjcp.org/style/2021/10/10A/weissbier/;normal;pale;top;;ceu;traditional;malty
-10B;10;Dunkles Weissbier;;Dunkles Weizenbier, Dunkles Hefeweizen, Dunkelweizen;4.3;5.6;10;18;14;23;1044;1057;1008;1014;https://www.bjcp.org/style/2021/10/10B/dunkles-weissbier/;normal;amber;top;;ceu;traditional;malty
+10B;10;Dunkles Weissbier;;Dunkles Weizenbier, Dunkles Hefeweizen, Dunkelweizen, Dunkel Weizen;4.3;5.6;10;18;14;23;1044;1057;1008;1014;https://www.bjcp.org/style/2021/10/10B/dunkles-weissbier/;normal;amber;top;;ceu;traditional;malty
 10C;10;Weizenbock;;;6.5;9;15;30;6;25;1064;1090;1015;1022;https://www.bjcp.org/style/2021/10/10C/weizenbock/;high;amber;top;;ceu;traditional;malty
 11;;British Bitter;;;;;;;;;;;;;https://www.bjcp.org/style/2021/11/british-bitter/;;;;;;;
 11A;11;Ordinary Bitter;Bitter;;3.2;3.8;25;35;8;14;1030;1039;1007;1011;https://www.bjcp.org/style/2021/11/11A/ordinary-bitter/;low;amber;top;;GBR;traditional;bitter
@@ -52,12 +52,12 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 13A;13;Dark Mild;;Mild;3;3.8;10;25;14;25;1030;1038;1008;1013;https://www.bjcp.org/style/2021/13/13A/dark-mild/;low;dark;top;;GBR;traditional;malty
 13B;13;British Brown Ale;English Brown, Brown Ale;;4.2;5.9;20;30;12;22;1040;1052;1008;1013;https://www.bjcp.org/style/2021/13/13B/british-brown-ale/;normal;amber;top;;GBR;traditional;malty
 13C;13;English Porter;;Brown Porter;4;5.4;18;35;20;30;1040;1052;1008;1014;https://www.bjcp.org/style/2021/13/13C/english-porter/;normal;dark;top;;GBR;traditional;malty
-14;;Scottish Ale;;;;;;;;;;;;;https://www.bjcp.org/style/2021/14/scottish-ale/;;;;;;;
-14A;14;Scottish Light;;;2.5;3.3;10;20;17;25;1030;1035;1010;1013;https://www.bjcp.org/style/2021/14/14A/scottish-light/;low;amber;top;;GBR;traditional;malty
-14B;14;Scottish Heavy;;;3.3;3.9;10;20;12;20;1035;1040;1010;1015;https://www.bjcp.org/style/2021/14/14B/scottish-heavy/;low;amber;top;;GBR;traditional;malty
-14C;14;Scottish Export;;;3.9;6;15;30;12;20;1040;1060;1010;1016;https://www.bjcp.org/style/2021/14/14C/scottish-export/;normal;amber;top;;GBR;traditional;malty
+14;;Scottish Ale;Scottish-style Ale;;;;;;;;;;;;https://www.bjcp.org/style/2021/14/scottish-ale/;;;;;;;
+14A;14;Scottish Light;Scottish-style Light;;2.5;3.3;10;20;17;25;1030;1035;1010;1013;https://www.bjcp.org/style/2021/14/14A/scottish-light/;low;amber;top;;GBR;traditional;malty
+14B;14;Scottish Heavy;Scottish-style Heavy Ale;;3.3;3.9;10;20;12;20;1035;1040;1010;1015;https://www.bjcp.org/style/2021/14/14B/scottish-heavy/;low;amber;top;;GBR;traditional;malty
+14C;14;Scottish Export;Scottish-style Export;;3.9;6;15;30;12;20;1040;1060;1010;1016;https://www.bjcp.org/style/2021/14/14C/scottish-export/;normal;amber;top;;GBR;traditional;malty
 15;;Irish Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/15/irish-beer/;;;;;;;
-15A;15;Irish Red Ale;Irish Ale;;3.8;5;18;28;9;14;1036;1046;1010;1014;https://www.bjcp.org/style/2021/15/15A/irish-red-ale/;normal;amber;top;;IRL ;traditional;balanced
+15A;15;Irish Red Ale;Irish Ale;Irish-style Red Ale;3.8;5;18;28;9;14;1036;1046;1010;1014;https://www.bjcp.org/style/2021/15/15A/irish-red-ale/;normal;amber;top;;IRL ;traditional;balanced
 15B;15;Irish Stout;Dry Stout;Stout;3.8;5;25;45;25;40;1036;1044;1007;1011;https://www.bjcp.org/style/2021/15/15B/irish-stout/;normal;dark;top;;IRL ;traditional;bitter
 15C;15;Irish Extra Stout;;;5;6.5;35;50;30;40;1052;1062;1010;1014;https://www.bjcp.org/style/2021/15/15C/irish-extra-stout/;high;dark;top;;IRL ;traditional;bitter
 16;;Dark British Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/16/dark-british-beer/;;;;;;;
@@ -69,12 +69,12 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 17A;17;British Strong Ale;Burton Ale, Strong Ale;;5.5;8;30;60;8;22;1055;1080;1015;1022;https://www.bjcp.org/style/2021/17/17A/british-strong-ale/;high;amber;top;;GBR;traditional;malty
 17B;17;Old Ale;;;5.5;9;30;60;10;22;1055;1088;1015;1022;https://www.bjcp.org/style/2021/17/17B/old-ale/;high;amber;top;aged;GBR;traditional;malty
 17C;17;Wee Heavy;Scotch Ale, Scottish Ale;;6.5;10;17;35;14;25;1070;1130;1018;1040;https://www.bjcp.org/style/2021/17/17C/wee-heavy/;high;amber;top;;GBR;traditional;malty
-17D;17;English Barley Wine;;;8;12;35;70;8;22;1080;1120;1018;1030;https://www.bjcp.org/style/2021/17/17D/english-barleywine/;very_high;amber;top;;GBR;traditional;malty
+17D;17;English Barley Wine;;English Barleywine;8;12;35;70;8;22;1080;1120;1018;1030;https://www.bjcp.org/style/2021/17/17D/english-barleywine/;very_high;amber;top;;GBR;traditional;malty
 18;;Pale American Ale;;;;;;;;;;;;;https://www.bjcp.org/style/2021/18/pale-american-ale/;;;;;;;
 18A;18;Blonde Ale;Golden Ale;Blond Ale;3.8;5.5;15;28;3;6;1038;1054;1008;1013;https://www.bjcp.org/style/2021/18/18A/blonde-ale/;normal;pale;any;;na;craft;balanced
 18B;18;American Pale Ale;APA;Amerikanisches Pale Ale, Pale Ale;4.5;6.2;30;50;5;10;1045;1060;1010;1015;https://www.bjcp.org/style/2021/18/18B/american-pale-ale/;normal;pale;top;;na;craft;bitter
 19;;Amber and Brown American Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/19/amber-and-brown-american-beer/;;;;;;;
-19A;19;American Amber Ale;;Amerikanisches Amber Ale, Amber Ale;4.5;6.2;25;40;10;17;1045;1060;1010;1015;https://www.bjcp.org/style/2021/19/19A/american-amber-ale/;normal;amber;top;;na;craft;balanced
+19A;19;American Amber Ale;;Amerikanisches Amber Ale, Amber Ale, American-style Amber;4.5;6.2;25;40;10;17;1045;1060;1010;1015;https://www.bjcp.org/style/2021/19/19A/american-amber-ale/;normal;amber;top;;na;craft;balanced
 19B;19;California Common ;Steam Beer;Cali Common;4.5;5.5;30;45;9;14;1048;1054;1011;1014;https://www.bjcp.org/style/2021/19/19B/california-common/;normal;amber;bottom;;na;traditional;bitter
 19C;19;American Brown Ale;;Amerikanisches Brown Ale;4.3;6.2;20;30;18;35;1045;1060;1010;1016;https://www.bjcp.org/style/2021/19/19C/american-brown-ale/;normal;dark;top;;na;craft;balanced
 20;;American Porter and Stout;;;;;;;;;;;;;https://www.bjcp.org/style/2021/20/american-porter-and-stout/;;;;;;;
@@ -98,7 +98,7 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 22C;22;American Barleywine;;;8;12;50;100;9;18;1080;1120;1016;1030;https://www.bjcp.org/style/2021/22/22C/american-barleywine/;very_high;amber;top;;na;craft;bitter
 22D;22;Wheatwine;;;8;12;30;60;6;14;1080;1120;1016;1030;https://www.bjcp.org/style/2021/22/22D/wheatwine/;very_high;amber;top;;na;craft;balanced
 23;;European Sour Ale;;;;;;;;;;;;;https://www.bjcp.org/style/2021/23/european-sour-ale/;;;;;;;
-23A;23;Berliner Weisse;;Berliner Weiss;2.8;3.8;3;8;2;3;1028;1032;1003;1006;https://www.bjcp.org/style/2021/23/23A/berliner-weisse/;low;pale;top;;GER;traditional;
+23A;23;Berliner Weisse;;Berliner Weiss, Berliner-style Weisse;2.8;3.8;3;8;2;3;1028;1032;1003;1006;https://www.bjcp.org/style/2021/23/23A/berliner-weisse/;low;pale;top;;GER;traditional;
 23B;23;Flanders Red Ale;;;4.6;6.5;10;25;10;17;1048;1057;1002;1012;https://www.bjcp.org/style/2021/23/23B/flanders-red-ale/;normal;amber;top;;BEL;traditional;balanced
 23C;23;Oud Bruin;;;4;8;20;25;17;22;1040;1074;1008;1012;https://www.bjcp.org/style/2021/23/23C/oud-bruin/;normal;dark;top;;BEL;traditional;malty
 23D;23;Lambic;;;5;6.5;0;10;3;6;1040;1054;1001;1010;https://www.bjcp.org/style/2021/23/23D/lambic/;normal;pale;wild;;BEL;traditional;
@@ -106,18 +106,18 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 23F;23;Fruit Lambic;;;5;7;0;10;3;7;1040;1060;1000;1010;https://www.bjcp.org/style/2021/23/23F/fruit-lambic/;normal;pale;wild;;BEL;traditional;
 23G;23;Gose;;;4.2;4.8;5;12;3;4;1036;1056;1006;1010;https://www.bjcp.org/style/2021/23/23G/gose/;normal;pale;top;;GER;historical;
 24;;Belgian Ale;;;;;;;;;;;;;https://www.bjcp.org/style/2021/24/belgian-ale/;;;;;;;
-24A;24;Witbier;Belgian White Ale;;4.5;5.5;8;20;2;4;1044;1052;1008;1012;https://www.bjcp.org/style/2021/24/24A/witbier/;normal;pale;top;;BEL;traditional;
+24A;24;Witbier;Belgian White Ale;Belgian Wit;4.5;5.5;8;20;2;4;1044;1052;1008;1012;https://www.bjcp.org/style/2021/24/24A/witbier/;normal;pale;top;;BEL;traditional;
 24B;24;Belgian Pale Ale;;;4.8;5.5;20;30;8;14;1048;1054;1010;1014;https://www.bjcp.org/style/2021/24/24B/belgian-pale-ale/;normal;amber;top;;BEL;traditional;balanced
-24C;24;Bière de Garde;;;6;8.5;18;28;6;19;1060;1080;1008;1016;https://www.bjcp.org/style/2021/24/24C/biere-de-garde/;high;amber;any;lagered;FRA;traditional;malty
+24C;24;Bière de Garde;;Bire de Garde;6;8.5;18;28;6;19;1060;1080;1008;1016;https://www.bjcp.org/style/2021/24/24C/biere-de-garde/;high;amber;any;lagered;FRA;traditional;malty
 25;;Strong Belgian Ale;;;;;;;;;;;;;https://www.bjcp.org/style/2021/25/strong-belgian-ale/;;;;;;;
 25A;25;Belgian Blond Ale;;Belgisches Blond, Blond, Blonde;6;7.5;15;30;4;6;1062;1075;1008;1018;https://www.bjcp.org/style/2021/25/25A/belgian-blond-ale/;high;pale;top;;BEL;traditional;balanced
 25B;25;Saison;;;;;20;35;5;22;1048;1065;1002;1008;https://www.bjcp.org/style/2021/25/25B/saison/;normal;pale;top;;BEL;traditional;bitter
-25C;25;Belgian Golden Strong Ale;;;7.5;10.5;22;35;3;6;1070;1095;1005;1016;https://www.bjcp.org/style/2021/25/25C/belgian-golden-strong-ale/;very_high;pale;top;;BEL;traditional;bitter
+25C;25;Belgian Golden Strong Ale;;Strong Dark Belgian Ale;7.5;10.5;22;35;3;6;1070;1095;1005;1016;https://www.bjcp.org/style/2021/25/25C/belgian-golden-strong-ale/;very_high;pale;top;;BEL;traditional;bitter
 26;;Monastic Ale;;;;;;;;;;;;;https://www.bjcp.org/style/2021/26/monastic-ale/;;;;;;;
-26A;26;Belgian Single;Patersbier;;4.8;6;25;45;3;5;1044;1054;1004;1010;https://www.bjcp.org/style/2021/26/26A/belgian-single/;normal;pale;top;;BEL;craft;bitter
+26A;26;Belgian Single;Patersbier;Trappist Single, Belgian-style Table Beer;4.8;6;25;45;3;5;1044;1054;1004;1010;https://www.bjcp.org/style/2021/26/26A/belgian-single/;normal;pale;top;;BEL;craft;bitter
 26B;26;Belgian Dubbel;;Belgisches Dubbel, Dubbel, Dubble;6;7.6;15;25;10;17;1062;1075;1008;1018;https://www.bjcp.org/style/2021/26/26B/belgian-dubbel/;high;amber;top;;BEL;traditional;malty
 26C;26;Belgian Tripel;;Belgisches Tripel, Triple, Tripel, Tipel;7.5;9.5;20;40;4.5;7;1075;1085;1008;1014;https://www.bjcp.org/style/2021/26/26C/belgian-tripel/;high;pale;top;;BEL;traditional;bitter
-26D;26;Belgian Dark Strong Ale;Belgian Quad, Quadrupel;Belgisches Dunkles Starkbier, Belgisches Dunkel;8;12;20;35;12;22;1075;1110;1010;1024;https://www.bjcp.org/style/2021/26/26D/belgian-dark-strong-ale/;very_high;amber;top;;BEL;traditional;malty
+26D;26;Belgian Dark Strong Ale;Belgian Quad, Quadrupel;Belgisches Dunkles Starkbier, Belgisches Dunkel, Strong Dark Belgian Ale;8;12;20;35;12;22;1075;1110;1010;1024;https://www.bjcp.org/style/2021/26/26D/belgian-dark-strong-ale/;very_high;amber;top;;BEL;traditional;malty
 27;;Historical Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/27/historical-beer/;;;;;;;
 27A.1;27;Kellerbier;Cellar Beer;;;;;;;;;;;;https://www.bjcp.org/style/2021/27/27A/historical-beer-kellerbier/;normal;;bottom;;GER;traditional;balanced
 27A.2;27;Kentucky Common;;;4;5.5;15;30;11;20;1044;1055;1010;1018;https://www.bjcp.org/style/2021/27/27A/historical-beer-kentucky-common/;normal;amber;top;;USA;historical;balanced
@@ -132,14 +132,14 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 28A;28;Brett Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/28/28A/brett-beer/;;;;;na;craft;
 28B;28;Mixed-Fermentation Sour Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/28/28B/mixed-fermentation-sour-beer/;;;;;na;craft;
 28C;28;Wild Specialty Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/28/28C/wild-specialty-beer/;;;;;na;craft;
-28D;28;Straight Sour Beer;;;4.5;7;3;8;2;3;1048;1065;1006;1013;https://www.bjcp.org/style/2021/28/28D/straight-sour-beer/;;pale;top;;;;
-29;;Fruit Beer Variants;;Fruchtbier;;;;;;;;;;;https://www.bjcp.org/style/2021/29/fruit-beer/;;;;;;;
-29A;29;Fruit Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/29/29A/fruit-beer/;;;;;;;
+28D;28;Straight Sour Beer;;American-style Sour Ale;4.5;7;3;8;2;3;1048;1065;1006;1013;https://www.bjcp.org/style/2021/28/28D/straight-sour-beer/;;pale;top;;;;
+29;;Fruit Beer Variants;;;;;;;;;;;;;https://www.bjcp.org/style/2021/29/fruit-beer/;;;;;;;
+29A;29;Fruit Beer;;Fruchtbier;;;;;;;;;;;https://www.bjcp.org/style/2021/29/29A/fruit-beer/;;;;;;;
 29B;29;Fruit and Spice Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/29/29B/fruit-and-spice-beer/;;;;;;;
 29C;29;Specialty Fruit Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/29/29C/specialty-fruit-beer/;;;;;;;
 29D;29;Grape Ale;;;6;8.5;10;30;4;8;1059;1075;1004;1013;https://www.bjcp.org/style/2021/29/29D/grape-ale/;;;;;;;
 30;;Spiced Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/30/spiced-beer/;;;;;;;
-30A;30;Spice, Herb, or Vegetable Beer;;Frucht- Gewürz- und Kräuterbiere, Gewürz- Kräuter- und Gemüsebier;;;;;;;;;;;https://www.bjcp.org/style/2021/30/30A/spice-herb-or-vegetable-beer/;;;;;;;
+30A;30;Spice, Herb, or Vegetable Beer;;Frucht- Gewürz- und Kräuterbiere, Gewürz- Kräuter- und Gemüsebier, Fruit/Vegetable Beer, Herb and Spice Beer;;;;;;;;;;;https://www.bjcp.org/style/2021/30/30A/spice-herb-or-vegetable-beer/;;;;;;;
 30B;30;Autumn Seasonal Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/30/30B/autumn-seasonal-beer/;;;;;;;
 30C;30;Winter Seasonal Beer;;Winter Special Spiced, Holiday Special Spiced, Gewürztes Winterbier, Christmas;;;;;;;;;;;https://www.bjcp.org/style/2021/30/30C/winter-seasonal-beer/;;;;;;;
 30D;30;Specialty Spice Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/30/30D/specialty-spice-beer/;;;;;;;
