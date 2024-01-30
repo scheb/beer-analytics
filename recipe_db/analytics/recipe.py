@@ -187,6 +187,7 @@ class RecipesPopularityAnalysis(RecipeLevelAnalysis):
                     r.created >= %s  -- Cut-off date for popularity charts
                     {where1} {where2}
                 GROUP BY month, ras.style_id
+                ORDER BY month ASC
             """.format(
                 join=recipe_scope_filter.join_statement,
                 where1=recipe_scope_filter.where_statement,
