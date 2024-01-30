@@ -343,6 +343,12 @@ class Style(models.Model):
         return False
 
     @property
+    def strength_label(self) -> str:
+        if self.strength is not None:
+            return self.strength.replace("_", " ")
+        return ""
+
+    @property
     def bjcp_id(self):
         # Remove extra suffix that was added to make ids unique
         return re.sub("\.[0-9]+$", "", self.id)
