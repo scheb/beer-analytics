@@ -9,7 +9,7 @@ from recipe_db.analytics.fermentable import UnmappedFermentablesAnalysis
 from recipe_db.analytics.hop import UnmappedHopsAnalysis
 from recipe_db.analytics.style import UnmappedStylesAnalysis
 from recipe_db.analytics.yeast import UnmappedYeastsAnalysis
-from recipe_db.models import Hop, Tag, Yeast, Fermentable, IgnoredHop, RecipeHop
+from recipe_db.models import Hop, Tag, Yeast, Fermentable, IgnoredHop, RecipeHop, Recipe, Style
 from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.admin import AdminChartFactory
 from web_app.charts.utils import NoDataException
@@ -93,6 +93,25 @@ def styles(request: HttpRequest) -> HttpResponse:
     }
 
     return render(request, "admin/styles.html", context)
+
+
+def styles_qa(request: HttpRequest) -> HttpResponse:
+    styles = []
+    for style in Style.objects.all().order_by('-recipes_count'):
+        linked_names = (
+            Recipe.objects.filter(style=style)
+                .values(style_name=Lower('style_raw'))
+                .annotate(count=Count('style_name'))
+                .order_by("-count")
+            )
+        styles.append({
+            "name": style.name,
+            "linked_count": linked_names.count(),
+            "linked": linked_names,
+        })
+
+    return render(request, "admin/styles_qa.html", {"styles": styles})
+
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="data")
 def descriptions(request: HttpRequest) -> HttpResponse:

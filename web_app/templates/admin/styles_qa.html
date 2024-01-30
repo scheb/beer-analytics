@@ -1,0 +1,41 @@
+{% extends 'base_admin.html' %}
+{% load web_app %}
+
+{% block content %}
+    <h1>Styles Admin</h1>
+
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#mapped-styles" id="mapped-styles" class="anchor"><span></span></a>Mapped Styles</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <colgroup>
+                    <col width="20%" />
+                    <col width="10%" />
+                    <col width="70%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">Style</th>
+                        <th scope="col">Num Variants</th>
+                        <th scope="col">Variants</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for style in styles %}
+                    <tr>
+                        <td>{{ style.name }}</td>
+                        <td>{{ style.linked_count }}</td>
+                        <td>
+                            {% for linked in style.linked %}
+                                {{ linked.style_name|highlight:style.name }} <small class="ms-3">({{ linked.count }})</small><br/>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}
