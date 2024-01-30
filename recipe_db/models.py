@@ -356,7 +356,6 @@ class Style(models.Model):
 
     @property
     def origin_regions(self) -> List[OriginCountry]:
-        print(self.origin_codes)
         return list(map(lambda o: self.ORIGINS[o], self.origin_codes))
 
     @property
