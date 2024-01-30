@@ -1,0 +1,35 @@
+{% extends 'base_admin.html' %}
+{% load web_app %}
+
+{% block content %}
+    <h1>Styles Admin</h1>
+
+    <section class="card card-chart">
+        <div class="card-header">
+            <h2><a href="#unmapped-styles" id="unmapped-styles" class="anchor"><span></span></a>Unmapped Styles</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <colgroup>
+                    <col width="20%" />
+                    <col width="70%" />
+                    <col width="10%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">Number Recipes</th>
+                        <th scope="col">Style Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for style in unmapped_styles %}
+                    <tr>
+                        <td>{{ style.num_recipes }}</td>
+                        <td>{{ style.style_name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}

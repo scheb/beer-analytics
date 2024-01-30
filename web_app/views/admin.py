@@ -7,6 +7,7 @@ from django.views.decorators.cache import cache_page
 
 from recipe_db.analytics.fermentable import UnmappedFermentablesAnalysis
 from recipe_db.analytics.hop import UnmappedHopsAnalysis
+from recipe_db.analytics.style import UnmappedStylesAnalysis
 from recipe_db.analytics.yeast import UnmappedYeastsAnalysis
 from recipe_db.models import Hop, Tag, Yeast, Fermentable, IgnoredHop, RecipeHop
 from web_app import DEFAULT_PAGE_CACHE_TIME
@@ -84,6 +85,14 @@ def fermentables(request: HttpRequest) -> HttpResponse:
 
     return render(request, "admin/fermentables.html", context)
 
+
+def styles(request: HttpRequest) -> HttpResponse:
+    unmapped_styles = UnmappedStylesAnalysis().get_unmapped()
+    context = {
+        "unmapped_styles": unmapped_styles,
+    }
+
+    return render(request, "admin/styles.html", context)
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="data")
 def descriptions(request: HttpRequest) -> HttpResponse:

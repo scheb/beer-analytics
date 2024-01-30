@@ -2,7 +2,7 @@ import pandas as pd
 from django.db import connection
 from pandas import DataFrame
 
-from recipe_db.analytics.utils import db_query_fetch_single
+from recipe_db.analytics.utils import db_query_fetch_single, db_query_fetch_dictlist
 
 
 class StyleSearchAnalysis:
@@ -22,3 +22,19 @@ class StyleSearchAnalysis:
         df['volume'] = (df['volume'] / max_volume * 100).round()
 
         return df
+
+
+class UnmappedStylesAnalysis:
+    def get_unmapped(self) -> list:
+        query = """
+            SELECT
+                COUNT(DISTINCT r.uid) AS num_recipes,
+                LOWER(r.style_raw) As style_name
+            FROM recipe_db_recipe AS r
+            WHERE r.style_id IS NULL AND r.style_oor IS NULL
+            GROUP BY LOWER(r.style_raw)
+            ORDER BY num_recipes DESC
+            LIMIT 100
+        """
+
+        return db_query_fetch_dictlist(query)
