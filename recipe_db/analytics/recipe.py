@@ -66,7 +66,7 @@ class RecipesCountAnalysis(RecipeLevelAnalysis):
                     COUNT(*) AS total_recipes
                 FROM recipe_db_recipe AS r
                 {join}
-                WHERE created IS NOT NULL {where}
+                WHERE 1 {where}
             """.format(
                 join=recipe_scope_filter.join_statement,
                 where=recipe_scope_filter.where_statement,
