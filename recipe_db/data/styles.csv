@@ -52,23 +52,23 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 13A;13;Dark Mild;;Mild;3;3.8;10;25;14;25;1030;1038;1008;1013;https://www.bjcp.org/style/2021/13/13A/dark-mild/;low;dark;top;;GBR;traditional;malty
 13B;13;British Brown Ale;English Brown, Brown Ale;;4.2;5.9;20;30;12;22;1040;1052;1008;1013;https://www.bjcp.org/style/2021/13/13B/british-brown-ale/;normal;amber;top;;GBR;traditional;malty
 13C;13;English Porter;;Brown Porter, British Porter;4;5.4;18;35;20;30;1040;1052;1008;1014;https://www.bjcp.org/style/2021/13/13C/english-porter/;normal;dark;top;;GBR;traditional;malty
-14;;Scottish Ale;Scottish-style Ale;;;;;;;;;;;;https://www.bjcp.org/style/2021/14/scottish-ale/;;;;;;;
-14A;14;Scottish Light;Scottish-style Light;;2.5;3.3;10;20;17;25;1030;1035;1010;1013;https://www.bjcp.org/style/2021/14/14A/scottish-light/;low;amber;top;;GBR;traditional;malty
-14B;14;Scottish Heavy;Scottish-style Heavy Ale;;3.3;3.9;10;20;12;20;1035;1040;1010;1015;https://www.bjcp.org/style/2021/14/14B/scottish-heavy/;low;amber;top;;GBR;traditional;malty
-14C;14;Scottish Export;Scottish-style Export;;3.9;6;15;30;12;20;1040;1060;1010;1016;https://www.bjcp.org/style/2021/14/14C/scottish-export/;normal;amber;top;;GBR;traditional;malty
+14;;Scottish Ale;;Scottish-style Ale;;;;;;;;;;;https://www.bjcp.org/style/2021/14/scottish-ale/;;;;;;;
+14A;14;Scottish Light;;Scottish-style Light;2.5;3.3;10;20;17;25;1030;1035;1010;1013;https://www.bjcp.org/style/2021/14/14A/scottish-light/;low;amber;top;;GBR;traditional;malty
+14B;14;Scottish Heavy;;Scottish-style Heavy Ale;3.3;3.9;10;20;12;20;1035;1040;1010;1015;https://www.bjcp.org/style/2021/14/14B/scottish-heavy/;low;amber;top;;GBR;traditional;malty
+14C;14;Scottish Export;;Scottish-style Export;3.9;6;15;30;12;20;1040;1060;1010;1016;https://www.bjcp.org/style/2021/14/14C/scottish-export/;normal;amber;top;;GBR;traditional;malty
 15;;Irish Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/15/irish-beer/;;;;;;;
 15A;15;Irish Red Ale;Irish Ale;Irish-style Red Ale;3.8;5;18;28;9;14;1036;1046;1010;1014;https://www.bjcp.org/style/2021/15/15A/irish-red-ale/;normal;amber;top;;IRL ;traditional;balanced
 15B;15;Irish Stout;Dry Stout;Stout;3.8;5;25;45;25;40;1036;1044;1007;1011;https://www.bjcp.org/style/2021/15/15B/irish-stout/;normal;dark;top;;IRL ;traditional;bitter
 15C;15;Irish Extra Stout;;;5;6.5;35;50;30;40;1052;1062;1010;1014;https://www.bjcp.org/style/2021/15/15C/irish-extra-stout/;high;dark;top;;IRL ;traditional;bitter
 16;;Dark British Beer;;;;;;;;;;;;;https://www.bjcp.org/style/2021/16/dark-british-beer/;;;;;;;
-16A;16;Sweet Stout;;;4;6;20;40;30;40;1044;1060;1012;1024;https://www.bjcp.org/style/2021/16/16A/sweet-stout/;normal;dark;top;;GBR;traditional;malty
+16A;16;Sweet Stout;Milk Stout, Cream Stout;;4;6;20;40;30;40;1044;1060;1012;1024;https://www.bjcp.org/style/2021/16/16A/sweet-stout/;normal;dark;top;;GBR;traditional;malty
 16B;16;Oatmeal Stout;;;4.2;5.9;25;40;22;40;1045;1065;1010;1018;https://www.bjcp.org/style/2021/16/16B/oatmeal-stout/;normal;dark;top;;GBR;traditional;balanced
 16C;16;Tropical Stout;;;5.5;8;30;50;30;40;1056;1075;1010;1018;https://www.bjcp.org/style/2021/16/16C/tropical-stout/;high;dark;top;;GBR;traditional;malty
 16D;16;Foreign Extra Stout;;;6.3;8;50;70;30;40;1056;1075;1010;1018;https://www.bjcp.org/style/2021/16/16D/foreign-extra-stout/;high;dark;top;;GBR;traditional;balanced
 17;;Strong British Ale;;;;;;;;;;;;;https://www.bjcp.org/style/2021/17/strong-british-ale/;;;;;;;
 17A;17;British Strong Ale;Burton Ale, Strong Ale;;5.5;8;30;60;8;22;1055;1080;1015;1022;https://www.bjcp.org/style/2021/17/17A/british-strong-ale/;high;amber;top;;GBR;traditional;malty
 17B;17;Old Ale;;;5.5;9;30;60;10;22;1055;1088;1015;1022;https://www.bjcp.org/style/2021/17/17B/old-ale/;high;amber;top;aged;GBR;traditional;malty
-17C;17;Wee Heavy;Scotch Ale, Scottish Ale;;6.5;10;17;35;14;25;1070;1130;1018;1040;https://www.bjcp.org/style/2021/17/17C/wee-heavy/;high;amber;top;;GBR;traditional;malty
+17C;17;Wee Heavy;Scotch Ale;;6.5;10;17;35;14;25;1070;1130;1018;1040;https://www.bjcp.org/style/2021/17/17C/wee-heavy/;high;amber;top;;GBR;traditional;malty
 17D;17;English Barley Wine;;English Barleywine;8;12;35;70;8;22;1080;1120;1018;1030;https://www.bjcp.org/style/2021/17/17D/english-barleywine/;very_high;amber;top;;GBR;traditional;malty
 18;;Pale American Ale;;;;;;;;;;;;;https://www.bjcp.org/style/2021/18/pale-american-ale/;;;;;;;
 18A;18;Blonde Ale;Golden Ale;Blond Ale;3.8;5.5;15;28;3;6;1038;1054;1008;1013;https://www.bjcp.org/style/2021/18/18A/blonde-ale/;normal;pale;any;;na;craft;balanced
