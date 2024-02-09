@@ -3,8 +3,11 @@
 .github
 .gitignore
 .idea
+**/.env
 bundles
 node_modules
 static
 var
 venv
+google_api_client.json
+yarn-error.log
