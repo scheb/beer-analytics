@@ -1,5 +1,5 @@
 try:
-    from beer_analytics.settings_shared import *
+    from config.settings_shared import *
 except ImportError:
     pass
 

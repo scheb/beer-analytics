@@ -20,7 +20,7 @@ services:
 
     db:
         env_file:
-            - beer_analytics/.env
+            - config/.env
         image: mariadb:11.0
         container_name: beer_analytics_db
         environment:

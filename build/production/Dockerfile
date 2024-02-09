@@ -14,7 +14,7 @@ ARG POETRY_VERSION="1.4"
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
-ENV DJANGO_SETTINGS_MODULE=beer_analytics.settings_dev
+ENV DJANGO_SETTINGS_MODULE=config.settings_dev
 ENV PATH="${PATH}:${POETRY_VENV}/bin"
 
 # Dependencies
@@ -31,7 +31,7 @@ RUN poetry config virtualenvs.create false && \
 
 # Copy application code to WORKDIR
 COPY ./bin/ ./bin/
-COPY ./beer_analytics/ ./beer_analytics/
+COPY ./config/ ./config/
 COPY ./recipe_db/ ./recipe_db/
 COPY ./web_app/ ./web_app/
 COPY ./manage.py ./

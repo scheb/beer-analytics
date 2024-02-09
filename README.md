@@ -39,17 +39,17 @@ Application Setup
 
 ### Configuration
 
-Provide a `.env` file in the `beer_analytics` folder. An example can be found in `beer_analytics/.env.example`.
+Provide a `.env` file in the `beer_analytics` folder. An example can be found in `config/.env.example`.
 
 Per default the application starts with "dev" settings, which is likely what you want. Use the `DJANGO_SETTINGS_MODULE`
 environment variable to use different settings according to the environment:
 
 ```
 # Dev settings
-DJANGO_SETTINGS_MODULE=beer_analytics.settings_dev
+DJANGO_SETTINGS_MODULE=config.settings_dev
 
 # Production settings
-DJANGO_SETTINGS_MODULE=beer_analytics.settings_prod
+DJANGO_SETTINGS_MODULE=config.settings_prod
 ```
 
 The Docker container uses dev settings.
