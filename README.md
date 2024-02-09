@@ -39,7 +39,7 @@ Application Setup
 
 ### Configuration
 
-Provide a `.env` file in the `beer_analytics` folder. An example can be found in `config/.env.example`.
+Provide a `.env` file in the main folder. An example can be found in `.env.example`.
 
 Per default the application starts with "dev" settings, which is likely what you want. Use the `DJANGO_SETTINGS_MODULE`
 environment variable to use different settings according to the environment:

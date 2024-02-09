@@ -10,6 +10,19 @@ services:
         container_name: beer_analytics_django
         restart: on-failure
         environment:
+            DATABASE_HOST: beer_analytics_db
+            DATABASE_NAME: beer_analytics
+            DATABASE_USER: root
+            DATABASE_PASSWORD: root
+            SECRET_KEY: ${SECRET_KEY}
+            RAW_DATA_DIR: ${RAW_DATA_DIR}
+            CACHE_DIR: ${CACHE_DIR}
+            ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+            LOG_FILE: ${LOG_FILE}
+            LOG_LEVEL: ${LOG_LEVEL}
+            WEB_ANALYTICS_ROOT_URL: '/wa/'
+            WEB_ANALYTICS_SITE_ID: 0
+            GOOGLE_API_CLIENT_CONFIG_FILE: ${GOOGLE_API_CLIENT_CONFIG_FILE}
             OPENAI_API_KEY: ${OPENAI_API_KEY}
         volumes:
             - .:/app:z
@@ -19,14 +32,12 @@ services:
             - db
 
     db:
-        env_file:
-            - config/.env
         image: mariadb:11.0
         container_name: beer_analytics_db
         environment:
-            MARIADB_DATABASE: ${DATABASE_NAME}
-            MARIADB_USER: ${DATABASE_USER}
-            MARIADB_PASSWORD: ${DATABASE_PASSWORD}
+            MARIADB_DATABASE: beer_analytics
+            MARIADB_USER: beer_analytics
+            MARIADB_PASSWORD: beer_analytics
             MARIADB_ROOT_PASSWORD: 'root'
             MARIADB_AUTO_UPGRADE: 1
         ports:
