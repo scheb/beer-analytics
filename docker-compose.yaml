@@ -21,13 +21,14 @@ services:
     db:
         env_file:
             - beer_analytics/.env
-        image: mysql:8.0
+        image: mariadb:11.0
         container_name: beer_analytics_db
         environment:
-            MYSQL_DATABASE: ${DATABASE_NAME}
-            MYSQL_USER: ${DATABASE_USER}
-            MYSQL_PASSWORD: ${DATABASE_PASSWORD}
-            MYSQL_ROOT_PASSWORD: 'root'
+            MARIADB_DATABASE: ${DATABASE_NAME}
+            MARIADB_USER: ${DATABASE_USER}
+            MARIADB_PASSWORD: ${DATABASE_PASSWORD}
+            MARIADB_ROOT_PASSWORD: 'root'
+            MARIADB_AUTO_UPGRADE: 1
         ports:
             - "3308:3306"
         volumes:
