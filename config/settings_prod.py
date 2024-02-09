@@ -16,11 +16,12 @@ CACHES = {
         "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
         "LOCATION": path.join(env.str("CACHE_DIR"), "data"),
         "OPTIONS": {"MAX_ENTRIES": 3 * NUM_ENTITIES * 10},
-     },
+    },
     "images": {
         "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
-        "LOCATION": path.join(env.str("CACHE_DIR"), "images")},
+        "LOCATION": path.join(env.str("CACHE_DIR"), "images"),
         "OPTIONS": {"MAX_ENTRIES": 3 * NUM_ENTITIES * 10},
+    },
 }
 
 SESSION_COOKIE_SECURE = True
