@@ -82,19 +82,19 @@ except ImportError:
         return None
     def get_hop_description() -> Optional[str]:
         return None
-    def fetch_hop_type_description() -> Optional[str]:
+    def get_hop_type_description() -> Optional[str]:
         return None
-    def fetch_flavor_description() -> Optional[str]:
+    def get_flavor_description() -> Optional[str]:
         return None
-    def fetch_flavor_category_description() -> Optional[str]:
+    def get_flavor_category_description() -> Optional[str]:
         return None
-    def fetch_fermentable_description() -> Optional[str]:
+    def get_fermentable_description() -> Optional[str]:
         return None
-    def fetch_fermentable_type_description() -> Optional[str]:
+    def get_fermentable_type_description() -> Optional[str]:
         return None
-    def fetch_yeast_description() -> Optional[str]:
+    def get_yeast_description() -> Optional[str]:
         return None
-    def fetch_yeast_type_description() -> Optional[str]:
+    def get_yeast_type_description() -> Optional[str]:
         return None
 else:
     from content.loader import (fetch_style_description, fetch_hop_description, fetch_hop_type_description,
