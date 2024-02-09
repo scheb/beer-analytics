@@ -10,6 +10,7 @@ services:
         container_name: beer_analytics_django
         restart: on-failure
         environment:
+            DJANGO_SETTINGS_MODULE: config.settings_dev
             DATABASE_HOST: beer_analytics_db
             DATABASE_NAME: beer_analytics
             DATABASE_USER: root
