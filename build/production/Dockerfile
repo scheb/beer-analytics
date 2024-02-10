@@ -19,7 +19,7 @@ ENV PATH="${PATH}:${POETRY_VENV}/bin"
 
 # Dependencies
 RUN apt-get update && \
-    apt-get -y install default-libmysqlclient-dev pkg-config build-essential && \
+    apt-get -y install default-libmysqlclient-dev pkg-config build-essential git && \
     pip install poetry==${POETRY_VERSION}
 
 WORKDIR ${APP_HOME}
