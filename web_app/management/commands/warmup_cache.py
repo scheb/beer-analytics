@@ -1,6 +1,7 @@
 from typing import Iterable
 
 import requests
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.urls import reverse
 
@@ -12,7 +13,7 @@ from web_app.charts.trend import TrendPeriod, TrendChartFactory
 from web_app.charts.yeast import YeastChartFactory
 
 
-BASE_URL = "https://www.beer-analytics.com"
+BASE_URL = settings.__getattr__("APP_URL")
 WARMUP_PERCENTILE = 0.9
 WARMUP_MOST_SEARCHED = 20
 

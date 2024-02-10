@@ -11,6 +11,9 @@ env.read_env()
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
+APP_URL = env.str("APP_URL")
+APP_DOMAIN = APP_URL.replace('https://', '').replace('http://', '')
+
 SECRET_KEY = env.str("SECRET_KEY")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 DEBUG = True
@@ -150,7 +153,7 @@ STATICFILES_DIRS = (path.join(BASE_DIR, "bundles"),)
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
 META_SITE_PROTOCOL = "https"
-META_SITE_DOMAIN = "www.beer-analytics.com"
+META_SITE_DOMAIN = APP_DOMAIN
 META_SITE_NAME = "Beer Analytics"
 META_SITE_TYPE = "website"
 META_INCLUDE_KEYWORDS = ["beer", "brewing", "recipe", "ingredients", "analysis", "analytics"]
