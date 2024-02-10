@@ -112,7 +112,7 @@ id;parent_style_id;name;alt_names;alt_names_extra;abv_min;abv_max;ibu_min;ibu_ma
 25;;Strong Belgian Ale;;;;;;;;;;;;;https://www.bjcp.org/style/2021/25/strong-belgian-ale/;;;;;;;
 25A;25;Belgian Blond Ale;;Belgisches Blond, Blond, Blonde;6;7.5;15;30;4;6;1062;1075;1008;1018;https://www.bjcp.org/style/2021/25/25A/belgian-blond-ale/;high;pale;top;;BEL;traditional;balanced
 25B;25;Saison;;;;;20;35;5;22;1048;1065;1002;1008;https://www.bjcp.org/style/2021/25/25B/saison/;normal;pale;top;;BEL;traditional;bitter
-25C;25;Belgian Golden Strong Ale;;Strong Dark Belgian Ale;7.5;10.5;22;35;3;6;1070;1095;1005;1016;https://www.bjcp.org/style/2021/25/25C/belgian-golden-strong-ale/;very_high;pale;top;;BEL;traditional;bitter
+25C;25;Belgian Golden Strong Ale;;;7.5;10.5;22;35;3;6;1070;1095;1005;1016;https://www.bjcp.org/style/2021/25/25C/belgian-golden-strong-ale/;very_high;pale;top;;BEL;traditional;bitter
 26;;Monastic Ale;;;;;;;;;;;;;https://www.bjcp.org/style/2021/26/monastic-ale/;;;;;;;
 26A;26;Belgian Single;Patersbier;Trappist Single, Belgian-style Table Beer;4.8;6;25;45;3;5;1044;1054;1004;1010;https://www.bjcp.org/style/2021/26/26A/belgian-single/;normal;pale;top;;BEL;craft;bitter
 26B;26;Belgian Dubbel;;Belgisches Dubbel, Dubbel, Dubble;6;7.6;15;25;10;17;1062;1075;1008;1018;https://www.bjcp.org/style/2021/26/26B/belgian-dubbel/;high;amber;top;;BEL;traditional;malty
