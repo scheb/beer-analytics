@@ -1,4 +1,5 @@
-from typing import Iterable
+import random
+from typing import Iterable, List
 
 import requests
 from django.conf import settings
@@ -26,15 +27,15 @@ class Command(BaseCommand):
     def handle(self, *args, **options) -> None:
         entities = options["entities"] or ["style", "hop", "fermentable", "yeast", "trend"]
         if "style" in entities:
-            self.warmup_urls(self.get_warmup_urls_for_style())
+            self.warmup_urls(self.randomize_set(self.get_warmup_urls_for_style()))
         if "hop" in entities:
-            self.warmup_urls(self.get_warmup_urls_for_hop())
+            self.warmup_urls(self.randomize_set(self.get_warmup_urls_for_hop()))
         if "fermentable" in entities:
-            self.warmup_urls(self.get_warmup_urls_for_fermentable())
+            self.warmup_urls(self.randomize_set(self.get_warmup_urls_for_fermentable()))
         if "yeast" in entities:
-            self.warmup_urls(self.get_warmup_urls_for_yeast())
+            self.warmup_urls(self.randomize_set(self.get_warmup_urls_for_yeast()))
         if "trend" in entities:
-            self.warmup_urls(self.get_warmup_urls_for_trends())
+            self.warmup_urls(self.randomize_set(self.get_warmup_urls_for_trends()))
 
     def get_warmup_urls_for_style(self) -> Iterable[str]:
         # Most popular styles by search
@@ -150,3 +151,8 @@ class Command(BaseCommand):
             self.stdout.write(url)
             response = requests.get(url)
             self.stdout.write("%s - %s sec." % (response.status_code, response.elapsed.total_seconds()))
+
+    def randomize_set(self, urls: Iterable[str]) -> Iterable[str]:
+        urls = list(set(urls))
+        random.shuffle(urls)
+        return urls
