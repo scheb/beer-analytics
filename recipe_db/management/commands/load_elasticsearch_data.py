@@ -16,6 +16,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("--limit", help="Number of records to load")
         parser.add_argument("--reset", action="store_true", help="Reset index")
+        parser.add_argument("--forcemerge", action="store_true", help="Force merge after update")
 
     def handle(self, *args, **options) -> None:
         es = get_elasticsearch()
@@ -37,10 +38,12 @@ class Command(BaseCommand):
         progress.close()
         self.stdout.write(f"Indexed {successes}/{num_records} documents")
 
+        if options["forcemerge"]:
+            self.stdout.write("Force merge index")
+            es.indices.forcemerge(index=INDEX_NAME)
+
         self.stdout.write("Refreshing index")
-        es.indices.forcemerge(index=INDEX_NAME)
         es.indices.refresh(index=INDEX_NAME)
-        self.stdout.write("Done")
 
 
 def flat_list(values) -> list:
