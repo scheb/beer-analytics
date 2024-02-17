@@ -7,11 +7,18 @@
         <h2 class="h5 mb-3" style="border: none;">The Ultimate Beer Brewing Recipe Database</h2>
         <p>
             Welcome to Beer Analytics, the ultimate online destination for beer recipes and data-driven insights.
-            Our extensive database is perfect for beer lovers and homebrewers alike, offering a wealth of information on how
+            Our extensive database is offering wealth of information on how
             beer brewing recipes are crafted, even for those new to the world of data analysis. With a staggering
             <strong>{{ recipes }} recipes</strong> it is the largest database of beer recipes in the world, aggregated
-            from various sources in homebrewing community. We're here to take your beer brewing knowledge to the next level!
+            from various sources in homebrewing community.
         </p>
+
+        <form action="{% url "search" %}" method="GET" class="search">
+            <label for="input-search" class="visually-hidden">Search recipes</label>
+            <input type="search" name="term" value="{{ search_term }}" class="search-term form-control float-start me-2" id="input-search" placeholder="Search {{ recipes }} recipes">
+            <button type="submit" class="btn btn-secondary">Find Recipes 🔍</button>
+        </form>
+
         <p>
             Dive into the intricacies of various <a href="{% url "style_overview" %}">beer styles</a> and uncover their
             unique compositions. Browse our comprehensive index of <a href="{% url "fermentable_overview" %}">fermentables</a>,
@@ -19,6 +26,7 @@
             <a href="{% url "yeast_overview" %}">yeasts</a> to expand your understanding of the ingredients that
             make each brew stand out.
         </p>
+        
         <p>
             Can't find exactly what you're looking for? Filter options <span class="with-sidebar">in the sidebar</span>
             <span class="with-toogle">in the top menu</span> allow you to tailor your search and receive <strong>customized

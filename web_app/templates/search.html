@@ -10,7 +10,7 @@
 
     <form action="{% url "search" %}" method="GET" class="search">
         <label for="input-search" class="visually-hidden">Search recipes</label>
-        <input type="search" name="term" value="{{ search_term }}" class="search-term form-control float-start me-2" id="input-search" placeholder="Search term">
+        <input type="search" name="term" value="{{ search_term }}" class="search-term form-control float-start me-2" id="input-search" placeholder="Search for recipe names, beer styles, hops etc.">
         <button type="submit" class="btn btn-secondary">Find Recipes 🔍</button>
     </form>
 
