@@ -1,10 +1,11 @@
-from typing import Iterable
+from typing import Iterable, Optional
 
 from django.conf import settings
 from elastic_transport import ObjectApiResponse
 
 from elasticsearch import Elasticsearch
-from recipe_db.models import Recipe
+from recipe_db.models import Recipe, SourceInfo
+from recipe_db.search.result import RecipeResultBuilder
 
 SEARCHABLE_TEXT_FIELDS = ["name", "author", "style_raw", "style_names", "hops", "fermentables", "yeasts"]
 INDEX_NAME = 'recipes'
@@ -32,7 +33,10 @@ class RecipeSearchResult:
     @property
     def recipes(self) -> Iterable[Recipe]:
         ids = map(lambda r: r['_id'], self._result)
-        return Recipe.objects.filter(uid__in=ids)
+        recipes = Recipe.objects.filter(uid__in=ids)
+        builder = RecipeResultBuilder()
+        for recipe in recipes:
+            yield builder.create_recipe_result(recipe)
 
 
 def search_by_term(term: str):
