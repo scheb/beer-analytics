@@ -25,6 +25,8 @@ google-api-python-client = "^2.108.0"
 openai = "^1.0.1"
 uvicorn = {extras = ["standard"], version = "^0.27.0.post1"}
 gunicorn = "^21.2.0"
+elasticsearch = "^8.12.0"
+elasticsearch-async = "^6.2.0"
 
 [tool.poetry.dev-dependencies]
 black = "^23.3.0"
