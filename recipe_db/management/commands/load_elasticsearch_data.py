@@ -1,52 +1,59 @@
 import tqdm
 
 from itertools import chain
-from typing import Iterable
+from typing import Iterable, Optional
 
-from django.conf import settings
 from django.core.management.base import BaseCommand
-from elasticsearch import Elasticsearch
 from elasticsearch.helpers import streaming_bulk
 from recipe_db.models import Recipe
+from recipe_db.search.elasticsearch import get_elasticsearch
 
 INDEX_NAME = 'recipes'
 
 class Command(BaseCommand):
     help = "Load recipe data into Elasticsearch"
 
-    def handle(self, *args, **options) -> None:
-        es = Elasticsearch(
-            "http://es:9200",
-            basic_auth=("elastic", settings.__getattr__("ELASTICSEARCH_PASSWORD"))
-        )
+    def add_arguments(self, parser):
+        parser.add_argument("--limit", help="Number of records to load")
+        parser.add_argument("--reset", action="store_true", help="Reset index")
 
-        # print(es.info())
-        # self.stdout.write("Delete old index")
-        # es.options(ignore_status=[400, 404]).indices.delete(index=INDEX_NAME)
+    def handle(self, *args, **options) -> None:
+        es = get_elasticsearch()
+
+        # Reset the index
+        reset = options["reset"]
+        if reset:
+            self.stdout.write("Delete old index")
+            es.options(ignore_status=[400, 404]).indices.delete(index=INDEX_NAME)
 
         self.stdout.write("Bulk load recipes")
-        limit = 10000
+        limit = int(options["limit"]) if options["limit"] is not None else None
+        num_records = limit or Recipe.objects.count()
         successes = 0
-        progress = tqdm.tqdm(unit="docs", total=limit)
+        progress = tqdm.tqdm(unit="docs", total=num_records)
         for ok, action in streaming_bulk(es, index=INDEX_NAME, actions=get_recipes(limit)):
             progress.update(1)
             successes += ok
         progress.close()
-        self.stdout.write(f"Indexed {successes}/{limit} documents")
+        self.stdout.write(f"Indexed {successes}/{num_records} documents")
 
         self.stdout.write("Refreshing index")
         es.indices.forcemerge(index=INDEX_NAME)
         es.indices.refresh(index=INDEX_NAME)
         self.stdout.write("Done")
-        # print(es.indices.stats(index=INDEX_NAME))
+
 
 def flat_list(values) -> list:
     return list(chain.from_iterable(values))
 
-def get_recipes(limit: int) -> Iterable:
+
+def get_recipes(limit: Optional[int]) -> Iterable:
     recipes = Recipe.objects \
                   .prefetch_related("associated_styles", "associated_fermentables", "associated_hops", "associated_yeasts") \
-                  .all()[:limit]
+                  .all()
+
+    if limit is not None:
+        recipes = recipes[:limit]
 
     for recipe in recipes:
         styles = recipe.associated_styles.all()

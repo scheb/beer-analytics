@@ -1,8 +1,7 @@
 import pprint
 
-from django.conf import settings
 from django.core.management.base import BaseCommand
-from elasticsearch import Elasticsearch
+from recipe_db.search.elasticsearch import get_elasticsearch
 
 INDEX_NAME = 'recipes'
 
@@ -10,11 +9,7 @@ class Command(BaseCommand):
     help = "Search data in elasticsearch"
 
     def handle(self, *args, **options) -> None:
-        es = Elasticsearch(
-            "http://es:9200",
-            basic_auth=("elastic", settings.__getattr__("ELASTICSEARCH_PASSWORD"))
-        )
-
+        es = get_elasticsearch()
         result = es.search(
             index=INDEX_NAME,
             # query={
