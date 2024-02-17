@@ -34,6 +34,7 @@
                 <li class="nav-item"><a class="nav-link{% if url_name|startswith:'hop' %} active{% endif %}" href="{% url "hop_overview" %}"><span class="nav-icon icon-hop"></span><span class="d-none d-sm-inline ms-2">Hops</span></a></li>
                 <li class="nav-item"><a class="nav-link{% if url_name|startswith:'yeast' %} active{% endif %}" href="{% url "yeast_overview" %}"><span class="nav-icon icon-yeast"></span><span class="d-none d-sm-inline ms-2">Yeasts</span></a></li>
                 <li class="nav-item"><a class="nav-link{% if url_name|startswith:'trend' %} active{% endif %}" href="{% url "trend_overview" "recent" %}"><span class="nav-icon icon-trend"></span><span class="d-none d-sm-inline ms-2">Trends</span></a></li>
+                <li class="nav-item"><a class="nav-link{% if url_name|startswith:'search' %} active{% endif %}" href="{% url "search" %}"><span class="nav-icon icon-search"></span><span class="d-none d-sm-inline ms-2">Recipes</span></a></li>
             </ul>
         </div>
         {% endwith %}

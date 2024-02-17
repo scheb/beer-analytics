@@ -151,6 +151,12 @@ footer {
     background-image: url('../img/embed/icon-github.svg');
 }
 
+.icon-search {
+    width: 28px;
+    height: 28px;
+    background-image: url('../img/embed/icon-search.svg');
+}
+
 .nav-link {
     &:active, &:hover, &.active {
         .nav-icon {
