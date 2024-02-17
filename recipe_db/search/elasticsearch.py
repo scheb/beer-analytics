@@ -9,11 +9,17 @@ from recipe_db.models import Recipe
 SEARCHABLE_TEXT_FIELDS = ["name", "author", "style_raw", "style_names", "hops", "fermentables", "yeasts"]
 INDEX_NAME = 'recipes'
 RESULT_SIZE = 100
+ELASTICSEARCH = None
 
-ELASTICSEARCH = Elasticsearch(
-    settings.__getattr__("ELASTICSEARCH_URL"),
-    basic_auth=("elastic", settings.__getattr__("ELASTICSEARCH_PASSWORD"))
-)
+
+def get_elasticsearch():
+    global ELASTICSEARCH
+    if ELASTICSEARCH is None:
+        ELASTICSEARCH = Elasticsearch(
+            settings.__getattr__("ELASTICSEARCH_URL"),
+            basic_auth=("elastic", settings.__getattr__("ELASTICSEARCH_PASSWORD"))
+        )
+    return ELASTICSEARCH
 
 
 class RecipeSearchResult:
@@ -30,7 +36,7 @@ class RecipeSearchResult:
 
 
 def search_by_term(term: str):
-    result = ELASTICSEARCH.search(
+    result = get_elasticsearch().search(
         index=INDEX_NAME,
         _source=False,
         size=RESULT_SIZE,
