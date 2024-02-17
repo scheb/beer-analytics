@@ -11,7 +11,7 @@ INDEX_NAME = 'recipes'
 RESULT_SIZE = 100
 
 ELASTICSEARCH = Elasticsearch(
-    "http://es:9200",
+    settings.__getattr__("ELASTICSEARCH_URL"),
     basic_auth=("elastic", settings.__getattr__("ELASTICSEARCH_PASSWORD"))
 )
 
