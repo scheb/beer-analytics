@@ -1,7 +1,7 @@
 from django.urls import path, register_converter
 
 from . import views
-from .views import fermentable, hop, misc, style, yeast, trend, analyze, admin
+from .views import fermentable, hop, misc, style, yeast, trend, analyze, admin, search
 from .views.utils import FORMATS
 
 
@@ -30,6 +30,8 @@ urlpatterns = [
     path("analyze/entities.json", analyze.get_entities, name="analyze_entities"),
     path("analyze/charts/<str:chart_type>.json", analyze.chart, name="analyze_chart"),
     path("analyze/recipes/random.inc", analyze.recipes, name="analyze_recipes"),
+
+    path("recipe-search/", search.search, name="search"),
 
     path("styles/", style.overview, name="style_overview"),
     path("styles/<str:category_slug>/", style.category, name="style_category"),

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load web_app %}
+
+{% block content %}
+    <h1>Beer Recipes Search</h1>
+    <p>
+        Search our database of <strong>{{ recipes }} beer brewing recipes</strong>.
+        Search by keywords, beer style, used hops and many more parameters.
+    </p>
+
+    <form action="{% url "search" %}" method="GET" class="search">
+        <label for="input-search" class="visually-hidden">Search recipes</label>
+        <input type="search" name="term" value="{{ search_term }}" class="search-term form-control float-start me-2" id="input-search" placeholder="Search term">
+        <button type="submit" class="btn btn-secondary">Find Recipes 🔍</button>
+    </form>
+
+    {% if result %}
+        <section class="search-results">
+            {% if result.hits > 0 %}
+                <p>Found <strong>{% if not result.hits_accurate %}~{% endif %}{{ result.hits }}</strong> matching recipes:</p>
+                <ul class="column-list-wide">
+                    {% for recipe in result.recipes %}
+                        <li>
+                            {% if recipe.source %}
+                                <a href="{{ recipe.url }}" target="_blank"><img src="{{ recipe.source.icon }}" title="{{ recipe.source.name }}" alt="{{ recipe.source.name }} Icon" width="16" height="16" class="align-middle"/></a>
+                            {% endif %}
+                            <a href="{{ recipe.url }}" target="_blank">{{ recipe.name }}</a>
+                            {% if recipe.author %}<small><span class="text-muted"> by</span> {{ recipe.author }}</small>{% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Sorry, no matching recipes found.</p>
+            {% endif %}
+        </section>
+    {% else %}
+        <hr/>
+        <p>
+            Would you rather <strong>discover recipes</strong> by <a href="{% url "style_overview" %}">beer style</a> or
+            their ingredients? Browse our comprehensive index of <a href="{% url "fermentable_overview" %}">fermentables</a>,
+            <a href="{% url "fermentable_category" "grain" %}">malts</a>, <a href="{% url "hop_overview" %}">hops</a> and
+            <a href="{% url "yeast_overview" %}">yeasts</a> to expand your understanding of the ingredients and find
+            recipes for your next brew.
+        </p>
+        <p></p>
+    {% endif %}
+{% endblock %}

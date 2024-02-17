@@ -54,6 +54,29 @@ class HomeMeta(PageMeta):
         return meta
 
 
+class SearchMeta(PageMeta):
+    def __init__(self, search_term: str):
+        self.search_term = search_term
+        super().__init__()
+
+    def get_meta(self) -> Meta:
+        recipes = Recipe.objects.count()
+        if self.search_term:
+            return Meta(
+                title=suffix_title("%s - Beer Recipes Search" % self.search_term),
+                description='Search results for "%s". Search our database of %s beer brewing recipes. Search by keywords, beer style, used hops and many more parameters.' % (self.search_term, intcomma(recipes)),
+                keywords=[self.search_term, "beer", "brewing", "recipes", "search", "browse", "styles"],
+                url=reverse("search"),
+            )
+        else:
+            return Meta(
+                title=suffix_title("Search %s Beer Recipes" % intcomma(recipes)),
+                description="Search our database of %s beer brewing recipes. Search by keywords, beer style, used hops and many more parameters." % intcomma(recipes),
+                keywords=["beer", "brewing", "recipes", "search", "browse", "styles"],
+                url=reverse("search"),
+            )
+
+
 class StyleOverviewMeta(PageMeta):
     def get_meta(self) -> Meta:
         return Meta(
