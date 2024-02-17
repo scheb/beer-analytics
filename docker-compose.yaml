@@ -49,7 +49,7 @@ services:
         volumes:
             - 'beer_analytics_db:/var/lib/mysql'
 
-    es_setup:
+    elasticsearch_setup:
         image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
         container_name: beer_analytics_es_setup
         volumes:
@@ -75,7 +75,7 @@ services:
                 "instances:\n"\
                 "  - name: es\n"\
                 "    dns:\n"\
-                "      - es\n"\
+                "      - elasticsearch\n"\
                 "      - localhost\n"\
                 "    ip:\n"\
                 "      - 127.0.0.1\n"\
@@ -94,9 +94,9 @@ services:
               find . -type d -exec chmod 750 \{\} \;;
               find . -type f -exec chmod 640 \{\} \;;
               echo "Waiting for Elasticsearch availability";
-              until curl -s --cacert config/certs/ca/ca.crt https://es:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
+              until curl -s --cacert config/certs/ca/ca.crt https://elasticsearch:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
               echo "Setting kibana_system password";
-              until curl -s -X POST --cacert config/certs/ca/ca.crt -u "elastic:${ELASTIC_PASSWORD}" -H "Content-Type: application/json" https://es:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
+              until curl -s -X POST --cacert config/certs/ca/ca.crt -u "elastic:${ELASTIC_PASSWORD}" -H "Content-Type: application/json" https://elasticsearch:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
               echo "All done!";
             '
         healthcheck:
@@ -105,9 +105,9 @@ services:
             timeout: 5s
             retries: 120
 
-    es:
+    elasticsearch:
         depends_on:
-            es_setup:
+            elasticsearch_setup:
                 condition: service_healthy
         image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
         container_name: beer_analytics_es
@@ -124,7 +124,7 @@ services:
             - discovery.type=single-node
             - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
             - bootstrap.memory_lock=true
-            - http.publish_host=es
+            - http.publish_host=elasticsearch
             - xpack.security.enabled=true
             - xpack.security.http.ssl.enabled=false
             - xpack.security.transport.ssl.enabled=false
