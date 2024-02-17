@@ -18,14 +18,6 @@ class ChartFormat:
 register_converter(ChartFormat, "cformat")
 
 
-
-
-
-
-
-
-
-
 urlpatterns = [
     path("", views.misc.home, name="home"),
     path("legal/", misc.legal, name="legal"),
