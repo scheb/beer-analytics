@@ -2,7 +2,7 @@
     {% for recipe in recipes %}
         <li>
             {% if recipe.source %}
-                <a href="{{ recipe.url }}" target="_blank"><img src="{{ recipe.source.icon }}" title="{{ recipe.source.name }}" alt="{{ recipe.source.name }} Icon" width="16" height="16" class="align-middle"/></a>
+                {% if recipe.url %}<a href="{{ recipe.url }}" target="_blank">{% endif %}<img src="{{ recipe.source.icon }}" title="{{ recipe.source.name }}" alt="{{ recipe.source.name }} Icon" width="16" height="16" class="align-middle"/>{% if recipe.url %}</a>{% endif %}
             {% endif %}
             <a href="{{ recipe.url }}" target="_blank">{{ recipe.name }}</a>
             {% if recipe.author %}<small><span class="text-muted"> by</span> {{ recipe.author }}</small>{% endif %}

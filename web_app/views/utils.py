@@ -2,10 +2,10 @@ from typing import Optional, Iterable
 
 from django.http import HttpResponse, Http404, HttpRequest, JsonResponse
 from django.shortcuts import render
-from django.template import TemplateDoesNotExist, loader
 from django.urls import reverse
 
-from recipe_db.models import Style, Hop, Fermentable, Yeast, Recipe, Tag, SourceInfo
+from recipe_db.models import Style, Hop, Fermentable, Yeast, Recipe, Tag
+from recipe_db.search.result import RecipeResultBuilder
 from web_app.charts.utils import Chart
 
 FORMAT_PNG = "png"
@@ -26,25 +26,11 @@ def render_chart(chart: Chart, data_format: str) -> HttpResponse:
 
 
 def render_recipes_list(request: HttpRequest, recipes: Iterable[Recipe], section_name: str) -> HttpResponse:
-    sources = {}
-    for source in SourceInfo.objects.all():
-        sources[source.source_id] = source
-
+    builder = RecipeResultBuilder()
     recipes_list = []
     for recipe in recipes:
-        url = "#"
-        source = None
-        if recipe.source in sources:
-            source = sources[recipe.source]
-            if source.recipe_url is not None:
-                url = source.recipe_url.format(recipe.source_id)
-
-        recipes_list.append({
-            "name": recipe.name if not None else "Unnamed recipe",
-            "author": recipe.author,
-            "source": source,
-            "url": url,
-        })
+        recipe_result = builder.create_recipe_result(recipe)
+        recipes_list.append(recipe_result)
 
     context = {
         "recipes": recipes_list,
