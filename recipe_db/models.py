@@ -444,6 +444,11 @@ class Fermentable(models.Model):
         return dict(cls.CATEGORY_CHOICES)
 
     @property
+    def all_names(self) -> Iterable[str]:
+        yield self.name
+        yield from self.alt_names_list
+
+    @property
     def translit_name(self) -> Iterable[str]:
         for translit_name in get_translit_names(self.name):
             if translit_name != self.name:
@@ -565,6 +570,11 @@ class Hop(models.Model):
     @classmethod
     def get_categories(cls) -> dict:
         return dict(cls.USE_CHOICES)
+
+    @property
+    def all_names(self) -> Iterable[str]:
+        yield self.name
+        yield from self.alt_names_list
 
     @property
     def translit_name(self) -> Iterable[str]:
@@ -798,6 +808,11 @@ class Yeast(models.Model):
         return type != cls.BRETT_BACTERIA
 
     @property
+    def all_names(self) -> Iterable[str]:
+        yield self.name
+        yield from self.alt_names_list
+
+    @property
     def translit_name(self) -> Iterable[str]:
         for translit_name in get_translit_names(self.name):
             if translit_name != self.name:
@@ -834,6 +849,13 @@ class Yeast(models.Model):
             return "{} · {} {}".format(self.lab, self.product_id, self.product_name)
         else:
             return self.full_name
+
+    @property
+    def alt_names_list(self):
+        if self.alt_names is not None:
+            items = self.alt_names.split(",")
+            return list(map(lambda x: x.strip(), items))
+        return []
 
     @property
     def type_name(self) -> Optional[str]:
