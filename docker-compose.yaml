@@ -25,6 +25,7 @@ services:
             WEB_ANALYTICS_ROOT_URL: '/wa/'
             WEB_ANALYTICS_SITE_ID: 0
             GOOGLE_API_CLIENT_CONFIG_FILE: ${GOOGLE_API_CLIENT_CONFIG_FILE}
+            ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
             OPENAI_API_KEY: ${OPENAI_API_KEY}
         volumes:
             - .:/app:z
@@ -50,6 +51,7 @@ services:
 
     es_setup:
         image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+        container_name: beer_analytics_es_setup
         volumes:
             - beer_analytics_es_certs:/usr/share/elasticsearch/config/certs
         user: "0"
@@ -71,9 +73,9 @@ services:
                 echo "Creating certs";
                 echo -ne \
                 "instances:\n"\
-                "  - name: es01\n"\
+                "  - name: es\n"\
                 "    dns:\n"\
-                "      - es01\n"\
+                "      - es\n"\
                 "      - localhost\n"\
                 "    ip:\n"\
                 "      - 127.0.0.1\n"\
@@ -92,13 +94,13 @@ services:
               find . -type d -exec chmod 750 \{\} \;;
               find . -type f -exec chmod 640 \{\} \;;
               echo "Waiting for Elasticsearch availability";
-              until curl -s --cacert config/certs/ca/ca.crt https://es01:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
+              until curl -s --cacert config/certs/ca/ca.crt https://es:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
               echo "Setting kibana_system password";
-              until curl -s -X POST --cacert config/certs/ca/ca.crt -u "elastic:${ELASTIC_PASSWORD}" -H "Content-Type: application/json" https://es01:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
+              until curl -s -X POST --cacert config/certs/ca/ca.crt -u "elastic:${ELASTIC_PASSWORD}" -H "Content-Type: application/json" https://es:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
               echo "All done!";
             '
         healthcheck:
-            test: [ "CMD-SHELL", "[ -f config/certs/es01/es01.crt ]" ]
+            test: [ "CMD-SHELL", "[ -f config/certs/es/es.crt ]" ]
             interval: 1s
             timeout: 5s
             retries: 120
@@ -108,15 +110,16 @@ services:
             es_setup:
                 condition: service_healthy
         image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+        container_name: beer_analytics_es
         labels:
             co.elastic.logs/module: elasticsearch
         volumes:
             - beer_analytics_es_certs:/usr/share/elasticsearch/config/certs
-            - beer_analytics_es_esdata01:/usr/share/elasticsearch/data
+            - beer_analytics_es_esdata:/usr/share/elasticsearch/data
         ports:
             - ${ES_PORT}:9200
         environment:
-            - node.name=es01
+            - node.name=es
             - cluster.name=${CLUSTER_NAME}
             - discovery.type=single-node
             - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
@@ -141,13 +144,12 @@ services:
             timeout: 10s
             retries: 120
 
-
 volumes:
     beer_analytics_db:
     beer_analytics_es_certs:
-    beer_analytics_es_esdata01:
+    beer_analytics_es_esdata:
 
 networks:
     default:
-        name: elastic
+        name: beer_analytics
         external: false
