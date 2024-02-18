@@ -27,6 +27,9 @@ services:
             GOOGLE_API_CLIENT_CONFIG_FILE: ${GOOGLE_API_CLIENT_CONFIG_FILE}
             ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
             OPENAI_API_KEY: ${OPENAI_API_KEY}
+            OTEL_RESOURCE_ATTRIBUTES: service.name=beer-analytics-local
+            OTEL_EXPORTER_OTLP_ENDPOINT: https://otlp.eu01.nr-data.net:4317
+            OTEL_EXPORTER_OTLP_HEADERS: "api-key=${NEW_RELIC_API_KEY}"
         volumes:
             - .:/app:z
             - beer_analytics_es_certs:/usr/share/elasticsearch/config/certs
