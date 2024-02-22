@@ -4,78 +4,78 @@
         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "home" %}</loc>
+        <loc>{{ base_url }}{% url "home" %}</loc>
         <changefreq>weekly</changefreq>
         <priority>0.1</priority>
     </url>
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "about" %}</loc>
+        <loc>{{ base_url }}{% url "about" %}</loc>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "style_overview" %}</loc>
+        <loc>{{ base_url }}{% url "style_overview" %}</loc>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "hop_overview" %}</loc>
+        <loc>{{ base_url }}{% url "hop_overview" %}</loc>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "hop_flavor_overview" %}</loc>
+        <loc>{{ base_url }}{% url "hop_flavor_overview" %}</loc>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "fermentable_overview" %}</loc>
+        <loc>{{ base_url }}{% url "fermentable_overview" %}</loc>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "yeast_overview" %}</loc>
+        <loc>{{ base_url }}{% url "yeast_overview" %}</loc>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "search" %}</loc>
+        <loc>{{ base_url }}{% url "search" %}</loc>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "trend_popular_hops" %}</loc>
+        <loc>{{ base_url }}{% url "trend_popular_hops" %}</loc>
         <changefreq>weekly</changefreq>
         <priority>0.3</priority>
     </url>
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "trend_popular_yeasts" %}</loc>
+        <loc>{{ base_url }}{% url "trend_popular_yeasts" %}</loc>
         <changefreq>weekly</changefreq>
         <priority>0.3</priority>
     </url>
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "trend_popular_styles" %}</loc>
+        <loc>{{ base_url }}{% url "trend_popular_styles" %}</loc>
         <changefreq>weekly</changefreq>
         <priority>0.3</priority>
     </url>
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "trend_overview" "recent" %}</loc>
+        <loc>{{ base_url }}{% url "trend_overview" "recent" %}</loc>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{% url "trend_overview" "seasonal" %}</loc>
+        <loc>{{ base_url }}{% url "trend_overview" "seasonal" %}</loc>
         <changefreq>weekly</changefreq>
         <priority>0.3</priority>
     </url>
     {% for style in styles %}
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{{ style|url }}</loc>
+        <loc>{{ base_url }}{{ style|url }}</loc>
         <changefreq>weekly</changefreq>
         <priority>{{ style|priority }}</priority>
 {#        {% if style.recipes_count > 100 %}{% for chart_type in style_chart_types %}{# To avoid charts not having enough data #}
 {#        <image:image>#}
-{#            <image:loc>{{ request.scheme }}://{{ request.get_host }}{{ style|chart_image_url:chart_type }}</image:loc>#}
+{#            <image:loc>{{ base_url }}{{ style|chart_image_url:chart_type }}</image:loc>#}
 {#            <image:title>{{ style|chart_image_alt:chart_type }}</image:title>#}
 {#        </image:image>#}
 {#        {% endfor %}{% endif %}#}
@@ -83,12 +83,12 @@
     {% endfor %}
     {% for hop in hops %}
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{{ hop|url }}</loc>
+        <loc>{{ base_url }}{{ hop|url }}</loc>
         <changefreq>weekly</changefreq>
         <priority>{{ hop|priority }}</priority>
 {#        {% if hop.recipes_count > 100 %}{% for chart_type in hop_chart_types %}{# To avoid charts not having enough data #}
 {#        <image:image>#}
-{#            <image:loc>{{ request.scheme }}://{{ request.get_host }}{{ hop|chart_image_url:chart_type }}</image:loc>#}
+{#            <image:loc>{{ base_url }}{{ hop|chart_image_url:chart_type }}</image:loc>#}
 {#            <image:title>{{ hop|chart_image_alt:chart_type }}</image:title>#}
 {#        </image:image>#}
 {#        {% endfor %}{% endif %}#}
@@ -96,19 +96,19 @@
     {% endfor %}
     {% for tag in tags %}
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{{ tag|url }}</loc>
+        <loc>{{ base_url }}{{ tag|url }}</loc>
         <changefreq>weekly</changefreq>
         <priority>{{ tag|priority }}</priority>
     </url>
     {% endfor %}
     {% for fermentable in fermentables %}
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{{ fermentable|url }}</loc>
+        <loc>{{ base_url }}{{ fermentable|url }}</loc>
         <changefreq>weekly</changefreq>
         <priority>{{ fermentable|priority }}</priority>
 {#        {% if fermentable.recipes_count > 100 %}{% for chart_type in fermentable_chart_types %}{# To avoid charts not having enough data #}
 {#        <image:image>#}
-{#            <image:loc>{{ request.scheme }}://{{ request.get_host }}{{ fermentable|chart_image_url:chart_type }}</image:loc>#}
+{#            <image:loc>{{ base_url }}{{ fermentable|chart_image_url:chart_type }}</image:loc>#}
 {#            <image:title>{{ fermentable|chart_image_alt:chart_type }}</image:title>#}
 {#        </image:image>#}
 {#        {% endfor %}{% endif %}#}
@@ -116,12 +116,12 @@
     {% endfor %}
     {% for yeast in yeasts %}
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}{{ yeast|url }}</loc>
+        <loc>{{ base_url }}{{ yeast|url }}</loc>
         <changefreq>weekly</changefreq>
         <priority>{{ yeast|priority }}</priority>
 {#        {% if yeast.recipes_count > 100 %}{% for chart_type in yeast_chart_types %}{# To avoid charts not having enough data #}
 {#        <image:image>#}
-{#            <image:loc>{{ request.scheme }}://{{ request.get_host }}{{ yeast|chart_image_url:chart_type }}</image:loc>#}
+{#            <image:loc>{{ base_url }}{{ yeast|chart_image_url:chart_type }}</image:loc>#}
 {#            <image:title>{{ yeast|chart_image_alt:chart_type }}</image:title>#}
 {#        </image:image>#}
 {#        {% endfor %}{% endif %}#}

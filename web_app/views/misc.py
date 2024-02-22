@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render
 from django.urls import reverse
@@ -61,6 +62,7 @@ def sitemap(request: HttpRequest) -> HttpResponse:
         request,
         "sitemap.xml",
         {
+            "base_url": settings.__getattr__("APP_URL"),
             "styles": styles,
             "hops": hops,
             "fermentables": fermentables,
