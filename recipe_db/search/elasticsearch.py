@@ -87,6 +87,22 @@ def search_query(query, limit: int) -> RecipeSearchResult:
         index=INDEX_NAME,
         _source=False,
         size=limit,
-        query=query,
+        # The function_score in combination with random_score randomizes results with equal score
+        query={
+            'function_score': {
+                'query': query,
+                'functions': [
+                    {
+                        'random_score': {
+                            'seed': 12345678910,
+                            'field': '_seq_no',
+                        },
+                        'weight': 0.0001,
+                    }
+                ],
+                'boost_mode': 'sum',
+            }
+        },
     )
+    print(result)
     return RecipeSearchResult(result)
