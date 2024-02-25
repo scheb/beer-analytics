@@ -34,9 +34,6 @@ class Command(BaseCommand):
         successes = 0
         progress = tqdm.tqdm(unit="docs", total=num_records)
 
-        for recipe in get_recipes(limit, chunk_size):
-            print(recipe)
-
         for ok, action in streaming_bulk(es, index=INDEX_NAME, actions=get_recipes(limit, chunk_size)):
             progress.update(1)
             successes += ok
