@@ -112,12 +112,16 @@ class Command(BaseCommand):
             hops_by_name[hop.name] = hop
 
         # Update tags & substitutes
+        non_existent_tags = {}
         for data in data_rows:
             hop = hops_by_name[data["name"]]
             for tag_name in split_list(data["aromas"]):
                 tag = get_tag(normalize_flavor_name(tag_name))
                 if tag is None:
-                    self.stdout.write("Tag %s does not exists" % tag_name)
+                    if tag_name in non_existent_tags:
+                        non_existent_tags[tag_name] += 1
+                    else:
+                        non_existent_tags[tag_name] = 1
                     continue
                 hop.aroma_tags.add(tag)
 
@@ -129,6 +133,10 @@ class Command(BaseCommand):
                 else:
                     print("Substitute hop {} not found".format(substitute_name))
 
+        if len(non_existent_tags) > 0:
+            self.stdout.write("  Non-existent flavor tags:")
+            for k, v in sorted(non_existent_tags.items(), key=lambda item: item[1], reverse=True):
+                self.stdout.write("  %s: %s" % (k, v))
 
     def load_fermentables(self):
         csv_file = load_csv("fermentables.csv")
