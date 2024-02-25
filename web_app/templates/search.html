@@ -4,20 +4,51 @@
 {% block content %}
     <h1>Beer Recipes Search</h1>
     <p>
-        Search our database of <strong>{{ recipes }} beer brewing recipes</strong>.
+        Search our database of <strong>{{ num_recipes }} beer brewing recipes</strong>.
         Search by keywords, beer style, used hops and many more parameters.
     </p>
 
     <form action="{% url "search" %}" method="GET" class="search">
-        <label for="input-search" class="visually-hidden">Search recipes</label>
-        <input type="search" name="term" value="{{ search_term }}" class="search-term form-control float-start me-2" id="input-search" placeholder="Search for recipe names, beer styles, hops etc.">
-        <button type="submit" class="btn btn-secondary">Find Recipes 🔍</button>
+        <div class="d-flex flex-row">
+            <p class="form-floating me-2">
+                <select name="hops" id="input-hop" class="form-select w-auto" aria-label="Hops">
+                    <option value=""></option>
+                    {% for hop in hops %}<option value="{{ hop.id }}"{% if hop.id == search_hop %} selected="selected"{% endif %}>{{ hop.name }}</option>{% endfor %}
+                </select>
+                <label for="input-hop">Hops used</label>
+            </p>
+            <p class="form-floating">
+                <select name="styles" id="input-style" class="form-select w-auto" aria-label="Beer style">
+                    <option value=""></option>
+                    {% for style_category in style_categories %}
+                        <optgroup label="{{ style_category.name }}">
+                        {% spaceless %}
+                            {% for style1 in style_category.sub_styles %}
+                                <option value="{{ style1.id }}"{% if style1.id == search_style %} selected="selected"{% endif %}>{{ style1.name }}</option>
+                                    {% for style2 in style1.sub_styles %}
+                                        <option value="{{ style2.id }}"{% if style2.id == search_style %} selected="selected"{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;{{ style2.name }}</option>
+                                    {% endfor %}
+                            {% endfor %}
+                        {% endspaceless %}
+                        </optgroup>
+                    {% endfor %}
+                </select>
+                <label for="input-style">Style</label>
+            </p>
+        </div>
+        <p class="form-floating">
+            <input type="search" name="term" value="{{ search_term }}" class="search-term form-control" id="input-search" placeholder="Search for keyword">
+            <label for="input-search">Keywords</label>
+        </p>
+        <p><button type="submit" class="btn btn-secondary">Find Recipes 🔍</button></p>
     </form>
+
+    <hr/>
 
     {% if result %}
         <section class="search-results">
             {% if result.hits > 0 %}
-                <p>Found <strong>{% if not result.hits_accurate %}~{% endif %}{{ result.hits }}</strong> matching recipes:</p>
+                <p>Found <strong>{% if result.hits_accuracy == 'eq' %}{% elif result.hits_accuracy == 'gte' %}&gt;{% else %}~{% endif %}{{ result.hits }}</strong> matching recipes:</p>
                 <ul class="column-list-wide">
                     {% for recipe in result.recipes %}
                         <li>
@@ -30,14 +61,20 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                <p>Sorry, no matching recipes found.</p>
+                <p><strong>Sorry, no matching recipes found.</strong></p>
+                <p>
+                    Would you rather <strong>discover recipes</strong> by <a href="{% url "style_overview" %}">beer style</a> or
+                    ingredients? Browse our comprehensive index of <a href="{% url "fermentable_overview" %}">fermentables</a>,
+                    <a href="{% url "fermentable_category" "grain" %}">malts</a>, <a href="{% url "hop_overview" %}">hops</a> and
+                    <a href="{% url "yeast_overview" %}">yeasts</a> to expand your understanding of the ingredients and find
+                    recipes for your next brew.
+                </p>
             {% endif %}
         </section>
     {% else %}
-        <hr/>
         <p>
             Would you rather <strong>discover recipes</strong> by <a href="{% url "style_overview" %}">beer style</a> or
-            their ingredients? Browse our comprehensive index of <a href="{% url "fermentable_overview" %}">fermentables</a>,
+            ingredients? Browse our comprehensive index of <a href="{% url "fermentable_overview" %}">fermentables</a>,
             <a href="{% url "fermentable_category" "grain" %}">malts</a>, <a href="{% url "hop_overview" %}">hops</a> and
             <a href="{% url "yeast_overview" %}">yeasts</a> to expand your understanding of the ingredients and find
             recipes for your next brew.

@@ -33,6 +33,10 @@ class Command(BaseCommand):
         num_records = limit or Recipe.objects.count()
         successes = 0
         progress = tqdm.tqdm(unit="docs", total=num_records)
+
+        for recipe in get_recipes(limit, chunk_size):
+            print(recipe)
+
         for ok, action in streaming_bulk(es, index=INDEX_NAME, actions=get_recipes(limit, chunk_size)):
             progress.update(1)
             successes += ok
@@ -90,7 +94,7 @@ def create_recipe_doc(recipe: Recipe):
             'created': recipe.created,
             'style_raw': recipe.style_raw,
             'style_names': flat_list(map(lambda x: x.all_names, styles)),
-            'style_ids': flat_list(map(lambda x: x.id, styles)),
+            'style_ids': list(set(map(lambda x: x.id, styles))),
             'ibu': recipe.ibu,
             'abv': recipe.abv,
             'srm': recipe.srm,
@@ -98,7 +102,10 @@ def create_recipe_doc(recipe: Recipe):
             'og': recipe.og,
             'fg': recipe.fg,
             'hops': flat_list(map(lambda x: x.all_names, hops)),
+            'hop_ids': list(set(map(lambda x: x.id, hops))),
             'fermentables': flat_list(map(lambda x: x.all_names, fermentables)),
+            'fermentable_ids': list(set(map(lambda x: x.id, fermentables))),
             'yeasts': flat_list(map(lambda x: x.all_names, yeasts)),
+            'yeast_ids': list(set(map(lambda x: x.id, yeasts))),
         }
     }

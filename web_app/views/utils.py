@@ -3,6 +3,7 @@ from typing import Optional, Iterable
 from django.http import HttpResponse, Http404, HttpRequest, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
+from django.views.decorators.cache import cache_page
 
 from recipe_db.models import Style, Hop, Fermentable, Yeast, Recipe, Tag
 from recipe_db.search.result import RecipeResultBuilder
@@ -117,3 +118,25 @@ else:
 
 def no_data_response() -> HttpResponse:
     return JsonResponse({"no_data": True})
+
+
+# https://djangosnippets.org/snippets/10865/
+def conditional_cache_page(timeout, condition, *, cache=None, key_prefix=None):
+    """This decorator is exactly like cache_page, but with the option to skip
+    the caching entirely.
+
+    The second argument is a callable, ``condition``. It's given the
+    request and all further arguments, and if it evaluates to a true-ish
+    value, the cache is used.
+    """
+
+    def decorator(func):
+        def wrapper(request, *args, **kwargs):
+            if condition(request, *args, **kwargs):
+                return cache_page(
+                    timeout=timeout, cache=cache, key_prefix=key_prefix
+                )(func)(request, *args, **kwargs)
+
+            return func(request, *args, **kwargs)
+        return wrapper
+    return decorator
