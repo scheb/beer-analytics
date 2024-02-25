@@ -15,7 +15,7 @@
                     <option value=""></option>
                     {% for hop in hops %}<option value="{{ hop.id }}"{% if hop.id == search_hop %} selected="selected"{% endif %}>{{ hop.name }}</option>{% endfor %}
                 </select>
-                <label for="input-hop">Hops used</label>
+                <label for="input-hop" class="text-muted">Hops used</label>
             </p>
             <p class="form-floating">
                 <select name="styles" id="input-style" class="form-select w-auto" aria-label="Beer style">
@@ -33,12 +33,12 @@
                         </optgroup>
                     {% endfor %}
                 </select>
-                <label for="input-style">Style</label>
+                <label for="input-style" class="text-muted">Style</label>
             </p>
         </div>
         <p class="form-floating">
             <input type="search" name="term" value="{{ search_term }}" class="search-term form-control" id="input-search" placeholder="Search for keyword">
-            <label for="input-search">Keywords</label>
+            <label for="input-search" class="text-muted">Keywords search</label>
         </p>
         <p><button type="submit" class="btn btn-secondary">Find Recipes 🔍</button></p>
     </form>
