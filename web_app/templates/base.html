@@ -85,15 +85,17 @@
                     <li class="nav-item mb-2"><a href="{% url "fermentable_overview" %}" class="nav-link p-0 text-muted">Fermentables</a></li>
                     <li class="nav-item mb-2"><a href="{% url "yeast_overview" %}" class="nav-link p-0 text-muted">Yeasts</a></li>
                     <li class="nav-item mb-2"><a href="{% url "yeast_type" "brett-bacteria" %}" class="nav-link p-0 text-muted">Brettanomyces &amp; Bacteria</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "search" %}" class="nav-link p-0 text-muted">Beer Recipe Search</a></li>
                 </ul>
             </div>
 
             <div class="col mb-3">
                 <h5>Data Analysis</h5>
                 <ul class="nav flex-column">
-
-                    <li class="nav-item mb-2"><a href="{% url "trend_overview" "recent" %}" class="nav-link p-0 text-muted">Most Popular Hops</a></li>
                     <li class="nav-item mb-2"><a href="{% url "trend_overview" "recent" %}" class="nav-link p-0 text-muted">Trends in Homebrewing</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "trend_popular_hops" %}" class="nav-link p-0 text-muted">Popular Hops</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "trend_popular_yeasts" %}" class="nav-link p-0 text-muted">Popular Yeasts</a></li>
+                    <li class="nav-item mb-2"><a href="{% url "trend_popular_styles" %}" class="nav-link p-0 text-muted">Popular Beer Styles</a></li>
                     <li class="nav-item mb-2"><a href="{% url "analyze" %}" class="nav-link p-0 text-muted">Beer Recipe Analyzer</a></li>
                 </ul>
             </div>
