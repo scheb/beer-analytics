@@ -9,8 +9,6 @@ from web_app.views.utils import conditional_cache_page
 
 
 def search_cache_condition(request: HttpRequest) -> bool:
-    print(request.GET)
-    print(len(request.GET))
     return len(request.GET) == 0
 
 
