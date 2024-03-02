@@ -1307,3 +1307,18 @@ class SourceInfo(models.Model):
     icon = models.CharField(max_length=10240, default=None, blank=True, null=True)
     page_url = models.CharField(max_length=1024, default=None, blank=True, null=True)
     recipe_url = models.CharField(max_length=1024, default=None, blank=True, null=True)
+
+
+class SearchIndexUpdateQueue(models.Model):
+    OPERATION_UPDATE = 'update'
+    OPERATION_DELETE = 'delete'
+
+    operation = models.CharField(max_length=128)
+    index = models.CharField(max_length=64)
+    entity_id = models.CharField(max_length=64)
+    updated_at = models.DateTimeField(auto_now_add=True, blank=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['index', 'updated_at']),
+        ]

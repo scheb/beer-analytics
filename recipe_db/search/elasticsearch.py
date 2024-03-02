@@ -6,13 +6,13 @@ from elastic_transport import ObjectApiResponse
 from elasticsearch import Elasticsearch
 from recipe_db.analytics.scope import RecipeScope
 from recipe_db.models import Recipe
+from recipe_db.search.recipe_index import RECIPES_INDEX_NAME
 from recipe_db.search.result import RecipeResultBuilder
 
 # We can boost ingredients fields
 # SEARCHABLE_TEXT_FIELDS = ["name", "style_raw^2", "style_names^2", "hops^2", "fermentables", "yeasts^2"]
 
 SEARCHABLE_TEXT_FIELDS = ["name", "style_raw", "style_names", "hops", "fermentables", "yeasts"]
-INDEX_NAME = 'recipes'
 RESULT_SIZE = 100
 ELASTICSEARCH = None
 
@@ -84,7 +84,7 @@ def execute_search(scope: RecipeScope) -> RecipeSearchResult:
 
 def search_query(query, limit: int) -> RecipeSearchResult:
     result = get_elasticsearch().search(
-        index=INDEX_NAME,
+        index=RECIPES_INDEX_NAME,
         _source=False,
         size=limit,
         # The function_score in combination with random_score randomizes results with equal score
@@ -104,5 +104,5 @@ def search_query(query, limit: int) -> RecipeSearchResult:
             }
         },
     )
-    print(result)
+
     return RecipeSearchResult(result)
