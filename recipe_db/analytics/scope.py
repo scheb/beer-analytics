@@ -293,6 +293,8 @@ class RecipeScope:
             )
 
     def __init__(self) -> None:
+        self.search_term = None
+
         self.creation_date_min = None
         self.creation_date_max = None
 
@@ -350,6 +352,9 @@ class RecipeScope:
             filters.append(self.yeast_criteria.get_filter())
 
         return filters
+
+    def has_filter(self) -> bool:
+        return self.get_filter().has_filter()
 
 
 # Analyze hops only

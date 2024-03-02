@@ -56,6 +56,9 @@ def recipes(request: HttpRequest) -> HttpResponse:
 def get_scope(request: HttpRequest) -> RecipeScope:
     recipe_scope = RecipeScope()
 
+    if "term" in request.GET:
+        recipe_scope.search_term = str(request.GET['term']).strip() if len(str(request.GET['term']).strip()) > 0 else None
+
     if "styles" in request.GET:
         recipe_scope.style_criteria = get_style_criteria(str(request.GET["styles"]))
     if "hops" in request.GET:

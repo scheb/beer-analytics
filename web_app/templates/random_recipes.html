@@ -9,4 +9,12 @@
         </li>
     {% endfor %}
 </ul>
-<p class="mt-3 mb-0 text-center"><button class="btn bg-light" data-reload="true" data-interaction="{{ section_name }}:Reload Recipes">🤔 Need more inspiration? 🍺</button></p>
+{% if recipes_search_url %}
+<p class="mt-3 mb-0 text-center">
+    <button class="btn bg-light" data-interaction="{{ section_name }}:Search Recipes">Find More Recipes 🔎</button>
+</p>
+{% else %}
+<p class="mt-3 mb-0 text-center">
+    <button class="btn bg-light" data-reload="true" data-interaction="{{ section_name }}:Reload Recipes">🤔 Need more inspiration? 🍺</button>
+</p>
+{% endif %}

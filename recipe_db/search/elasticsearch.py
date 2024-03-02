@@ -4,6 +4,7 @@ from django.conf import settings
 from elastic_transport import ObjectApiResponse
 
 from elasticsearch import Elasticsearch
+from recipe_db.analytics.scope import RecipeScope
 from recipe_db.models import Recipe
 from recipe_db.search.result import RecipeResultBuilder
 
@@ -35,6 +36,7 @@ class RecipeSearchResult:
 
     @property
     def recipes(self) -> Iterable[Recipe]:
+        # TODO: preserve score
         ids = map(lambda r: r['_id'], self._result)
         recipes = Recipe.objects.filter(uid__in=ids)
         builder = RecipeResultBuilder()
@@ -42,28 +44,28 @@ class RecipeSearchResult:
             yield builder.create_recipe_result(recipe)
 
 
-def execute_search(term: Optional[str], hops: Optional[str], styles: Optional[str]) -> RecipeSearchResult:
+def execute_search(scope: RecipeScope) -> RecipeSearchResult:
     criteria = []
 
-    if term is not None:
+    if scope.search_term is not None:
         criteria.append({
             'multi_match': {
-                'query': term,
+                'query': scope.search_term,
                 'fields': SEARCHABLE_TEXT_FIELDS,
             }
         })
 
-    if hops is not None:
+    if scope.hop_criteria is not None and len(scope.hop_criteria.hops) > 0:
         criteria.append({
             'term': {
-                'hop_ids.keyword': hops,
+                'hop_ids.keyword': scope.hop_criteria.hops[0].id,
             }
         })
 
-    if styles is not None:
+    if scope.style_criteria is not None and len(scope.style_criteria.styles) > 0:
         criteria.append({
             'term': {
-                'style_ids.keyword': styles,
+                'style_ids.keyword': scope.style_criteria.styles[0].id,
             }
         })
 
@@ -76,8 +78,6 @@ def execute_search(term: Optional[str], hops: Optional[str], styles: Optional[st
                 "must": criteria
             }
         }
-
-    print(query)
 
     return search_query(query, RESULT_SIZE)
 
