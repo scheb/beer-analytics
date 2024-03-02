@@ -1,3 +1,5 @@
+from urllib.parse import urlencode
+
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
@@ -207,4 +209,7 @@ def recipes(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
         return redirect("hop_recipes", category_id=hop.category, slug=hop.id, permanent=True)
 
     recipes_list = HopAnalysis(hop).random_recipes(24)
-    return render_recipes_list(request, recipes_list, "Hops")
+    context = {
+        "recipes_search_url": reverse("search") + "?" + urlencode({'hops': hop.id})
+    }
+    return render_recipes_list(request, recipes_list, "Hops", context)

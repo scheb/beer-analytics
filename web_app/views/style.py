@@ -1,3 +1,5 @@
+from urllib.parse import urlencode
+
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
@@ -128,8 +130,11 @@ def recipes(request: HttpRequest, slug: str, category_slug: str) -> HttpResponse
     if category_slug != style.category.slug:
         return redirect("style_recipes", category_slug=style.category.slug, slug=style.slug, permanent=True)
 
+    context = {
+        "recipes_search_url": reverse("search") + "?" + urlencode({'styles': style.id})
+    }
     recipes_list = StyleAnalysis(style).random_recipes(24)
-    return render_recipes_list(request, recipes_list, "Styles")
+    return render_recipes_list(request, recipes_list, "Styles", context)
 
 
 def display_chart(request: HttpRequest, style: Style, chart_type: str, format: str) -> HttpResponse:

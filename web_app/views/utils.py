@@ -26,7 +26,10 @@ def render_chart(chart: Chart, data_format: str) -> HttpResponse:
         raise Http404("Unknown plotting format %s." % data_format)
 
 
-def render_recipes_list(request: HttpRequest, recipes: Iterable[Recipe], section_name: str) -> HttpResponse:
+def render_recipes_list(request: HttpRequest, recipes: Iterable[Recipe], section_name: str, extra_context: Optional[dict] = None) -> HttpResponse:
+    if extra_context is None:
+        extra_context = {}
+
     builder = RecipeResultBuilder()
     recipes_list = []
     for recipe in recipes:
@@ -37,7 +40,7 @@ def render_recipes_list(request: HttpRequest, recipes: Iterable[Recipe], section
         "recipes": recipes_list,
         "section_name": section_name,
     }
-    return render(request, "random_recipes.html", context)
+    return render(request, "random_recipes.html", context | extra_context)
 
 
 def object_url(item: object):
