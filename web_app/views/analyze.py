@@ -50,7 +50,7 @@ def recipes(request: HttpRequest) -> HttpResponse:
     recipes_scope = get_scope(request)
     analysis = RecipesListAnalysis(recipes_scope)
     recipes_list = analysis.random(24)
-    return render_recipes_list(request, recipes_list, "Analyze")
+    return render_recipes_list(request, recipes_list, "Analyzer")
 
 
 def get_scope(request: HttpRequest) -> RecipeScope:
