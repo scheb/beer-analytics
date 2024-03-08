@@ -37,6 +37,7 @@ $theme-colors: (
 
 $link-color: shade-color($primary, 16%);
 
+$box-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.2);
 
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/variables-dark";

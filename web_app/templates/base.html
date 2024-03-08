@@ -20,9 +20,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <script defer src="{% static 'app.js' %}"></script>
 </head>
-<body class="main-body">
+<body class="main-body" id="top">
 
-<header class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap shadow">
+<header class="navbar navbar-dark fixed-top flex-md-nowrap shadow">
     <nav class="container-fluid navbar-expand p-0">
         <a class="navbar-brand col-md-3 col-lg-2 d-none d-md-block" href="/"><span class="logo"></span><span class="d-none d-sm-inline ms-1">Beer Analytics</span></a>
         {% load web_app %}
@@ -47,7 +47,7 @@
 
 <div class="container-fluid header-margin">
     <div class="row">
-        <aside id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+        <aside id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse shadow">
             <div class="position-sticky sidebar-content">
                 {% block sidebar %}
                     {% include "filters.html" %}
@@ -55,7 +55,7 @@
             </div>
         </aside>
 
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pb-4">
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5 pb-4">
             {% block content %}{% endblock %}
         </main>
     </div>

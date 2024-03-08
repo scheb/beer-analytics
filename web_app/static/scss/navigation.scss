@@ -12,6 +12,7 @@
 header {
     &.navbar {
         padding: 0;
+        background-color: $gray-900;
     }
 
     .navbar-brand {
@@ -20,11 +21,8 @@ header {
         align-items: center;
         margin: 0;
         padding: 0.5rem;
-        background-color: $gray-900;
-        box-shadow: inset -1px -1px 0 rgba(0, 0, 0, .25);
         font-family: var(--#{$prefix}font-headline);
         font-size: 1.3rem;
-        border-bottom: 3px solid $primary;
 
         .logo {
             @include navbar-icon;
