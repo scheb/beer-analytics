@@ -36,10 +36,10 @@ class RecipeSearchResult:
 
     @property
     def recipes(self) -> Iterable[Recipe]:
-        # TODO: preserve score
-        ids = map(lambda r: r['_id'], self._result)
-        recipes = Recipe.objects.filter(uid__in=ids)
+        ids = list(map(lambda r: r['_id'], self._result))
         builder = RecipeResultBuilder()
+        recipes = list(Recipe.objects.filter(uid__in=ids))
+        recipes = sorted(recipes, key=lambda r: ids.index(r.uid))
         for recipe in recipes:
             yield builder.create_recipe_result(recipe)
 
