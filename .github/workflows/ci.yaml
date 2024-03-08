@@ -1,7 +1,5 @@
 on:
     push:
-        branches:
-            - main
 
 jobs:
     build:
@@ -16,10 +14,22 @@ jobs:
                     username: ${{ secrets.DOCKERHUB_USERNAME }}
                     password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+            -   id: meta
+                uses: docker/metadata-action@v5
+                with:
+                    images: ${{ secrets.DOCKERHUB_USERNAME }}/beer-analytics
+                    tags: |
+                        type=sha
+                        type=ref,event=branch
+                        type=ref,event=pr
+                        # set latest tag for default branch
+                        type=raw,value=latest,enable={{ is_default_branch }}
+
             -   name: Build and push
                 uses: docker/build-push-action@v5
                 with:
                     context: .
                     file: ./build/production/Dockerfile
+                    tags: ${{ steps.meta.outputs.tags }}
+                    labels: ${{ steps.meta.outputs.labels }}
                     push: true
-                    tags: ${{ secrets.DOCKERHUB_USERNAME }}/beer-analytics:${{ github.sha }},${{ secrets.DOCKERHUB_USERNAME }}/beer-analytics:latest
