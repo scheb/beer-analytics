@@ -3,11 +3,10 @@ name = "beer-analytics"
 version = "1.0"
 description = "Beer Analytics website project"
 authors = ["Christian Scheb <me@christianscheb.de>"]
-license = "THE BEER-WARE LICENSE"
 
 [tool.poetry.dependencies]
-python = "~3.10"
-Django = "^4.2"
+python = "~3.11"
+Django = "^5.0"
 django-environ = "^0.10"
 django-meta = "^2.1"
 kaleido = "0.2.1"
@@ -23,7 +22,7 @@ django-structlog = "^6.0.0"
 mysqlclient = "^2.2.0"
 google-api-python-client = "^2.108.0"
 openai = "^1.0.1"
-uvicorn = {extras = ["standard"], version = "^0.27.0.post1"}
+uvicorn = {extras = ["standard"], version = "^0.27.1"}
 gunicorn = "^21.2.0"
 elasticsearch = "^8.12.0"
 elasticsearch-async = "^6.2.0"

@@ -6,11 +6,11 @@ RUN yarn install && \
     yarn build-prod
 
 
-FROM python:3.10-slim-bullseye
+FROM python:3.11-slim-bookworm
 
 ARG BUILD_ENVIRONMENT=production
 ARG APP_HOME=/app
-ARG POETRY_VERSION="1.4"
+ARG POETRY_VERSION="1.8"
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
