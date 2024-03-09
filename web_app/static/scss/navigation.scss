@@ -22,7 +22,7 @@ header {
         padding: 0.5rem;
         background-color: $gray-900;
         box-shadow: inset -1px -1px 0 rgba(0, 0, 0, .25);
-        font-family: "Titillium Web", var(--bs-font-sans-serif);
+        font-family: var(--#{$prefix}font-headline);
         font-size: 1.3rem;
         border-bottom: 3px solid $primary;
 

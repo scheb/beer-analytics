@@ -4,6 +4,8 @@
 // Configuration
 @import "~bootstrap/scss/functions";
 
+$font-family-headline: Urbanist;
+
 $black: #000;
 $white: #fff;
 $primary: #d07330;
@@ -44,6 +46,12 @@ $link-color: shade-color($primary, 16%);
 
 // Layout & components
 @import "~bootstrap/scss/root";
+
+:root,
+[data-bs-theme="light"] {
+    --#{$prefix}font-headline: #{inspect($font-family-headline)}, #{inspect($font-family-sans-serif)};
+}
+
 @import "~bootstrap/scss/reboot";
 @import "~bootstrap/scss/type";
 //@import "~bootstrap/scss/images";

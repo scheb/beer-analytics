@@ -1,7 +1,7 @@
 // Basic styles and Bootstrap overwrites
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Titillium Web", var(--bs-font-sans-serif);
+    font-family: var(--#{$prefix}font-headline);
 }
 
 h1 {
