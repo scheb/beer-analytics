@@ -9,14 +9,23 @@
 }
 
 .detail-alias {
-    margin-top:-0.25rem;
-    margin-bottom: 0.5rem;
+    margin-top:-0.33rem;
+    margin-bottom: 0.75rem;
     font-size: 0.75rem;
     --bs-text-opacity: 1;
     color: var(--bs-secondary-color) !important;
 
     @include media-breakpoint-up('md') {
         font-size: 0.875rem;
+    }
+}
+
+.detail-summary {
+    margin-bottom: 1rem;
+
+    .detail-info,
+    .badge-list {
+        margin-bottom: 0.5rem;
     }
 }
 

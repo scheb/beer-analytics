@@ -22,76 +22,78 @@
             {% endspaceless %}{% endif %}
         </header>
 
-        <dl class="detail-info">
-            <dt>Recipes:</dt>
-            <dd>{{ hop.recipes_count }}</dd>
-            <dt>Purpose:</dt>
-            <dd>{{ hop.category_name }}</dd>
+        <div class="detail-summary">
+            <dl class="detail-info">
+                <dt>Recipes:</dt>
+                <dd>{{ hop.recipes_count }}</dd>
+                <dt>Purpose:</dt>
+                <dd>{{ hop.category_name }}</dd>
 
-            {% if hop.recipes_alpha_mean %}
-            <dt>Alpha:</dt>
-            <dd>{{ hop.alpha_level|title }}</dd>
-            {% endif %}
+                {% if hop.recipes_alpha_mean %}
+                <dt>Alpha:</dt>
+                <dd>{{ hop.alpha_level|title }}</dd>
+                {% endif %}
 
-            {% if hop.origin_countries|length > 0 %}
-            <dt>Origin:</dt>
-            <dd>{% for origin in hop.origin_countries %}{% if forloop.counter0 %}, {% endif %}{{ origin.flag }} {{ origin.name }}{% endfor %}</dd>
-            {% endif %}
-        </dl>
+                {% if hop.origin_countries|length > 0 %}
+                <dt>Origin:</dt>
+                <dd>{% for origin in hop.origin_countries %}{% if forloop.counter0 %}, {% endif %}{{ origin.flag }} {{ origin.name }}{% endfor %}</dd>
+                {% endif %}
+            </dl>
 
-        <div class="d-flex flex-column d-lg-block">
-            {% if hop.recipes_count %}
-            <nav class="toc toc-align order-last">
-                <h2 class="toc-headline">Table of Contents</h2>
-                <ol>
-                    <li class="d-lg-none"><a href="#profile" data-interaction="Hops:Click TOC:$label">Profile</a></li>
-                    <li><a href="#characteristics" data-interaction="Hops:Click TOC:$label">Characteristics</a>
-                    <li><a href="#popularity" data-interaction="Hops:Click TOC:$label">Popularity Over Time</a>
-                    <li><a href="#styles-percent-recipes" data-interaction="Hops:Click TOC:$label">Popularity within Beer Styles</a>
-                    <li><a href="#styles-number-recipes" data-interaction="Hops:Click TOC:$label">Common Beer Styles</a>
-                    <li><a href="#style-amount" data-interaction="Hops:Click TOC:$label">Dosage per Style</a>
-                    <li><a href="#usage-amount" data-interaction="Hops:Click TOC:$label">Dosage per Use</a>
-                    <li><a href="#hop-pairings" data-interaction="Hops:Click TOC:$label">Hop Pairings</a>
-                    <li><a href="#most-used-yeasts" data-interaction="Hops:Click TOC:$label">Most Used Yeasts</a>
-                    <li><a href="#trending-yeasts" data-interaction="Hops:Click TOC:$label">Trending Yeasts</a>
-                    <li><a href="#recipes" data-interaction="Hops:Click TOC:$label">Brewing Recipes</a>
-                </ol>
-            </nav>
-            {% endif %}
-
-            {% if hop.accessible_substitutes.count %}{% spaceless %}
-                <figure class="badge-list">
-                    <figcaption>Substitutes:</figcaption>
-                    <ul>
-                    {% for substitute in hop.accessible_substitutes %}
-                        <li><a href="{{ substitute|url }}" class="badge bg-primary">{{ substitute.name }}</a></li>
-                    {% endfor %}
-                    </ul>
-                </figure>
-            {% endspaceless %}{% endif %}
-
-            {% if hop.significant_pairings.count %}{% spaceless %}
-                <figure class="badge-list">
-                    <figcaption>Pairings:</figcaption>
+            <div class="d-flex flex-column d-lg-block">
+                {% if hop.recipes_count %}
+                <nav class="toc toc-align order-last">
+                    <h2 class="toc-headline">Table of Contents</h2>
                     <ol>
-                    {% for pairing in hop.significant_pairings %}
-                        <li><a href="{{ pairing.paired_hop|url }}" class="badge bg-secondary">{{ pairing.paired_hop.name }}</a></li>
-                    {% endfor %}
+                        <li class="d-lg-none"><a href="#profile" data-interaction="Hops:Click TOC:$label">Profile</a></li>
+                        <li><a href="#characteristics" data-interaction="Hops:Click TOC:$label">Characteristics</a>
+                        <li><a href="#popularity" data-interaction="Hops:Click TOC:$label">Popularity Over Time</a>
+                        <li><a href="#styles-percent-recipes" data-interaction="Hops:Click TOC:$label">Popularity within Beer Styles</a>
+                        <li><a href="#styles-number-recipes" data-interaction="Hops:Click TOC:$label">Common Beer Styles</a>
+                        <li><a href="#style-amount" data-interaction="Hops:Click TOC:$label">Dosage per Style</a>
+                        <li><a href="#usage-amount" data-interaction="Hops:Click TOC:$label">Dosage per Use</a>
+                        <li><a href="#hop-pairings" data-interaction="Hops:Click TOC:$label">Hop Pairings</a>
+                        <li><a href="#most-used-yeasts" data-interaction="Hops:Click TOC:$label">Most Used Yeasts</a>
+                        <li><a href="#trending-yeasts" data-interaction="Hops:Click TOC:$label">Trending Yeasts</a>
+                        <li><a href="#recipes" data-interaction="Hops:Click TOC:$label">Brewing Recipes</a>
                     </ol>
-                    <small class="ms-1 text-nowrap">☞ <a href="#hop-pairings" data-interaction="Hops:Click See Dosage">See Dosage</a></small>
-                </figure>
-            {% endspaceless %}{% endif %}
+                </nav>
+                {% endif %}
 
-            {% if hop.aroma_tags.count %}{% spaceless %}
-                <figure class="badge-list">
-                    <figcaption>Flavor:</figcaption>
-                    <ul>
-                    {% for tag in hop.aroma_tags.all %}
-                        <li><a href="{% url "hop_flavor_detail" tag.id %}" class="badge bg-{{ tag.category }}">{{ tag.name }}</a></li>
-                    {% endfor %}
-                    </ul>
-                </figure>
-            {% endspaceless %}{% endif %}
+                {% if hop.accessible_substitutes.count %}{% spaceless %}
+                    <figure class="badge-list">
+                        <figcaption>Substitutes:</figcaption>
+                        <ul>
+                        {% for substitute in hop.accessible_substitutes %}
+                            <li><a href="{{ substitute|url }}" class="badge bg-primary">{{ substitute.name }}</a></li>
+                        {% endfor %}
+                        </ul>
+                    </figure>
+                {% endspaceless %}{% endif %}
+
+                {% if hop.significant_pairings.count %}{% spaceless %}
+                    <figure class="badge-list">
+                        <figcaption>Pairings:</figcaption>
+                        <ol>
+                        {% for pairing in hop.significant_pairings %}
+                            <li><a href="{{ pairing.paired_hop|url }}" class="badge bg-secondary">{{ pairing.paired_hop.name }}</a></li>
+                        {% endfor %}
+                        </ol>
+                        <small class="ms-1 text-nowrap">☞ <a href="#hop-pairings" data-interaction="Hops:Click See Dosage">See Dosage</a></small>
+                    </figure>
+                {% endspaceless %}{% endif %}
+
+                {% if hop.aroma_tags.count %}{% spaceless %}
+                    <figure class="badge-list">
+                        <figcaption>Flavor:</figcaption>
+                        <ul>
+                        {% for tag in hop.aroma_tags.all %}
+                            <li><a href="{% url "hop_flavor_detail" tag.id %}" class="badge bg-{{ tag.category }}">{{ tag.name }}</a></li>
+                        {% endfor %}
+                        </ul>
+                    </figure>
+                {% endspaceless %}{% endif %}
+            </div>
         </div>
 
         <h2 class="d-lg-none">
