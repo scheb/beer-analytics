@@ -1,6 +1,25 @@
 {% extends 'base.html' %}
 {% load web_app %}
 
+{% block sidebar %}{% if hop.recipes_count %}
+    <nav class="table-of-contents">
+        <ol id="toc-navigation">
+            <li class="section-title"><a href="#top" data-interaction="Hops:Click TOC:$label">{{ hop.name }} Hops</a></li>
+            <li><a href="#profile" data-interaction="Hops:Click TOC:$label">Profile</a></li>
+            <li><a href="#characteristics" data-interaction="Hops:Click TOC:$label">Characteristics</a></li>
+            <li><a href="#popularity" data-interaction="Hops:Click TOC:$label">Popularity Over Time</a></li>
+            <li><a href="#styles-percent-recipes" data-interaction="Hops:Click TOC:$label">Popularity within Beer Styles</a></li>
+            <li><a href="#styles-number-recipes" data-interaction="Hops:Click TOC:$label">Common Beer Styles</a></li>
+            <li><a href="#style-amount" data-interaction="Hops:Click TOC:$label">Dosage per Style</a></li>
+            <li><a href="#usage-amount" data-interaction="Hops:Click TOC:$label">Dosage per Use</a></li>
+            <li><a href="#hop-pairings" data-interaction="Hops:Click TOC:$label">Hop Pairings</a></li>
+            <li><a href="#most-used-yeasts" data-interaction="Hops:Click TOC:$label">Most Used Yeasts</a></li>
+            <li><a href="#trending-yeasts" data-interaction="Hops:Click TOC:$label">Trending Yeasts</a></li>
+            <li><a href="#recipes" data-interaction="Hops:Click TOC:$label">Brewing Recipes</a></li>
+        </ol>
+    </nav>
+{% else %}{{ block.super }}{% endif %}{% endblock %}
+
 {% block content %}
     <nav aria-label="breadcrumb" class="mt-4">
         <ol class="breadcrumb">
@@ -10,8 +29,7 @@
         </ol>
     </nav>
 
-    <article>
-    <div class="detail-head clearfix">
+    <div class="detail-head">
         <header>
             <h1>{{ hop.name }} Hops</h1>
             {% if hop.alt_names %}{% spaceless %}
@@ -22,193 +40,181 @@
             {% endspaceless %}{% endif %}
         </header>
 
-        <div class="detail-summary">
-            <dl class="detail-info">
-                <dt>Recipes:</dt>
-                <dd>{{ hop.recipes_count }}</dd>
-                <dt>Purpose:</dt>
-                <dd>{{ hop.category_name }}</dd>
+        <dl class="detail-info">
+            <dt>Recipes:</dt>
+            <dd>{{ hop.recipes_count }}</dd>
+            <dt>Purpose:</dt>
+            <dd>{{ hop.category_name }}</dd>
 
-                {% if hop.recipes_alpha_mean %}
-                <dt>Alpha:</dt>
-                <dd>{{ hop.alpha_level|title }}</dd>
-                {% endif %}
+            {% if hop.recipes_alpha_mean %}
+            <dt>Alpha:</dt>
+            <dd>{{ hop.alpha_level|title }}</dd>
+            {% endif %}
 
-                {% if hop.origin_countries|length > 0 %}
-                <dt>Origin:</dt>
-                <dd>{% for origin in hop.origin_countries %}{% if forloop.counter0 %}, {% endif %}{{ origin.flag }} {{ origin.name }}{% endfor %}</dd>
-                {% endif %}
-            </dl>
+            {% if hop.origin_countries|length > 0 %}
+            <dt>Origin:</dt>
+            <dd>{% for origin in hop.origin_countries %}{% if forloop.counter0 %}, {% endif %}{{ origin.flag }} {{ origin.name }}{% endfor %}</dd>
+            {% endif %}
+        </dl>
 
-            <div class="d-flex flex-column d-lg-block">
-                {% if hop.recipes_count %}
-                <nav class="toc toc-align order-last">
-                    <h2 class="toc-headline">Table of Contents</h2>
-                    <ol>
-                        <li class="d-lg-none"><a href="#profile" data-interaction="Hops:Click TOC:$label">Profile</a></li>
-                        <li><a href="#characteristics" data-interaction="Hops:Click TOC:$label">Characteristics</a>
-                        <li><a href="#popularity" data-interaction="Hops:Click TOC:$label">Popularity Over Time</a>
-                        <li><a href="#styles-percent-recipes" data-interaction="Hops:Click TOC:$label">Popularity within Beer Styles</a>
-                        <li><a href="#styles-number-recipes" data-interaction="Hops:Click TOC:$label">Common Beer Styles</a>
-                        <li><a href="#style-amount" data-interaction="Hops:Click TOC:$label">Dosage per Style</a>
-                        <li><a href="#usage-amount" data-interaction="Hops:Click TOC:$label">Dosage per Use</a>
-                        <li><a href="#hop-pairings" data-interaction="Hops:Click TOC:$label">Hop Pairings</a>
-                        <li><a href="#most-used-yeasts" data-interaction="Hops:Click TOC:$label">Most Used Yeasts</a>
-                        <li><a href="#trending-yeasts" data-interaction="Hops:Click TOC:$label">Trending Yeasts</a>
-                        <li><a href="#recipes" data-interaction="Hops:Click TOC:$label">Brewing Recipes</a>
-                    </ol>
-                </nav>
-                {% endif %}
+        {% if hop.accessible_substitutes.count %}{% spaceless %}
+            <figure class="badge-list">
+                <figcaption>Substitutes:</figcaption>
+                <ul>
+                {% for substitute in hop.accessible_substitutes %}
+                    <li><a href="{{ substitute|url }}" class="badge bg-primary">{{ substitute.name }}</a></li>
+                {% endfor %}
+                </ul>
+            </figure>
+        {% endspaceless %}{% endif %}
 
-                {% if hop.accessible_substitutes.count %}{% spaceless %}
-                    <figure class="badge-list">
-                        <figcaption>Substitutes:</figcaption>
-                        <ul>
-                        {% for substitute in hop.accessible_substitutes %}
-                            <li><a href="{{ substitute|url }}" class="badge bg-primary">{{ substitute.name }}</a></li>
-                        {% endfor %}
-                        </ul>
-                    </figure>
-                {% endspaceless %}{% endif %}
+        {% if hop.significant_pairings.count %}{% spaceless %}
+            <figure class="badge-list">
+                <figcaption>Pairings:</figcaption>
+                <ol>
+                {% for pairing in hop.significant_pairings %}
+                    <li><a href="{{ pairing.paired_hop|url }}" class="badge bg-secondary">{{ pairing.paired_hop.name }}</a></li>
+                {% endfor %}
+                </ol>
+                <small class="ms-1 text-nowrap">☞ <a href="#hop-pairings" data-interaction="Hops:Click See Dosage">See Dosage</a></small>
+            </figure>
+        {% endspaceless %}{% endif %}
 
-                {% if hop.significant_pairings.count %}{% spaceless %}
-                    <figure class="badge-list">
-                        <figcaption>Pairings:</figcaption>
-                        <ol>
-                        {% for pairing in hop.significant_pairings %}
-                            <li><a href="{{ pairing.paired_hop|url }}" class="badge bg-secondary">{{ pairing.paired_hop.name }}</a></li>
-                        {% endfor %}
-                        </ol>
-                        <small class="ms-1 text-nowrap">☞ <a href="#hop-pairings" data-interaction="Hops:Click See Dosage">See Dosage</a></small>
-                    </figure>
-                {% endspaceless %}{% endif %}
+        {% if hop.aroma_tags.count %}{% spaceless %}
+            <figure class="badge-list">
+                <figcaption>Flavor:</figcaption>
+                <ul>
+                {% for tag in hop.aroma_tags.all %}
+                    <li><a href="{% url "hop_flavor_detail" tag.id %}" class="badge bg-{{ tag.category }}">{{ tag.name }}</a></li>
+                {% endfor %}
+                </ul>
+            </figure>
+        {% endspaceless %}{% endif %}
+    </div>
 
-                {% if hop.aroma_tags.count %}{% spaceless %}
-                    <figure class="badge-list">
-                        <figcaption>Flavor:</figcaption>
-                        <ul>
-                        {% for tag in hop.aroma_tags.all %}
-                            <li><a href="{% url "hop_flavor_detail" tag.id %}" class="badge bg-{{ tag.category }}">{{ tag.name }}</a></li>
-                        {% endfor %}
-                        </ul>
-                    </figure>
-                {% endspaceless %}{% endif %}
-            </div>
-        </div>
-
-        <h2 class="d-lg-none">
-            <a href="#profile" id="introduction" class="anchor"><span></span></a>
-            Profile
-        </h2>
-        {% if not long_description and description %}<p>{{ description|safe }}</p>{% endif %}
-
+    <section id="profile" class="anchor-target">
+        <h2><a href="#profile" class="anchor"><span></span></a>Profile</h2>
         {% if long_description %}
             <div class="detail-long-description">
                 {% include long_description %}
             </div>
+        {% elif description %}
+            <p>{{ description|safe }}</p>
         {% endif %}
+    </section>
 
-        {% if not hop.recipes_count %}
-        <p class="alert alert-primary" role="alert">We're sorry, there are no recipes with this hop variety in our database.</p>
-        <p>👉 <a href="{% url "hop_overview" %}">Browse available hops</a></p>
-        {% endif %}
-    </div>
+    {% if not hop.recipes_count %}
+    <p class="alert alert-primary" role="alert">We're sorry, there are no recipes with this hop variety in our database.</p>
+    <p>👉 <a href="{% url "hop_overview" %}">Browse available hops</a></p>
+    {% endif %}
 
 {# Start: has recipes #}
 {% if hop.recipes_count > 0 %}
     {% include './metrics.html' %}
 
     {% with chart_type="popularity" anchor="popularity" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Popularity Over Time</h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-m" data-chart="{{ hop|chart_js:chart_type }}">
-                    <noscript>
-                        {{ hop|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2><a href="#{{ anchor }}" class="anchor"><span></span></a>Popularity Over Time</h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-m" data-chart="{{ hop|chart_js:chart_type }}">
+                        <noscript>
+                            {{ hop|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
     {% endwith %}
 
     {% with chart_type="typical-styles-relative" anchor="styles-percent-recipes" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2>
-                    <a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>
-                    Popularity within Beer Styles
-                </h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-l" data-chart="{{ hop|chart_js:chart_type }}">
-                    <noscript>
-                        {{ hop|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2>
+                        <a href="#{{ anchor }}" class="anchor"><span></span></a>
+                        Popularity within Beer Styles
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-l" data-chart="{{ hop|chart_js:chart_type }}">
+                        <noscript>
+                            {{ hop|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
     {% endwith %}
 
     {% with chart_type="typical-styles-absolute" anchor="styles-number-recipes" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2>
-                    <a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>
-                    Common Beer Styles
-                </h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-l" data-chart="{{ hop|chart_js:chart_type }}">
-                    <noscript>
-                        {{ hop|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2>
+                        <a href="#{{ anchor }}" class="anchor"><span></span></a>
+                        Common Beer Styles
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-l" data-chart="{{ hop|chart_js:chart_type }}">
+                        <noscript>
+                            {{ hop|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
     {% endwith %}
 
     {% with chart_type="amount-used-per-style" anchor="style-amount" %}
-         <section class="card card-chart">
-            <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Dosage per Style</h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-l" data-chart="{{ hop|chart_js:chart_type }}">
-                    <noscript>
-                        {{ hop|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+             <div class="card card-chart">
+                <div class="card-header">
+                    <h2><a href="#{{ anchor }}" class="anchor"><span></span></a>Dosage per Style</h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-l" data-chart="{{ hop|chart_js:chart_type }}">
+                        <noscript>
+                            {{ hop|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
     {% endwith %}
 
     {% with chart_type="amount-used-per-use" anchor="usage-amount" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Dosage per Use</h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-l" data-chart="{{ hop|chart_js:chart_type }}">
-                    <noscript>
-                        {{ hop|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2><a href="#{{ anchor }}" class="anchor"><span></span></a>Dosage per Use</h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-l" data-chart="{{ hop|chart_js:chart_type }}">
+                        <noscript>
+                            {{ hop|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
     {% endwith %}
 
     {% with chart_type="hop-pairings" anchor="hop-pairings" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Hop Pairings</h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-l" data-chart="{{ hop|chart_js:chart_type }}">
-                    <noscript>
-                        {{ hop|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2><a href="#{{ anchor }}" class="anchor"><span></span></a>Hop Pairings</h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-l" data-chart="{{ hop|chart_js:chart_type }}">
+                        <noscript>
+                            {{ hop|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
@@ -216,42 +222,48 @@
 
 
     {% with chart_type="popular-yeasts" anchor="most-used-yeasts" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Used Yeasts</h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-m" data-chart="{{ hop|chart_js:chart_type }}">
-                    <noscript>
-                        {{ hop|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2><a href="#{{ anchor }}" class="anchor"><span></span></a>Most Used Yeasts</h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-m" data-chart="{{ hop|chart_js:chart_type }}">
+                        <noscript>
+                            {{ hop|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
     {% endwith %}
 
     {% with chart_type="trending-yeasts" anchor="trending-yeasts" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Trending Yeasts</h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-m" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options='{"noDataText":"No trends detected"}'>
-                    <noscript>
-                        {{ hop|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2><a href="#{{ anchor }}" class="anchor"><span></span></a>Trending Yeasts</h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-m" data-chart="{{ hop|chart_js:chart_type }}" data-chart-options='{"noDataText":"No trends detected"}'>
+                        <noscript>
+                            {{ hop|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
     {% endwith %}
 
     {% with anchor="recipes" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Brewing Recipes</h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-s" data-recipes="{{ hop|recipes }}"></div>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2><a href="#{{ anchor }}" class="anchor"><span></span></a>Brewing Recipes</h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-s" data-recipes="{{ hop|recipes }}"></div>
+                </div>
             </div>
         </section>
     {% endwith %}

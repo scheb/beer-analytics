@@ -1,10 +1,15 @@
 // Detail pages header
 
 .detail-head {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 
     h1 {
         margin-bottom: 0.25rem;
+    }
+
+    .detail-info,
+    .badge-list {
+        margin-bottom: 0.5rem;
     }
 }
 
@@ -17,15 +22,6 @@
 
     @include media-breakpoint-up('md') {
         font-size: 0.875rem;
-    }
-}
-
-.detail-summary {
-    margin-bottom: 1rem;
-
-    .detail-info,
-    .badge-list {
-        margin-bottom: 0.5rem;
     }
 }
 

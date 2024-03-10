@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
 {% load web_app %}
 
+{% block sidebar %}
+    <nav class="table-of-contents">
+        <ol id="toc-navigation">
+            <li class="section-title"><a href="#top" data-interaction="Hops:Click TOC:$label">{{ yeast.full_name }}</a></li>
+            <li><a href="#profile" data-interaction="Yeasts:Click TOC:$label">Profile</a></li>
+            <li><a href="#popularity">Popularity Over Time</a></li>
+            <li><a href="#styles-percent-recipes" data-interaction="Yeasts:Click TOC:$label">Popularity within Beer Styles</a></li>
+            <li><a href="#styles-number-recipes" data-interaction="Yeasts:Click TOC:$label">Common Beer Styles</a></li>
+            <li><a href="#most-used-hops" data-interaction="Yeasts:Click TOC:$label">Most Used Hops</a></li>
+            <li><a href="#trending-hops" data-interaction="Yeasts:Click TOC:$label">Trending Hops</a></li>
+            <li><a href="#recipes" data-interaction="Yeasts:Click TOC:$label">Brewing Recipes</a></li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block content %}
     <nav aria-label="breadcrumb" class="mt-4">
         <ol class="breadcrumb">
@@ -11,8 +26,11 @@
     </nav>
 
     <article>
-    <div class="detail-head clearfix">
-        <h1>{{ yeast.full_name }}{% if yeast.has_extra_product_id %} <small class="text-muted">{{ yeast.product_id }}</small>{% endif %}</h1>
+    <div class="detail-head">
+        <header>
+            <h1>{{ yeast.full_name }}{% if yeast.has_extra_product_id %} <small class="text-muted">{{ yeast.product_id }}</small>{% endif %}</h1>
+        </header>
+
         <dl class="detail-info">
             <dt>Recipes:</dt>
             <dd>{{ yeast.recipes_count }}</dd>
@@ -42,22 +60,11 @@
             </dd>
             {% endif %}
         </dl>
+    </div>
 
-        <nav class="toc toc-align">
-            <h2 class="toc-headline">Table of Contents</h2>
-            <ol>
-                <li class="d-lg-none"><a href="#profile" data-interaction="Yeasts:Click TOC:$label">Profile</a></li>
-                <li><a href="#popularity" data-interaction="Yeasts:Click TOC:$label">Popularity Over Time</a></li>
-                <li><a href="#styles-percent-recipes" data-interaction="Yeasts:Click TOC:$label">Popularity within Beer Styles</a></li>
-                <li><a href="#styles-number-recipes" data-interaction="Yeasts:Click TOC:$label">Common Beer Styles</a></li>
-                <li><a href="#most-used-hops" data-interaction="Yeasts:Click TOC:$label">Most Used Hops</a></li>
-                <li><a href="#trending-hops" data-interaction="Yeasts:Click TOC:$label">Trending Hops</a></li>
-                <li><a href="#recipes" data-interaction="Yeasts:Click TOC:$label">Brewing Recipes</a></li>
-            </ol>
-        </nav>
-
-        <h2 class="d-lg-none">
-            <a href="#profile" id="introduction" class="anchor"><span></span></a>
+    <section id="profile" class="anchor-target">
+        <h2>
+            <a href="#profile" id="profile" class="anchor"><span></span></a>
             Profile
         </h2>
         {% if not long_description and description %}<p>{{ description|safe }}</p>{% endif %}
@@ -67,96 +74,108 @@
                 {% include long_description %}
             </div>
         {% endif %}
-    </div>
+    </section>
 
     {% with chart_type="popularity" anchor="popularity" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Popularity Over Time</h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-m" data-chart="{{ yeast|chart_js:chart_type }}">
-                    <noscript>
-                        {{ yeast|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2><a href="#{{ anchor }}" class="anchor"><span></span></a>Popularity Over Time</h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-m" data-chart="{{ yeast|chart_js:chart_type }}">
+                        <noscript>
+                            {{ yeast|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
     {% endwith %}
 
     {% with chart_type="typical-styles-relative" anchor="styles-percent-recipes" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2>
-                    <a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>
-                    Popularity within Beer Styles
-                </h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-l" data-chart="{{ yeast|chart_js:chart_type }}">
-                    <noscript>
-                        {{ yeast|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2>
+                        <a href="#{{ anchor }}" class="anchor"><span></span></a>
+                        Popularity within Beer Styles
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-l" data-chart="{{ yeast|chart_js:chart_type }}">
+                        <noscript>
+                            {{ yeast|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
     {% endwith %}
 
     {% with chart_type="typical-styles-absolute" anchor="styles-number-recipes" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2>
-                    <a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>
-                    Common Beer Styles
-                </h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-l" data-chart="{{ yeast|chart_js:chart_type }}">
-                    <noscript>
-                        {{ yeast|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2>
+                        <a href="#{{ anchor }}" class="anchor"><span></span></a>
+                        Common Beer Styles
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-l" data-chart="{{ yeast|chart_js:chart_type }}">
+                        <noscript>
+                            {{ yeast|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
     {% endwith %}
 
     {% with chart_type="popular-hops" anchor="most-used-hops" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Used Hops</h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-m" data-chart="{{ yeast|chart_js:chart_type }}">
-                    <noscript>
-                        {{ yeast|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Used Hops</h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-m" data-chart="{{ yeast|chart_js:chart_type }}">
+                        <noscript>
+                            {{ yeast|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
     {% endwith %}
 
     {% with chart_type="trending-hops" anchor="trending-hops" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Trending Hops</h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-m" data-chart="{{ yeast|chart_js:chart_type }}" data-chart-options='{"noDataText":"No trends detected"}'>
-                    <noscript>
-                        {{ yeast|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Trending Hops</h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-m" data-chart="{{ yeast|chart_js:chart_type }}" data-chart-options='{"noDataText":"No trends detected"}'>
+                        <noscript>
+                            {{ yeast|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
     {% endwith %}
 
     {% with anchor="recipes" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Brewing Recipes</h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-s" data-recipes="{{ yeast|recipes }}"></div>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Brewing Recipes</h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-s" data-recipes="{{ yeast|recipes }}"></div>
+                </div>
             </div>
         </section>
     {% endwith %}

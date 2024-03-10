@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views.decorators.cache import cache_page
 
 from recipe_db.analytics.spotlight.yeast import YeastAnalysis
-from recipe_db.models import Yeast
+from recipe_db.models import Yeast, create_human_readable_id
 from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.utils import NoDataException
 from web_app.charts.yeast import YeastChartFactory
@@ -162,6 +162,7 @@ def group_by_lab(yeasts: iter) -> Tuple[list, list]:
     # Create lab objects
     for lab in labs:
         yeast_labs[lab] = {
+            "id": create_human_readable_id(lab),
             "name": lab,
             "yeasts": [],
         }

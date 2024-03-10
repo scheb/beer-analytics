@@ -1,6 +1,19 @@
 {% extends 'base.html' %}
 {% load web_app %}
 
+{% block sidebar %}
+    <nav class="table-of-contents">
+        <ol id="toc-navigation">
+            {% for category in categories %}
+                <li class="section-title"><a href="#{{ category.id }}" data-interaction="Fermentables:Click TOC:$label">{{ category.name }}</a></li>
+                {% for type in category.types %}
+                    <li><a href="#{{ type.id }}" data-interaction="Fermentables:Click TOC:$label">{{ type.name }}</a></li>
+                {% endfor %}
+            {% endfor %}
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block content %}
     <h1>List of Fermentables</h1>
     <p>
@@ -16,9 +29,9 @@
 
     <div id="fermentables-overview">
         {% for category in categories %}
-            <section class="search-group">
+            <section class="search-group anchor-target" id="{{ category.id }}">
                 <h2>
-                    <a href="#{{ category.id }}" id="{{ category.id }}" class="anchor"><span></span></a>
+                    <a href="#{{ category.id }}" class="anchor"><span></span></a>
                     <a href="{% url "fermentable_category" category.id %}" class="text-body">{{ category.name }}</a>
                 </h2>
                 <div class="mb-4">

@@ -1,25 +1,25 @@
 {% extends 'base.html' %}
 {% load web_app %}
 
-{% block content %}
-    <header class="clearfix">
-        <h1>Most Popular Beer Yeasts <small class="text-muted text-nowrap">by {{ month }}</small></h1>
+{% block sidebar %}
+    <nav class="table-of-contents">
+        <ol id="toc-navigation">
+            <li class="section-title"><a href="#top" data-interaction="Trends:Click TOC:$label">Most Popular Beer Yeasts</a></li>
+            <li><a href="#most-searched-yeasts" data-interaction="Trends:Click TOC:$label">Most Searched Yeasts</a></li>
+            <li><a href="#most-used-yeasts" data-interaction="Trends:Click TOC:$label">Most Used Yeasts</a></li>
+        </ol>
+    </nav>
+{% endblock %}
 
-        <div class="d-flex flex-column d-lg-block">
-            <nav class="toc toc-align order-last">
-                <h2 class="toc-headline">Table of Contents</h2>
-                <ol>
-                    <li><a href="#most-searched-yeasts" class="">Most Searched Yeasts</a></li>
-                    <li><a href="#most-used-yeasts" class="">Most Used Yeasts</a></li>
-                </ol>
-            </nav>
-            <p>Yeasts and bacteria are responsible for the magical transformation that turns simple sugars into alcohol and carbon dioxide, giving beer its intoxicating qualities and effervescence. Explore the myriad strains that brewers worship and utilize, each with its own unique characteristics that influence the taste, aroma, and texture of the final product. We'll <strong>uncover the most popular yeasts</strong> making waves in the brewing world today, showcasing the trending strains that are defining the cutting-edge of beer production.</p>
-        </div>
+{% block content %}
+    <header>
+        <h1>Most Popular Beer Yeasts <small class="text-muted text-nowrap">by {{ month }}</small></h1>
+        <p>Yeasts and bacteria are responsible for the magical transformation that turns simple sugars into alcohol and carbon dioxide, giving beer its intoxicating qualities and effervescence. Explore the myriad strains that brewers worship and utilize, each with its own unique characteristics that influence the taste, aroma, and texture of the final product. We'll <strong>uncover the most popular yeasts</strong> making waves in the brewing world today, showcasing the trending strains that are defining the cutting-edge of beer production.</p>
     </header>
 
-    <section>
-        {% with chart_type="searched-yeasts" anchor="most-searched-yeasts" %}
-            <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Searched Yeasts</h2>
+    {% with chart_type="searched-yeasts" anchor="most-searched-yeasts" %}
+        <section class="anchor-target" id="{{ anchor }}">
+            <h2><a href="#{{ anchor }}" class="anchor"><span></span></a>Most Searched Yeasts</h2>
             <p>Search engine data offers a fascinating lens into the world of beer brewing, particularly in understanding the yeast strains that brewers and beer enthusiasts are looking for. By analyzing the search frequencies for various yeast strains, we gain insights into the yeast varieties that are most influential today. This analysis not only highlights the most wanted yeasts (and bacteria), but also reflects the evolving tastes in brewing.</p>
             <ol>
                 {% for yeast in most_searched_yeasts %}
@@ -35,21 +35,21 @@
                     </div>
                 </div>
             </div>
-        {% endwith %}
 
-        <div class="featured-yeasts">
-            <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
-                {% for yeast in most_searched_yeasts|slice:":4" %}
-                    <div class="col">{% include "yeast/featured.html" with yeast=yeast %}</div>
-                {% endfor %}
+            <div class="featured-yeasts">
+                <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
+                    {% for yeast in most_searched_yeasts|slice:":4" %}
+                        <div class="col">{% include "yeast/featured.html" with yeast=yeast %}</div>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
 
-    </section>
+        </section>
+    {% endwith %}
 
-    <section>
-        {% with chart_type="popular-yeasts" anchor="most-used-yeasts" %}
-            <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Most Used Yeasts</h2>
+    {% with chart_type="popular-yeasts" anchor="most-used-yeasts" %}
+        <section class="anchor-target" id="{{ anchor }}">
+            <h2><a href="#{{ anchor }}" class="anchor"><span></span></a>Most Used Yeasts</h2>
             <p>A complementary method to uncover the most favored yeasts in beer brewing is by looking at the yeast strains featured in of beer recipes. Through a thorough examination of recipes from the homebrewing community, we can pinpoint the yeast varieties that are most favoured among brewers. This approach not only reveals the  most preferred yeasts but also unveils trends and preferences within the community.</p>
             <ol>
                 {% for yeast in most_used_yeasts %}
@@ -65,16 +65,15 @@
                     </div>
                 </div>
             </div>
-        {% endwith %}
 
-        <div class="featured-yeasts">
-            <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
-                {% for yeast in most_used_yeasts|slice:":4" %}
-                    <div class="col">{% include "yeast/featured.html" with yeast=yeast %}</div>
-                {% endfor %}
+            <div class="featured-yeasts">
+                <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
+                    {% for yeast in most_used_yeasts|slice:":4" %}
+                        <div class="col">{% include "yeast/featured.html" with yeast=yeast %}</div>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
 
-    </section>
-
+        </section>
+    {% endwith %}
 {% endblock %}

@@ -4,28 +4,52 @@
     bottom: 0;
     left: 0;
     z-index: 100; // Behind the navbar
-    padding: 62px 0 0; // Height of navbar
-    color: $light;
+    padding: 51px 0 0; // Height of navbar
     overflow-y: auto;
+    background: $gray-10;
 
     .sidebar-content {
         margin: 0 1rem;
     }
 
-    a {
-        color: $primary-light;
-    }
-
     .table-of-contents {
-        ul {
+        ul, ol {
+            margin-top: 1rem;
             @include list-unstyled();
-            margin-top: 0.25rem;
-            padding: 0 0.5rem;
 
-            a {
-                text-decoration: none;
-                &:hover {
-                    color: $primary;
+            li {
+                &.section-title {
+                    a {
+                        margin-left: 0;
+                        margin-bottom: 0.25rem;
+                        padding: 0.25rem 0;
+                        border: none;
+                        font-family: var(--bs-font-headline);
+                        font-size: 1.125rem;
+                        font-weight: bold;
+
+                        &.active {
+                            border: none;
+                        }
+                    }
+                }
+
+                a {
+                    display: inline-block;
+                    margin-left: 0.5rem;
+                    padding: 0.25rem 0.5rem;
+                    border-left: 3px solid $gray-100;
+                    color: $gray;
+                    text-decoration: none;
+
+                    &:hover {
+                        color: $primary;
+                    }
+
+                    &.active {
+                        color: $primary;
+                        border-left: 3px solid $primary;
+                    }
                 }
             }
         }
@@ -33,6 +57,8 @@
 }
 
 .filtering {
+    padding: 1rem 0;
+
     select {
         padding: 2px 3px 3px 3px;
     }

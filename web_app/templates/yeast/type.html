@@ -1,6 +1,20 @@
 {% extends 'base.html' %}
 {% load web_app %}
 
+{% block sidebar %}
+    <nav class="table-of-contents">
+        <ol id="toc-navigation">
+            <li class="section-title"><a href="#top" data-interaction="Yeasts:Click TOC:$label">{{ type_name }}{% if type_is_yeast %} Yeast{% endif %}</a></li>
+            {% for lab in labs %}
+                <li><a href="#{{ lab.id }}" data-interaction="Yeasts:Click TOC:$label">{{ lab.name }}</a></li>
+            {% endfor %}
+            {% if yeasts and labs %}
+                <li><a href="#other" data-interaction="Yeasts:Click TOC:$label">Other</a></li>
+            {% endif %}
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block content %}
     <nav aria-label="breadcrumb" class="mt-4">
         <ol class="breadcrumb">
@@ -15,7 +29,6 @@
             {% include long_description %}
         </div>
     {% endif %}
-
 
     {% if most_popular %}{% spaceless %}
         <figure class="badge-list">
@@ -32,8 +45,11 @@
 
     <div class="yeasts-overview">
         {% for lab in labs %}
-            <section>
-                <h3>{{ lab.name }}</h3>
+            <section class="anchor-target" id="{{ lab.id }}">
+                <h3>
+                    <a href="#{{ lab.id }}" class="anchor"><span></span></a>
+                    {{ lab.name }}
+                </h3>
                 {% if lab.yeasts %}
                     <ul class="column-list-wide">
                         {% for yeast in lab.yeasts %}
@@ -49,9 +65,12 @@
         {% endfor %}
 
         {% if yeasts %}
-            <section>
+            <section class="anchor-target" id="other">
                 {% if labs %}
-                    <h3>Other</h3>
+                    <h3>
+                        <a href="#other" class="anchor"><span></span></a>
+                        Other
+                    </h3>
                 {% endif %}
                 <ul class="column-list-wide">
                     {% for yeast in yeasts %}

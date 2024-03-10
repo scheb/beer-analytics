@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
 {% load web_app %}
 
+{% block sidebar %}
+    <nav class="table-of-contents">
+        <ol id="toc-navigation">
+            <li class="section-title"><a href="#top" data-interaction="Fermentables:Click TOC:$label">{{ fermentable.name }}</a></li>
+            <li><a href="#profile" data-interaction="Fermentables:Click TOC:$label">Profile</a></li>
+            <li><a href="#characteristics" data-interaction="Fermentables:Click TOC:$label">Characteristics</a></li>
+            <li><a href="#popularity" data-interaction="Fermentables:Click TOC:$label">Popularity Over Time</a></li>
+            <li><a href="#styles-percent-recipes" data-interaction="Fermentables:Click TOC:$label">Popularity within Beer Styles</a></li>
+            <li><a href="#styles-number-recipes" data-interaction="Fermentables:Click TOC:$label">Common Beer Styles</a></li>
+            <li><a href="#style-amount" data-interaction="Fermentables:Click TOC:$label">Amount per Style</a></li>
+            <li><a href="#recipes" data-interaction="Fermentables:Click TOC:$label">Brewing Recipes</a></li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block content %}
     <nav aria-label="breadcrumb" class="mt-4">
         <ol class="breadcrumb">
@@ -11,8 +26,8 @@
     </nav>
 
     <article>
-    <div class="detail-head clearfix">
-        <header></header>
+    <div class="detail-head">
+        <header>
             <h1>{{ fermentable.name }}</h1>
             {% if fermentable.alt_names %}{% spaceless %}
                 <p class="detail-alias">
@@ -21,6 +36,7 @@
                 </p>
             {% endspaceless %}{% endif %}
         </header>
+
         <dl class="detail-info">
             {% if fermentable.type %}
             <dt>Type:</dt>
@@ -29,108 +45,107 @@
             <dt>Recipes:</dt>
             <dd>{{ fermentable.recipes_count }}</dd>
         </dl>
+    </div>
 
-        <nav class="toc toc-align order-last">
-            <h2 class="toc-headline">Table of Contents</h2>
-            <ol>
-                <li class="d-lg-none"><a href="#profile" data-interaction="Hops:Click TOC:$label">Profile</a></li>
-                <li><a href="#characteristics" data-interaction="Fermentables:Click TOC:$label">Characteristics</a></li>
-                <li><a href="#popularity" data-interaction="Fermentables:Click TOC:$label">Popularity Over Time</a></li>
-                <li><a href="#styles-percent-recipes" data-interaction="Fermentables:Click TOC:$label">Popularity within Beer Styles</a></li>
-                <li><a href="#styles-number-recipes" data-interaction="Fermentables:Click TOC:$label">Common Beer Styles</a></li>
-                <li><a href="#style-amount" data-interaction="Fermentables:Click TOC:$label">Amount per Style</a></li>
-                <li><a href="#recipes" data-interaction="Fermentables:Click TOC:$label">Brewing Recipes</a></li>
-            </ol>
-        </nav>
-
-        <h2 class="d-lg-none">
-            <a href="#profile" id="introduction" class="anchor"><span></span></a>
+    <section class="anchor-target" id="profile">
+        <h2>
+            <a href="#profile" class="anchor"><span></span></a>
             Profile
         </h2>
-        {% if not long_description and description %}<p>{{ description|safe }}</p>{% endif %}
-
         {% if long_description %}
             <div class="detail-long-description">
                 {% include long_description %}
             </div>
+        {% elif description %}
+            <p>{{ description|safe }}</p>
         {% endif %}
-    </div>
+    </section>
 
     {% include './metrics.html' %}
 
     {% with chart_type="popularity" anchor="popularity" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Popularity Over Time</h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-m" data-chart="{{ fermentable|chart_js:chart_type }}">
-                    <noscript>
-                        {{ fermentable|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2><a href="#{{ anchor }}" class="anchor"><span></span></a>Popularity Over Time</h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-m" data-chart="{{ fermentable|chart_js:chart_type }}">
+                        <noscript>
+                            {{ fermentable|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
     {% endwith %}
 
     {% with chart_type="typical-styles-relative" anchor="styles-percent-recipes" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2>
-                    <a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>
-                    Popularity within Beer Styles
-                </h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-l" data-chart="{{ fermentable|chart_js:chart_type }}">
-                    <noscript>
-                        {{ fermentable|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2>
+                        <a href="#{{ anchor }}" class="anchor"><span></span></a>
+                        Popularity within Beer Styles
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-l" data-chart="{{ fermentable|chart_js:chart_type }}">
+                        <noscript>
+                            {{ fermentable|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
     {% endwith %}
 
     {% with chart_type="typical-styles-absolute" anchor="styles-number-recipes" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2>
-                    <a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>
-                    Common Beer Styles
-                </h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-l" data-chart="{{ fermentable|chart_js:chart_type }}">
-                    <noscript>
-                        {{ fermentable|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2>
+                        <a href="#{{ anchor }}" class="anchor"><span></span></a>
+                        Common Beer Styles
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-l" data-chart="{{ fermentable|chart_js:chart_type }}">
+                        <noscript>
+                            {{ fermentable|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
     {% endwith %}
 
     {% with chart_type="amount-used-per-style" anchor="style-amount" %}
-         <section class="card card-chart">
-            <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Amount per Style</h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-l" data-chart="{{ fermentable|chart_js:chart_type }}">
-                    <noscript>
-                        {{ fermentable|chart_image:chart_type|safe }}
-                    </noscript>
+        <section class="anchor-target" id="{{ anchor }}">
+             <div class="card card-chart">
+                <div class="card-header">
+                    <h2><a href="#{{ anchor }}" class="anchor"><span></span></a>Amount per Style</h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-l" data-chart="{{ fermentable|chart_js:chart_type }}">
+                        <noscript>
+                            {{ fermentable|chart_image:chart_type|safe }}
+                        </noscript>
+                    </div>
                 </div>
             </div>
         </section>
     {% endwith %}
 
     {% with anchor="recipes" %}
-        <section class="card card-chart">
-            <div class="card-header">
-                <h2><a href="#{{ anchor }}" id="{{ anchor }}" class="anchor"><span></span></a>Brewing Recipes</h2>
-            </div>
-            <div class="card-body">
-                <div class="chart-s" data-recipes="{{ fermentable|recipes }}"></div>
+        <section class="anchor-target" id="{{ anchor }}">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h2><a href="#{{ anchor }}" class="anchor"><span></span></a>Brewing Recipes</h2>
+                </div>
+                <div class="card-body">
+                    <div class="chart-s" data-recipes="{{ fermentable|recipes }}"></div>
+                </div>
             </div>
         </section>
     {% endwith %}

@@ -1,6 +1,17 @@
 {% extends 'base.html' %}
 {% load web_app %}
 
+{% block sidebar %}{% if types %}
+    <nav class="table-of-contents">
+        <ol id="toc-navigation">
+            <li class="section-title"><a href="#top" data-interaction="Fermentables:Click TOC:$label">{{ category_name }}</a></li>
+            {% for type in types %}
+                <li><a href="#{{ type.id }}" data-interaction="Fermentables:Click TOC:$label">{{ type.name }}</a></li>
+            {% endfor %}
+        </ol>
+    </nav>
+{% else %}{{ block.super }}{% endif %}{% endblock %}
+
 {% block content %}
     <nav aria-label="breadcrumb" class="mt-4">
         <ol class="breadcrumb">
@@ -41,8 +52,11 @@
 
         {% if types %}
             {% for type in types %}
-                <section>
-                    <h3>{{ type.name }}</h3>
+                <section class="anchor-target" id="{{ type.id }}">
+                    <h3>
+                        <a href="#{{ type.id }}" id="{{ type.id }}" class="anchor"><span></span></a>
+                        {{ type.name }}
+                    </h3>
                     {% if type.fermentables %}
                         <ul class="column-list">
                             {% for fermentable in type.fermentables %}

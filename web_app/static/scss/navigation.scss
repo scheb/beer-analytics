@@ -184,3 +184,12 @@ footer {
     @include navbar-toggler-icon;
     background-image: url('../img/embed/icon-filter.svg');
 }
+
+// Offset all anchor targets by the height of the sticky header
+.anchor-target[id]::before {
+    content: '';
+    display: block;
+    height: 51px;
+    margin-top: -51px;
+    visibility: hidden;
+}
