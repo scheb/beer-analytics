@@ -1,6 +1,6 @@
 from urllib.parse import urlencode
 
-from django.http import HttpResponse, HttpRequest, Http404
+from django.http import HttpResponse, HttpRequest, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
@@ -40,7 +40,7 @@ def category_or_tag(request: HttpRequest, category_id: str) -> HttpResponse:
 
     try:
         tag_obj = Tag.objects.get(pk=category_id)
-        return redirect("hop_flavor_detail", flavor_id=tag_obj.id, permanent=True)
+        return redirect_to_hop_flavor(tag_obj)
     except Tag.DoesNotExist:
         pass
 
@@ -137,12 +137,17 @@ def flavor_detail(request: HttpRequest, flavor_id: str) -> HttpResponse:
     return render(request, "hop/flavor.html", context)
 
 
+def flavor_catch_all(request: HttpRequest, flavor_id: str, subpath: str) -> HttpResponse:
+    tag_obj = get_object_or_404(Tag, pk=flavor_id.lower())
+    return redirect_to_hop_flavor(tag_obj)
+
+
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
     hop = get_object_or_404(Hop, pk=slug.lower())
 
     if category_id != hop.category or slug != hop.id:
-        return redirect("hop_detail", category_id=hop.category, slug=hop.id, permanent=True)
+        return redirect_to_hop(hop)
 
     meta_provider = HopMeta(hop)
     meta = meta_provider.get_meta()
@@ -213,3 +218,16 @@ def recipes(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
         "recipes_search_url": reverse("search") + "?" + urlencode({'hops': hop.id})
     }
     return render_recipes_list(request, recipes_list, "Hops", context)
+
+
+def catch_all(request: HttpRequest, slug: str, category_id: str, subpath: str) -> HttpResponse:
+    hop = get_object_or_404(Hop, pk=slug.lower())
+    return redirect_to_hop(hop)
+
+
+def redirect_to_hop(hop: Hop) -> HttpResponseRedirect:
+    return redirect("hop_detail", category_id=hop.category, slug=hop.id, permanent=True)
+
+
+def redirect_to_hop_flavor(tag_obj: Tag) -> HttpResponseRedirect:
+    return redirect("hop_flavor_detail", flavor_id=tag_obj.id, permanent=True)

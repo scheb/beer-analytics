@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from django.http import HttpResponse, HttpRequest, Http404
+from django.http import HttpResponse, HttpRequest, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
@@ -69,7 +69,7 @@ def detail(request: HttpRequest, slug: str, type_id: str) -> HttpResponse:
         raise Http404("Yeast doesn't have any data.")
 
     if type_id != yeast.type or slug != yeast.id:
-        return redirect("yeast_detail", type_id=yeast.type, slug=yeast.id, permanent=True)
+        return redirect_to_yeast(yeast)
 
     meta_provider = YeastMeta(yeast)
     meta = meta_provider.get_meta()
@@ -180,3 +180,12 @@ def group_by_lab(yeasts: iter) -> Tuple[list, list]:
             other_yeasts.extend(yeast_lab["yeasts"])
 
     return other_yeasts, labs_filtered
+
+
+def catch_all(request: HttpRequest, slug: str, type_id: str, subpath: str) -> HttpResponse:
+    yeast = get_object_or_404(Yeast, pk=slug.lower())
+    return redirect_to_yeast(yeast)
+
+
+def redirect_to_yeast(yeast: Yeast) -> HttpResponseRedirect:
+    return redirect("yeast_detail", type_id=yeast.type, slug=yeast.id, permanent=True)

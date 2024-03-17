@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from django.http import HttpResponse, HttpRequest, Http404
+from django.http import HttpResponse, HttpRequest, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
@@ -78,7 +78,7 @@ def detail(request: HttpRequest, slug: str, category_id: str) -> HttpResponse:
         raise Http404("Fermentable doesn't have any data.")
 
     if category_id != fermentable.category or slug != fermentable.id:
-        return redirect("fermentable_detail", category_id=fermentable.category, slug=fermentable.id, permanent=True)
+        return redirect_to_fermentable(fermentable)
 
     meta_provider = FermentableMeta(fermentable)
     meta = meta_provider.get_meta()
@@ -208,3 +208,12 @@ def group_by_type(fermentables: iter) -> Tuple[list, list]:
             types_filtered.append(fermentable_type)
 
     return untyped_fermentables, types_filtered
+
+
+def catch_all(request: HttpRequest, slug: str, category_id: str, subpath: str) -> HttpResponse:
+    fermentable = get_object_or_404(Fermentable, pk=slug.lower())
+    return redirect_to_fermentable(fermentable)
+
+
+def redirect_to_fermentable(fermentable: Fermentable) -> HttpResponseRedirect:
+    return redirect("fermentable_detail", category_id=fermentable.category, slug=fermentable.id, permanent=True)

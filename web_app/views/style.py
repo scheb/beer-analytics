@@ -1,6 +1,6 @@
 from urllib.parse import urlencode
 
-from django.http import HttpResponse, HttpRequest, Http404
+from django.http import HttpResponse, HttpRequest, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
@@ -31,7 +31,7 @@ def category(request: HttpRequest, category_slug: str) -> HttpResponse:
     style = get_object_or_404(Style, slug=category_slug)
 
     if not style.is_category:
-        return redirect("style_detail", category_slug=style.category.slug, slug=style.slug, permanent=True)
+        return redirect_to_style(style)
 
     return display_style(request, style)
 
@@ -41,9 +41,9 @@ def detail(request: HttpRequest, slug: str, category_slug: str) -> HttpResponse:
     style = get_object_or_404(Style, slug=slug.lower())
 
     if style.is_category:
-        return redirect("style_category", category_slug=style.category.slug, permanent=True)
-    if category_slug != style.category.slug or slug != style.slug:
-        return redirect("style_detail", category_slug=style.category.slug, slug=style.slug, permanent=True)
+        return redirect_to_style(style)
+    elif category_slug != style.category.slug or slug != style.slug:
+        return redirect_to_style(style)
 
     return display_style(request, style)
 
@@ -149,3 +149,20 @@ def display_chart(request: HttpRequest, style: Style, chart_type: str, format: s
         raise Http404("Unknown chart type %s." % chart_type)
 
     return render_chart(chart, format)
+
+
+def category_catch_all(request: HttpRequest, category_slug: str, subpath: str) -> HttpResponse:
+    style = get_object_or_404(Style, slug=category_slug)
+    return redirect_to_style(style)
+
+
+def catch_all(request: HttpRequest, slug: str, category_slug, subpath: str) -> HttpResponse:
+    style = get_object_or_404(Style, slug=slug.lower())
+    return redirect_to_style(style)
+
+
+def redirect_to_style(style: Style) -> HttpResponseRedirect:
+    if style.is_category:
+        return redirect("style_category", category_slug=style.category.slug, permanent=True)
+    else:
+        return redirect("style_detail", category_slug=style.category.slug, slug=style.slug, permanent=True)
