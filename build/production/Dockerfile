@@ -1,4 +1,4 @@
-FROM node:18 as static_build
+FROM node:20-bookworm-slim as static_build
 
 WORKDIR /src
 COPY . ./
