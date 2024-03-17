@@ -12,7 +12,7 @@ from web_app.charts.style import StyleChartFactory
 from web_app.charts.yeast import YeastChartFactory
 from web_app.meta import PageMeta, HomeMeta
 
-FEATURED_HOPS = ['talus', 'nectaron', 'hbc-586', 'vic-secret']
+FEATURED_HOPS = ['elani', 'nectaron', 'luminosa', 'vic-secret', 'hbc-1019', 'lotus']
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def home(request: HttpRequest) -> HttpResponse:
