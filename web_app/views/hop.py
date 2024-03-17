@@ -12,6 +12,7 @@ from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.utils import NoDataException
 from web_app.meta import HopMeta, HopOverviewMeta, HopFlavorOverviewMeta, HopFlavorMeta
+from web_app.views.hop_flavor import redirect_to_hop_flavor
 from web_app.views.utils import render_chart, FORMAT_PNG, render_recipes_list, no_data_response, \
     get_hop_type_description, get_flavor_description, get_hop_description, get_flavor_category_description
 
@@ -33,11 +34,19 @@ def overview(request: HttpRequest) -> HttpResponse:
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
-def category_or_tag(request: HttpRequest, category_id: str) -> HttpResponse:
+def category(request: HttpRequest, category_id: str) -> HttpResponse:
     categories = Hop.get_categories()
     if category_id in categories:
-        return category(request, category_id)
+        return render_category(request, category_id)
 
+    # Is it a hop?
+    try:
+        hop = Hop.objects.get(pk=category_id)
+        return redirect_to_hop(hop)
+    except Hop.DoesNotExist:
+        pass
+
+    # Is it a flavor?
     try:
         tag_obj = Tag.objects.get(pk=category_id)
         return redirect_to_hop_flavor(tag_obj)
@@ -47,7 +56,7 @@ def category_or_tag(request: HttpRequest, category_id: str) -> HttpResponse:
     raise Http404("Unknown hop category %s." % category)
 
 
-def category(request: HttpRequest, category_id: str) -> HttpResponse:
+def render_category(request: HttpRequest, category_id: str) -> HttpResponse:
     categories = Hop.get_categories()
     hops_query = Hop.objects.filter(use=category_id, recipes_count__gt=0)
 
@@ -66,80 +75,6 @@ def category(request: HttpRequest, category_id: str) -> HttpResponse:
     }
 
     return render(request, "hop/category.html", context)
-
-
-@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
-def flavor_overview(request: HttpRequest) -> HttpResponse:
-    meta = HopFlavorOverviewMeta().get_meta()
-    context = {"meta": meta, "categories": get_hop_flavor_categories()}
-    return render(request, "hop/flavor_overview.html", context)
-
-
-def get_hop_flavor_categories():
-    available_categories = {
-        'fruity': {"name": "Fruity", "tags": []},
-        'citrus': {"name": "Citrus", "tags": []},
-        'tropical': {"name": "Tropical", "tags": []},
-        'floral': {"name": "Floral", "tags": []},
-        'earthy-woody': {"name": "Earthy & Woody", "tags": []},
-        'herbal': {"name": "Herbal", "tags": []},
-        'spicy': {"name": "Spicy", "tags": []},
-        'cream-caramel': {"name": "Creamy & Caramel", "tags": []},
-        'vegetal': {"name": "Vegetal", "tags": []},
-        'other': {"name": "General Descriptors", "tags": []},
-    }
-    tags = Tag.objects.order_by("name")
-    for tag in tags:
-        if tag.accessible_hops_count >= 1:
-            assigned_category = (tag.category if tag.category in available_categories else "other")
-            available_categories[assigned_category]["tags"].append(tag)
-    categories = []
-    for category_id, category in available_categories.items():
-        if len(category["tags"]) > 0:
-            description_template = get_flavor_category_description(category_id)
-
-            category["id"] = category_id
-            category["description"] = description_template
-            categories.append(category)
-
-    return categories
-
-
-@cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
-def flavor_detail(request: HttpRequest, flavor_id: str) -> HttpResponse:
-    tag_obj = get_object_or_404(Tag, pk=flavor_id.lower())
-
-    if flavor_id != tag_obj.id:
-        return redirect("hop_flavor_detail", flavor_id=tag_obj.id, permanent=True)
-
-    hops_query = Hop.objects.filter(aroma_tags=tag_obj, recipes_count__gt=0)
-    num_hops = hops_query.count()
-    if num_hops <= 0:
-        raise Http404("Flavor doesn't have any data.")
-
-    hops = hops_query.order_by("name")
-    most_popular = hops_query.order_by("-search_popularity")[:2]
-    meta = HopFlavorMeta(tag_obj).get_meta()
-    associated_aroma_tags = HopFlavorAnalysis().get_associated_flavors(tag_obj)
-    long_description_template = get_flavor_description(tag_obj.id)
-
-    context = {
-        "tag_name": tag_obj.name,
-        "tag_category": tag_obj.category,
-        "num_hops": num_hops,
-        "hops": hops,
-        "hops_count": hops.count(),
-        "most_popular": most_popular,
-        "meta": meta,
-        "associated_aroma_tags": associated_aroma_tags,
-        "long_description": long_description_template,
-    }
-    return render(request, "hop/flavor.html", context)
-
-
-def flavor_catch_all(request: HttpRequest, flavor_id: str, subpath: str) -> HttpResponse:
-    tag_obj = get_object_or_404(Tag, pk=flavor_id.lower())
-    return redirect_to_hop_flavor(tag_obj)
 
 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
@@ -227,7 +162,3 @@ def catch_all(request: HttpRequest, slug: str, category_id: str, subpath: str) -
 
 def redirect_to_hop(hop: Hop) -> HttpResponseRedirect:
     return redirect("hop_detail", category_id=hop.category, slug=hop.id, permanent=True)
-
-
-def redirect_to_hop_flavor(tag_obj: Tag) -> HttpResponseRedirect:
-    return redirect("hop_flavor_detail", flavor_id=tag_obj.id, permanent=True)

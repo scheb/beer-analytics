@@ -1,7 +1,7 @@
 from django.urls import path, register_converter
 
 from . import views
-from .views import fermentable, hop, misc, style, yeast, trend, analyze, admin, search
+from .views import fermentable, hop, hop_flavor, misc, style, yeast, trend, analyze, admin, search
 from .views.utils import FORMATS
 
 
@@ -51,12 +51,12 @@ urlpatterns = [
     path("styles/<str:category_slug>/<path:subpath>", style.category_catch_all, name="style_category_catch_all"),
 
     # HOP FLAVORS
-    path("hops/flavors/", views.hop.flavor_overview, name="hop_flavor_overview"),
-    path("hops/flavors/<str:flavor_id>/", views.hop.flavor_detail, name="hop_flavor_detail"),
-    path("hops/flavors/<str:flavor_id>/<path:subpath>", views.hop.flavor_catch_all, name="hop_flavor_catch_all"),
+    path("hops/flavors/", views.hop_flavor.overview, name="hop_flavor_overview"),
+    path("hops/flavors/<str:flavor_id>/", views.hop_flavor.detail, name="hop_flavor_detail"),
+    path("hops/flavors/<str:flavor_id>/<path:subpath>", views.hop_flavor.catch_all, name="hop_flavor_catch_all"),
 
     path("hops/", views.hop.overview, name="hop_overview"),
-    path("hops/<str:category_id>/", hop.category_or_tag, name="hop_category"),
+    path("hops/<str:category_id>/", hop.category, name="hop_category"),
     path("hops/<str:category_id>/<str:slug>/", hop.detail, name="hop_detail"),
     path("hops/<str:category_id>/<str:slug>/charts/<str:chart_type>.json", hop.chart_data, name="hop_chart_data"),
     path("hops/<str:category_id>/<str:slug>/charts/<str:chart_type>.<cformat:format>", hop.chart_image, name="hop_chart"),
