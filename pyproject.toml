@@ -3,6 +3,7 @@ name = "beer-analytics"
 version = "1.0"
 description = "Beer Analytics website project"
 authors = ["Christian Scheb <me@christianscheb.de>"]
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "~3.11"
