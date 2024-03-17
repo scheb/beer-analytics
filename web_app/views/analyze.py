@@ -20,7 +20,6 @@ from web_app.views.utils import render_chart, FORMAT_JSON, render_recipes_list, 
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def result(request: HttpRequest) -> HttpResponse:
     meta = PageMeta.create("Custom Analysis", "", url=reverse("legal"))
-    meta.extra_props = {"robots": "noindex"}
     return render(request, "analyze.html", {"meta": meta})
 
 

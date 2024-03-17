@@ -46,7 +46,6 @@ def about(request: HttpRequest) -> HttpResponse:
 @cache_page(DEFAULT_PAGE_CACHE_TIME, cache="default")
 def updates(request: HttpRequest) -> HttpResponse:
     meta = PageMeta.create("Recent Updates", "Recent updates on Beer Analytics", url=reverse("updates"))
-    meta.extra_props = {"robots": "noindex"}
     return render(request, "updates.html", {"meta": meta})
 
 
