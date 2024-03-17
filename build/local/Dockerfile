@@ -1,13 +1,15 @@
 FROM python:3.11-slim-bookworm
 
-ARG BUILD_ENVIRONMENT=local
 ARG APP_HOME=/app
-
-ENV PYTHONUNBUFFERED 1
-ENV PYTHONDONTWRITEBYTECODE 1
 ARG POETRY_VERSION="1.8"
-ENV DJANGO_SETTINGS_MODULE=config.settings_dev
-ENV PATH="${PATH}:${POETRY_VENV}/bin"
+
+ENV POETRY_NO_INTERACTION=1 \
+    POETRY_VIRTUALENVS_IN_PROJECT=0 \
+    POETRY_VIRTUALENVS_CREATE=0 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    DJANGO_SETTINGS_MODULE=config.settings_dev \
+    PATH="${POETRY_VENV}/bin:${PATH}"
 
 # Dependencies
 RUN apt-get update && \
@@ -18,8 +20,8 @@ WORKDIR ${APP_HOME}
 
 # Install Python dependencies
 COPY poetry.lock pyproject.toml ./
-RUN poetry config virtualenvs.create false && \
-    poetry install
+RUN poetry install
+
 
 # Copy application code to WORKDIR
 COPY . ${APP_HOME}
