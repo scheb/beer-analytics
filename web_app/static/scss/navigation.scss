@@ -90,6 +90,32 @@ footer {
     }
 }
 
+.cc-license {
+    .icon-cc,
+    .icon-cc-by,
+    .icon-cc-sa {
+        display: inline-block;
+        vertical-align: bottom;
+        opacity: 0.9;
+        height: 1.25rem;
+        width: 1.25rem;
+        background-size: contain;
+        margin-right: 0.1rem;
+    }
+
+    .icon-cc {
+        background-image: url('../img/embed/icon-cc.svg');
+    }
+
+    .icon-cc-by {
+        background-image: url('../img/embed/icon-cc-by.svg');
+    }
+
+    .icon-cc-sa {
+        background-image: url('../img/embed/icon-cc-sa.svg');
+    }
+}
+
 // Ensures together with margin-top:auto in footer, that the footer is always at the bottom of the page
 .main-body {
     min-height: 100vh;

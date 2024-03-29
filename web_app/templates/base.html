@@ -62,18 +62,19 @@
 
 <footer class="bd-footer border-top px-md-4 pt-4 pb-1">
     <div class="container-fluid">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 col-md-9 ms-sm-auto col-lg-10">
-            <div class="col mb-3">
+        <div class="row ms-sm-auto col-md-9 col-xl-10">
+            <div class="col-12 col-xl-5 lg-4 mb-4">
                 <p class="mb-2 d-flex">
                     <a href="/" class="me-1 link-dark text-decoration-none align-middle" title="Back to Home"><span class="logo"></span></a>
                     <span class="align-self-center h5 mb-0">Beer Analytics</span>
                 </p>
-                <p class="small text-muted mb-0">Built with ❤️ and open source software for the homebrewing community.</p>
+                <p class="small text-muted">Built with ❤️ and open source software for the homebrewing community.</p>
+                <p class="small text-muted mb-0 cc-license"><span class="icon-cc"></span><span class="icon-cc-by"></span><span class="icon-cc-sa"></span> Except where otherwise noted, content on this site is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 License</a>.</p>
             </div>
 
-            <div class="col mb-3"></div>
+            <div class="d-none d-xl-block col-1"></div>
 
-            <div class="col mb-3">
+            <div class="col-12 col-sm-4 col-xl-2 mb-4">
                 <h5>Beer Brewing</h5>
                 <ul class="nav flex-column">
                     <li class="nav-item mb-2"><a href="{% url "style_overview" %}" class="nav-link p-0 text-muted">Beer Styles</a></li>
@@ -86,7 +87,7 @@
                 </ul>
             </div>
 
-            <div class="col mb-3">
+            <div class="col-12 col-sm-4 col-xl-2 mb-4">
                 <h5>Data Analysis</h5>
                 <ul class="nav flex-column">
                     <li class="nav-item mb-2"><a href="{% url "trend_overview" "recent" %}" class="nav-link p-0 text-muted">Trends in Homebrewing</a></li>
@@ -97,7 +98,7 @@
                 </ul>
             </div>
 
-            <div class="col mb-3">
+            <div class="col-12 col-sm-4 col-xl-2 mb-4">
                 <h5>About</h5>
                 <ul class="nav flex-column">
                     <li class="nav-item mb-2"><a href="{% url "about" %}" class="nav-link p-0 text-muted">About Beer Analytics</a></li>
