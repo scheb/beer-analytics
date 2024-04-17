@@ -17,7 +17,7 @@ def search(request: HttpRequest) -> HttpResponse:
     search_result = None
 
     scope = get_scope(request)
-    if scope.has_filter():
+    if scope.search_term is not None or scope.has_filter():
         search_result = execute_search(scope)
 
     meta = SearchMeta(scope.search_term).get_meta()
