@@ -137,6 +137,11 @@ You're welcome to contribute new features, such as new analysis/chart types or b
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
+Acknowledgments
+---------------
+
+Thank you [@kasperg3](https://github.com/kasperg3) for sharing data from his awesome [hops database](https://github.com/kasperg3/HopDatabase).
+
 Support Me
 ----------
 I love to hear from people using my work, it's giving me the motivation to keep working on it.
