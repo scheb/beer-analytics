@@ -4,7 +4,7 @@ from django.http import HttpRequest, HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.views.decorators.cache import cache_page
 
-from recipe_db.models import Hop, Style, Yeast
+from recipe_db.models import Hop, Style, Yeast, Tag
 from web_app import DEFAULT_PAGE_CACHE_TIME
 from web_app.charts.trend import TrendChartFactory, TrendPeriod
 from web_app.charts.utils import NoDataException
@@ -70,6 +70,7 @@ def popular_hops(request: HttpRequest) -> HttpResponse:
         "month": datetime.now().strftime("%B %Y"),
         "most_searched_hops": Hop.get_most_searched(10),
         "most_used_hops": Hop.get_most_popular(10),
+        "most_searched_hop_flavors": Tag.get_most_searched(10),
     }
 
     return render(request, "trend/popular-hops.html", context)

@@ -90,6 +90,29 @@ class MostSearchedHopsChart(ChartDefinition, ABC):
         return self.IMAGE_ALT
 
 
+class MostSearchedHopFlavorsChart(ChartDefinition, ABC):
+    def __init__(self, period: TrendPeriod, filter_param: Optional[str]) -> None:
+        pass
+
+    CHART_TITLE = "<b>Most searched hop flavors</b>"
+    IMAGE_ALT = "Most searched hop flavors"
+
+    def plot(self) -> Chart:
+        df = HopSearchAnalysis().get_most_searched_hop_flavors()
+        if len(df) == 0:
+            raise NoDataException()
+
+        figure = BarChart().plot(df, "hop_flavor", "volume", None, "Search Volume")
+        return Chart(figure, title=self.get_chart_title())
+
+    def get_chart_title(self) -> str:
+        return self.CHART_TITLE
+
+    def get_image_alt(self) -> str:
+        return self.IMAGE_ALT
+
+
+
 class TrendingYeastsChart(TrendChart):
     CHART_TITLE = "<b>Trending yeasts</b> of the last %s months"
     IMAGE_ALT = "Trending yeasts of the last %s months"
@@ -237,6 +260,7 @@ class TrendChartFactory:
         popular_yeasts=PopularYeastsChart,
         popular_styles=PopularStylesChart,
         searched_hops=MostSearchedHopsChart,
+        searched_hop_flavors=MostSearchedHopFlavorsChart,
         searched_yeasts=MostSearchedYeastsChart,
         searched_styles=MostSearchedStylesChart,
     )

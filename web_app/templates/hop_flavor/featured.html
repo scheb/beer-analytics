@@ -1,0 +1,10 @@
+{% load static %}
+{% load web_app %}
+<article class="card featured-card featured-hop_flavor">
+    <div class="card-header">
+        <h3 class="p-0"><a href="{{ hop_flavor|url }}" class="text-body" style="text-decoration: none">{{ hop_flavor.name }} Hop Flavor</a></h3>
+    </div>
+    <div class="card-body">
+        {{ hop_flavor|description|truncatewords_html:80 }}
+    </div>
+</article>

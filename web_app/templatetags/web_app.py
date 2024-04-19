@@ -10,14 +10,14 @@ from django.utils.html import escape
 from django.utils.safestring import mark_safe
 
 from recipe_db.formulas import celsius_to_fahrenheit
-from recipe_db.models import Style, Hop, Fermentable, Yeast
+from recipe_db.models import Style, Hop, Fermentable, Yeast, Tag
 from web_app.charts.fermentable import FermentableChartFactory
 from web_app.charts.hop import HopChartFactory
 from web_app.charts.style import StyleChartFactory
 from web_app.charts.trend import TrendChartFactory, TrendPeriod
 from web_app.charts.yeast import YeastChartFactory
 from web_app.views.utils import object_url, get_hop_description, get_yeast_description, get_fermentable_description, \
-    get_style_description
+    get_style_description, get_flavor_description
 
 register = template.Library()
 
@@ -240,6 +240,9 @@ def get_item_description(item: object):
         description_template = get_fermentable_description(item.id)
     elif isinstance(item, Style):
         description_template = get_style_description(item.id)
+    elif isinstance(item, Tag):
+        description_template = get_flavor_description(item.id)
+        print(item.id)
     else:
         return ""
 

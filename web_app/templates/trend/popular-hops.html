@@ -7,6 +7,7 @@
             <li class="section-title"><a href="#top" data-interaction="Trends:Click TOC:$label">Most Popular Hops</a></li>
             <li><a href="#most-searched-hops" data-interaction="Trends:Click TOC:$label">Most Searched Hops</a></li>
             <li><a href="#most-used-hops" data-interaction="Trends:Click TOC:$label">Most Used Hops</a></li>
+            <li><a href="#most-searched-hop-flavors" data-interaction="Trends:Click TOC:$label">Most Searched Hop Flavors</a></li>
         </ol>
     </nav>
 {% endblock %}
@@ -88,5 +89,39 @@
             </div>
 
         </section>
+    {% endwith %}
+
+    {% with chart_type="searched-hop-flavors" anchor="most-searched-hop-flavors" %}
+        <section class="anchor-target" id="{{ anchor }}">
+            <h2>
+                <a href="#{{ anchor }}" class="anchor"><span></span></a>
+                Most Searched Hop Flavors
+            </h2>
+            <p>
+                Analyzing the most searched hop <em>flavors</em> also offers a fascinating glimpse into evolving trends in brewing, providing insights into shifts in consumer preferences, innovative brewing techniques, and emerging flavor profiles within the vibrant world of craft beer.
+            </p>
+            <ol>
+                {% for hop_flavor in most_searched_hop_flavors %}
+                    <li><a href="{{ hop_flavor|url }}">{{ hop_flavor.name }}</a></li>
+                {% endfor %}
+            </ol>
+            <div class="card card-chart">
+                <div class="card-body">
+                    <div id="chart-{{ chart_type }}" class="chart-m" data-chart="{% url "trend_chart" "seasonal" chart_type "json" %}">
+                        <noscript>
+                            <img src="{% url "trend_chart" "seasonal" chart_type "svg" %}" alt="{{ period|chart_image_alt:chart_type }}"/>
+                        </noscript>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {% comment %}<div class="featured-hops">
+            <div class="row row-cols-1 row-cols-md-1 row-cols-xl-2 g-2">
+                {% for hop_flavor in most_searched_hop_flavors|slice:":4" %}
+                    <div class="col">{% include "hop_flavor/featured.html" with hop_flavor=hop_flavor %}</div>
+                {% endfor %}
+            </div>
+        </div>{% endcomment %}
     {% endwith %}
 {% endblock %}

@@ -340,3 +340,20 @@ class HopSearchAnalysis:
 
         return df
 
+    def get_most_searched_hop_flavors(self) -> DataFrame:
+        max_volume = db_query_fetch_single("SELECT MAX(search_popularity) FROM recipe_db_tag")
+
+        query = """
+            SELECT
+                tag.name AS hop_flavor, tag.search_popularity AS volume
+            FROM recipe_db_tag AS tag
+            WHERE tag.search_popularity > 0
+            ORDER BY tag.search_popularity DESC
+            LIMIT 10
+        """
+
+        df = pd.read_sql(query, connection)
+        df['volume'] = (df['volume'] / max_volume * 100).round()
+
+        return df
+
