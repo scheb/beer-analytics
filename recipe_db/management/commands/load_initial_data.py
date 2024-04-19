@@ -259,8 +259,26 @@ def load_csv(file_name: str):
 def normalize_flavor_name(value: str):
     value = value.lower()
 
+    if value == "citrusy":
+        return "Citrus"
+
     if value == "fruit":
         return "Fruity"
+
+    if value == "yuzu fruit":
+        return "Yuzu"
+
+    if value == "spicy notes":
+        return "Spicy"
+
+    if value == "blackcurrant":
+        return "Black Currant"
+
+    if value == "gooseberries":
+        return "Gooseberry"
+
+    if value == "fresh lime":
+        return "Lime"
 
     if value == "spice":
         return "Spicy"
@@ -283,7 +301,7 @@ def normalize_flavor_name(value: str):
     if value == "stonefruit":
         return "Stone Fruit"
 
-    if value == "passion fruit":
+    if value == "passionfruit":
         return "Passion Fruit"
 
     if value == "whitewine":
