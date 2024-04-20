@@ -12,7 +12,7 @@ Ahtanum;aroma;USA;Amarillo, Cascade, Centennial, Willamette;Cedar, Citrus, Earth
 Akoya;aroma;GER;Aurora, Hallertauer Tradition, Northern Brewer, Perle;Fruity, Green Fruit, Pepper, Spicy, Tea;;
 Alliance;dual-purpose;GBR;;;;
 Aloha;dual-purpose;USA;;Berry, Citrus, Floral, Fruity, Sweet;;
-Alora;aroma;USA;;Apricot, Peach, Sweet Melon, Yuzu;X17701;Exp 17701, Experimental 17701, Experimental Hop 17701, HS17701
+Alora;aroma;USA;;Apricot, Peach, Sweet, Melon, Yuzu;X17701;Exp 17701, Experimental 17701, Experimental Hop 17701, HS17701
 Altus;dual-purpose;USA;Apollo, Target;Dank, Grassy, Herbal, Resinous, Soft, Spicy, Tangerine;X07270, Experimental Grapefruit;Exp Grapefruit, Experimental 07270, Exp 7270
 Amallia;dual-purpose;USA;;Earthy;;Amalia
 Amarillo;aroma;USA;Cascade, Centennial, Chinook, Simcoe, Summer, Yellow Sub;Apricot, Citrus, Floral, Grapefruit, Herbal, Lemon, Melon, Orange, Peach, Spicy, Stone Fruit, Tropical Fruits, Woody;;Amarillo, Armarillo, Amar, Amaerillo, Armadillo, Amerillo
@@ -111,7 +111,7 @@ Elani;dual-purpose;USA;Citra, Mosaic, Amarillo;Pineapple, Guava, Lime, Peach, Pe
 Elixir;aroma;FRA;;Citrus, Cognac, Floral, Leather, Orange, Tangerine, Tobacco, Tropical Fruits, Woody;;Elexir, Elixer
 Ella;aroma;AUS;Galaxy, Palisade, Perle;Anise, Floral, Grapefruit, Noble, Spicy, Tropical Fruits;Stella;
 Elsaesser;aroma;FRA;;;;
-Emerald Spire;aroma;USA;;Peach, Juicy, Grape, Watermelon, Bubblegum, Melon, Cinnamon, Peach;GLH-8732;
+Emerald Spire;aroma;USA;;Peach, Juicy, Grapes, Watermelon, Bubblegum, Melon, Cinnamon, Peach;GLH-8732;
 Endeavour;dual-purpose;GBR;Bramling Cross, Pilgrim;Black Currant, Lemon, Spicy, Citrus, Loganberry, Grapefruit, Lime, Earthy, Floral, Fruity;J-17;Endeavour, Endevour
 Enigma;bittering;AUS;Hallertauer Blanc, Nelson Sauvin;Berry, Currant, Raspberry, Stone Fruit, Tropical Fruits, White Wine;;Engima
 Epic;aroma;GBR;;Berry, Fruity, Herbal;;
@@ -148,7 +148,7 @@ Grüngeist;aroma;USA;;Tropical Fruits, Peach, Passion Fruit, Lemon, Floral, Kiwi
 Hallertau (NZ);aroma;NZL;Hallertauer Mittelfrüh;Lime, Floral, Clean, Delicate, Fresh, Vibrant, Earthy, Herbal, Crisp;;NZ Hallertau, Hallertauer (NZ), New Zealand Hallertau, New Zealand Hallertauer, Hallertau New Zealand, Hallertauer New Zealand
 Hallertau (US);aroma;USA;Liberty, Mount Hood, Hallertauer Mittelfrüh, Crystal, Hallertauer Tradition;Spicy, Floral, Herbal;;US Hallertau, Hallertauer (U.S.)
 Hallertauer Bitter;bittering;GER;Merkur;Spicy, Sweet;;Hallertau Bitter, H Bitter
-Hallertauer Blanc;aroma;GER;Enigma, Nelson Sauvin;Clean, Gooseberry, Grape, Lemongrass, Passion Fruit, Pineapple, White Wine;;Hallertau Blanc, H Blanc, Blanc
+Hallertauer Blanc;aroma;GER;Enigma, Nelson Sauvin;Clean, Gooseberry, Grapes, Lemongrass, Passion Fruit, Pineapple, White Wine;;Hallertau Blanc, H Blanc, Blanc
 Hallertauer Diamant;dual-purpose;GER;;;;Hallertau Diamant, H Diamant, Diamant
 Hallertauer Gold;aroma;GER;Hallertauer Mittelfrüh, Saaz, Tettnanger, Spalter, Perle, Hersbrucker, Fuggle, East Kent Golding, Crystal, Liberty;Spicy, Fruity, Earthy, Herbal, Floral, Pine, Citrus, Grassy, Woody;;Hallertau Gold, H Gold
 Hallertauer Mittelfrüh;aroma;GER;Crystal, Hallertauer Mittelfrüh, Hallertauer Tradition, Hersbrucker, Liberty, Ultra, Vanguard;Citrus, Floral, Grassy, Spicy, Tea;;Hallertau Mittelfrüh, Hallertau Mittlefrüh, Mittelfrüh, Mittelfrüher, H Mittelfrüh, Hallertauer MF, German Hallertau, Domestic Hallertau, Hallertauer Hallertauer, Hallertau Hallertauer, Mttelfrueh, Mittlefrüh, Hallertau Mittel, Hallertau (DE)
@@ -181,7 +181,7 @@ Horizon;dual-purpose;USA;Magnum, Nugget;Citrus, Floral, Spicy;;
 HORT 9909;dual-purpose;NZL;;Citrus, Crisp, Hay, Lemon, Lime, Noble, Spicy, Sweet;;Trial Hop 9909
 HPA 035;dual-purpose;AUS;;Orange, Peach, White Pepper, Citrus, Fruity, Spicy, Zesty, Floral, Herbal, Tangy;AU 035;AU 35, Exp 035, Experimental 035
 HS10416;bittering;USA;;Orange, Citrus, Pine, Resinous, Mint, Tropical Fruits, Bold;;x10416, Exp 10416, Experimental 10416
-Hüll Melon;aroma;GER;Belma, Jarrylo;Fruity, Melon, Strawberry, Peach, Tea, Creamy, Yogurt, Herbal, Spicy, Floral, Lemon, Aniseed, Lavender, Geranium;;Hüll Mellon, Melon Hüll, Hüllmelon, Huel Melon, Hallertau Melon, Heull Melon
+Hüll Melon;aroma;GER;Belma, Jarrylo;Cantaloupe, Fruity, Melon, Strawberry, Peach, Tea, Creamy, Yogurt, Herbal, Spicy, Floral, Lemon, Aniseed, Lavender, Geranium;;Hüll Mellon, Melon Hüll, Hüllmelon, Huel Melon, Hallertau Melon, Heull Melon
 Hulla Norrgård;dual-purpose;SWE;;Spicy, Herbal, Citrus, Clove;;Hulla
 Hüller Bitter;dual-purpose;GER;;Fruity, Mild, Resin, Spicy;;Hüll Bitter, Hüller Bitterer
 Hybrid-2;aroma;ZAF;;;;
@@ -218,7 +218,7 @@ Limonadier;aroma;CAN;Cascade, Centennial, Citra;Lemon, Grapefruit, Citrus, Mango
 Lomik;dual-purpose;POL;Northern Brewer;Herbal, Spicy;;Lomic
 Loral;dual-purpose;USA;Glacier, Nugget, Strisselspalt, Tardif de Bourgogne;Citrus, Floral, Fruity, Herbal, Lemon, Pepper, Tropical Fruits;HBC 291;Loral Nobel, Loral Noble
 Lórien;dual-purpose;USA;Lemondrop;Lemon, Lime, Melon, Hay, Wildflower, Cinnamon, Tangy, Clean, Floral;IH033;
-Lotus;aroma;USA;;Berries, Berry, Candied Grape, Cream, Orange, Tropical Fruits, Vanilla;X06297, Experimental Stonefruit;Experimental 06297, Exp 06297, Exp Stonefruit, Exp Stone Fruit, Experimental Stone Fruit
+Lotus;aroma;USA;;Berries, Berry, Candied Grapes, Cream, Orange, Tropical Fruits, Vanilla;X06297, Experimental Stonefruit;Experimental 06297, Exp 06297, Exp Stonefruit, Exp Stone Fruit, Experimental Stone Fruit
 Lubelska;aroma;POL;Saaz, Sterling, Tettnanger, Spalter;Floral, Lavender, Magnolia, Spicy, Noble, Earthy, Spicy, Herbal, Cinnamon, Bergamot, Citrus;Lublin, Lubelski;Lubelski, Luboloski, Lubliner
 Lubelska-Pulawy;aroma;POL;;;;
 Lucan;aroma;CZH;;;;
@@ -228,7 +228,7 @@ Mackinac;aroma;USA;;Citrus, Floral, Melon, Papaya, Pepper, Spicy, Tropical Fruit
 Magnat;dual-purpose;POL;Lubelska, Magnum;Chamomile, Citrus, Floral, Lemon, Lilac, Woody;;
 Magnum;bittering;GER, USA;Columbus, Galena, Hallertauer Taurus, Horizon, Northdown, Northern Brewer, Nugget;Apple, Citrus, Floral, Grassy, Herbal, Lemon, Nutmeg, Pepper, Pineapple, Spearmint, Spicy;;Magnun, Magnung, Magnu, Mag, Hallertau Magnum, Hallertauer Magnum, German Magnum
 Malling;dual-purpose;AUT;;Citrus, Apricot, Melon, Pear, Pepper;;
-Mandarina Bavaria;aroma;GER;Cascade, Hüll Melon;Bubble Gum, Citrus, Grapefruit, Herbal, Lemon, Lime, Resin, Tangerine, Tropical Fruits;;Bavarian Mandarina, Bavaria Mandarina, Mandarin Bavaria, Mandrina Bavaria, Mandarina Barvaria, Mandarina, Manderina Bavaria, Madarina Bavaria, Manderina Baveria
+Mandarina Bavaria;aroma;GER;Cascade, Hüll Melon;Bubblegum, Citrus, Grapefruit, Herbal, Lemon, Lime, Resin, Tangerine, Tropical Fruits;;Bavarian Mandarina, Bavaria Mandarina, Mandarin Bavaria, Mandrina Bavaria, Mandarina Barvaria, Mandarina, Manderina Bavaria, Madarina Bavaria, Manderina Baveria
 Mapuche;aroma;ARG;;Blueberry, Fruity, Peach, Apricot;;
 Marco Polo;dual-purpose;CHN;Columbus;Elderflower, Gooseberry, Oregano;;
 Marynka;dual-purpose;POL;Tettnanger;Anise, Aniseed, Chocolate, Citrus, Earthy, Grapefruit, Hay, Herbal, Lemon, Licorice, Tobacco;;
@@ -253,7 +253,7 @@ Moutere;dual-purpose;NZL;;Earthy, Grapefruit, Hay, Passion Fruit, Pine, Tropical
 Mystic;aroma;GBR;;;CF160;Mystique
 Nadwislanska;aroma;POL;;;;
 Nectaron;dual-purpose;NZL;Citra, Mosaic, Waimea;Citrus, Grapefruit, Passion Fruit, Peach, Pineapple, Stone Fruit, Tropical Fruits;HORT 4337;Nectron, Trial Hop 4337, 4337, Necatron
-Nelson Sauvin;dual-purpose;NZL;Enigma, Hallertauer Blanc, Motueka, Riwaka;Fruity, Gooseberry, Grape, Passion Fruit, White Wine;;Nelson, Nels, Nel, Nelso, Neslson Sauvin, Sauvin New Zealand, Nelson Sauivin, Nelson Savin, Nelson Sauvain, Nelson Saivon, Nelson Sauvignon, Neslson Sauvin, Nelson Suavin, Nelson Sauvon, Nelson Saubin, Nelson Sau
+Nelson Sauvin;dual-purpose;NZL;Enigma, Hallertauer Blanc, Motueka, Riwaka;Fruity, Gooseberry, Grapes, Passion Fruit, White Wine;;Nelson, Nels, Nel, Nelso, Neslson Sauvin, Sauvin New Zealand, Nelson Sauivin, Nelson Savin, Nelson Sauvain, Nelson Saivon, Nelson Sauvignon, Neslson Sauvin, Nelson Suavin, Nelson Sauvon, Nelson Saubin, Nelson Sau
 Neo1;dual-purpose;USA;;;;Neo 1
 Neoplanta;dual-purpose;SLO;;;;
 Newport;bittering;USA;Brewer's Gold, Fuggle, Galena, Magnum, Nugget;Balsamic, Citrus, Clean, Earthy, Evergreen, Pine, Pungent, Resinous, Spicy, White Wine;;

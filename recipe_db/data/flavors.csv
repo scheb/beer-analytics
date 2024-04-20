@@ -9,6 +9,7 @@ Apple;fruity
 Apricot;fruity
 Aromatic;other
 Artichoke;vegetal
+Balanced;other
 Balsamic;spicy
 Banana;fruity
 Basil;herbal
@@ -19,10 +20,12 @@ Black Pepper;spicy
 Black Tea;fruity
 Blackberry;fruity
 Blueberry;fruity
+Bright;other
 Bubblegum;fruity
 Calendula;floral
 Candy;cream-caramel
 Cannabis;herbal
+Cantaloupe;tropical
 Caramel;cream-caramel
 Cassis;fruity
 Cedar;earthy-woody
@@ -34,6 +37,7 @@ Chocolate;cream-caramel
 Cinnamon;spicy
 Citrus;citrus
 Clean;other
+Clementine;citrus
 Clove;spicy
 Clover;herbal
 Coconut;tropical
@@ -55,6 +59,7 @@ Elderberry;fruity
 Elderflower;floral
 Eucalyptus;herbal
 Evergreen;earthy-woody
+Exotic;other
 Fig;fruity
 Floral;floral
 Fresh;other
@@ -65,20 +70,23 @@ Geranium;floral
 Ginger;spicy
 Gingerbread;spicy
 Gooseberry;fruity
-Grape;fruity
 Grapefruit;citrus
+Grapes;fruity
 Grassy;earthy-woody
 Green;vegetal
+Green Fruit;fruity
 Green Tea;herbal
 Guava;tropical
 Hay;earthy-woody
 Hazelnut;earthy-woody
 Herbal;herbal
 Honey;cream-caramel
+Honey Dew;tropical
 Honeydew;tropical
 Incense;earthy-woody
 Intense;other
 Jasmine;floral
+Juicy;other
 Juniper;herbal
 Kiwi;citrus
 Kumquat;citrus
@@ -126,21 +134,26 @@ Pomegranate;fruity
 Pungent;spicy
 Quince;fruity
 Raspberry;fruity
+Red Berries;fruity
 Red Currant;fruity
 Red Fruit;fruity
+Refreshing;other
 Resinous;earthy-woody
 Rose;floral
 Rustic;other
 Sage;herbal
 Smooth;other
+Soft;other
 Spearmint;herbal
 Spice;spicy
 Spicy;spicy
 Stone Fruit;fruity
 Strawberry;fruity
+Subtle;other
 Sulfur;vegetal
 Sweet;cream-caramel
 Tangerine;citrus
+Tangy;spicy
 Tarragon;herbal
 Tea;herbal
 Thyme;herbal
@@ -150,6 +163,7 @@ Tomato;vegetal
 Tropical Fruits;tropical
 Vanilla;cream-caramel
 Vegetal;vegetal
+Vibrant;other
 Watermelon;fruity
 Whisky;earthy-woody
 White Wine;fruity
