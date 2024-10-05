@@ -43,7 +43,7 @@ ENV VIRTUAL_ENV=/app/.venv \
 
 # Dependencies
 RUN apt-get update && \
-    apt-get -y install default-libmysqlclient-dev git && \
+    apt-get -y install default-libmysqlclient-dev git openssh-client && \
     # cleaning up unused files
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \
     rm -rf /var/lib/apt/lists/*
