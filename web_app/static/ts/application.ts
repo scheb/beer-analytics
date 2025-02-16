@@ -1,7 +1,7 @@
 import {DetailList} from "./lists"
 import {ChartContainer, RecipesContainer} from "./results"
 import {SearchBox} from "./search"
-import {Collapse, ScrollSpy, Tab} from "bootstrap"
+import {Collapse, ScrollSpy, Tab, Toast} from "bootstrap"
 import {Analyzer} from "./filtering";
 import { registerLicense } from '@syncfusion/ej2-base';
 import {InteractionElement} from "./interaction";
@@ -55,4 +55,29 @@ if (toc) {
         threshold: [0.01, 0.25, 0.5, 0.75, 1],  // Refresh calculations every quarter of a section
         rootMargin: "-70px 0px -25% 0px",  // Top: Account for sticky header, Bottom: Ignore the bottom 25% of the viewport
     })
+}
+
+// Init toast
+function showToast(): boolean {
+    const toastDismissed = localStorage.getItem('jobToastDismissed')
+    if (!toastDismissed) {
+        return true
+    }
+
+    const toastDismissedTime = Number(toastDismissed)
+    if (isNaN(toastDismissedTime)) {
+        return true
+    }
+
+    const showToastTime = new Date().getTime() - 3*24*3600*1000 // 3 days
+    return showToastTime > toastDismissedTime
+}
+
+const toastElement = document.getElementById('jobToast')
+if (toastElement && showToast()) {
+    toastElement.addEventListener('hide.bs.toast', () => {
+        localStorage.setItem('jobToastDismissed', (new Date()).getTime() as unknown as string)
+    })
+    const toast = Toast.getOrCreateInstance(toastElement, {'autohide': false})
+    toast.show()
 }
