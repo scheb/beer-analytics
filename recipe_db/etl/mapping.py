@@ -164,6 +164,9 @@ class HopMapper(GenericMapper):
         value = item.kind_raw or ""
         value = value.lower()
         value = re.sub("&#039;", "'", value)  # Uptick
+        value = re.sub("&auml;", "ä", value)  # Umlauts
+        value = re.sub("&uuml;", "ü", value)  # Umlauts
+        value = re.sub("&ouml;", "ö", value)  # Umlauts
         value = re.sub("northern\\s+brewer\\s+-\\s+", "", value)  # Producer prefix
         value = re.sub("^hall?ertau(er)?$", "hallertauer mittelfrüh", value)  # Just "Hallertau(er)"
         value = re.sub("\\(?[0-9]+([.,][0-9]+)?\\s+aa\\)?", "", value)
