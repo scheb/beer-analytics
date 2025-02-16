@@ -166,7 +166,6 @@ HBC 431;bittering;USA;;Herbal, Floral, Fruity;;Exp 431
 HBC 432;dual-purpose;USA;;Peach, Fruity, Sweet, Vibrant, Aromatic, Citrus, Tropical;;
 HBC 472;dual-purpose;USA;;Citrus, Coconut, Earthy, Floral, Fruity, Grapefruit, Herbal, Whisky, Woody;;
 HBC 522;dual-purpose;USA;Centennial, Citra, Columbus;Floral, Citrus, Orange, Grapefruit, Woody;;
-HBC 586;bittering;USA;;Citrus, Fruity, Guava, Herbal, Lychee, Mango, Stone Fruit, Sulfur, Tropical Fruits, Woody;;
 HBC 630;bittering;USA;;Aromatic, Banana, Berries, Candy, Cherry, Citrus, Fruity, Peach, Raspberry, Stone Fruit, Sweet, Tropical Fruits;;
 HBC 638;dual-purpose;USA;;Aromatic, Banana, Cantaloupe, Cherry, Citrus, Herbal, Mango, Pineapple, Stone Fruit, Strawberry, Sweet, Tropical, Tropical Fruits;;
 Helga;aroma;AUS;Hallertauer Mittelfrüh;Floral, Spicy, Herbal, Earthy, Noble, Mild, Pleasant;Southern Hallertau;
@@ -208,6 +207,7 @@ Klon 18;aroma;UKR;Saaz, Tettnanger, Lubelska, Slavyanka;Fruity, Grassy, Floral, 
 Kohatu;aroma;NZL;Motueka, Wai-iti;Berries, Citrus, Floral, Fresh, Lime, Passion Fruit, Pine, Pineapple, Tropical Fruits;;Kuhatu
 Korsta;dual-purpose;SWE;;Spicy, Citrus, Grapefruit, Tropical fruits, Grassy, Earthy, Herbal, Zest, Fresh;;
 Kracanup;aroma;AUS;;Fruity, Versatile;;Krakanup
+Krush;bittering;USA;;Citrus, Fruity, Guava, Herbal, Lychee, Mango, Stone Fruit, Sulfur, Tropical Fruits, Woody;HBC 586;
 Książęcy;aroma;POL;;;;
 Lambic;aroma;USA;;Woody, Green, Grassy, Spicy, Floral, Fruity, Mild;;
 Legacy;dual-purpose;USA;Cluster, Galena, Northern Brewer;Blackberry, Currant, Floral, Grapefruit, Grassy, Orange, Spicy;;
