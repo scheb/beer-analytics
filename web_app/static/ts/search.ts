@@ -159,6 +159,7 @@ export class SearchBox {
 
         this.appendNoResult();
         input.addEventListener('input', delay(this.onInput.bind(this), 800))
+        input.addEventListener('keydown', this.onKeyDown.bind(this))
         if (input.value.length > 0) {
             this.search(input.value)
         }
@@ -166,6 +167,13 @@ export class SearchBox {
 
     private onInput(evt: KeyboardEvent): void {
         if (evt.target instanceof HTMLInputElement) {
+            this.search(evt.target.value)
+        }
+    }
+
+    private onKeyDown(evt: KeyboardEvent): void {
+        if (evt.key === 'Enter' && evt.target instanceof HTMLInputElement) {
+            evt.preventDefault()
             this.search(evt.target.value)
         }
     }
