@@ -1,0 +1,742 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+<style>
+    .hop-selectors {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 30px 0;
+        gap: 20px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .hop-selector {
+        margin: 0;
+        padding: 25px;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        width: 100%;
+        max-width: 600px;
+        position: relative;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+    
+    .hop-selector:hover {
+        border-color: #007bff;
+        box-shadow: 0 6px 24px rgba(0, 123, 255, 0.15);
+        transform: translateY(-2px);
+    }
+    
+    .hop-selector h3 {
+        margin: 0 0 20px 0;
+        color: #495057;
+        text-align: center;
+        font-size: 1.1em;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .hop-select {
+        width: 100%;
+        padding: 15px 20px;
+        border: 2px solid #dee2e6;
+        border-radius: 8px;
+        font-size: 16px;
+        margin-bottom: 15px;
+        background: #ffffff;
+        color: #495057;
+        transition: all 0.3s ease;
+        outline: none;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 15px center;
+        background-repeat: no-repeat;
+        background-size: 16px;
+        padding-right: 50px;
+    }
+    
+    .hop-select:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    }
+    
+    .hop-select:hover {
+        border-color: #007bff;
+    }
+    
+    .remove-hop {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        font-size: 16px;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+    }
+    
+    .remove-hop:hover {
+        background: #c82333;
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+    }
+    
+    .add-hop {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        width: auto;
+        min-width: 200px;
+        height: 50px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        margin: 20px 0;
+        padding: 0 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 16px rgba(40, 167, 69, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .add-hop::before {
+        content: '+';
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+    .add-hop:hover {
+        background: linear-gradient(135deg, #218838 0%, #1ea97c 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+    }
+    
+    .add-hop:active {
+        transform: translateY(0);
+    }
+    
+    .add-hop:disabled {
+        background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: 0 2px 8px rgba(108, 117, 125, 0.2);
+    }
+    
+    .add-hop:disabled::before {
+        content: '✓';
+    }
+    
+    .hop-info {
+        margin: 15px 0 0 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+        border-radius: 8px;
+        border: 1px solid rgba(0, 123, 255, 0.1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+    
+    .hop-info:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .hop-info p {
+        margin: 0;
+        color: #495057;
+        font-size: 15px;
+        font-weight: 500;
+        text-align: center;
+    }
+    
+    .hop-info strong {
+        color: #007bff;
+        font-weight: 600;
+    }
+    
+    .hop-info h4 {
+        margin: 0 0 10px 0;
+        color: #2c3e50;
+    }
+    
+    .hop-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        margin: 10px 0;
+    }
+    
+    .stat-item {
+        text-align: center;
+        padding: 8px;
+        background: #f8f9fa;
+        border-radius: 4px;
+    }
+    
+    .stat-value {
+        font-weight: bold;
+        font-size: 1.2em;
+        color: #2c3e50;
+    }
+    
+    .stat-label {
+        font-size: 0.9em;
+        color: #6c757d;
+    }
+    
+    .aroma-tags {
+        margin: 10px 0;
+    }
+    
+    .aroma-tag {
+        display: inline-block;
+        background: #e9ecef;
+        padding: 4px 8px;
+        margin: 2px;
+        border-radius: 12px;
+        font-size: 0.9em;
+        color: #495057;
+    }
+    
+    .compare-button {
+        display: none;  /* Hide the compare button */
+    }
+    
+    #comparison-results {
+        margin: 30px 0;
+    }
+    
+    .error-message {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 12px;
+        border-radius: 4px;
+        border: 1px solid #f5c6cb;
+        margin: 10px 0;
+    }
+    
+    .instructions {
+        background: #d1ecf1;
+        color: #0c5460;
+        padding: 15px;
+        border-radius: 4px;
+        border: 1px solid #bee5eb;
+        margin: 20px 0;
+        text-align: center;
+    }
+    
+    .fallback-chart {
+        display: grid;
+        gap: 15px;
+        margin: 20px 0;
+    }
+    
+    .hop-aroma-list {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        background: #f8f9fa;
+    }
+    
+    .hop-aroma-list h4 {
+        margin: 0 0 10px 0;
+        color: #2c3e50;
+    }
+    
+    .aroma-comparison-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 0;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .aroma-comparison-item:last-child {
+        border-bottom: none;
+    }
+    
+    .aroma-present {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #28a745;
+    }
+    
+    .aroma-absent {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #dc3545;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ meta.title }}</h1>
+    
+    <div class="instructions">
+        <strong>How to use:</strong> Add hops using the + button below to compare their aroma profiles. 
+        The spider diagram will automatically update to show the intensity (0-5 scale) of different flavor notes for each hop.
+    </div>
+    
+    <div class="hop-selectors" id="hop-selectors">
+        <!-- Dynamic hop selectors will be added here -->
+    </div>
+    
+    <button class="add-hop" id="add-hop-button" onclick="addHop()">Add Hop</button>
+    
+    <div id="comparison-results">
+        <div id="spider-chart" style="height: 600px;"></div>
+        <div id="detailed-comparison"></div>
+    </div>
+</div>
+
+<script>
+let selectedHops = [];
+let hopCounter = 0;
+let allHops = [{% for hop in hops %}"{{ hop.name|escapejs }}"{% if not forloop.last %},{% endif %}{% endfor %}];
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if Plotly is loaded, if not try to load it
+    if (typeof Plotly === 'undefined') {
+        console.warn('Plotly not loaded, attempting fallback...');
+        const script = document.createElement('script');
+        script.src = 'https://cdn.plot.ly/plotly-2.26.0.min.js';
+        script.onload = function() {
+            console.log('Plotly loaded successfully');
+            // Initialize empty plot
+            initializeEmptyPlot();
+        };
+        script.onerror = function() {
+            console.error('Failed to load Plotly.js');
+            showError('Failed to load chart library. Please check your internet connection and refresh the page.');
+        };
+        document.head.appendChild(script);
+    } else {
+        // Initialize empty plot
+        initializeEmptyPlot();
+    }
+    
+    // Add first hop selector by default
+    addHop();
+});
+
+function initializeEmptyPlot() {
+    // Create an invisible trace to show the spider web structure
+    const aromaCategories = ['Fruity', 'Citrusy', 'Floral', 'Spicy', 'Herbal', 'Piney', 'Earthy', 'Sweet'];
+    const emptyTrace = {
+        type: 'scatterpolar',
+        mode: 'lines',
+        r: new Array(aromaCategories.length).fill(0),
+        theta: aromaCategories,
+        fill: 'none',
+        line: {
+            color: 'rgba(0,0,0,0)', // Invisible line
+            width: 0
+        },
+        showlegend: false,
+        hoverinfo: 'skip'
+    };
+    
+    const layout = {
+        polar: {
+            radialaxis: {
+                visible: false,  // Hide the radial axis numbers
+                range: [-1, 6],  // Start from -1 so that 0 values have visible area
+                showline: false,
+                showgrid: true,
+                gridcolor: 'rgba(128, 128, 128, 0.3)',
+                tickmode: 'linear',
+                tick0: 0,
+                dtick: 1
+            },
+            angularaxis: {
+                showline: false,
+                gridcolor: 'rgba(128, 128, 128, 0.3)',
+                tickfont: {
+                    size: 12,
+                    color: '#666'
+                }
+            }
+        },
+        showlegend: true,
+        title: {
+            text: 'Hop Aroma Profile Comparison (0-5 Scale)',
+            font: {
+                size: 16,
+                color: '#333'
+            }
+        },
+        font: {
+            size: 12
+        },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)'
+    };
+    
+    try {
+        Plotly.newPlot('spider-chart', [emptyTrace], layout, {responsive: true});
+    } catch (error) {
+        console.error('Failed to initialize plot:', error);
+        // Fallback: show a message
+        document.getElementById('spider-chart').innerHTML = '<div style="text-align: center; padding: 50px; color: #666;"><h3>Spider Chart</h3><p>Select hops to compare their aroma profiles</p></div>';
+    }
+}
+
+function addHop() {
+    if (selectedHops.length >= 3) {
+        return; // Maximum 3 hops
+    }
+    
+    const hopId = `hop-${++hopCounter}`;
+    const hopIndex = selectedHops.length;
+    
+    const hopSelector = document.createElement('div');
+    hopSelector.className = 'hop-selector';
+    hopSelector.id = hopId;
+    
+    hopSelector.innerHTML = `
+        <button class="remove-hop" onclick="removeHop('${hopId}')" title="Remove hop">×</button>
+        <h3>Hop ${hopIndex + 1}</h3>
+        <select id="${hopId}-select" onchange="onHopSelectionChange('${hopId}')">
+            <option value="">Select a hop...</option>
+            ${allHops.map(hop => `<option value="${hop}">${hop}</option>`).join('')}
+        </select>
+        <div class="hop-info" id="${hopId}-info" style="display: none;"></div>
+    `;
+    
+    document.getElementById('hop-selectors').appendChild(hopSelector);
+    selectedHops.push(null);
+    
+    updateAddButton();
+}
+
+function removeHop(hopId) {
+    const hopElement = document.getElementById(hopId);
+    const hopIndex = Array.from(hopElement.parentNode.children).indexOf(hopElement);
+    
+    hopElement.remove();
+    selectedHops.splice(hopIndex, 1);
+    
+    // Update hop numbers
+    const selectors = document.querySelectorAll('.hop-selector h3');
+    selectors.forEach((h3, index) => {
+        h3.textContent = `Hop ${index + 1}`;
+    });
+    
+    updateAddButton();
+    
+    // Auto-trigger comparison after removal
+    compareHops();
+}
+
+function onHopSelectionChange(hopId) {
+    const select = document.getElementById(`${hopId}-select`);
+    const hopInfo = document.getElementById(`${hopId}-info`);
+    const hopName = select.value;
+    
+    // Update selected hops array
+    const hopElement = document.getElementById(hopId);
+    const hopIndex = Array.from(hopElement.parentNode.children).indexOf(hopElement);
+    selectedHops[hopIndex] = hopName || null;
+    
+    // Show hop info
+    if (hopName) {
+        hopInfo.style.display = 'block';
+        hopInfo.innerHTML = `<p>Selected: <strong>${hopName}</strong></p>`;
+    } else {
+        hopInfo.style.display = 'none';
+    }
+    
+    // Auto-trigger comparison
+    compareHops();
+}
+
+function updateAddButton() {
+    const addButton = document.getElementById('add-hop-button');
+    const currentCount = selectedHops.length;
+    
+    if (currentCount >= 3) {
+        addButton.disabled = true;
+        addButton.textContent = 'Maximum Reached';
+        addButton.style.display = 'none';
+    } else {
+        addButton.disabled = false;
+        addButton.textContent = `Add Hop ${currentCount > 0 ? `(${currentCount}/3)` : ''}`;
+        addButton.style.display = 'flex';
+    }
+}
+
+function compareHops() {
+    const validHops = selectedHops.filter(hop => hop !== null && hop !== undefined);
+    
+    if (validHops.length === 0) {
+        // Show empty plot instead of error
+        initializeEmptyPlot();
+        document.getElementById('detailed-comparison').innerHTML = '';
+        return;
+    }
+    
+    // Show loading state
+    document.getElementById('spider-chart').innerHTML = '<p>Loading comparison...</p>';
+    
+    // Fetch comparison data
+    const hopIds = validHops.join(',');
+    fetch(`/hops/comparison/data/?hops=${hopIds}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                showError(data.error);
+                return;
+            }
+            
+            displayComparison(data);
+        })
+        .catch(error => {
+            showError('Failed to load comparison data: ' + error.message);
+        });
+}
+
+function displayComparison(data) {
+    // Create spider chart
+    createSpiderChart(data);
+    
+    // Display detailed comparison
+    displayDetailedComparison(data);
+}
+
+function createSpiderChart(data) {
+    // Check if Plotly is available
+    if (typeof Plotly === 'undefined') {
+        console.warn('Plotly not available, using fallback chart');
+        createFallbackChart(data);
+        return;
+    }
+    
+    const traces = [];
+    const pastelColors = ['#FFB3BA', '#BAFFC9', '#BAE1FF', '#FFFFBA', '#FFD1DC', '#E6E6FA'];
+    
+    data.hops.forEach((hop, index) => {
+        // Transform values so 0 becomes 1, 1 becomes 2, etc.
+        // This ensures 0 values have visible area on the plot
+        const transformedValues = hop.aroma_values.map(value => value + 1);
+        
+        const color = pastelColors[index % pastelColors.length];
+        
+        // Convert hex to rgba for fill color
+        const r = parseInt(color.slice(1,3), 16);
+        const g = parseInt(color.slice(3,5), 16);
+        const b = parseInt(color.slice(5,7), 16);
+        const fillColor = `rgba(${r}, ${g}, ${b}, 0.3)`;
+        
+        traces.push({
+            type: 'scatterpolar',
+            mode: 'lines',  // Only show lines, hide markers/points
+            r: [...transformedValues, transformedValues[0]], // Add first value at end to close the line
+            theta: [...data.aroma_categories, data.aroma_categories[0]], // Add first category at end
+            fill: 'toself',
+            name: hop.name,
+            line: {
+                color: color,
+                width: 3
+            },
+            fillcolor: fillColor
+        });
+    });
+    
+    const layout = {
+        polar: {
+            radialaxis: {
+                visible: false,  // Hide the radial axis numbers
+                range: [-1, 6],  // Start from -1 so that 0 values (now 1) have visible area
+                showline: false,
+                showgrid: true,
+                gridcolor: 'rgba(128, 128, 128, 0.3)'
+            },
+            angularaxis: {
+                showline: false,
+                gridcolor: 'rgba(128, 128, 128, 0.3)'
+            }
+        },
+        showlegend: true,
+        title: 'Hop Aroma Profile Comparison (0-5 Scale)',
+        font: {
+            size: 12
+        }
+    };
+    
+    try {
+        Plotly.newPlot('spider-chart', traces, layout, {responsive: true});
+    } catch (error) {
+        console.error('Plotly error:', error);
+        createFallbackChart(data);
+    }
+}
+
+function createFallbackChart(data) {
+    const chartDiv = document.getElementById('spider-chart');
+    const pastelColors = ['#FFB3BA', '#BAFFC9', '#BAE1FF', '#FFFFBA', '#FFD1DC', '#E6E6FA'];
+    
+    let html = '<h3>Hop Aroma Comparison</h3>';
+    html += '<p><em>Interactive spider chart unavailable - showing comparison table instead</em></p>';
+    html += '<div class="fallback-chart">';
+    
+    // Create a comparison table
+    data.aroma_categories.forEach(aroma => {
+        html += '<div class="aroma-comparison-item">';
+        html += `<span><strong>${aroma}</strong></span>`;
+        html += '<div>';
+        
+        data.hops.forEach((hop, hopIndex) => {
+            const aromaValue = hop.aroma_values[data.aroma_categories.indexOf(aroma)];
+            const color = pastelColors[hopIndex % pastelColors.length];
+            const intensity = Math.max(0.3, aromaValue / 5); // Minimum 30% opacity
+            
+            // Convert hex to rgba
+            const r = parseInt(color.slice(1,3), 16);
+            const g = parseInt(color.slice(3,5), 16);
+            const b = parseInt(color.slice(5,7), 16);
+            const backgroundColor = `rgba(${r}, ${g}, ${b}, ${intensity})`;
+            
+            html += `<span title="${hop.name}: ${aromaValue}/5" 
+                           style="display: inline-block; width: 20px; height: 20px; border-radius: 50%; 
+                                  background: ${backgroundColor}; margin: 0 5px; border: 1px solid ${color};
+                                  text-align: center; line-height: 18px; font-size: 10px; color: #333; font-weight: bold;">${aromaValue}</span>`;
+        });
+        
+        html += '</div>';
+        html += '</div>';
+    });
+    
+    html += '</div>';
+    
+    // Add legend
+    html += '<div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 4px;">';
+    html += '<strong>Legend:</strong> ';
+    data.hops.forEach((hop, index) => {
+        const color = pastelColors[index % pastelColors.length];
+        html += `<span style="display: inline-block; width: 15px; height: 15px; border-radius: 50%; 
+                               background: ${color}; margin: 0 5px;"></span> ${hop.name} `;
+    });
+    html += '<br><small>Numbers represent aroma intensity on a scale of 0-5</small>';
+    html += '</div>';
+    
+    chartDiv.innerHTML = html;
+}
+
+function displayDetailedComparison(data) {
+    const detailedDiv = document.getElementById('detailed-comparison');
+    
+    if (data.hops.length === 0) {
+        detailedDiv.innerHTML = '';
+        return;
+    }
+    
+    let html = '<h3>Detailed Comparison</h3>';
+    html += '<div style="overflow-x: auto;">';
+    html += '<table style="width: 100%; border-collapse: collapse; margin: 20px 0;">';
+    
+    // Table header
+    html += '<thead><tr style="background: #f8f9fa;">';
+    html += '<th style="padding: 12px; border: 1px solid #ddd; text-align: left; font-weight: bold;">Property</th>';
+    data.hops.forEach(hop => {
+        html += `<th style="padding: 12px; border: 1px solid #ddd; text-align: center; font-weight: bold;">${hop.name}</th>`;
+    });
+    html += '</tr></thead>';
+    
+    html += '<tbody>';
+    
+    // Type row
+    html += '<tr>';
+    html += '<td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background: #f8f9fa;">Type</td>';
+    data.hops.forEach(hop => {
+        html += `<td style="padding: 12px; border: 1px solid #ddd; text-align: center;">${hop.category}</td>`;
+    });
+    html += '</tr>';
+    
+    // Alpha Acid row
+    html += '<tr>';
+    html += '<td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background: #f8f9fa;">Alpha Acid</td>';
+    data.hops.forEach(hop => {
+        const alphaValue = hop.alpha_range.mean ? hop.alpha_range.mean.toFixed(1) + '%' : 'N/A';
+        html += `<td style="padding: 12px; border: 1px solid #ddd; text-align: center;">${alphaValue}</td>`;
+    });
+    html += '</tr>';
+    
+    // Recipes Count row
+    html += '<tr>';
+    html += '<td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background: #f8f9fa;">Recipes</td>';
+    data.hops.forEach(hop => {
+        html += `<td style="padding: 12px; border: 1px solid #ddd; text-align: center;">${hop.recipes_count}</td>`;
+    });
+    html += '</tr>';
+    
+    // Origin row
+    html += '<tr>';
+    html += '<td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background: #f8f9fa;">Origin</td>';
+    data.hops.forEach(hop => {
+        const origin = hop.origin_countries.join(', ') || 'Unknown';
+        html += `<td style="padding: 12px; border: 1px solid #ddd; text-align: center;">${origin}</td>`;
+    });
+    html += '</tr>';
+    
+    // Aroma intensity rows
+    data.aroma_categories.forEach(aroma => {
+        html += '<tr>';
+        html += `<td style="padding: 12px; border: 1px solid #ddd; font-weight: bold; background: #f8f9fa;">${aroma} Intensity</td>`;
+        data.hops.forEach(hop => {
+            const aromaIndex = data.aroma_categories.indexOf(aroma);
+            const intensity = hop.aroma_values[aromaIndex];
+            html += `<td style="padding: 12px; border: 1px solid #ddd; text-align: center;">${intensity}/5</td>`;
+        });
+        html += '</tr>';
+    });
+    
+    html += '</tbody>';
+    html += '</table>';
+    html += '</div>';
+    
+    // Add aroma notes section below the table
+    html += '<h4 style="margin-top: 30px;">Aroma Notes</h4>';
+    data.hops.forEach(hop => {
+        html += `
+            <div style="margin: 15px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9;">
+                <h5 style="margin: 0 0 10px 0; color: #333;">${hop.name}</h5>
+                <div class="aroma-tags">
+                    ${hop.aromas.map(aroma => `<span class="aroma-tag">${aroma}</span>`).join('')}
+                </div>
+            </div>
+        `;
+    });
+    
+    detailedDiv.innerHTML = html;
+}
+
+function showError(message) {
+    const resultsDiv = document.getElementById('comparison-results');
+    resultsDiv.innerHTML = `<div class="error-message">${message}</div>`;
+}
+</script>
+{% endblock %}
