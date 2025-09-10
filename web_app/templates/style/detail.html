@@ -163,7 +163,7 @@
                     <h2><a href="#{{ anchor }}" class="anchor"><span></span></a>Trending Yeasts</h2>
                 </div>
                 <div class="card-body">
-                    <div class="chart-m" data-chart="{{ style|chart_js:chart_type }}">
+                    <div class="chart-m" data-chart="{{ style|chart_js:chart_type }}" data-chart-options='{"noDataText":"No trends detected"}'>
                         <noscript>
                             {{ style|chart_image:chart_type|safe }}
                         </noscript>
