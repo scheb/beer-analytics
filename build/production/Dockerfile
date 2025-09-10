@@ -11,7 +11,7 @@ FROM python:3.11-slim-bookworm as python
 FROM python as python-build-stage
 
 ARG APP_HOME=/app
-ARG POETRY_VERSION="1.8"
+ARG POETRY_VERSION="2.1"
 
 ENV POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_IN_PROJECT=1 \
