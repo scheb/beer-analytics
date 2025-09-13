@@ -1,14 +1,16 @@
-FROM node:24-bookworm-slim as static-builder
+FROM node:24-bookworm-slim AS static-builder
 
 WORKDIR /src
 COPY . ./
 RUN yarn install && \
     yarn build-prod
 
-# define an alias for the specific python version used in this file.
-FROM python:3.11-slim-bookworm as python
 
-FROM python as python-build-stage
+
+# Define an alias for the specific python version used in this file.
+FROM python:3.11-slim-bookworm AS python
+
+FROM python AS python-build-stage
 
 ARG APP_HOME=/app
 ARG POETRY_VERSION="2.1"
@@ -31,7 +33,9 @@ COPY poetry.lock pyproject.toml ./
 RUN poetry install --without dev && \
     rm -rf $POETRY_CACHE_DIR
 
-FROM python as python-run-stage
+
+
+FROM python AS python-run-stage
 
 ARG APP_HOME=/app
 
