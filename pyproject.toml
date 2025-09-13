@@ -27,6 +27,7 @@ uvicorn = {extras = ["standard"], version = "^0.27.1"}
 gunicorn = "^21.2.0"
 elasticsearch = "^8.12.0"
 elasticsearch-async = "^6.2.0"
+setuptools = "^80.9.0"
 
 [tool.poetry.dev-dependencies]
 black = "^23.3.0"
