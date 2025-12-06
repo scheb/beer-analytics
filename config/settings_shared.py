@@ -1,4 +1,5 @@
 import structlog
+import os
 from os import path
 from pathlib import Path
 
@@ -7,7 +8,7 @@ from environ import Env
 from web_app import DEFAULT_PAGE_CACHE_TIME
 
 env = Env()
-env.read_env()
+env.read_env(os.path.join(os.path.dirname(__file__), "../.env"))
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
