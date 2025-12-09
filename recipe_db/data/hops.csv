@@ -26,7 +26,7 @@ Aquila;aroma;USA;Cluster, Galena;;;
 Aramis;aroma;FRA;Ahtanum, Centennial, Challenger, Strisselspalt, Willamette, Hallertauer Mittelfrüh, Saaz, East Kent Golding;Caramel, Citrus, Floral, Grassy, Herbal, Jasmine, Lemongrass, Mint, Pepper, Raspberry, Rose, Spicy, Strawberry, Sweet;;Armis
 Arcadian;aroma;USA;;;;
 Archer;aroma;GBR;;Apricot, Citrus, Floral, Lime, Peach;;
-Ariana;dual-purpose;GER;Hallertauer Blanc, Hüll Melon, Mandarina Bavaria;Black Berries, Black Currant, Citrus, Fruity, Gooseberry, Herbal, Jasmine, Passion Fruit, Peach, Pear, Pineapple, Resinous, Tangerine, Tropical Fruits;;Arriana
+Ariana;dual-purpose;GER;Hallertauer Blanc, Hüll Melon, Mandarina Bavaria;Blackberry, Black Currant, Citrus, Fruity, Gooseberry, Herbal, Jasmine, Passion Fruit, Peach, Pear, Pineapple, Resinous, Tangerine, Tropical Fruits;;Arriana
 Astra;dual-purpose;AUS;;Grapefruit, Grassy, Honey, Melon, Peach, Sweet, Tropical Fruits, White Wine;;
 Atlas;aroma;SLO;;Floral, Lime, Pine;;
 Aurora;dual-purpose;SLO;Northern Brewer, Perle, Styrian Golding;Aniseed, Citrus, Floral, Herbal, Lemongrass, Noble, Spicy, Tea;Super Styrians;Arora, Super Styrian, Styrian Aurora, Styrian Arora
@@ -215,7 +215,7 @@ Książęcy;aroma;POL;;;;
 Lambic;aroma;USA;;Woody, Green, Grassy, Spicy, Floral, Fruity, Mild;;
 Legacy;dual-purpose;USA;Cluster, Galena, Northern Brewer;Blackberry, Currant, Floral, Grapefruit, Grassy, Orange, Spicy;;
 Lemonaughty;dual-purpose;USA;;Lemon, Fruity, Smooth, Cantaloupe, Citrus, Zesty, Sweet, Melon;J-1;
-Lemondrop;aroma;USA;Cascade, Centennial, Liberty, Mandarina Bavaria, Motueka;Citrus, Floral, Green Tea, Lemon, Light Melon, Melon, Mint;;Lemon Drop
+Lemondrop;aroma;USA;Cascade, Centennial, Liberty, Mandarina Bavaria, Motueka;Citrus, Floral, Green Tea, Lemon, Melon, Mint;;Lemon Drop
 Liberty;aroma;USA;Crystal, Hallertauer Mittelfrüh, Mount Hood;Citrus, Floral, Herbal, Lemon, Noble, Rose, Spicy, Tea, Woody;;
 Lilly;dual-purpose;GER;;Citrus, Grapefruit, Tangerine, Passion Fruit, Gooseberry, Red Currant;Sissi;
 Limonadier;aroma;CAN;Cascade, Centennial, Citra;Lemon, Grapefruit, Citrus, Mango, Pine, Fruity, Zesty;;
@@ -351,7 +351,7 @@ Spalter Select;aroma;GER;Saaz, Spalter, Tettnanger;Apple, Citrus, Cognac, Floral
 Sterling;dual-purpose;USA;Lubelska, Saaz;Citrus, Floral, Grassy, Herbal, Noble, Pepper, Spicy, Tea, Tobacco;;
 Sticklebract;dual-purpose;NZL;Hallertauer Mittelfrüh, Hersbrucker, Northern Brewer, Simcoe, Sorachi Ace;Citrus, Pine, Resinous, Fruity, Woody, Noble, Spicy, Pepper, Herbal, Fresh;;Stricklebract
 Strata;aroma;USA;Galaxy, Mosaic;Cannabis, Grapefruit, Musty, Passion Fruit, Strawberry;X-331;Strada
-Strisselspalt;aroma;FRA;Liberty, Hallertauer Mittelfrüh, Mount Hood, Crystal, Hersbrucker, Aramis;Herbal, Floral, Citrus, Spicy, Fruity, Bergamot, Grapefruit, Orange, Cream, Caramel, Cassis, Camomile, Tea, Pleasant, Delicate;;Strisselspalter, Strisselsspalt, Strisslespalt, Striesslespalt, Striesselspalt, French Strisserspalt, French Striisselspalt, French Strisseispalt, French Spissalspalt, Strisslespalt France, Strissespalt
+Strisselspalt;aroma;FRA;Liberty, Hallertauer Mittelfrüh, Mount Hood, Crystal, Hersbrucker, Aramis;Herbal, Floral, Citrus, Spicy, Fruity, Bergamot, Grapefruit, Orange, Cream, Caramel, Cassis, Chamomile, Tea, Pleasant, Delicate;;Strisselspalter, Strisselsspalt, Strisslespalt, Striesslespalt, Striesselspalt, French Strisserspalt, French Striisselspalt, French Strisseispalt, French Spissalspalt, Strisslespalt France, Strissespalt
 Styrian Cardinal;dual-purpose;SLO;;Anise, Apple, Citrus, Fruity, Gooseberry, Pineapple, Strawberry, Tropical Fruits;;Cardinal
 Styrian Dragon;aroma;SLO;;Citrus, Grapefruit, Lime, Orange;105/220;Dragon
 Styrian Fox;dual-purpose;SLO;;Blackberry, Currant, Floral, Fruity, Honey, Lemongrass, Marjoram, Peach, Raspberry, Strawberry;;Fox, Sty Fox, Stryian Fox, Sytrian Fox
