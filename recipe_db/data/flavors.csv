@@ -20,6 +20,7 @@ Black Pepper;spicy
 Black Tea;fruity
 Blackberry;fruity
 Blueberry;fruity
+Boysenberry;fruity
 Bright;other
 Bubblegum;fruity
 Calendula;floral
@@ -29,6 +30,7 @@ Cantaloupe;tropical
 Caramel;cream-caramel
 Cassis;fruity
 Cedar;earthy-woody
+Cedarwood;earthy-woody
 Celeriac;vegetal
 Chamomile;floral
 Cherry;fruity
@@ -43,6 +45,7 @@ Clover;herbal
 Coconut;tropical
 Coffee;cream-caramel
 Cognac;earthy-woody
+Coriander;spicy
 Cream;tropical
 Creamy;cream-caramel
 Cress;vegetal
@@ -60,6 +63,7 @@ Elderflower;floral
 Eucalyptus;herbal
 Evergreen;earthy-woody
 Exotic;other
+Fennel;herbal
 Fig;fruity
 Floral;floral
 Fresh;other
@@ -92,10 +96,12 @@ Kumquat;citrus
 Lavender;floral
 Leather;earthy-woody
 Lemon;citrus
+Lemon Zest;citrus
 Lemongrass;citrus
 Licorice;spicy
 Lilac;floral
 Lime;citrus
+Lime Zest;citrus
 Loganberry;fruity
 Lychee;tropical
 Magnolia;floral
@@ -108,11 +114,13 @@ Melon;tropical
 Menthol;herbal
 Mild;other
 Mint;herbal
+Mirabelle;fruity
 Mojito;herbal
 Molasses;cream-caramel
 Musty;earthy-woody
 Nectar;fruity
 Nectarine;fruity
+Nettle;herbal
 Noble;other
 Nougat;cream-caramel
 Nutmeg;spicy
@@ -139,6 +147,7 @@ Red Fruit;fruity
 Refreshing;other
 Resinous;earthy-woody
 Rose;floral
+Rosemary;herbal
 Rustic;other
 Sage;herbal
 Smooth;other
@@ -165,8 +174,12 @@ Vegetal;vegetal
 Vibrant;other
 Watermelon;fruity
 Whisky;earthy-woody
+White Currant;fruity
+White Pepper;spicy
 White Wine;fruity
 Whitegrape;fruity
+Wildflower;floral
 Woody;earthy-woody
 Yogurt;cream-caramel
+Yuzu;citrus
 Zesty;citrus
